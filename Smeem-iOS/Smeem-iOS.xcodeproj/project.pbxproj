@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		4A0E8D5429F8346600E0FC23 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 4A0E8D5329F8346600E0FC23 /* FirebaseAnalyticsWithoutAdIdSupport */; };
 		4A0E8D5629F8346600E0FC23 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 4A0E8D5529F8346600E0FC23 /* FirebaseMessaging */; };
+		4A0E8D5829F8362E00E0FC23 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0E8D5729F8362E00E0FC23 /* AuthViewController.swift */; };
+		4A0E8D5B29F8399700E0FC23 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4A0E8D5A29F8399700E0FC23 /* SnapKit */; };
 		4A8FFA5029C9E1FD00FB76C0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8FFA4F29C9E1FD00FB76C0 /* AppDelegate.swift */; };
 		4A8FFA5229C9E1FD00FB76C0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8FFA5129C9E1FD00FB76C0 /* SceneDelegate.swift */; };
 		4A8FFA5429C9E1FD00FB76C0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8FFA5329C9E1FD00FB76C0 /* ViewController.swift */; };
@@ -19,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4A0E8D5729F8362E00E0FC23 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 		4A4E21EE29D9B02500BF8747 /* Smeem-iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Smeem-iOS.entitlements"; sourceTree = "<group>"; };
 		4A8FFA4C29C9E1FD00FB76C0 /* Smeem-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Smeem-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A8FFA4F29C9E1FD00FB76C0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -36,6 +39,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A0E8D5B29F8399700E0FC23 /* SnapKit in Frameworks */,
 				4A0E8D5629F8346600E0FC23 /* FirebaseMessaging in Frameworks */,
 				4A0E8D5429F8346600E0FC23 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 			);
@@ -72,6 +76,7 @@
 				4A8FFA5829C9E1FE00FB76C0 /* Assets.xcassets */,
 				4A8FFA5A29C9E1FE00FB76C0 /* LaunchScreen.storyboard */,
 				4A8FFA5D29C9E1FE00FB76C0 /* Info.plist */,
+				4A0E8D5729F8362E00E0FC23 /* AuthViewController.swift */,
 			);
 			path = "Smeem-iOS";
 			sourceTree = "<group>";
@@ -95,6 +100,7 @@
 			packageProductDependencies = (
 				4A0E8D5329F8346600E0FC23 /* FirebaseAnalyticsWithoutAdIdSupport */,
 				4A0E8D5529F8346600E0FC23 /* FirebaseMessaging */,
+				4A0E8D5A29F8399700E0FC23 /* SnapKit */,
 			);
 			productName = "Smeem-iOS";
 			productReference = 4A8FFA4C29C9E1FD00FB76C0 /* Smeem-iOS.app */;
@@ -126,6 +132,7 @@
 			mainGroup = 4A8FFA4329C9E1FD00FB76C0;
 			packageReferences = (
 				4A0E8D5229F8346600E0FC23 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				4A0E8D5929F8399700E0FC23 /* XCRemoteSwiftPackageReference "SnapKit" */,
 			);
 			productRefGroup = 4A8FFA4D29C9E1FD00FB76C0 /* Products */;
 			projectDirPath = "";
@@ -156,6 +163,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4A8FFA5429C9E1FD00FB76C0 /* ViewController.swift in Sources */,
+				4A0E8D5829F8362E00E0FC23 /* AuthViewController.swift in Sources */,
 				4A8FFA5029C9E1FD00FB76C0 /* AppDelegate.swift in Sources */,
 				4A8FFA5229C9E1FD00FB76C0 /* SceneDelegate.swift in Sources */,
 			);
