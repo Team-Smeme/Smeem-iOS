@@ -11,6 +11,8 @@
 		4A0E8D5629F8346600E0FC23 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 4A0E8D5529F8346600E0FC23 /* FirebaseMessaging */; };
 		4A0E8D5829F8362E00E0FC23 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0E8D5729F8362E00E0FC23 /* AuthViewController.swift */; };
 		4A0E8D5B29F8399700E0FC23 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4A0E8D5A29F8399700E0FC23 /* SnapKit */; };
+		4A47164D29F8EB2600CBE9C8 /* KakaoSDKUser in Frameworks */ = {isa = PBXBuildFile; productRef = 4A47164C29F8EB2600CBE9C8 /* KakaoSDKUser */; };
+		4A47164F29F907FE00CBE9C8 /* Shared.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 4A47164E29F907FE00CBE9C8 /* Shared.xcconfig */; };
 		4A8FFA5029C9E1FD00FB76C0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8FFA4F29C9E1FD00FB76C0 /* AppDelegate.swift */; };
 		4A8FFA5229C9E1FD00FB76C0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8FFA5129C9E1FD00FB76C0 /* SceneDelegate.swift */; };
 		4A8FFA5429C9E1FD00FB76C0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8FFA5329C9E1FD00FB76C0 /* ViewController.swift */; };
@@ -22,6 +24,7 @@
 
 /* Begin PBXFileReference section */
 		4A0E8D5729F8362E00E0FC23 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
+		4A47164E29F907FE00CBE9C8 /* Shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Shared.xcconfig; sourceTree = "<group>"; };
 		4A4E21EE29D9B02500BF8747 /* Smeem-iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Smeem-iOS.entitlements"; sourceTree = "<group>"; };
 		4A8FFA4C29C9E1FD00FB76C0 /* Smeem-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Smeem-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A8FFA4F29C9E1FD00FB76C0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -39,6 +42,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A47164D29F8EB2600CBE9C8 /* KakaoSDKUser in Frameworks */,
 				4A0E8D5B29F8399700E0FC23 /* SnapKit in Frameworks */,
 				4A0E8D5629F8346600E0FC23 /* FirebaseMessaging in Frameworks */,
 				4A0E8D5429F8346600E0FC23 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
@@ -51,6 +55,7 @@
 		4A8FFA4329C9E1FD00FB76C0 = {
 			isa = PBXGroup;
 			children = (
+				4A47164E29F907FE00CBE9C8 /* Shared.xcconfig */,
 				4A8FFA4E29C9E1FD00FB76C0 /* Smeem-iOS */,
 				4A8FFA4D29C9E1FD00FB76C0 /* Products */,
 			);
@@ -101,6 +106,7 @@
 				4A0E8D5329F8346600E0FC23 /* FirebaseAnalyticsWithoutAdIdSupport */,
 				4A0E8D5529F8346600E0FC23 /* FirebaseMessaging */,
 				4A0E8D5A29F8399700E0FC23 /* SnapKit */,
+				4A47164C29F8EB2600CBE9C8 /* KakaoSDKUser */,
 			);
 			productName = "Smeem-iOS";
 			productReference = 4A8FFA4C29C9E1FD00FB76C0 /* Smeem-iOS.app */;
@@ -113,6 +119,9 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
+				KnownAssetTags = (
+					New,
+				);
 				LastSwiftUpdateCheck = 1420;
 				LastUpgradeCheck = 1420;
 				TargetAttributes = {
@@ -133,6 +142,7 @@
 			packageReferences = (
 				4A0E8D5229F8346600E0FC23 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				4A0E8D5929F8399700E0FC23 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				4A47164B29F8EB2600CBE9C8 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
 			);
 			productRefGroup = 4A8FFA4D29C9E1FD00FB76C0 /* Products */;
 			projectDirPath = "";
@@ -149,6 +159,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4A8FFA5C29C9E1FE00FB76C0 /* LaunchScreen.storyboard in Resources */,
+				4A47164F29F907FE00CBE9C8 /* Shared.xcconfig in Resources */,
 				4AC9489829ED800800489C2B /* GoogleService-Info.plist in Resources */,
 				4A8FFA5929C9E1FE00FB76C0 /* Assets.xcassets in Resources */,
 				4A8FFA5729C9E1FD00FB76C0 /* Main.storyboard in Resources */,
@@ -307,6 +318,7 @@
 		};
 		4A8FFA6129C9E1FE00FB76C0 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4A47164E29F907FE00CBE9C8 /* Shared.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -341,6 +353,7 @@
 		};
 		4A8FFA6229C9E1FE00FB76C0 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4A47164E29F907FE00CBE9C8 /* Shared.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -405,6 +418,22 @@
 				kind = branch;
 			};
 		};
+		4A0E8D5929F8399700E0FC23 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+		4A47164B29F8EB2600CBE9C8 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kakao/kakao-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -417,6 +446,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4A0E8D5229F8346600E0FC23 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseMessaging;
+		};
+		4A0E8D5A29F8399700E0FC23 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4A0E8D5929F8399700E0FC23 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+		4A47164C29F8EB2600CBE9C8 /* KakaoSDKUser */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4A47164B29F8EB2600CBE9C8 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
+			productName = KakaoSDKUser;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

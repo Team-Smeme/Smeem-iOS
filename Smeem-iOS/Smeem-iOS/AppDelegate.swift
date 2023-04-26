@@ -11,13 +11,15 @@ import UIKit
 import Firebase
 import FirebaseCore
 import FirebaseMessaging
+import KakaoSDKCommon
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
-    var window: UIWindow?
-    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        let nativeAppKey = Bundle.main.object(forInfoDictionaryKey: "NATIVE_APP_KEY") as? String ?? ""
+        KakaoSDK.initSDK(appKey: nativeAppKey)
+        
         let appleIDProvider = ASAuthorizationAppleIDProvider()
         appleIDProvider.getCredentialState(forUserID: "") { (credentialState, error) in
             switch credentialState {
