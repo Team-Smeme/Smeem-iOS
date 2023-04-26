@@ -136,3 +136,5 @@
  # End of https://www.toptal.com/developers/gitignore/api/xcode,macos,swift
 
 Smeem-iOS/Smeem-iOS.xcodeproj/project.xcworkspace/xcuserdata/hwangchanmi.xcuserdatad/
+
+*.xcconfig
