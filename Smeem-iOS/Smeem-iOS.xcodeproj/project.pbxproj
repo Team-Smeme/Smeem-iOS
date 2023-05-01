@@ -12,6 +12,14 @@
 		37A574C329FF6E9C00312453 /* ImageLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574C229FF6E9C00312453 /* ImageLiterals.swift */; };
 		37A574C529FF6EA800312453 /* FontLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574C429FF6EA800312453 /* FontLiterals.swift */; };
 		37A574C829FF6F1C00312453 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574C729FF6F1C00312453 /* UIView+.swift */; };
+		37A574CA29FF980F00312453 /* UIStackView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574C929FF980F00312453 /* UIStackView+.swift */; };
+		37A574CC29FF990E00312453 /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574CB29FF990E00312453 /* UIViewController+.swift */; };
+		37A574CE29FF9A2D00312453 /* UIScreen+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574CD29FF9A2D00312453 /* UIScreen+.swift */; };
+		37A574D029FF9AEE00312453 /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574CF29FF9AEE00312453 /* UILabel+.swift */; };
+		37A574D929FF9FFF00312453 /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 37A574D529FF9FFF00312453 /* Pretendard-SemiBold.otf */; };
+		37A574DA29FF9FFF00312453 /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 37A574D629FF9FFF00312453 /* Pretendard-Regular.otf */; };
+		37A574DB29FF9FFF00312453 /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 37A574D729FF9FFF00312453 /* Pretendard-Medium.otf */; };
+		37A574DC29FF9FFF00312453 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 37A574D829FF9FFF00312453 /* Pretendard-Bold.otf */; };
 		4A0E8D5429F8346600E0FC23 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 4A0E8D5329F8346600E0FC23 /* FirebaseAnalyticsWithoutAdIdSupport */; };
 		4A0E8D5629F8346600E0FC23 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 4A0E8D5529F8346600E0FC23 /* FirebaseMessaging */; };
 		4A0E8D5829F8362E00E0FC23 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0E8D5729F8362E00E0FC23 /* AuthViewController.swift */; };
@@ -32,6 +40,14 @@
 		37A574C229FF6E9C00312453 /* ImageLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLiterals.swift; sourceTree = "<group>"; };
 		37A574C429FF6EA800312453 /* FontLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontLiterals.swift; sourceTree = "<group>"; };
 		37A574C729FF6F1C00312453 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
+		37A574C929FF980F00312453 /* UIStackView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+.swift"; sourceTree = "<group>"; };
+		37A574CB29FF990E00312453 /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
+		37A574CD29FF9A2D00312453 /* UIScreen+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+.swift"; sourceTree = "<group>"; };
+		37A574CF29FF9AEE00312453 /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
+		37A574D529FF9FFF00312453 /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
+		37A574D629FF9FFF00312453 /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.otf"; sourceTree = "<group>"; };
+		37A574D729FF9FFF00312453 /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
+		37A574D829FF9FFF00312453 /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
 		4A0E8D5729F8362E00E0FC23 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 		4A47164E29F907FE00CBE9C8 /* Shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Shared.xcconfig; sourceTree = "<group>"; };
 		4A4E21EE29D9B02500BF8747 /* Smeem-iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Smeem-iOS.entitlements"; sourceTree = "<group>"; };
@@ -145,6 +161,10 @@
 		37A574C629FF6EC000312453 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				37A574D829FF9FFF00312453 /* Pretendard-Bold.otf */,
+				37A574D729FF9FFF00312453 /* Pretendard-Medium.otf */,
+				37A574D629FF9FFF00312453 /* Pretendard-Regular.otf */,
+				37A574D529FF9FFF00312453 /* Pretendard-SemiBold.otf */,
 			);
 			path = Fonts;
 			sourceTree = "<group>";
@@ -257,7 +277,11 @@
 				4A8FFA5C29C9E1FE00FB76C0 /* LaunchScreen.storyboard in Resources */,
 				4A47164F29F907FE00CBE9C8 /* Shared.xcconfig in Resources */,
 				4AC9489829ED800800489C2B /* GoogleService-Info.plist in Resources */,
+				37A574DB29FF9FFF00312453 /* Pretendard-Medium.otf in Resources */,
+				37A574D929FF9FFF00312453 /* Pretendard-SemiBold.otf in Resources */,
+				37A574DA29FF9FFF00312453 /* Pretendard-Regular.otf in Resources */,
 				4A8FFA5929C9E1FE00FB76C0 /* Assets.xcassets in Resources */,
+				37A574DC29FF9FFF00312453 /* Pretendard-Bold.otf in Resources */,
 				4A8FFA5729C9E1FD00FB76C0 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
