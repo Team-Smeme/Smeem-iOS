@@ -103,6 +103,10 @@
 			isa = PBXGroup;
 			children = (
 				37A574C729FF6F1C00312453 /* UIView+.swift */,
+				37A574C929FF980F00312453 /* UIStackView+.swift */,
+				37A574CB29FF990E00312453 /* UIViewController+.swift */,
+				37A574CD29FF9A2D00312453 /* UIScreen+.swift */,
+				37A574CF29FF9AEE00312453 /* UILabel+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -295,11 +299,15 @@
 			files = (
 				37A574C529FF6EA800312453 /* FontLiterals.swift in Sources */,
 				4A8FFA5429C9E1FD00FB76C0 /* ViewController.swift in Sources */,
+				37A574CC29FF990E00312453 /* UIViewController+.swift in Sources */,
 				37A574C329FF6E9C00312453 /* ImageLiterals.swift in Sources */,
 				4A0E8D5829F8362E00E0FC23 /* AuthViewController.swift in Sources */,
 				37A574C829FF6F1C00312453 /* UIView+.swift in Sources */,
+				37A574D029FF9AEE00312453 /* UILabel+.swift in Sources */,
+				37A574CE29FF9A2D00312453 /* UIScreen+.swift in Sources */,
 				4A8FFA5029C9E1FD00FB76C0 /* AppDelegate.swift in Sources */,
 				37A574C129FF6E9100312453 /* ColorLiterals.swift in Sources */,
+				37A574CA29FF980F00312453 /* UIStackView+.swift in Sources */,
 				4A8FFA5229C9E1FD00FB76C0 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
