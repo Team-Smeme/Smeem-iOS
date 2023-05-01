@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		37A574BF29FE249400312453 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 37A574BE29FE249400312453 /* Moya */; };
+		37A574C129FF6E9100312453 /* ColorLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574C029FF6E9100312453 /* ColorLiterals.swift */; };
+		37A574C329FF6E9C00312453 /* ImageLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574C229FF6E9C00312453 /* ImageLiterals.swift */; };
+		37A574C529FF6EA800312453 /* FontLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574C429FF6EA800312453 /* FontLiterals.swift */; };
+		37A574C829FF6F1C00312453 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574C729FF6F1C00312453 /* UIView+.swift */; };
 		4A0E8D5429F8346600E0FC23 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 4A0E8D5329F8346600E0FC23 /* FirebaseAnalyticsWithoutAdIdSupport */; };
 		4A0E8D5629F8346600E0FC23 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 4A0E8D5529F8346600E0FC23 /* FirebaseMessaging */; };
 		4A0E8D5829F8362E00E0FC23 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0E8D5729F8362E00E0FC23 /* AuthViewController.swift */; };
@@ -23,6 +28,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		37A574C029FF6E9100312453 /* ColorLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorLiterals.swift; sourceTree = "<group>"; };
+		37A574C229FF6E9C00312453 /* ImageLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLiterals.swift; sourceTree = "<group>"; };
+		37A574C429FF6EA800312453 /* FontLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontLiterals.swift; sourceTree = "<group>"; };
+		37A574C729FF6F1C00312453 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		4A0E8D5729F8362E00E0FC23 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 		4A47164E29F907FE00CBE9C8 /* Shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Shared.xcconfig; sourceTree = "<group>"; };
 		4A4E21EE29D9B02500BF8747 /* Smeem-iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Smeem-iOS.entitlements"; sourceTree = "<group>"; };
@@ -45,6 +54,7 @@
 				4A47164D29F8EB2600CBE9C8 /* KakaoSDKUser in Frameworks */,
 				4A0E8D5B29F8399700E0FC23 /* SnapKit in Frameworks */,
 				4A0E8D5629F8346600E0FC23 /* FirebaseMessaging in Frameworks */,
+				37A574BF29FE249400312453 /* Moya in Frameworks */,
 				4A0E8D5429F8346600E0FC23 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -52,6 +62,93 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		37A574B429FE203100312453 /* Global */ = {
+			isa = PBXGroup;
+			children = (
+				37A574B629FE207C00312453 /* Extensions */,
+				37A574B729FE208A00312453 /* UIComponents */,
+				37A574B829FE209900312453 /* Literals */,
+				37A574B929FE209F00312453 /* Resources */,
+				37A574BA29FE20A900312453 /* Utils */,
+			);
+			path = Global;
+			sourceTree = "<group>";
+		};
+		37A574B529FE204500312453 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				4A8FFA5329C9E1FD00FB76C0 /* ViewController.swift */,
+				4A0E8D5729F8362E00E0FC23 /* AuthViewController.swift */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		37A574B629FE207C00312453 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				37A574C729FF6F1C00312453 /* UIView+.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		37A574B729FE208A00312453 /* UIComponents */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = UIComponents;
+			sourceTree = "<group>";
+		};
+		37A574B829FE209900312453 /* Literals */ = {
+			isa = PBXGroup;
+			children = (
+				37A574C029FF6E9100312453 /* ColorLiterals.swift */,
+				37A574C229FF6E9C00312453 /* ImageLiterals.swift */,
+				37A574C429FF6EA800312453 /* FontLiterals.swift */,
+			);
+			path = Literals;
+			sourceTree = "<group>";
+		};
+		37A574B929FE209F00312453 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				37A574C629FF6EC000312453 /* Fonts */,
+				4A8FFA5829C9E1FE00FB76C0 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		37A574BA29FE20A900312453 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		37A574BB29FE219100312453 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		37A574BC29FE224700312453 /* Supports */ = {
+			isa = PBXGroup;
+			children = (
+				4A8FFA4F29C9E1FD00FB76C0 /* AppDelegate.swift */,
+				4A8FFA5129C9E1FD00FB76C0 /* SceneDelegate.swift */,
+				4A8FFA5A29C9E1FE00FB76C0 /* LaunchScreen.storyboard */,
+				4A8FFA5529C9E1FD00FB76C0 /* Main.storyboard */,
+			);
+			path = Supports;
+			sourceTree = "<group>";
+		};
+		37A574C629FF6EC000312453 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		4A8FFA4329C9E1FD00FB76C0 = {
 			isa = PBXGroup;
 			children = (
@@ -73,15 +170,12 @@
 			isa = PBXGroup;
 			children = (
 				4A4E21EE29D9B02500BF8747 /* Smeem-iOS.entitlements */,
+				37A574B429FE203100312453 /* Global */,
+				37A574BB29FE219100312453 /* Network */,
+				37A574B529FE204500312453 /* Presentation */,
 				4AC9489729ED800800489C2B /* GoogleService-Info.plist */,
-				4A8FFA4F29C9E1FD00FB76C0 /* AppDelegate.swift */,
-				4A8FFA5129C9E1FD00FB76C0 /* SceneDelegate.swift */,
-				4A8FFA5329C9E1FD00FB76C0 /* ViewController.swift */,
-				4A8FFA5529C9E1FD00FB76C0 /* Main.storyboard */,
-				4A8FFA5829C9E1FE00FB76C0 /* Assets.xcassets */,
-				4A8FFA5A29C9E1FE00FB76C0 /* LaunchScreen.storyboard */,
 				4A8FFA5D29C9E1FE00FB76C0 /* Info.plist */,
-				4A0E8D5729F8362E00E0FC23 /* AuthViewController.swift */,
+				37A574BC29FE224700312453 /* Supports */,
 			);
 			path = "Smeem-iOS";
 			sourceTree = "<group>";
@@ -107,6 +201,7 @@
 				4A0E8D5529F8346600E0FC23 /* FirebaseMessaging */,
 				4A0E8D5A29F8399700E0FC23 /* SnapKit */,
 				4A47164C29F8EB2600CBE9C8 /* KakaoSDKUser */,
+				37A574BE29FE249400312453 /* Moya */,
 			);
 			productName = "Smeem-iOS";
 			productReference = 4A8FFA4C29C9E1FD00FB76C0 /* Smeem-iOS.app */;
@@ -143,6 +238,7 @@
 				4A0E8D5229F8346600E0FC23 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				4A0E8D5929F8399700E0FC23 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				4A47164B29F8EB2600CBE9C8 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
+				37A574BD29FE249400312453 /* XCRemoteSwiftPackageReference "Moya" */,
 			);
 			productRefGroup = 4A8FFA4D29C9E1FD00FB76C0 /* Products */;
 			projectDirPath = "";
@@ -173,9 +269,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				37A574C529FF6EA800312453 /* FontLiterals.swift in Sources */,
 				4A8FFA5429C9E1FD00FB76C0 /* ViewController.swift in Sources */,
+				37A574C329FF6E9C00312453 /* ImageLiterals.swift in Sources */,
 				4A0E8D5829F8362E00E0FC23 /* AuthViewController.swift in Sources */,
+				37A574C829FF6F1C00312453 /* UIView+.swift in Sources */,
 				4A8FFA5029C9E1FD00FB76C0 /* AppDelegate.swift in Sources */,
+				37A574C129FF6E9100312453 /* ColorLiterals.swift in Sources */,
 				4A8FFA5229C9E1FD00FB76C0 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -410,6 +510,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		37A574BD29FE249400312453 /* XCRemoteSwiftPackageReference "Moya" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Moya/Moya.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 15.0.0;
+			};
+		};
 		4A0E8D5229F8346600E0FC23 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -437,6 +545,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		37A574BE29FE249400312453 /* Moya */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 37A574BD29FE249400312453 /* XCRemoteSwiftPackageReference "Moya" */;
+			productName = Moya;
+		};
 		4A0E8D5329F8346600E0FC23 /* FirebaseAnalyticsWithoutAdIdSupport */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 4A0E8D5229F8346600E0FC23 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
