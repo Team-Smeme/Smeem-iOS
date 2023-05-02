@@ -32,6 +32,7 @@
 		4A0EA45E2A014134006CCE52 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EA45D2A014134006CCE52 /* API.swift */; };
 		4A0EA4602A014139006CCE52 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EA45F2A014139006CCE52 /* Service.swift */; };
 		4A0EA4622A01413D006CCE52 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EA4612A01413D006CCE52 /* DataModel.swift */; };
+		4A0EA4642A014710006CCE52 /* SmeemButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EA4632A014710006CCE52 /* SmeemButton.swift */; };
 		4A47164D29F8EB2600CBE9C8 /* KakaoSDKUser in Frameworks */ = {isa = PBXBuildFile; productRef = 4A47164C29F8EB2600CBE9C8 /* KakaoSDKUser */; };
 		4A47164F29F907FE00CBE9C8 /* Shared.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 4A47164E29F907FE00CBE9C8 /* Shared.xcconfig */; };
 		4A8FFA5029C9E1FD00FB76C0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8FFA4F29C9E1FD00FB76C0 /* AppDelegate.swift */; };
@@ -63,6 +64,7 @@
 		4A0EA45D2A014134006CCE52 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		4A0EA45F2A014139006CCE52 /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		4A0EA4612A01413D006CCE52 /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
+		4A0EA4632A014710006CCE52 /* SmeemButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmeemButton.swift; sourceTree = "<group>"; };
 		4A47164E29F907FE00CBE9C8 /* Shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Shared.xcconfig; sourceTree = "<group>"; };
 		4A4E21EE29D9B02500BF8747 /* Smeem-iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Smeem-iOS.entitlements"; sourceTree = "<group>"; };
 		4A8FFA4C29C9E1FD00FB76C0 /* Smeem-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Smeem-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -129,6 +131,7 @@
 			isa = PBXGroup;
 			children = (
 				37A574DF2A00CDCD00312453 /* File.swift */,
+				4A0EA4632A014710006CCE52 /* SmeemButton.swift */,
 			);
 			path = UIComponents;
 			sourceTree = "<group>";
@@ -369,6 +372,7 @@
 				37A574CA29FF980F00312453 /* UIStackView+.swift in Sources */,
 				4A0EA45E2A014134006CCE52 /* API.swift in Sources */,
 				4A8FFA5229C9E1FD00FB76C0 /* SceneDelegate.swift in Sources */,
+				4A0EA4642A014710006CCE52 /* SmeemButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -517,9 +521,9 @@
 				INFOPLIST_FILE = "Smeem-iOS/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -529,9 +533,12 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Smeem Debug";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -552,9 +559,9 @@
 				INFOPLIST_FILE = "Smeem-iOS/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -564,9 +571,12 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Smeem Release";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
