@@ -20,6 +20,8 @@
 		37A574DA29FF9FFF00312453 /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 37A574D629FF9FFF00312453 /* Pretendard-Regular.otf */; };
 		37A574DB29FF9FFF00312453 /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 37A574D729FF9FFF00312453 /* Pretendard-Medium.otf */; };
 		37A574DC29FF9FFF00312453 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 37A574D829FF9FFF00312453 /* Pretendard-Bold.otf */; };
+		37A574DE29FFEF4E00312453 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574DD29FFEF4E00312453 /* Network.swift */; };
+		37A574E02A00CDCD00312453 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574DF2A00CDCD00312453 /* File.swift */; };
 		4A0E8D5429F8346600E0FC23 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 4A0E8D5329F8346600E0FC23 /* FirebaseAnalyticsWithoutAdIdSupport */; };
 		4A0E8D5629F8346600E0FC23 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 4A0E8D5529F8346600E0FC23 /* FirebaseMessaging */; };
 		4A0E8D5829F8362E00E0FC23 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0E8D5729F8362E00E0FC23 /* AuthViewController.swift */; };
@@ -48,6 +50,8 @@
 		37A574D629FF9FFF00312453 /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.otf"; sourceTree = "<group>"; };
 		37A574D729FF9FFF00312453 /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
 		37A574D829FF9FFF00312453 /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
+		37A574DD29FFEF4E00312453 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		37A574DF2A00CDCD00312453 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		4A0E8D5729F8362E00E0FC23 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 		4A47164E29F907FE00CBE9C8 /* Shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Shared.xcconfig; sourceTree = "<group>"; };
 		4A4E21EE29D9B02500BF8747 /* Smeem-iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Smeem-iOS.entitlements"; sourceTree = "<group>"; };
@@ -114,6 +118,7 @@
 		37A574B729FE208A00312453 /* UIComponents */ = {
 			isa = PBXGroup;
 			children = (
+				37A574DF2A00CDCD00312453 /* File.swift */,
 			);
 			path = UIComponents;
 			sourceTree = "<group>";
@@ -122,8 +127,8 @@
 			isa = PBXGroup;
 			children = (
 				37A574C029FF6E9100312453 /* ColorLiterals.swift */,
-				37A574C229FF6E9C00312453 /* ImageLiterals.swift */,
 				37A574C429FF6EA800312453 /* FontLiterals.swift */,
+				37A574C229FF6E9C00312453 /* ImageLiterals.swift */,
 			);
 			path = Literals;
 			sourceTree = "<group>";
@@ -147,6 +152,8 @@
 		37A574BB29FE219100312453 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				37A574E12A00CE1C00312453 /* Dto */,
+				37A574DD29FFEF4E00312453 /* Network.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -171,6 +178,13 @@
 				37A574D529FF9FFF00312453 /* Pretendard-SemiBold.otf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		37A574E12A00CE1C00312453 /* Dto */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Dto;
 			sourceTree = "<group>";
 		};
 		4A8FFA4329C9E1FD00FB76C0 = {
@@ -297,6 +311,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				37A574DE29FFEF4E00312453 /* Network.swift in Sources */,
 				37A574C529FF6EA800312453 /* FontLiterals.swift in Sources */,
 				4A8FFA5429C9E1FD00FB76C0 /* ViewController.swift in Sources */,
 				37A574CC29FF990E00312453 /* UIViewController+.swift in Sources */,
@@ -305,6 +320,7 @@
 				37A574C829FF6F1C00312453 /* UIView+.swift in Sources */,
 				37A574D029FF9AEE00312453 /* UILabel+.swift in Sources */,
 				37A574CE29FF9A2D00312453 /* UIScreen+.swift in Sources */,
+				37A574E02A00CDCD00312453 /* File.swift in Sources */,
 				4A8FFA5029C9E1FD00FB76C0 /* AppDelegate.swift in Sources */,
 				37A574C129FF6E9100312453 /* ColorLiterals.swift in Sources */,
 				37A574CA29FF980F00312453 /* UIStackView+.swift in Sources */,
