@@ -48,6 +48,10 @@ extension UIColor {
     static var gray600: UIColor {
         return UIColor(hex: "#8C8C8C")
     }
+    
+    static var toastBackground: UIColor {
+        return UIColor(hex: "#474747")
+    }
 }
 
 extension UIColor {
