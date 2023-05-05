@@ -21,6 +21,7 @@ class HomeViewController: UIViewController {
     private var calendar: FSCalendar = {
         let calendar = FSCalendar()
         calendar.placeholderType = .none
+        calendar.scope = .week
         calendar.appearance.todayColor = .point
         calendar.appearance.weekdayTextColor = .smeemBlack
         calendar.appearance.weekdayFont = .c3
@@ -53,10 +54,17 @@ class HomeViewController: UIViewController {
         setBackgroundColor()
         setDelegate()
         setCalendar()
+        setSwipe()
         setLayout()
     }
     
     // MARK: - @objc
+    
+    @objc func swipeEvent(_ swipe: UISwipeGestureRecognizer) {
+        if (swipe.location(in: self.view).y < border.frame.origin.y+20) {
+            calendar.setScope((swipe.direction == .up) ? .week : .month, animated: true)
+        }
+    }
     
     // MARK: - Custom Method
     
@@ -73,6 +81,14 @@ class HomeViewController: UIViewController {
         for i in 0...6 {
             calendar.calendarWeekdayView.weekdayLabels[i].text = weekdayLabels[i]
         }
+    }
+    private func setSwipe() {
+        let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(swipeEvent(_:)))
+        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(swipeEvent(_:)))
+        swipeUp.direction = .up
+        swipeDown.direction = .down
+        view.addGestureRecognizer(swipeUp)
+        view.addGestureRecognizer(swipeDown)
     }
     private func setLayout() {
         view.addSubviews(calendar, indicator, border)
@@ -100,6 +116,12 @@ class HomeViewController: UIViewController {
 // MARK: - Extension : FSCalendarDelegate
 
 extension HomeViewController: FSCalendarDelegate {
+    func calendar(_ calendar: FSCalendar, boundingRectWillChange bounds: CGRect, animated: Bool) {
+        calendar.snp.updateConstraints {
+            $0.height.equalTo(bounds.height)
+        }
+        view.layoutIfNeeded()
+    }
 }
 
 // MARK: - Extension : FSCalendarDataSource
