@@ -33,6 +33,17 @@ class HomeViewController: UIViewController {
         calendar.appearance.borderRadius = 0.4
         return calendar
     }()
+    private let indicator: UIView = {
+        let indicator = UIView()
+        indicator.layer.cornerRadius = 5
+        indicator.backgroundColor = .gray300
+        return indicator
+    }()
+    private let border: UIView = {
+        let border = UIView()
+        border.backgroundColor = .gray100
+        return border
+    }()
 
     // MARK: - Life Cycle
     
@@ -40,6 +51,7 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
 
         setBackgroundColor()
+        setDelegate()
         setCalendar()
         setLayout()
     }
@@ -51,6 +63,10 @@ class HomeViewController: UIViewController {
     private func setBackgroundColor() {
         view.backgroundColor = .white
     }
+    private func setDelegate() {
+        calendar.dataSource = self
+        calendar.delegate = self
+    }
     private func setCalendar() {
         calendar.headerHeight = convertByHeightRatio(66)
         calendar.weekdayHeight = convertByHeightRatio(41)
@@ -59,7 +75,7 @@ class HomeViewController: UIViewController {
         }
     }
     private func setLayout() {
-        view.addSubviews(calendar)
+        view.addSubviews(calendar, indicator, border)
         
         calendar.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
@@ -67,5 +83,26 @@ class HomeViewController: UIViewController {
             $0.trailing.equalToSuperview().offset(-convertByWidthRatio(19))
             $0.height.equalTo(convertByWidthRatio(422))
         }
+        indicator.snp.makeConstraints {
+            $0.top.equalTo(calendar.snp.bottom).offset(convertByWidthRatio(12))
+            $0.centerX.equalToSuperview()
+            $0.height.equalTo(convertByWidthRatio(4))
+            $0.width.equalTo(convertByWidthRatio(72))
+        }
+        border.snp.makeConstraints {
+            $0.top.equalTo(indicator.snp.bottom).offset(convertByWidthRatio(12))
+            $0.height.equalTo(6)
+            $0.width.equalToSuperview()
+        }
     }
+}
+
+// MARK: - Extension : FSCalendarDelegate
+
+extension HomeViewController: FSCalendarDelegate {
+}
+
+// MARK: - Extension : FSCalendarDataSource
+
+extension HomeViewController: FSCalendarDataSource {
 }
