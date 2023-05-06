@@ -11,7 +11,7 @@ import SnapKit
 
 final class BottomSheetView: UIView {
     
-    // MARK: - Property
+    // MARK: - viewType
     
     enum ViewType {
         case login
