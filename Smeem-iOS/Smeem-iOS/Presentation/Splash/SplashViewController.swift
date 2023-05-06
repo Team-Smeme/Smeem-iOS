@@ -42,11 +42,12 @@ final class SplashViewController: UIViewController {
        return label
     }()
     
-    private let loginButton: UIButton = {
+    private lazy var loginButton: UIButton = {
         let button = UIButton()
         button.titleLabel?.font = .b4
         button.setTitle("이미 계정이 있어요.", for: .normal)
         button.setTitleColor(.gray600, for: .normal)
+        button.addTarget(self, action: #selector(loginButtonDidTap), for: .touchUpInside)
         return button
     }()
     
@@ -66,6 +67,17 @@ final class SplashViewController: UIViewController {
     }
     
     // MARK: - @objc
+    
+    @objc func loginButtonDidTap() {
+        let bottomSheetVC = BottomSheetViewController()
+        bottomSheetVC.modalPresentationStyle = .overFullScreen
+        present(bottomSheetVC, animated: false) {
+            bottomSheetVC.bottomSheetView.frame.origin.y = self.view.frame.height
+            UIView.animate(withDuration: 0.3) {
+                bottomSheetVC.bottomSheetView.frame.origin.y = self.view.frame.height-bottomSheetVC.defaultLoginHeight
+            }
+        }
+    }
     
     // MARK: - Custom Method
     
@@ -106,5 +118,4 @@ final class SplashViewController: UIViewController {
             $0.height.equalTo(60)
         }
     }
-
 }
