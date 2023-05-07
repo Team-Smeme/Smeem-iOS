@@ -11,10 +11,10 @@ import SnapKit
 
 final class BottomSheetViewController: UIViewController {
     
+    // MARK: - Property
+    
     var defaultLoginHeight: CGFloat = 282
     var defaultSignUpHeight: CGFloat = 394
-    
-    // MARK: - Property
     
     // MARK: - UI Property
     
@@ -27,7 +27,6 @@ final class BottomSheetViewController: UIViewController {
     
     lazy var bottomSheetView: BottomSheetView = {
         let view = BottomSheetView()
-        view.backgroundColor = .white
         view.viewType = .login
         return view
     }()
