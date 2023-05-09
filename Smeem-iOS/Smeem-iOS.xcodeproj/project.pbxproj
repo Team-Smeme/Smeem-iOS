@@ -22,6 +22,8 @@
 		37A574DC29FF9FFF00312453 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 37A574D829FF9FFF00312453 /* Pretendard-Bold.otf */; };
 		37A574E02A00CDCD00312453 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574DF2A00CDCD00312453 /* File.swift */; };
 		37A574E42A00E95F00312453 /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 37A574E32A00E95F00312453 /* FSCalendar */; };
+		37A574E62A02178D00312453 /* CustomToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574E52A02178D00312453 /* CustomToastView.swift */; };
+		37A574E82A02424F00312453 /* RandomSubjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574E72A02424F00312453 /* RandomSubjectView.swift */; };
 		4A0E8D5429F8346600E0FC23 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 4A0E8D5329F8346600E0FC23 /* FirebaseAnalyticsWithoutAdIdSupport */; };
 		4A0E8D5629F8346600E0FC23 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 4A0E8D5529F8346600E0FC23 /* FirebaseMessaging */; };
 		4A0E8D5829F8362E00E0FC23 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0E8D5729F8362E00E0FC23 /* AuthViewController.swift */; };
@@ -57,6 +59,8 @@
 		37A574D729FF9FFF00312453 /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
 		37A574D829FF9FFF00312453 /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
 		37A574DF2A00CDCD00312453 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
+		37A574E52A02178D00312453 /* CustomToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomToastView.swift; sourceTree = "<group>"; };
+		37A574E72A02424F00312453 /* RandomSubjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomSubjectView.swift; sourceTree = "<group>"; };
 		4A0E8D5729F8362E00E0FC23 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 		4A0EA4542A014027006CCE52 /* GeneralResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralResponse.swift; sourceTree = "<group>"; };
 		4A0EA4562A01403E006CCE52 /* MoyaLoggingPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoyaLoggingPlugin.swift; sourceTree = "<group>"; };
@@ -132,6 +136,8 @@
 			children = (
 				37A574DF2A00CDCD00312453 /* File.swift */,
 				4A0EA4632A014710006CCE52 /* SmeemButton.swift */,
+				37A574E52A02178D00312453 /* CustomToastView.swift */,
+				37A574E72A02424F00312453 /* RandomSubjectView.swift */,
 			);
 			path = UIComponents;
 			sourceTree = "<group>";
@@ -371,7 +377,9 @@
 				37A574C129FF6E9100312453 /* ColorLiterals.swift in Sources */,
 				37A574CA29FF980F00312453 /* UIStackView+.swift in Sources */,
 				4A0EA45E2A014134006CCE52 /* API.swift in Sources */,
+				37A574E62A02178D00312453 /* CustomToastView.swift in Sources */,
 				4A8FFA5229C9E1FD00FB76C0 /* SceneDelegate.swift in Sources */,
+				37A574E82A02424F00312453 /* RandomSubjectView.swift in Sources */,
 				4A0EA4642A014710006CCE52 /* SmeemButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

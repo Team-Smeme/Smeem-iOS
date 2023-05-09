@@ -7,9 +7,20 @@
 
 import UIKit
 
+import SnapKit
+
 class CustomToastView: UIView {
-    private let label = UILabel()
+    
     private let text: String
+    
+    private let label: UILabel = {
+        let label = UILabel()
+        label.font = .c2
+        label.textColor = .smeemWhite
+        label.setTextWithLineHeight(lineHeight: 17)
+        label.sizeToFit()
+        return label
+    }()
     
     public init(text: String) {
         self.text = text
@@ -38,17 +49,16 @@ class CustomToastView: UIView {
 
 extension CustomToastView {
     private func setToastViewUI() {
-        addSubview(label)
-        label.font = .c2
-        label.textColor = .smeemWhite
-        label.text = text
-        label.sizeToFit()
         backgroundColor = .toastBackground
-        layer.cornerRadius = 6
         clipsToBounds = true
+        layer.cornerRadius = 6
+        
+        label.text = text
     }
     
     private func setToastViewLayout() {
+        addSubview(label)
+        
         label.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.leading.equalToSuperview().offset(16)
