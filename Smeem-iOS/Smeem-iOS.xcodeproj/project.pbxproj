@@ -7,34 +7,86 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		37A574BF29FE249400312453 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 37A574BE29FE249400312453 /* Moya */; };
+		37A574C129FF6E9100312453 /* ColorLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574C029FF6E9100312453 /* ColorLiterals.swift */; };
+		37A574C329FF6E9C00312453 /* ImageLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574C229FF6E9C00312453 /* ImageLiterals.swift */; };
+		37A574C529FF6EA800312453 /* FontLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574C429FF6EA800312453 /* FontLiterals.swift */; };
+		37A574C829FF6F1C00312453 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574C729FF6F1C00312453 /* UIView+.swift */; };
+		37A574CA29FF980F00312453 /* UIStackView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574C929FF980F00312453 /* UIStackView+.swift */; };
+		37A574CC29FF990E00312453 /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574CB29FF990E00312453 /* UIViewController+.swift */; };
+		37A574CE29FF9A2D00312453 /* UIScreen+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574CD29FF9A2D00312453 /* UIScreen+.swift */; };
+		37A574D029FF9AEE00312453 /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574CF29FF9AEE00312453 /* UILabel+.swift */; };
+		37A574D929FF9FFF00312453 /* Pretendard-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 37A574D529FF9FFF00312453 /* Pretendard-SemiBold.otf */; };
+		37A574DA29FF9FFF00312453 /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 37A574D629FF9FFF00312453 /* Pretendard-Regular.otf */; };
+		37A574DB29FF9FFF00312453 /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 37A574D729FF9FFF00312453 /* Pretendard-Medium.otf */; };
+		37A574DC29FF9FFF00312453 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 37A574D829FF9FFF00312453 /* Pretendard-Bold.otf */; };
+		37A574E02A00CDCD00312453 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574DF2A00CDCD00312453 /* File.swift */; };
+		37A574E42A00E95F00312453 /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 37A574E32A00E95F00312453 /* FSCalendar */; };
+		37A574E62A02178D00312453 /* CustomToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574E52A02178D00312453 /* CustomToastView.swift */; };
+		37A574E82A02424F00312453 /* RandomSubjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574E72A02424F00312453 /* RandomSubjectView.swift */; };
 		4A0E8D5429F8346600E0FC23 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 4A0E8D5329F8346600E0FC23 /* FirebaseAnalyticsWithoutAdIdSupport */; };
 		4A0E8D5629F8346600E0FC23 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 4A0E8D5529F8346600E0FC23 /* FirebaseMessaging */; };
 		4A0E8D5829F8362E00E0FC23 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0E8D5729F8362E00E0FC23 /* AuthViewController.swift */; };
 		4A0E8D5B29F8399700E0FC23 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4A0E8D5A29F8399700E0FC23 /* SnapKit */; };
+		4A0EA4552A014027006CCE52 /* GeneralResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EA4542A014027006CCE52 /* GeneralResponse.swift */; };
+		4A0EA4572A01403E006CCE52 /* MoyaLoggingPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EA4562A01403E006CCE52 /* MoyaLoggingPlugin.swift */; };
+		4A0EA4592A014103006CCE52 /* URLConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EA4582A014103006CCE52 /* URLConstant.swift */; };
+		4A0EA45E2A014134006CCE52 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EA45D2A014134006CCE52 /* API.swift */; };
+		4A0EA4602A014139006CCE52 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EA45F2A014139006CCE52 /* Service.swift */; };
+		4A0EA4622A01413D006CCE52 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EA4612A01413D006CCE52 /* DataModel.swift */; };
+		4A0EA4642A014710006CCE52 /* SmeemButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EA4632A014710006CCE52 /* SmeemButton.swift */; };
 		4A47164D29F8EB2600CBE9C8 /* KakaoSDKUser in Frameworks */ = {isa = PBXBuildFile; productRef = 4A47164C29F8EB2600CBE9C8 /* KakaoSDKUser */; };
 		4A47164F29F907FE00CBE9C8 /* Shared.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 4A47164E29F907FE00CBE9C8 /* Shared.xcconfig */; };
 		4A8FFA5029C9E1FD00FB76C0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8FFA4F29C9E1FD00FB76C0 /* AppDelegate.swift */; };
 		4A8FFA5229C9E1FD00FB76C0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8FFA5129C9E1FD00FB76C0 /* SceneDelegate.swift */; };
 		4A8FFA5429C9E1FD00FB76C0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8FFA5329C9E1FD00FB76C0 /* ViewController.swift */; };
-		4A8FFA5729C9E1FD00FB76C0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A8FFA5529C9E1FD00FB76C0 /* Main.storyboard */; };
 		4A8FFA5929C9E1FE00FB76C0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A8FFA5829C9E1FE00FB76C0 /* Assets.xcassets */; };
 		4A8FFA5C29C9E1FE00FB76C0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A8FFA5A29C9E1FE00FB76C0 /* LaunchScreen.storyboard */; };
 		4AC9489829ED800800489C2B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4AC9489729ED800800489C2B /* GoogleService-Info.plist */; };
+		4AD923E72A0650B600FF5E27 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD923E62A0650B600FF5E27 /* SplashViewController.swift */; };
+		4AD923E92A0692C600FF5E27 /* BottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD923E82A0692C600FF5E27 /* BottomSheetViewController.swift */; };
+		4AD923EB2A0692EA00FF5E27 /* BottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD923EA2A0692EA00FF5E27 /* BottomSheetView.swift */; };
+		6F62668C2A04EA3B000365CD /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F62668B2A04EA3B000365CD /* HomeViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		37A574C029FF6E9100312453 /* ColorLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorLiterals.swift; sourceTree = "<group>"; };
+		37A574C229FF6E9C00312453 /* ImageLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLiterals.swift; sourceTree = "<group>"; };
+		37A574C429FF6EA800312453 /* FontLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontLiterals.swift; sourceTree = "<group>"; };
+		37A574C729FF6F1C00312453 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
+		37A574C929FF980F00312453 /* UIStackView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+.swift"; sourceTree = "<group>"; };
+		37A574CB29FF990E00312453 /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
+		37A574CD29FF9A2D00312453 /* UIScreen+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+.swift"; sourceTree = "<group>"; };
+		37A574CF29FF9AEE00312453 /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
+		37A574D529FF9FFF00312453 /* Pretendard-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.otf"; sourceTree = "<group>"; };
+		37A574D629FF9FFF00312453 /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.otf"; sourceTree = "<group>"; };
+		37A574D729FF9FFF00312453 /* Pretendard-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.otf"; sourceTree = "<group>"; };
+		37A574D829FF9FFF00312453 /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
+		37A574DF2A00CDCD00312453 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
+		37A574E52A02178D00312453 /* CustomToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomToastView.swift; sourceTree = "<group>"; };
+		37A574E72A02424F00312453 /* RandomSubjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomSubjectView.swift; sourceTree = "<group>"; };
 		4A0E8D5729F8362E00E0FC23 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
+		4A0EA4542A014027006CCE52 /* GeneralResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralResponse.swift; sourceTree = "<group>"; };
+		4A0EA4562A01403E006CCE52 /* MoyaLoggingPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoyaLoggingPlugin.swift; sourceTree = "<group>"; };
+		4A0EA4582A014103006CCE52 /* URLConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLConstant.swift; sourceTree = "<group>"; };
+		4A0EA45D2A014134006CCE52 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
+		4A0EA45F2A014139006CCE52 /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
+		4A0EA4612A01413D006CCE52 /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
+		4A0EA4632A014710006CCE52 /* SmeemButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmeemButton.swift; sourceTree = "<group>"; };
 		4A47164E29F907FE00CBE9C8 /* Shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Shared.xcconfig; sourceTree = "<group>"; };
 		4A4E21EE29D9B02500BF8747 /* Smeem-iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Smeem-iOS.entitlements"; sourceTree = "<group>"; };
 		4A8FFA4C29C9E1FD00FB76C0 /* Smeem-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Smeem-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A8FFA4F29C9E1FD00FB76C0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4A8FFA5129C9E1FD00FB76C0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		4A8FFA5329C9E1FD00FB76C0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		4A8FFA5629C9E1FD00FB76C0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4A8FFA5829C9E1FE00FB76C0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4A8FFA5B29C9E1FE00FB76C0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4A8FFA5D29C9E1FE00FB76C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4AC9489729ED800800489C2B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		4AD923E62A0650B600FF5E27 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+		4AD923E82A0692C600FF5E27 /* BottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetViewController.swift; sourceTree = "<group>"; };
+		4AD923EA2A0692EA00FF5E27 /* BottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetView.swift; sourceTree = "<group>"; };
+		6F62668B2A04EA3B000365CD /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,8 +95,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				4A47164D29F8EB2600CBE9C8 /* KakaoSDKUser in Frameworks */,
+				37A574E42A00E95F00312453 /* FSCalendar in Frameworks */,
 				4A0E8D5B29F8399700E0FC23 /* SnapKit in Frameworks */,
 				4A0E8D5629F8346600E0FC23 /* FirebaseMessaging in Frameworks */,
+				37A574BF29FE249400312453 /* Moya in Frameworks */,
 				4A0E8D5429F8346600E0FC23 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -52,6 +106,145 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		37A574B429FE203100312453 /* Global */ = {
+			isa = PBXGroup;
+			children = (
+				37A574B629FE207C00312453 /* Extensions */,
+				37A574B729FE208A00312453 /* UIComponents */,
+				37A574B829FE209900312453 /* Literals */,
+				37A574B929FE209F00312453 /* Resources */,
+				37A574BA29FE20A900312453 /* Utils */,
+			);
+			path = Global;
+			sourceTree = "<group>";
+		};
+		37A574B529FE204500312453 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				4AD923E52A0650A000FF5E27 /* Splash */,
+				4AE4B5172A06BF4A00D45F87 /* BottomSheet */,
+				6F62668A2A04E889000365CD /* Home */,
+				4A8FFA5329C9E1FD00FB76C0 /* ViewController.swift */,
+				4A0E8D5729F8362E00E0FC23 /* AuthViewController.swift */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		37A574B629FE207C00312453 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				37A574C729FF6F1C00312453 /* UIView+.swift */,
+				37A574C929FF980F00312453 /* UIStackView+.swift */,
+				37A574CB29FF990E00312453 /* UIViewController+.swift */,
+				37A574CD29FF9A2D00312453 /* UIScreen+.swift */,
+				37A574CF29FF9AEE00312453 /* UILabel+.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		37A574B729FE208A00312453 /* UIComponents */ = {
+			isa = PBXGroup;
+			children = (
+				37A574DF2A00CDCD00312453 /* File.swift */,
+				4A0EA4632A014710006CCE52 /* SmeemButton.swift */,
+				37A574E52A02178D00312453 /* CustomToastView.swift */,
+				37A574E72A02424F00312453 /* RandomSubjectView.swift */,
+			);
+			path = UIComponents;
+			sourceTree = "<group>";
+		};
+		37A574B829FE209900312453 /* Literals */ = {
+			isa = PBXGroup;
+			children = (
+				37A574C029FF6E9100312453 /* ColorLiterals.swift */,
+				37A574C429FF6EA800312453 /* FontLiterals.swift */,
+				37A574C229FF6E9C00312453 /* ImageLiterals.swift */,
+			);
+			path = Literals;
+			sourceTree = "<group>";
+		};
+		37A574B929FE209F00312453 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				37A574C629FF6EC000312453 /* Fonts */,
+				4A8FFA5829C9E1FE00FB76C0 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		37A574BA29FE20A900312453 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		37A574BB29FE219100312453 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				4A0EA4532A014018006CCE52 /* Base */,
+				4A0EA45A2A014111006CCE52 /* API */,
+				4A0EA45B2A01411C006CCE52 /* Service */,
+				4A0EA45C2A014126006CCE52 /* DataModel */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		37A574BC29FE224700312453 /* Supports */ = {
+			isa = PBXGroup;
+			children = (
+				4A8FFA4F29C9E1FD00FB76C0 /* AppDelegate.swift */,
+				4A8FFA5129C9E1FD00FB76C0 /* SceneDelegate.swift */,
+				4A8FFA5A29C9E1FE00FB76C0 /* LaunchScreen.storyboard */,
+			);
+			path = Supports;
+			sourceTree = "<group>";
+		};
+		37A574C629FF6EC000312453 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				37A574D829FF9FFF00312453 /* Pretendard-Bold.otf */,
+				37A574D729FF9FFF00312453 /* Pretendard-Medium.otf */,
+				37A574D629FF9FFF00312453 /* Pretendard-Regular.otf */,
+				37A574D529FF9FFF00312453 /* Pretendard-SemiBold.otf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		4A0EA4532A014018006CCE52 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				4A0EA4542A014027006CCE52 /* GeneralResponse.swift */,
+				4A0EA4562A01403E006CCE52 /* MoyaLoggingPlugin.swift */,
+				4A0EA4582A014103006CCE52 /* URLConstant.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		4A0EA45A2A014111006CCE52 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				4A0EA45D2A014134006CCE52 /* API.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		4A0EA45B2A01411C006CCE52 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				4A0EA45F2A014139006CCE52 /* Service.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		4A0EA45C2A014126006CCE52 /* DataModel */ = {
+			isa = PBXGroup;
+			children = (
+				4A0EA4612A01413D006CCE52 /* DataModel.swift */,
+			);
+			path = DataModel;
+			sourceTree = "<group>";
+		};
 		4A8FFA4329C9E1FD00FB76C0 = {
 			isa = PBXGroup;
 			children = (
@@ -74,16 +267,38 @@
 			children = (
 				4A4E21EE29D9B02500BF8747 /* Smeem-iOS.entitlements */,
 				4AC9489729ED800800489C2B /* GoogleService-Info.plist */,
-				4A8FFA4F29C9E1FD00FB76C0 /* AppDelegate.swift */,
-				4A8FFA5129C9E1FD00FB76C0 /* SceneDelegate.swift */,
-				4A8FFA5329C9E1FD00FB76C0 /* ViewController.swift */,
-				4A8FFA5529C9E1FD00FB76C0 /* Main.storyboard */,
-				4A8FFA5829C9E1FE00FB76C0 /* Assets.xcassets */,
-				4A8FFA5A29C9E1FE00FB76C0 /* LaunchScreen.storyboard */,
 				4A8FFA5D29C9E1FE00FB76C0 /* Info.plist */,
-				4A0E8D5729F8362E00E0FC23 /* AuthViewController.swift */,
+				37A574B429FE203100312453 /* Global */,
+				37A574BB29FE219100312453 /* Network */,
+				37A574B529FE204500312453 /* Presentation */,
+				37A574BC29FE224700312453 /* Supports */,
 			);
 			path = "Smeem-iOS";
+			sourceTree = "<group>";
+		};
+		4AD923E52A0650A000FF5E27 /* Splash */ = {
+			isa = PBXGroup;
+			children = (
+				4AD923E62A0650B600FF5E27 /* SplashViewController.swift */,
+			);
+			path = Splash;
+			sourceTree = "<group>";
+		};
+		4AE4B5172A06BF4A00D45F87 /* BottomSheet */ = {
+			isa = PBXGroup;
+			children = (
+				4AD923E82A0692C600FF5E27 /* BottomSheetViewController.swift */,
+				4AD923EA2A0692EA00FF5E27 /* BottomSheetView.swift */,
+			);
+			path = BottomSheet;
+			sourceTree = "<group>";
+		};
+		6F62668A2A04E889000365CD /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				6F62668B2A04EA3B000365CD /* HomeViewController.swift */,
+			);
+			path = Home;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -107,6 +322,8 @@
 				4A0E8D5529F8346600E0FC23 /* FirebaseMessaging */,
 				4A0E8D5A29F8399700E0FC23 /* SnapKit */,
 				4A47164C29F8EB2600CBE9C8 /* KakaoSDKUser */,
+				37A574BE29FE249400312453 /* Moya */,
+				37A574E32A00E95F00312453 /* FSCalendar */,
 			);
 			productName = "Smeem-iOS";
 			productReference = 4A8FFA4C29C9E1FD00FB76C0 /* Smeem-iOS.app */;
@@ -143,6 +360,8 @@
 				4A0E8D5229F8346600E0FC23 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				4A0E8D5929F8399700E0FC23 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				4A47164B29F8EB2600CBE9C8 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
+				37A574BD29FE249400312453 /* XCRemoteSwiftPackageReference "Moya" */,
+				37A574E22A00E95F00312453 /* XCRemoteSwiftPackageReference "FSCalendar" */,
 			);
 			productRefGroup = 4A8FFA4D29C9E1FD00FB76C0 /* Products */;
 			projectDirPath = "";
@@ -161,8 +380,11 @@
 				4A8FFA5C29C9E1FE00FB76C0 /* LaunchScreen.storyboard in Resources */,
 				4A47164F29F907FE00CBE9C8 /* Shared.xcconfig in Resources */,
 				4AC9489829ED800800489C2B /* GoogleService-Info.plist in Resources */,
+				37A574DB29FF9FFF00312453 /* Pretendard-Medium.otf in Resources */,
+				37A574D929FF9FFF00312453 /* Pretendard-SemiBold.otf in Resources */,
+				37A574DA29FF9FFF00312453 /* Pretendard-Regular.otf in Resources */,
 				4A8FFA5929C9E1FE00FB76C0 /* Assets.xcassets in Resources */,
-				4A8FFA5729C9E1FD00FB76C0 /* Main.storyboard in Resources */,
+				37A574DC29FF9FFF00312453 /* Pretendard-Bold.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -173,24 +395,38 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				37A574C529FF6EA800312453 /* FontLiterals.swift in Sources */,
+				4AD923E92A0692C600FF5E27 /* BottomSheetViewController.swift in Sources */,
 				4A8FFA5429C9E1FD00FB76C0 /* ViewController.swift in Sources */,
+				37A574CC29FF990E00312453 /* UIViewController+.swift in Sources */,
+				37A574C329FF6E9C00312453 /* ImageLiterals.swift in Sources */,
+				4A0EA4622A01413D006CCE52 /* DataModel.swift in Sources */,
+				6F62668C2A04EA3B000365CD /* HomeViewController.swift in Sources */,
+				4A0EA4572A01403E006CCE52 /* MoyaLoggingPlugin.swift in Sources */,
 				4A0E8D5829F8362E00E0FC23 /* AuthViewController.swift in Sources */,
+				37A574C829FF6F1C00312453 /* UIView+.swift in Sources */,
+				37A574D029FF9AEE00312453 /* UILabel+.swift in Sources */,
+				37A574CE29FF9A2D00312453 /* UIScreen+.swift in Sources */,
+				4A0EA4602A014139006CCE52 /* Service.swift in Sources */,
+				4A0EA4592A014103006CCE52 /* URLConstant.swift in Sources */,
+				4AD923E72A0650B600FF5E27 /* SplashViewController.swift in Sources */,
+				4AD923EB2A0692EA00FF5E27 /* BottomSheetView.swift in Sources */,
+				37A574E02A00CDCD00312453 /* File.swift in Sources */,
+				4A0EA4552A014027006CCE52 /* GeneralResponse.swift in Sources */,
 				4A8FFA5029C9E1FD00FB76C0 /* AppDelegate.swift in Sources */,
+				37A574C129FF6E9100312453 /* ColorLiterals.swift in Sources */,
+				37A574CA29FF980F00312453 /* UIStackView+.swift in Sources */,
+				4A0EA45E2A014134006CCE52 /* API.swift in Sources */,
+				37A574E62A02178D00312453 /* CustomToastView.swift in Sources */,
 				4A8FFA5229C9E1FD00FB76C0 /* SceneDelegate.swift in Sources */,
+				37A574E82A02424F00312453 /* RandomSubjectView.swift in Sources */,
+				4A0EA4642A014710006CCE52 /* SmeemButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		4A8FFA5529C9E1FD00FB76C0 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				4A8FFA5629C9E1FD00FB76C0 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		4A8FFA5A29C9E1FE00FB76C0 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -333,9 +569,9 @@
 				INFOPLIST_FILE = "Smeem-iOS/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -345,9 +581,12 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Smeem Debug";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -368,9 +607,9 @@
 				INFOPLIST_FILE = "Smeem-iOS/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -380,9 +619,12 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Smeem Release";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -410,6 +652,22 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		37A574BD29FE249400312453 /* XCRemoteSwiftPackageReference "Moya" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Moya/Moya.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 15.0.0;
+			};
+		};
+		37A574E22A00E95F00312453 /* XCRemoteSwiftPackageReference "FSCalendar" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/WenchaoD/FSCalendar.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 		4A0E8D5229F8346600E0FC23 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -437,6 +695,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		37A574BE29FE249400312453 /* Moya */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 37A574BD29FE249400312453 /* XCRemoteSwiftPackageReference "Moya" */;
+			productName = Moya;
+		};
+		37A574E32A00E95F00312453 /* FSCalendar */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 37A574E22A00E95F00312453 /* XCRemoteSwiftPackageReference "FSCalendar" */;
+			productName = FSCalendar;
+		};
 		4A0E8D5329F8346600E0FC23 /* FirebaseAnalyticsWithoutAdIdSupport */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 4A0E8D5229F8346600E0FC23 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
