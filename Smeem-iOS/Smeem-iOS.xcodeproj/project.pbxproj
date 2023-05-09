@@ -41,6 +41,9 @@
 		4A8FFA5929C9E1FE00FB76C0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A8FFA5829C9E1FE00FB76C0 /* Assets.xcassets */; };
 		4A8FFA5C29C9E1FE00FB76C0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A8FFA5A29C9E1FE00FB76C0 /* LaunchScreen.storyboard */; };
 		4AC9489829ED800800489C2B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4AC9489729ED800800489C2B /* GoogleService-Info.plist */; };
+		4AD923E72A0650B600FF5E27 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD923E62A0650B600FF5E27 /* SplashViewController.swift */; };
+		4AD923E92A0692C600FF5E27 /* BottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD923E82A0692C600FF5E27 /* BottomSheetViewController.swift */; };
+		4AD923EB2A0692EA00FF5E27 /* BottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD923EA2A0692EA00FF5E27 /* BottomSheetView.swift */; };
 		6F62668C2A04EA3B000365CD /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F62668B2A04EA3B000365CD /* HomeViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -76,6 +79,9 @@
 		4A8FFA5B29C9E1FE00FB76C0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4A8FFA5D29C9E1FE00FB76C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4AC9489729ED800800489C2B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		4AD923E62A0650B600FF5E27 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+		4AD923E82A0692C600FF5E27 /* BottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetViewController.swift; sourceTree = "<group>"; };
+		4AD923EA2A0692EA00FF5E27 /* BottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetView.swift; sourceTree = "<group>"; };
 		6F62668B2A04EA3B000365CD /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -111,6 +117,8 @@
 		37A574B529FE204500312453 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				4AD923E52A0650A000FF5E27 /* Splash */,
+				4AE4B5172A06BF4A00D45F87 /* BottomSheet */,
 				6F62668A2A04E889000365CD /* Home */,
 				4A8FFA5329C9E1FD00FB76C0 /* ViewController.swift */,
 				4A0E8D5729F8362E00E0FC23 /* AuthViewController.swift */,
@@ -262,6 +270,21 @@
 			path = "Smeem-iOS";
 			sourceTree = "<group>";
 		};
+		4AD923E52A0650A000FF5E27 /* Splash */ = {
+			isa = PBXGroup;
+			children = (
+				4AD923E62A0650B600FF5E27 /* SplashViewController.swift */,
+			);
+			path = Splash;
+			sourceTree = "<group>";
+		};
+		4AE4B5172A06BF4A00D45F87 /* BottomSheet */ = {
+			isa = PBXGroup;
+			children = (
+				4AD923E82A0692C600FF5E27 /* BottomSheetViewController.swift */,
+				4AD923EA2A0692EA00FF5E27 /* BottomSheetView.swift */,
+			);
+			path = BottomSheet;
 		6F62668A2A04E889000365CD /* Home */ = {
 			isa = PBXGroup;
 			children = (
@@ -365,6 +388,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				37A574C529FF6EA800312453 /* FontLiterals.swift in Sources */,
+				4AD923E92A0692C600FF5E27 /* BottomSheetViewController.swift in Sources */,
 				4A8FFA5429C9E1FD00FB76C0 /* ViewController.swift in Sources */,
 				37A574CC29FF990E00312453 /* UIViewController+.swift in Sources */,
 				37A574C329FF6E9C00312453 /* ImageLiterals.swift in Sources */,
@@ -377,6 +401,8 @@
 				37A574CE29FF9A2D00312453 /* UIScreen+.swift in Sources */,
 				4A0EA4602A014139006CCE52 /* Service.swift in Sources */,
 				4A0EA4592A014103006CCE52 /* URLConstant.swift in Sources */,
+				4AD923E72A0650B600FF5E27 /* SplashViewController.swift in Sources */,
+				4AD923EB2A0692EA00FF5E27 /* BottomSheetView.swift in Sources */,
 				37A574E02A00CDCD00312453 /* File.swift in Sources */,
 				4A0EA4552A014027006CCE52 /* GeneralResponse.swift in Sources */,
 				4A8FFA5029C9E1FD00FB76C0 /* AppDelegate.swift in Sources */,
