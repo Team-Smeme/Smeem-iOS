@@ -36,13 +36,12 @@ class CustomToastView: UIView {
     public func show(duration: TimeInterval, completion: (() -> Void)? = nil) {
         UIView.animate(withDuration: 0.3, animations: {
             self.alpha = 1
+        })
+        UIView.animate(withDuration: 0.3, delay: duration, animations: {
+            self.alpha = 0
         }) { _ in
-            UIView.animate(withDuration: 0.3, delay: duration, animations: {
-                self.alpha = 0
-            }) { _ in
-                self.removeFromSuperview()
-                completion?()
-            }
+            self.removeFromSuperview()
+            completion?()
         }
     }
 }
