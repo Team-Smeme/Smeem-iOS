@@ -285,6 +285,8 @@
 				4AD923EA2A0692EA00FF5E27 /* BottomSheetView.swift */,
 			);
 			path = BottomSheet;
+			sourceTree = "<group>";
+		};
 		6F62668A2A04E889000365CD /* Home */ = {
 			isa = PBXGroup;
 			children = (
