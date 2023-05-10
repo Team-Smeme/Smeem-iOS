@@ -11,6 +11,8 @@ import SnapKit
 
 class RandomSubjectView: UIView {
     
+    //MARK: - UI Property
+    
     private let questionLabel: UILabel = {
         let label = UILabel()
         label.font = .b1
@@ -26,7 +28,6 @@ class RandomSubjectView: UIView {
         label.textColor = .smeemBlack
         label.numberOfLines = 0
         label.setTextWithLineHeight(lineHeight: 22)
-//        label.text = "     " + "한 줄일 때"
         label.text = "     " + "오늘부터 딱 일주일 후! 설레는 크리스마스네요.\n일주일 전부터 세워보는 나의 크리스마스 계획은?"
         return label
     }()
@@ -38,6 +39,8 @@ class RandomSubjectView: UIView {
         //button.setImage(<#T##image: UIImage?##UIImage?#>, for: <#T##UIControl.State#>)
         return button
     }()
+    
+    //MARK:  - init
     
     override init(frame: CGRect) {
         super.init(frame: .zero)
@@ -52,6 +55,9 @@ class RandomSubjectView: UIView {
 }
 
 extension RandomSubjectView {
+    
+    //MARK: - Custom Functions
+    
     private func setRandomSubjectViewUI() {
         backgroundColor = .gray100
     }
@@ -83,7 +89,6 @@ extension RandomSubjectView {
     private func setRandomSubjectViewHeight() {
         let labelWidth = UIScreen.main.bounds.width - 36
         contentLabel.preferredMaxLayoutWidth = labelWidth
-        
         contentLabel.setNeedsLayout()
         contentLabel.layoutIfNeeded()
         

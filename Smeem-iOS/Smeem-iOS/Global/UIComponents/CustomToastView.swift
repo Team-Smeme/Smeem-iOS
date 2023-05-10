@@ -51,7 +51,6 @@ extension CustomToastView {
         backgroundColor = .toastBackground
         clipsToBounds = true
         layer.cornerRadius = 6
-        
         label.text = text
     }
     
