@@ -29,9 +29,8 @@ final class AlarmCollectionViewCell: UICollectionViewCell {
     
     let dayLabel: UILabel = {
         let label = UILabel()
-        label.text = "일단?"
         label.font = .b2
-        label.textColor = .white
+        label.textColor = .gray400
         return label
     }()
     
@@ -39,7 +38,7 @@ final class AlarmCollectionViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+
         setBackgroundColor()
         setLayout()
         
@@ -50,7 +49,7 @@ final class AlarmCollectionViewCell: UICollectionViewCell {
     }
     
     private func setBackgroundColor() {
-        backgroundColor = .point
+        backgroundColor = .white
     }
     
     private func setLayout() {
