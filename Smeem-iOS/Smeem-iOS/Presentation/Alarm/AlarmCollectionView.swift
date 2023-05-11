@@ -94,12 +94,6 @@ extension AlarmCollectionView: UICollectionViewDataSource {
         initalSelectedIndexPaths.forEach {
             collectionView.selectItem(at: $0, animated: false, scrollPosition: .init())
         }
-        
-        if indexPath.item == 0 {
-            cell.makeSelectedRoundCorners(cornerRadius: 6, maskedCorners: .layerMinXMinYCorner)
-        } else if indexPath.row == dayArray.count-1 {
-            cell.makeSelectedRoundCorners(cornerRadius: 6, maskedCorners: .layerMaxXMinYCorner)
-        }
         cell.setData(dayArray[indexPath.item])
         return cell
     }
