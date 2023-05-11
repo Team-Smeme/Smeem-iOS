@@ -36,6 +36,7 @@ final class AlarmCollectionViewCell: UICollectionViewCell {
     
     private let bottomLine: UIView = {
         let view = UIView()
+        view.layer.borderWidth = 1.5
         view.layer.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1).cgColor
         view.layer.borderColor = UIColor(red: 0.961, green: 0.961, blue: 0.961, alpha: 1).cgColor
         return view
