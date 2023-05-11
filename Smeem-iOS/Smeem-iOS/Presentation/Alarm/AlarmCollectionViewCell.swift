@@ -27,14 +27,14 @@ final class AlarmCollectionViewCell: UICollectionViewCell {
     
     // MARK: - UI Property
     
-    let dayLabel: UILabel = {
+    private let dayLabel: UILabel = {
         let label = UILabel()
         label.font = .b2
         label.textColor = .gray400
         return label
     }()
     
-    let bottomLine: UIView = {
+    private let bottomLine: UIView = {
         let view = UIView()
         view.layer.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1).cgColor
         view.layer.borderColor = UIColor(red: 0.961, green: 0.961, blue: 0.961, alpha: 1).cgColor
