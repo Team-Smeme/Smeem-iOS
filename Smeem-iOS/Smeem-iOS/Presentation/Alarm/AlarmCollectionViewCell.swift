@@ -34,6 +34,13 @@ final class AlarmCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
+    let bottomLine: UIView = {
+        let view = UIView()
+        view.layer.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1).cgColor
+        view.layer.borderColor = UIColor(red: 0.961, green: 0.961, blue: 0.961, alpha: 1).cgColor
+        return view
+    }()
+    
     // MARK: - Life Cycle
     
     override init(frame: CGRect) {
@@ -48,22 +55,28 @@ final class AlarmCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Custom Method
+    
     private func setBackgroundColor() {
         backgroundColor = .white
     }
     
     private func setLayout() {
-        addSubview(dayLabel)
+        addSubviews(dayLabel, bottomLine)
         
         dayLabel.snp.makeConstraints {
             $0.centerX.centerY.equalToSuperview()
+        }
+        
+        bottomLine.snp.makeConstraints {
+            $0.bottom.equalToSuperview()
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(1.5)
         }
     }
     
     func setData(_ text: String) {
         dayLabel.text = text
     }
-    
-    // MARK: - Custom Method
 
 }
