@@ -26,6 +26,14 @@ final class DatePickerFooterView: UICollectionReusableView {
     
     // MARK: - UI Property
     
+    private let alarmLabel: UILabel = {
+        let label = UILabel()
+        label.text = "알림 시간"
+        label.font = .c2
+        label.textColor = .point
+        return label
+    }()
+    
     private lazy var inputTextField: UITextField = {
         let textField = UITextField()
         textField.text = "10:00 PM"
@@ -40,7 +48,6 @@ final class DatePickerFooterView: UICollectionReusableView {
     private let pickerView: UIPickerView = {
         let pickerView = UIPickerView()
         pickerView.backgroundColor = .clear
-        pickerView.translatesAutoresizingMaskIntoConstraints = false
         return pickerView
     }()
     
@@ -56,7 +63,6 @@ final class DatePickerFooterView: UICollectionReusableView {
         
         toolBar.setItems([cancleButton, space, saveButton], animated: true)
         toolBar.isUserInteractionEnabled = true
-        toolBar.translatesAutoresizingMaskIntoConstraints = false
         return toolBar
     }()
     
@@ -64,8 +70,6 @@ final class DatePickerFooterView: UICollectionReusableView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        inputTextField.inputView = pickerView
         
         setBackgroundColor()
         setLayout()
@@ -99,11 +103,16 @@ final class DatePickerFooterView: UICollectionReusableView {
     }
     
     private func setLayout() {
-        addSubview(inputTextField)
+        addSubviews(alarmLabel, inputTextField)
+        
+        alarmLabel.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalToSuperview().inset(20)
+        }
         
         inputTextField.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalToSuperview().inset(41)
+            $0.top.equalTo(alarmLabel.snp.bottom).offset(4)
         }
     }
     
