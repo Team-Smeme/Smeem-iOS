@@ -126,11 +126,16 @@ final class DatePickerFooterView: UICollectionReusableView {
     }
 }
 
+
+// MARK: - UITextFieldDelegate
+
 extension DatePickerFooterView: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         return false
     }
 }
+
+// MAKR: - UIPickerViewDelegate
 
 extension DatePickerFooterView: UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
@@ -144,6 +149,8 @@ extension DatePickerFooterView: UIPickerViewDelegate {
         }
     }
 }
+
+// MARK: - UIPickerViewDataSource
 
 extension DatePickerFooterView: UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
