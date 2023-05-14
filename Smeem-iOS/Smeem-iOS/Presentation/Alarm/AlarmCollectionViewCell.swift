@@ -69,8 +69,7 @@ final class AlarmCollectionViewCell: UICollectionViewCell {
         }
         
         bottomLine.snp.makeConstraints {
-            $0.bottom.equalToSuperview()
-            $0.leading.trailing.equalToSuperview()
+            $0.leading.trailing.bottom.equalToSuperview()
             $0.height.equalTo(1.5)
         }
     }
