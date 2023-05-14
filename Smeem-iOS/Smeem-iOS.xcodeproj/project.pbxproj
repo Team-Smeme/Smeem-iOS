@@ -35,7 +35,6 @@
 		4A0EA4622A01413D006CCE52 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EA4612A01413D006CCE52 /* DataModel.swift */; };
 		4A0EA4642A014710006CCE52 /* SmeemButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EA4632A014710006CCE52 /* SmeemButton.swift */; };
 		4A3F2E972A0ABBAA00F6AC60 /* AlarmCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3F2E962A0ABBAA00F6AC60 /* AlarmCollectionViewCell.swift */; };
-		4A3F2E9A2A0ABE2200F6AC60 /* OnboardingAlarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3F2E992A0ABE2200F6AC60 /* OnboardingAlarm.swift */; };
 		4A3F2E9C2A0B4C7100F6AC60 /* AlarmCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3F2E9B2A0B4C7100F6AC60 /* AlarmCollectionView.swift */; };
 		4A3F2EA02A0C18B600F6AC60 /* DatePickerFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3F2E9F2A0C18B600F6AC60 /* DatePickerFooterView.swift */; };
 		4A47164D29F8EB2600CBE9C8 /* KakaoSDKUser in Frameworks */ = {isa = PBXBuildFile; productRef = 4A47164C29F8EB2600CBE9C8 /* KakaoSDKUser */; };
@@ -76,7 +75,6 @@
 		4A0EA4612A01413D006CCE52 /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 		4A0EA4632A014710006CCE52 /* SmeemButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmeemButton.swift; sourceTree = "<group>"; };
 		4A3F2E962A0ABBAA00F6AC60 /* AlarmCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmCollectionViewCell.swift; sourceTree = "<group>"; };
-		4A3F2E992A0ABE2200F6AC60 /* OnboardingAlarm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingAlarm.swift; sourceTree = "<group>"; };
 		4A3F2E9B2A0B4C7100F6AC60 /* AlarmCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmCollectionView.swift; sourceTree = "<group>"; };
 		4A3F2E9F2A0C18B600F6AC60 /* DatePickerFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerFooterView.swift; sourceTree = "<group>"; };
 		4A47164E29F907FE00CBE9C8 /* Shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Shared.xcconfig; sourceTree = "<group>"; };
@@ -129,7 +127,6 @@
 			children = (
 				4AD923E52A0650A000FF5E27 /* Splash */,
 				4AE4B5172A06BF4A00D45F87 /* BottomSheet */,
-				4A3F2E982A0ABE0B00F6AC60 /* Onboarding */,
 				4A3F2E952A0ABB9C00F6AC60 /* Alarm */,
 				6F62668A2A04E889000365CD /* Home */,
 				4A8FFA5329C9E1FD00FB76C0 /* ViewController.swift */,
@@ -260,14 +257,6 @@
 				4A3F2E9F2A0C18B600F6AC60 /* DatePickerFooterView.swift */,
 			);
 			path = Alarm;
-			sourceTree = "<group>";
-		};
-		4A3F2E982A0ABE0B00F6AC60 /* Onboarding */ = {
-			isa = PBXGroup;
-			children = (
-				4A3F2E992A0ABE2200F6AC60 /* OnboardingAlarm.swift */,
-			);
-			path = Onboarding;
 			sourceTree = "<group>";
 		};
 		4A8FFA4329C9E1FD00FB76C0 = {
@@ -430,7 +419,6 @@
 				4A3F2E972A0ABBAA00F6AC60 /* AlarmCollectionViewCell.swift in Sources */,
 				6F62668C2A04EA3B000365CD /* HomeViewController.swift in Sources */,
 				4A3F2E9C2A0B4C7100F6AC60 /* AlarmCollectionView.swift in Sources */,
-				4A3F2E9A2A0ABE2200F6AC60 /* OnboardingAlarm.swift in Sources */,
 				4A0EA4572A01403E006CCE52 /* MoyaLoggingPlugin.swift in Sources */,
 				4A0E8D5829F8362E00E0FC23 /* AuthViewController.swift in Sources */,
 				37A574C829FF6F1C00312453 /* UIView+.swift in Sources */,
