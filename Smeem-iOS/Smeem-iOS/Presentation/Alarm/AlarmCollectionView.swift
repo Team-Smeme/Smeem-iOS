@@ -9,7 +9,7 @@
  1. 사용할 VC에서 AlarmCollectionView 프로퍼티 생성
  private lazy var alarm = AlarmCollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
  
- 2. view에 addSubView 하고 레이아웃 값 준 후 사용
+ 2. view에 addSubView 하고 높이값 포함한 레이아웃 설정
  */
 
 import UIKit
