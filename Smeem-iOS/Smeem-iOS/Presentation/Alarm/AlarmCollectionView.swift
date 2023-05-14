@@ -19,7 +19,7 @@ final class AlarmCollectionView: UICollectionView {
     // MARK: - Property
     
     private let dayArray = ["월", "화", "수", "목", "금", "토", "일"]
-    private let selectedIndexPath: [IndexPath] = [IndexPath(item: 0, section: 0), IndexPath(item: 1, section: 0), IndexPath(item: 2, section: 0), IndexPath(item: 3, section: 0), IndexPath(item: 4, section: 0)]
+    private let selectedIndexPath = [IndexPath(item: 0, section: 0), IndexPath(item: 1, section: 0), IndexPath(item: 2, section: 0), IndexPath(item: 3, section: 0), IndexPath(item: 4, section: 0)]
     
     // MARK: - UI Property
     
@@ -51,8 +51,7 @@ final class AlarmCollectionView: UICollectionView {
     private func setLayerUI() {
         makeRoundCorner(cornerRadius: 6)
         layer.borderWidth = 1.5
-        layer.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1).cgColor
-        layer.borderColor = UIColor(red: 0.961, green: 0.961, blue: 0.961, alpha: 1).cgColor
+        layer.borderColor = UIColor.gray100.cgColor
     }
     
     private func setProperty() {

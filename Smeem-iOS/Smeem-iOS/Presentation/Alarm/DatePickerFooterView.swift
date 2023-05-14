@@ -15,9 +15,9 @@ final class DatePickerFooterView: UICollectionReusableView {
     
     // MARK: - Property
     
-    let hoursArray: [String] = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
-    let minuteArray: [String] = ["00", "30"]
-    let dayAndNightArray: [String] = ["AM", "PM"]
+    let hoursArray = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
+    let minuteArray = ["00", "30"]
+    let dayAndNightArray = ["AM", "PM"]
     
     var selectedHours: String?
     var selectedMinute: String?
