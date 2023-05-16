@@ -41,7 +41,6 @@
 		4A47164F29F907FE00CBE9C8 /* Shared.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 4A47164E29F907FE00CBE9C8 /* Shared.xcconfig */; };
 		4A8FFA5029C9E1FD00FB76C0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8FFA4F29C9E1FD00FB76C0 /* AppDelegate.swift */; };
 		4A8FFA5229C9E1FD00FB76C0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8FFA5129C9E1FD00FB76C0 /* SceneDelegate.swift */; };
-		4A8FFA5429C9E1FD00FB76C0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8FFA5329C9E1FD00FB76C0 /* ViewController.swift */; };
 		4A8FFA5929C9E1FE00FB76C0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A8FFA5829C9E1FE00FB76C0 /* Assets.xcassets */; };
 		4A8FFA5C29C9E1FE00FB76C0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A8FFA5A29C9E1FE00FB76C0 /* LaunchScreen.storyboard */; };
 		4AC9489829ED800800489C2B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4AC9489729ED800800489C2B /* GoogleService-Info.plist */; };
@@ -87,7 +86,6 @@
 		4A8FFA4C29C9E1FD00FB76C0 /* Smeem-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Smeem-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A8FFA4F29C9E1FD00FB76C0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4A8FFA5129C9E1FD00FB76C0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		4A8FFA5329C9E1FD00FB76C0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		4A8FFA5829C9E1FE00FB76C0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4A8FFA5B29C9E1FE00FB76C0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4A8FFA5D29C9E1FE00FB76C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -127,7 +125,6 @@
 				37A574B729FE208A00312453 /* UIComponents */,
 				37A574B829FE209900312453 /* Literals */,
 				37A574B929FE209F00312453 /* Resources */,
-				37A574BA29FE20A900312453 /* Utils */,
 			);
 			path = Global;
 			sourceTree = "<group>";
@@ -139,8 +136,6 @@
 				4AF5076F2A10CBA2007C62B1 /* Onboarding */,
 				4AE4B5172A06BF4A00D45F87 /* BottomSheet */,
 				6F62668A2A04E889000365CD /* Home */,
-				4A8FFA5329C9E1FD00FB76C0 /* ViewController.swift */,
-				4A0E8D5729F8362E00E0FC23 /* AuthViewController.swift */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -186,13 +181,6 @@
 				4A8FFA5829C9E1FE00FB76C0 /* Assets.xcassets */,
 			);
 			path = Resources;
-			sourceTree = "<group>";
-		};
-		37A574BA29FE20A900312453 /* Utils */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Utils;
 			sourceTree = "<group>";
 		};
 		37A574BB29FE219100312453 /* Network */ = {
@@ -313,6 +301,7 @@
 		4AE4B5172A06BF4A00D45F87 /* BottomSheet */ = {
 			isa = PBXGroup;
 			children = (
+				4A0E8D5729F8362E00E0FC23 /* AuthViewController.swift */,
 				4AD923E82A0692C600FF5E27 /* BottomSheetViewController.swift */,
 				4AD923EA2A0692EA00FF5E27 /* BottomSheetView.swift */,
 			);
@@ -462,7 +451,6 @@
 				4AF507772A10CD96007C62B1 /* GoalCollectionViewCell.swift in Sources */,
 				4AD923E92A0692C600FF5E27 /* BottomSheetViewController.swift in Sources */,
 				4AEFD4CA2A1392DF00DAB2BD /* HowLearningView.swift in Sources */,
-				4A8FFA5429C9E1FD00FB76C0 /* ViewController.swift in Sources */,
 				37A574CC29FF990E00312453 /* UIViewController+.swift in Sources */,
 				37A574C329FF6E9C00312453 /* ImageLiterals.swift in Sources */,
 				4A3F2EA02A0C18B600F6AC60 /* DatePickerFooterView.swift in Sources */,
