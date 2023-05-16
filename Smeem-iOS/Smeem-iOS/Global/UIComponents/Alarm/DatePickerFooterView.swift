@@ -57,9 +57,9 @@ final class DatePickerFooterView: UICollectionReusableView {
         toolBar.isTranslucent = true
         toolBar.backgroundColor = .lightGray
         
-        let saveButton = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(saveButtonDidTap))
+        let saveButton = UIBarButtonItem(title: "Save", style: .plain, target: nil, action: #selector(saveButtonDidTap))
         let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let cancleButton = UIBarButtonItem(title: "Cancle", style: .plain, target: self, action: #selector(cancleButtonDidTap))
+        let cancleButton = UIBarButtonItem(title: "Cancle", style: .plain, target: nil, action: #selector(cancleButtonDidTap))
         
         toolBar.setItems([cancleButton, space, saveButton], animated: true)
         toolBar.isUserInteractionEnabled = true
