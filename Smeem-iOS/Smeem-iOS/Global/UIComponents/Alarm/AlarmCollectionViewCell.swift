@@ -57,6 +57,12 @@ final class AlarmCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Custom Method
     
+    func setData(_ text: String) {
+        dayLabel.text = text
+    }
+    
+    // MARK: - Layout
+    
     private func setBackgroundColor() {
         backgroundColor = .white
     }
@@ -72,10 +78,6 @@ final class AlarmCollectionViewCell: UICollectionViewCell {
             $0.leading.trailing.bottom.equalToSuperview()
             $0.height.equalTo(1.5)
         }
-    }
-    
-    func setData(_ text: String) {
-        dayLabel.text = text
     }
 
 }
