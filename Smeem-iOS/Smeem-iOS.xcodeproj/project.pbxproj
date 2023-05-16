@@ -48,6 +48,8 @@
 		4AD923E72A0650B600FF5E27 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD923E62A0650B600FF5E27 /* SplashViewController.swift */; };
 		4AD923E92A0692C600FF5E27 /* BottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD923E82A0692C600FF5E27 /* BottomSheetViewController.swift */; };
 		4AD923EB2A0692EA00FF5E27 /* BottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD923EA2A0692EA00FF5E27 /* BottomSheetView.swift */; };
+		4AF507752A10CD4D007C62B1 /* GoalOnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF507742A10CD4D007C62B1 /* GoalOnboardingViewController.swift */; };
+		4AF507772A10CD96007C62B1 /* GoalCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF507762A10CD96007C62B1 /* GoalCollectionViewCell.swift */; };
 		6F62668C2A04EA3B000365CD /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F62668B2A04EA3B000365CD /* HomeViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -90,6 +92,8 @@
 		4AD923E62A0650B600FF5E27 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		4AD923E82A0692C600FF5E27 /* BottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetViewController.swift; sourceTree = "<group>"; };
 		4AD923EA2A0692EA00FF5E27 /* BottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetView.swift; sourceTree = "<group>"; };
+		4AF507742A10CD4D007C62B1 /* GoalOnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalOnboardingViewController.swift; sourceTree = "<group>"; };
+		4AF507762A10CD96007C62B1 /* GoalCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalCollectionViewCell.swift; sourceTree = "<group>"; };
 		6F62668B2A04EA3B000365CD /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -126,6 +130,7 @@
 			isa = PBXGroup;
 			children = (
 				4AD923E52A0650A000FF5E27 /* Splash */,
+				4AF5076F2A10CBA2007C62B1 /* Onboarding */,
 				4AE4B5172A06BF4A00D45F87 /* BottomSheet */,
 				4A3F2E952A0ABB9C00F6AC60 /* Alarm */,
 				6F62668A2A04E889000365CD /* Home */,
@@ -307,6 +312,15 @@
 			path = BottomSheet;
 			sourceTree = "<group>";
 		};
+		4AF5076F2A10CBA2007C62B1 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				4AF507742A10CD4D007C62B1 /* GoalOnboardingViewController.swift */,
+				4AF507762A10CD96007C62B1 /* GoalCollectionViewCell.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
 		6F62668A2A04E889000365CD /* Home */ = {
 			isa = PBXGroup;
 			children = (
@@ -410,6 +424,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				37A574C529FF6EA800312453 /* FontLiterals.swift in Sources */,
+				4AF507772A10CD96007C62B1 /* GoalCollectionViewCell.swift in Sources */,
 				4AD923E92A0692C600FF5E27 /* BottomSheetViewController.swift in Sources */,
 				4A8FFA5429C9E1FD00FB76C0 /* ViewController.swift in Sources */,
 				37A574CC29FF990E00312453 /* UIViewController+.swift in Sources */,
@@ -437,6 +452,7 @@
 				4A8FFA5229C9E1FD00FB76C0 /* SceneDelegate.swift in Sources */,
 				37A574E82A02424F00312453 /* RandomSubjectView.swift in Sources */,
 				4A0EA4642A014710006CCE52 /* SmeemButton.swift in Sources */,
+				4AF507752A10CD4D007C62B1 /* GoalOnboardingViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
