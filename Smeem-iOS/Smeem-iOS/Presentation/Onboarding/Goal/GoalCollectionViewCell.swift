@@ -53,6 +53,22 @@ final class GoalCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Custom Method
     
+    func setData(_ text: String) {
+        goalLabel.text = text
+    }
+    
+    private func setCellSelected(_ selected: Bool) {
+        if isSelected {
+            layer.borderColor = UIColor.point.cgColor
+            checkButton.backgroundColor = .point
+        } else {
+            layer.borderColor = UIColor.gray100.cgColor
+            checkButton.backgroundColor = .blue
+        }
+    }
+    
+    // MARK: - Layout
+    
     private func setUI() {
         makeRoundCorner(cornerRadius: 6)
         layer.borderWidth = 1.5
@@ -71,20 +87,6 @@ final class GoalCollectionViewCell: UICollectionViewCell {
             $0.leading.equalTo(checkButton.snp.trailing).offset(12)
             $0.centerY.equalToSuperview()
         }
-    }
-    
-    func setCellSelected(_ selected: Bool) {
-        if isSelected {
-            layer.borderColor = UIColor.point.cgColor
-            checkButton.backgroundColor = .point
-        } else {
-            layer.borderColor = UIColor.gray100.cgColor
-            checkButton.backgroundColor = .blue
-        }
-    }
-    
-    func setData(_ text: String) {
-        goalLabel.text = text
     }
 
 }

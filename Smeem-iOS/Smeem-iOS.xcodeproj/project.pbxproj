@@ -138,7 +138,6 @@
 				4AD923E52A0650A000FF5E27 /* Splash */,
 				4AF5076F2A10CBA2007C62B1 /* Onboarding */,
 				4AE4B5172A06BF4A00D45F87 /* BottomSheet */,
-				4A3F2E952A0ABB9C00F6AC60 /* Alarm */,
 				6F62668A2A04E889000365CD /* Home */,
 				4A8FFA5329C9E1FD00FB76C0 /* ViewController.swift */,
 				4A0E8D5729F8362E00E0FC23 /* AuthViewController.swift */,
@@ -161,9 +160,11 @@
 		37A574B729FE208A00312453 /* UIComponents */ = {
 			isa = PBXGroup;
 			children = (
+				4A3F2E952A0ABB9C00F6AC60 /* Alarm */,
 				4A0EA4632A014710006CCE52 /* SmeemButton.swift */,
 				37A574E52A02178D00312453 /* CustomToastView.swift */,
 				37A574E72A02424F00312453 /* RandomSubjectView.swift */,
+				4AEFD4C92A1392DF00DAB2BD /* HowLearningView.swift */,
 			);
 			path = UIComponents;
 			sourceTree = "<group>";
@@ -331,7 +332,6 @@
 			isa = PBXGroup;
 			children = (
 				4AEFD4C42A136EE100DAB2BD /* HowOnboardingViewController.swift */,
-				4AEFD4C92A1392DF00DAB2BD /* HowLearningView.swift */,
 			);
 			path = How;
 			sourceTree = "<group>";
@@ -347,9 +347,9 @@
 		4AF5076F2A10CBA2007C62B1 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
-				4AEFD4C62A13907D00DAB2BD /* Alarm */,
 				4AEFD4C22A136E5F00DAB2BD /* Goal */,
 				4AEFD4C32A136E6F00DAB2BD /* How */,
+				4AEFD4C62A13907D00DAB2BD /* Alarm */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";

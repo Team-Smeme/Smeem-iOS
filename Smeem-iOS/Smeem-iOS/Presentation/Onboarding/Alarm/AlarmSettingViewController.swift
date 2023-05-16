@@ -92,12 +92,15 @@ final class AlarmSettingViewController: UIViewController {
     
     // MARK: - Custom Method
     
+    // MARK: - Layout
+    
     private func setBackgroundColor() {
         view.backgroundColor = .smeemWhite
     }
     
     private func setLayout() {
-        view.addSubviews(nowStepOneLabel, divisionLabel, totalStepLabel,                              timeSettingLabelStackView, alarmCollectionView, laterButton, completeButton)
+        view.addSubviews(nowStepOneLabel, divisionLabel, totalStepLabel, timeSettingLabelStackView,
+                         alarmCollectionView, laterButton, completeButton)
         timeSettingLabelStackView.addArrangedSubviews(titleTimeSettingLabel, deatilTimeSettingLabel)
         
         nowStepOneLabel.snp.makeConstraints {

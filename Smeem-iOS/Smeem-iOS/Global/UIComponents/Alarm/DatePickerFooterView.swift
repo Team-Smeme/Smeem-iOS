@@ -98,6 +98,17 @@ final class DatePickerFooterView: UICollectionReusableView {
     
     // MARK: - Custom Method
     
+    private func setPickerViewDelegate() {
+        pickerView.delegate = self
+        pickerView.dataSource = self
+    }
+    
+    private func setTextFieldDelgate() {
+        inputTextField.delegate = self
+    }
+    
+    // MARK: - Layout
+    
     private func setBackgroundColor() {
         backgroundColor = .clear
     }
@@ -115,15 +126,6 @@ final class DatePickerFooterView: UICollectionReusableView {
             $0.top.equalTo(alarmLabel.snp.bottom).offset(4)
         }
     }
-    
-    private func setPickerViewDelegate() {
-        pickerView.delegate = self
-        pickerView.dataSource = self
-    }
-    
-    private func setTextFieldDelgate() {
-        inputTextField.delegate = self
-    }
 }
 
 
@@ -135,7 +137,7 @@ extension DatePickerFooterView: UITextFieldDelegate {
     }
 }
 
-// MAKR: - UIPickerViewDelegate
+// MARK: - UIPickerViewDelegate
 
 extension DatePickerFooterView: UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {

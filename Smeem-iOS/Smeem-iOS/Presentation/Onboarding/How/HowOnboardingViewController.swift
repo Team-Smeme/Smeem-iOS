@@ -94,12 +94,14 @@ final class HowOnboardingViewController: UIViewController {
     
     // MARK: - Custom Method
     
+    // MARK: - Layout
+    
     private func setBackgroundColor() {
         view.backgroundColor = .white
     }
     
     private func setLayout() {
-        view.addSubviews(nowStepOneLabel, divisionLabel, totalStepLabel,                              learningLabelStackView, howLearningView, nextButton)
+        view.addSubviews(nowStepOneLabel, divisionLabel, totalStepLabel, learningLabelStackView, howLearningView, nextButton)
         learningLabelStackView.addArrangedSubviews(titleLearningLabel, detailLearningLabel)
         
         nowStepOneLabel.snp.makeConstraints {

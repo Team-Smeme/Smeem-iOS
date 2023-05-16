@@ -38,11 +38,15 @@ final class HowLearningView: UIView {
         case edit
     }
     
+    // MARK: - Property
+    
     var buttontype: ButtonType = .logo {
         didSet {
             showButtonType()
         }
     }
+    
+    // MARK: - UI Property
     
     private let pointBackgroudView: UIView = {
         let view = UIView()
@@ -132,10 +136,6 @@ final class HowLearningView: UIView {
         return label
     }()
     
-    // MARK: - Property
-    
-    // MARK: - UI Property
-    
     // MARK: - Life Cycle
     
     override init(frame: CGRect) {
@@ -148,8 +148,19 @@ final class HowLearningView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     // MARK: - @objc
+    
+    // MARK: - Custom Method
+    
+    private func showButtonType() {
+        switch buttontype {
+        case .logo:
+            editButton.isHidden = true
+        case .edit:
+            smeemLogo.isHidden = true
+        }
+    }
     
     // MARK: - Layout
     
@@ -228,17 +239,6 @@ final class HowLearningView: UIView {
         secondDetailLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(20)
             $0.top.equalTo(firstDetailLabel.snp.bottom).offset(6)
-        }
-    }
-    
-    // MARK: - Custom Method
-    
-    private func showButtonType() {
-        switch buttontype {
-        case .logo:
-            editButton.isHidden = true
-        case .edit:
-            smeemLogo.isHidden = true
         }
     }
 

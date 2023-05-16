@@ -102,9 +102,20 @@ final class GoalOnboardingViewController: UIViewController {
     
     // MARK: - Custom Method
     
+    private func setDelgate() {
+        learningListCollectionView.delegate = self
+        learningListCollectionView.dataSource = self
+    }
+    
+    private func setCellReigster() {
+        learningListCollectionView.register(GoalCollectionViewCell.self, forCellWithReuseIdentifier: GoalCollectionViewCell.identifier)
+    }
+    
     private func setBackgroundColor() {
         view.backgroundColor = .white
     }
+    
+    // MARK: - Layout
     
     private func setLayout() {
         view.addSubviews(nowStepOneLabel, divisionLabel, totalStepLabel,
@@ -135,29 +146,22 @@ final class GoalOnboardingViewController: UIViewController {
         learningListCollectionView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(18)
             $0.top.equalTo(learningLabelStackView.snp.bottom).offset(28)
+            $0.bottom.equalToSuperview().inset(178)
         }
         
         nextButton.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(18)
-            $0.top.equalTo(learningListCollectionView.snp.bottom).offset(80)
             $0.bottom.equalToSuperview().inset(50)
             $0.height.equalTo(convertByHeightRatio(60))
         }
     }
-    
-    private func setDelgate() {
-        learningListCollectionView.delegate = self
-        learningListCollectionView.dataSource = self
-    }
-    
-    private func setCellReigster() {
-        learningListCollectionView.register(GoalCollectionViewCell.self, forCellWithReuseIdentifier: GoalCollectionViewCell.identifier)
-    }
 }
 
-extension GoalOnboardingViewController: UICollectionViewDelegate {
-    
-}
+// MARK: - UICollectionViewDelegate
+
+extension GoalOnboardingViewController: UICollectionViewDelegate { }
+
+// MARK: - UICollectionViewDataSource
 
 extension GoalOnboardingViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
