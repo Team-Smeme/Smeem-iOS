@@ -11,6 +11,12 @@ import SnapKit
 
 final class GoalCollectionViewCell: UICollectionViewCell {
     
+    override var isSelected: Bool {
+        didSet {
+            setCellSelected(isSelected)
+        }
+    }
+    
     static let identifier = "OnboardingGoalCollectionViewCell"
     
     // MARK: - Property
@@ -19,7 +25,6 @@ final class GoalCollectionViewCell: UICollectionViewCell {
     
     private let checkButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = .point
         return button
     }()
     
@@ -35,8 +40,9 @@ final class GoalCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-//        backgroundColor = .point
+        setUI()
         setLayout()
+        setCellSelected(isSelected)
     }
     
     required init?(coder: NSCoder) {
@@ -46,6 +52,11 @@ final class GoalCollectionViewCell: UICollectionViewCell {
     // MARK: - @objc
     
     // MARK: - Custom Method
+    
+    private func setUI() {
+        makeRoundCorner(cornerRadius: 6)
+        layer.borderWidth = 1.5
+    }
     
     private func setLayout() {
         addSubviews(checkButton, goalLabel)
@@ -59,6 +70,16 @@ final class GoalCollectionViewCell: UICollectionViewCell {
         goalLabel.snp.makeConstraints {
             $0.leading.equalTo(checkButton.snp.trailing).offset(12)
             $0.centerY.equalToSuperview()
+        }
+    }
+    
+    func setCellSelected(_ selected: Bool) {
+        if isSelected {
+            layer.borderColor = UIColor.point.cgColor
+            checkButton.backgroundColor = .point
+        } else {
+            layer.borderColor = UIColor.gray100.cgColor
+            checkButton.backgroundColor = .blue
         }
     }
     
