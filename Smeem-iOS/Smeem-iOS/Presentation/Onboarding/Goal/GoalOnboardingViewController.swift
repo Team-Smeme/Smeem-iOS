@@ -77,6 +77,7 @@ final class GoalOnboardingViewController: UIViewController {
     private lazy var nextButton: SmeemButton = {
         let button = SmeemButton()
         button.setTitle("다음", for: .normal)
+        button.addTarget(self, action: #selector(nextButtonDidTap), for: .touchUpInside)
         return button
     }()
     
@@ -89,9 +90,15 @@ final class GoalOnboardingViewController: UIViewController {
         setLayout()
         setDelgate()
         setCellReigster()
+        hiddenNavigationBar()
     }
     
     // MARK: - @objc
+    
+    @objc func nextButtonDidTap() {
+        let howOnboardingVC = HowOnboardingViewController()
+        self.navigationController?.pushViewController(howOnboardingVC, animated: true)
+    }
     
     // MARK: - Custom Method
     

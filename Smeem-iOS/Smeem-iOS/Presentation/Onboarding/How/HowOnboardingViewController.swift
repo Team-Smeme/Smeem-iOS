@@ -69,9 +69,10 @@ final class HowOnboardingViewController: UIViewController {
         return view
     }()
     
-    private let nextButton: SmeemButton = {
+    private lazy var nextButton: SmeemButton = {
         let button = SmeemButton()
         button.setTitle("다음", for: .normal)
+        button.addTarget(self, action: #selector(nextButtonDidTap), for: .touchUpInside)
         return button
     }()
     
@@ -85,6 +86,11 @@ final class HowOnboardingViewController: UIViewController {
     }
     
     // MARK: - @objc
+    
+    @objc func nextButtonDidTap() {
+        let alarmVC = AlarmSettingViewController()
+        self.navigationController?.pushViewController(alarmVC, animated: true)
+    }
     
     // MARK: - Custom Method
     
