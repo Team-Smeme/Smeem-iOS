@@ -9,6 +9,19 @@ import UIKit
 
 final class HowLearningView: UIView {
     
+    // MARK: - ButtonType
+    
+    enum ButtonType {
+        case logo
+        case edit
+    }
+    
+    var buttontype: ButtonType = .logo {
+        didSet {
+            showButtonType()
+        }
+    }
+    
     private let pointBackgroudView: UIView = {
         let view = UIView()
         view.backgroundColor = .point
@@ -19,6 +32,12 @@ final class HowLearningView: UIView {
         let imageView = UIImageView()
         imageView.backgroundColor = .blue
         return imageView
+    }()
+    
+    private let editButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .black
+        return button
     }()
     
     private let myGoalLabel: UILabel = {
@@ -110,6 +129,8 @@ final class HowLearningView: UIView {
     
     // MARK: - @objc
     
+    // MARK: - Layout
+    
     private func setUI() {
         makeRoundCorner(cornerRadius: 10)
         layer.borderWidth = 1.5
@@ -122,7 +143,7 @@ final class HowLearningView: UIView {
         let pointBackgroundViewHeight = 129
         
         addSubviews(pointBackgroudView, learningHowLabel, firstSelectedLearningHowLabel,         secondSelectedLearningHowLabel, deatilGoalLabel, firstDetailLabel,           secondDetailLabel)
-        pointBackgroudView.addSubviews(smeemLogo, myGoalLabel, SelectedMyGoalLabel)
+        pointBackgroudView.addSubviews(smeemLogo, editButton, myGoalLabel, SelectedMyGoalLabel)
         
         self.snp.makeConstraints {
             $0.width.equalTo(howLearningViewWidth)
@@ -140,6 +161,11 @@ final class HowLearningView: UIView {
             $0.top.equalToSuperview().inset(22)
             $0.width.equalTo(33)
             $0.height.equalTo(20)
+        }
+        
+        editButton.snp.makeConstraints {
+            $0.trailing.top.equalToSuperview().inset(8)
+            $0.width.height.equalTo(25)
         }
         
         myGoalLabel.snp.makeConstraints {
@@ -184,5 +210,14 @@ final class HowLearningView: UIView {
     }
     
     // MARK: - Custom Method
+    
+    private func showButtonType() {
+        switch buttontype {
+        case .logo:
+            editButton.isHidden = true
+        case .edit:
+            smeemLogo.isHidden = true
+        }
+    }
 
 }
