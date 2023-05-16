@@ -124,7 +124,7 @@ final class AlarmSettingViewController: UIViewController {
         }
         
         alarmCollectionView.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(26.5)
+            $0.leading.trailing.equalToSuperview().inset(23)
             $0.top.equalTo(timeSettingLabelStackView.snp.bottom).offset(28)
             $0.height.equalTo(convertByHeightRatio(133))
         }

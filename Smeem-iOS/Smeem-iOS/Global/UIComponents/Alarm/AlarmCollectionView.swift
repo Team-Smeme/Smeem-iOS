@@ -103,7 +103,7 @@ extension AlarmCollectionView: UICollectionViewDataSource {
 extension AlarmCollectionView: UICollectionViewDelegateFlowLayout {
     // (cell size, itemSpacing)
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let cellSize = CGSize(width: convertByWidthRatio(46), height: convertByHeightRatio(49))
+        let cellSize = CGSize(width: convertByWidthRatio(47), height: convertByHeightRatio(49))
         return cellSize
     }
     

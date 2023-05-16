@@ -74,7 +74,7 @@ final class HowLearningView: UIView {
         return label
     }()
     
-    private let SelectedMyGoalLabel: UILabel = {
+    private let selectedMyGoalLabel: UILabel = {
         let label = UILabel()
         label.text = "외국어 업무 문서 읽고 작성하기"
         label.font = .h3
@@ -175,8 +175,9 @@ final class HowLearningView: UIView {
         let howLearningViewHeight = 370
         let pointBackgroundViewHeight = 129
         
-        addSubviews(pointBackgroudView, learningHowLabel, firstSelectedLearningHowLabel,         secondSelectedLearningHowLabel, deatilGoalLabel, firstDetailLabel,           secondDetailLabel)
-        pointBackgroudView.addSubviews(smeemLogo, editButton, myGoalLabel, SelectedMyGoalLabel)
+        addSubviews(pointBackgroudView, learningHowLabel, firstSelectedLearningHowLabel, secondSelectedLearningHowLabel,
+                    deatilGoalLabel, firstDetailLabel, secondDetailLabel)
+        pointBackgroudView.addSubviews(smeemLogo, editButton, myGoalLabel, selectedMyGoalLabel)
         
         self.snp.makeConstraints {
             $0.width.equalTo(howLearningViewWidth)
@@ -206,7 +207,7 @@ final class HowLearningView: UIView {
             $0.top.equalTo(smeemLogo.snp.bottom).offset(23)
         }
         
-        SelectedMyGoalLabel.snp.makeConstraints {
+        selectedMyGoalLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(20)
             $0.top.equalTo(myGoalLabel.snp.bottom).offset(2)
         }
