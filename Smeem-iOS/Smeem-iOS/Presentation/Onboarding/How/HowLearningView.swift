@@ -5,6 +5,28 @@
 //  Created by 황찬미 on 2023/05/16.
 //
 
+/**
+ 1. 사용할 VC에서 호출
+private let howLearningView: HowLearningView = {
+ let view = HowLearningView()
+ return view
+ }()
+ 
+ 2. 자신이 사용할 UI에 맞는 ButtonType 설정 후 사용 (ButtonType은 logo, edit 두 개)
+ private let howLearningView: HowLearningView = {
+  let view = HowLearningView()
+  view.buttonType = .edit
+  return view
+  }()
+ 
+ 3. view 자체의 넓이와 높이값 줄 필요 없이  VC에서는 레이아웃만 잡아 주면 됨
+ ex) 예시임
+ howLearningView.snp.makeConstraints {
+     $0.top.equalTo(learningLabelStackView.snp.bottom).offset(28)
+     $0.centerX.equalToSuperview()
+ }
+ */
+
 import UIKit
 
 final class HowLearningView: UIView {
