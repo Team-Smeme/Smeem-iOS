@@ -34,6 +34,7 @@
 		4A0EA4602A014139006CCE52 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EA45F2A014139006CCE52 /* Service.swift */; };
 		4A0EA4622A01413D006CCE52 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EA4612A01413D006CCE52 /* DataModel.swift */; };
 		4A0EA4642A014710006CCE52 /* SmeemButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EA4632A014710006CCE52 /* SmeemButton.swift */; };
+		4A13B7592A13D37000F4FB1E /* UserNickNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A13B7582A13D37000F4FB1E /* UserNickNameViewController.swift */; };
 		4A3F2E972A0ABBAA00F6AC60 /* AlarmCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3F2E962A0ABBAA00F6AC60 /* AlarmCollectionViewCell.swift */; };
 		4A3F2E9C2A0B4C7100F6AC60 /* AlarmCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3F2E9B2A0B4C7100F6AC60 /* AlarmCollectionView.swift */; };
 		4A3F2EA02A0C18B600F6AC60 /* DatePickerFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3F2E9F2A0C18B600F6AC60 /* DatePickerFooterView.swift */; };
@@ -78,6 +79,7 @@
 		4A0EA45F2A014139006CCE52 /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		4A0EA4612A01413D006CCE52 /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 		4A0EA4632A014710006CCE52 /* SmeemButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmeemButton.swift; sourceTree = "<group>"; };
+		4A13B7582A13D37000F4FB1E /* UserNickNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNickNameViewController.swift; sourceTree = "<group>"; };
 		4A3F2E962A0ABBAA00F6AC60 /* AlarmCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmCollectionViewCell.swift; sourceTree = "<group>"; };
 		4A3F2E9B2A0B4C7100F6AC60 /* AlarmCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmCollectionView.swift; sourceTree = "<group>"; };
 		4A3F2E9F2A0C18B600F6AC60 /* DatePickerFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerFooterView.swift; sourceTree = "<group>"; };
@@ -249,6 +251,14 @@
 			path = DataModel;
 			sourceTree = "<group>";
 		};
+		4A13B7572A13D35800F4FB1E /* Nickname */ = {
+			isa = PBXGroup;
+			children = (
+				4A13B7582A13D37000F4FB1E /* UserNickNameViewController.swift */,
+			);
+			path = Nickname;
+			sourceTree = "<group>";
+		};
 		4A3F2E952A0ABB9C00F6AC60 /* Alarm */ = {
 			isa = PBXGroup;
 			children = (
@@ -339,6 +349,7 @@
 				4AEFD4C22A136E5F00DAB2BD /* Goal */,
 				4AEFD4C32A136E6F00DAB2BD /* How */,
 				4AEFD4C62A13907D00DAB2BD /* Alarm */,
+				4A13B7572A13D35800F4FB1E /* Nickname */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
@@ -471,6 +482,7 @@
 				4A8FFA5029C9E1FD00FB76C0 /* AppDelegate.swift in Sources */,
 				37A574C129FF6E9100312453 /* ColorLiterals.swift in Sources */,
 				37A574CA29FF980F00312453 /* UIStackView+.swift in Sources */,
+				4A13B7592A13D37000F4FB1E /* UserNickNameViewController.swift in Sources */,
 				4A0EA45E2A014134006CCE52 /* API.swift in Sources */,
 				37A574E62A02178D00312453 /* CustomToastView.swift in Sources */,
 				4A8FFA5229C9E1FD00FB76C0 /* SceneDelegate.swift in Sources */,
