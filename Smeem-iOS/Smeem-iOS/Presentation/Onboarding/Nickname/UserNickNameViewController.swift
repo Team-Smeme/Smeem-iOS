@@ -35,6 +35,11 @@ final class UserNicknameViewController: UIViewController {
         textField.tintColor = .point
         textField.textColor = .point
         textField.font = .h3
+        
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: nicknameLimitLabel.frame.height))
+        textField.leftView = paddingView
+        textField.leftViewMode = .always
+        
         return textField
     }()
     
