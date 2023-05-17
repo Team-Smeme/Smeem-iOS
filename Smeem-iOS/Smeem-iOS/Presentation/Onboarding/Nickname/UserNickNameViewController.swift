@@ -33,6 +33,8 @@ final class UserNicknameViewController: UIViewController {
         let textField = UITextField()
         textField.borderStyle = .roundedRect
         textField.tintColor = .point
+        textField.textColor = .point
+        textField.font = .h3
         return textField
     }()
     
@@ -44,8 +46,8 @@ final class UserNicknameViewController: UIViewController {
         return label
     }()
     
-    private let nextButton: UIButton = {
-        let button = UIButton()
+    private let nextButton: SmeemButton = {
+        let button = SmeemButton()
         button.setTitle("다음", for: .normal)
         return button
     }()
@@ -59,11 +61,11 @@ final class UserNicknameViewController: UIViewController {
         setLayout()
         showKeyboard(textView: nicknameTextField)
     }
-    
+
     // MARK: - @objc
     
     // MARK: - Custom Method
-    
+
     // MARK: - Layout
     
     private func setBackgroundColor() {
@@ -71,7 +73,8 @@ final class UserNicknameViewController: UIViewController {
     }
 
     private func setLayout() {
-        view.addSubviews(titleNicknameLabel, detailNicknameLabel, nicknameTextField, nicknameLimitLabel)
+        view.addSubviews(titleNicknameLabel, detailNicknameLabel, nicknameTextField, nicknameLimitLabel,
+                         nextButton)
         
         titleNicknameLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(120)
@@ -92,6 +95,12 @@ final class UserNicknameViewController: UIViewController {
         nicknameLimitLabel.snp.makeConstraints {
             $0.top.equalTo(nicknameTextField.snp.bottom).offset(10)
             $0.trailing.equalToSuperview().inset(20)
+        }
+        
+        nextButton.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview().inset(18)
+            $0.height.equalTo(convertByHeightRatio(60))
+            $0.bottom.equalToSuperview().inset(336+10)
         }
     }
 }
