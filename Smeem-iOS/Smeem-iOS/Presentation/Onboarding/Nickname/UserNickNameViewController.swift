@@ -35,11 +35,7 @@ final class UserNicknameViewController: UIViewController {
         textField.tintColor = .point
         textField.textColor = .point
         textField.font = .h3
-        
-        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: nicknameLimitLabel.frame.height))
-        textField.leftView = paddingView
-        textField.leftViewMode = .always
-        
+        textField.addPaddingView()
         return textField
     }()
     
@@ -64,12 +60,17 @@ final class UserNicknameViewController: UIViewController {
         
         setBackgroundColor()
         setLayout()
+        setTextFieldDelegate()
         showKeyboard(textView: nicknameTextField)
     }
 
     // MARK: - @objc
     
     // MARK: - Custom Method
+    
+    private func setTextFieldDelegate() {
+        nicknameTextField.delegate = self
+    }
 
     // MARK: - Layout
     
@@ -107,5 +108,21 @@ final class UserNicknameViewController: UIViewController {
             $0.height.equalTo(convertByHeightRatio(60))
             $0.bottom.equalToSuperview().inset(336+10)
         }
+    }
+}
+
+// MARK: - UITextFieldDelegate
+
+extension UserNicknameViewController: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if let char = string.cString(using: String.Encoding.utf8) {
+               let isBackSpace = strcmp(char, "\\b")
+               if isBackSpace == -92 {
+                   return true
+               }
+         }
+        
+        guard self.nicknameTextField.text?.count ?? 0 < 10 else { return false }
+        return true
     }
 }
