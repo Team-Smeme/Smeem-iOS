@@ -31,6 +31,7 @@ final class GoalCollectionViewCell: UICollectionViewCell {
     private let goalLabel: UILabel = {
         let label = UILabel()
         label.font = .b3
+        label.text = "전체 동의하기"
         label.textColor = .gray600
         return label
     }()
