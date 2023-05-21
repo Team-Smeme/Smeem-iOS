@@ -29,26 +29,19 @@ extension UILabel {
     
     /// UILabel의 line 수 길이 구하는 함수
     func countCurrentLines() -> CGFloat {
-        guard let text = self.text as NSString? else { return 0 }
-        guard let font = self.font              else { return 0 }
+        let myText = text as? NSString
+
+        let labelSize = myText?.boundingRect(with: CGSize(width: self.frame.width, height: .greatestFiniteMagnitude),
+                                             options: .usesLineFragmentOrigin,
+                                             attributes: [NSAttributedString.Key.font: font ?? UIFont()],
+                                             context: nil)
         
-        var attributes = [NSAttributedString.Key: Any]()
-        
-        if let kernAttribute = self.attributedText?.attributes(at: 0, effectiveRange: nil).first(where: { key, _ in
-            return key == .kern
-        }) {
-            attributes[.kern] = kernAttribute.value
-        }
-        attributes[.font] = font
-        
-        let labelTextSize = text.boundingRect(
-            with: CGSize(width: self.bounds.width, height: .greatestFiniteMagnitude),
-            options: .usesLineFragmentOrigin,
-            attributes: attributes,
-            context: nil
-        )
-        
-        return CGFloat(ceil(labelTextSize.height / font.lineHeight))
+        return ceil(CGFloat((labelSize?.height ?? 0) / font.lineHeight))
+    }
+    
+    func calculateContentHeight(lineHeight: CGFloat) -> CGFloat {
+        let numberOfLines = self.countCurrentLines()
+        return numberOfLines * lineHeight
     }
     
     /**
@@ -61,11 +54,11 @@ extension UILabel {
      let currentHeight = label.calculateContentHeight(21)
      ~~~
      */
-    func calculateContentHeight(lineHeight: CGFloat) -> CGFloat {
-        let numOfLines = self.countCurrentLines()
-        
-        return numOfLines * lineHeight
-    }
+//    func calculateContentHeight(lineHeight: CGFloat) -> CGFloat {
+//        let numOfLines = self.countCurrentLines()
+//        
+//        return numOfLines * lineHeight
+//    }
     
     func asColor(targetString: String, color: UIColor) {
         let fullText = text ?? ""
