@@ -70,4 +70,9 @@ extension UIViewController {
     func convertByHeightRatio(_ convert: CGFloat) -> CGFloat {
         return (convert / 812) * getDeviceHeight()
     }
+    
+    /// 상단 네비바 hidden
+    func hiddenNavigationBar() {
+        self.navigationController?.isNavigationBarHidden = true
+    }
 }
