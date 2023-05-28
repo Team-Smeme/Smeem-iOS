@@ -43,11 +43,7 @@ final class DiaryScrollerView: UIScrollView {
     
     // MARK: - UI Property
     
-    private let contentView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .point
-        return view
-    }()
+    private let contentView = UIView()
     
     private let correnctionLabel: UILabel = {
         let label = UILabel()
@@ -99,7 +95,6 @@ final class DiaryScrollerView: UIScrollView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        setLayout()
         setBackgroundColor()
     }
     
@@ -124,26 +119,45 @@ final class DiaryScrollerView: UIScrollView {
         return ceil(newSize.height)
     }
     
+    
+    // MARK: - Layout
+    
+    private func setBackgroundColor() {
+        backgroundColor = .white
+    }
+    
     private func viewTypeContentViewLayout() {
         let detailDiaryTopInset: CGFloat = 16
         let detailbottomInset: CGFloat = 78
-        let correctionTopInset: CGFloat = 46
-        let correctionbottomInset: CGFloat = 68
+        let correctionTopInset: CGFloat = 41
+        let correctionbottomInset: CGFloat = 78
         
         let detailDiaryTotalContentViewHeight = detailDiaryTopInset+detailbottomInset+calculateTextViewHeight(textView: contentLabel)
         let correctiontextViewTotalHeight = correctionTopInset+correctionbottomInset+calculateTextViewHeight(textView: contentLabel)
         
         addSubview(contentView)
+        contentView.addSubviews(correnctionLabel, contentLabel, labelStackView)
+        labelStackView.addArrangedSubviews(dateLabel, nicknameLabel)
         
         contentView.snp.makeConstraints {
             $0.top.leading.trailing.bottom.equalTo(self.contentLayoutGuide)
             $0.width.equalToSuperview()
         }
         
+        correnctionLabel.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(8)
+            $0.leading.equalToSuperview().inset(20)
+        }
+        
         switch viewType {
         case .correction:
             contentView.snp.makeConstraints {
                 $0.height.equalTo(correctiontextViewTotalHeight)
+            }
+            
+            contentLabel.snp.makeConstraints {
+                $0.top.equalTo(correnctionLabel.snp.bottom).offset(6)
+                $0.leading.trailing.equalToSuperview().inset(18)
             }
             
         case .correctionHasRandomSubject:
@@ -160,6 +174,7 @@ final class DiaryScrollerView: UIScrollView {
             
             contentLabel.snp.makeConstraints {
                 $0.top.equalToSuperview().inset(16)
+                $0.leading.trailing.equalToSuperview().inset(18)
             }
             
         case .detailDiaryHasRandomSubject:
@@ -170,33 +185,12 @@ final class DiaryScrollerView: UIScrollView {
                 $0.height.equalTo(detailDiaryTotalContentViewHeight)
             }
         }
-        
-    }
-    
-    // MARK: - Layout
-    
-    private func setBackgroundColor() {
-        backgroundColor = .white
-    }
-    
-    private func setLayout() {
-        contentView.addSubviews(correnctionLabel, contentLabel, labelStackView)
-        labelStackView.addArrangedSubviews(dateLabel, nicknameLabel)
-        
-        correnctionLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(13)
-            $0.leading.equalToSuperview().inset(20)
-        }
-        
-        contentLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(36)
-            $0.leading.trailing.equalToSuperview().inset(18)
-        }
 
         labelStackView.snp.makeConstraints {
             $0.top.equalTo(contentLabel.snp.bottom).offset(24)
             $0.trailing.equalToSuperview().inset(18)
         }
+        
     }
 
 }
