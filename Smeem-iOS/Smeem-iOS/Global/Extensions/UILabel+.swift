@@ -39,11 +39,6 @@ extension UILabel {
         return ceil(CGFloat((labelSize?.height ?? 0) / font.lineHeight))
     }
     
-    func calculateContentHeight(lineHeight: CGFloat) -> CGFloat {
-        let numberOfLines = self.countCurrentLines()
-        return numberOfLines * lineHeight
-    }
-    
     /**
      custom line height가 적용된 label height를 구하는 함수
      - Parameters:
@@ -54,11 +49,12 @@ extension UILabel {
      let currentHeight = label.calculateContentHeight(21)
      ~~~
      */
-//    func calculateContentHeight(lineHeight: CGFloat) -> CGFloat {
-//        let numOfLines = self.countCurrentLines()
-//        
-//        return numOfLines * lineHeight
-//    }
+    
+    func calculateContentHeight(lineHeight: CGFloat) -> CGFloat {
+        let numberOfLines = self.countCurrentLines()
+        
+        return numberOfLines * lineHeight
+    }
     
     func asColor(targetString: String, color: UIColor) {
         let fullText = text ?? ""
