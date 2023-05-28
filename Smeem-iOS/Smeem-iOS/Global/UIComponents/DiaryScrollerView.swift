@@ -38,6 +38,7 @@ final class DiaryScrollerView: UIScrollView {
     var viewType: ViewType = .correction {
         didSet {
             viewTypeContentViewLayout()
+            setDelegate()
         }
     }
     
@@ -61,6 +62,7 @@ final class DiaryScrollerView: UIScrollView {
         textView.isEditable = false
         textView.isScrollEnabled = false
         textView.text = "I watched Avatar with my boyfriend at Hongdae CGV. I should have skimmed the previous season - Avatar1.. I really couldn’t get what they were saying and the universe(??). What I was annoyed then was 두팔 didn’t know that as me. I think 두팔 who is my boyfriend should study before wathcing…. but Avatar2 is amazing movie I think. In my personal opinion, the jjin main character of Avatar2 is not Sully, but his son."
+        textView.tintColor = .point
         textView.setLineSpacing()
         return textView
     }()
@@ -119,47 +121,54 @@ final class DiaryScrollerView: UIScrollView {
         return ceil(newSize.height)
     }
     
-    
-    // MARK: - Layout
-    
+    private func setDelegate() {
+        switch viewType {
+        case .correction, .correctionHasRandomSubject:
+            contentLabel.delegate = self
+        case .detailDiary, .detailDiaryHasRandomSubject: break
+        }
+    }
+        
+        // MARK: - Layout
+        
     private func setBackgroundColor() {
         backgroundColor = .white
     }
-    
+        
     private func viewTypeContentViewLayout() {
         let detailDiaryTopInset: CGFloat = 16
         let detailbottomInset: CGFloat = 78
         let correctionTopInset: CGFloat = 41
         let correctionbottomInset: CGFloat = 78
-        
+            
         let detailDiaryTotalContentViewHeight = detailDiaryTopInset+detailbottomInset+calculateTextViewHeight(textView: contentLabel)
         let correctiontextViewTotalHeight = correctionTopInset+correctionbottomInset+calculateTextViewHeight(textView: contentLabel)
-        
+            
         addSubview(contentView)
         contentView.addSubviews(correnctionLabel, contentLabel, labelStackView)
         labelStackView.addArrangedSubviews(dateLabel, nicknameLabel)
-        
+            
         contentView.snp.makeConstraints {
             $0.top.leading.trailing.bottom.equalTo(self.contentLayoutGuide)
             $0.width.equalToSuperview()
         }
-        
+            
         correnctionLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(8)
             $0.leading.equalToSuperview().inset(20)
         }
-        
+            
         switch viewType {
         case .correction:
             contentView.snp.makeConstraints {
                 $0.height.equalTo(correctiontextViewTotalHeight)
             }
-            
+                
             contentLabel.snp.makeConstraints {
                 $0.top.equalTo(correnctionLabel.snp.bottom).offset(6)
                 $0.leading.trailing.equalToSuperview().inset(18)
             }
-            
+                
         case .correctionHasRandomSubject:
             // 랜덤 주제 추가된 레이아웃으로 수정
             contentView.snp.makeConstraints {
@@ -167,30 +176,44 @@ final class DiaryScrollerView: UIScrollView {
             }
         case .detailDiary:
             correnctionLabel.isHidden = true
-            
+                
             contentView.snp.makeConstraints {
                 $0.height.equalTo(detailDiaryTotalContentViewHeight)
             }
-            
+                
             contentLabel.snp.makeConstraints {
                 $0.top.equalToSuperview().inset(16)
                 $0.leading.trailing.equalToSuperview().inset(18)
             }
-            
+                
         case .detailDiaryHasRandomSubject:
             correnctionLabel.isHidden = true
-            
+                
             // 랜덤 주제 추가된 레이아웃으로 수정
             contentView.snp.makeConstraints {
                 $0.height.equalTo(detailDiaryTotalContentViewHeight)
             }
         }
-
+            
         labelStackView.snp.makeConstraints {
             $0.top.equalTo(contentLabel.snp.bottom).offset(24)
             $0.trailing.equalToSuperview().inset(18)
         }
-        
     }
+}
 
+extension DiaryScrollerView: UITextViewDelegate {
+    func textView(_ textView: UITextView,
+                  editMenuForTextIn range: NSRange,
+                  suggestedActions: [UIMenuElement]) -> UIMenu? {
+        var additionalActions: [UIMenuElement] = []
+        
+        if range.length > 0 {
+            let chanmiAction = UIAction(title: "첨삭") {_ in
+                print(textView.text(in: textView.selectedTextRange ?? UITextRange()) ?? String())
+            }
+            additionalActions.append(chanmiAction)
+        }
+        return UIMenu(children: additionalActions)
+    }
 }
