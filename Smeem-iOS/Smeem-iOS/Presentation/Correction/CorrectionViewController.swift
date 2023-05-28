@@ -46,6 +46,8 @@ final class CorrectionViewController: UIViewController {
     
     // MARK: - Custom Method
     
+    // MARK: - Layout
+    
     private func setBackgroundColor() {
         view.backgroundColor = .white
     }
@@ -77,7 +79,4 @@ final class CorrectionViewController: UIViewController {
             $0.leading.trailing.bottom.equalToSuperview()
         }
     }
-
-    
-    // MARK: - Layout
 }
