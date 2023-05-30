@@ -149,7 +149,7 @@ final class HomeViewController: UIViewController {
         dateFormatter.locale = Locale(identifier: "ko_KR")
         dateFormatter.dateFormat = "yyyy-MM-dd"
         
-        writtenDays = writtenDaysString
+        writtenDays = writtenDaysfromServer
             .map { dateFormatter.date(from: $0)! }
     }
     
@@ -269,7 +269,9 @@ extension HomeViewController: FSCalendarDataSource {
 
 extension HomeViewController: FSCalendarDelegateAppearance {
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-        self.configureVisibleCells()
+        configureVisibleCells()
+        diaryThumbnail.isHidden = !writtenDays.contains(date)
+        // TODO: - 매번 contain 쓰지말고 더 효율적인 방안 모색해보기
     }
 
     private func configureVisibleCells() {
