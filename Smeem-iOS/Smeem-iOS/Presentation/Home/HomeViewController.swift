@@ -16,11 +16,12 @@ final class HomeViewController: UIViewController {
     
     private let weekdayLabels = ["S", "M", "T", "W", "T", "F", "S"]
     private let gregorian = Calendar(identifier: .gregorian)
-    private var eventDates: [String] = []
+    private var writtenDays: [String] = []
+    private let tmpText = ["I watched Avatar with my boyfriend at Hongdae CGV. I should have skimmed the previous season - Avatar1.. I really couldn’t get what they were saying and the universe(??). What I was annoyed then was 두팔 didn’t know that as me. I think 두팔 who is my boyfriend should study before wathcing…. but Avatar2 is amazing movie I think. In my personal opinion, the jjin main character of Avatar2 is not Sully, but his son.", "4 : 18 PM"]
     
     // MARK: - UI Property
     
-    private var calendar: FSCalendar = {
+    private lazy var calendar: FSCalendar = {
         let calendar = FSCalendar()
         calendar.placeholderType = .none
         calendar.scope = .week
@@ -34,6 +35,11 @@ final class HomeViewController: UIViewController {
         calendar.appearance.headerDateFormat = "YYYY년 M월"
         calendar.appearance.borderRadius = 0.4
         calendar.register(CalendarCell.self, forCellReuseIdentifier: "cell")
+        calendar.headerHeight = convertByHeightRatio(66)
+        calendar.weekdayHeight = convertByHeightRatio(41)
+        for i in 0...6 {
+            calendar.calendarWeekdayView.weekdayLabels[i].text = weekdayLabels[i]
+        }
         return calendar
     }()
     
@@ -50,6 +56,46 @@ final class HomeViewController: UIViewController {
         return border
     }()
     
+    private let diaryThumbnail = UIView()
+    
+    private let diaryDate: UILabel = {
+        let diaryDate = UILabel()
+        diaryDate.textColor = .smeemBlack
+        diaryDate.font = .s3
+        return diaryDate
+    }()
+    
+    private lazy var fullViewButton: UIView = {
+        let fullViewButton = UIView()
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(fullViewButtonDidTap(_:)))
+        fullViewButton.addGestureRecognizer(tapGesture)
+        fullViewButton.isUserInteractionEnabled = true
+        return fullViewButton
+    }()
+ 
+    private let diaryText: UILabel = {
+        let diaryText = UILabel()
+        diaryText.textColor = .smeemBlack
+        diaryText.font = .b4
+        diaryText.numberOfLines = 3
+        diaryText.lineBreakMode = .byWordWrapping
+        return diaryText
+    }()
+    
+    private let fullViewButtonText: UILabel = {
+        let text = UILabel()
+        text.text = "전체보기"
+        text.textColor = .gray400
+        text.font = .c2
+        return text
+    }()
+    
+    private let fullViewButtonSymbol: UIImageView = {
+        let symbol = UIImageView()
+        symbol.image = UIImage(named: "rightArrow")
+        return symbol
+    }()
+    
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -57,10 +103,10 @@ final class HomeViewController: UIViewController {
         
         hiddenNavigationBar()
         setBackgroundColor()
-        setDelegate()
-        setCalendar()
-        setSwipe()
         setLayout()
+        setDelegate()
+        setSwipe()
+        setData()
     }
     
     // MARK: - @objc
@@ -70,20 +116,16 @@ final class HomeViewController: UIViewController {
             calendar.setScope((swipe.direction == .up) ? .week : .month, animated: true)
         }
     }
+
+    @objc func fullViewButtonDidTap(_ gesture: UITapGestureRecognizer) {
+        // 뷰 이동
+    }
     
     // MARK: - Custom Method
     
     private func setDelegate() {
         calendar.dataSource = self
         calendar.delegate = self
-    }
-    
-    private func setCalendar() {
-        calendar.headerHeight = convertByHeightRatio(66)
-        calendar.weekdayHeight = convertByHeightRatio(41)
-        for i in 0...6 {
-            calendar.calendarWeekdayView.weekdayLabels[i].text = weekdayLabels[i]
-        }
     }
     
     private func setSwipe() {
@@ -95,6 +137,12 @@ final class HomeViewController: UIViewController {
         view.addGestureRecognizer(swipeDown)
     }
     
+    private func setData() {
+        diaryText.text = tmpText[0]
+        diaryDate.text = tmpText[1]
+        diaryText.setTextWithLineHeight(lineHeight: 22)
+    }
+    
     // MARK: - Layout
     
     private func setBackgroundColor() {
@@ -102,7 +150,9 @@ final class HomeViewController: UIViewController {
     }
     
     private func setLayout() {
-        view.addSubviews(calendar, indicator, border)
+        view.addSubviews(calendar, indicator, border, diaryThumbnail)
+        diaryThumbnail.addSubviews(diaryDate, fullViewButton, diaryText)
+        fullViewButton.addSubviews(fullViewButtonText, fullViewButtonSymbol)
         
         calendar.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
@@ -120,8 +170,43 @@ final class HomeViewController: UIViewController {
         
         border.snp.makeConstraints {
             $0.top.equalTo(indicator.snp.bottom).offset(convertByWidthRatio(12))
-            $0.height.equalTo(6)
+            $0.height.equalTo(convertByHeightRatio(6))
             $0.width.equalToSuperview()
+        }
+        
+        diaryThumbnail.snp.makeConstraints {
+            $0.top.equalTo(border.snp.bottom)
+            $0.centerX.width.equalToSuperview()
+            $0.height.equalTo(convertByHeightRatio(122))
+        }
+        
+        diaryText.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(convertByHeightRatio(54))
+            $0.centerX.equalToSuperview()
+            $0.leading.equalToSuperview().offset(convertByWidthRatio(18))
+            $0.trailing.equalToSuperview().offset(-convertByWidthRatio(18))
+        }
+        
+        diaryDate.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(convertByHeightRatio(20))
+            $0.leading.equalTo(diaryText.snp.leading)
+        }
+        
+        fullViewButton.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(convertByHeightRatio(20))
+            $0.trailing.equalToSuperview().offset(-convertByWidthRatio(22))
+            $0.width.equalTo(convertByWidthRatio(61))
+            $0.height.equalTo(17)
+        }
+        
+        fullViewButtonText.snp.makeConstraints {
+            $0.leading.equalToSuperview()
+            $0.centerY.equalToSuperview()
+        }
+        
+        fullViewButtonSymbol.snp.makeConstraints {
+            $0.trailing.equalToSuperview()
+            $0.centerY.equalToSuperview()
         }
     }
 }
@@ -159,14 +244,10 @@ extension HomeViewController: FSCalendarDataSource {
     private func checkDate(for date: Date) -> FilledType {
         let formattedDate = ""
         
-        if eventDates.contains(formattedDate) {
-            return .some
+        if gregorian.isDateInToday(date) {
+            return .today
         } else {
-            if self.gregorian.isDateInToday(date) {
-                return .today
-            } else {
-                return .none
-            }
+            return writtenDays.contains(formattedDate) ? .some : .none
         }
     }
     
