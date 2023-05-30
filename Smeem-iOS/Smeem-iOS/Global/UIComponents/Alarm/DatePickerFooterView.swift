@@ -57,9 +57,9 @@ final class DatePickerFooterView: UICollectionReusableView {
         toolBar.isTranslucent = true
         toolBar.backgroundColor = .lightGray
         
-        let saveButton = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(saveButtonDidTap))
+        let saveButton = UIBarButtonItem(title: "Save", style: .plain, target: nil, action: #selector(saveButtonDidTap))
         let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let cancleButton = UIBarButtonItem(title: "Cancle", style: .plain, target: self, action: #selector(cancleButtonDidTap))
+        let cancleButton = UIBarButtonItem(title: "Cancle", style: .plain, target: nil, action: #selector(cancleButtonDidTap))
         
         toolBar.setItems([cancleButton, space, saveButton], animated: true)
         toolBar.isUserInteractionEnabled = true
@@ -98,6 +98,17 @@ final class DatePickerFooterView: UICollectionReusableView {
     
     // MARK: - Custom Method
     
+    private func setPickerViewDelegate() {
+        pickerView.delegate = self
+        pickerView.dataSource = self
+    }
+    
+    private func setTextFieldDelgate() {
+        inputTextField.delegate = self
+    }
+    
+    // MARK: - Layout
+    
     private func setBackgroundColor() {
         backgroundColor = .clear
     }
@@ -115,15 +126,6 @@ final class DatePickerFooterView: UICollectionReusableView {
             $0.top.equalTo(alarmLabel.snp.bottom).offset(4)
         }
     }
-    
-    private func setPickerViewDelegate() {
-        pickerView.delegate = self
-        pickerView.dataSource = self
-    }
-    
-    private func setTextFieldDelgate() {
-        inputTextField.delegate = self
-    }
 }
 
 
@@ -135,7 +137,7 @@ extension DatePickerFooterView: UITextFieldDelegate {
     }
 }
 
-// MAKR: - UIPickerViewDelegate
+// MARK: - UIPickerViewDelegate
 
 extension DatePickerFooterView: UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
