@@ -11,6 +11,8 @@ final class AlarmSettingViewController: UIViewController {
     
     // MARK: - Property
     
+    var isAlarm = true
+    
     // MARK: - UI Property
     
     private let nowStepOneLabel: UILabel = {
@@ -63,17 +65,19 @@ final class AlarmSettingViewController: UIViewController {
         return stackView
     }()
     
-    private let laterButton: UIButton = {
+    private lazy var laterButton: UIButton = {
         let button = UIButton()
         button.setTitle("나중에 설정하기", for: .normal)
         button.setTitleColor(.gray600, for: .normal)
         button.titleLabel?.font = .b4
+        button.addTarget(self, action: #selector(requestNotificationPermission), for: .touchUpInside)
         return button
     }()
     
-    private let completeButton: SmeemButton = {
+    private lazy var completeButton: SmeemButton = {
         let button = SmeemButton()
         button.setTitle("완료", for: .normal)
+        button.addTarget(self, action: #selector(requestNotificationPermission), for: .touchUpInside)
         return button
     }()
     
@@ -89,6 +93,18 @@ final class AlarmSettingViewController: UIViewController {
     }
     
     // MARK: - @objc
+    
+    @objc func requestNotificationPermission(){
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert,.sound,.badge], completionHandler: { didAllow, error in
+            if didAllow {
+                print("Push: 권한 허용")
+                self.isAlarm = true
+            } else {
+                print("Push: 권한 거부")
+                self.isAlarm = false
+            }
+        })
+    }
     
     // MARK: - Custom Method
     
