@@ -97,6 +97,17 @@ final class HomeViewController: UIViewController {
         return symbol
     }()
     
+    private let emptyView = UIView()
+    private let emptySymbol = UIImageView(image: UIImage(named: "noDiary"))
+    
+    private let emptyText: UILabel = {
+        let emptyText = UILabel()
+        emptyText.text = "작성된 일기가 없어요."
+        emptyText.font = .c3
+        emptyText.textColor = .gray300
+        return emptyText
+    }()
+    
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -151,6 +162,9 @@ final class HomeViewController: UIViewController {
         
         writtenDays = writtenDaysfromServer
             .map { dateFormatter.date(from: $0)! }
+        
+        diaryThumbnail.isHidden = !writtenDaysfromServer.contains(dateFormatter.string(from: Date()))
+        emptyView.isHidden = !diaryThumbnail.isHidden
     }
     
     // MARK: - Layout
@@ -162,9 +176,10 @@ final class HomeViewController: UIViewController {
     private func setLayout() {
         hiddenNavigationBar()
         
-        view.addSubviews(calendar, indicator, border, diaryThumbnail)
+        view.addSubviews(calendar, indicator, border, diaryThumbnail, emptyView)
         diaryThumbnail.addSubviews(diaryDate, fullViewButton, diaryText)
         fullViewButton.addSubviews(fullViewButtonText, fullViewButtonSymbol)
+        emptyView.addSubviews(emptySymbol, emptyText)
         
         calendar.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
@@ -220,6 +235,23 @@ final class HomeViewController: UIViewController {
             $0.trailing.equalToSuperview()
             $0.centerY.equalToSuperview()
         }
+        
+        emptyView.snp.makeConstraints {
+            $0.top.leading.trailing.equalTo(diaryThumbnail)
+            $0.bottom.equalToSuperview()
+        }
+        
+        emptySymbol.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(convertByHeightRatio(60))
+            $0.centerX.equalToSuperview()
+            $0.height.equalTo(convertByHeightRatio(47))
+            $0.width.equalTo(convertByWidthRatio(65))
+        }
+        
+        emptyText.snp.makeConstraints {
+            $0.top.equalTo(emptySymbol.snp.bottom).offset(convertByHeightRatio(16))
+            $0.centerX.equalToSuperview()
+        }
     }
 }
 
@@ -270,8 +302,9 @@ extension HomeViewController: FSCalendarDataSource {
 extension HomeViewController: FSCalendarDelegateAppearance {
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         configureVisibleCells()
-        diaryThumbnail.isHidden = !writtenDays.contains(date)
         // TODO: - 매번 contain 쓰지말고 더 효율적인 방안 모색해보기
+        diaryThumbnail.isHidden = !writtenDays.contains(date)
+        emptyView.isHidden = !diaryThumbnail.isHidden
     }
 
     private func configureVisibleCells() {
