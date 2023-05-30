@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-final class DiaryForeignViewController: UIViewController {
+final class ForeignDiaryViewController: UIViewController {
     
     // MARK: - Property
     
@@ -19,7 +19,6 @@ final class DiaryForeignViewController: UIViewController {
     private let navibarContentStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.alignment = .center
-        //객체들의 길이값이 다를 때
         stackView.distribution = .equalSpacing
         stackView.spacing = 110
         return stackView
@@ -62,7 +61,7 @@ final class DiaryForeignViewController: UIViewController {
         let textView = UITextView()
         textView.setLineSpacing()
         textView.textColor = .gray400
-        textView.delegate = self
+//        textView.delegate = self
         return textView
     }()
 
@@ -80,6 +79,8 @@ final class DiaryForeignViewController: UIViewController {
         view.backgroundColor = .gray100
         return view
     }()
+    
+    private let thinLine = SeparationLine(height: .thin)
 
     private lazy var randomTopicButton: UIButton = {
         let button = UIButton()
@@ -94,17 +95,9 @@ final class DiaryForeignViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        hiddenNavigationBar()
         setBackgoundColor()
         setLayout()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        showKeyboard(textView: diaryTextView)
-        keyboardAddObserver()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        keyboardRemoveObserver()
     }
     
     // MARK: - @objc
@@ -140,7 +133,7 @@ final class DiaryForeignViewController: UIViewController {
         naviView.addSubview(navibarContentStackView)
         navibarContentStackView.addArrangedSubviews(cancelButton, languageLabel, completeButton)
         diaryTextView.addSubview(placeHolderLabel)
-        bottomView.addSubview(randomTopicButton)
+        bottomView.addSubviews(thinLine, randomTopicButton)
         
         naviView.snp.makeConstraints {
             $0.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
@@ -149,11 +142,11 @@ final class DiaryForeignViewController: UIViewController {
         
         navibarContentStackView.snp.makeConstraints {
             $0.center.equalToSuperview()
-            $0.leading.equalToSuperview().offset(18)
+            $0.leading.equalToSuperview().offset(convertByWidthRatio(18))
         }
         
         diaryTextView.snp.makeConstraints {
-            $0.top.equalTo(naviView.snp.bottom).offset(10)
+            $0.top.equalTo(naviView.snp.bottom).offset(convertByHeightRatio(10))
             $0.centerX.equalToSuperview()
             $0.leading.equalTo(navibarContentStackView)
             $0.bottom.equalTo(bottomView.snp.top)
@@ -168,109 +161,17 @@ final class DiaryForeignViewController: UIViewController {
             $0.height.equalTo(constraintByNotch(87, 53))
         }
         
+        thinLine.snp.makeConstraints {
+            $0.bottom.equalTo(bottomView.snp.top)
+        }
+        
         randomTopicButton.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(18)
-            $0.trailing.equalToSuperview().offset(-30)
+            $0.top.equalToSuperview().offset(convertByHeightRatio(18))
+            $0.trailing.equalToSuperview().offset(convertByWidthRatio(-30))
         }
-    }
-    
-    private func characterValidation() -> Bool {
-        while diaryTextView.text.getArrayAfterRegex(regex: "[a-zA-z]").count > 9 {
-            return true
-        }
-        return false
-    }
-    
-//    private func setRandomTopicButtonToggle() {
-//        isRandomTopic.toggle()
-//        if isRandomTopic {
-//            randomTopicButton.setImage(Constant.Image.btnRandomTopicCheckBoxSelected, for: .normal)
-//
-//            view.addSubview(randomSubjectView)
-//
-//            randomSubjectView.snp.remakeConstraints {
-//                $0.top.equalTo(naviView.snp.bottom).offset(10)
-//                $0.leading.equalToSuperview()
-//            }
-//
-//            diaryTextView.snp.remakeConstraints {
-//                $0.top.equalTo(randomSubjectView.snp.bottom).offset(9)
-//                $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).offset(30)
-//                $0.trailing.equalTo(view.safeAreaLayoutGuide).offset(-30)
-//                $0.bottom.equalTo(bottomView.snp.top)
-//            }
-//
-//        } else {
-//            randomTopicButton.setImage(Constant.Image.btnRandomTopicCheckBox, for: .normal)
-//
-//            naviView.snp.remakeConstraints {
-//                $0.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-//                $0.height.equalTo(convertByHeightRatio(66))
-//            }
-//
-//            diaryTextView.snp.remakeConstraints {
-//                $0.top.equalTo(naviView.snp.bottom).offset(9)
-//                $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).offset(30)
-//                $0.trailing.equalTo(view.safeAreaLayoutGuide).offset(-30)
-//                $0.bottom.equalTo(bottomView.snp.top)
-//            }
-//
-//            randomSubjectView.removeFromSuperview()
-//        }
-//    }
-    
-    private func keyboardAddObserver() {
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow),
-                                               name: UIResponder.keyboardWillShowNotification, object: nil)
-
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide),
-                                               name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-
-    private func keyboardRemoveObserver() {
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
 }
 
 // MARK: - UITextViewDelegate
-
-extension DiaryForeignViewController: UITextViewDelegate {
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        if textView.text.isEmpty {
-            placeHolderLabel.isHidden = false
-            textView.textColor = .smeemBlack
-            textView.font = .b4
-            textView.setLineSpacing()
-            textView.tintColor = .clear
-        }
-    }
-
-    func textViewDidChange(_ textView: UITextView) {
-        if textView.text.isEmpty {
-            updateUIForEmptyTextView(textView)
-        } else {
-            updateUIForNonEmptyTextView(textView)
-        }
-    }
-    
-    func updateUIForEmptyTextView(_ textView: UITextView) {
-        textView.textColor = .smeemBlack
-        textView.font = .b4
-        textView.setLineSpacing()
-        textView.tintColor = .clear
-        placeHolderLabel.isHidden = false
-    }
-
-    func updateUIForNonEmptyTextView(_ textView: UITextView) {
-        textView.font = .b4
-        textView.setLineSpacing()
-        textView.tintColor = .point
-        placeHolderLabel.isHidden = true
-        let isValid = characterValidation()
-        completeButton.isEnabled = isValid
-        completeButton.setTitleColor(isValid ? .point : .gray400, for: .normal)
-    }
-}
 
 // MARK: - Network
