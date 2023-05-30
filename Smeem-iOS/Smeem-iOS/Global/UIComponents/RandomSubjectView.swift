@@ -5,6 +5,14 @@
 //  Created by Joon Baek on 2023/05/03.
 //
 
+/**
+ 1. 사용할 VC에서 RandomSubjectView 생성
+ let randomSubjectView = RandomSubjectView()
+ 
+ 2. view에 addSubView 후 y축 레이아웃 값만 입력해서 사용
+**/
+
+
 import UIKit
 
 import SnapKit
@@ -63,22 +71,28 @@ extension RandomSubjectView {
     }
     
     private func setRandomSubjectViewLayout() {
+        
+        snp.makeConstraints {
+            $0.centerX.equalTo(self)
+            $0.width.equalTo(convertByWidthRatio(375))
+        }
+        
         addSubviews(questionLabel, contentLabel, refreshButton)
         
         questionLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(20)
-            $0.leading.equalToSuperview().offset(18)
+            $0.top.equalToSuperview().offset(convertByHeightRatio(20))
+            $0.leading.equalToSuperview().offset(convertByWidthRatio(18))
         }
         
         contentLabel.snp.makeConstraints {
             $0.top.equalTo(questionLabel)
             $0.leading.equalTo(questionLabel)
-            $0.width.equalToSuperview().offset(-36)
+            $0.width.equalToSuperview().offset(convertByWidthRatio(-36))
         }
         
         refreshButton.snp.makeConstraints {
-            $0.bottom.equalToSuperview().offset(-20)
-            $0.trailing.equalToSuperview().offset(-18)
+            $0.bottom.equalToSuperview().offset(convertByHeightRatio(-20))
+            $0.trailing.equalToSuperview().offset(convertByWidthRatio(-18))
             //TODO: 에셋 나오면 삭제 예정
             $0.width.height.equalTo(18)
         }
