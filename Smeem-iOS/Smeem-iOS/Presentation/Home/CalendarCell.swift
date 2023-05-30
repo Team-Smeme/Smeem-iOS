@@ -5,7 +5,6 @@
 //  Created by 임주민 on 2023/05/29.
 //
 
-import Foundation
 import UIKit
 
 import FSCalendar

@@ -10,7 +10,7 @@ import UIKit
 import FSCalendar
 import SnapKit
 
-class HomeViewController: UIViewController {
+final class HomeViewController: UIViewController {
     
     // MARK: - Property
     
