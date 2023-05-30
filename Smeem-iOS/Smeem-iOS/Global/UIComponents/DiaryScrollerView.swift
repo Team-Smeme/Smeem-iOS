@@ -24,6 +24,8 @@
 
 import UIKit
 
+import SnapKit
+
 final class DiaryScrollerView: UIScrollView {
     
     // MARK: - Property
