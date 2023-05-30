@@ -33,6 +33,7 @@ final class HomeViewController: UIViewController {
         calendar.appearance.headerMinimumDissolvedAlpha = 0
         calendar.appearance.headerDateFormat = "YYYY년 M월"
         calendar.appearance.borderRadius = 0.4
+        calendar.register(CalendarCell.self, forCellReuseIdentifier: "cell")
         return calendar
     }()
     
@@ -82,7 +83,6 @@ final class HomeViewController: UIViewController {
         for i in 0...6 {
             calendar.calendarWeekdayView.weekdayLabels[i].text = weekdayLabels[i]
         }
-        calendar.register(CalendarCell.self, forCellReuseIdentifier: "cell")
     }
     
     private func setSwipe() {
