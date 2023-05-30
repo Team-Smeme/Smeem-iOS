@@ -62,14 +62,16 @@ final class CalendarCell: FSCalendarCell {
             self.rectangleImageView.image = nil
         case .single:
             self.rectangleImageView.image = UIImage(named: "monthday")
+            self.titleLabel.textColor = .smeemBlack
         }
         
         switch filledType {
         case .none:
-            self.titleLabel.textColor = .smeemBlack
+            self.titleLabel.textColor = (self.selectedType == .single)
+            ? .smeemBlack
+            : .gray400
         case .some:
             self.titleLabel.textColor = .smeemBlack
-            self.rectangleImageView.image = UIImage(named: "monthday")
         case .today:
             self.titleLabel.textColor = .smeemWhite
             self.rectangleImageView.image = UIImage(named: "monthToday")

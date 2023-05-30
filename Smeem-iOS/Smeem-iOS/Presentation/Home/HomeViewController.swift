@@ -16,7 +16,8 @@ final class HomeViewController: UIViewController {
     
     private let weekdayLabels = ["S", "M", "T", "W", "T", "F", "S"]
     private let gregorian = Calendar(identifier: .gregorian)
-    private var writtenDays: [String] = []
+    private var writtenDays = [Date]()
+    private var writtenDaysfromServer = ["2023-05-01","2023-05-03","2023-05-10","2023-05-15","2023-05-20","2023-05-23","2023-05-30","2023-05-31"]
     private let tmpText = ["I watched Avatar with my boyfriend at Hongdae CGV. I should have skimmed the previous season - Avatar1.. I really couldn’t get what they were saying and the universe(??). What I was annoyed then was 두팔 didn’t know that as me. I think 두팔 who is my boyfriend should study before wathcing…. but Avatar2 is amazing movie I think. In my personal opinion, the jjin main character of Avatar2 is not Sully, but his son.", "4 : 18 PM"]
     
     // MARK: - UI Property
@@ -101,12 +102,12 @@ final class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        hiddenNavigationBar()
         setBackgroundColor()
         setLayout()
         setDelegate()
         setSwipe()
         setData()
+        setEvents()
     }
     
     // MARK: - @objc
@@ -143,6 +144,15 @@ final class HomeViewController: UIViewController {
         diaryText.setTextWithLineHeight(lineHeight: 22)
     }
     
+    func setEvents() {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        
+        writtenDays = writtenDaysString
+            .map { dateFormatter.date(from: $0)! }
+    }
+    
     // MARK: - Layout
     
     private func setBackgroundColor() {
@@ -150,6 +160,8 @@ final class HomeViewController: UIViewController {
     }
     
     private func setLayout() {
+        hiddenNavigationBar()
+        
         view.addSubviews(calendar, indicator, border, diaryThumbnail)
         diaryThumbnail.addSubviews(diaryDate, fullViewButton, diaryText)
         fullViewButton.addSubviews(fullViewButtonText, fullViewButtonSymbol)
@@ -242,12 +254,10 @@ extension HomeViewController: FSCalendarDataSource {
     }
     
     private func checkDate(for date: Date) -> FilledType {
-        let formattedDate = ""
-        
         if gregorian.isDateInToday(date) {
             return .today
         } else {
-            return writtenDays.contains(formattedDate) ? .some : .none
+            return writtenDays.contains(date) ? .some : .none
         }
     }
     
