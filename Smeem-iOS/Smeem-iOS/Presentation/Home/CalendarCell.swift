@@ -38,10 +38,7 @@ final class CalendarCell: FSCalendarCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        let rectangleImageView = UIImageView(image: UIImage(named: "monthday"))
-        self.contentView.insertSubview(rectangleImageView, at: 0)
-        self.rectangleImageView = rectangleImageView
-        self.shapeLayer.isHidden = true
+        setBackgroundDefaultCell()
     }
     
     required init!(coder aDecoder: NSCoder!) {
@@ -55,27 +52,34 @@ final class CalendarCell: FSCalendarCell {
                            y: self.contentView.bounds.minY + 2.0,
                            width: width,
                            height: width)
-        self.rectangleImageView.frame = frame
+        rectangleImageView.frame = frame
         
         switch selectedType {
         case .not:
-            self.rectangleImageView.image = nil
+            rectangleImageView.image = nil
         case .single:
-            self.rectangleImageView.image = UIImage(named: "monthday")
-            self.titleLabel.textColor = .smeemBlack
+            titleLabel.textColor = .smeemBlack
+            rectangleImageView.image = UIImage(named: "monthday")
         }
         
         switch filledType {
         case .none:
-            self.titleLabel.textColor = (self.selectedType == .single)
+            titleLabel.textColor = (self.selectedType == .single)
             ? .smeemBlack
             : .gray400
         case .some:
-            self.titleLabel.textColor = .smeemBlack
+            titleLabel.textColor = .smeemBlack
         case .today:
-            self.titleLabel.textColor = .smeemWhite
-            self.rectangleImageView.image = UIImage(named: "monthToday")
+            titleLabel.textColor = .smeemWhite
+            rectangleImageView.image = UIImage(named: "monthToday")
         }
+    }
+    
+    func setBackgroundDefaultCell() {
+        let rectangleImageView = UIImageView(image: UIImage(named: "monthday"))
+        contentView.insertSubview(rectangleImageView, at: 0)
+        self.rectangleImageView = rectangleImageView
+        shapeLayer.isHidden = true
     }
     
     func configureUI(isSelected: Bool, with type: FilledType) {
