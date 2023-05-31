@@ -9,9 +9,19 @@ import UIKit
 
 import SnapKit
 
+//protocol InputTextFieldDelegate: AnyObject {
+//    func textViewDidChange(_ textView: UITextView)
+//}
+
+//protocol randumSujectViewProtocol: AnyObject {
+//    func configure(with viewModel: RandomSubjectViewModel)
+//}
+
 final class ForeignDiaryViewController: UIViewController {
     
     // MARK: - Property
+    
+    var isRandomTopic = false
     
     // MARK: - UI Property
     
@@ -32,7 +42,7 @@ final class ForeignDiaryViewController: UIViewController {
         button.addTarget(self, action: #selector(naviButtonDidTap), for: .touchUpInside)
         return button
     }()
-
+    
     private let languageLabel: UILabel = {
         let label = UILabel()
         label.font = .s2
@@ -51,20 +61,16 @@ final class ForeignDiaryViewController: UIViewController {
         return button
     }()
     
-    private var randomSubjectView: RandomSubjectView = {
-        let view = RandomSubjectView()
-//        view.configure(with: RandomSubjectViewModel(contentText: "", isHiddenRefreshButton: true))
-        return view
-    }()
-
-    private lazy var diaryTextView: UITextView = {
+    private var randomSubjectView = RandomSubjectView(frame: .zero)
+    
+    lazy var InputTextView: UITextView = {
         let textView = UITextView()
         textView.setLineSpacing()
         textView.textColor = .gray400
-//        textView.delegate = self
+        //        textView.delegate = self
         return textView
     }()
-
+    
     private let placeHolderLabel: UILabel = {
         let label = UILabel()
         label.text = "일기를 작성해주세요."
@@ -73,7 +79,7 @@ final class ForeignDiaryViewController: UIViewController {
         label.setTextWithLineHeight(lineHeight: 21)
         return label
     }()
-
+    
     private let bottomView: UIView = {
         let view = UIView()
         view.backgroundColor = .gray100
@@ -81,10 +87,9 @@ final class ForeignDiaryViewController: UIViewController {
     }()
     
     private let thinLine = SeparationLine(height: .thin)
-
+    
     private lazy var randomTopicButton: UIButton = {
         let button = UIButton()
-//        button.setImage(Constant.Image.btnRandomTopicCheckBox, for: .normal)
         button.addTarget(self, action: #selector(randomTopicButtonDidTap), for: .touchUpInside)
         button.backgroundColor = .point
         return button
@@ -103,7 +108,7 @@ final class ForeignDiaryViewController: UIViewController {
     // MARK: - @objc
     
     @objc func randomTopicButtonDidTap(_ gesture: UITapGestureRecognizer) {
-//        setRandomTopicButtonToggle()
+        setRandomTopicButtonToggle()
     }
     
     @objc func keyboardWillShow(_ notification: Notification) {
@@ -119,7 +124,7 @@ final class ForeignDiaryViewController: UIViewController {
     }
     
     @objc func completionButtonDidTap() {
-//        changeMainRootViewController()
+        //        changeMainRootViewController()
     }
     
     // MARK: - Custom Method
@@ -129,10 +134,10 @@ final class ForeignDiaryViewController: UIViewController {
     }
     
     private func setLayout() {
-        view.addSubviews(naviView, diaryTextView, bottomView)
+        view.addSubviews(naviView, InputTextView, bottomView)
         naviView.addSubview(navibarContentStackView)
         navibarContentStackView.addArrangedSubviews(cancelButton, languageLabel, completeButton)
-        diaryTextView.addSubview(placeHolderLabel)
+        InputTextView.addSubview(placeHolderLabel)
         bottomView.addSubviews(thinLine, randomTopicButton)
         
         naviView.snp.makeConstraints {
@@ -145,7 +150,7 @@ final class ForeignDiaryViewController: UIViewController {
             $0.leading.equalToSuperview().offset(convertByWidthRatio(18))
         }
         
-        diaryTextView.snp.makeConstraints {
+        InputTextView.snp.makeConstraints {
             $0.top.equalTo(naviView.snp.bottom).offset(convertByHeightRatio(10))
             $0.centerX.equalToSuperview()
             $0.leading.equalTo(navibarContentStackView)
@@ -153,7 +158,8 @@ final class ForeignDiaryViewController: UIViewController {
         }
         
         placeHolderLabel.snp.makeConstraints {
-            $0.top.leading.equalToSuperview()
+            $0.centerY.equalTo(InputTextView.textInputView)
+            $0.leading.equalTo(InputTextView)
         }
         
         bottomView.snp.makeConstraints {
@@ -170,8 +176,81 @@ final class ForeignDiaryViewController: UIViewController {
             $0.trailing.equalToSuperview().offset(convertByWidthRatio(-30))
         }
     }
+    
+    private func setRandomTopicButtonToggle() {
+        isRandomTopic.toggle()
+        if isRandomTopic {
+            
+            view.addSubview(randomSubjectView)
+            randomSubjectView.snp.makeConstraints {
+                $0.top.equalTo(naviView.snp.bottom).offset(16)
+                $0.leading.equalToSuperview()
+            }
+            
+            InputTextView.snp.remakeConstraints {
+                $0.top.equalTo(randomSubjectView.snp.bottom).offset(9)
+                $0.leading.trailing.equalToSuperview().inset(18)
+                $0.bottom.equalTo(bottomView.snp.top)
+            }
+            
+        } else {
+            randomSubjectView.removeFromSuperview()
+            
+            InputTextView.snp.remakeConstraints {
+                $0.top.equalTo(naviView.snp.bottom).offset(9)
+                $0.leading.trailing.equalToSuperview().inset(18)
+                $0.bottom.equalTo(bottomView.snp.top)
+            }
+        }
+    }
+    
+    private func characterValidation() -> Bool {
+        while InputTextView.text.getArrayAfterRegex(regex: "[a-zA-z]").count > 9 {
+            return true
+        }
+        return false
+    }
+    
+    private func keyboardAddObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow),
+                                               name: UIResponder.keyboardWillShowNotification, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide),
+                                               name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    private func keyboardRemoveObserver() {
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
 }
 
 // MARK: - UITextViewDelegate
+
+extension ForeignDiaryViewController: UITextViewDelegate {
+    
+    func textViewDidChange(_ textView: UITextView) {
+        if textView.text.isEmpty {
+            placeHolderLabel.isHidden = false
+            textView.textColor = .smeemBlack
+            textView.font = .b4
+            textView.setLineSpacing()
+            textView.tintColor = .clear
+        } else {
+            placeHolderLabel.isHidden = true
+            textView.font = .b4
+            textView.setLineSpacing()
+            textView.tintColor = .point
+            completeButton.isEnabled = false
+            
+            if characterValidation() == true {
+                completeButton.isEnabled = true
+                completeButton.setTitleColor(.smeemBlack, for: .normal)
+            } else {
+                completeButton.setTitleColor(.gray400, for: .normal)
+            }
+        }
+    }
+}
 
 // MARK: - Network
