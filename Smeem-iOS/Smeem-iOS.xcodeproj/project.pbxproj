@@ -36,14 +36,11 @@
 		4A0EA4602A014139006CCE52 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EA45F2A014139006CCE52 /* Service.swift */; };
 		4A0EA4622A01413D006CCE52 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EA4612A01413D006CCE52 /* DataModel.swift */; };
 		4A0EA4642A014710006CCE52 /* SmeemButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EA4632A014710006CCE52 /* SmeemButton.swift */; };
-		4A13B7592A13D37000F4FB1E /* UserNickNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A13B7582A13D37000F4FB1E /* UserNickNameViewController.swift */; };
 		4A3F2E972A0ABBAA00F6AC60 /* AlarmCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3F2E962A0ABBAA00F6AC60 /* AlarmCollectionViewCell.swift */; };
 		4A3F2E9C2A0B4C7100F6AC60 /* AlarmCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3F2E9B2A0B4C7100F6AC60 /* AlarmCollectionView.swift */; };
 		4A3F2EA02A0C18B600F6AC60 /* DatePickerFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3F2E9F2A0C18B600F6AC60 /* DatePickerFooterView.swift */; };
 		4A47164D29F8EB2600CBE9C8 /* KakaoSDKUser in Frameworks */ = {isa = PBXBuildFile; productRef = 4A47164C29F8EB2600CBE9C8 /* KakaoSDKUser */; };
 		4A47164F29F907FE00CBE9C8 /* Shared.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 4A47164E29F907FE00CBE9C8 /* Shared.xcconfig */; };
-		4A8275D32A1513120083A4AB /* ServiceAcceptViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8275D22A1513120083A4AB /* ServiceAcceptViewController.swift */; };
-		4A8275D52A1519550083A4AB /* ServiceAcceptCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8275D42A1519550083A4AB /* ServiceAcceptCollectionViewCell.swift */; };
 		4A8FFA5029C9E1FD00FB76C0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8FFA4F29C9E1FD00FB76C0 /* AppDelegate.swift */; };
 		4A8FFA5229C9E1FD00FB76C0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8FFA5129C9E1FD00FB76C0 /* SceneDelegate.swift */; };
 		4A8FFA5929C9E1FE00FB76C0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A8FFA5829C9E1FE00FB76C0 /* Assets.xcassets */; };
@@ -56,11 +53,16 @@
 		4AD923E72A0650B600FF5E27 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD923E62A0650B600FF5E27 /* SplashViewController.swift */; };
 		4AD923E92A0692C600FF5E27 /* BottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD923E82A0692C600FF5E27 /* BottomSheetViewController.swift */; };
 		4AD923EB2A0692EA00FF5E27 /* BottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD923EA2A0692EA00FF5E27 /* BottomSheetView.swift */; };
-		4AEFD4C52A136EE100DAB2BD /* HowOnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEFD4C42A136EE100DAB2BD /* HowOnboardingViewController.swift */; };
-		4AEFD4C82A13908E00DAB2BD /* AlarmSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEFD4C72A13908E00DAB2BD /* AlarmSettingViewController.swift */; };
-		4AEFD4CA2A1392DF00DAB2BD /* HowLearningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEFD4C92A1392DF00DAB2BD /* HowLearningView.swift */; };
-		4AF507752A10CD4D007C62B1 /* GoalOnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF507742A10CD4D007C62B1 /* GoalOnboardingViewController.swift */; };
-		4AF507772A10CD96007C62B1 /* GoalCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF507762A10CD96007C62B1 /* GoalCollectionViewCell.swift */; };
+		6F294A3E2A26177B00856CC8 /* GoalOnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF507742A10CD4D007C62B1 /* GoalOnboardingViewController.swift */; };
+		6F294A3F2A26177E00856CC8 /* GoalCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF507762A10CD96007C62B1 /* GoalCollectionViewCell.swift */; };
+		6F294A402A26178300856CC8 /* HowOnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEFD4C42A136EE100DAB2BD /* HowOnboardingViewController.swift */; };
+		6F294A412A26178600856CC8 /* AlarmSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEFD4C72A13908E00DAB2BD /* AlarmSettingViewController.swift */; };
+		6F294A422A26178C00856CC8 /* UserNickNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A13B7582A13D37000F4FB1E /* UserNickNameViewController.swift */; };
+		6F294A432A26179700856CC8 /* ServiceAcceptViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8275D22A1513120083A4AB /* ServiceAcceptViewController.swift */; };
+		6F294A442A26179900856CC8 /* ServiceAcceptCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8275D42A1519550083A4AB /* ServiceAcceptCollectionViewCell.swift */; };
+		6F294A452A2617B000856CC8 /* UITextField+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD04B382A190020004B7A58 /* UITextField+.swift */; };
+		6F294A462A2617D500856CC8 /* HowLearningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEFD4C92A1392DF00DAB2BD /* HowLearningView.swift */; };
+		6F31802F2A24D1DB00089870 /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F31802E2A24D1DB00089870 /* CalendarCell.swift */; };
 		6F62668C2A04EA3B000365CD /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F62668B2A04EA3B000365CD /* HomeViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -117,6 +119,7 @@
 		4AEFD4C92A1392DF00DAB2BD /* HowLearningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HowLearningView.swift; sourceTree = "<group>"; };
 		4AF507742A10CD4D007C62B1 /* GoalOnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalOnboardingViewController.swift; sourceTree = "<group>"; };
 		4AF507762A10CD96007C62B1 /* GoalCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalCollectionViewCell.swift; sourceTree = "<group>"; };
+		6F31802E2A24D1DB00089870 /* CalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCell.swift; sourceTree = "<group>"; };
 		6F62668B2A04EA3B000365CD /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -407,6 +410,7 @@
 			isa = PBXGroup;
 			children = (
 				6F62668B2A04EA3B000365CD /* HomeViewController.swift */,
+				6F31802E2A24D1DB00089870 /* CalendarCell.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -505,30 +509,32 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4AEFD4C82A13908E00DAB2BD /* AlarmSettingViewController.swift in Sources */,
+				6F294A3E2A26177B00856CC8 /* GoalOnboardingViewController.swift in Sources */,
+				6F294A402A26178300856CC8 /* HowOnboardingViewController.swift in Sources */,
 				37A574C529FF6EA800312453 /* FontLiterals.swift in Sources */,
-				4AEFD4C52A136EE100DAB2BD /* HowOnboardingViewController.swift in Sources */,
-				4AF507772A10CD96007C62B1 /* GoalCollectionViewCell.swift in Sources */,
 				4AD923E92A0692C600FF5E27 /* BottomSheetViewController.swift in Sources */,
-				4AEFD4CA2A1392DF00DAB2BD /* HowLearningView.swift in Sources */,
+				6F294A462A2617D500856CC8 /* HowLearningView.swift in Sources */,
 				37A574CC29FF990E00312453 /* UIViewController+.swift in Sources */,
 				37A574C329FF6E9C00312453 /* ImageLiterals.swift in Sources */,
 				4A3F2EA02A0C18B600F6AC60 /* DatePickerFooterView.swift in Sources */,
 				4AD04B3D2A190E9A004B7A58 /* UITextView+.swift in Sources */,
 				4A0EA4622A01413D006CCE52 /* DataModel.swift in Sources */,
 				37CD0DB52A1DEE64001F03E7 /* ForeignDiaryViewController.swift in Sources */,
+				6F31802F2A24D1DB00089870 /* CalendarCell.swift in Sources */,
 				4A3F2E972A0ABBAA00F6AC60 /* AlarmCollectionViewCell.swift in Sources */,
+				6F294A412A26178600856CC8 /* AlarmSettingViewController.swift in Sources */,
 				6F62668C2A04EA3B000365CD /* HomeViewController.swift in Sources */,
 				4AD04B3B2A1905BB004B7A58 /* DiaryScrollerView.swift in Sources */,
 				4A3F2E9C2A0B4C7100F6AC60 /* AlarmCollectionView.swift in Sources */,
 				4A0EA4572A01403E006CCE52 /* MoyaLoggingPlugin.swift in Sources */,
 				4A0E8D5829F8362E00E0FC23 /* AuthViewController.swift in Sources */,
-				4AD04B392A190020004B7A58 /* UITextField+.swift in Sources */,
+				6F294A452A2617B000856CC8 /* UITextField+.swift in Sources */,
 				37A574C829FF6F1C00312453 /* UIView+.swift in Sources */,
 				37A574D029FF9AEE00312453 /* UILabel+.swift in Sources */,
 				37A574CE29FF9A2D00312453 /* UIScreen+.swift in Sources */,
 				4A0EA4602A014139006CCE52 /* Service.swift in Sources */,
 				4A0EA4592A014103006CCE52 /* URLConstant.swift in Sources */,
+				6F294A432A26179700856CC8 /* ServiceAcceptViewController.swift in Sources */,
 				4AD04B402A1921AE004B7A58 /* CorrectionViewController.swift in Sources */,
 				4A8275D32A1513120083A4AB /* ServiceAcceptViewController.swift in Sources */,
 				4AD923E72A0650B600FF5E27 /* SplashViewController.swift in Sources */,
@@ -538,14 +544,14 @@
 				4A8FFA5029C9E1FD00FB76C0 /* AppDelegate.swift in Sources */,
 				37A574C129FF6E9100312453 /* ColorLiterals.swift in Sources */,
 				37A574CA29FF980F00312453 /* UIStackView+.swift in Sources */,
-				4A13B7592A13D37000F4FB1E /* UserNickNameViewController.swift in Sources */,
+				6F294A422A26178C00856CC8 /* UserNickNameViewController.swift in Sources */,
 				4A0EA45E2A014134006CCE52 /* API.swift in Sources */,
-				4A8275D52A1519550083A4AB /* ServiceAcceptCollectionViewCell.swift in Sources */,
+				6F294A442A26179900856CC8 /* ServiceAcceptCollectionViewCell.swift in Sources */,
+				6F294A3F2A26177E00856CC8 /* GoalCollectionViewCell.swift in Sources */,
 				37A574E62A02178D00312453 /* CustomToastView.swift in Sources */,
 				4A8FFA5229C9E1FD00FB76C0 /* SceneDelegate.swift in Sources */,
 				37A574E82A02424F00312453 /* RandomSubjectView.swift in Sources */,
 				4A0EA4642A014710006CCE52 /* SmeemButton.swift in Sources */,
-				4AF507752A10CD4D007C62B1 /* GoalOnboardingViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
