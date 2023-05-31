@@ -139,6 +139,13 @@ final class HomeViewController: UIViewController {
         return xButton
     }()
     
+    private lazy var myPageButton: UIButton = {
+        let myPageButton = UIButton()
+        myPageButton.setImage(UIImage(named: "icn_mypage"), for: .normal)
+        myPageButton.addTarget(self, action: #selector(self.myPageButtonDidTap(_:)), for: .touchUpInside)
+        return myPageButton
+    }()
+    
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -165,7 +172,11 @@ final class HomeViewController: UIViewController {
     }
 
     @objc func fullViewButtonDidTap(_ gesture: UITapGestureRecognizer) {
-        // 뷰 이동
+        // 뷰 이동 - 상세일기
+    }
+    
+    @objc func myPageButtonDidTap(_ sender: UIButton) {
+        // 뷰 이동 - 마이페이지
     }
     
     @objc func xButtonDidTap(_ sender: UIButton) {
@@ -219,7 +230,7 @@ final class HomeViewController: UIViewController {
     private func setLayout() {
         hiddenNavigationBar()
         
-        view.addSubviews(calendar, indicator, border, diaryThumbnail, emptyView, floatingView)
+        view.addSubviews(calendar, myPageButton, indicator, border, diaryThumbnail, emptyView, floatingView)
         diaryThumbnail.addSubviews(diaryDate, fullViewButton, diaryText)
         fullViewButton.addSubviews(fullViewButtonText, fullViewButtonSymbol)
         emptyView.addSubviews(emptySymbol, emptyText)
@@ -227,9 +238,15 @@ final class HomeViewController: UIViewController {
         
         calendar.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
-            $0.leading.equalToSuperview().offset(convertByWidthRatio(19))
-            $0.trailing.equalToSuperview().offset(-convertByWidthRatio(19))
+            $0.leading.equalToSuperview().offset(convertByWidthRatio(15))
+            $0.trailing.equalToSuperview().offset(-convertByWidthRatio(15))
             $0.height.equalTo(convertByWidthRatio(422))
+        }
+        
+        myPageButton.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(convertByHeightRatio(66)/2-convertByHeightRatio(40)/2)
+            $0.trailing.equalToSuperview().offset(-convertByWidthRatio(18))
+            $0.width.height.equalTo(convertByHeightRatio(40))
         }
         
         indicator.snp.makeConstraints {
