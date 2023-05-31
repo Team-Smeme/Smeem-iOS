@@ -19,6 +19,7 @@ final class HomeViewController: UIViewController {
     private var writtenDays = [Date]()
     private var writtenDaysfromServer = ["2023-05-01","2023-05-03","2023-05-10","2023-05-15","2023-05-20","2023-05-23","2023-05-30","2023-05-31"]
     private let tmpText = ["I watched Avatar with my boyfriend at Hongdae CGV. I should have skimmed the previous season - Avatar1.. I really couldn’t get what they were saying and the universe(??). What I was annoyed then was 두팔 didn’t know that as me. I think 두팔 who is my boyfriend should study before wathcing…. but Avatar2 is amazing movie I think. In my personal opinion, the jjin main character of Avatar2 is not Sully, but his son.", "4 : 18 PM"]
+    private var isWating30days = true
     
     // MARK: - UI Property
     
@@ -108,6 +109,36 @@ final class HomeViewController: UIViewController {
         return emptyText
     }()
     
+    private let floatingView: UIView = {
+        let floatingView = UIView()
+        floatingView.backgroundColor = .gray100
+        floatingView.layer.cornerRadius = 10
+        return floatingView
+    }()
+    
+    private let waitingLabel: UILabel = {
+        let waitingLabel = UILabel()
+        waitingLabel.text = "30일 전의 일기가 기다리고 있어요!"
+        waitingLabel.font = .s1
+        waitingLabel.textColor = .smeemBlack
+        return waitingLabel
+    }()
+    
+    private let adviceLabel: UILabel = {
+        let adviceLabel = UILabel()
+        adviceLabel.text = "이전 일기를 첨삭하고 더 어쩌구 해보세요"
+        adviceLabel.font = .c3
+        adviceLabel.textColor = .smeemBlack
+        return adviceLabel
+    }()
+    
+    private lazy var xButton: UIButton = {
+        let xButton = UIButton()
+        xButton.setImage(UIImage(named: "icnCancelGrey"), for: .normal)
+        xButton.addTarget(self, action: #selector(self.xButtonDidTap(_:)), for: .touchUpInside)
+        return xButton
+    }()
+    
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -119,6 +150,10 @@ final class HomeViewController: UIViewController {
         setSwipe()
         setData()
         setEvents()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        floatingView.isHidden = !isWating30days
     }
     
     // MARK: - @objc
@@ -176,10 +211,11 @@ final class HomeViewController: UIViewController {
     private func setLayout() {
         hiddenNavigationBar()
         
-        view.addSubviews(calendar, indicator, border, diaryThumbnail, emptyView)
+        view.addSubviews(calendar, indicator, border, diaryThumbnail, emptyView, floatingView)
         diaryThumbnail.addSubviews(diaryDate, fullViewButton, diaryText)
         fullViewButton.addSubviews(fullViewButtonText, fullViewButtonSymbol)
         emptyView.addSubviews(emptySymbol, emptyText)
+        floatingView.addSubviews(waitingLabel, adviceLabel, xButton)
         
         calendar.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
@@ -251,6 +287,29 @@ final class HomeViewController: UIViewController {
         emptyText.snp.makeConstraints {
             $0.top.equalTo(emptySymbol.snp.bottom).offset(convertByHeightRatio(16))
             $0.centerX.equalToSuperview()
+        }
+        
+        floatingView.snp.makeConstraints {
+            $0.bottom.equalToSuperview().inset(convertByHeightRatio(50))
+            $0.centerX.equalToSuperview()
+            $0.width.equalTo(convertByWidthRatio(339))
+            $0.height.equalTo(convertByHeightRatio(88))
+        }
+        
+        waitingLabel.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(convertByHeightRatio(22))
+            $0.leading.equalToSuperview().offset(convertByWidthRatio(18))
+        }
+        
+        adviceLabel.snp.makeConstraints {
+            $0.bottom.equalToSuperview().offset(-convertByHeightRatio(24))
+            $0.leading.equalTo(waitingLabel.snp.leading)
+        }
+        
+        xButton.snp.makeConstraints {
+            $0.trailing.equalToSuperview().offset(-convertByWidthRatio(8))
+            $0.centerY.equalToSuperview()
+            $0.width.height.equalTo(40)
         }
     }
 }
