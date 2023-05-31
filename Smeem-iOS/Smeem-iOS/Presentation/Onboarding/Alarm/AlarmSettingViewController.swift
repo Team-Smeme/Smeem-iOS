@@ -5,6 +5,7 @@
 //  Created by 황찬미 on 2023/05/16.
 //
 
+import AppTrackingTransparency
 import UIKit
 
 final class AlarmSettingViewController: UIViewController {
@@ -70,14 +71,14 @@ final class AlarmSettingViewController: UIViewController {
         button.setTitle("나중에 설정하기", for: .normal)
         button.setTitleColor(.gray600, for: .normal)
         button.titleLabel?.font = .b4
-        button.addTarget(self, action: #selector(requestNotificationPermission), for: .touchUpInside)
+        button.addTarget(self, action: #selector(nextButtonDidTap), for: .touchUpInside)
         return button
     }()
     
     private lazy var completeButton: SmeemButton = {
         let button = SmeemButton()
         button.setTitle("완료", for: .normal)
-        button.addTarget(self, action: #selector(requestNotificationPermission), for: .touchUpInside)
+        button.addTarget(self, action: #selector(nextButtonDidTap), for: .touchUpInside)
         return button
     }()
     
@@ -94,19 +95,46 @@ final class AlarmSettingViewController: UIViewController {
     
     // MARK: - @objc
     
-    @objc func requestNotificationPermission(){
+    @objc func nextButtonDidTap(){
+        requestNotificationPermission()
+    }
+    
+    // MARK: - Custom Method
+    
+    func requestNotificationPermission(){
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert,.sound,.badge], completionHandler: { didAllow, error in
             if didAllow {
                 print("Push: 권한 허용")
                 self.isAlarm = true
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+                    self.requestTrackingAuthoriaztion()
+                }
             } else {
                 print("Push: 권한 거부")
                 self.isAlarm = false
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+                    self.requestTrackingAuthoriaztion()
+                }
             }
         })
     }
     
-    // MARK: - Custom Method
+    func requestTrackingAuthoriaztion() {
+        ATTrackingManager.requestTrackingAuthorization { status in
+            switch status {
+            case .authorized:
+                print("성공")
+            case .denied:
+                print("해당 앱 추적 권한 거부 또는 아이폰 설정 -> 개인정보보호 -> 추적 거부 상태")
+            case .notDetermined:
+                print("승인 요청을 받기 전 상태값")
+            case .restricted:
+                print("앱 추적 데이터 사용 권한이 제한된 경우")
+            default:
+                print("에러 처리")
+            }
+        }
+    }
     
     // MARK: - Layout
     
