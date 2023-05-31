@@ -168,6 +168,14 @@ final class HomeViewController: UIViewController {
         // 뷰 이동
     }
     
+    @objc func xButtonDidTap(_ sender: UIButton) {
+        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
+            self.floatingView.alpha = 0.0
+        }, completion: {_ in
+            self.floatingView.removeFromSuperview()
+        })
+    }
+    
     // MARK: - Custom Method
     
     private func setDelegate() {
