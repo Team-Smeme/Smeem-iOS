@@ -25,6 +25,19 @@ extension UIViewController {
         view.endEditing(true)
     }
     
+    /// 키보드의 높이에 따라 해당 customView 위치를 변경해 주는 메서드(SE 기기대응 포함)
+    func handleKeyboardChanged(notification: Notification, customView: UIView, isActive: Bool) {
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            let keyboardHeight = keyboardRectangle.height
+            let safeAreaHeight = self.view.safeAreaInsets.bottom
+            
+            UIView.animate(withDuration: 1) {
+                customView.transform = UIScreen.main.hasNotch ? (isActive ? CGAffineTransform(translationX: 0, y: -(keyboardHeight - safeAreaHeight)) : .identity) : (isActive ? CGAffineTransform(translationX: 0, y: -keyboardHeight) : .identity)
+            }
+        }
+    }
+    
     func getDeviceWidth() -> CGFloat {
         return UIScreen.main.bounds.width
     }
