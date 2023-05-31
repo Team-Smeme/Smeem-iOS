@@ -109,10 +109,12 @@ final class HomeViewController: UIViewController {
         return emptyText
     }()
     
-    private let floatingView: UIView = {
+    private lazy var floatingView: UIView = {
         let floatingView = UIView()
         floatingView.backgroundColor = .gray100
         floatingView.layer.cornerRadius = 10
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(floatingViewDidTap(_:)))
+        floatingView.addGestureRecognizer(tapGesture)
         return floatingView
     }()
     
@@ -175,6 +177,10 @@ final class HomeViewController: UIViewController {
         // 뷰 이동 - 상세일기
     }
     
+    @objc func floatingViewDidTap(_ gesture: UITapGestureRecognizer) {
+        // 뷰 이동 - 30일 전 상세일기
+    }
+    
     @objc func myPageButtonDidTap(_ sender: UIButton) {
         // 뷰 이동 - 마이페이지
     }
@@ -230,11 +236,11 @@ final class HomeViewController: UIViewController {
     private func setLayout() {
         hiddenNavigationBar()
         
-        view.addSubviews(calendar, myPageButton, indicator, border, diaryThumbnail, emptyView, floatingView)
+        view.addSubviews(calendar, myPageButton, indicator, border, diaryThumbnail, emptyView, floatingView, xButton)
         diaryThumbnail.addSubviews(diaryDate, fullViewButton, diaryText)
         fullViewButton.addSubviews(fullViewButtonText, fullViewButtonSymbol)
         emptyView.addSubviews(emptySymbol, emptyText)
-        floatingView.addSubviews(waitingLabel, adviceLabel, xButton)
+        floatingView.addSubviews(waitingLabel, adviceLabel)
         
         calendar.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
@@ -332,9 +338,9 @@ final class HomeViewController: UIViewController {
         }
         
         xButton.snp.makeConstraints {
-            $0.trailing.equalToSuperview().offset(-convertByWidthRatio(8))
-            $0.centerY.equalToSuperview()
-            $0.width.height.equalTo(40)
+            $0.trailing.equalToSuperview().offset(-convertByWidthRatio(26))
+            $0.centerY.equalTo(floatingView.snp.centerY)
+            $0.width.height.equalTo(convertByWidthRatio(40))
         }
     }
 }
