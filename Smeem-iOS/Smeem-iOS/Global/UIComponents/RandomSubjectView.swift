@@ -19,7 +19,7 @@ import SnapKit
 
 class RandomSubjectView: UIView {
     
-    //MARK: - UI Property
+    // MARK: - UI Property
     
     private let questionLabel: UILabel = {
         let label = UILabel()
@@ -48,7 +48,7 @@ class RandomSubjectView: UIView {
         return button
     }()
     
-    //MARK:  - init
+    // MARK: - Life Cycle
     
     override init(frame: CGRect) {
         super.init(frame: .zero)
@@ -64,7 +64,7 @@ class RandomSubjectView: UIView {
 
 extension RandomSubjectView {
     
-    //MARK: - Custom Functions
+    // MARK: - Custom Functions
     
     private func setRandomSubjectViewUI() {
         backgroundColor = .gray100

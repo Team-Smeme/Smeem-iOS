@@ -25,7 +25,6 @@
 		37A574E62A02178D00312453 /* CustomToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574E52A02178D00312453 /* CustomToastView.swift */; };
 		37A574E82A02424F00312453 /* RandomSubjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574E72A02424F00312453 /* RandomSubjectView.swift */; };
 		37CD0DB52A1DEE64001F03E7 /* ForeignDiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37CD0DB42A1DEE64001F03E7 /* ForeignDiaryViewController.swift */; };
-		37CD0DB72A1DF3E9001F03E7 /* UITextView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37CD0DB62A1DF3E9001F03E7 /* UITextView+.swift */; };
 		4A0E8D5429F8346600E0FC23 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 4A0E8D5329F8346600E0FC23 /* FirebaseAnalyticsWithoutAdIdSupport */; };
 		4A0E8D5629F8346600E0FC23 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 4A0E8D5529F8346600E0FC23 /* FirebaseMessaging */; };
 		4A0E8D5829F8362E00E0FC23 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0E8D5729F8362E00E0FC23 /* AuthViewController.swift */; };
@@ -543,7 +542,6 @@
 				4A0EA45E2A014134006CCE52 /* API.swift in Sources */,
 				4A8275D52A1519550083A4AB /* ServiceAcceptCollectionViewCell.swift in Sources */,
 				37A574E62A02178D00312453 /* CustomToastView.swift in Sources */,
-				37CD0DB72A1DF3E9001F03E7 /* UITextView+.swift in Sources */,
 				4A8FFA5229C9E1FD00FB76C0 /* SceneDelegate.swift in Sources */,
 				37A574E82A02424F00312453 /* RandomSubjectView.swift in Sources */,
 				4A0EA4642A014710006CCE52 /* SmeemButton.swift in Sources */,

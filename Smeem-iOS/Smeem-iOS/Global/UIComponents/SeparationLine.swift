@@ -35,11 +35,7 @@ class SeparationLine: UIView {
     
     // MARK: - Life Cycle
     
-    convenience init() {
-        self.init(height: .thin)
-    }
-    
-    init(height: LineHeight) {
+    init(height: LineHeight = .thin) {
         self.height = height
         super.init(frame: .zero)
         setColors()
