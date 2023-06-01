@@ -9,23 +9,36 @@ import UIKit
 
 import SnapKit
 
-//protocol InputTextFieldDelegate: AnyObject {
-//    func textViewDidChange(_ textView: UITextView)
-//}
-
-//protocol randumSujectViewProtocol: AnyObject {
-//    func configure(with viewModel: RandomSubjectViewModel)
-//}
-
 final class ForeignDiaryViewController: UIViewController {
     
     // MARK: - Property
     
-    var isRandomTopic = false
+    private var randomTopicEnabled: Bool = false {
+        didSet {
+            if randomTopicEnabled {
+                view.addSubview(randomSubjectView)
+                randomSubjectView.snp.makeConstraints {
+                    $0.top.equalTo(naviView.snp.bottom).offset(convertByHeightRatio(16))
+                    $0.leading.equalToSuperview()
+                }
+            } else {
+                randomSubjectView.removeFromSuperview()
+            }
+            
+            inputTextView.snp.remakeConstraints {
+                $0.top.equalTo(randomTopicEnabled ? randomSubjectView.snp.bottom : naviView.snp.bottom).offset(convertByHeightRatio(9))
+                $0.leading.trailing.equalToSuperview().inset(convertByWidthRatio(18))
+                $0.bottom.equalTo(bottomView.snp.top)
+            }
+            view.layoutIfNeeded()
+        }
+    }
     
     // MARK: - UI Property
     
     private let naviView = UIView()
+    private lazy var randomSubjectView = RandomSubjectView()
+    
     private let navibarContentStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.alignment = .center
@@ -53,21 +66,20 @@ final class ForeignDiaryViewController: UIViewController {
     
     private lazy var completeButton: UIButton = {
         let button = UIButton()
-        button.titleLabel?.font = .b4
-        button.setTitleColor(.gray400, for: .normal)
+        button.titleLabel?.font = .b1
+        button.setTitleColor(.gray300, for: .normal)
         button.setTitle("완료", for: .normal)
-        button.addTarget(self, action: #selector(completionButtonDidTap), for: .touchUpInside)
         button.isEnabled = false
         return button
     }()
     
-    private var randomSubjectView = RandomSubjectView()
-    
-    lazy var InputTextView: UITextView = {
+    lazy var inputTextView: UITextView = {
         let textView = UITextView()
         textView.setLineSpacing()
-        textView.textColor = .gray400
-        //        textView.delegate = self
+        textView.textColor = .smeemBlack
+        textView.font = .b4
+        textView.tintColor = .point
+        textView.delegate = self
         return textView
     }()
     
@@ -97,6 +109,11 @@ final class ForeignDiaryViewController: UIViewController {
     
     // MARK: - Life Cycle
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        inputTextView.becomeFirstResponder()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -111,20 +128,8 @@ final class ForeignDiaryViewController: UIViewController {
         setRandomTopicButtonToggle()
     }
     
-    @objc func keyboardWillShow(_ notification: Notification) {
-        handleKeyboardChanged(notification: notification, customView: bottomView, isActive: true)
-    }
-    
-    @objc func keyboardWillHide(_ notification: Notification) {
-        handleKeyboardChanged(notification: notification, customView: bottomView, isActive: false)
-    }
-    
     @objc func naviButtonDidTap() {
         self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
-    }
-    
-    @objc func completionButtonDidTap() {
-        //        changeMainRootViewController()
     }
     
     // MARK: - Custom Method
@@ -133,11 +138,24 @@ final class ForeignDiaryViewController: UIViewController {
         view.backgroundColor = .smeemWhite
     }
     
+    private func setRandomTopicButtonToggle() {
+        randomTopicEnabled.toggle()
+    }
+    
+    private func characterValidation() -> Bool {
+        while inputTextView.text.getArrayAfterRegex(regex: "[a-zA-z]").count > 9 {
+            return true
+        }
+        return false
+    }
+    
+    //MARK: - Layout
+    
     private func setLayout() {
-        view.addSubviews(naviView, InputTextView, bottomView)
+        view.addSubviews(naviView, inputTextView, bottomView)
         naviView.addSubview(navibarContentStackView)
         navibarContentStackView.addArrangedSubviews(cancelButton, languageLabel, completeButton)
-        InputTextView.addSubview(placeHolderLabel)
+        inputTextView.addSubview(placeHolderLabel)
         bottomView.addSubviews(thinLine, randomTopicButton)
         
         naviView.snp.makeConstraints {
@@ -150,7 +168,7 @@ final class ForeignDiaryViewController: UIViewController {
             $0.leading.equalToSuperview().offset(convertByWidthRatio(18))
         }
         
-        InputTextView.snp.makeConstraints {
+        inputTextView.snp.makeConstraints {
             $0.top.equalTo(naviView.snp.bottom).offset(convertByHeightRatio(10))
             $0.centerX.equalToSuperview()
             $0.leading.equalTo(navibarContentStackView)
@@ -158,7 +176,7 @@ final class ForeignDiaryViewController: UIViewController {
         }
         
         placeHolderLabel.snp.makeConstraints {
-            $0.centerY.equalTo(InputTextView.textInputView).offset(-1)
+            $0.centerY.equalTo(inputTextView.textInputView).offset(-1)
             $0.leading.equalToSuperview().offset(convertByWidthRatio(5))
         }
         
@@ -176,53 +194,6 @@ final class ForeignDiaryViewController: UIViewController {
             $0.trailing.equalToSuperview().offset(convertByWidthRatio(-30))
         }
     }
-    
-    private func setRandomTopicButtonToggle() {
-        isRandomTopic.toggle()
-        if isRandomTopic {
-            
-            view.addSubview(randomSubjectView)
-            randomSubjectView.snp.makeConstraints {
-                $0.top.equalTo(naviView.snp.bottom).offset(16)
-                $0.leading.equalToSuperview()
-            }
-            
-            InputTextView.snp.remakeConstraints {
-                $0.top.equalTo(randomSubjectView.snp.bottom).offset(9)
-                $0.leading.trailing.equalToSuperview().inset(18)
-                $0.bottom.equalTo(bottomView.snp.top)
-            }
-            
-        } else {
-            randomSubjectView.removeFromSuperview()
-            
-            InputTextView.snp.remakeConstraints {
-                $0.top.equalTo(naviView.snp.bottom).offset(9)
-                $0.leading.trailing.equalToSuperview().inset(18)
-                $0.bottom.equalTo(bottomView.snp.top)
-            }
-        }
-    }
-    
-    private func characterValidation() -> Bool {
-        while InputTextView.text.getArrayAfterRegex(regex: "[a-zA-z]").count > 9 {
-            return true
-        }
-        return false
-    }
-    
-    private func keyboardAddObserver() {
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow),
-                                               name: UIResponder.keyboardWillShowNotification, object: nil)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide),
-                                               name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-    
-    private func keyboardRemoveObserver() {
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
 }
 
 // MARK: - UITextViewDelegate
@@ -230,26 +201,10 @@ final class ForeignDiaryViewController: UIViewController {
 extension ForeignDiaryViewController: UITextViewDelegate {
     
     func textViewDidChange(_ textView: UITextView) {
-        if textView.text.isEmpty {
-            placeHolderLabel.isHidden = false
-            textView.textColor = .smeemBlack
-            textView.font = .b4
-            textView.setLineSpacing()
-            textView.tintColor = .clear
-        } else {
-            placeHolderLabel.isHidden = true
-            textView.font = .b4
-            textView.setLineSpacing()
-            textView.tintColor = .point
-            completeButton.isEnabled = false
-            
-            if characterValidation() == true {
-                completeButton.isEnabled = true
-                completeButton.setTitleColor(.smeemBlack, for: .normal)
-            } else {
-                completeButton.setTitleColor(.gray400, for: .normal)
-            }
-        }
+        let isTextEmpty = textView.text.isEmpty
+        placeHolderLabel.isHidden = !isTextEmpty
+        completeButton.isEnabled = characterValidation()
+        completeButton.setTitleColor(completeButton.isEnabled ? .point : .gray400, for: .normal)
     }
 }
 
