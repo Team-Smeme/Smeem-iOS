@@ -15,21 +15,8 @@ final class ForeignDiaryViewController: UIViewController {
     
     private var randomTopicEnabled: Bool = false {
         didSet {
-            if randomTopicEnabled {
-                view.addSubview(randomSubjectView)
-                randomSubjectView.snp.makeConstraints {
-                    $0.top.equalTo(naviView.snp.bottom).offset(convertByHeightRatio(16))
-                    $0.leading.equalToSuperview()
-                }
-            } else {
-                randomSubjectView.removeFromSuperview()
-            }
-            
-            inputTextView.snp.remakeConstraints {
-                $0.top.equalTo(randomTopicEnabled ? randomSubjectView.snp.bottom : naviView.snp.bottom).offset(convertByHeightRatio(9))
-                $0.leading.trailing.equalToSuperview().inset(convertByWidthRatio(18))
-                $0.bottom.equalTo(bottomView.snp.top)
-            }
+            updateRandomTopicView()
+            updateInputTextViewConstraints()
             view.layoutIfNeeded()
         }
     }
@@ -147,6 +134,26 @@ final class ForeignDiaryViewController: UIViewController {
             return true
         }
         return false
+    }
+    
+    private func updateRandomTopicView() {
+        if randomTopicEnabled {
+            view.addSubview(randomSubjectView)
+            randomSubjectView.snp.makeConstraints {
+                $0.top.equalTo(naviView.snp.bottom).offset(convertByHeightRatio(16))
+                $0.leading.equalToSuperview()
+            }
+        } else {
+            randomSubjectView.removeFromSuperview()
+        }
+    }
+    
+    private func updateInputTextViewConstraints() {
+        inputTextView.snp.remakeConstraints {
+            $0.top.equalTo(randomTopicEnabled ? randomSubjectView.snp.bottom : naviView.snp.bottom).offset(convertByHeightRatio(9))
+            $0.leading.trailing.equalToSuperview().inset(convertByWidthRatio(18))
+            $0.bottom.equalTo(bottomView.snp.top)
+        }
     }
     
     //MARK: - Layout
