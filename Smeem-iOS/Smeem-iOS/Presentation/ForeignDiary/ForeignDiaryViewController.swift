@@ -61,7 +61,7 @@ final class ForeignDiaryViewController: UIViewController {
         return button
     }()
     
-    private var randomSubjectView = RandomSubjectView(frame: .zero)
+    private var randomSubjectView = RandomSubjectView()
     
     lazy var InputTextView: UITextView = {
         let textView = UITextView()
@@ -158,8 +158,8 @@ final class ForeignDiaryViewController: UIViewController {
         }
         
         placeHolderLabel.snp.makeConstraints {
-            $0.centerY.equalTo(InputTextView.textInputView)
-            $0.leading.equalTo(InputTextView)
+            $0.centerY.equalTo(InputTextView.textInputView).offset(-1)
+            $0.leading.equalToSuperview().offset(convertByWidthRatio(5))
         }
         
         bottomView.snp.makeConstraints {
