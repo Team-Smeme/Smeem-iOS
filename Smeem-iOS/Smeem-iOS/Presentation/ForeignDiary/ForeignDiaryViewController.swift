@@ -62,7 +62,6 @@ final class ForeignDiaryViewController: UIViewController {
     
     lazy var inputTextView: UITextView = {
         let textView = UITextView()
-        textView.setLineSpacing()
         textView.textColor = .smeemBlack
         textView.font = .b4
         textView.tintColor = .point
@@ -150,7 +149,7 @@ final class ForeignDiaryViewController: UIViewController {
     
     private func updateInputTextViewConstraints() {
         inputTextView.snp.remakeConstraints {
-            $0.top.equalTo(randomTopicEnabled ? randomSubjectView.snp.bottom : naviView.snp.bottom).offset(convertByHeightRatio(9))
+            $0.top.equalTo(randomTopicEnabled ? randomSubjectView.snp.bottom : naviView.snp.bottom).offset(convertByHeightRatio(20))
             $0.leading.trailing.equalToSuperview().inset(convertByWidthRatio(18))
             $0.bottom.equalTo(bottomView.snp.top)
         }
@@ -183,8 +182,8 @@ final class ForeignDiaryViewController: UIViewController {
         }
         
         placeHolderLabel.snp.makeConstraints {
-            $0.centerY.equalTo(inputTextView.textInputView).offset(-1)
-            $0.leading.equalToSuperview().offset(convertByWidthRatio(5))
+            $0.centerY.equalTo(inputTextView.textInputView)
+            $0.leading.equalToSuperview().offset(convertByWidthRatio(4))
         }
         
         bottomView.snp.makeConstraints {
