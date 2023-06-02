@@ -105,7 +105,7 @@ final class ForeignDiaryViewController: UIViewController {
         super.viewDidLoad()
         
         hiddenNavigationBar()
-        setBackgoundColor()
+        setBackgroundColor()
         setLayout()
     }
     
@@ -121,7 +121,7 @@ final class ForeignDiaryViewController: UIViewController {
     
     // MARK: - Custom Method
     
-    private func setBackgoundColor() {
+    private func setBackgroundColor() {
         view.backgroundColor = .smeemWhite
     }
     
