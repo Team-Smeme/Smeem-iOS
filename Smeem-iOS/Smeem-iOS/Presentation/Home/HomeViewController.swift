@@ -155,6 +155,7 @@ final class HomeViewController: UIViewController {
     private lazy var addDiaryButton: SmeemButton = {
         let addDiaryButton = SmeemButton()
         addDiaryButton.setTitle("일기 작성하기", for: .normal)
+        addDiaryButton.addTarget(self, action: #selector(self.addDiaryButtonDidTap(_:)), for: .touchUpInside)
         return addDiaryButton
     }()
     
@@ -193,6 +194,13 @@ final class HomeViewController: UIViewController {
         }, completion: {_ in
             self.floatingView.isHidden = true
         })
+    }
+    
+    @objc func addDiaryButtonDidTap(_ sender: UIButton) {
+        let newVC = HomeViewFloatingViewController()
+        newVC.modalTransitionStyle = .crossDissolve
+        newVC.modalPresentationStyle = .overFullScreen
+        self.present(newVC, animated: true, completion: nil)
     }
     
     // MARK: - Custom Method
