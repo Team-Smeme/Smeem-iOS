@@ -60,12 +60,12 @@ final class ForeignDiaryViewController: UIViewController {
         return button
     }()
     
-    lazy var inputTextView: UITextView = {
+    private lazy var inputTextView: UITextView = {
         let textView = UITextView()
         textView.textColor = .smeemBlack
         textView.font = .b4
         textView.tintColor = .point
-        textView.delegate = self
+        textView.delegate = self.delegate
         return textView
     }()
     
