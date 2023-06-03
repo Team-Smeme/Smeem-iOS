@@ -54,7 +54,7 @@ class EditNicknameViewController: UIViewController {
         return label
     }()
     
-    private let nextButton: SmeemButton = {
+    private let doneButton: SmeemButton = {
         let button = SmeemButton()
         button.setTitle("완료", for: .normal)
         button.isEnabled = false
@@ -81,11 +81,11 @@ class EditNicknameViewController: UIViewController {
     
     @objc private func textFieldEditingChanged(_ textField: UITextField) {
         if let text = textField.text, !text.isEmpty {
-            nextButton.isEnabled = true // 텍스트 필드에 텍스트가 입력되었을 때 버튼 활성화
-            nextButton.backgroundColor = .point
+            doneButton.isEnabled = true // 텍스트 필드에 텍스트가 입력되었을 때 버튼 활성화
+            doneButton.backgroundColor = .point
         } else {
-            nextButton.isEnabled = false // 텍스트 필드가 비어있을 때 버튼 비활성화
-            nextButton.backgroundColor = .pointInactive
+            doneButton.isEnabled = false // 텍스트 필드가 비어있을 때 버튼 비활성화
+            doneButton.backgroundColor = .pointInactive
         }
     }
     
@@ -105,7 +105,7 @@ class EditNicknameViewController: UIViewController {
         view.addSubviews(headerContainerView,
                          nicknameTextField,
                          nicknameLimitLabel,
-                         nextButton)
+                         doneButton)
         headerContainerView.addSubviews(backButton, titleLabel)
         
         headerContainerView.snp.makeConstraints {
@@ -134,7 +134,7 @@ class EditNicknameViewController: UIViewController {
             $0.trailing.equalTo(nicknameTextField)
         }
         
-        nextButton.snp.makeConstraints {
+        doneButton.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(18)
             $0.height.equalTo(convertByHeightRatio(60))
             $0.bottom.equalToSuperview().inset(336+10)
