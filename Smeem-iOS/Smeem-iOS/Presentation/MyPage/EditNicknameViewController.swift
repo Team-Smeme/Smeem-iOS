@@ -72,9 +72,22 @@ class EditNicknameViewController: UIViewController {
         setLayout()
         hiddenNavigationBar()
         setTextFieldDelegate()
+        showKeyboard(textView: nicknameTextField)
+        
+        nicknameTextField.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
     }
 
     // MARK: - @objc
+    
+    @objc private func textFieldEditingChanged(_ textField: UITextField) {
+        if let text = textField.text, !text.isEmpty {
+            nextButton.isEnabled = true // 텍스트 필드에 텍스트가 입력되었을 때 버튼 활성화
+            nextButton.backgroundColor = .point
+        } else {
+            nextButton.isEnabled = false // 텍스트 필드가 비어있을 때 버튼 비활성화
+            nextButton.backgroundColor = .pointInactive
+        }
+    }
     
     // MARK: - Custom Method
     
