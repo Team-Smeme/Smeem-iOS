@@ -19,7 +19,7 @@ class EditNicknameViewController: UIViewController {
     
     private let backButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = .systemPink
+        button.backgroundColor = .point
         return button
     }()
 //        setImage, addTarget 넣기
@@ -30,6 +30,36 @@ class EditNicknameViewController: UIViewController {
         label.font = .s2
         label.textColor = .smeemBlack
         return label
+    }()
+    
+    private lazy var nicknameTextField: UITextField = {
+        let textField = UITextField()
+        textField.borderStyle = .roundedRect
+        textField.tintColor = .point
+        textField.textColor = .point
+        textField.font = .h3
+        textField.addPaddingView()
+        textField.layer.cornerRadius = 6
+        textField.layer.borderWidth = 1.5
+        textField.layer.borderColor = UIColor.gray100.cgColor
+        textField.layer.masksToBounds = true
+        return textField
+    }()
+    
+    private let nicknameLimitLabel: UILabel = {
+        let label = UILabel()
+        label.text = "공백 포함 10자 제한"
+        label.font = .c4
+        label.textColor = .gray400
+        return label
+    }()
+    
+    private let nextButton: SmeemButton = {
+        let button = SmeemButton()
+        button.setTitle("완료", for: .normal)
+        button.isEnabled = false
+        button.backgroundColor = .pointInactive
+        return button
     }()
 
     
@@ -55,12 +85,15 @@ class EditNicknameViewController: UIViewController {
     }
     
     private func setLayout() {
-        view.addSubviews(headerContainerView)
+        view.addSubviews(headerContainerView,
+                         nicknameTextField,
+                         nicknameLimitLabel,
+                         nextButton)
         headerContainerView.addSubviews(backButton, titleLabel)
         
         headerContainerView.snp.makeConstraints {
             $0.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            $0.height.equalTo(66)
+            $0.height.equalTo(convertByHeightRatio(66))
         }
         
         backButton.snp.makeConstraints {
@@ -72,10 +105,28 @@ class EditNicknameViewController: UIViewController {
         titleLabel.snp.makeConstraints{
             $0.centerX.centerY.equalToSuperview()
         }
+        
+        nicknameTextField.snp.makeConstraints {
+            $0.top.equalTo(headerContainerView.snp.bottom).offset(14)
+            $0.leading.trailing.equalToSuperview().inset(18)
+            $0.height.equalTo(convertByHeightRatio(66))
+        }
+        
+        nicknameLimitLabel.snp.makeConstraints{
+            $0.top.equalTo(nicknameTextField.snp.bottom).offset(10)
+            $0.trailing.equalTo(nicknameTextField)
+        }
+        
+        nextButton.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview().inset(18)
+            $0.height.equalTo(convertByHeightRatio(60))
+            $0.bottom.equalToSuperview().inset(336+10)
+        }
     }
-    
+}
     
 
+               }
 }
 
 // MARK: - UITableView Delegate
