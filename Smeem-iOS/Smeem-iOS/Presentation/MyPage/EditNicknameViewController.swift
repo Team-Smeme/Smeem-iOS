@@ -71,13 +71,17 @@ class EditNicknameViewController: UIViewController {
         setBackgroundColor()
         setLayout()
         hiddenNavigationBar()
-//        showKeyboard(textView: nicknameTextField)
+        setTextFieldDelegate()
     }
 
     // MARK: - @objc
     
     // MARK: - Custom Method
     
+    private func setTextFieldDelegate() {
+        nicknameTextField.delegate = self
+    }
+
     // MARK: - Layout
  
     private func setBackgroundColor() {
@@ -124,9 +128,19 @@ class EditNicknameViewController: UIViewController {
         }
     }
 }
-    
 
+// MARK: - UITextField Delegate
+
+extension EditNicknameViewController: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if let char = string.cString(using: String.Encoding.utf8) {
+               let isBackSpace = strcmp(char, "\\b")
+               if isBackSpace == -92 {
+                   return true
                }
+         }
+        
+        guard self.nicknameTextField.text?.count ?? 0 < 10 else { return false }
+        return true
+    }
 }
-
-// MARK: - UITableView Delegate
