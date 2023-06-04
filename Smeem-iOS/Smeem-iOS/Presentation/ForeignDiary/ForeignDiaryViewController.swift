@@ -66,7 +66,7 @@ final class ForeignDiaryViewController: UIViewController {
         textView.textColor = .smeemBlack
         textView.font = .b4
         textView.tintColor = .point
-        textView.delegate = self.delegate
+        textView.delegate = self
         return textView
     }()
     
