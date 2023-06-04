@@ -22,7 +22,7 @@ class EditNicknameViewController: UIViewController {
         button.backgroundColor = .point
         return button
     }()
-//        setImage, addTarget 넣기
+    // TODO: setImage, addTarget 넣기
     
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -61,7 +61,6 @@ class EditNicknameViewController: UIViewController {
         button.backgroundColor = .pointInactive
         return button
     }()
-
     
     // MARK: - Life Cycle
     
@@ -120,7 +119,7 @@ class EditNicknameViewController: UIViewController {
         }
         
         titleLabel.snp.makeConstraints{
-            $0.centerX.centerY.equalToSuperview()
+            $0.center.equalToSuperview()
         }
         
         nicknameTextField.snp.makeConstraints {
