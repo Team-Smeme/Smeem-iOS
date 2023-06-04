@@ -97,7 +97,7 @@ final class ForeignDiaryViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        inputTextView.becomeFirstResponder()
+        showKeyboard(textView: inputTextView)
     }
     
     override func viewDidLoad() {
@@ -149,7 +149,7 @@ final class ForeignDiaryViewController: UIViewController {
     
     private func updateInputTextViewConstraints() {
         inputTextView.snp.remakeConstraints {
-            $0.top.equalTo(randomTopicEnabled ? randomSubjectView.snp.bottom : naviView.snp.bottom).offset(convertByHeightRatio(20))
+            $0.top.equalTo(randomTopicEnabled ? randomSubjectView.snp.bottom : navigationView.snp.bottom)
             $0.leading.trailing.equalToSuperview().inset(convertByWidthRatio(18))
             $0.bottom.equalTo(bottomView.snp.top)
         }
