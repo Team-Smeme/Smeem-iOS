@@ -33,7 +33,7 @@ class DiaryViewController: UIViewController {
     
     // MARK: - UI Property
     
-    private let navigationView = UIView()
+    let navigationView = UIView()
     private lazy var randomSubjectView = RandomSubjectView()
     
     private let navibarContentStackView: UIStackView = {
@@ -79,7 +79,7 @@ class DiaryViewController: UIViewController {
         return button
     }()
     
-    private lazy var inputTextView: UITextView = {
+    lazy var inputTextView: UITextView = {
         let textView = UITextView()
         textView.textColor = .smeemBlack
         textView.font = .b4
@@ -97,7 +97,7 @@ class DiaryViewController: UIViewController {
         return label
     }()
     
-    private let bottomView: UIView = {
+    let bottomView: UIView = {
         let view = UIView()
         view.backgroundColor = .gray100
         return view
