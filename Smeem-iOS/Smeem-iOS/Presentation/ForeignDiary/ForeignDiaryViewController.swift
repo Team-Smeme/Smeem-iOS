@@ -23,13 +23,14 @@ final class ForeignDiaryViewController: UIViewController {
     
     // MARK: - UI Property
     
-    private let naviView = UIView()
+    private let navigationView = UIView()
     private lazy var randomSubjectView = RandomSubjectView()
     
     private let navibarContentStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.alignment = .center
         stackView.distribution = .equalSpacing
+        // FIXME: 기기대응시 문제가 생길수도..?
         stackView.spacing = 110
         return stackView
     }()
@@ -139,7 +140,7 @@ final class ForeignDiaryViewController: UIViewController {
         if randomTopicEnabled {
             view.addSubview(randomSubjectView)
             randomSubjectView.snp.makeConstraints {
-                $0.top.equalTo(naviView.snp.bottom).offset(convertByHeightRatio(16))
+                $0.top.equalTo(navigationView.snp.bottom).offset(convertByHeightRatio(16))
                 $0.leading.equalToSuperview()
             }
         } else {
@@ -158,13 +159,13 @@ final class ForeignDiaryViewController: UIViewController {
     //MARK: - Layout
     
     private func setLayout() {
-        view.addSubviews(naviView, inputTextView, bottomView)
-        naviView.addSubview(navibarContentStackView)
+        view.addSubviews(navigationView, inputTextView, bottomView)
+        navigationView.addSubview(navibarContentStackView)
         navibarContentStackView.addArrangedSubviews(cancelButton, languageLabel, completeButton)
         inputTextView.addSubview(placeHolderLabel)
         bottomView.addSubviews(thinLine, randomTopicButton)
         
-        naviView.snp.makeConstraints {
+        navigationView.snp.makeConstraints {
             $0.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             $0.height.equalTo(convertByHeightRatio(66))
         }
@@ -175,7 +176,7 @@ final class ForeignDiaryViewController: UIViewController {
         }
         
         inputTextView.snp.makeConstraints {
-            $0.top.equalTo(naviView.snp.bottom).offset(convertByHeightRatio(10))
+            $0.top.equalTo(navigationView.snp.bottom).offset(convertByHeightRatio(10))
             $0.centerX.equalToSuperview()
             $0.leading.equalTo(navibarContentStackView)
             $0.bottom.equalTo(bottomView.snp.top)
