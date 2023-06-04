@@ -12,6 +12,7 @@ import SnapKit
 protocol DiaryStrategy {
     func configureLanguageLabel(_ label: UILabel)
     func configureRightNavigationButton(_ button: UIButton)
+    func configureStepLabel(_ label: UILabel)
 }
 
 class DiaryViewController: UIViewController {
@@ -61,6 +62,13 @@ class DiaryViewController: UIViewController {
         return label
     }()
     
+    private let stepLabel: UILabel = {
+        let label = UILabel()
+        label.font = .c4
+        label.textColor = .gray500
+        return label
+    }()
+    
     private lazy var rightNavigationButton: UIButton = {
         let button = UIButton()
         button.titleLabel?.font = .b1
@@ -76,7 +84,7 @@ class DiaryViewController: UIViewController {
         textView.textColor = .smeemBlack
         textView.font = .b4
         textView.tintColor = .point
-        textView.delegate = self.delegate
+        textView.delegate = self
         return textView
     }()
     
@@ -114,20 +122,9 @@ class DiaryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if self is ForeignDiaryViewController {
-            diaryStrategy = ForeignDiaryStrategy()
-        } else if self is StepOneKoreanDiaryViewController {
-            diaryStrategy = StepOneKoreanDiaryStrategy()
-        } else if self is StepTwoKoreanDiaryViewController {
-            diaryStrategy = StepTwoKoreanDiaryStrategy()
-        }
-        
-        diaryStrategy?.configureLanguageLabel(languageLabel)
-        diaryStrategy?.configureRightNavigationButton(rightNavigationButton)
-        
-        hiddenNavigationBar()
-        setBackgroundColor()
-        setLayout()
+        configureDiaryStrategy()
+        configureUI()
+        setupUI()
     }
     
     deinit {
@@ -136,7 +133,7 @@ class DiaryViewController: UIViewController {
     
     // MARK: - @objc
     
-    @objc func randomTopicButtonDidTap(_ gesture: UITapGestureRecognizer) {
+    @objc func randomTopicButtonDidTap() {
         setRandomTopicButtonToggle()
     }
     
@@ -145,10 +142,32 @@ class DiaryViewController: UIViewController {
     }
     
     @objc func rightNavigationButtonTapped() {
-        guard let diaryText = inputTextView.text else { return }
+        //        guard let diaryText = inputTextView.text else { return }
     }
     
     // MARK: - Custom Method
+    
+    private func setupUI() {
+        hiddenNavigationBar()
+        setBackgroundColor()
+        setLayout()
+    }
+    
+    private func configureDiaryStrategy() {
+        if self is ForeignDiaryViewController {
+            diaryStrategy = ForeignDiaryStrategy()
+        } else if self is StepOneKoreanDiaryViewController {
+            diaryStrategy = StepOneKoreanDiaryStrategy()
+        } else if self is StepTwoKoreanDiaryViewController {
+            diaryStrategy = StepTwoKoreanDiaryStrategy()
+        }
+    }
+    
+    private func configureUI() {
+        diaryStrategy?.configureLanguageLabel(languageLabel)
+        diaryStrategy?.configureRightNavigationButton(rightNavigationButton)
+        diaryStrategy?.configureStepLabel(stepLabel)
+    }
     
     private func setBackgroundColor() {
         view.backgroundColor = .smeemWhite
@@ -182,7 +201,7 @@ class DiaryViewController: UIViewController {
     
     private func setLayout() {
         view.addSubviews(navigationView, inputTextView, bottomView)
-        navigationView.addSubview(navibarContentStackView)
+        navigationView.addSubviews(navibarContentStackView, stepLabel)
         navibarContentStackView.addArrangedSubviews(cancelButton, languageLabel, rightNavigationButton)
         inputTextView.addSubview(placeHolderLabel)
         bottomView.addSubviews(thinLine, randomTopicButton)
@@ -195,6 +214,11 @@ class DiaryViewController: UIViewController {
         navibarContentStackView.snp.makeConstraints {
             $0.center.equalToSuperview()
             $0.leading.equalToSuperview().offset(convertByWidthRatio(18))
+        }
+        
+        stepLabel.snp.makeConstraints {
+            $0.top.equalTo(languageLabel.snp.bottom).offset(4)
+            $0.centerX.equalToSuperview()
         }
         
         inputTextView.snp.makeConstraints {

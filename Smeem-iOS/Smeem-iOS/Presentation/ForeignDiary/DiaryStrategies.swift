@@ -8,12 +8,17 @@
 import UIKit
 
 class ForeignDiaryStrategy: DiaryStrategy {
+    
     func configureLanguageLabel(_ label: UILabel) {
         label.text = "English"
     }
     
     func configureRightNavigationButton(_ button: UIButton) {
         button.setTitle("완료", for: .normal)
+    }
+    
+    func configureStepLabel(_ label: UILabel) {
+        label.text = ""
     }
 }
 
@@ -26,6 +31,10 @@ class StepOneKoreanDiaryStrategy: DiaryStrategy {
     func configureRightNavigationButton(_ button: UIButton) {
         button.setTitle("다음", for: .normal)
     }
+    
+    func configureStepLabel(_ label: UILabel) {
+        label.text = "STEP1"
+    }
 }
 
 class StepTwoKoreanDiaryStrategy: DiaryStrategy {
@@ -35,5 +44,9 @@ class StepTwoKoreanDiaryStrategy: DiaryStrategy {
     
     func configureRightNavigationButton(_ button: UIButton) {
         button.setTitle("다음", for: .normal)
+    }
+    
+    func configureStepLabel(_ label: UILabel) {
+        label.text = "STEP2"
     }
 }
