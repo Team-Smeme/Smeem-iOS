@@ -43,6 +43,7 @@ class EditNicknameViewController: UIViewController {
         textField.layer.borderWidth = 1.5
         textField.layer.borderColor = UIColor.gray100.cgColor
         textField.layer.masksToBounds = true
+        textField.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
         return textField
     }()
     
@@ -72,8 +73,6 @@ class EditNicknameViewController: UIViewController {
         hiddenNavigationBar()
         setTextFieldDelegate()
         showKeyboard(textView: nicknameTextField)
-        
-        nicknameTextField.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
     }
 
     // MARK: - @objc
