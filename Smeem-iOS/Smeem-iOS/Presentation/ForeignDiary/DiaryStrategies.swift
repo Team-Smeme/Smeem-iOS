@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ForeignDiaryStrategy: DiaryStrategy {
+final class ForeignDiaryStrategy: DiaryStrategy {
     
     func configureLanguageLabel(_ label: UILabel) {
         label.text = "English"
@@ -26,7 +26,7 @@ class ForeignDiaryStrategy: DiaryStrategy {
     }
 }
 
-class StepOneKoreanDiaryStrategy: DiaryStrategy {
+final class StepOneKoreanDiaryStrategy: DiaryStrategy {
     
     func configureLanguageLabel(_ label: UILabel) {
         label.text = "한국어"
@@ -45,9 +45,9 @@ class StepOneKoreanDiaryStrategy: DiaryStrategy {
     }
 }
 
-class StepTwoKoreanDiaryStrategy: DiaryStrategy {
+final class StepTwoKoreanDiaryStrategy: DiaryStrategy {
     func configureLanguageLabel(_ label: UILabel) {
-        label.text = "한국어"
+        label.text = "English"
     }
     
     func configureRightNavigationButton(_ button: UIButton) {

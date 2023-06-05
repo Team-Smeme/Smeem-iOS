@@ -12,5 +12,4 @@ final class ForeignDiaryViewController: DiaryViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-
 }
