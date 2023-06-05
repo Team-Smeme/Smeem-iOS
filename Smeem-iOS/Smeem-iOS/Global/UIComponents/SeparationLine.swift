@@ -11,7 +11,7 @@
  
  pivate let mediumLine = SeparationLine(height: .medium)
  
- 2. view에 addSubView 하고 y축(top)값만 설정
+ 2. view에 addSubView 하고 y축(top)값과 centerX값 설정
  **/
 
 import UIKit
@@ -28,8 +28,8 @@ class SeparationLine: UIView {
         case thick = 6
     }
     
-    private let thinLineColor = UIColor.gray100
-    private let thickLineColor = UIColor.gray200
+    private let thinLineColor = UIColor.gray200
+    private let thickLineColor = UIColor.gray100
     
     private let height: LineHeight
     
@@ -50,9 +50,9 @@ class SeparationLine: UIView {
     
     private func setColors() {
         switch height {
-        case .medium:
+        case .thin:
             self.backgroundColor = thinLineColor
-        case .thin, .thick:
+        case .medium,.thick:
             self.backgroundColor = thickLineColor
         }
     }
