@@ -59,7 +59,7 @@ class DiaryViewController: UIViewController {
         let label = UILabel()
         label.font = .s2
         label.textColor = .smeemBlack
-        label.text = "English"
+        label.text = "Language"
         return label
     }()
     
@@ -261,13 +261,32 @@ extension DiaryViewController: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
         let isTextEmpty = textView.text.isEmpty
         placeHolderLabel.isHidden = !isTextEmpty
-        rightNavigationButton.isEnabled = characterValidation()
+        
+        if let strategy = diaryStrategy {
+            if let koreanStrategy = strategy as? StepOneKoreanDiaryStrategy {
+                rightNavigationButton.isEnabled = koreanStrategy.koreanValidation(with: textView.text, in: self)
+            } else {
+                rightNavigationButton.isEnabled = strategy.englishValidation(with: textView.text, in: self)
+            }
+        } else {
+            rightNavigationButton.isEnabled = false
+        }
+        
         rightNavigationButton.setTitleColor(rightNavigationButton.isEnabled ? .point : .gray400, for: .normal)
     }
-    
-    private func characterValidation() -> Bool {
-        return inputTextView.text.getArrayAfterRegex(regex: "[a-zA-z]").count > 9
+}
+
+extension DiaryStrategy {
+    func englishValidation(with text: String, in viewController: DiaryViewController) -> Bool {
+        return viewController.inputTextView.text.getArrayAfterRegex(regex: "[a-zA-z]").count > 9
     }
+    
+}
+
+extension StepOneKoreanDiaryStrategy {
+    func koreanValidation(with text: String, in viewController: DiaryViewController) -> Bool {
+           return viewController.inputTextView.text.getArrayAfterRegex(regex: "[가-핳ㄱ-ㅎㅏ-ㅣ]").count > 9
+       }
 }
 
 // MARK: - Network
