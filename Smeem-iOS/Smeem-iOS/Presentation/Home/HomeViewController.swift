@@ -280,6 +280,7 @@ final class HomeViewController: UIViewController {
         
         border.snp.makeConstraints {
             $0.top.equalTo(indicator.snp.bottom).offset(convertByWidthRatio(12))
+            $0.centerX.equalToSuperview()
             $0.height.equalTo(convertByHeightRatio(6))
             $0.width.equalToSuperview()
         }
@@ -337,7 +338,7 @@ final class HomeViewController: UIViewController {
         }
         
         floatingView.snp.makeConstraints {
-            $0.bottom.equalTo(addDiaryButton.snp.top).offset(-convertByHeightRatio(10))
+            $0.bottom.equalToSuperview().offset(-convertByHeightRatio(120))
             $0.centerX.equalToSuperview()
             $0.width.equalTo(convertByWidthRatio(339))
             $0.height.equalTo(convertByHeightRatio(88))
@@ -360,7 +361,7 @@ final class HomeViewController: UIViewController {
         }
         
         addDiaryButton.snp.makeConstraints {
-            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(convertByHeightRatio(16))
+            $0.bottom.equalToSuperview().inset(convertByHeightRatio(50))
             $0.centerX.equalToSuperview()
             $0.width.equalTo(convertByWidthRatio(339))
             $0.height.equalTo(convertByHeightRatio(60))
@@ -433,7 +434,8 @@ extension HomeViewController: FSCalendarDelegateAppearance {
     private func configureBottomLayout(date: Date) {
         addDiaryButton.isHidden = (gregorian.isDateInToday(date) && !isHavingTodayDiary) ? false : true
         if (!floatingView.isHidden) {
-            floatingView.snp.makeConstraints { $0.bottom.equalToSuperview().offset(-convertByHeightRatio(addDiaryButton.isHidden ? 50 : 120))
+            floatingView.snp.updateConstraints {
+                $0.bottom.equalToSuperview().offset(-convertByHeightRatio(addDiaryButton.isHidden ? 50 : 120))
             }
         }
     }

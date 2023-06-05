@@ -128,13 +128,11 @@ final class HomeViewFloatingViewController: UIViewController {
     }
     
     @objc func foreignDiaryButtonDidTap(_ gesture: UITapGestureRecognizer) {
-        print("foreign")
 //        let nextVC = DiaryForeignViewController()
 //        present(diaryForeignViewController, animated: true)
     }
     
     @objc func koreanDiaryButtonDidTap(_ gesture: UITapGestureRecognizer) {
-        print("korean")
 //        let nextVC = DiaryKoreanViewController()
 //        present(nextVC, animated: true)
     }
