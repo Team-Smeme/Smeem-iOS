@@ -89,7 +89,7 @@ class DiaryViewController: UIViewController {
         return textView
     }()
     
-    private let placeHolderLabel: UILabel = {
+    let placeHolderLabel: UILabel = {
         let label = UILabel()
         label.text = "일기를 작성해주세요."
         label.textColor = .gray400
@@ -106,7 +106,7 @@ class DiaryViewController: UIViewController {
     
     private let thinLine = SeparationLine(height: .thin)
     
-    private lazy var randomTopicButton: UIButton = {
+    lazy var randomTopicButton: UIButton = {
         let button = UIButton()
         button.addTarget(self, action: #selector(randomTopicButtonDidTap), for: .touchUpInside)
         button.backgroundColor = .point
@@ -244,8 +244,10 @@ class DiaryViewController: UIViewController {
         }
         
         randomTopicButton.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(convertByHeightRatio(18))
-            $0.trailing.equalToSuperview().offset(convertByWidthRatio(-30))
+            $0.top.equalToSuperview().offset(convertByHeightRatio(17))
+            $0.trailing.equalToSuperview().offset(convertByWidthRatio(-18))
+            $0.width.equalTo(convertByWidthRatio(78))
+            $0.height.equalTo(convertByHeightRatio(19))
         }
     }
 }
