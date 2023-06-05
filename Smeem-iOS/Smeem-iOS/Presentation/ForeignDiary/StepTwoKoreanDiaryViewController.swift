@@ -28,6 +28,12 @@ final class StepTwoKoreanDiaryViewController: DiaryViewController {
     
     private let thickLine = SeparationLine(height: .thick)
     
+    private let hintButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .gray200
+        return button
+    }()
+    
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -44,6 +50,7 @@ final class StepTwoKoreanDiaryViewController: DiaryViewController {
     
     private func setLayout() {
         view.addSubviews(hintTextView,thickLine)
+        bottomView.addSubview(hintButton)
         
         hintTextView.snp.makeConstraints {
             $0.top.equalTo(navigationView.snp.bottom)
@@ -62,6 +69,13 @@ final class StepTwoKoreanDiaryViewController: DiaryViewController {
             $0.top.equalTo(thickLine.snp.bottom)
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalTo(bottomView.snp.top)
+        }
+        
+        hintButton.snp.makeConstraints {
+            $0.centerY.equalTo(randomTopicButton)
+            $0.leading.equalTo(placeHolderLabel)
+            $0.width.equalTo(convertByWidthRatio(92))
+            $0.height.equalTo(convertByHeightRatio(29))
         }
     }
 }

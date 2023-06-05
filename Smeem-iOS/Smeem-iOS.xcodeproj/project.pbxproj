@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3728B8D12A2CFE0B00EF4CF8 /* DiaryStrategies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3728B8D02A2CFE0B00EF4CF8 /* DiaryStrategies.swift */; };
+		3728B8D32A2CFED300EF4CF8 /* ForeignDiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3728B8D22A2CFED300EF4CF8 /* ForeignDiaryViewController.swift */; };
+		3728B8D52A2CFF2C00EF4CF8 /* StepOneKoreanDiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3728B8D42A2CFF2C00EF4CF8 /* StepOneKoreanDiaryViewController.swift */; };
+		3728B8D72A2CFF3A00EF4CF8 /* StepTwoKoreanDiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3728B8D62A2CFF3A00EF4CF8 /* StepTwoKoreanDiaryViewController.swift */; };
+		374FAF812A2CACCF00237A1A /* DiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374FAF802A2CACCF00237A1A /* DiaryViewController.swift */; };
 		3761116C2A278D0E0095EC5A /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3761116B2A278D0E0095EC5A /* String+.swift */; };
 		37A574C129FF6E9100312453 /* ColorLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574C029FF6E9100312453 /* ColorLiterals.swift */; };
 		37A574C329FF6E9C00312453 /* ImageLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574C229FF6E9C00312453 /* ImageLiterals.swift */; };
@@ -21,9 +26,6 @@
 		37A574DB29FF9FFF00312453 /* Pretendard-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 37A574D729FF9FFF00312453 /* Pretendard-Medium.otf */; };
 		37A574DC29FF9FFF00312453 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 37A574D829FF9FFF00312453 /* Pretendard-Bold.otf */; };
 		37A574E02A00CDCD00312453 /* SeparationLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574DF2A00CDCD00312453 /* SeparationLine.swift */; };
-		37A574E62A02178D00312453 /* CustomToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574E52A02178D00312453 /* CustomToastView.swift */; };
-		37A574E82A02424F00312453 /* RandomSubjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574E72A02424F00312453 /* RandomSubjectView.swift */; };
-		37CD0DB52A1DEE64001F03E7 /* ForeignDiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37CD0DB42A1DEE64001F03E7 /* ForeignDiaryViewController.swift */; };
 		37A574E62A02178D00312453 /* CustomToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574E52A02178D00312453 /* CustomToastView.swift */; };
 		37A574E82A02424F00312453 /* RandomSubjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574E72A02424F00312453 /* RandomSubjectView.swift */; };
 		4A0E8D5829F8362E00E0FC23 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0E8D5729F8362E00E0FC23 /* AuthViewController.swift */; };
@@ -71,6 +73,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3728B8D02A2CFE0B00EF4CF8 /* DiaryStrategies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryStrategies.swift; sourceTree = "<group>"; };
+		3728B8D22A2CFED300EF4CF8 /* ForeignDiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForeignDiaryViewController.swift; sourceTree = "<group>"; };
+		3728B8D42A2CFF2C00EF4CF8 /* StepOneKoreanDiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepOneKoreanDiaryViewController.swift; sourceTree = "<group>"; };
+		3728B8D62A2CFF3A00EF4CF8 /* StepTwoKoreanDiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepTwoKoreanDiaryViewController.swift; sourceTree = "<group>"; };
+		374FAF802A2CACCF00237A1A /* DiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryViewController.swift; sourceTree = "<group>"; };
 		3761116B2A278D0E0095EC5A /* String+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		37A574C029FF6E9100312453 /* ColorLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorLiterals.swift; sourceTree = "<group>"; };
 		37A574C229FF6E9C00312453 /* ImageLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLiterals.swift; sourceTree = "<group>"; };
@@ -87,7 +94,6 @@
 		37A574DF2A00CDCD00312453 /* SeparationLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeparationLine.swift; sourceTree = "<group>"; };
 		37A574E52A02178D00312453 /* CustomToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomToastView.swift; sourceTree = "<group>"; };
 		37A574E72A02424F00312453 /* RandomSubjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomSubjectView.swift; sourceTree = "<group>"; };
-		37CD0DB42A1DEE64001F03E7 /* ForeignDiaryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForeignDiaryViewController.swift; sourceTree = "<group>"; };
 		4A0E8D5729F8362E00E0FC23 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 		4A0EA4542A014027006CCE52 /* GeneralResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralResponse.swift; sourceTree = "<group>"; };
 		4A0EA4562A01403E006CCE52 /* MoyaLoggingPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoyaLoggingPlugin.swift; sourceTree = "<group>"; };
@@ -253,7 +259,11 @@
 		37CD0DB32A1DEE64001F03E7 /* ForeignDiary */ = {
 			isa = PBXGroup;
 			children = (
-				37CD0DB42A1DEE64001F03E7 /* ForeignDiaryViewController.swift */,
+				3728B8D02A2CFE0B00EF4CF8 /* DiaryStrategies.swift */,
+				374FAF802A2CACCF00237A1A /* DiaryViewController.swift */,
+				3728B8D22A2CFED300EF4CF8 /* ForeignDiaryViewController.swift */,
+				3728B8D42A2CFF2C00EF4CF8 /* StepOneKoreanDiaryViewController.swift */,
+				3728B8D62A2CFF3A00EF4CF8 /* StepTwoKoreanDiaryViewController.swift */,
 			);
 			path = ForeignDiary;
 			sourceTree = "<group>";
@@ -529,7 +539,6 @@
 				4A3F2EA02A0C18B600F6AC60 /* DatePickerFooterView.swift in Sources */,
 				4AD04B3D2A190E9A004B7A58 /* UITextView+.swift in Sources */,
 				4A0EA4622A01413D006CCE52 /* DataModel.swift in Sources */,
-				37CD0DB52A1DEE64001F03E7 /* ForeignDiaryViewController.swift in Sources */,
 				6F31802F2A24D1DB00089870 /* CalendarCell.swift in Sources */,
 				4A3F2E972A0ABBAA00F6AC60 /* AlarmCollectionViewCell.swift in Sources */,
 				6F294A412A26178600856CC8 /* AlarmSettingViewController.swift in Sources */,
@@ -547,14 +556,19 @@
 				6F294A432A26179700856CC8 /* ServiceAcceptViewController.swift in Sources */,
 				4AD04B402A1921AE004B7A58 /* CorrectionViewController.swift in Sources */,
 				4AD923E72A0650B600FF5E27 /* SplashViewController.swift in Sources */,
+				3728B8D32A2CFED300EF4CF8 /* ForeignDiaryViewController.swift in Sources */,
 				4AD923EB2A0692EA00FF5E27 /* BottomSheetView.swift in Sources */,
 				37A574E02A00CDCD00312453 /* SeparationLine.swift in Sources */,
+				3728B8D72A2CFF3A00EF4CF8 /* StepTwoKoreanDiaryViewController.swift in Sources */,
 				4A0EA4552A014027006CCE52 /* GeneralResponse.swift in Sources */,
 				4A8FFA5029C9E1FD00FB76C0 /* AppDelegate.swift in Sources */,
+				3728B8D52A2CFF2C00EF4CF8 /* StepOneKoreanDiaryViewController.swift in Sources */,
 				37A574C129FF6E9100312453 /* ColorLiterals.swift in Sources */,
 				37A574CA29FF980F00312453 /* UIStackView+.swift in Sources */,
 				6F294A422A26178C00856CC8 /* UserNickNameViewController.swift in Sources */,
+				374FAF812A2CACCF00237A1A /* DiaryViewController.swift in Sources */,
 				4A0EA45E2A014134006CCE52 /* API.swift in Sources */,
+				3728B8D12A2CFE0B00EF4CF8 /* DiaryStrategies.swift in Sources */,
 				6F294A442A26179900856CC8 /* ServiceAcceptCollectionViewCell.swift in Sources */,
 				6F294A3F2A26177E00856CC8 /* GoalCollectionViewCell.swift in Sources */,
 				37A574E62A02178D00312453 /* CustomToastView.swift in Sources */,
