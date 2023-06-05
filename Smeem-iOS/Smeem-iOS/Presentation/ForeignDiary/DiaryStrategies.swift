@@ -20,6 +20,10 @@ class ForeignDiaryStrategy: DiaryStrategy {
     func configureStepLabel(_ label: UILabel) {
         label.text = ""
     }
+    
+    func configureRandomSubjectButton(_ button: UIButton) {
+        button.isEnabled = true
+    }
 }
 
 class StepOneKoreanDiaryStrategy: DiaryStrategy {
@@ -35,6 +39,10 @@ class StepOneKoreanDiaryStrategy: DiaryStrategy {
     func configureStepLabel(_ label: UILabel) {
         label.text = "STEP1"
     }
+    
+    func configureRandomSubjectButton(_ button: UIButton) {
+        button.isEnabled = true
+    }
 }
 
 class StepTwoKoreanDiaryStrategy: DiaryStrategy {
@@ -48,5 +56,9 @@ class StepTwoKoreanDiaryStrategy: DiaryStrategy {
     
     func configureStepLabel(_ label: UILabel) {
         label.text = "STEP2"
+    }
+    
+    func configureRandomSubjectButton(_ button: UIButton) {
+        button.isEnabled = false
     }
 }

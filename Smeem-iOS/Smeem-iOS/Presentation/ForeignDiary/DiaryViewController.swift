@@ -13,6 +13,7 @@ protocol DiaryStrategy {
     func configureLanguageLabel(_ label: UILabel)
     func configureRightNavigationButton(_ button: UIButton)
     func configureStepLabel(_ label: UILabel)
+    func configureRandomSubjectButton(_ button: UIButton)
 }
 
 class DiaryViewController: UIViewController {
@@ -106,7 +107,7 @@ class DiaryViewController: UIViewController {
     
     private let thinLine = SeparationLine(height: .thin)
     
-    lazy var randomTopicButton: UIButton = {
+    lazy var randomSubjectButton: UIButton = {
         let button = UIButton()
         button.addTarget(self, action: #selector(randomTopicButtonDidTap), for: .touchUpInside)
         button.backgroundColor = .point
@@ -168,6 +169,7 @@ class DiaryViewController: UIViewController {
         diaryStrategy?.configureLanguageLabel(languageLabel)
         diaryStrategy?.configureRightNavigationButton(rightNavigationButton)
         diaryStrategy?.configureStepLabel(stepLabel)
+        diaryStrategy?.configureRandomSubjectButton(randomSubjectButton)
     }
     
     private func setBackgroundColor() {
@@ -205,7 +207,7 @@ class DiaryViewController: UIViewController {
         navigationView.addSubviews(navibarContentStackView, stepLabel)
         navibarContentStackView.addArrangedSubviews(cancelButton, languageLabel, rightNavigationButton)
         inputTextView.addSubview(placeHolderLabel)
-        bottomView.addSubviews(thinLine, randomTopicButton)
+        bottomView.addSubviews(thinLine, randomSubjectButton)
         
         navigationView.snp.makeConstraints {
             $0.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
@@ -243,7 +245,7 @@ class DiaryViewController: UIViewController {
             $0.centerX.equalToSuperview()
         }
         
-        randomTopicButton.snp.makeConstraints {
+        randomSubjectButton.snp.makeConstraints {
             $0.top.equalToSuperview().offset(convertByHeightRatio(17))
             $0.trailing.equalToSuperview().offset(convertByWidthRatio(-18))
             $0.width.equalTo(convertByWidthRatio(78))

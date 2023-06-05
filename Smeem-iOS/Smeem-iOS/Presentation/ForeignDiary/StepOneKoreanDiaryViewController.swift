@@ -8,7 +8,7 @@
 import UIKit
 
 final class StepOneKoreanDiaryViewController: DiaryViewController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
