@@ -19,7 +19,7 @@ class EditNicknameViewController: UIViewController {
     
     private let backButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = .point
+        button.setImage(Constant.Image.icnBack, for: .normal)
         return button
     }()
     // TODO: setImage, addTarget 넣기
