@@ -31,8 +31,8 @@ final class HomeViewFloatingViewController: UIViewController {
     
     private lazy var foreignDiaryButton: UILabel = {
         let foreignButton = UILabel()
-        foreignButton.text = "외국어로 바로 작성하기"
         foreignButton.font = .s4
+        foreignButton.attributedText = changePartialStringStyle(mainString: "외국어로 바로 작성하기", pointString: "외국어로 바로", pointFont: .s2, pointColor: .point)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(foreignDiaryButtonDidTap(_:)))
         foreignButton.addGestureRecognizer(tapGesture)
         foreignButton.isUserInteractionEnabled = true
@@ -47,8 +47,8 @@ final class HomeViewFloatingViewController: UIViewController {
     
     private lazy var koreanDiaryButton: UILabel = {
         let koreanButton = UILabel()
-        koreanButton.text = "한국어로 먼저 작성하기"
         koreanButton.font = .s4
+        koreanButton.attributedText = changePartialStringStyle(mainString: "한국어로 먼저 작성하기", pointString: "한국어로 먼저", pointFont: .s2, pointColor: .point)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(koreanDiaryButtonDidTap(_:)))
         koreanButton.addGestureRecognizer(tapGesture)
         koreanButton.isUserInteractionEnabled = true
@@ -82,9 +82,6 @@ final class HomeViewFloatingViewController: UIViewController {
     
     // MARK: - Custom Method
     
-//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        self.dismiss(animated: true, completion: nil)
-//    }
     
     // MARK: - Layout
     
