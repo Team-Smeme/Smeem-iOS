@@ -81,6 +81,7 @@ class DiaryViewController: UIViewController {
     
     lazy var inputTextView: UITextView = {
         let textView = UITextView()
+        textView.textContainerInset = .init(top: 20, left: 18, bottom: 0, right: 18)
         textView.textColor = .smeemBlack
         textView.font = .b4
         textView.tintColor = .point
@@ -192,7 +193,7 @@ class DiaryViewController: UIViewController {
     private func updateInputTextViewConstraints() {
         inputTextView.snp.remakeConstraints {
             $0.top.equalTo(randomTopicEnabled ? randomSubjectView.snp.bottom : navigationView.snp.bottom)
-            $0.leading.trailing.equalToSuperview().inset(convertByWidthRatio(18))
+            $0.leading.trailing.equalToSuperview()
             $0.bottom.equalTo(bottomView.snp.top)
         }
     }
@@ -222,15 +223,14 @@ class DiaryViewController: UIViewController {
         }
         
         inputTextView.snp.makeConstraints {
-            $0.top.equalTo(navigationView.snp.bottom).offset(convertByHeightRatio(10))
-            $0.centerX.equalToSuperview()
-            $0.leading.equalTo(navibarContentStackView)
+            $0.top.equalTo(navigationView.snp.bottom)
+            $0.centerX.leading.equalToSuperview()
             $0.bottom.equalTo(bottomView.snp.top)
         }
         
         placeHolderLabel.snp.makeConstraints {
-            $0.centerY.equalTo(inputTextView.textInputView)
-            $0.leading.equalToSuperview().offset(convertByWidthRatio(4))
+            $0.top.equalToSuperview().offset(convertByHeightRatio(18))
+            $0.leading.equalToSuperview().offset(convertByWidthRatio(20))
         }
         
         bottomView.snp.makeConstraints {
@@ -240,6 +240,7 @@ class DiaryViewController: UIViewController {
         
         thinLine.snp.makeConstraints {
             $0.bottom.equalTo(bottomView.snp.top)
+            $0.centerX.equalToSuperview()
         }
         
         randomTopicButton.snp.makeConstraints {
