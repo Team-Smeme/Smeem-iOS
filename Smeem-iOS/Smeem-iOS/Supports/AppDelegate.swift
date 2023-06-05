@@ -36,6 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 break
             }
         }
+        
         //앱 실행 중 강제로 연결 취소 시
         NotificationCenter.default.addObserver(forName: ASAuthorizationAppleIDProvider.credentialRevokedNotification, object: nil, queue: nil) { (Notification) in
             print("Revoked Notification")
@@ -46,16 +47,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // 메시지 대리자 설정
         Messaging.messaging().delegate = self
-
-        let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
-        UNUserNotificationCenter
-          .current()
-          .requestAuthorization(
-            options: authOptions,completionHandler: { (_, _) in }
-          )
         
         // APNs 등록
         application.registerForRemoteNotifications()
+        
         return true
     }
     
