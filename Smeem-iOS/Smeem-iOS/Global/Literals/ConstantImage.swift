@@ -1,5 +1,5 @@
 //
-//  ImageLiterals.swift
+//  ConstantImage.swift
 //  Smeem-iOS
 //
 //  Created by Joon Baek on 2023/05/01.
