@@ -12,7 +12,7 @@ struct Constant {
 }
 
 extension Constant {
-    enum image {
+    enum Image {
         
         static let icnBack = UIImage(named: "icnBack")
         static let icnCancelGrey = UIImage(named: "icnCancelGrey")
