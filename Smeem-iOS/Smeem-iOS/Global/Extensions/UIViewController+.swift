@@ -62,4 +62,18 @@ extension UIViewController {
     func hiddenNavigationBar() {
         self.navigationController?.isNavigationBarHidden = true
     }
+    
+    /// 부분 글자 스타일 변경 함수
+    func changePartialStringStyle(mainString: String,
+                                  pointString: String,
+                                  pointFont: UIFont,
+                                  pointColor: UIColor) -> NSMutableAttributedString {
+        let range = (mainString as NSString).range(of: pointString)
+        
+        let attributedString = NSMutableAttributedString(string: mainString)
+        attributedString.addAttribute(.font, value: pointFont, range: range)
+        attributedString.addAttribute(.foregroundColor, value: pointColor, range: range)
+        
+        return attributedString
+    }
 }
