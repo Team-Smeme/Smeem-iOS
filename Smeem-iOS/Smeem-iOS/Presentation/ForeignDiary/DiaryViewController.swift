@@ -115,9 +115,8 @@ class DiaryViewController: UIViewController {
     }()
     
     // MARK: - Life Cycle
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+        
+    override func viewWillAppear(_ animated: Bool) {
         showKeyboard(textView: inputTextView)
     }
     
@@ -140,7 +139,7 @@ class DiaryViewController: UIViewController {
     }
     
     @objc func naviButtonDidTap() {
-        self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
+        resignFirstResponder()
     }
     
     @objc func rightNavigationButtonTapped() {
@@ -226,7 +225,7 @@ class DiaryViewController: UIViewController {
         
         inputTextView.snp.makeConstraints {
             $0.top.equalTo(navigationView.snp.bottom)
-            $0.centerX.leading.equalToSuperview()
+            $0.leading.trailing.equalToSuperview()
             $0.bottom.equalTo(bottomView.snp.top)
         }
         
@@ -262,14 +261,16 @@ extension DiaryViewController: UITextViewDelegate {
         let isTextEmpty = textView.text.isEmpty
         placeHolderLabel.isHidden = !isTextEmpty
         
-        if let strategy = diaryStrategy {
-            if let koreanStrategy = strategy as? StepOneKoreanDiaryStrategy {
-                rightNavigationButton.isEnabled = koreanStrategy.koreanValidation(with: textView.text, in: self)
-            } else {
-                rightNavigationButton.isEnabled = strategy.englishValidation(with: textView.text, in: self)
-            }
-        } else {
+        guard let strategy = diaryStrategy else {
             rightNavigationButton.isEnabled = false
+            rightNavigationButton.setTitleColor(.gray400, for: .normal)
+            return
+        }
+        
+        if let koreanStrategy = strategy as? StepOneKoreanDiaryStrategy {
+            rightNavigationButton.isEnabled = koreanStrategy.koreanValidation(with: textView.text, in: self)
+        } else {
+            rightNavigationButton.isEnabled = strategy.englishValidation(with: textView.text, in: self)
         }
         
         rightNavigationButton.setTitleColor(rightNavigationButton.isEnabled ? .point : .gray400, for: .normal)
@@ -285,8 +286,8 @@ extension DiaryStrategy {
 
 extension StepOneKoreanDiaryStrategy {
     func koreanValidation(with text: String, in viewController: DiaryViewController) -> Bool {
-           return viewController.inputTextView.text.getArrayAfterRegex(regex: "[가-핳ㄱ-ㅎㅏ-ㅣ]").count > 9
-       }
+        return viewController.inputTextView.text.getArrayAfterRegex(regex: "[가-핳ㄱ-ㅎㅏ-ㅣ]").count > 9
+    }
 }
 
 // MARK: - Network
