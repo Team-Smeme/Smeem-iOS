@@ -100,12 +100,12 @@ final class HomeViewController: UIViewController {
     
     private let fullViewButtonSymbol: UIImageView = {
         let symbol = UIImageView()
-        symbol.image = UIImage(named: "rightArrow")
+        symbol.image = Constant.Image.icnRightArrow
         return symbol
     }()
     
     private let emptyView = UIView()
-    private let emptySymbol = UIImageView(image: UIImage(named: "noDiary"))
+    private let emptySymbol = UIImageView(image: Constant.Image.noDiary)
     
     private let emptyText: UILabel = {
         let emptyText = UILabel()
@@ -142,14 +142,14 @@ final class HomeViewController: UIViewController {
     
     private lazy var xButton: UIButton = {
         let xButton = UIButton()
-        xButton.setImage(UIImage(named: "icnCancelGrey"), for: .normal)
+        xButton.setImage(Constant.Image.icnCancelGrey, for: .normal)
         xButton.addTarget(self, action: #selector(self.xButtonDidTap(_:)), for: .touchUpInside)
         return xButton
     }()
     
     private lazy var myPageButton: UIButton = {
         let myPageButton = UIButton()
-        myPageButton.setImage(UIImage(named: "icn_mypage"), for: .normal)
+        myPageButton.setImage(Constant.Image.icnMyPage, for: .normal)
         myPageButton.addTarget(self, action: #selector(self.myPageButtonDidTap(_:)), for: .touchUpInside)
         return myPageButton
     }()
@@ -252,11 +252,11 @@ final class HomeViewController: UIViewController {
     private func setLayout() {
         hiddenNavigationBar()
         
-        view.addSubviews(calendar, myPageButton, indicator, border, diaryThumbnail, emptyView, floatingView, xButton, addDiaryButton)
+        view.addSubviews(calendar, myPageButton, indicator, border, diaryThumbnail, emptyView, floatingView, addDiaryButton)
         diaryThumbnail.addSubviews(diaryDate, fullViewButton, diaryText)
         fullViewButton.addSubviews(fullViewButtonText, fullViewButtonSymbol)
         emptyView.addSubviews(emptySymbol, emptyText)
-        floatingView.addSubviews(waitingLabel, adviceLabel)
+        floatingView.addSubviews(waitingLabel, adviceLabel, xButton)
         
         calendar.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
@@ -355,8 +355,8 @@ final class HomeViewController: UIViewController {
         }
         
         xButton.snp.makeConstraints {
-            $0.trailing.equalToSuperview().offset(-convertByWidthRatio(26))
-            $0.centerY.equalTo(floatingView.snp.centerY)
+            $0.trailing.equalToSuperview().inset(convertByWidthRatio(8))
+            $0.centerY.equalToSuperview()
             $0.width.height.equalTo(convertByWidthRatio(40))
         }
         
@@ -395,7 +395,7 @@ extension HomeViewController: FSCalendarDataSource {
     
     /// 달력에 보여지는 모든 셀들의 배경 디자인 설정
     private func configure(cell: FSCalendarCell, for date: Date, at position: FSCalendarMonthPosition) {
-         guard let cell = cell as? CalendarCell else { return }
+        guard let cell = cell as? CalendarCell else { return }
         
         let filledType = checkFilledType(of: date)
         let isSelected = calendar.selectedDates.contains(date)
