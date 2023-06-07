@@ -70,6 +70,7 @@
 		6F294A462A2617D500856CC8 /* HowLearningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEFD4C92A1392DF00DAB2BD /* HowLearningView.swift */; };
 		6F31802F2A24D1DB00089870 /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F31802E2A24D1DB00089870 /* CalendarCell.swift */; };
 		6F62668C2A04EA3B000365CD /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F62668B2A04EA3B000365CD /* HomeViewController.swift */; };
+		A301B0A22A30720F006BE0BA /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = A301B0A12A30720F006BE0BA /* Kingfisher */; };
 		A3D7ECB72A26566A009857D6 /* EditNicknameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D7ECB62A26566A009857D6 /* EditNicknameViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -143,6 +144,7 @@
 				4AA942D22A276AFF00A552A0 /* FirebaseMessaging in Frameworks */,
 				4AA942D72A276C7900A552A0 /* KakaoSDKCommon in Frameworks */,
 				4AA942C22A2767D000A552A0 /* FSCalendar in Frameworks */,
+				A301B0A22A30720F006BE0BA /* Kingfisher in Frameworks */,
 				4AA942CD2A276A9F00A552A0 /* Moya in Frameworks */,
 				4AA942D92A276C7900A552A0 /* KakaoSDKUser in Frameworks */,
 				4AA942D02A276AFF00A552A0 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
@@ -468,6 +470,7 @@
 				4AA942D42A276C7900A552A0 /* KakaoSDKAuth */,
 				4AA942D62A276C7900A552A0 /* KakaoSDKCommon */,
 				4AA942D82A276C7900A552A0 /* KakaoSDKUser */,
+				A301B0A12A30720F006BE0BA /* Kingfisher */,
 			);
 			productName = "Smeem-iOS";
 			productReference = 4A8FFA4C29C9E1FD00FB76C0 /* Smeem-iOS.app */;
@@ -506,6 +509,7 @@
 				4AA942CB2A276A9F00A552A0 /* XCRemoteSwiftPackageReference "Moya" */,
 				4AA942CE2A276AFF00A552A0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				4AA942D32A276C7900A552A0 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
+				A301B0A02A30720F006BE0BA /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = 4A8FFA4D29C9E1FD00FB76C0 /* Products */;
 			projectDirPath = "";
@@ -858,6 +862,14 @@
 				kind = branch;
 			};
 		};
+		A301B0A02A30720F006BE0BA /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -900,6 +912,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4AA942D32A276C7900A552A0 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
 			productName = KakaoSDKUser;
+		};
+		A301B0A12A30720F006BE0BA /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A301B0A02A30720F006BE0BA /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
