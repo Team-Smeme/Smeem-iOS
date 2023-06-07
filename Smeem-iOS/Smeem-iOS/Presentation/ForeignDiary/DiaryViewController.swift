@@ -118,6 +118,7 @@ class DiaryViewController: UIViewController {
         
     override func viewWillAppear(_ animated: Bool) {
         showKeyboard(textView: inputTextView)
+        keyboardAddObserver()
     }
     
     override func viewDidLoad() {
@@ -126,6 +127,10 @@ class DiaryViewController: UIViewController {
         configureDiaryStrategy()
         configureUI()
         setupUI()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        keyboardRemoveObserver()
     }
     
     deinit {
@@ -144,6 +149,14 @@ class DiaryViewController: UIViewController {
     
     @objc func rightNavigationButtonTapped() {
         //        guard let diaryText = inputTextView.text else { return }
+    }
+    
+    @objc func keyboardWillShow(_ notification: Notification) {
+        handleKeyboardChanged(notification: notification, customView: bottomView, isActive: true)
+    }
+    
+    @objc func keyboardWillHide(_ notification: Notification) {
+        handleKeyboardChanged(notification: notification, customView: bottomView, isActive: false)
     }
     
     // MARK: - Custom Method
@@ -197,6 +210,19 @@ class DiaryViewController: UIViewController {
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalTo(bottomView.snp.top)
         }
+    }
+    
+    private func keyboardAddObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow),
+                                               name: UIResponder.keyboardWillShowNotification, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide),
+                                               name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    private func keyboardRemoveObserver() {
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     //MARK: - Layout
