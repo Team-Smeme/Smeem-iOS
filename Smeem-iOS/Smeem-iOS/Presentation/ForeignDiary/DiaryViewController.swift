@@ -81,11 +81,18 @@ class DiaryViewController: UIViewController {
     }()
     
     lazy var inputTextView: UITextView = {
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = 3 // adjust this value as needed
+        
         let textView = UITextView()
+        textView.font = .b4
+        
+        let attrsDictionary: [NSAttributedString.Key: Any] = [.paragraphStyle: paragraphStyle, .font: textView.font!]
+        
         textView.textContainerInset = .init(top: 20, left: 18, bottom: 0, right: 18)
         textView.textColor = .smeemBlack
-        textView.font = .b4
         textView.tintColor = .point
+        textView.typingAttributes = attrsDictionary
         textView.delegate = self
         return textView
     }()
