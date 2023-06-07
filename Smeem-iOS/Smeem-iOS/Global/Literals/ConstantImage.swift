@@ -15,6 +15,7 @@ extension Constant {
     enum Image {
         
         static let icnBack = UIImage(named: "icnBack")
+        static let icnCancelBlack = UIImage(named: "icnCancelBlack")
         static let icnCancelGrey = UIImage(named: "icnCancelGrey")
         static let icnCancelSmall = UIImage(named: "icnCancelSmall")
         static let icnCancelWhite = UIImage(named: "icnCancelWhite")
