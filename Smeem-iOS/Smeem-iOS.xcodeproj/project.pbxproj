@@ -68,6 +68,7 @@
 		6F294A442A26179900856CC8 /* ServiceAcceptCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8275D42A1519550083A4AB /* ServiceAcceptCollectionViewCell.swift */; };
 		6F294A452A2617B000856CC8 /* UITextField+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD04B382A190020004B7A58 /* UITextField+.swift */; };
 		6F294A462A2617D500856CC8 /* HowLearningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEFD4C92A1392DF00DAB2BD /* HowLearningView.swift */; };
+		6F294A482A27818200856CC8 /* HomeViewFloatingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F294A472A27818200856CC8 /* HomeViewFloatingViewController.swift */; };
 		6F31802F2A24D1DB00089870 /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F31802E2A24D1DB00089870 /* CalendarCell.swift */; };
 		6F62668C2A04EA3B000365CD /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F62668B2A04EA3B000365CD /* HomeViewController.swift */; };
 		A3D7ECB72A26566A009857D6 /* EditNicknameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D7ECB62A26566A009857D6 /* EditNicknameViewController.swift */; };
@@ -130,6 +131,7 @@
 		4AEFD4C92A1392DF00DAB2BD /* HowLearningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HowLearningView.swift; sourceTree = "<group>"; };
 		4AF507742A10CD4D007C62B1 /* GoalOnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalOnboardingViewController.swift; sourceTree = "<group>"; };
 		4AF507762A10CD96007C62B1 /* GoalCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalCollectionViewCell.swift; sourceTree = "<group>"; };
+		6F294A472A27818200856CC8 /* HomeViewFloatingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewFloatingViewController.swift; sourceTree = "<group>"; };
 		6F31802E2A24D1DB00089870 /* CalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCell.swift; sourceTree = "<group>"; };
 		6F62668B2A04EA3B000365CD /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		A3D7ECB62A26566A009857D6 /* EditNicknameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNicknameViewController.swift; sourceTree = "<group>"; };
@@ -431,6 +433,7 @@
 			children = (
 				6F62668B2A04EA3B000365CD /* HomeViewController.swift */,
 				6F31802E2A24D1DB00089870 /* CalendarCell.swift */,
+				6F294A472A27818200856CC8 /* HomeViewFloatingViewController.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -542,6 +545,7 @@
 				6F294A3E2A26177B00856CC8 /* GoalOnboardingViewController.swift in Sources */,
 				3761116C2A278D0E0095EC5A /* String+.swift in Sources */,
 				6F294A402A26178300856CC8 /* HowOnboardingViewController.swift in Sources */,
+				6F294A482A27818200856CC8 /* HomeViewFloatingViewController.swift in Sources */,
 				37A574C529FF6EA800312453 /* FontLiterals.swift in Sources */,
 				4AD923E92A0692C600FF5E27 /* BottomSheetViewController.swift in Sources */,
 				6F294A462A2617D500856CC8 /* HowLearningView.swift in Sources */,
