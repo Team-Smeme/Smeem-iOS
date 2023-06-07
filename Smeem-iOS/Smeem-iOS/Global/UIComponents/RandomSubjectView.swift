@@ -44,7 +44,7 @@ class RandomSubjectView: UIView {
         let button = UIButton()
         button.backgroundColor = .gray200
         //TODO: 에셋 나오면 추가할게여!
-        //button.setImage(<#T##image: UIImage?##UIImage?#>, for: <#T##UIControl.State#>)
+//        button.setImage(<#T##image: UIImage?##UIImage?#>, for: <#T##UIControl.State#>)
         return button
     }()
     
@@ -60,11 +60,23 @@ class RandomSubjectView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-}
-
-extension RandomSubjectView {
     
-    // MARK: - Custom Functions
+    // MARK: - Custom Method
+    
+    private func setRandomSubjectViewHeight() {
+        let labelWidth = UIScreen.main.bounds.width - 36
+        contentLabel.preferredMaxLayoutWidth = labelWidth
+        contentLabel.setNeedsLayout()
+        contentLabel.layoutIfNeeded()
+        
+        let contentLabelHeight = contentLabel.frame.height
+        
+        snp.makeConstraints {
+            $0.height.equalTo(contentLabelHeight < 20 ? 88 : 110)
+        }
+    }
+    
+    // MARK: - Layout
     
     private func setRandomSubjectViewUI() {
         backgroundColor = .gray100
@@ -98,18 +110,5 @@ extension RandomSubjectView {
         }
         
         setRandomSubjectViewHeight()
-    }
-    
-    private func setRandomSubjectViewHeight() {
-        let labelWidth = UIScreen.main.bounds.width - 36
-        contentLabel.preferredMaxLayoutWidth = labelWidth
-        contentLabel.setNeedsLayout()
-        contentLabel.layoutIfNeeded()
-        
-        let contentLabelHeight = contentLabel.frame.height
-        
-        snp.makeConstraints {
-            $0.height.equalTo(contentLabelHeight < 20 ? 88 : 110)
-        }
     }
 }
