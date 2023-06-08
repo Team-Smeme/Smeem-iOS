@@ -17,9 +17,15 @@ final class HomeViewController: UIViewController {
     private let weekdayLabels = ["S", "M", "T", "W", "T", "F", "S"]
     private let gregorian = Calendar(identifier: .gregorian)
     private var writtenDays = [Date]()
-    private var writtenDaysfromServer = ["2023-05-01","2023-05-03","2023-05-10","2023-05-15","2023-05-20","2023-05-23","2023-05-30","2023-05-31"]
+    private var writtenDaysfromServer = ["2023-05-01","2023-05-03","2023-05-10","2023-05-15","2023-05-20","2023-05-23","2023-05-30","2023-06-03"]
     private let tmpText = ["I watched Avatar with my boyfriend at Hongdae CGV. I should have skimmed the previous season - Avatar1.. I really couldn’t get what they were saying and the universe(??). What I was annoyed then was 두팔 didn’t know that as me. I think 두팔 who is my boyfriend should study before wathcing…. but Avatar2 is amazing movie I think. In my personal opinion, the jjin main character of Avatar2 is not Sully, but his son.", "4 : 18 PM"]
     private var isWating30days = true
+    private var isHavingTodayDiary = false {
+        didSet {
+            diaryThumbnail.isHidden = !isHavingTodayDiary
+            emptyView.isHidden = isHavingTodayDiary
+        }
+    }
     
     // MARK: - UI Property
     
@@ -94,12 +100,12 @@ final class HomeViewController: UIViewController {
     
     private let fullViewButtonSymbol: UIImageView = {
         let symbol = UIImageView()
-        symbol.image = UIImage(named: "rightArrow")
+        symbol.image = Constant.Image.icnRightArrow
         return symbol
     }()
     
     private let emptyView = UIView()
-    private let emptySymbol = UIImageView(image: UIImage(named: "noDiary"))
+    private let emptySymbol = UIImageView(image: Constant.Image.noDiary)
     
     private let emptyText: UILabel = {
         let emptyText = UILabel()
@@ -136,16 +142,23 @@ final class HomeViewController: UIViewController {
     
     private lazy var xButton: UIButton = {
         let xButton = UIButton()
-        xButton.setImage(UIImage(named: "icnCancelGrey"), for: .normal)
+        xButton.setImage(Constant.Image.icnCancelGrey, for: .normal)
         xButton.addTarget(self, action: #selector(self.xButtonDidTap(_:)), for: .touchUpInside)
         return xButton
     }()
     
     private lazy var myPageButton: UIButton = {
         let myPageButton = UIButton()
-        myPageButton.setImage(UIImage(named: "icn_mypage"), for: .normal)
+        myPageButton.setImage(Constant.Image.icnMyPage, for: .normal)
         myPageButton.addTarget(self, action: #selector(self.myPageButtonDidTap(_:)), for: .touchUpInside)
         return myPageButton
+    }()
+    
+    private lazy var addDiaryButton: SmeemButton = {
+        let addDiaryButton = SmeemButton()
+        addDiaryButton.setTitle("일기 작성하기", for: .normal)
+        addDiaryButton.addTarget(self, action: #selector(self.addDiaryButtonDidTap(_:)), for: .touchUpInside)
+        return addDiaryButton
     }()
     
     // MARK: - Life Cycle
@@ -159,10 +172,6 @@ final class HomeViewController: UIViewController {
         setSwipe()
         setData()
         setEvents()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        floatingView.isHidden = !isWating30days
     }
     
     // MARK: - @objc
@@ -189,8 +198,15 @@ final class HomeViewController: UIViewController {
         UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut, animations: {
             self.floatingView.alpha = 0.0
         }, completion: {_ in
-            self.floatingView.removeFromSuperview()
+            self.floatingView.isHidden = true
         })
+    }
+    
+    @objc func addDiaryButtonDidTap(_ sender: UIButton) {
+        let newVC = HomeViewFloatingViewController()
+        newVC.modalTransitionStyle = .crossDissolve
+        newVC.modalPresentationStyle = .overFullScreen
+        self.present(newVC, animated: true, completion: nil)
     }
     
     // MARK: - Custom Method
@@ -236,11 +252,11 @@ final class HomeViewController: UIViewController {
     private func setLayout() {
         hiddenNavigationBar()
         
-        view.addSubviews(calendar, myPageButton, indicator, border, diaryThumbnail, emptyView, floatingView, xButton)
+        view.addSubviews(calendar, myPageButton, indicator, border, diaryThumbnail, emptyView, floatingView, addDiaryButton)
         diaryThumbnail.addSubviews(diaryDate, fullViewButton, diaryText)
         fullViewButton.addSubviews(fullViewButtonText, fullViewButtonSymbol)
         emptyView.addSubviews(emptySymbol, emptyText)
-        floatingView.addSubviews(waitingLabel, adviceLabel)
+        floatingView.addSubviews(waitingLabel, adviceLabel, xButton)
         
         calendar.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
@@ -264,6 +280,7 @@ final class HomeViewController: UIViewController {
         
         border.snp.makeConstraints {
             $0.top.equalTo(indicator.snp.bottom).offset(convertByWidthRatio(12))
+            $0.centerX.equalToSuperview()
             $0.height.equalTo(convertByHeightRatio(6))
             $0.width.equalToSuperview()
         }
@@ -321,7 +338,7 @@ final class HomeViewController: UIViewController {
         }
         
         floatingView.snp.makeConstraints {
-            $0.bottom.equalToSuperview().inset(convertByHeightRatio(50))
+            $0.bottom.equalToSuperview().offset(-convertByHeightRatio(120))
             $0.centerX.equalToSuperview()
             $0.width.equalTo(convertByWidthRatio(339))
             $0.height.equalTo(convertByHeightRatio(88))
@@ -338,9 +355,16 @@ final class HomeViewController: UIViewController {
         }
         
         xButton.snp.makeConstraints {
-            $0.trailing.equalToSuperview().offset(-convertByWidthRatio(26))
-            $0.centerY.equalTo(floatingView.snp.centerY)
+            $0.trailing.equalToSuperview().inset(convertByWidthRatio(8))
+            $0.centerY.equalToSuperview()
             $0.width.height.equalTo(convertByWidthRatio(40))
+        }
+        
+        addDiaryButton.snp.makeConstraints {
+            $0.bottom.equalToSuperview().inset(convertByHeightRatio(50))
+            $0.centerX.equalToSuperview()
+            $0.width.equalTo(convertByWidthRatio(339))
+            $0.height.equalTo(convertByHeightRatio(60))
         }
     }
 }
@@ -369,39 +393,50 @@ extension HomeViewController: FSCalendarDataSource {
         return cell
     }
     
+    /// 달력에 보여지는 모든 셀들의 배경 디자인 설정
     private func configure(cell: FSCalendarCell, for date: Date, at position: FSCalendarMonthPosition) {
         guard let cell = cell as? CalendarCell else { return }
-        let filledType: FilledType = checkDate(for: date)
-        checkSeletedDates(cell, for: date, typeFor: filledType)
+        
+        let filledType = checkFilledType(of: date)
+        let isSelected = calendar.selectedDates.contains(date)
+        
+        cell.configureUI(isSelected: isSelected, with: filledType)
     }
     
-    private func checkDate(for date: Date) -> FilledType {
-        if gregorian.isDateInToday(date) {
+    /// 해당 셀의 FilledType 체크 (오늘 / 일기 있는 날 / 일기 없는 날)
+    private func checkFilledType(of date: Date) -> FilledType {
+        if gregorian.isDateInToday(date) { /// 오늘인 경우
             return .today
-        } else {
+        } else { /// 오늘 아닌경우 -> 일기 있는 날과 없는 날로 구분
             return writtenDays.contains(date) ? .some : .none
         }
-    }
-    
-    private func checkSeletedDates(_ cell: CalendarCell, for date: Date, typeFor filledType: FilledType) {
-        let isSelected = calendar.selectedDates.contains(date)
-        cell.configureUI(isSelected: isSelected, with: filledType)
     }
 }
 
 extension HomeViewController: FSCalendarDelegateAppearance {
+    /// 날짜 선택 시 콜백 메소드
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-        configureVisibleCells()
-        // TODO: - 매번 contain 쓰지말고 더 효율적인 방안 모색해보기
-        diaryThumbnail.isHidden = !writtenDays.contains(date)
-        emptyView.isHidden = !diaryThumbnail.isHidden
+        isHavingTodayDiary = writtenDays.contains(date)
+        configureSelectedUI()
+        configureBottomLayout(date: date)
     }
 
-    private func configureVisibleCells() {
+    /// 달력의 선택된 셀 배경 디자인 변경
+    private func configureSelectedUI() {
         calendar.visibleCells().forEach { (cell) in
             let date = calendar.date(for: cell)
             let position = calendar.monthPosition(for: cell)
             self.configure(cell: cell, for: date!, at: position)
+        }
+    }
+    
+    /// 홈뷰 하단 30일전 일기 첨삭 팝업뷰와 일기 작성뷰 레이아웃 설정
+    private func configureBottomLayout(date: Date) {
+        addDiaryButton.isHidden = (gregorian.isDateInToday(date) && !isHavingTodayDiary) ? false : true
+        if (!floatingView.isHidden) {
+            floatingView.snp.updateConstraints {
+                $0.bottom.equalToSuperview().offset(-convertByHeightRatio(addDiaryButton.isHidden ? 50 : 120))
+            }
         }
     }
 }
