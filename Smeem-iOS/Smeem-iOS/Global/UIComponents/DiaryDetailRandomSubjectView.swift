@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-class DiaryDetailRandomSubjectView: UIView {
+final class DiaryDetailRandomSubjectView: UIView {
     
     // MARK: - Property
     

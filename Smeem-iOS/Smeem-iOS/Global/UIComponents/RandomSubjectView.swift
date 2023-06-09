@@ -17,7 +17,7 @@ import UIKit
 
 import SnapKit
 
-class RandomSubjectView: UIView {
+final class RandomSubjectView: UIView {
     
     // MARK: - UI Property
     
