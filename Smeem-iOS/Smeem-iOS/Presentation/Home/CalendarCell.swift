@@ -59,7 +59,7 @@ final class CalendarCell: FSCalendarCell {
             rectangleImageView.image = nil
         case .single:
             titleLabel.textColor = .smeemBlack
-            rectangleImageView.image = UIImage(named: "monthday")
+            rectangleImageView.image = Constant.Image.monthday
         }
         
         switch filledType {
@@ -71,12 +71,12 @@ final class CalendarCell: FSCalendarCell {
             titleLabel.textColor = .smeemBlack
         case .today:
             titleLabel.textColor = .smeemWhite
-            rectangleImageView.image = UIImage(named: "monthToday")
+            rectangleImageView.image = Constant.Image.monthToday
         }
     }
     
     func setBackgroundDefaultCell() {
-        let rectangleImageView = UIImageView(image: UIImage(named: "monthday"))
+        let rectangleImageView = UIImageView(image: Constant.Image.monthday)
         contentView.insertSubview(rectangleImageView, at: 0)
         self.rectangleImageView = rectangleImageView
         shapeLayer.isHidden = true
