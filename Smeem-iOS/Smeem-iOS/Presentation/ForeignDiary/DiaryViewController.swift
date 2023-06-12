@@ -133,6 +133,7 @@ class DiaryViewController: UIViewController {
     
     deinit {
         randomSubjectView.removeFromSuperview()
+        NotificationCenter.default.removeObserver(self)
     }
     
     // MARK: - @objc
