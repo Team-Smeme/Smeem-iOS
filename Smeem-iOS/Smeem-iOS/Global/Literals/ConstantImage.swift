@@ -24,5 +24,10 @@ extension Constant {
         static let icnMore = UIImage(named: "icnMore")
         static let icnMoreHoriz = UIImage(named: "icnMoreHoriz")
         static let incCheckActive = UIImage(named: "incCheckActive")
+        static let icnMyPage = UIImage(named: "icnMyPage")
+        static let icnRightArrow = UIImage(named: "icnRightArrow")
+        static let noDiary = UIImage(named: "noDiary")
+        static let monthday = UIImage(named: "monthday")
+        static let monthToday = UIImage(named: "monthToday")
     }
 }
