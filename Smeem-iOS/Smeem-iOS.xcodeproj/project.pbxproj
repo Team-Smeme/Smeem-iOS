@@ -14,7 +14,7 @@
 		374FAF812A2CACCF00237A1A /* DiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374FAF802A2CACCF00237A1A /* DiaryViewController.swift */; };
 		3761116C2A278D0E0095EC5A /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3761116B2A278D0E0095EC5A /* String+.swift */; };
 		37A574C129FF6E9100312453 /* ColorLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574C029FF6E9100312453 /* ColorLiterals.swift */; };
-		37A574C329FF6E9C00312453 /* ConstantImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574C229FF6E9C00312453 /* ConstantImage.swift */; };
+		37A574C329FF6E9C00312453 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574C229FF6E9C00312453 /* Image.swift */; };
 		37A574C529FF6EA800312453 /* FontLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574C429FF6EA800312453 /* FontLiterals.swift */; };
 		37A574C829FF6F1C00312453 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574C729FF6F1C00312453 /* UIView+.swift */; };
 		37A574CA29FF980F00312453 /* UIStackView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574C929FF980F00312453 /* UIStackView+.swift */; };
@@ -52,6 +52,7 @@
 		4AA942D52A276C7900A552A0 /* KakaoSDKAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 4AA942D42A276C7900A552A0 /* KakaoSDKAuth */; };
 		4AA942D72A276C7900A552A0 /* KakaoSDKCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 4AA942D62A276C7900A552A0 /* KakaoSDKCommon */; };
 		4AA942D92A276C7900A552A0 /* KakaoSDKUser in Frameworks */ = {isa = PBXBuildFile; productRef = 4AA942D82A276C7900A552A0 /* KakaoSDKUser */; };
+		4AC4B82D2A2F9FE200E147AA /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4B82C2A2F9FE200E147AA /* UserDefaultsManager.swift */; };
 		4AC9489829ED800800489C2B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4AC9489729ED800800489C2B /* GoogleService-Info.plist */; };
 		4AD04B3B2A1905BB004B7A58 /* DiaryScrollerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD04B3A2A1905BB004B7A58 /* DiaryScrollerView.swift */; };
 		4AD04B3D2A190E9A004B7A58 /* UITextView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD04B3C2A190E9A004B7A58 /* UITextView+.swift */; };
@@ -82,7 +83,7 @@
 		374FAF802A2CACCF00237A1A /* DiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryViewController.swift; sourceTree = "<group>"; };
 		3761116B2A278D0E0095EC5A /* String+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		37A574C029FF6E9100312453 /* ColorLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorLiterals.swift; sourceTree = "<group>"; };
-		37A574C229FF6E9C00312453 /* ConstantImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstantImage.swift; sourceTree = "<group>"; };
+		37A574C229FF6E9C00312453 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		37A574C429FF6EA800312453 /* FontLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontLiterals.swift; sourceTree = "<group>"; };
 		37A574C729FF6F1C00312453 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		37A574C929FF980F00312453 /* UIStackView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+.swift"; sourceTree = "<group>"; };
@@ -118,6 +119,7 @@
 		4A8FFA5829C9E1FE00FB76C0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4A8FFA5B29C9E1FE00FB76C0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4A8FFA5D29C9E1FE00FB76C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4AC4B82C2A2F9FE200E147AA /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		4AC9489729ED800800489C2B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		4AD04B382A190020004B7A58 /* UITextField+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+.swift"; sourceTree = "<group>"; };
 		4AD04B3A2A1905BB004B7A58 /* DiaryScrollerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryScrollerView.swift; sourceTree = "<group>"; };
@@ -163,6 +165,7 @@
 				37A574B729FE208A00312453 /* UIComponents */,
 				37A574B829FE209900312453 /* Literals */,
 				37A574B929FE209F00312453 /* Resources */,
+				4AC4B82B2A2F9F5300E147AA /* Constants */,
 			);
 			path = Global;
 			sourceTree = "<group>";
@@ -215,7 +218,6 @@
 			children = (
 				37A574C029FF6E9100312453 /* ColorLiterals.swift */,
 				37A574C429FF6EA800312453 /* FontLiterals.swift */,
-				37A574C229FF6E9C00312453 /* ConstantImage.swift */,
 			);
 			path = Literals;
 			sourceTree = "<group>";
@@ -363,6 +365,15 @@
 				37A574BC29FE224700312453 /* Supports */,
 			);
 			path = "Smeem-iOS";
+			sourceTree = "<group>";
+		};
+		4AC4B82B2A2F9F5300E147AA /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				37A574C229FF6E9C00312453 /* Image.swift */,
+				4AC4B82C2A2F9FE200E147AA /* UserDefaultsManager.swift */,
+			);
+			path = Constants;
 			sourceTree = "<group>";
 		};
 		4AD04B3E2A19217B004B7A58 /* Correction */ = {
@@ -550,7 +561,7 @@
 				4AD923E92A0692C600FF5E27 /* BottomSheetViewController.swift in Sources */,
 				6F294A462A2617D500856CC8 /* HowLearningView.swift in Sources */,
 				37A574CC29FF990E00312453 /* UIViewController+.swift in Sources */,
-				37A574C329FF6E9C00312453 /* ConstantImage.swift in Sources */,
+				37A574C329FF6E9C00312453 /* Image.swift in Sources */,
 				4A3F2EA02A0C18B600F6AC60 /* DatePickerFooterView.swift in Sources */,
 				4AD04B3D2A190E9A004B7A58 /* UITextView+.swift in Sources */,
 				4A0EA4622A01413D006CCE52 /* DataModel.swift in Sources */,
@@ -574,6 +585,7 @@
 				4AD923E72A0650B600FF5E27 /* SplashViewController.swift in Sources */,
 				3728B8D32A2CFED300EF4CF8 /* ForeignDiaryViewController.swift in Sources */,
 				4AD923EB2A0692EA00FF5E27 /* BottomSheetView.swift in Sources */,
+				4AC4B82D2A2F9FE200E147AA /* UserDefaultsManager.swift in Sources */,
 				37A574E02A00CDCD00312453 /* SeparationLine.swift in Sources */,
 				3728B8D72A2CFF3A00EF4CF8 /* StepTwoKoreanDiaryViewController.swift in Sources */,
 				4A0EA4552A014027006CCE52 /* GeneralResponse.swift in Sources */,
