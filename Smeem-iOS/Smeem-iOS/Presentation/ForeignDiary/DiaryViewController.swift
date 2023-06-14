@@ -122,7 +122,6 @@ class DiaryViewController: UIViewController {
     
     private lazy var dismissButton: UIButton? = {
         let button = UIButton()
-        button.backgroundColor = .blue
         button.addTarget(self, action: #selector(dismissButtonDidTap), for: .touchUpInside)
         return button
     }()
@@ -162,6 +161,7 @@ class DiaryViewController: UIViewController {
     
     @objc func dismissButtonDidTap() {
         tutorialImageView?.removeFromSuperview()
+        dismissButton?.removeFromSuperview()
     }
     
     // MARK: - Custom Method
@@ -237,7 +237,7 @@ class DiaryViewController: UIViewController {
         }
         
         stepLabel.snp.makeConstraints {
-            $0.top.equalTo(languageLabel.snp.bottom).offset(4)
+            $0.top.equalTo(languageLabel.snp.bottom).offset(convertByWidthRatio(4))
             $0.centerX.equalToSuperview()
         }
         
@@ -294,9 +294,6 @@ class DiaryViewController: UIViewController {
                 tutorialImageView = nil
                 dismissButton = nil
             }
-            
-        } else if self is StepTwoKoreanDiaryViewController {
-            diaryStrategy = StepTwoKoreanDiaryStrategy()
         }
     }
 }
