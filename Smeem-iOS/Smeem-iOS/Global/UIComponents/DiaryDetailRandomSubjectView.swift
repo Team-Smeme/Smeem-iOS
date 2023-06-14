@@ -1,23 +1,17 @@
 //
-//  RandomSubjectView.swift
+//  DiaryDetailRandomSubjectView.swift
 //  Smeem-iOS
 //
-//  Created by Joon Baek on 2023/05/03.
+//  Created by Joon Baek on 2023/06/07.
 //
-
-/**
- 1. 사용할 VC에서 RandomSubjectView 생성
- let randomSubjectView = RandomSubjectView()
- 
- 2. view에 addSubView 후 y축 레이아웃 값만 입력해서 사용
-**/
-
 
 import UIKit
 
 import SnapKit
 
-final class RandomSubjectView: UIView {
+final class DiaryDetailRandomSubjectView: UIView {
+    
+    // MARK: - Property
     
     // MARK: - UI Property
     
@@ -36,16 +30,8 @@ final class RandomSubjectView: UIView {
         label.textColor = .smeemBlack
         label.numberOfLines = 0
         label.setTextWithLineHeight(lineHeight: 22)
-        label.text = "     " + "오늘부터 딱 일주일 후! 설레는 크리스마스네요.\n일주일 전부터 세워보는 나의 크리스마스 계획은?"
+        label.text = "     " + "랜덤주제 한줄일 경우"
         return label
-    }()
-    
-    private let refreshButton: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .gray200
-        //TODO: 에셋 나오면 추가할게여!
-//        button.setImage(<#T##image: UIImage?##UIImage?#>, for: <#T##UIControl.State#>)
-        return button
     }()
     
     // MARK: - Life Cycle
@@ -72,7 +58,7 @@ final class RandomSubjectView: UIView {
         let contentLabelHeight = contentLabel.frame.height
         
         snp.makeConstraints {
-            $0.height.equalTo(contentLabelHeight < 20 ? 88 : 110)
+            $0.height.equalTo(contentLabelHeight < 20 ? 62 : 84)
         }
     }
     
@@ -89,24 +75,17 @@ final class RandomSubjectView: UIView {
             $0.width.equalTo(convertByWidthRatio(375))
         }
         
-        addSubviews(questionLabel, contentLabel, refreshButton)
+        addSubviews(questionLabel, contentLabel)
         
         questionLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(convertByHeightRatio(20))
-            $0.leading.equalToSuperview().offset(convertByWidthRatio(18))
+            $0.leading.equalToSuperview().offset(convertByWidthRatio(30))
         }
         
         contentLabel.snp.makeConstraints {
             $0.top.equalTo(questionLabel)
             $0.leading.equalTo(questionLabel)
-            $0.width.equalToSuperview().offset(convertByWidthRatio(-36))
-        }
-        
-        refreshButton.snp.makeConstraints {
-            $0.bottom.equalToSuperview().offset(convertByHeightRatio(-20))
-            $0.trailing.equalToSuperview().offset(convertByWidthRatio(-18))
-            //TODO: 에셋 나오면 삭제 예정
-            $0.width.height.equalTo(18)
+            $0.width.equalToSuperview().offset(convertByWidthRatio(-60))
         }
         
         setRandomSubjectViewHeight()

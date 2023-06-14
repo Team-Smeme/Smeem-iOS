@@ -18,7 +18,7 @@ import UIKit
 
 import SnapKit
 
-class SeparationLine: UIView {
+final class SeparationLine: UIView {
     
     // MARK: - UI Property
     
