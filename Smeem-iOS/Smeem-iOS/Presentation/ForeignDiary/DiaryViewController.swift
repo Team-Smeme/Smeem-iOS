@@ -114,6 +114,19 @@ class DiaryViewController: UIViewController {
         return button
     }()
     
+    private var tutorialImageView: UIImageView? = {
+        let imageView = UIImageView()
+        imageView.image = Constant.Image.tutorialDiaryStepOne
+        return imageView
+    }()
+    
+    private lazy var dismissButton: UIButton? = {
+        let button = UIButton()
+        button.backgroundColor = .blue
+        button.addTarget(self, action: #selector(dismissButtonDidTap), for: .touchUpInside)
+        return button
+    }()
+    
     // MARK: - Life Cycle
         
     override func viewWillAppear(_ animated: Bool) {
@@ -126,6 +139,7 @@ class DiaryViewController: UIViewController {
         configureDiaryStrategy()
         configureUI()
         setupUI()
+        checkToturial()
     }
     
     deinit {
@@ -144,6 +158,10 @@ class DiaryViewController: UIViewController {
     
     @objc func rightNavigationButtonTapped() {
         //        guard let diaryText = inputTextView.text else { return }
+    }
+    
+    @objc func dismissButtonDidTap() {
+        tutorialImageView?.removeFromSuperview()
     }
     
     // MARK: - Custom Method
@@ -249,6 +267,36 @@ class DiaryViewController: UIViewController {
             $0.trailing.equalToSuperview().offset(convertByWidthRatio(-18))
             $0.width.equalTo(convertByWidthRatio(78))
             $0.height.equalTo(convertByHeightRatio(19))
+        }
+    }
+    
+    private func checkToturial() {
+        if self is StepOneKoreanDiaryViewController {
+            let tutorialDiaryStepOne = UserDefaultsManager.tutorialDiaryStepOne
+            
+            if !tutorialDiaryStepOne {
+                UserDefaultsManager.tutorialDiaryStepOne = true
+                
+                view.addSubviews(tutorialImageView ?? UIImageView(), dismissButton ?? UIButton())
+                view.bringSubviewToFront(tutorialImageView ?? UIImageView())
+                view.bringSubviewToFront(dismissButton ?? UIButton())
+                
+                
+                tutorialImageView?.snp.makeConstraints {
+                    $0.top.leading.trailing.bottom.equalToSuperview()
+                }
+                dismissButton?.snp.makeConstraints {
+                    $0.top.equalToSuperview().inset(convertByHeightRatio(204))
+                    $0.trailing.equalToSuperview().inset(convertByHeightRatio(10))
+                    $0.width.height.equalTo(convertByHeightRatio(45))
+                }
+            } else {
+                tutorialImageView = nil
+                dismissButton = nil
+            }
+            
+        } else if self is StepTwoKoreanDiaryViewController {
+            diaryStrategy = StepTwoKoreanDiaryStrategy()
         }
     }
 }
