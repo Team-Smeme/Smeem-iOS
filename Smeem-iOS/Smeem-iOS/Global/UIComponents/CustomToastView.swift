@@ -16,7 +16,7 @@ import UIKit
 
 import SnapKit
 
-class CustomToastView: UIView {
+final class CustomToastView: UIView {
     
     // MARK: - Property
     
