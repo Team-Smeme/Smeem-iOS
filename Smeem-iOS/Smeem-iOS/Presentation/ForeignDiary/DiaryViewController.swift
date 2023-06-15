@@ -113,10 +113,11 @@ class DiaryViewController: UIViewController {
     }()
     
     // MARK: - Life Cycle
-        
+    
     override func viewWillAppear(_ animated: Bool) {
-        showKeyboard(textView: inputTextView)
+        super.viewWillAppear(animated)
         keyboardAddObserver()
+        showKeyboard(textView: inputTextView)
     }
     
     override func viewDidLoad() {
@@ -150,12 +151,22 @@ class DiaryViewController: UIViewController {
         //        guard let diaryText = inputTextView.text else { return }
     }
     
-    @objc func keyboardWillShow(_ notification: Notification) {
-        handleKeyboardChanged(notification: notification, customView: bottomView, isActive: true)
+    @objc func keyboardWillShow(notification: NSNotification) {
+        guard let userInfo = notification.userInfo,
+              let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect
+        else { return }
+        
+        let keyboardHeight = keyboardFrame.height
+        let insets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight, right: 0)
+        inputTextView.contentInset = insets
+        inputTextView.scrollIndicatorInsets = insets
+        self.bottomView.transform = CGAffineTransform(translationX: 0, y: -keyboardHeight)
     }
     
-    @objc func keyboardWillHide(_ notification: Notification) {
-        handleKeyboardChanged(notification: notification, customView: bottomView, isActive: false)
+    @objc func keyboardWillHide(notification: NSNotification) {
+        inputTextView.contentInset = .zero
+        inputTextView.scrollIndicatorInsets = .zero
+        self.bottomView.transform = CGAffineTransform.identity
     }
     
     // MARK: - Custom Method
@@ -212,11 +223,8 @@ class DiaryViewController: UIViewController {
     }
     
     private func keyboardAddObserver() {
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow),
-                                               name: UIResponder.keyboardWillShowNotification, object: nil)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide),
-                                               name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     private func keyboardRemoveObserver() {
@@ -261,7 +269,7 @@ class DiaryViewController: UIViewController {
         
         bottomView.snp.makeConstraints {
             $0.bottom.leading.trailing.equalToSuperview()
-            $0.height.equalTo(constraintByNotch(87, 53))
+            $0.height.equalTo(constraintByNotch(53, 87))
         }
         
         thinLine.snp.makeConstraints {
@@ -299,6 +307,14 @@ extension DiaryViewController: UITextViewDelegate {
         }
         
         rightNavigationButton.setTitleColor(rightNavigationButton.isEnabled ? .point : .gray400, for: .normal)
+    }
+    
+    func textViewDidChangeSelection(_ textView: UITextView) {
+        let cursorPosition = textView.selectedTextRange?.end
+        if let cursorPosition = cursorPosition {
+            let caretPositionRect = textView.caretRect(for: cursorPosition)
+            textView.scrollRectToVisible(caretPositionRect, animated: true)
+        }
     }
 }
 
