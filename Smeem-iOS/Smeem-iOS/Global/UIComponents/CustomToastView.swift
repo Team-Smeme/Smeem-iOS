@@ -10,6 +10,8 @@
  let toastView = CustomToastView(text: "토스트 메시지 텍스트")
  
  2. view에 addSubView 후 y축(bottom) 레이아웃 값만 입력해서 사용
+ 
+ 3. duration에 띄워지는 시간을 입력해서 호출 toastView.show(duration: )
 **/
 
 import UIKit
@@ -28,7 +30,6 @@ final class CustomToastView: UIView {
         let label = UILabel()
         label.font = .c2
         label.textColor = .smeemWhite
-        //TODO: LineHeight 속성지정?
         label.setTextWithLineHeight(lineHeight: 17)
         label.sizeToFit()
         return label
@@ -39,6 +40,7 @@ final class CustomToastView: UIView {
     public init(text: String) {
         self.text = text
         super.init(frame: .zero)
+        alpha = 0
         setToastViewUI()
         setToastViewLayout()
     }
