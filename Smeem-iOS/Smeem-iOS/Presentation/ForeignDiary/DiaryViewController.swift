@@ -303,9 +303,6 @@ class DiaryViewController: UIViewController {
                 UserDefaultsManager.tutorialDiaryStepOne = true
                 
                 view.addSubviews(tutorialImageView ?? UIImageView(), dismissButton ?? UIButton())
-                view.bringSubviewToFront(tutorialImageView ?? UIImageView())
-                view.bringSubviewToFront(dismissButton ?? UIButton())
-                
                 
                 tutorialImageView?.snp.makeConstraints {
                     $0.top.leading.trailing.bottom.equalToSuperview()
