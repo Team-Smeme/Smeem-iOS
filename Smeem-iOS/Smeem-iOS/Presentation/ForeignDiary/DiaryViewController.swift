@@ -111,6 +111,8 @@ class DiaryViewController: UIViewController {
         return button
     }()
     
+    let regExToastView = CustomToastView(text: "외국어를 포함해 작성해 주세요 :(")
+    
     // MARK: - Life Cycle
         
     override func viewWillAppear(_ animated: Bool) {
@@ -285,7 +287,6 @@ extension DiaryViewController: UITextViewDelegate {
         placeHolderLabel.isHidden = !isTextEmpty
         
         guard let strategy = diaryStrategy else {
-            rightNavigationButton.isEnabled = false
             rightNavigationButton.setTitleColor(.gray400, for: .normal)
             return
         }
