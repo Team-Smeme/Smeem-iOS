@@ -90,12 +90,12 @@ final class HomeViewFloatingViewController: UIViewController {
         
         setBackgroundColor()
         setLayout()
-        checkToturial()
+        checkTutorial()
     }
     
     // MARK: - Custom Method
     
-    private func checkToturial() {
+    private func checkTutorial() {
         let tutorialDiaryStepTwo = UserDefaultsManager.tutorialWeeklyTwoMode
         
         if !tutorialDiaryStepTwo {

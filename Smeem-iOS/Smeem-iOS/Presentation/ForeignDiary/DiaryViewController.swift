@@ -137,7 +137,7 @@ class DiaryViewController: UIViewController {
         configureDiaryStrategy()
         configureUI()
         setupUI()
-        checkToturial()
+        checkTutorial()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -295,7 +295,7 @@ class DiaryViewController: UIViewController {
         }
     }
     
-    private func checkToturial() {
+    private func checkTutorial() {
         if self is StepOneKoreanDiaryViewController {
             let tutorialDiaryStepOne = UserDefaultsManager.tutorialDiaryStepOne
             

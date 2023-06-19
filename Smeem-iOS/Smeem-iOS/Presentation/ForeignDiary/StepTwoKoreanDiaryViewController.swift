@@ -51,7 +51,7 @@ final class StepTwoKoreanDiaryViewController: DiaryViewController {
         super.viewDidLoad()
         
         setLayout()
-        checkToturial()
+        checkTutorial()
     }
     
     // MARK: - @objc
@@ -94,7 +94,7 @@ final class StepTwoKoreanDiaryViewController: DiaryViewController {
         }
     }
     
-    private func checkToturial() {
+    private func checkTutorial() {
         let tutorialDiaryStepTwo = UserDefaultsManager.tutorialDiaryStepTwo
         
         if !tutorialDiaryStepTwo {
