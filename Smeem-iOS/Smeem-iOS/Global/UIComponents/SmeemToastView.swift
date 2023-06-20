@@ -66,6 +66,7 @@ final class SmeemToastView: UIView {
     
     private let cautionImage: UIImageView = {
         let imageView = UIImageView()
+        //TODO: 추후 추가할게요!
         imageView.backgroundColor = .white
         return imageView
     }()
@@ -82,7 +83,6 @@ final class SmeemToastView: UIView {
     private let bodyLabel: UILabel = {
         let label = UILabel()
         label.textColor = .smeemWhite
-        label.setTextWithLineHeight(lineHeight: 17)
         label.sizeToFit()
         return label
     }()
@@ -96,7 +96,6 @@ final class SmeemToastView: UIView {
             self.bodyText = bodyType.rawValue
         case .errorToast:
             self.bodyText = BodyType.error.rawValue
-            
         }
         super.init(frame: .zero)
         alpha = 0
@@ -130,12 +129,17 @@ final class SmeemToastView: UIView {
         
         switch type {
         case .defaultToast:
+            backgroundColor = .toastBackground
             bodyLabel.font = .c2
+            //FIXME: 한줄이라 lineHeight 적용이 안되어서 Figma 레이아웃과 차이가 있네요,,
+            bodyLabel.setTextWithLineHeight(lineHeight: 22)
+            
         case .errorToast:
+            backgroundColor = .smeemBlack
             bodyLabel.font = .c4
+            bodyLabel.setTextWithLineHeight(lineHeight: 14)
         }
         
-        backgroundColor = .toastBackground
         clipsToBounds = true
         layer.cornerRadius = 6
     }
