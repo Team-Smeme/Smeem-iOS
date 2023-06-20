@@ -111,6 +111,18 @@ class DiaryViewController: UIViewController {
         return button
     }()
     
+    private var tutorialImageView: UIImageView? = {
+        let imageView = UIImageView()
+        imageView.image = Constant.Image.tutorialDiaryStepOne
+        return imageView
+    }()
+    
+    private lazy var dismissButton: UIButton? = {
+        let button = UIButton()
+        button.addTarget(self, action: #selector(dismissButtonDidTap), for: .touchUpInside)
+        return button
+    }()
+    
     let regExToastView = SmeemToastView(type: .defaultToast(bodyType: .regEx))
     
     // MARK: - Life Cycle
@@ -126,6 +138,7 @@ class DiaryViewController: UIViewController {
         configureDiaryStrategy()
         configureUI()
         setupUI()
+        checkTutorial()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -156,6 +169,11 @@ class DiaryViewController: UIViewController {
     
     @objc func keyboardWillHide(_ notification: Notification) {
         handleKeyboardChanged(notification: notification, customView: bottomView, isActive: false)
+    }
+    
+    @objc func dismissButtonDidTap() {
+        tutorialImageView?.removeFromSuperview()
+        dismissButton?.removeFromSuperview()
     }
     
     // MARK: - Custom Method
@@ -244,7 +262,7 @@ class DiaryViewController: UIViewController {
         }
         
         stepLabel.snp.makeConstraints {
-            $0.top.equalTo(languageLabel.snp.bottom).offset(4)
+            $0.top.equalTo(languageLabel.snp.bottom).offset(convertByWidthRatio(4))
             $0.centerX.equalToSuperview()
         }
         
@@ -274,6 +292,30 @@ class DiaryViewController: UIViewController {
             $0.trailing.equalToSuperview().offset(convertByWidthRatio(-18))
             $0.width.equalTo(convertByWidthRatio(78))
             $0.height.equalTo(convertByHeightRatio(19))
+        }
+    }
+    
+    private func checkTutorial() {
+        if self is StepOneKoreanDiaryViewController {
+            let tutorialDiaryStepOne = UserDefaultsManager.tutorialDiaryStepOne
+            
+            if !tutorialDiaryStepOne {
+                UserDefaultsManager.tutorialDiaryStepOne = true
+                
+                view.addSubviews(tutorialImageView ?? UIImageView(), dismissButton ?? UIButton())
+                
+                tutorialImageView?.snp.makeConstraints {
+                    $0.top.leading.trailing.bottom.equalToSuperview()
+                }
+                dismissButton?.snp.makeConstraints {
+                    $0.top.equalToSuperview().inset(convertByHeightRatio(204))
+                    $0.trailing.equalToSuperview().inset(convertByHeightRatio(10))
+                    $0.width.height.equalTo(convertByHeightRatio(45))
+                }
+            } else {
+                tutorialImageView = nil
+                dismissButton = nil
+            }
         }
     }
 }

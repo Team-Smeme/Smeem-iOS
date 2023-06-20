@@ -1,5 +1,5 @@
 //
-//  ConstantImage.swift
+//  Image.swift
 //  Smeem-iOS
 //
 //  Created by Joon Baek on 2023/05/01.
@@ -28,5 +28,9 @@ extension Constant {
         static let noDiary = UIImage(named: "noDiary")
         static let monthday = UIImage(named: "monthday")
         static let monthToday = UIImage(named: "monthToday")
+        static let tutorialWeekly = UIImage(named: "tutorialWeekly")
+        static let tutorialWeeklyCorrection = UIImage(named: "tutorialWeeklyCorrection")
+        static let tutorialDiaryStepOne = UIImage(named: "tutorialDiaryStepOne")
+        static let tutorialDiaryStepTwo = UIImage(named: "tutorialDiaryStepTwo")
     }
 }
