@@ -279,7 +279,7 @@ class DiaryViewController: UIViewController {
         
         bottomView.snp.makeConstraints {
             $0.bottom.leading.trailing.equalToSuperview()
-            $0.height.equalTo(constraintByNotch(87, 53))
+            $0.height.equalTo(constraintByNotch(53, 87))
         }
         
         thinLine.snp.makeConstraints {
