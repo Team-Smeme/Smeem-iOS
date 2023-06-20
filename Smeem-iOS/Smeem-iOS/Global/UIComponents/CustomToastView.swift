@@ -18,17 +18,51 @@ import UIKit
 
 import SnapKit
 
+enum ToastViewType {
+    case defaultToast(bodyType: BodyType)
+    case errorToast(errorType: ErrorType)
+}
+
+enum ErrorType: String {
+    case networkError = "인터넷 연결을 확인해 주세요 :("
+    case systemError = "죄송합니다, 시스템 오류가 발생했어요 :("
+    case loadDataError = "데이터를 불러올 수 없어요 :("
+}
+
+enum BodyType: String {
+    case error = "재접속하거나 나중에 다시 시도해 주세요."
+    case regEx = "외국어를 포함해 작성해 주세요"
+    case completed = "작성 완료"
+    case changed = "변경 완료"
+    case edited = "첨삭 완료"
+}
+
 final class CustomToastView: UIView {
     
     // MARK: - Property
-    
-    private let text: String
+
+    private let type: ToastViewType
+    private let bodyText: String
     
     // MARK: - UI Property
     
-    private let label: UILabel = {
+    private let cautionImage: UIImageView = {
+        let imageView = UIImageView()
+        imageView.backgroundColor = .white
+        return imageView
+    }()
+    
+    private let headLabel: UILabel = {
         let label = UILabel()
-        label.font = .c2
+        label.font = .c1
+        label.textColor = .smeemWhite
+        label.setTextWithLineHeight(lineHeight: 21)
+        label.sizeToFit()
+        return label
+    }()
+    
+    private let bodyLabel: UILabel = {
+        let label = UILabel()
         label.textColor = .smeemWhite
         label.setTextWithLineHeight(lineHeight: 17)
         label.sizeToFit()
@@ -37,8 +71,15 @@ final class CustomToastView: UIView {
     
     // MARK: - Life Cycle
     
-    public init(text: String) {
-        self.text = text
+    public init(type: ToastViewType) {
+        self.type = type
+        switch type {
+        case .defaultToast(bodyType: let bodyType):
+            self.bodyText = bodyType.rawValue
+        case .errorToast:
+            self.bodyText = BodyType.error.rawValue
+            
+        }
         super.init(frame: .zero)
         alpha = 0
         setToastViewUI()
@@ -65,24 +106,60 @@ final class CustomToastView: UIView {
     // MARK: - Layout
     
     private func setToastViewUI() {
+        
+        switch type {
+        case .defaultToast:
+            bodyLabel.font = .c2
+            bodyLabel.text = bodyText
+        case .errorToast(let errorType):
+            bodyLabel.font = .c4
+            headLabel.text = errorType.rawValue
+            bodyLabel.text = BodyType.error.rawValue
+        }
+        
         backgroundColor = .toastBackground
         clipsToBounds = true
         layer.cornerRadius = 6
-        label.text = text
     }
     
     private func setToastViewLayout() {
-        addSubview(label)
+        addSubviews(cautionImage, headLabel, bodyLabel)
         
-        label.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
-            $0.leading.equalToSuperview().offset(convertByWidthRatio(16))
+        switch type {
+        case .defaultToast:
+            bodyLabel.snp.makeConstraints {
+                $0.centerY.equalToSuperview()
+                $0.leading.equalToSuperview().offset(convertByWidthRatio(16))
+            }
+            
+        case .errorToast:
+            
+            cautionImage.snp.makeConstraints {
+                $0.centerY.equalToSuperview()
+                $0.leading.equalTo(convertByWidthRatio(19))
+                $0.width.height.equalTo(22)
+            }
+            
+            headLabel.snp.makeConstraints {
+                $0.top.equalToSuperview().offset(14)
+                $0.leading.equalTo(cautionImage.snp.trailing).offset(14)
+            }
+            
+            bodyLabel.snp.makeConstraints {
+                $0.top.equalTo(headLabel.snp.bottom).offset(3)
+                $0.leading.equalTo(headLabel)
+            }
         }
         
         snp.makeConstraints {
             $0.centerX.equalTo(self)
             $0.width.equalTo(convertByWidthRatio(339))
-            $0.height.equalTo(convertByHeightRatio(50))
+            
+            if case .defaultToast = type {
+                $0.height.equalTo(convertByHeightRatio(50))
+            } else {
+                $0.height.equalTo(convertByHeightRatio(70))
+            }
         }
     }
 }
