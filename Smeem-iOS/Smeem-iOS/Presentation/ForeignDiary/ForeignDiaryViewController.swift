@@ -22,13 +22,12 @@ final class ForeignDiaryViewController: DiaryViewController {
         if rightNavigationButton.titleLabel?.textColor == .point {
             //TODO: HomeView로 돌아가는 코드
         } else {
-            regExToastView.show(duration: 0.7)
-            
             view.addSubview(regExToastView)
             regExToastView.snp.makeConstraints {
                 $0.centerX.equalToSuperview()
                 $0.bottom.equalTo(bottomView.snp.top).offset(-20)
             }
+            regExToastView.show()
         }
     }
 }
