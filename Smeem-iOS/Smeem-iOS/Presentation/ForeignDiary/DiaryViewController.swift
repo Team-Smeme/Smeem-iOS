@@ -147,6 +147,7 @@ class DiaryViewController: UIViewController {
     
     deinit {
         randomSubjectView.removeFromSuperview()
+        regExToastView.removeFromSuperview()
         NotificationCenter.default.removeObserver(self)
     }
     
