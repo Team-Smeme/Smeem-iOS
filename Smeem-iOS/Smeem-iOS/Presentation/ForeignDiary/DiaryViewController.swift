@@ -111,7 +111,7 @@ class DiaryViewController: UIViewController {
         return button
     }()
     
-    let regExToastView = CustomToastView(text: "외국어를 포함해 작성해 주세요 :(")
+    let regExToastView = SmeemToastView(type: .defaultToast(bodyType: .regEx))
     
     // MARK: - Life Cycle
         
