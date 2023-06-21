@@ -20,6 +20,10 @@ final class AlarmCollectionView: UICollectionView {
     
     private let dayArray = ["월", "화", "수", "목", "금", "토", "일"]
     private let selectedIndexPath = [IndexPath(item: 0, section: 0), IndexPath(item: 1, section: 0), IndexPath(item: 2, section: 0), IndexPath(item: 3, section: 0), IndexPath(item: 4, section: 0)]
+    var dayDicrionary: [String:String] = ["월": "MON", "화": "TUE", "수": "WED", "목": "THU", "금": "FRI", "토": "SAT", "일": "SUN"]
+    var selectedDayArray: Set<String> = ["MON", "TUE", "WED", "THU", "FRI"]
+    
+    var trainingDayClosure: ((TrainingTime) -> Void)?
     
     // MARK: - UI Property
     
@@ -77,7 +81,15 @@ final class AlarmCollectionView: UICollectionView {
 
 // MARK: - UICollectionViewDelegate
 
-extension AlarmCollectionView: UICollectionViewDelegate { }
+extension AlarmCollectionView: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        selectedDayArray.insert(dayDicrionary[dayArray[indexPath.item]] ?? "")
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        selectedDayArray.remove(dayDicrionary[dayArray[indexPath.item]] ?? "")
+    }
+}
 
 // MARK: - UICollectionViewDataSource
 
