@@ -30,8 +30,6 @@
 	<string>$(BASE_URL)</string>
 	<key>TEMP_TOKEN</key>
 	<string>$(TEMP_TOKEN)</string>
-	<key>PAPAGO_CLIENT_ID</key>
-	<string>$(PAPAGO_CLIENT_ID)</string>
 	<key>X_NAVER_CLIENT_ID</key>
 	<string>$(X_NAVER_CLIENT_ID)</string>
 	<key>X_NAVER_CLIENT_SECRET</key>
