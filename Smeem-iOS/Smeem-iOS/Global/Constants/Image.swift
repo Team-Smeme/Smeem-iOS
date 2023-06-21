@@ -28,6 +28,10 @@ extension Constant {
         static let noDiary = UIImage(named: "noDiary")
         static let monthday = UIImage(named: "monthday")
         static let monthToday = UIImage(named: "monthToday")
+        
+        static let logoWhiteSmeem = UIImage(named: "logoWhiteSmeem")
+        static let logoPointSmeem = UIImage(named: "logoPointSmeem")
+        
         static let tutorialWeekly = UIImage(named: "tutorialWeekly")
         static let tutorialWeeklyCorrection = UIImage(named: "tutorialWeeklyCorrection")
         static let tutorialDiaryStepOne = UIImage(named: "tutorialDiaryStepOne")
