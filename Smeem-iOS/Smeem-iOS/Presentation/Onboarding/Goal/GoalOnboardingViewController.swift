@@ -187,4 +187,3 @@ extension GoalOnboardingViewController: UICollectionViewDelegateFlowLayout {
         return cellLineSpacing
     }
 }
-
