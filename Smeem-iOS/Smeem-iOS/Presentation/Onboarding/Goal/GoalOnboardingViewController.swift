@@ -76,6 +76,7 @@ final class GoalOnboardingViewController: UIViewController {
     
     private lazy var nextButton: SmeemButton = {
         let button = SmeemButton()
+        button.smeemButtonType = .notEnabled
         button.setTitle("다음", for: .normal)
         button.addTarget(self, action: #selector(nextButtonDidTap), for: .touchUpInside)
         return button
@@ -159,7 +160,11 @@ final class GoalOnboardingViewController: UIViewController {
 
 // MARK: - UICollectionViewDelegate
 
-extension GoalOnboardingViewController: UICollectionViewDelegate { }
+extension GoalOnboardingViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        nextButton.smeemButtonType = .enabled
+    }
+}
 
 // MARK: - UICollectionViewDataSource
 
