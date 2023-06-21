@@ -51,7 +51,7 @@ class DiaryViewController: UIViewController {
         button.titleLabel?.font = .b4
         button.setTitleColor(.black, for: .normal)
         button.setTitle("취소", for: .normal)
-        button.addTarget(self, action: #selector(naviButtonDidTap), for: .touchUpInside)
+        button.addTarget(self, action: #selector(leftNaviButtonDidTap), for: .touchUpInside)
         return button
     }()
     
@@ -59,7 +59,7 @@ class DiaryViewController: UIViewController {
         let label = UILabel()
         label.font = .s2
         label.textColor = .smeemBlack
-        label.text = "Language"
+        label.text = "Lang"
         return label
     }()
     
@@ -70,13 +70,12 @@ class DiaryViewController: UIViewController {
         return label
     }()
     
-    private lazy var rightNavigationButton: UIButton = {
+    lazy var rightNavigationButton: UIButton = {
         let button = UIButton()
         button.titleLabel?.font = .b1
         button.setTitleColor(.gray300, for: .normal)
         button.setTitle("완료", for: .normal)
-        button.isEnabled = false
-        button.addTarget(self, action: #selector(rightNavigationButtonTapped) , for: .touchUpInside)
+        button.addTarget(self, action: #selector(rightNavigationButtonDidTap) , for: .touchUpInside)
         return button
     }()
     
@@ -124,6 +123,8 @@ class DiaryViewController: UIViewController {
         return button
     }()
     
+    let regExToastView = SmeemToastView(type: .defaultToast(bodyType: .regEx))
+    
     // MARK: - Life Cycle
     
     override func viewWillAppear(_ animated: Bool) {
@@ -147,6 +148,7 @@ class DiaryViewController: UIViewController {
     
     deinit {
         randomSubjectView.removeFromSuperview()
+        regExToastView.removeFromSuperview()
         NotificationCenter.default.removeObserver(self)
     }
     
@@ -156,12 +158,11 @@ class DiaryViewController: UIViewController {
         setRandomTopicButtonToggle()
     }
     
-    @objc func naviButtonDidTap() {
-        resignFirstResponder()
+    @objc func leftNaviButtonDidTap() {
     }
     
-    @objc func rightNavigationButtonTapped() {
-        //        guard let diaryText = inputTextView.text else { return }
+    @objc func rightNavigationButtonDidTap() {
+
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
@@ -337,7 +338,6 @@ extension DiaryViewController: UITextViewDelegate {
         placeHolderLabel.isHidden = !isTextEmpty
         
         guard let strategy = diaryStrategy else {
-            rightNavigationButton.isEnabled = false
             rightNavigationButton.setTitleColor(.gray400, for: .normal)
             return
         }
