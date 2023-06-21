@@ -39,6 +39,7 @@
 		4A0EA4642A014710006CCE52 /* SmeemButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EA4632A014710006CCE52 /* SmeemButton.swift */; };
 		4A3774822A42DF4500357DD1 /* NetworkHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3774812A42DF4500357DD1 /* NetworkHeader.swift */; };
 		4A3774842A42E6EA00357DD1 /* SharedConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3774832A42E6EA00357DD1 /* SharedConstant.swift */; };
+		4A37748A2A433A6500357DD1 /* OnboardingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3774892A433A6500357DD1 /* OnboardingModel.swift */; };
 		4A3F2E972A0ABBAA00F6AC60 /* AlarmCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3F2E962A0ABBAA00F6AC60 /* AlarmCollectionViewCell.swift */; };
 		4A3F2E9C2A0B4C7100F6AC60 /* AlarmCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3F2E9B2A0B4C7100F6AC60 /* AlarmCollectionView.swift */; };
 		4A3F2EA02A0C18B600F6AC60 /* DatePickerFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3F2E9F2A0C18B600F6AC60 /* DatePickerFooterView.swift */; };
@@ -112,6 +113,7 @@
 		4A13B7582A13D37000F4FB1E /* UserNickNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNickNameViewController.swift; sourceTree = "<group>"; };
 		4A3774812A42DF4500357DD1 /* NetworkHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkHeader.swift; sourceTree = "<group>"; };
 		4A3774832A42E6EA00357DD1 /* SharedConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedConstant.swift; sourceTree = "<group>"; };
+		4A3774892A433A6500357DD1 /* OnboardingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingModel.swift; sourceTree = "<group>"; };
 		4A3F2E962A0ABBAA00F6AC60 /* AlarmCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmCollectionViewCell.swift; sourceTree = "<group>"; };
 		4A3F2E9B2A0B4C7100F6AC60 /* AlarmCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmCollectionView.swift; sourceTree = "<group>"; };
 		4A3F2E9F2A0C18B600F6AC60 /* DatePickerFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerFooterView.swift; sourceTree = "<group>"; };
@@ -326,6 +328,22 @@
 			path = Nickname;
 			sourceTree = "<group>";
 		};
+		4A3774872A433A4400357DD1 /* VC */ = {
+			isa = PBXGroup;
+			children = (
+				4AEFD4C72A13908E00DAB2BD /* AlarmSettingViewController.swift */,
+			);
+			path = VC;
+			sourceTree = "<group>";
+		};
+		4A3774882A433A5000357DD1 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				4A3774892A433A6500357DD1 /* OnboardingModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		4A3F2E952A0ABB9C00F6AC60 /* Alarm */ = {
 			isa = PBXGroup;
 			children = (
@@ -431,7 +449,8 @@
 		4AEFD4C62A13907D00DAB2BD /* Alarm */ = {
 			isa = PBXGroup;
 			children = (
-				4AEFD4C72A13908E00DAB2BD /* AlarmSettingViewController.swift */,
+				4A3774882A433A5000357DD1 /* Model */,
+				4A3774872A433A4400357DD1 /* VC */,
 			);
 			path = Alarm;
 			sourceTree = "<group>";
@@ -594,6 +613,7 @@
 				4A0EA4592A014103006CCE52 /* URLConstant.swift in Sources */,
 				6F294A432A26179700856CC8 /* ServiceAcceptViewController.swift in Sources */,
 				4AD04B402A1921AE004B7A58 /* CorrectionViewController.swift in Sources */,
+				4A37748A2A433A6500357DD1 /* OnboardingModel.swift in Sources */,
 				4AD923E72A0650B600FF5E27 /* SplashViewController.swift in Sources */,
 				3728B8D32A2CFED300EF4CF8 /* ForeignDiaryViewController.swift in Sources */,
 				4AD923EB2A0692EA00FF5E27 /* BottomSheetView.swift in Sources */,
