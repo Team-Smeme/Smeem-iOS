@@ -6,3 +6,17 @@
 //
 
 import Foundation
+
+import Moya
+
+protocol BaseTargetType: TargetType { }
+
+extension BaseTargetType {
+    var baseURL: URL {
+        return URL(string: SharedConstant.baseURL)!
+    }
+    
+    var sampleData: Data {
+        return Data()
+    }
+}
