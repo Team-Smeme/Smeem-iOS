@@ -51,7 +51,7 @@ class DiaryViewController: UIViewController {
         button.titleLabel?.font = .b4
         button.setTitleColor(.black, for: .normal)
         button.setTitle("취소", for: .normal)
-        button.addTarget(self, action: #selector(naviButtonDidTap), for: .touchUpInside)
+        button.addTarget(self, action: #selector(leftNaviButtonDidTap), for: .touchUpInside)
         return button
     }()
     
@@ -59,7 +59,7 @@ class DiaryViewController: UIViewController {
         let label = UILabel()
         label.font = .s2
         label.textColor = .smeemBlack
-        label.text = "Language"
+        label.text = "Lang"
         return label
     }()
     
@@ -70,13 +70,12 @@ class DiaryViewController: UIViewController {
         return label
     }()
     
-    private lazy var rightNavigationButton: UIButton = {
+    lazy var rightNavigationButton: UIButton = {
         let button = UIButton()
         button.titleLabel?.font = .b1
         button.setTitleColor(.gray300, for: .normal)
         button.setTitle("완료", for: .normal)
-        button.isEnabled = false
-        button.addTarget(self, action: #selector(rightNavigationButtonTapped) , for: .touchUpInside)
+        button.addTarget(self, action: #selector(rightNavigationButtonDidTap) , for: .touchUpInside)
         return button
     }()
     
@@ -124,11 +123,14 @@ class DiaryViewController: UIViewController {
         return button
     }()
     
+    let regExToastView = SmeemToastView(type: .defaultToast(bodyType: .regEx))
+    
     // MARK: - Life Cycle
-        
+    
     override func viewWillAppear(_ animated: Bool) {
-        showKeyboard(textView: inputTextView)
+        super.viewWillAppear(animated)
         keyboardAddObserver()
+        showKeyboard(textView: inputTextView)
     }
     
     override func viewDidLoad() {
@@ -146,6 +148,7 @@ class DiaryViewController: UIViewController {
     
     deinit {
         randomSubjectView.removeFromSuperview()
+        regExToastView.removeFromSuperview()
         NotificationCenter.default.removeObserver(self)
     }
     
@@ -155,20 +158,29 @@ class DiaryViewController: UIViewController {
         setRandomTopicButtonToggle()
     }
     
-    @objc func naviButtonDidTap() {
-        resignFirstResponder()
+    @objc func leftNaviButtonDidTap() {
     }
     
-    @objc func rightNavigationButtonTapped() {
-        //        guard let diaryText = inputTextView.text else { return }
+    @objc func rightNavigationButtonDidTap() {
+
     }
     
-    @objc func keyboardWillShow(_ notification: Notification) {
-        handleKeyboardChanged(notification: notification, customView: bottomView, isActive: true)
+    @objc func keyboardWillShow(notification: NSNotification) {
+        guard let userInfo = notification.userInfo,
+              let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect
+        else { return }
+        
+        let keyboardHeight = keyboardFrame.height
+        let insets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight, right: 0)
+        inputTextView.contentInset = insets
+        inputTextView.scrollIndicatorInsets = insets
+        self.bottomView.transform = CGAffineTransform(translationX: 0, y: -keyboardHeight)
     }
     
-    @objc func keyboardWillHide(_ notification: Notification) {
-        handleKeyboardChanged(notification: notification, customView: bottomView, isActive: false)
+    @objc func keyboardWillHide(notification: NSNotification) {
+        inputTextView.contentInset = .zero
+        inputTextView.scrollIndicatorInsets = .zero
+        self.bottomView.transform = CGAffineTransform.identity
     }
     
     @objc func dismissButtonDidTap() {
@@ -230,11 +242,8 @@ class DiaryViewController: UIViewController {
     }
     
     private func keyboardAddObserver() {
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow),
-                                               name: UIResponder.keyboardWillShowNotification, object: nil)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide),
-                                               name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     private func keyboardRemoveObserver() {
@@ -279,7 +288,7 @@ class DiaryViewController: UIViewController {
         
         bottomView.snp.makeConstraints {
             $0.bottom.leading.trailing.equalToSuperview()
-            $0.height.equalTo(constraintByNotch(87, 53))
+            $0.height.equalTo(constraintByNotch(53, 87))
         }
         
         thinLine.snp.makeConstraints {
@@ -329,7 +338,6 @@ extension DiaryViewController: UITextViewDelegate {
         placeHolderLabel.isHidden = !isTextEmpty
         
         guard let strategy = diaryStrategy else {
-            rightNavigationButton.isEnabled = false
             rightNavigationButton.setTitleColor(.gray400, for: .normal)
             return
         }
@@ -341,6 +349,14 @@ extension DiaryViewController: UITextViewDelegate {
         }
         
         rightNavigationButton.setTitleColor(rightNavigationButton.isEnabled ? .point : .gray400, for: .normal)
+    }
+    
+    func textViewDidChangeSelection(_ textView: UITextView) {
+        let cursorPosition = textView.selectedTextRange?.end
+        if let cursorPosition = cursorPosition {
+            let caretPositionRect = textView.caretRect(for: cursorPosition)
+            textView.scrollRectToVisible(caretPositionRect, animated: true)
+        }
     }
 }
 
