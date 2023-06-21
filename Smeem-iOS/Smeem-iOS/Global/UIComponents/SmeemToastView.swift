@@ -75,15 +75,18 @@ final class SmeemToastView: UIView {
         let label = UILabel()
         label.font = .c1
         label.textColor = .smeemWhite
+        //TODO: 미리 속성지정 없이도 lineHeight 적용되게 하기
+        label.text = "추후 수정하겠습니다.."
         label.setTextWithLineHeight(lineHeight: 21)
-        label.sizeToFit()
         return label
     }()
     
     private let bodyLabel: UILabel = {
         let label = UILabel()
         label.textColor = .smeemWhite
-        label.sizeToFit()
+        //TODO: 미리 속성지정 없이도 lineHeight 적용되게 하기
+        label.text = "추후 수정하겠습니다.."
+        label.setTextWithLineHeight(lineHeight: 14)
         return label
     }()
     
@@ -126,20 +129,30 @@ final class SmeemToastView: UIView {
         let (headText, bodyText) = type.displayText
         headLabel.text = headText
         bodyLabel.text = bodyText
+        func lineHeight(for type: ToastViewType) -> CGFloat {
+            switch type {
+            case .defaultToast:
+                return 22
+            case .errorToast:
+                return 14
+            }
+        }
         
-        switch type {
+        switch self.type {
         case .defaultToast:
             backgroundColor = .toastBackground
             bodyLabel.font = .c2
-            //FIXME: 한줄이라 lineHeight 적용이 안되어서 Figma 레이아웃과 차이가 있네요,,
-            bodyLabel.setTextWithLineHeight(lineHeight: 22)
             
         case .errorToast:
             backgroundColor = .smeemBlack
             bodyLabel.font = .c4
-            bodyLabel.setTextWithLineHeight(lineHeight: 14)
         }
         
+        let determinedLineHeight = lineHeight(for: self.type)
+
+        bodyLabel.text = bodyText
+        bodyLabel.setTextWithLineHeight(lineHeight: determinedLineHeight)
+
         clipsToBounds = true
         layer.cornerRadius = 6
     }
@@ -154,9 +167,7 @@ final class SmeemToastView: UIView {
                 $0.centerY.equalToSuperview()
                 $0.leading.equalToSuperview().offset(convertByWidthRatio(16))
             }
-            
         case .errorToast:
-            
             cautionImage.snp.makeConstraints {
                 $0.centerY.equalToSuperview()
                 $0.leading.equalTo(convertByWidthRatio(19))
