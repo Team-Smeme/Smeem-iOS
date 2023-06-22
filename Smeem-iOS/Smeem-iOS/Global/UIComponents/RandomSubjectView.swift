@@ -35,8 +35,8 @@ final class RandomSubjectView: UIView {
         label.font = .b4
         label.textColor = .smeemBlack
         label.numberOfLines = 0
-        label.setTextWithLineHeight(lineHeight: 22)
         label.text = "     " + "오늘부터 딱 일주일 후! 설레는 크리스마스네요.\n일주일 전부터 세워보는 나의 크리스마스 계획은?"
+        label.setTextWithLineHeight(lineHeight: 22)
         return label
     }()
     
@@ -62,6 +62,14 @@ final class RandomSubjectView: UIView {
     }
     
     // MARK: - Custom Method
+    
+    func configureData(contentText: String = "") {
+        contentLabel.text = "     " + contentText
+        contentLabel.setTextWithLineHeight(lineHeight: 22)
+        setRandomSubjectViewHeight()
+        layoutIfNeeded()
+        print("Content label updated: \(contentLabel.text ?? "nil")✅🅾️🙏")
+    }
     
     private func setRandomSubjectViewHeight() {
         let labelWidth = UIScreen.main.bounds.width - 36
