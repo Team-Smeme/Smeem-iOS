@@ -13,6 +13,9 @@ final class GoalOnboardingViewController: UIViewController {
     
     let goalLabelList = ["자기계발", "취미로 즐기기", "현지 언어에 적응하기", "외국어 시험 고득점하기",
                          "외국어 원서 독해", "아직 모르겠어요"]
+    var selectedGoalLabel = String()
+    
+    var targetClosure: ((String) -> Void)?
     
     // MARK: - UI Property
     
@@ -98,6 +101,7 @@ final class GoalOnboardingViewController: UIViewController {
     
     @objc func nextButtonDidTap() {
         let howOnboardingVC = HowOnboardingViewController()
+        howOnboardingVC.tempTarget = selectedGoalLabel
         self.navigationController?.pushViewController(howOnboardingVC, animated: true)
     }
     
@@ -162,6 +166,7 @@ final class GoalOnboardingViewController: UIViewController {
 
 extension GoalOnboardingViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        selectedGoalLabel = goalLabelList[indexPath.item]
         nextButton.smeemButtonType = .enabled
     }
 }

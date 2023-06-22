@@ -11,6 +11,8 @@ final class HowOnboardingViewController: UIViewController {
     
     // MARK: - Property
     
+    var tempTarget = String()
+    
     // MARK: - UI Property
     
     private let nowStepOneLabel: UILabel = {
@@ -71,6 +73,7 @@ final class HowOnboardingViewController: UIViewController {
     
     private lazy var nextButton: SmeemButton = {
         let button = SmeemButton()
+        button.smeemButtonType = .enabled
         button.setTitle("다음", for: .normal)
         button.addTarget(self, action: #selector(nextButtonDidTap), for: .touchUpInside)
         return button
@@ -89,6 +92,7 @@ final class HowOnboardingViewController: UIViewController {
     
     @objc func nextButtonDidTap() {
         let alarmVC = AlarmSettingViewController()
+        alarmVC.targetData = tempTarget
         self.navigationController?.pushViewController(alarmVC, animated: true)
     }
     

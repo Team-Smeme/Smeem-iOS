@@ -12,7 +12,11 @@ final class AlarmSettingViewController: UIViewController {
     
     // MARK: - Property
     
-    var isAlarm = true
+    var isAlarmData = Bool()
+    var targetData = String()
+    var trainingTimeData: TrainingTime?
+    
+    var trainingClosure: ((TrainingTime) -> Void)?
     
     // MARK: - UI Property
     
@@ -77,12 +81,19 @@ final class AlarmSettingViewController: UIViewController {
     
     private lazy var completeButton: SmeemButton = {
         let button = SmeemButton()
+        button.smeemButtonType = .enabled
         button.setTitle("완료", for: .normal)
         button.addTarget(self, action: #selector(nextButtonDidTap), for: .touchUpInside)
         return button
     }()
     
-    private lazy var alarmCollectionView = AlarmCollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    private lazy var alarmCollectionView: AlarmCollectionView = {
+        let collectionView = AlarmCollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        collectionView.trainingDayClosure = { trainingData in
+            self.trainingTimeData = trainingData
+        }
+        return collectionView
+    }()
     
     // MARK: - Life Cycle
     
@@ -96,7 +107,7 @@ final class AlarmSettingViewController: UIViewController {
     // MARK: - @objc
     
     @objc func nextButtonDidTap(){
-        requestNotificationPermission()
+//        requestNotificationPermission()
     }
     
     // MARK: - Custom Method
@@ -105,13 +116,13 @@ final class AlarmSettingViewController: UIViewController {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert,.sound,.badge], completionHandler: { didAllow, error in
             if didAllow {
                 print("Push: 권한 허용")
-                self.isAlarm = true
+                self.isAlarmData = true
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
                     self.requestTrackingAuthoriaztion()
                 }
             } else {
                 print("Push: 권한 거부")
-                self.isAlarm = false
+                self.isAlarmData = false
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
                     self.requestTrackingAuthoriaztion()
                 }

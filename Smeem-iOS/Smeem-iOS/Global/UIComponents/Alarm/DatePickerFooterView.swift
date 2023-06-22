@@ -86,9 +86,9 @@ final class DatePickerFooterView: UICollectionReusableView {
     // MARK: - @objc
     
     @objc func saveButtonDidTap() {
-        let selectedHours = selectedHours ?? "1"
+        let selectedHours = selectedHours ?? "10"
         let selectedMinute = selectedMinute ?? "00"
-        let selectedDayAndNight = selectedDayAndNight ?? "AM"
+        let selectedDayAndNight = selectedDayAndNight ?? "PM"
         
         totalText = ""
         totalText += selectedHours
@@ -96,7 +96,7 @@ final class DatePickerFooterView: UICollectionReusableView {
         totalText += " " + selectedDayAndNight
         inputTextField.text = totalText
         
-        let trainingTime = TrainingTime(day: selectedDayAndNight,
+        let trainingTime = TrainingTime(day: String(),
                                         hour: calculateTime(dayAndNight: selectedDayAndNight, hours: selectedHours),
                                         minute: (selectedMinute))
         self.trainingTimeClosure?(trainingTime)
