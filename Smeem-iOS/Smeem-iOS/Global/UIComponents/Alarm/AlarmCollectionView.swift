@@ -132,9 +132,14 @@ extension AlarmCollectionView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         guard let footerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: DatePickerFooterView.identifier, for: indexPath) as? DatePickerFooterView else { return UICollectionReusableView() }
         
-        footerView.trainingTimeClosure = { trainingData in
-            var trainingData = trainingData
-            trainingData.day = Array(self.selectedDayArray).joined(separator: ", ")
+        footerView.trainingTimeClosure = { data in
+            let dayData = Array(self.selectedDayArray).joined(separator: ", ")
+            let hoursData = data.hour
+            let minuteData = data.minute
+            
+            let trainingData = TrainingTime(day: dayData,
+                                           hour: hoursData,
+                                           minute: minuteData)
             self.trainingDayClosure?(trainingData)
         }
         return footerView
