@@ -62,6 +62,11 @@ final class UserNicknameViewController: UIViewController {
         setLayout()
         setTextFieldDelegate()
         showKeyboard(textView: nicknameTextField)
+        addTextFieldNotification()
+    }
+    
+    deinit {
+        removeTextFieldNotification()
     }
 
     // MARK: - @objc
@@ -85,6 +90,19 @@ final class UserNicknameViewController: UIViewController {
     
     private func setTextFieldDelegate() {
         nicknameTextField.delegate = self
+    }
+    
+    private func addTextFieldNotification() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(nicknameDidChange),
+                                               name: UITextField.textDidChangeNotification,
+                                               object: nicknameTextField)
+    }
+    
+    private func removeTextFieldNotification() {
+        NotificationCenter.default.removeObserver(self,
+                                                  name: UITextField.textDidChangeNotification,
+                                                  object: nicknameTextField)
     }
 
     // MARK: - Layout
