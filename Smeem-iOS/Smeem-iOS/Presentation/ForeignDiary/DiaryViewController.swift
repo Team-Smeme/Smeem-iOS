@@ -32,6 +32,11 @@ class DiaryViewController: UIViewController {
         }
     }
     
+    var isRandomTopic: Bool = false
+    
+    var randomSubject = RandomSubjectResponse(id: 0, content: "")
+    var topicID: Int?
+    
     // MARK: - UI Property
     
     let navigationView = UIView()
@@ -162,7 +167,6 @@ class DiaryViewController: UIViewController {
     }
     
     @objc func rightNavigationButtonDidTap() {
-
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
@@ -194,6 +198,7 @@ class DiaryViewController: UIViewController {
         hiddenNavigationBar()
         setBackgroundColor()
         setLayout()
+        randomSubjectWithAPI()
     }
     
     private func configureDiaryStrategy() {
@@ -252,6 +257,10 @@ class DiaryViewController: UIViewController {
     }
     
     //MARK: - Layout
+    
+    private func setData() {
+        randomSubjectView.configureData(contentText: randomSubject.content)
+    }
     
     private func setLayout() {
         view.addSubviews(navigationView, inputTextView, bottomView)
@@ -374,3 +383,15 @@ extension StepOneKoreanDiaryStrategy {
 }
 
 // MARK: - Network
+
+extension DiaryViewController {
+    func randomSubjectWithAPI() {
+        randomSubjectView.configureData()
+        
+        RandomSubjectAPI.shared.getRandomSubject { response in
+            guard let randomSubjectData = response?.data else { return }
+            self.randomSubject = randomSubjectData
+            self.topicID = self.randomSubject.id
+        }
+    }
+}
