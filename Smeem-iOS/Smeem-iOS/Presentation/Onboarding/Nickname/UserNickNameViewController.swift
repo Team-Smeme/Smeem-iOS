@@ -66,6 +66,21 @@ final class UserNicknameViewController: UIViewController {
 
     // MARK: - @objc
     
+    
+    @objc func nicknameDidChange(_ notification: Notification) {
+        if let textField = notification.object as? UITextField {
+            if let text = textField.text {
+                if text.first == " " {
+                    nextButton.smeemButtonType = .notEnabled
+                } else if text.filter({ $0 == " " }).count == text.count {
+                    nextButton.smeemButtonType = .notEnabled
+                } else {
+                    nextButton.smeemButtonType = .enabled
+                }
+            }
+        }
+    }
+    
     // MARK: - Custom Method
     
     private func setTextFieldDelegate() {
@@ -111,18 +126,15 @@ final class UserNicknameViewController: UIViewController {
     }
 }
 
-// MARK: - UITextFieldDelegate
-
 extension UserNicknameViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if let char = string.cString(using: String.Encoding.utf8) {
-               let isBackSpace = strcmp(char, "\\b")
-               if isBackSpace == -92 {
-                   return true
-               }
-         }
+        guard let text = self.nicknameTextField.text else { return false }
+        let maxLength = 9
         
-        guard self.nicknameTextField.text?.count ?? 0 < 10 else { return false }
+        if text.count > maxLength && range.length == 0 && range.location > maxLength {
+            return false
+        }
+        
         return true
     }
 }
