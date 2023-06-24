@@ -7,7 +7,9 @@
 
 import Foundation
 
-struct OnboardingModel: Codable {
+// MARK: - UserPlan
+
+struct UserPlanModel: Codable {
     let target: String
     let trainingTime: TrainingTime
     let hasAlarm: Bool
@@ -16,3 +18,17 @@ struct OnboardingModel: Codable {
 struct TrainingTime: Codable {
     let day, hour, minute: String
 }
+
+// MARK: - Nickname
+
+struct NicknameRequest: Codable {
+    let username: String
+}
+
+struct NicknameResponse: Codable {
+    let success: Bool
+    let message: String
+    let data: ObjectID?
+}
+
+struct ObjectID: Codable {}

@@ -47,9 +47,10 @@ final class UserNicknameViewController: UIViewController {
         return label
     }()
     
-    private let nextButton: SmeemButton = {
+    private lazy var nextButton: SmeemButton = {
         let button = SmeemButton()
         button.setTitle("다음", for: .normal)
+        button.addTarget(self, action: #selector(nextButtonDidTap), for: .touchUpInside)
         return button
     }()
     
@@ -71,6 +72,9 @@ final class UserNicknameViewController: UIViewController {
 
     // MARK: - @objc
     
+    @objc func nextButtonDidTap() {
+        nicknamePatchAPI(nickname: nicknameTextField.text ?? "")
+    }
     
     @objc func nicknameDidChange(_ notification: Notification) {
         if let textField = notification.object as? UITextField {
@@ -154,5 +158,13 @@ extension UserNicknameViewController: UITextFieldDelegate {
         }
         
         return true
+    }
+}
+
+extension UserNicknameViewController {
+    func nicknamePatchAPI(nickname: String) {
+        OnboardingAPI.shared.nicknamePatch(param: NicknameRequest(username: nickname)) { response in
+            print("닉네임 중복 확인", response.success)
+        }
     }
 }
