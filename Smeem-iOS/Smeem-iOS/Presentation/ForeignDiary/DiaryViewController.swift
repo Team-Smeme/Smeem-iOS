@@ -32,7 +32,6 @@ class DiaryViewController: UIViewController {
         }
     }
     
-    var isRandomTopic: Bool = false
     var topicID: Int?
     var topicContent = String()
     
