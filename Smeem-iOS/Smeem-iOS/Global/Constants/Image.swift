@@ -36,5 +36,9 @@ extension Constant {
         static let tutorialWeeklyCorrection = UIImage(named: "tutorialWeeklyCorrection")
         static let tutorialDiaryStepOne = UIImage(named: "tutorialDiaryStepOne")
         static let tutorialDiaryStepTwo = UIImage(named: "tutorialDiaryStepTwo")
+        
+        static let btnAppleLogin = UIImage(named: "btnAppleLogin")
+        static let btnKakaoLogin = UIImage(named: "btnKakaoLogin")
+        static let btnNonMember = UIImage(named: "btnNonMember")
     }
 }
