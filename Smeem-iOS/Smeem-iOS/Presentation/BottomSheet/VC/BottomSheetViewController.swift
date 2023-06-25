@@ -9,12 +9,14 @@ import UIKit
 
 import SnapKit
 
-final class BottomSheetViewController: UIViewController {
-    
+final class BottomSheetViewController: UIViewController, LoginDelegate {
+
     // MARK: - Property
     
     var defaultLoginHeight: CGFloat = 282
     var defaultSignUpHeight: CGFloat = 394
+    
+    var betaAccessToken = UserDefaultsManager.betaLoginToken
     
     // MARK: - UI Property
     
@@ -25,9 +27,9 @@ final class BottomSheetViewController: UIViewController {
         return view
     }()
     
-    lazy var bottomSheetView: BottomSheetView = {
+    var bottomSheetView: BottomSheetView = {
         let view = BottomSheetView()
-        view.viewType = .login
+        view.viewType = .signUp
         return view
     }()
     
@@ -38,6 +40,7 @@ final class BottomSheetViewController: UIViewController {
         
         setBackgroundColor()
         setLayout()
+        setBottomViewDelegate()
     }
     
     // MARK: - @objc
@@ -51,6 +54,14 @@ final class BottomSheetViewController: UIViewController {
     }
     
     // MARK: - Custom Method
+    
+    func betaLoginDataSend() {
+        betaLoginAPI()
+    }
+    
+    private func setBottomViewDelegate() {
+        self.bottomSheetView.delegate = self
+    }
     
     private func setBackgroundColor() {
         view.backgroundColor = .clear
@@ -73,6 +84,17 @@ final class BottomSheetViewController: UIViewController {
                 $0.height.equalTo(defaultSignUpHeight)
                 $0.leading.trailing.bottom.equalToSuperview()
             }
+        }
+    }
+}
+
+// MARK: - Network
+
+extension BottomSheetViewController {
+    private func betaLoginAPI() {
+        AuthAPI.shared.betaTestLoginAPI() { response in
+            guard let token = response.data?.accessToken else { return }
+            self.betaAccessToken = token
         }
     }
 }

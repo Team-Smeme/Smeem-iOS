@@ -118,21 +118,14 @@ final class AlarmSettingViewController: UIViewController {
                 print("Push: 권한 허용")
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
 //                    self.userPlanPatchAPICall(target: "DEVELOP", hasAlarm: true)
-                    let bottomSheetVC = BottomSheetViewController()
-                    bottomSheetVC.bottomSheetView.viewType = .signUp
-                    bottomSheetVC.modalPresentationStyle = .overFullScreen
-                    self.present(bottomSheetVC, animated: false) {
-                        bottomSheetVC.bottomSheetView.frame.origin.y = self.view.frame.height
-                        UIView.animate(withDuration: 0.3) {
-                            bottomSheetVC.bottomSheetView.frame.origin.y = self.view.frame.height-bottomSheetVC.defaultSignUpHeight
-                        }
-                    }
+                    self.presentBottomSheet()
                 }
             } else {
                 print("Push: 권한 거부")
-//                DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
-                    self.userPlanPatchAPICall(target: "DEVELOP", hasAlarm: true)
-//                }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+//                    self.userPlanPatchAPICall(target: "DEVELOP", hasAlarm: true)
+                    self.presentBottomSheet()
+                }
             }
         })
     }
@@ -143,6 +136,18 @@ final class AlarmSettingViewController: UIViewController {
         userPlanPatchAPI(userPlan: UserPlanRequest(target: "DEVELOP",
                                                    trainingTime: trainigTimeData,
                                                    hasAlarm: hasAlarm))
+    }
+    
+    private func presentBottomSheet() {
+        let bottomSheetVC = BottomSheetViewController()
+        bottomSheetVC.bottomSheetView.viewType = .signUp
+        bottomSheetVC.modalPresentationStyle = .overFullScreen
+        self.present(bottomSheetVC, animated: false) {
+            bottomSheetVC.bottomSheetView.frame.origin.y = self.view.frame.height
+            UIView.animate(withDuration: 0.3) {
+                bottomSheetVC.bottomSheetView.frame.origin.y = self.view.frame.height-bottomSheetVC.defaultSignUpHeight
+            }
+        }
     }
     
     func requestTrackingAuthoriaztion() {

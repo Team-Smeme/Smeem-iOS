@@ -14,6 +14,10 @@ enum ViewType {
     case signUp
 }
 
+protocol LoginDelegate {
+    func betaLoginDataSend()
+}
+
 final class BottomSheetView: UIView {
     
     // MARK: - viewType
@@ -23,6 +27,8 @@ final class BottomSheetView: UIView {
             setBottomSheetLayout()
         }
     }
+    
+    var delegate: LoginDelegate?
     
     // MARK: - UI Property
     
@@ -40,15 +46,17 @@ final class BottomSheetView: UIView {
         return button
     }()
     
-    private let kakaoLoginButton: UIButton = {
+    private lazy var kakaoLoginButton: UIButton = {
         let button = UIButton()
         button.setImage(Constant.Image.btnKakaoLogin, for: .normal)
+        button.addTarget(self, action: #selector(loginButtonDidTap), for: .touchUpInside)
         return button
     }()
     
-    private let appleLoginButton: UIButton = {
+    private lazy var appleLoginButton: UIButton = {
         let button = UIButton()
         button.setImage(Constant.Image.btnAppleLogin, for: .normal)
+        button.addTarget(self, action: #selector(loginButtonDidTap), for: .touchUpInside)
         return button
     }()
     
@@ -80,6 +88,10 @@ final class BottomSheetView: UIView {
     }
     
     // MARK: - @objc
+    
+    @objc func loginButtonDidTap() {
+        delegate?.betaLoginDataSend()
+    }
     
     // MARK: - Custom Method
     
