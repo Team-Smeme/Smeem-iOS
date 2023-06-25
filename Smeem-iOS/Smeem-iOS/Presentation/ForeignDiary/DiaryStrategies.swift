@@ -7,6 +7,8 @@
 
 import UIKit
 
+//MARK: - ForeignDiaryStrategy
+
 final class ForeignDiaryStrategy: DiaryStrategy {
     
     func configureLanguageLabel(_ label: UILabel) {
@@ -26,6 +28,8 @@ final class ForeignDiaryStrategy: DiaryStrategy {
     }
 }
 
+//MARK: - StepOneKoreanDiaryStrategy
+
 final class StepOneKoreanDiaryStrategy: DiaryStrategy {
     
     func configureLanguageLabel(_ label: UILabel) {
@@ -44,6 +48,8 @@ final class StepOneKoreanDiaryStrategy: DiaryStrategy {
         button.isEnabled = true
     }
 }
+
+//MARK: - StepTwoKoreanDiaryStrategy
 
 final class StepTwoKoreanDiaryStrategy: DiaryStrategy {
     func configureLanguageLabel(_ label: UILabel) {
