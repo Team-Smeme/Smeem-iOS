@@ -8,6 +8,12 @@
 import Foundation
 
 struct RandomSubjectResponse: Codable {
-    let id: Int
+    let success: Bool
+    let message: String
+    let data: RandomSubjectData
+}
+
+struct RandomSubjectData: Codable {
+    let topicId: Int
     let content: String
 }

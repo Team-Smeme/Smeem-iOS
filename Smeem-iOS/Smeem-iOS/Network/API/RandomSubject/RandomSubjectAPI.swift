@@ -6,35 +6,27 @@
 //
 
 import Moya
-import Foundation
 
-enum RandomSubjectService {
-    case randomSubject
-}
-
-extension RandomSubjectService: BaseTargetType {
-    var path: String {
-        switch self {
-        case .randomSubject:
-            return URLConstant.randomSubjectURL
-        }
-    }
+final class RandomSubjectAPI {
+    static let shared: RandomSubjectAPI = RandomSubjectAPI()
+    private let randomSubjectProvider = MoyaProvider<RandomSubjectService>(plugins: [MoyaLoggingPlugin()])
     
-    var method: Moya.Method {
-        switch self {
-        case .randomSubject:
-            return .get
-        }
-    }
+    private var randomSubjectData: RandomSubjectResponse?
     
-    var task: Moya.Task {
-        switch self {
-        case .randomSubject:
-            return .requestPlain
+    func getRandomSubject(completion: @escaping
+                          (RandomSubjectResponse?) -> Void) {
+        randomSubjectProvider.request(.randomSubject) { response in
+            switch response {
+            case .success(let result):
+                do {
+                    self.randomSubjectData = try result.map(RandomSubjectResponse.self)
+                    completion(self.randomSubjectData)
+                } catch {
+                    print(error)
+                }
+            case .failure(let err):
+                print(err)
+            }
         }
-    }
-    
-    var headers: [String : String]? {
-        return NetworkConstant.tempTokenHeader
     }
 }

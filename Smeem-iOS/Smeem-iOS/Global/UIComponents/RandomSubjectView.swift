@@ -19,14 +19,16 @@ import SnapKit
 
 final class RandomSubjectView: UIView {
     
+    // MARK: - Property
+    
     // MARK: - UI Property
     
     private let questionLabel: UILabel = {
         let label = UILabel()
         label.font = .b1
         label.textColor = .point
-        label.setTextWithLineHeight(lineHeight: 21)
         label.text = "Q."
+        label.setTextWithLineHeight(lineHeight: 21)
         return label
     }()
     
@@ -63,12 +65,9 @@ final class RandomSubjectView: UIView {
     
     // MARK: - Custom Method
     
-    func configureData(contentText: String = "") {
+    func configureData(contentText: String) {
         contentLabel.text = "     " + contentText
         contentLabel.setTextWithLineHeight(lineHeight: 22)
-        setRandomSubjectViewHeight()
-        layoutIfNeeded()
-        print("Content label updated: \(contentLabel.text ?? "nil")✅🅾️🙏")
     }
     
     private func setRandomSubjectViewHeight() {
@@ -79,7 +78,8 @@ final class RandomSubjectView: UIView {
         
         let contentLabelHeight = contentLabel.frame.height
         
-        snp.makeConstraints {
+        snp.remakeConstraints {
+            $0.width.equalTo(convertByWidthRatio(375))
             $0.height.equalTo(contentLabelHeight < 20 ? 88 : 110)
         }
     }
