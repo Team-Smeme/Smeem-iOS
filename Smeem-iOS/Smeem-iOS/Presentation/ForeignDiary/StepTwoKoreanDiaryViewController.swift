@@ -51,6 +51,7 @@ final class StepTwoKoreanDiaryViewController: DiaryViewController {
         super.viewDidLoad()
         
         setLayout()
+        handleRightNavitationButton()
         checkTutorial()
     }
     
@@ -61,7 +62,15 @@ final class StepTwoKoreanDiaryViewController: DiaryViewController {
         dismissButton?.removeFromSuperview()
     }
     
+    override func rightNavigationButtonDidTap() {
+        postDiaryAPI()
+    }
+    
     // MARK: - Custom Method
+    
+    private func handleRightNavitationButton() {
+        rightNavigationButton.addTarget(self, action: #selector(rightNavigationButtonDidTap), for: .touchUpInside)
+    }
     
     // MARK: - Layout
     

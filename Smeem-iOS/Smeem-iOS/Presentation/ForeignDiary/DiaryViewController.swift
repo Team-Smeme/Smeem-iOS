@@ -400,4 +400,11 @@ extension DiaryViewController {
             self.setData()
         }
     }
+    
+    func postDiaryAPI() {
+        PostDiaryAPI.shared.postDiary(param: PostDiaryRequest(content: inputTextView.text, topicId: topicID)) { response in
+            guard let postDiaryResponse = response?.data else { return }
+//            self.diaryID = postDiaryResponse.
+        }
+    }
 }
