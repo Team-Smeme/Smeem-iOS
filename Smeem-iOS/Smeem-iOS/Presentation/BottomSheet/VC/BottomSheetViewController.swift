@@ -17,6 +17,7 @@ final class BottomSheetViewController: UIViewController, LoginDelegate {
     var defaultSignUpHeight: CGFloat = 394
     
     var betaAccessToken = UserDefaultsManager.betaLoginToken
+    var userPlanRequest: UserPlanRequest?
     
     // MARK: - UI Property
     
@@ -57,6 +58,12 @@ final class BottomSheetViewController: UIViewController, LoginDelegate {
     
     func betaLoginDataSend() {
         betaLoginAPI()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+            let userNicknameVC = UserNicknameViewController()
+            userNicknameVC.userPlanRequest = self.userPlanRequest
+            self.navigationController?.pushViewController(userNicknameVC, animated: true)
+        }
     }
     
     private func setBottomViewDelegate() {
@@ -94,7 +101,7 @@ extension BottomSheetViewController {
     private func betaLoginAPI() {
         AuthAPI.shared.betaTestLoginAPI() { response in
             guard let token = response.data?.accessToken else { return }
-            self.betaAccessToken = token
+            UserDefaultsManager.betaLoginToken = token
         }
     }
 }

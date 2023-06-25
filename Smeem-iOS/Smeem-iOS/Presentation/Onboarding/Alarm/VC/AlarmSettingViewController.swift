@@ -118,13 +118,13 @@ final class AlarmSettingViewController: UIViewController {
                 print("Push: 권한 허용")
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
 //                    self.userPlanPatchAPICall(target: "DEVELOP", hasAlarm: true)
-                    self.presentBottomSheet()
+                    self.presentBottomSheet(target: "DEVELOP", hasAlarm: true)
                 }
             } else {
                 print("Push: 권한 거부")
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
 //                    self.userPlanPatchAPICall(target: "DEVELOP", hasAlarm: true)
-                    self.presentBottomSheet()
+                    self.presentBottomSheet(target: "DEVELOP", hasAlarm: false)
                 }
             }
         })
@@ -138,11 +138,19 @@ final class AlarmSettingViewController: UIViewController {
                                                    hasAlarm: hasAlarm))
     }
     
-    private func presentBottomSheet() {
+    private func presentBottomSheet(target: String, hasAlarm: Bool) {
         let bottomSheetVC = BottomSheetViewController()
         bottomSheetVC.bottomSheetView.viewType = .signUp
-        bottomSheetVC.modalPresentationStyle = .overFullScreen
-        self.present(bottomSheetVC, animated: false) {
+        let navigationController = UINavigationController(rootViewController: bottomSheetVC)
+        navigationController.modalPresentationStyle = .overFullScreen
+        navigationController.isNavigationBarHidden = true
+        
+        guard let trainigTimeData = trainingTimeData else { return }
+        bottomSheetVC.userPlanRequest = UserPlanRequest(target: target,
+                                                        trainingTime: trainigTimeData,
+                                                        hasAlarm: hasAlarm)
+        
+        self.present(navigationController, animated: false) {
             bottomSheetVC.bottomSheetView.frame.origin.y = self.view.frame.height
             UIView.animate(withDuration: 0.3) {
                 bottomSheetVC.bottomSheetView.frame.origin.y = self.view.frame.height-bottomSheetVC.defaultSignUpHeight

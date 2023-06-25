@@ -11,6 +11,8 @@ final class UserNicknameViewController: UIViewController {
     
     // MARK: - Property
     
+    var userPlanRequest: UserPlanRequest?
+    
     // MARK: - UI Property
     
     private let titleNicknameLabel: UILabel = {
@@ -64,6 +66,7 @@ final class UserNicknameViewController: UIViewController {
         setTextFieldDelegate()
         showKeyboard(textView: nicknameTextField)
         addTextFieldNotification()
+        userPlanPatchAPI(userPlan: userPlanRequest!)
     }
     
     deinit {
@@ -162,9 +165,16 @@ extension UserNicknameViewController: UITextFieldDelegate {
 }
 
 extension UserNicknameViewController {
-    func nicknamePatchAPI(nickname: String) {
+    private func nicknamePatchAPI(nickname: String) {
         OnboardingAPI.shared.nicknamePatch(param: NicknameRequest(username: nickname)) { response in
             print("닉네임 중복 확인", response.success)
+        }
+    }
+    
+    private func userPlanPatchAPI(userPlan: UserPlanRequest) {
+        OnboardingAPI.shared.userPlanPathch(param: userPlan) { response in
+            print(response.message)
+            print(response.success)
         }
     }
 }
