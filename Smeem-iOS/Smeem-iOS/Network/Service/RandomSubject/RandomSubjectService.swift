@@ -25,7 +25,7 @@ extension RandomSubjectService: BaseTargetType {
     
     var task: Moya.Task {
         switch self {
-        case . randomSubject:
+        case .randomSubject:
             return .requestPlain
         }
     }
@@ -33,6 +33,5 @@ extension RandomSubjectService: BaseTargetType {
     var headers: [String : String]? {
         return NetworkConstant.tempTokenHeader
     }
-    
-    
+
 }

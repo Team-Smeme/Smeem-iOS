@@ -33,8 +33,6 @@ class DiaryViewController: UIViewController {
     }
     
     var isRandomTopic: Bool = false
-    
-//    var randomSubject = RandomSubjectResponse()
     var topicID: Int?
     var topicContent = String()
     
@@ -146,7 +144,6 @@ class DiaryViewController: UIViewController {
         configureUI()
         setupUI()
         randomSubjectView.delegate = self
-        randomSubjectWithAPI()
         checkTutorial()
     }
     
@@ -164,6 +161,7 @@ class DiaryViewController: UIViewController {
     
     @objc func randomTopicButtonDidTap() {
         setRandomTopicButtonToggle()
+        randomSubjectWithAPI()
     }
     
     @objc func leftNaviButtonDidTap() {
@@ -196,6 +194,10 @@ class DiaryViewController: UIViewController {
     }
     
     // MARK: - Custom Method
+    
+    private func setData() {
+        randomSubjectView.configureData(contentText: topicContent)
+    }
     
     private func setupUI() {
         hiddenNavigationBar()
@@ -259,10 +261,6 @@ class DiaryViewController: UIViewController {
     }
     
     //MARK: - Layout
-    
-    private func setData() {
-        randomSubjectView.configureData(contentText: topicContent)
-    }
     
     private func setLayout() {
         view.addSubviews(navigationView, inputTextView, bottomView)

@@ -8,7 +8,7 @@
 import Moya
 
 final class RandomSubjectAPI {
-    static let shared: RandomSubjectAPI = RandomSubjectAPI()
+    static let shared = RandomSubjectAPI()
     private let randomSubjectProvider = MoyaProvider<RandomSubjectService>(plugins: [MoyaLoggingPlugin()])
     
     private var randomSubjectData: RandomSubjectResponse?
