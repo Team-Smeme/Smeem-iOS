@@ -145,6 +145,8 @@ class DiaryViewController: UIViewController {
         configureDiaryStrategy()
         configureUI()
         setupUI()
+        randomSubjectView.delegate = self
+        randomSubjectWithAPI()
         checkTutorial()
     }
     
@@ -162,7 +164,6 @@ class DiaryViewController: UIViewController {
     
     @objc func randomTopicButtonDidTap() {
         setRandomTopicButtonToggle()
-        randomSubjectWithAPI()
     }
     
     @objc func leftNaviButtonDidTap() {
@@ -380,6 +381,14 @@ extension DiaryStrategy {
 extension StepOneKoreanDiaryStrategy {
     func koreanValidation(with text: String, in viewController: DiaryViewController) -> Bool {
         return viewController.inputTextView.text.getArrayAfterRegex(regex: "[가-핳ㄱ-ㅎㅏ-ㅣ]").count > 9
+    }
+}
+
+//MARK: - RandomSubjectViewDelegate
+
+extension DiaryViewController: RandomSubjectViewDelegate {
+    func refreshButtonTapped() {
+        randomSubjectWithAPI()
     }
 }
 

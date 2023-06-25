@@ -17,9 +17,15 @@ import UIKit
 
 import SnapKit
 
+protocol RandomSubjectViewDelegate: AnyObject {
+    func refreshButtonTapped()
+}
+
 final class RandomSubjectView: UIView {
     
     // MARK: - Property
+    
+    weak var delegate: RandomSubjectViewDelegate?
     
     // MARK: - UI Property
     
@@ -42,11 +48,12 @@ final class RandomSubjectView: UIView {
         return label
     }()
     
-    private let refreshButton: UIButton = {
+    private lazy var refreshButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .gray200
         //TODO: 에셋 나오면 추가할게여!
 //        button.setImage(<#T##image: UIImage?##UIImage?#>, for: <#T##UIControl.State#>)
+        button.addTarget(self, action: #selector(refreshButtonDidTap), for: .touchUpInside)
         return button
     }()
     
@@ -61,6 +68,12 @@ final class RandomSubjectView: UIView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - @objc
+    
+    @objc func refreshButtonDidTap() {
+        delegate?.refreshButtonTapped()
     }
     
     // MARK: - Custom Method
