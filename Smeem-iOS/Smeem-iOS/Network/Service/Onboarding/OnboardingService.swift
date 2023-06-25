@@ -9,7 +9,7 @@ import Foundation
 import Moya
 
 enum OnboardingService {
-    case userPlan(param: UserPlanModel)
+    case userPlan(param: UserPlanRequest)
     case nickname(param: NicknameRequest)
 }
 

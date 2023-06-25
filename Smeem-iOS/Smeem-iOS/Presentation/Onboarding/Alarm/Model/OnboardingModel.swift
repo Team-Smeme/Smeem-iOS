@@ -9,14 +9,15 @@ import Foundation
 
 // MARK: - UserPlan
 
-struct UserPlanModel: Codable {
+struct UserPlanRequest: Codable {
     let target: String
     let trainingTime: TrainingTime
     let hasAlarm: Bool
 }
 
 struct TrainingTime: Codable {
-    let day, hour, minute: String
+    let day: String
+    let hour, minute: Int
 }
 
 // MARK: - Nickname

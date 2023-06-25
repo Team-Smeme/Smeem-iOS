@@ -97,8 +97,9 @@ final class DatePickerFooterView: UICollectionReusableView {
         inputTextField.text = totalText
         
         let trainingTime = TrainingTime(day: String(),
-                                        hour: calculateTime(dayAndNight: selectedDayAndNight, hours: selectedHours),
-                                        minute: (selectedMinute))
+                                        hour: calculateTime(dayAndNight: selectedDayAndNight,
+                                                            hours: selectedHours),
+                                        minute: Int(selectedMinute)!)
         self.trainingTimeClosure?(trainingTime)
         
         self.inputTextField.resignFirstResponder()
@@ -110,18 +111,18 @@ final class DatePickerFooterView: UICollectionReusableView {
     
     // MARK: - Custom Method
     
-    private func calculateTime(dayAndNight: String, hours: String) -> String {
+    private func calculateTime(dayAndNight: String, hours: String) -> Int {
         if dayAndNight == "PM" {
             if hours == "12" {
-                return hours
+                return Int(hours) ?? 0
             }
-            return String(Int(hours)!+12)
+            return Int(hours)!+12
         } else {
             if hours == "12" {
-                return "00"
+                return 0
             }
         }
-        return hours
+        return hours == "00" ? 0 : 30
     }
     
     private func setPickerViewDelegate() {

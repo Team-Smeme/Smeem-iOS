@@ -12,9 +12,9 @@ final class AlarmSettingViewController: UIViewController {
     
     // MARK: - Property
     
-    var isAlarmData = Bool()
     var targetData = String()
     var trainingTimeData: TrainingTime?
+    var userPlanData: UserPlanRequest?
     
     var trainingClosure: ((TrainingTime) -> Void)?
     
@@ -107,27 +107,42 @@ final class AlarmSettingViewController: UIViewController {
     // MARK: - @objc
     
     @objc func nextButtonDidTap(){
-//        requestNotificationPermission()
+        requestNotificationPermission()
     }
     
     // MARK: - Custom Method
     
-    func requestNotificationPermission(){
+   private func requestNotificationPermission(){
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert,.sound,.badge], completionHandler: { didAllow, error in
             if didAllow {
                 print("Push: 권한 허용")
-                self.isAlarmData = true
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
-                    self.requestTrackingAuthoriaztion()
+//                    self.userPlanPatchAPICall(target: "DEVELOP", hasAlarm: true)
+                    let bottomSheetVC = BottomSheetViewController()
+                    bottomSheetVC.bottomSheetView.viewType = .signUp
+                    bottomSheetVC.modalPresentationStyle = .overFullScreen
+                    self.present(bottomSheetVC, animated: false) {
+                        bottomSheetVC.bottomSheetView.frame.origin.y = self.view.frame.height
+                        UIView.animate(withDuration: 0.3) {
+                            bottomSheetVC.bottomSheetView.frame.origin.y = self.view.frame.height-bottomSheetVC.defaultSignUpHeight
+                        }
+                    }
                 }
             } else {
                 print("Push: 권한 거부")
-                self.isAlarmData = false
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
-                    self.requestTrackingAuthoriaztion()
-                }
+//                DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+                    self.userPlanPatchAPICall(target: "DEVELOP", hasAlarm: true)
+//                }
             }
         })
+    }
+    
+    private func userPlanPatchAPICall(target: String, hasAlarm: Bool) {
+        guard let trainigTimeData = trainingTimeData else { return }
+        
+        userPlanPatchAPI(userPlan: UserPlanRequest(target: "DEVELOP",
+                                                   trainingTime: trainigTimeData,
+                                                   hasAlarm: hasAlarm))
     }
     
     func requestTrackingAuthoriaztion() {
@@ -196,5 +211,13 @@ final class AlarmSettingViewController: UIViewController {
             $0.height.equalTo(19)
         }
     }
+}
 
+extension AlarmSettingViewController {
+    private func userPlanPatchAPI(userPlan: UserPlanRequest) {
+        OnboardingAPI.shared.userPlanPathch(param: userPlan) { response in
+            print(response.message)
+            print(response.success)
+        }
+    }
 }
