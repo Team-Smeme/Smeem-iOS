@@ -40,6 +40,9 @@
 		37DCA6702A484D3700FF8F90 /* PostDiaryRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DCA66F2A484D3700FF8F90 /* PostDiaryRequest.swift */; };
 		37DCA6722A484D5000FF8F90 /* PostDiaryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DCA6712A484D5000FF8F90 /* PostDiaryService.swift */; };
 		37DCA6742A484D5900FF8F90 /* PostDiaryAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DCA6732A484D5900FF8F90 /* PostDiaryAPI.swift */; };
+		37DCA6782A488CEB00FF8F90 /* PapagoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DCA6772A488CEB00FF8F90 /* PapagoResponse.swift */; };
+		37DCA67A2A4891BD00FF8F90 /* PapagoAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DCA6792A4891BD00FF8F90 /* PapagoAPI.swift */; };
+		37DCA67C2A48927400FF8F90 /* PapagoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DCA67B2A48927400FF8F90 /* PapagoService.swift */; };
 		4A0E8D5829F8362E00E0FC23 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0E8D5729F8362E00E0FC23 /* AuthViewController.swift */; };
 		4A0EA4552A014027006CCE52 /* GeneralResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EA4542A014027006CCE52 /* GeneralResponse.swift */; };
 		4A0EA4572A01403E006CCE52 /* MoyaLoggingPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EA4562A01403E006CCE52 /* MoyaLoggingPlugin.swift */; };
@@ -124,6 +127,9 @@
 		37DCA66F2A484D3700FF8F90 /* PostDiaryRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDiaryRequest.swift; sourceTree = "<group>"; };
 		37DCA6712A484D5000FF8F90 /* PostDiaryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDiaryService.swift; sourceTree = "<group>"; };
 		37DCA6732A484D5900FF8F90 /* PostDiaryAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDiaryAPI.swift; sourceTree = "<group>"; };
+		37DCA6772A488CEB00FF8F90 /* PapagoResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PapagoResponse.swift; sourceTree = "<group>"; };
+		37DCA6792A4891BD00FF8F90 /* PapagoAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PapagoAPI.swift; sourceTree = "<group>"; };
+		37DCA67B2A48927400FF8F90 /* PapagoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PapagoService.swift; sourceTree = "<group>"; };
 		4A0E8D5729F8362E00E0FC23 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 		4A0EA4542A014027006CCE52 /* GeneralResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralResponse.swift; sourceTree = "<group>"; };
 		4A0EA4562A01403E006CCE52 /* MoyaLoggingPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoyaLoggingPlugin.swift; sourceTree = "<group>"; };
@@ -311,13 +317,6 @@
 			isa = PBXGroup;
 			children = (
 				37DCA6562A47574300FF8F90 /* RandomSubjectAPI.swift */,
-			);
-			path = RandomSubject;
-			sourceTree = "<group>";
-		};
-		37DCA6582A47598700FF8F90 /* RandomSubject */ = {
-			isa = PBXGroup;
-			children = (
 				37DCA6592A47598700FF8F90 /* RandomSubjectService.swift */,
 			);
 			path = RandomSubject;
@@ -347,18 +346,11 @@
 			path = DetailDiary;
 			sourceTree = "<group>";
 		};
-		37DCA6622A4804F400FF8F90 /* DetailDiary */ = {
-			isa = PBXGroup;
-			children = (
-				37DCA6662A480A7300FF8F90 /* DetailDiaryService.swift */,
-			);
-			path = DetailDiary;
-			sourceTree = "<group>";
-		};
 		37DCA6632A4804F800FF8F90 /* DetailDiary */ = {
 			isa = PBXGroup;
 			children = (
 				37DCA6682A480A8E00FF8F90 /* DetailDiaryAPI.swift */,
+				37DCA6662A480A7300FF8F90 /* DetailDiaryService.swift */,
 			);
 			path = DetailDiary;
 			sourceTree = "<group>";
@@ -372,20 +364,30 @@
 			path = PostDiary;
 			sourceTree = "<group>";
 		};
-		37DCA66B2A484D0D00FF8F90 /* PostDiary */ = {
+		37DCA66C2A484D1000FF8F90 /* PostDiary */ = {
 			isa = PBXGroup;
 			children = (
+				37DCA6732A484D5900FF8F90 /* PostDiaryAPI.swift */,
 				37DCA6712A484D5000FF8F90 /* PostDiaryService.swift */,
 			);
 			path = PostDiary;
 			sourceTree = "<group>";
 		};
-		37DCA66C2A484D1000FF8F90 /* PostDiary */ = {
+		37DCA6752A488CBA00FF8F90 /* Papago */ = {
 			isa = PBXGroup;
 			children = (
-				37DCA6732A484D5900FF8F90 /* PostDiaryAPI.swift */,
+				37DCA6792A4891BD00FF8F90 /* PapagoAPI.swift */,
+				37DCA67B2A48927400FF8F90 /* PapagoService.swift */,
 			);
-			path = PostDiary;
+			path = Papago;
+			sourceTree = "<group>";
+		};
+		37DCA6762A488CC800FF8F90 /* Papago */ = {
+			isa = PBXGroup;
+			children = (
+				37DCA6772A488CEB00FF8F90 /* PapagoResponse.swift */,
+			);
+			path = Papago;
 			sourceTree = "<group>";
 		};
 		4A0EA4532A014018006CCE52 /* Base */ = {
@@ -404,6 +406,7 @@
 		4A0EA45A2A014111006CCE52 /* API */ = {
 			isa = PBXGroup;
 			children = (
+				37DCA6752A488CBA00FF8F90 /* Papago */,
 				37DCA66C2A484D1000FF8F90 /* PostDiary */,
 				37DCA6632A4804F800FF8F90 /* DetailDiary */,
 				37DCA6532A4755FA00FF8F90 /* RandomSubject */,
@@ -415,9 +418,6 @@
 		4A0EA45B2A01411C006CCE52 /* Service */ = {
 			isa = PBXGroup;
 			children = (
-				37DCA66B2A484D0D00FF8F90 /* PostDiary */,
-				37DCA6622A4804F400FF8F90 /* DetailDiary */,
-				37DCA6582A47598700FF8F90 /* RandomSubject */,
 				4A0EA45F2A014139006CCE52 /* Service.swift */,
 			);
 			path = Service;
@@ -426,6 +426,7 @@
 		4A0EA45C2A014126006CCE52 /* DataModel */ = {
 			isa = PBXGroup;
 			children = (
+				37DCA6762A488CC800FF8F90 /* Papago */,
 				37DCA66A2A484CF900FF8F90 /* PostDiary */,
 				37DCA6612A4804E800FF8F90 /* DetailDiary */,
 				37DCA65B2A475B5100FF8F90 /* RandomSubject */,
@@ -693,6 +694,7 @@
 				37A574CC29FF990E00312453 /* UIViewController+.swift in Sources */,
 				4A9E10E42A43468600295D07 /* BaseTargetType.swift in Sources */,
 				37A574C329FF6E9C00312453 /* Image.swift in Sources */,
+				37DCA67C2A48927400FF8F90 /* PapagoService.swift in Sources */,
 				4A3F2EA02A0C18B600F6AC60 /* DatePickerFooterView.swift in Sources */,
 				4AD04B3D2A190E9A004B7A58 /* UITextView+.swift in Sources */,
 				4A0EA4622A01413D006CCE52 /* DataModel.swift in Sources */,
@@ -713,6 +715,7 @@
 				37A574D029FF9AEE00312453 /* UILabel+.swift in Sources */,
 				37A574CE29FF9A2D00312453 /* UIScreen+.swift in Sources */,
 				37DCA6722A484D5000FF8F90 /* PostDiaryService.swift in Sources */,
+				37DCA67A2A4891BD00FF8F90 /* PapagoAPI.swift in Sources */,
 				37DCA6702A484D3700FF8F90 /* PostDiaryRequest.swift in Sources */,
 				4A0EA4602A014139006CCE52 /* Service.swift in Sources */,
 				4A0EA4592A014103006CCE52 /* URLConstant.swift in Sources */,
@@ -734,6 +737,7 @@
 				37A574CA29FF980F00312453 /* UIStackView+.swift in Sources */,
 				6F294A422A26178C00856CC8 /* UserNickNameViewController.swift in Sources */,
 				374FAF812A2CACCF00237A1A /* DiaryViewController.swift in Sources */,
+				37DCA6782A488CEB00FF8F90 /* PapagoResponse.swift in Sources */,
 				37DCA65A2A47598700FF8F90 /* RandomSubjectService.swift in Sources */,
 				4A0EA45E2A014134006CCE52 /* API.swift in Sources */,
 				3728B8D12A2CFE0B00EF4CF8 /* DiaryStrategies.swift in Sources */,

@@ -13,6 +13,9 @@ final class StepTwoKoreanDiaryViewController: DiaryViewController {
     
     // MARK: - Property
     
+    var isHintShowed: Bool = false
+    var hintText: String?
+    
     // MARK: - UI Property
     
     private let hintTextView: UITextView = {
@@ -27,8 +30,9 @@ final class StepTwoKoreanDiaryViewController: DiaryViewController {
     
     private let thickLine = SeparationLine(height: .thick)
     
-    private let hintButton: UIButton = {
+    private lazy var hintButton: UIButton = {
         let button = UIButton()
+        button.addTarget(self, action: #selector(hintButtondidTap), for: .touchUpInside)
         button.backgroundColor = .gray200
         return button
     }()
@@ -64,6 +68,19 @@ final class StepTwoKoreanDiaryViewController: DiaryViewController {
     
     override func rightNavigationButtonDidTap() {
         postDiaryAPI()
+    }
+    
+    @objc func hintButtondidTap() {
+        
+        isHintShowed.toggle()
+        if isHintShowed {
+            postPapagoApi(diaryText: hintTextView.text)
+            hintButton.backgroundColor = .point
+        } else {
+            hintButton.backgroundColor = .gray200
+            hintTextView.text = hintText
+        }
+        
     }
     
     // MARK: - Custom Method
@@ -122,6 +139,19 @@ final class StepTwoKoreanDiaryViewController: DiaryViewController {
         } else {
             tutorialImageView = nil
             dismissButton = nil
+        }
+    }
+}
+
+//MARK: - Network
+
+extension StepTwoKoreanDiaryViewController {
+    func postPapagoApi(diaryText: String) {
+        PapagoAPI.shared.postDiary(param: diaryText) { response in
+            guard let response = response else { return }
+            self.hintText = self.hintTextView.text
+            self.hintTextView.text.removeAll()
+            self.hintTextView.text = response.message.result.translatedText
         }
     }
 }
