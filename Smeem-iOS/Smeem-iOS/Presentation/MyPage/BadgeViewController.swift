@@ -24,6 +24,15 @@ class BadgeViewController: UIViewController {
         return button
     }()
     // TODO: addTarget 넣기
+    
+    private lazy var badgeCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .yellow
+        collectionView.showsVerticalScrollIndicator = false
+        return collectionView
+    }()
+
 
     
     // MARK: - Life Cycle
@@ -64,4 +73,8 @@ class BadgeViewController: UIViewController {
     }
 }
 
-// MARK: - UITableView Delegate
+// MARK: - UICollectionViewDelegate
+
+extension BadgeViewController: UICollectionViewDelegate { }
+
+// MARK: - UICollectionViewDataSource
