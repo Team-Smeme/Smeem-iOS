@@ -21,9 +21,17 @@ final class AlarmCollectionView: UICollectionView {
     private let dayArray = ["월", "화", "수", "목", "금", "토", "일"]
     private let selectedIndexPath = [IndexPath(item: 0, section: 0), IndexPath(item: 1, section: 0), IndexPath(item: 2, section: 0), IndexPath(item: 3, section: 0), IndexPath(item: 4, section: 0)]
     var dayDicrionary: [String:String] = ["월": "MON", "화": "TUE", "수": "WED", "목": "THU", "금": "FRI", "토": "SAT", "일": "SUN"]
-    var selectedDayArray: Set<String> = ["MON", "TUE", "WED", "THU", "FRI"]
     
-    var trainingDayClosure: ((TrainingTime) -> Void)?
+    var selectedDayArray: Set<String> = ["MON", "TUE", "WED", "THU", "FRI"] {
+        didSet {
+            selectedDayArray.isEmpty ?
+            trainingDayClosure?((day: Array(selectedDayArray).joined(separator: ","), .notEnabled)) :
+            trainingDayClosure?((Array(selectedDayArray).joined(separator: ","), .enabled))
+        }
+    }
+    
+    var trainingDayClosure: (((day: String, type: SmeemButtonType)) -> Void)?
+    var trainingTimeClosure: (((hour: Int, minute: Int)) -> Void)?
     
     // MARK: - UI Property
     
@@ -133,14 +141,12 @@ extension AlarmCollectionView: UICollectionViewDelegateFlowLayout {
         guard let footerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: DatePickerFooterView.identifier, for: indexPath) as? DatePickerFooterView else { return UICollectionReusableView() }
         
         footerView.trainingTimeClosure = { data in
-            let dayData = Array(self.selectedDayArray).joined(separator: ",")
+//            let dayData = Array(self.selectedDayArray).joined(separator: ",")
             let hoursData = data.hour
             let minuteData = data.minute
+            let traingData: (Int, Int) = (hoursData, minuteData)
             
-            let trainingData = TrainingTime(day: dayData,
-                                           hour: hoursData,
-                                           minute: minuteData)
-            self.trainingDayClosure?(trainingData)
+            self.trainingTimeClosure?(traingData)
         }
         return footerView
     }
