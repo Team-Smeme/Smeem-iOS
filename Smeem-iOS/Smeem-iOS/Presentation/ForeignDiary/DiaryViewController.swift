@@ -142,7 +142,7 @@ class DiaryViewController: UIViewController {
         configureDiaryStrategy()
         configureUI()
         setupUI()
-        randomSubjectView.delegate = self
+        setDelegate()
         checkTutorial()
     }
     
@@ -204,6 +204,8 @@ class DiaryViewController: UIViewController {
         setLayout()
     }
     
+    private func setDelegate() {
+        randomSubjectView.delegate = self
     private func configureDiaryStrategy() {
         if self is ForeignDiaryViewController {
             diaryStrategy = ForeignDiaryStrategy()

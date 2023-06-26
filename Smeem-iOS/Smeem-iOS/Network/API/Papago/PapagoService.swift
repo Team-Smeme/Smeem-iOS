@@ -13,11 +13,11 @@ enum PapagoService {
     case papago(param: String)
 }
 
-extension PapagoService: TargetType {
-    var baseURL: URL {
+extension PapagoService: BaseTargetType {
+    private var baseURL: String {
         switch self {
         case .papago:
-            return URL(string: "https://openapi.naver.com")!
+            return URLConstant.papagoBaseURL
         }
     }
     
@@ -25,7 +25,6 @@ extension PapagoService: TargetType {
         switch self {
         case .papago:
             return URLConstant.papagoPathURL
-//            return URLConstant.papagoBaseURL
         }
     }
     

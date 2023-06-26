@@ -7,7 +7,7 @@
 
 import UIKit
 
-//MARK: - ForeignDiaryStrategy
+// MARK: - ForeignDiaryStrategy
 
 final class ForeignDiaryStrategy: DiaryStrategy {
     
@@ -28,7 +28,7 @@ final class ForeignDiaryStrategy: DiaryStrategy {
     }
 }
 
-//MARK: - StepOneKoreanDiaryStrategy
+// MARK: - StepOneKoreanDiaryStrategy
 
 final class StepOneKoreanDiaryStrategy: DiaryStrategy {
     
@@ -49,7 +49,7 @@ final class StepOneKoreanDiaryStrategy: DiaryStrategy {
     }
 }
 
-//MARK: - StepTwoKoreanDiaryStrategy
+// MARK: - StepTwoKoreanDiaryStrategy
 
 final class StepTwoKoreanDiaryStrategy: DiaryStrategy {
     func configureLanguageLabel(_ label: UILabel) {
