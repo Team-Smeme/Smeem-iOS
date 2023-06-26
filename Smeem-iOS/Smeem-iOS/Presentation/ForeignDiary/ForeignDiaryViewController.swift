@@ -21,6 +21,7 @@ final class ForeignDiaryViewController: DiaryViewController {
     override func rightNavigationButtonDidTap() {
         if rightNavigationButton.titleLabel?.textColor == .point {
             //TODO: HomeView로 돌아가는 코드
+            postDiaryAPI()
         } else {
             view.addSubview(regExToastView)
             regExToastView.snp.makeConstraints {

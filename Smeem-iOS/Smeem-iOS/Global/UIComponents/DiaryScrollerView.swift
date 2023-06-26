@@ -57,7 +57,7 @@ final class DiaryScrollerView: UIScrollView {
         return label
     }()
     
-    private let contentLabel: UITextView = {
+    private let contentTextView: UITextView = {
         let textView = UITextView()
         textView.textColor = .black
         textView.font = .b4
@@ -110,6 +110,13 @@ final class DiaryScrollerView: UIScrollView {
     
     // MARK: - Custom Method
     
+    func configureDiaryScrollerView(contentText: String, date: String, nickname: String) {
+        contentTextView.text = contentText
+        dateLabel.text = date
+        nicknameLabel.text = nickname
+        contentTextView.configureAttributedText()
+    }
+    
     private func calculateTextViewHeight(textView: UITextView) -> CGFloat {
         textView.frame = CGRect(x: 0,
                                 y: 0,
@@ -126,7 +133,7 @@ final class DiaryScrollerView: UIScrollView {
     private func setDelegate() {
         switch viewType {
         case .correction, .correctionHasRandomSubject:
-            contentLabel.delegate = self
+            contentTextView.delegate = self
         case .detailDiary, .detailDiaryHasRandomSubject: break
         }
     }
@@ -143,11 +150,11 @@ final class DiaryScrollerView: UIScrollView {
         let correctionTopInset: CGFloat = 41
         let correctionbottomInset: CGFloat = 78
             
-        let detailDiaryTotalContentViewHeight = detailDiaryTopInset+detailbottomInset+calculateTextViewHeight(textView: contentLabel)
-        let correctiontextViewTotalHeight = correctionTopInset+correctionbottomInset+calculateTextViewHeight(textView: contentLabel)
+        let detailDiaryTotalContentViewHeight = detailDiaryTopInset+detailbottomInset+calculateTextViewHeight(textView: contentTextView)
+        let correctiontextViewTotalHeight = correctionTopInset+correctionbottomInset+calculateTextViewHeight(textView: contentTextView)
             
         addSubview(contentView)
-        contentView.addSubviews(correnctionLabel, contentLabel, labelStackView)
+        contentView.addSubviews(correnctionLabel, contentTextView, labelStackView)
         labelStackView.addArrangedSubviews(dateLabel, nicknameLabel)
             
         contentView.snp.makeConstraints {
@@ -166,7 +173,7 @@ final class DiaryScrollerView: UIScrollView {
                 $0.height.equalTo(correctiontextViewTotalHeight)
             }
                 
-            contentLabel.snp.makeConstraints {
+            contentTextView.snp.makeConstraints {
                 $0.top.equalTo(correnctionLabel.snp.bottom).offset(6)
                 $0.leading.trailing.equalToSuperview().inset(18)
             }
@@ -183,7 +190,7 @@ final class DiaryScrollerView: UIScrollView {
                 $0.height.equalTo(detailDiaryTotalContentViewHeight)
             }
                 
-            contentLabel.snp.makeConstraints {
+            contentTextView.snp.makeConstraints {
                 $0.top.equalToSuperview().inset(16)
                 $0.leading.trailing.equalToSuperview().inset(18)
             }
@@ -198,7 +205,7 @@ final class DiaryScrollerView: UIScrollView {
         }
             
         labelStackView.snp.makeConstraints {
-            $0.top.equalTo(contentLabel.snp.bottom).offset(24)
+            $0.top.equalTo(contentTextView.snp.bottom).offset(24)
             $0.trailing.equalToSuperview().inset(18)
         }
     }
