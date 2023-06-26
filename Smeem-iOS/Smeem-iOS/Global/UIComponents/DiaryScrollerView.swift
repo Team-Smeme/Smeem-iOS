@@ -65,7 +65,7 @@ final class DiaryScrollerView: UIScrollView {
         textView.isScrollEnabled = false
         textView.text = "I watched Avatar with my boyfriend at Hongdae CGV. I should have skimmed the previous season - Avatar1.. I really couldn’t get what they were saying and the universe(??). What I was annoyed then was 두팔 didn’t know that as me. I think 두팔 who is my boyfriend should study before wathcing…. but Avatar2 is amazing movie I think. In my personal opinion, the jjin main character of Avatar2 is not Sully, but his son. "
         textView.tintColor = .point
-        textView.setLineSpacing()
+        textView.configureAttributedText()
         return textView
     }()
     

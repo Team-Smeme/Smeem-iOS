@@ -71,6 +71,18 @@ final class HomeViewFloatingViewController: UIViewController {
         return dimView
     }()
     
+    private var tutorialImageView: UIImageView? = {
+        let imageView = UIImageView()
+        imageView.image = Constant.Image.tutorialWeekly
+        return imageView
+    }()
+    
+    private lazy var dismissButton: UIButton? = {
+        let button = UIButton()
+        button.addTarget(self, action: #selector(dismissButtonDidTap), for: .touchUpInside)
+        return button
+    }()
+    
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -78,9 +90,32 @@ final class HomeViewFloatingViewController: UIViewController {
         
         setBackgroundColor()
         setLayout()
+        checkTutorial()
     }
     
     // MARK: - Custom Method
+    
+    private func checkTutorial() {
+        let tutorialDiaryStepTwo = UserDefaultsManager.tutorialWeeklyTwoMode
+        
+        if !tutorialDiaryStepTwo {
+            UserDefaultsManager.tutorialWeeklyTwoMode = true
+            
+            view.addSubviews(tutorialImageView ?? UIImageView(), dismissButton ?? UIButton())
+            
+            tutorialImageView?.snp.makeConstraints {
+                $0.top.leading.trailing.bottom.equalToSuperview()
+            }
+            dismissButton?.snp.makeConstraints {
+                $0.top.equalToSuperview().inset(convertByHeightRatio(503))
+                $0.trailing.equalToSuperview().inset(convertByHeightRatio(10))
+                $0.width.height.equalTo(convertByHeightRatio(45))
+            }
+        } else {
+            tutorialImageView = nil
+            dismissButton = nil
+        }
+    }
     
     
     // MARK: - Layout
@@ -135,5 +170,10 @@ final class HomeViewFloatingViewController: UIViewController {
     @objc func koreanDiaryButtonDidTap(_ gesture: UITapGestureRecognizer) {
 //        let nextVC = DiaryKoreanViewController()
 //        present(nextVC, animated: true)
+    }
+    
+    @objc func dismissButtonDidTap() {
+        tutorialImageView?.removeFromSuperview()
+        dismissButton?.removeFromSuperview()
     }
 }

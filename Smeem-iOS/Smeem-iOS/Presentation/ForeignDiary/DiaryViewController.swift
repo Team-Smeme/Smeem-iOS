@@ -51,7 +51,7 @@ class DiaryViewController: UIViewController {
         button.titleLabel?.font = .b4
         button.setTitleColor(.black, for: .normal)
         button.setTitle("취소", for: .normal)
-        button.addTarget(self, action: #selector(naviButtonDidTap), for: .touchUpInside)
+        button.addTarget(self, action: #selector(leftNaviButtonDidTap), for: .touchUpInside)
         return button
     }()
     
@@ -59,7 +59,7 @@ class DiaryViewController: UIViewController {
         let label = UILabel()
         label.font = .s2
         label.textColor = .smeemBlack
-        label.text = "Language"
+        label.text = "Lang"
         return label
     }()
     
@@ -70,22 +70,19 @@ class DiaryViewController: UIViewController {
         return label
     }()
     
-    private lazy var rightNavigationButton: UIButton = {
+    lazy var rightNavigationButton: UIButton = {
         let button = UIButton()
         button.titleLabel?.font = .b1
         button.setTitleColor(.gray300, for: .normal)
         button.setTitle("완료", for: .normal)
-        button.isEnabled = false
-        button.addTarget(self, action: #selector(rightNavigationButtonTapped) , for: .touchUpInside)
+        button.addTarget(self, action: #selector(rightNavigationButtonDidTap) , for: .touchUpInside)
         return button
     }()
     
     lazy var inputTextView: UITextView = {
         let textView = UITextView()
-        textView.textContainerInset = .init(top: 20, left: 18, bottom: 0, right: 18)
-        textView.textColor = .smeemBlack
-        textView.font = .b4
-        textView.tintColor = .point
+        textView.configureDiaryTextView(topInset: 20)
+        textView.configureTypingAttributes()
         textView.delegate = self
         return textView
     }()
@@ -114,9 +111,25 @@ class DiaryViewController: UIViewController {
         return button
     }()
     
+    private var tutorialImageView: UIImageView? = {
+        let imageView = UIImageView()
+        imageView.image = Constant.Image.tutorialDiaryStepOne
+        return imageView
+    }()
+    
+    private lazy var dismissButton: UIButton? = {
+        let button = UIButton()
+        button.addTarget(self, action: #selector(dismissButtonDidTap), for: .touchUpInside)
+        return button
+    }()
+    
+    let regExToastView = SmeemToastView(type: .defaultToast(bodyType: .regEx))
+    
     // MARK: - Life Cycle
-        
+    
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        keyboardAddObserver()
         showKeyboard(textView: inputTextView)
     }
     
@@ -126,10 +139,17 @@ class DiaryViewController: UIViewController {
         configureDiaryStrategy()
         configureUI()
         setupUI()
+        checkTutorial()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        keyboardRemoveObserver()
     }
     
     deinit {
         randomSubjectView.removeFromSuperview()
+        regExToastView.removeFromSuperview()
+        NotificationCenter.default.removeObserver(self)
     }
     
     // MARK: - @objc
@@ -138,12 +158,34 @@ class DiaryViewController: UIViewController {
         setRandomTopicButtonToggle()
     }
     
-    @objc func naviButtonDidTap() {
-        resignFirstResponder()
+    @objc func leftNaviButtonDidTap() {
     }
     
-    @objc func rightNavigationButtonTapped() {
-        //        guard let diaryText = inputTextView.text else { return }
+    @objc func rightNavigationButtonDidTap() {
+
+    }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        guard let userInfo = notification.userInfo,
+              let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect
+        else { return }
+        
+        let keyboardHeight = keyboardFrame.height
+        let insets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight, right: 0)
+        inputTextView.contentInset = insets
+        inputTextView.scrollIndicatorInsets = insets
+        self.bottomView.transform = CGAffineTransform(translationX: 0, y: -keyboardHeight)
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        inputTextView.contentInset = .zero
+        inputTextView.scrollIndicatorInsets = .zero
+        self.bottomView.transform = CGAffineTransform.identity
+    }
+    
+    @objc func dismissButtonDidTap() {
+        tutorialImageView?.removeFromSuperview()
+        dismissButton?.removeFromSuperview()
     }
     
     // MARK: - Custom Method
@@ -199,6 +241,16 @@ class DiaryViewController: UIViewController {
         }
     }
     
+    private func keyboardAddObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    private func keyboardRemoveObserver() {
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
     //MARK: - Layout
     
     private func setLayout() {
@@ -219,7 +271,7 @@ class DiaryViewController: UIViewController {
         }
         
         stepLabel.snp.makeConstraints {
-            $0.top.equalTo(languageLabel.snp.bottom).offset(4)
+            $0.top.equalTo(languageLabel.snp.bottom).offset(convertByWidthRatio(4))
             $0.centerX.equalToSuperview()
         }
         
@@ -236,7 +288,7 @@ class DiaryViewController: UIViewController {
         
         bottomView.snp.makeConstraints {
             $0.bottom.leading.trailing.equalToSuperview()
-            $0.height.equalTo(constraintByNotch(87, 53))
+            $0.height.equalTo(constraintByNotch(53, 87))
         }
         
         thinLine.snp.makeConstraints {
@@ -251,6 +303,30 @@ class DiaryViewController: UIViewController {
             $0.height.equalTo(convertByHeightRatio(19))
         }
     }
+    
+    private func checkTutorial() {
+        if self is StepOneKoreanDiaryViewController {
+            let tutorialDiaryStepOne = UserDefaultsManager.tutorialDiaryStepOne
+            
+            if !tutorialDiaryStepOne {
+                UserDefaultsManager.tutorialDiaryStepOne = true
+                
+                view.addSubviews(tutorialImageView ?? UIImageView(), dismissButton ?? UIButton())
+                
+                tutorialImageView?.snp.makeConstraints {
+                    $0.top.leading.trailing.bottom.equalToSuperview()
+                }
+                dismissButton?.snp.makeConstraints {
+                    $0.top.equalToSuperview().inset(convertByHeightRatio(204))
+                    $0.trailing.equalToSuperview().inset(convertByHeightRatio(10))
+                    $0.width.height.equalTo(convertByHeightRatio(45))
+                }
+            } else {
+                tutorialImageView = nil
+                dismissButton = nil
+            }
+        }
+    }
 }
 
 // MARK: - UITextViewDelegate
@@ -262,7 +338,6 @@ extension DiaryViewController: UITextViewDelegate {
         placeHolderLabel.isHidden = !isTextEmpty
         
         guard let strategy = diaryStrategy else {
-            rightNavigationButton.isEnabled = false
             rightNavigationButton.setTitleColor(.gray400, for: .normal)
             return
         }
@@ -274,6 +349,14 @@ extension DiaryViewController: UITextViewDelegate {
         }
         
         rightNavigationButton.setTitleColor(rightNavigationButton.isEnabled ? .point : .gray400, for: .normal)
+    }
+    
+    func textViewDidChangeSelection(_ textView: UITextView) {
+        let cursorPosition = textView.selectedTextRange?.end
+        if let cursorPosition = cursorPosition {
+            let caretPositionRect = textView.caretRect(for: cursorPosition)
+            textView.scrollRectToVisible(caretPositionRect, animated: true)
+        }
     }
 }
 
