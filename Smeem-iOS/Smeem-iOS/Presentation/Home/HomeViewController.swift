@@ -16,18 +16,9 @@ final class HomeViewController: UIViewController {
     
     private let weekdayLabels = ["S", "M", "T", "W", "T", "F", "S"]
     private let gregorian = Calendar(identifier: .gregorian)
-    private var writtenDays = [Date]()
-    private var writtenDaysfromServer = ["2023-05-01","2023-05-03","2023-05-10","2023-05-15","2023-05-20","2023-05-23","2023-05-30","2023-06-03"]
-    private let tmpText = ["I watched Avatar with my boyfriend at Hongdae CGV. I should have skimmed the previous season - Avatar1.. I really couldn’t get what they were saying and the universe(??). What I was annoyed then was 두팔 didn’t know that as me. I think 두팔 who is my boyfriend should study before wathcing…. but Avatar2 is amazing movie I think. In my personal opinion, the jjin main character of Avatar2 is not Sully, but his son.", "4 : 18 PM"]
-    private var isWating30days = true
-    private var isHavingTodayDiary = false {
-        didSet {
-            diaryThumbnail.isHidden = !isHavingTodayDiary
-            emptyView.isHidden = isHavingTodayDiary
-        }
-    }
     private var homeDiaryDict = [String: HomeDiaryCustom]()
     private var writtenDaysStringList = [String]()
+    private var currentDate = Date()
     
     // MARK: - UI Property
     
