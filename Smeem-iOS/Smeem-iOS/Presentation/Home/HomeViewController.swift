@@ -86,7 +86,7 @@ final class HomeViewController: UIViewController {
         diaryText.textColor = .smeemBlack
         diaryText.font = .b4
         diaryText.numberOfLines = 3
-        diaryText.lineBreakMode = .byWordWrapping
+        diaryText.lineBreakMode = .byTruncatingTail
         return diaryText
     }()
     
@@ -229,6 +229,7 @@ final class HomeViewController: UIViewController {
         diaryText.text = tmpText[0]
         diaryDate.text = tmpText[1]
         diaryText.setTextWithLineHeight(lineHeight: 22)
+        diaryText.lineBreakMode = .byTruncatingTail
     }
     
     func setEvents() {
