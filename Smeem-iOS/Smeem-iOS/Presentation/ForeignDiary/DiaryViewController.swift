@@ -35,6 +35,8 @@ class DiaryViewController: UIViewController {
     var topicID: Int?
     var topicContent = String()
     
+    var isTopicCalled: Bool = false
+    
     // MARK: - UI Property
     
     let navigationView = UIView()
@@ -160,7 +162,10 @@ class DiaryViewController: UIViewController {
     
     @objc func randomTopicButtonDidTap() {
         setRandomTopicButtonToggle()
-        randomSubjectWithAPI()
+        if isTopicCalled {
+            randomSubjectWithAPI()
+            isTopicCalled = true
+        }
     }
     
     @objc func leftNaviButtonDidTap() {
@@ -206,6 +211,8 @@ class DiaryViewController: UIViewController {
     
     private func setDelegate() {
         randomSubjectView.delegate = self
+    }
+    
     private func configureDiaryStrategy() {
         if self is ForeignDiaryViewController {
             diaryStrategy = ForeignDiaryStrategy()
@@ -405,7 +412,7 @@ extension DiaryViewController {
     
     func postDiaryAPI() {
         PostDiaryAPI.shared.postDiary(param: PostDiaryRequest(content: inputTextView.text, topicId: topicID)) { response in
-            guard let postDiaryResponse = response?.data else { return }
+//            guard let postDiaryResponse = response?.data else { return }
 //            self.diaryID = postDiaryResponse.
         }
     }
