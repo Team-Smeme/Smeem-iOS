@@ -114,6 +114,7 @@ final class HomeViewController: UIViewController {
         floatingView.layer.cornerRadius = 10
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(floatingViewDidTap(_:)))
         floatingView.addGestureRecognizer(tapGesture)
+        floatingView.isHidden = true
         return floatingView
     }()
     
@@ -163,8 +164,6 @@ final class HomeViewController: UIViewController {
         setLayout()
         setDelegate()
         setSwipe()
-        setData()
-        setEvents()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -223,22 +222,10 @@ final class HomeViewController: UIViewController {
     }
     
     private func setData() {
-        diaryText.text = tmpText[0]
-        diaryDate.text = tmpText[1]
+        diaryText.text = homeDiaryDict[currentDate.toString("yyyy-MM-dd")]?.content
+        diaryDate.text = homeDiaryDict[currentDate.toString("yyyy-MM-dd")]?.createdTime.formatted("h : mm a")
         diaryText.setTextWithLineHeight(lineHeight: 22)
         diaryText.lineBreakMode = .byTruncatingTail
-    }
-    
-    func setEvents() {
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "ko_KR")
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        
-        writtenDays = writtenDaysfromServer
-            .map { dateFormatter.date(from: $0)! }
-        
-        diaryThumbnail.isHidden = !writtenDaysfromServer.contains(dateFormatter.string(from: Date()))
-        emptyView.isHidden = !diaryThumbnail.isHidden
     }
     
     // MARK: - Layout
@@ -406,7 +393,7 @@ extension HomeViewController: FSCalendarDataSource {
         if gregorian.isDateInToday(date) { /// 오늘인 경우
             return .today
         } else { /// 오늘 아닌경우 -> 일기 있는 날과 없는 날로 구분
-            return writtenDays.contains(date) ? .some : .none
+            return writtenDaysStringList.contains(date.toString("yyyy-MM-dd")) ? .some : .none
         }
     }
 }
@@ -414,7 +401,8 @@ extension HomeViewController: FSCalendarDataSource {
 extension HomeViewController: FSCalendarDelegateAppearance {
     /// 날짜 선택 시 콜백 메소드
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-        isHavingTodayDiary = writtenDays.contains(date)
+        currentDate = date
+        setData()
         configureSelectedUI()
         configureBottomLayout(date: date)
     }
@@ -428,8 +416,11 @@ extension HomeViewController: FSCalendarDelegateAppearance {
         }
     }
     
-    /// 홈뷰 하단 30일전 일기 첨삭 팝업뷰와 일기 작성뷰 레이아웃 설정
+    /// 홈뷰 하단 레이아웃 설정
     private func configureBottomLayout(date: Date) {
+        let isHavingTodayDiary = writtenDaysStringList.contains(date.toString("yyyy-MM-dd"))
+        diaryThumbnail.isHidden = !isHavingTodayDiary
+        emptyView.isHidden = isHavingTodayDiary
         addDiaryButton.isHidden = (gregorian.isDateInToday(date) && !isHavingTodayDiary) ? false : true
         if (!floatingView.isHidden) {
             floatingView.snp.updateConstraints {
