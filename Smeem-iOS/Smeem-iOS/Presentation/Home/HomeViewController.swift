@@ -167,6 +167,10 @@ final class HomeViewController: UIViewController {
         setEvents()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        homeDiaryWithAPI(start: Date().startOfMonth().addingDate(addValue: -7), end: Date().endOfMonth().addingDate(addValue: 7))
+    }
+    
     // MARK: - @objc
     
     @objc func swipeEvent(_ swipe: UISwipeGestureRecognizer) {
@@ -433,6 +437,15 @@ extension HomeViewController: FSCalendarDelegateAppearance {
             }
         }
     }
+    
+    /// currentMonth 비교해서 바뀌었을 때 서버 통신
+    func calendarCurrentPageDidChange(_ calendar: FSCalendar) {
+        currentDate = calendar.currentPage
+        homeDiaryWithAPI(start: currentDate.startOfMonth().addingDate(addValue: -7), end: currentDate.endOfMonth().addingDate(addValue: 7))
+        calendar.reloadData()
+    }
+}
+
 // MARK: - Extension : Network
 
 extension HomeViewController {
