@@ -89,4 +89,12 @@ extension UIViewController {
         
         return attributedString
     }
+    
+    func changeRootViewController(_ viewController: UIViewController) {
+        guard let window = UIApplication.shared.windows.first else { return }
+        UIView.transition(with: window, duration: 0.5, options: .transitionCrossDissolve, animations: {
+            let rootVC = UINavigationController(rootViewController: viewController)
+            window.rootViewController = rootVC
+        })
+    }
 }

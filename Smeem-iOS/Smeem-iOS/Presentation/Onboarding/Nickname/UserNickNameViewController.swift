@@ -12,6 +12,7 @@ final class UserNicknameViewController: UIViewController {
     // MARK: - Property
     
     var userPlanRequest: UserPlanRequest?
+    var checkDouble = Bool()
     
     // MARK: - UI Property
     
@@ -49,8 +50,18 @@ final class UserNicknameViewController: UIViewController {
         return label
     }()
     
+    private let doubleCheckLabel: UILabel = {
+        let label = UILabel()
+        label.text = "이미 사용 중인 닉네임이에요 :("
+        label.font = .c4
+        label.textColor = .point
+        label.isHidden = true
+        return label
+    }()
+    
     private lazy var nextButton: SmeemButton = {
         let button = SmeemButton()
+        button.smeemButtonType = .notEnabled
         button.setTitle("다음", for: .normal)
         button.addTarget(self, action: #selector(nextButtonDidTap), for: .touchUpInside)
         return button
@@ -77,6 +88,16 @@ final class UserNicknameViewController: UIViewController {
     
     @objc func nextButtonDidTap() {
         nicknamePatchAPI(nickname: nicknameTextField.text ?? "")
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+            if self.checkDouble {
+                let HomeVC = HomeViewController()
+                self.changeRootViewController(HomeVC)
+            } else {
+                self.nextButton.smeemButtonType = .notEnabled
+                self.doubleCheckLabel.isHidden = false
+            }
+        }
     }
     
     @objc func nicknameDidChange(_ notification: Notification) {
@@ -120,7 +141,7 @@ final class UserNicknameViewController: UIViewController {
 
     private func setLayout() {
         view.addSubviews(titleNicknameLabel, detailNicknameLabel, nicknameTextField, nicknameLimitLabel,
-                         nextButton)
+                         doubleCheckLabel, nextButton)
         
         titleNicknameLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(120)
@@ -138,9 +159,14 @@ final class UserNicknameViewController: UIViewController {
             $0.height.equalTo(convertByHeightRatio(60))
         }
         
+        doubleCheckLabel.snp.makeConstraints {
+            $0.top.equalTo(nicknameTextField.snp.bottom).offset(10)
+            $0.left.equalToSuperview().inset(20)
+        }
+        
         nicknameLimitLabel.snp.makeConstraints {
             $0.top.equalTo(nicknameTextField.snp.bottom).offset(10)
-            $0.trailing.equalToSuperview().inset(20)
+            $0.trailing.equalToSuperview().inset(26)
         }
         
         nextButton.snp.makeConstraints {
@@ -167,7 +193,7 @@ extension UserNicknameViewController: UITextFieldDelegate {
 extension UserNicknameViewController {
     private func nicknamePatchAPI(nickname: String) {
         OnboardingAPI.shared.nicknamePatch(param: NicknameRequest(username: nickname)) { response in
-            print("닉네임 중복 확인", response.success)
+            self.checkDouble = response.success
         }
     }
     
