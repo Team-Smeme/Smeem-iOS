@@ -12,6 +12,8 @@ import SnapKit
 final class DatePickerFooterView: UICollectionReusableView {
     
     static let identifier = "identifier"
+
+    var trainingTimeClosure: ((TrainingTime) -> Void)?
     
     // MARK: - Property
     
@@ -84,11 +86,22 @@ final class DatePickerFooterView: UICollectionReusableView {
     // MARK: - @objc
     
     @objc func saveButtonDidTap() {
+        let selectedHours = selectedHours ?? "10"
+        let selectedMinute = selectedMinute ?? "00"
+        let selectedDayAndNight = selectedDayAndNight ?? "PM"
+        
         totalText = ""
-        totalText += selectedHours ?? "1"
-        totalText += ":" + (selectedMinute ?? "00")
-        totalText += " " + (selectedDayAndNight ?? "AM")
+        totalText += selectedHours
+        totalText += ":" + selectedMinute
+        totalText += " " + selectedDayAndNight
         inputTextField.text = totalText
+        
+        let trainingTime = TrainingTime(day: String(),
+                                        hour: calculateTime(dayAndNight: selectedDayAndNight,
+                                                            hours: selectedHours),
+                                        minute: Int(selectedMinute)!)
+        self.trainingTimeClosure?(trainingTime)
+        
         self.inputTextField.resignFirstResponder()
     }
     
@@ -97,6 +110,20 @@ final class DatePickerFooterView: UICollectionReusableView {
     }
     
     // MARK: - Custom Method
+    
+    private func calculateTime(dayAndNight: String, hours: String) -> Int {
+        if dayAndNight == "PM" {
+            if hours == "12" {
+                return Int(hours) ?? 0
+            }
+            return Int(hours)!+12
+        } else {
+            if hours == "12" {
+                return 0
+            }
+        }
+        return hours == "00" ? 0 : 30
+    }
     
     private func setPickerViewDelegate() {
         pickerView.delegate = self

@@ -56,7 +56,7 @@ final class HowLearningView: UIView {
     
     private let smeemLogo: UIImageView = {
         let imageView = UIImageView()
-        imageView.backgroundColor = .blue
+        imageView.image = Constant.Image.logoWhiteSmeem
         return imageView
     }()
     

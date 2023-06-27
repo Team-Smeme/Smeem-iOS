@@ -9,20 +9,27 @@ import UIKit
 
 import SnapKit
 
+enum ViewType {
+    case login
+    case signUp
+}
+
+protocol LoginDelegate {
+    func betaLoginDataSend()
+    func dissmissButton()
+}
+
 final class BottomSheetView: UIView {
     
     // MARK: - viewType
-    
-    enum ViewType {
-        case login
-        case signUp
-    }
     
     var viewType: ViewType = .login {
         didSet {
             setBottomSheetLayout()
         }
     }
+    
+    var delegate: LoginDelegate?
     
     // MARK: - UI Property
     
@@ -36,31 +43,37 @@ final class BottomSheetView: UIView {
     
     private let cancelButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = .blue
+        button.setImage(Constant.Image.icnCancelGrey, for: .normal)
+        button.addTarget(self, action: #selector(cancleButtonDidTap), for: .touchUpInside)
         return button
     }()
     
-    private let kakaoLoginButton: UIButton = {
+    private lazy var kakaoLoginButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = .blue
+        button.setImage(Constant.Image.btnKakaoLogin, for: .normal)
+        button.addTarget(self, action: #selector(loginButtonDidTap), for: .touchUpInside)
         return button
     }()
     
-    private let appleLoginButton: UIButton = {
+    private lazy var appleLoginButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = .blue
+        button.setImage(Constant.Image.btnAppleLogin, for: .normal)
+        button.addTarget(self, action: #selector(loginButtonDidTap), for: .touchUpInside)
         return button
     }()
     
     private let guestLoginButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = .blue
+        button.setTitleColor(.gray600, for: .normal)
+        button.titleLabel?.font = .b4
+        button.setTitle("비회원으로 시작하기", for: .normal)
+        button.isHidden = true
         return button
     }()
     
     private let guestLoginTooltip: UIImageView = {
         let imageView = UIImageView()
-        imageView.backgroundColor = .blue
+        imageView.image = Constant.Image.btnNonMember
         return imageView
     }()
     
@@ -79,6 +92,14 @@ final class BottomSheetView: UIView {
     
     // MARK: - @objc
     
+    @objc func loginButtonDidTap() {
+        delegate?.betaLoginDataSend()
+    }
+    
+    @objc func cancleButtonDidTap() {
+        delegate?.dissmissButton()
+    }
+    
     // MARK: - Custom Method
     
     private func setUI() {
@@ -90,9 +111,9 @@ final class BottomSheetView: UIView {
         addSubviews(bottomSheetLabel, cancelButton, kakaoLoginButton, appleLoginButton, guestLoginButton, guestLoginTooltip)
         
         cancelButton.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(28)
-            $0.trailing.equalToSuperview().inset(28)
-            $0.width.height.equalTo(14)
+            $0.top.equalToSuperview().inset(10)
+            $0.trailing.equalToSuperview().inset(10)
+            $0.width.height.equalTo(40)
         }
         
         bottomSheetLabel.snp.makeConstraints {
@@ -102,16 +123,12 @@ final class BottomSheetView: UIView {
         
         kakaoLoginButton.snp.makeConstraints {
             $0.top.equalTo(bottomSheetLabel.snp.bottom).offset(32)
-            $0.leading.trailing.equalToSuperview().inset(19)
-            // 지워줄 코드
-            $0.height.equalTo(50)
+            $0.centerX.equalToSuperview()
         }
         
         appleLoginButton.snp.makeConstraints {
             $0.top.equalTo(kakaoLoginButton.snp.bottom).offset(10)
-            $0.leading.trailing.equalToSuperview().inset(19)
-            // 지워줄 코드
-            $0.height.equalTo(50)
+            $0.centerX.equalToSuperview()
         }
     }
     
@@ -124,16 +141,12 @@ final class BottomSheetView: UIView {
             
             guestLoginButton.snp.makeConstraints {
                 $0.top.equalTo(appleLoginButton.snp.bottom).offset(22)
-                $0.leading.trailing.equalToSuperview().inset(123)
-                // 지워 줄 코드
-                $0.height.equalTo(19)
+                $0.centerX.equalToSuperview()
             }
             
             guestLoginTooltip.snp.makeConstraints {
-                $0.top.equalTo(guestLoginButton.snp.bottom).offset(22)
-                $0.leading.trailing.equalToSuperview().inset(73)
-                // 지워줄 코드
-                $0.height.equalTo(68)
+                $0.top.equalTo(guestLoginButton.snp.bottom).offset(3)
+                $0.centerX.equalToSuperview()
             }
         }
     }

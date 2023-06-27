@@ -8,7 +8,6 @@
 import Foundation
 
 struct GeneralResponse<T: Decodable>: Decodable {
-    var status: Int
     var success: Bool
     var message: String?
     var data: T?
@@ -16,7 +15,6 @@ struct GeneralResponse<T: Decodable>: Decodable {
     enum CodingKeys: String, CodingKey {
         case message
         case data
-        case status
         case success
     }
     
@@ -24,13 +22,11 @@ struct GeneralResponse<T: Decodable>: Decodable {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         message = (try? values.decode(String.self, forKey: .message)) ?? ""
         data = (try? values.decode(T.self, forKey: .data)) ?? nil
-        status = (try? values.decode(Int.self, forKey: .status)) ?? 0
         success = (try? values.decode(Bool.self, forKey: .success)) ?? false
     }
 }
 
 struct GeneralArrayResponse<T: Decodable>: Decodable {
-    let status: Int
     let message: String?
     let success: Bool?
     let data: [T]?
@@ -38,7 +34,6 @@ struct GeneralArrayResponse<T: Decodable>: Decodable {
     enum CodingKeys: String, CodingKey {
         case message
         case data
-        case status
         case success
     }
     
@@ -46,7 +41,6 @@ struct GeneralArrayResponse<T: Decodable>: Decodable {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         message = (try? values.decode(String.self, forKey: .message)) ?? ""
         data = (try? values.decode([T].self, forKey: .data)) ?? []
-        status = (try? values.decode(Int.self, forKey: .status)) ?? 0
         success = (try? values.decode(Bool.self, forKey: .success)) ?? false
     }
 }

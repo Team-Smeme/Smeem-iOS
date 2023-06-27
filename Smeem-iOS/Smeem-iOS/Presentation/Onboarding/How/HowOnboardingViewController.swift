@@ -11,6 +11,8 @@ final class HowOnboardingViewController: UIViewController {
     
     // MARK: - Property
     
+    var tempTarget = String()
+    
     // MARK: - UI Property
     
     private let nowStepOneLabel: UILabel = {
@@ -71,6 +73,7 @@ final class HowOnboardingViewController: UIViewController {
     
     private lazy var nextButton: SmeemButton = {
         let button = SmeemButton()
+        button.smeemButtonType = .enabled
         button.setTitle("다음", for: .normal)
         button.addTarget(self, action: #selector(nextButtonDidTap), for: .touchUpInside)
         return button
@@ -83,16 +86,28 @@ final class HowOnboardingViewController: UIViewController {
         
         setBackgroundColor()
         setLayout()
+        swipeRecognizer()
     }
     
     // MARK: - @objc
     
     @objc func nextButtonDidTap() {
         let alarmVC = AlarmSettingViewController()
+        alarmVC.targetData = tempTarget
         self.navigationController?.pushViewController(alarmVC, animated: true)
     }
     
+    @objc func responseToSwipeGesture() {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
     // MARK: - Custom Method
+    
+    private func swipeRecognizer() {
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(responseToSwipeGesture))
+        swipeRight.direction = UISwipeGestureRecognizer.Direction.right
+        self.view.addGestureRecognizer(swipeRight)
+    }
     
     // MARK: - Layout
     
