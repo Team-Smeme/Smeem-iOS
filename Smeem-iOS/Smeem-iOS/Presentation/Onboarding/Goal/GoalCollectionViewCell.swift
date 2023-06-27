@@ -85,7 +85,4 @@ final class GoalCollectionViewCell: UICollectionViewCell {
             $0.centerY.equalToSuperview()
         }
     }
-
 }
-
-
