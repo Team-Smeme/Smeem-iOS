@@ -45,7 +45,7 @@ final class BottomSheetViewController: UIViewController {
     @objc func dimmedViewDidTap() {
         UIView.animate(withDuration: 0.3, animations: {
             self.bottomSheetView.frame.origin.y = self.view.frame.height
-        }) { (completion) in
+        }) { _ in
             self.dismiss(animated: false, completion: nil)
         }
     }
