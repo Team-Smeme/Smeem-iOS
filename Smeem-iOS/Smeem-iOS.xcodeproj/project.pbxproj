@@ -97,6 +97,11 @@
 		6FBC85702A4B5FA200A43F98 /* MyPageAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FBC856F2A4B5FA200A43F98 /* MyPageAPI.swift */; };
 		6FBC85722A4B5FAB00A43F98 /* MyPageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FBC85712A4B5FAB00A43F98 /* MyPageService.swift */; };
 		6FBC85742A4B603A00A43F98 /* MyPageInfoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FBC85732A4B603A00A43F98 /* MyPageInfoResponse.swift */; };
+		A301B0A22A30720F006BE0BA /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = A301B0A12A30720F006BE0BA /* Kingfisher */; };
+		A301B0A42A307289006BE0BA /* BadgeListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A301B0A32A307289006BE0BA /* BadgeListViewController.swift */; };
+		A345020F2A4B39B600ED91F7 /* BadgeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A345020E2A4B39B600ED91F7 /* BadgeHeaderView.swift */; };
+		A34502132A4B3EFA00ED91F7 /* BadgeListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A34502122A4B3EFA00ED91F7 /* BadgeListCollectionViewCell.swift */; };
+		A34502152A4B45E000ED91F7 /* DetailBadgeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A34502142A4B45E000ED91F7 /* DetailBadgeCollectionViewCell.swift */; };
 		6FE1298A2A4982DA005536C4 /* HomeAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE129892A4982DA005536C4 /* HomeAPI.swift */; };
 		6FE1298C2A498338005536C4 /* HomeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE1298B2A498338005536C4 /* HomeService.swift */; };
 		6FE1298E2A4986CA005536C4 /* HomeDiaryResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE1298D2A4986CA005536C4 /* HomeDiaryResponse.swift */; };
@@ -190,6 +195,10 @@
 		6FBC856F2A4B5FA200A43F98 /* MyPageAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageAPI.swift; sourceTree = "<group>"; };
 		6FBC85712A4B5FAB00A43F98 /* MyPageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageService.swift; sourceTree = "<group>"; };
 		6FBC85732A4B603A00A43F98 /* MyPageInfoResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageInfoResponse.swift; sourceTree = "<group>"; };
+		A301B0A32A307289006BE0BA /* BadgeListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeListViewController.swift; sourceTree = "<group>"; };
+		A345020E2A4B39B600ED91F7 /* BadgeHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeHeaderView.swift; sourceTree = "<group>"; };
+		A34502122A4B3EFA00ED91F7 /* BadgeListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeListCollectionViewCell.swift; sourceTree = "<group>"; };
+		A34502142A4B45E000ED91F7 /* DetailBadgeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailBadgeCollectionViewCell.swift; sourceTree = "<group>"; };
 		6FE129892A4982DA005536C4 /* HomeAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeAPI.swift; sourceTree = "<group>"; };
 		6FE1298B2A498338005536C4 /* HomeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeService.swift; sourceTree = "<group>"; };
 		6FE1298D2A4986CA005536C4 /* HomeDiaryResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDiaryResponse.swift; sourceTree = "<group>"; };
@@ -205,6 +214,7 @@
 				4AA942D22A276AFF00A552A0 /* FirebaseMessaging in Frameworks */,
 				4AA942D72A276C7900A552A0 /* KakaoSDKCommon in Frameworks */,
 				4AA942C22A2767D000A552A0 /* FSCalendar in Frameworks */,
+				A301B0A22A30720F006BE0BA /* Kingfisher in Frameworks */,
 				4AA942CD2A276A9F00A552A0 /* Moya in Frameworks */,
 				4AA942D92A276C7900A552A0 /* KakaoSDKUser in Frameworks */,
 				4AA942D02A276AFF00A552A0 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
@@ -668,6 +678,10 @@
 			children = (
 				A3D7ECB62A26566A009857D6 /* EditNicknameViewController.swift */,
 				6FBC856A2A4B1F9200A43F98 /* MyPageViewController.swift */,
+				A301B0A32A307289006BE0BA /* BadgeListViewController.swift */,
+				A345020E2A4B39B600ED91F7 /* BadgeHeaderView.swift */,
+				A34502122A4B3EFA00ED91F7 /* BadgeListCollectionViewCell.swift */,
+				A34502142A4B45E000ED91F7 /* DetailBadgeCollectionViewCell.swift */,
 			);
 			path = MyPage;
 			sourceTree = "<group>";
@@ -697,6 +711,7 @@
 				4AA942D42A276C7900A552A0 /* KakaoSDKAuth */,
 				4AA942D62A276C7900A552A0 /* KakaoSDKCommon */,
 				4AA942D82A276C7900A552A0 /* KakaoSDKUser */,
+				A301B0A12A30720F006BE0BA /* Kingfisher */,
 			);
 			productName = "Smeem-iOS";
 			productReference = 4A8FFA4C29C9E1FD00FB76C0 /* Smeem-iOS.app */;
@@ -735,6 +750,7 @@
 				4AA942CB2A276A9F00A552A0 /* XCRemoteSwiftPackageReference "Moya" */,
 				4AA942CE2A276AFF00A552A0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				4AA942D32A276C7900A552A0 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
+				A301B0A02A30720F006BE0BA /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = 4A8FFA4D29C9E1FD00FB76C0 /* Products */;
 			projectDirPath = "";
@@ -786,9 +802,11 @@
 				6F294A462A2617D500856CC8 /* HowLearningView.swift in Sources */,
 				37A574CC29FF990E00312453 /* UIViewController+.swift in Sources */,
 				4A9E10E42A43468600295D07 /* BaseTargetType.swift in Sources */,
+				A34502132A4B3EFA00ED91F7 /* BadgeListCollectionViewCell.swift in Sources */,
 				37A574C329FF6E9C00312453 /* Image.swift in Sources */,
 				37DCA67C2A48927400FF8F90 /* PapagoService.swift in Sources */,
 				4A3F2EA02A0C18B600F6AC60 /* DatePickerFooterView.swift in Sources */,
+				A345020F2A4B39B600ED91F7 /* BadgeHeaderView.swift in Sources */,
 				6FE1298C2A498338005536C4 /* HomeService.swift in Sources */,
 				4AD04B3D2A190E9A004B7A58 /* UITextView+.swift in Sources */,
 				6F31802F2A24D1DB00089870 /* CalendarCell.swift in Sources */,
@@ -797,6 +815,7 @@
 				37DCA6572A47574300FF8F90 /* RandomSubjectAPI.swift in Sources */,
 				37DCA6672A480A7300FF8F90 /* DetailDiaryService.swift in Sources */,
 				A3D7ECB72A26566A009857D6 /* EditNicknameViewController.swift in Sources */,
+				A34502152A4B45E000ED91F7 /* DetailBadgeCollectionViewCell.swift in Sources */,
 				6FE129902A49A5A6005536C4 /* Date+.swift in Sources */,
 				6F294A412A26178600856CC8 /* AlarmSettingViewController.swift in Sources */,
 				6F62668C2A04EA3B000365CD /* HomeViewController.swift in Sources */,
@@ -811,6 +830,7 @@
 				37A574C829FF6F1C00312453 /* UIView+.swift in Sources */,
 				37A574D029FF9AEE00312453 /* UILabel+.swift in Sources */,
 				37A574CE29FF9A2D00312453 /* UIScreen+.swift in Sources */,
+				A301B0A42A307289006BE0BA /* BadgeListViewController.swift in Sources */,
 				37DCA6722A484D5000FF8F90 /* PostDiaryService.swift in Sources */,
 				37DCA67A2A4891BD00FF8F90 /* PapagoAPI.swift in Sources */,
 				37DCA6702A484D3700FF8F90 /* PostDiaryRequest.swift in Sources */,
@@ -1118,6 +1138,14 @@
 				kind = branch;
 			};
 		};
+		A301B0A02A30720F006BE0BA /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1160,6 +1188,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4AA942D32A276C7900A552A0 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
 			productName = KakaoSDKUser;
+		};
+		A301B0A12A30720F006BE0BA /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A301B0A02A30720F006BE0BA /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
