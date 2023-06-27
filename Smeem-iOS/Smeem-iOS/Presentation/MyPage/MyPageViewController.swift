@@ -14,6 +14,7 @@ final class MyPageViewController: UIViewController {
     // MARK: - Property
     
     private var nickName: String = "주멩이"
+    private var isPushAlarm = true
     
     // MARK: - UI Property
     
@@ -60,6 +61,7 @@ final class MyPageViewController: UIViewController {
     private let editButton: UIButton = {
         let editButton = UIButton()
         editButton.setImage(Constant.Image.icnPencil, for: .normal)
+        editButton.addTarget(self, action: #selector(editButtonDidTap(_:)), for: .touchUpInside)
         return editButton
     }()
     
@@ -84,6 +86,28 @@ final class MyPageViewController: UIViewController {
         badgeContainer.layer.borderColor = UIColor.gray100.cgColor
         badgeContainer.makeRoundCorner(cornerRadius: 6)
         return badgeContainer
+    }()
+    
+    private let badgeImage: UIImageView = {
+        let image = UIImageView()
+        image.backgroundColor = .gray600
+        return image
+    }()
+    
+    private let badgeNameLabel: UILabel = {
+        let badgeNameLabel = UILabel()
+        badgeNameLabel.text = "웰컴 배지"
+        badgeNameLabel.font = .b1
+        badgeNameLabel.textColor = .smeemBlack
+        return badgeNameLabel
+    }()
+    
+    private let badgeSummaryLabel: UILabel = {
+        let badgeSummaryLabel = UILabel()
+        badgeSummaryLabel.text = "축하해요! 웰컴 배지를 획득했어요!"
+        badgeSummaryLabel.font = .b4
+        badgeSummaryLabel.textColor = .gray600
+        return badgeSummaryLabel
     }()
     
     private let languageLabel: UILabel = {
@@ -134,6 +158,21 @@ final class MyPageViewController: UIViewController {
         return alarmContainer
     }()
     
+    private let alarmPushLabel: UILabel = {
+        let pushLabel = UILabel()
+        pushLabel.text = "트레이닝 푸시알림"
+        pushLabel.font = .b4
+        pushLabel.textColor = .smeemBlack
+        return pushLabel
+    }()
+    
+    private lazy var alarmPushToggleButton: UIButton = {
+        let button = UIButton()
+        button.setImage(Constant.Image.btnToggleActive, for: .normal)
+        button.addTarget(self, action: #selector(pushButtonDidTap(_:)), for: .touchUpInside)
+        return button
+    }()
+    
     private lazy var alarmCollectionView = AlarmCollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     
     // MARK: - Life Cycle
@@ -151,7 +190,18 @@ final class MyPageViewController: UIViewController {
     }
     
     @objc func moreButtonDidTap(_ sender: UIButton) {
-
+        
+    }
+    
+    @objc func editButtonDidTap(_ sender: UIButton) {
+        let editVC = EditNicknameViewController()
+        self.navigationController?.pushViewController(editVC, animated: true)
+    }
+    
+    @objc func pushButtonDidTap(_ sender: UIButton) {
+        isPushAlarm.toggle()
+        let image = isPushAlarm ? Constant.Image.btnToggleActive : Constant.Image.btnToggleInActive
+        alarmPushToggleButton.setImage(image, for: .normal)
     }
     
     // MARK: - Custom Method
@@ -170,10 +220,10 @@ final class MyPageViewController: UIViewController {
         headerContainerView.addSubviews(backButton, titleLabel, moreButton)
         scrollView.addSubview(contentView)
         contentView.addSubviews(nickNameLabel, editButton, howLearningView, badgeLabel, badgeContainer, languageLabel, languageContainer, alarmLabel, alarmContainer, alarmCollectionView)
-        //badgeContainer.addSubviews(<#T##UIView...#>)
+        badgeContainer.addSubviews(badgeImage, badgeNameLabel, badgeSummaryLabel)
         languageContainer.addSubviews(languageLabelEnglish, languageCheckButton)
-        //alarmContainer.addSubviews(<#T##UIView...#>)
-        
+        alarmContainer.addSubviews(alarmPushLabel, alarmPushToggleButton)
+    
         headerContainerView.snp.makeConstraints {
             $0.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             $0.height.equalTo(convertByHeightRatio(66))
@@ -233,6 +283,22 @@ final class MyPageViewController: UIViewController {
             $0.height.equalTo(convertByHeightRatio(244))
         }
         
+        badgeImage.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(convertByHeightRatio(40))
+            $0.centerX.equalToSuperview()
+            $0.width.height.equalTo(convertByWidthRatio(100))
+        }
+        
+        badgeNameLabel.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(convertByHeightRatio(162))
+            $0.centerX.equalToSuperview()
+        }
+        
+        badgeSummaryLabel.snp.makeConstraints {
+            $0.top.equalTo(badgeNameLabel.snp.bottom).offset(convertByHeightRatio(8))
+            $0.centerX.equalToSuperview()
+        }
+        
         languageLabel.snp.makeConstraints {
             $0.top.equalTo(badgeContainer.snp.bottom).offset(convertByHeightRatio(52))
             $0.leading.equalToSuperview().inset(convertByWidthRatio(24))
@@ -264,6 +330,17 @@ final class MyPageViewController: UIViewController {
             $0.top.equalTo(alarmLabel.snp.bottom).offset(convertByHeightRatio(14))
             $0.leading.trailing.equalTo(howLearningView)
             $0.height.equalTo(convertByHeightRatio(54))
+        }
+        
+        alarmPushLabel.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.leading.equalToSuperview().offset(convertByWidthRatio(20))
+        }
+        
+        alarmPushToggleButton.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.trailing.equalToSuperview().offset(-convertByWidthRatio(13))
+            $0.width.equalTo(convertByWidthRatio(36))
         }
         
         alarmCollectionView.snp.makeConstraints {
