@@ -23,7 +23,7 @@ extension Constant {
         static let icnMore = UIImage(named: "icnMore")
         static let icnMoreHoriz = UIImage(named: "icnMoreHoriz")
         static let icnMoreMono = UIImage(named: "icnMoreMono")
-        static let incCheckActive = UIImage(named: "incCheckActive")
+        static let icnCheckActive = UIImage(named: "icnCheckActive")
         static let icnMyPage = UIImage(named: "icnMyPage")
         static let icnRightArrow = UIImage(named: "icnRightArrow")
         static let noDiary = UIImage(named: "noDiary")
