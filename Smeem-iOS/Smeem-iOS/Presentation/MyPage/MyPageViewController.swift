@@ -103,6 +103,20 @@ final class MyPageViewController: UIViewController {
         return languageContainer
     }()
     
+    private let languageLabelEnglish: UILabel = {
+        let languageLabel = UILabel()
+        languageLabel.text = "English"
+        languageLabel.font = .b4
+        languageLabel.textColor = .smeemBlack
+        return languageLabel
+    }()
+    
+    private let languageCheckButton: UIButton = {
+        let button = UIButton()
+        button.setImage(Constant.Image.icnCheck, for: .normal)
+        return button
+    }()
+    
     private let alarmLabel: UILabel = {
         let alarmLabel = UILabel()
         alarmLabel.text = "학습 알림"
@@ -157,7 +171,7 @@ final class MyPageViewController: UIViewController {
         scrollView.addSubview(contentView)
         contentView.addSubviews(nickNameLabel, editButton, howLearningView, badgeLabel, badgeContainer, languageLabel, languageContainer, alarmLabel, alarmContainer, alarmCollectionView)
         //badgeContainer.addSubviews(<#T##UIView...#>)
-        //languageContainer.addSubviews(<#T##UIView...#>)
+        languageContainer.addSubviews(languageLabelEnglish, languageCheckButton)
         //alarmContainer.addSubviews(<#T##UIView...#>)
         
         headerContainerView.snp.makeConstraints {
@@ -230,6 +244,17 @@ final class MyPageViewController: UIViewController {
             $0.height.equalTo(convertByHeightRatio(54))
         }
         
+        languageLabelEnglish.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.leading.equalToSuperview().offset(convertByWidthRatio(20))
+        }
+        
+        languageCheckButton.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.trailing.equalToSuperview().offset(-convertByWidthRatio(13))
+            $0.width.height.equalTo(convertByWidthRatio(40))
+        }
+        
         alarmLabel.snp.makeConstraints {
             $0.top.equalTo(languageContainer.snp.bottom).offset(convertByHeightRatio(52))
             $0.leading.equalToSuperview().inset(convertByWidthRatio(24))
@@ -243,7 +268,7 @@ final class MyPageViewController: UIViewController {
         
         alarmCollectionView.snp.makeConstraints {
             $0.top.equalTo(alarmContainer.snp.bottom).offset(convertByHeightRatio(10))
-            $0.leading.trailing.equalToSuperview().inset(convertByWidthRatio(23))
+            $0.leading.trailing.equalToSuperview().inset(23)
             $0.height.equalTo(convertByHeightRatio(133))
             $0.bottom.equalToSuperview().offset(-convertByHeightRatio(80))
         }
