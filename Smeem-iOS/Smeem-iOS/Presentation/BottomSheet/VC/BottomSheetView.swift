@@ -16,6 +16,7 @@ enum ViewType {
 
 protocol LoginDelegate {
     func betaLoginDataSend()
+    func dissmissButton()
 }
 
 final class BottomSheetView: UIView {
@@ -43,6 +44,7 @@ final class BottomSheetView: UIView {
     private let cancelButton: UIButton = {
         let button = UIButton()
         button.setImage(Constant.Image.icnCancelGrey, for: .normal)
+        button.addTarget(self, action: #selector(cancleButtonDidTap), for: .touchUpInside)
         return button
     }()
     
@@ -65,6 +67,7 @@ final class BottomSheetView: UIView {
         button.setTitleColor(.gray600, for: .normal)
         button.titleLabel?.font = .b4
         button.setTitle("비회원으로 시작하기", for: .normal)
+        button.isHidden = true
         return button
     }()
     
@@ -91,6 +94,10 @@ final class BottomSheetView: UIView {
     
     @objc func loginButtonDidTap() {
         delegate?.betaLoginDataSend()
+    }
+    
+    @objc func cancleButtonDidTap() {
+        delegate?.dissmissButton()
     }
     
     // MARK: - Custom Method
