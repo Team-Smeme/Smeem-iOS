@@ -32,6 +32,11 @@ class DiaryViewController: UIViewController {
         }
     }
     
+    var topicID: Int?
+    var topicContent = String()
+    
+    var isTopicCalled: Bool = false
+    
     // MARK: - UI Property
     
     let navigationView = UIView()
@@ -139,6 +144,7 @@ class DiaryViewController: UIViewController {
         configureDiaryStrategy()
         configureUI()
         setupUI()
+        setDelegate()
         checkTutorial()
     }
     
@@ -156,13 +162,16 @@ class DiaryViewController: UIViewController {
     
     @objc func randomTopicButtonDidTap() {
         setRandomTopicButtonToggle()
+        if isTopicCalled {
+            randomSubjectWithAPI()
+            isTopicCalled = true
+        }
     }
     
     @objc func leftNaviButtonDidTap() {
     }
     
     @objc func rightNavigationButtonDidTap() {
-
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
@@ -190,10 +199,18 @@ class DiaryViewController: UIViewController {
     
     // MARK: - Custom Method
     
+    private func setData() {
+        randomSubjectView.configureData(contentText: topicContent)
+    }
+    
     private func setupUI() {
         hiddenNavigationBar()
         setBackgroundColor()
         setLayout()
+    }
+    
+    private func setDelegate() {
+        randomSubjectView.delegate = self
     }
     
     private func configureDiaryStrategy() {
@@ -373,4 +390,30 @@ extension StepOneKoreanDiaryStrategy {
     }
 }
 
+//MARK: - RandomSubjectViewDelegate
+
+extension DiaryViewController: RandomSubjectViewDelegate {
+    func refreshButtonTapped() {
+        randomSubjectWithAPI()
+    }
+}
+
 // MARK: - Network
+
+extension DiaryViewController {
+    func randomSubjectWithAPI() {
+        RandomSubjectAPI.shared.getRandomSubject { response in
+            guard let randomSubjectData = response?.data else { return }
+            self.topicID = randomSubjectData.topicId
+            self.topicContent = randomSubjectData.content
+            self.setData()
+        }
+    }
+    
+    func postDiaryAPI() {
+        PostDiaryAPI.shared.postDiary(param: PostDiaryRequest(content: inputTextView.text, topicId: topicID)) { response in
+//            guard let postDiaryResponse = response?.data else { return }
+//            self.diaryID = postDiaryResponse.
+        }
+    }
+}
