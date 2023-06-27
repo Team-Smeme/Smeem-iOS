@@ -77,7 +77,10 @@
 		6F31802F2A24D1DB00089870 /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F31802E2A24D1DB00089870 /* CalendarCell.swift */; };
 		6F62668C2A04EA3B000365CD /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F62668B2A04EA3B000365CD /* HomeViewController.swift */; };
 		A301B0A22A30720F006BE0BA /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = A301B0A12A30720F006BE0BA /* Kingfisher */; };
-		A301B0A42A307289006BE0BA /* BadgeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A301B0A32A307289006BE0BA /* BadgeViewController.swift */; };
+		A301B0A42A307289006BE0BA /* BadgeListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A301B0A32A307289006BE0BA /* BadgeListViewController.swift */; };
+		A345020F2A4B39B600ED91F7 /* BadgeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A345020E2A4B39B600ED91F7 /* BadgeHeaderView.swift */; };
+		A34502132A4B3EFA00ED91F7 /* BadgeListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A34502122A4B3EFA00ED91F7 /* BadgeListCollectionViewCell.swift */; };
+		A34502152A4B45E000ED91F7 /* DetailBadgeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A34502142A4B45E000ED91F7 /* DetailBadgeCollectionViewCell.swift */; };
 		A3D7ECB72A26566A009857D6 /* EditNicknameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D7ECB62A26566A009857D6 /* EditNicknameViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -146,7 +149,10 @@
 		6F294A472A27818200856CC8 /* HomeViewFloatingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewFloatingViewController.swift; sourceTree = "<group>"; };
 		6F31802E2A24D1DB00089870 /* CalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCell.swift; sourceTree = "<group>"; };
 		6F62668B2A04EA3B000365CD /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
-		A301B0A32A307289006BE0BA /* BadgeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeViewController.swift; sourceTree = "<group>"; };
+		A301B0A32A307289006BE0BA /* BadgeListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeListViewController.swift; sourceTree = "<group>"; };
+		A345020E2A4B39B600ED91F7 /* BadgeHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeHeaderView.swift; sourceTree = "<group>"; };
+		A34502122A4B3EFA00ED91F7 /* BadgeListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeListCollectionViewCell.swift; sourceTree = "<group>"; };
+		A34502142A4B45E000ED91F7 /* DetailBadgeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailBadgeCollectionViewCell.swift; sourceTree = "<group>"; };
 		A3D7ECB62A26566A009857D6 /* EditNicknameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNicknameViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -469,7 +475,10 @@
 			isa = PBXGroup;
 			children = (
 				A3D7ECB62A26566A009857D6 /* EditNicknameViewController.swift */,
-				A301B0A32A307289006BE0BA /* BadgeViewController.swift */,
+				A301B0A32A307289006BE0BA /* BadgeListViewController.swift */,
+				A345020E2A4B39B600ED91F7 /* BadgeHeaderView.swift */,
+				A34502122A4B3EFA00ED91F7 /* BadgeListCollectionViewCell.swift */,
+				A34502142A4B45E000ED91F7 /* DetailBadgeCollectionViewCell.swift */,
 			);
 			path = MyPage;
 			sourceTree = "<group>";
@@ -584,13 +593,16 @@
 				6F294A462A2617D500856CC8 /* HowLearningView.swift in Sources */,
 				37A574CC29FF990E00312453 /* UIViewController+.swift in Sources */,
 				4A9E10E42A43468600295D07 /* BaseTargetType.swift in Sources */,
+				A34502132A4B3EFA00ED91F7 /* BadgeListCollectionViewCell.swift in Sources */,
 				37A574C329FF6E9C00312453 /* Image.swift in Sources */,
 				4A3F2EA02A0C18B600F6AC60 /* DatePickerFooterView.swift in Sources */,
+				A345020F2A4B39B600ED91F7 /* BadgeHeaderView.swift in Sources */,
 				4AD04B3D2A190E9A004B7A58 /* UITextView+.swift in Sources */,
 				4A0EA4622A01413D006CCE52 /* DataModel.swift in Sources */,
 				6F31802F2A24D1DB00089870 /* CalendarCell.swift in Sources */,
 				4A3F2E972A0ABBAA00F6AC60 /* AlarmCollectionViewCell.swift in Sources */,
 				A3D7ECB72A26566A009857D6 /* EditNicknameViewController.swift in Sources */,
+				A34502152A4B45E000ED91F7 /* DetailBadgeCollectionViewCell.swift in Sources */,
 				6F294A412A26178600856CC8 /* AlarmSettingViewController.swift in Sources */,
 				6F62668C2A04EA3B000365CD /* HomeViewController.swift in Sources */,
 				4AD04B3B2A1905BB004B7A58 /* DiaryScrollerView.swift in Sources */,
@@ -601,7 +613,7 @@
 				37A574C829FF6F1C00312453 /* UIView+.swift in Sources */,
 				37A574D029FF9AEE00312453 /* UILabel+.swift in Sources */,
 				37A574CE29FF9A2D00312453 /* UIScreen+.swift in Sources */,
-				A301B0A42A307289006BE0BA /* BadgeViewController.swift in Sources */,
+				A301B0A42A307289006BE0BA /* BadgeListViewController.swift in Sources */,
 				4A0EA4602A014139006CCE52 /* Service.swift in Sources */,
 				4A0EA4592A014103006CCE52 /* URLConstant.swift in Sources */,
 				6F294A432A26179700856CC8 /* ServiceAcceptViewController.swift in Sources */,
