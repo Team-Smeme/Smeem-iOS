@@ -126,7 +126,7 @@ final class HomeViewFloatingViewController: UIViewController {
     
     private func setLayout() {
         view.addSubviews(dimView, floatingButton, buttonStackView)
-        buttonStackView.addArrangedSubviews(koreanDiaryButton, border, foreignDiaryButton)
+        buttonStackView.addArrangedSubviews(foreignDiaryButton, border, koreanDiaryButton)
         
         dimView.snp.makeConstraints {
             $0.top.trailing.bottom.leading.equalToSuperview()
@@ -163,13 +163,17 @@ final class HomeViewFloatingViewController: UIViewController {
     }
     
     @objc func foreignDiaryButtonDidTap(_ gesture: UITapGestureRecognizer) {
-//        let nextVC = DiaryForeignViewController()
-//        present(diaryForeignViewController, animated: true)
+        let nextVC = ForeignDiaryViewController()
+        nextVC.modalTransitionStyle = .coverVertical
+        nextVC.modalPresentationStyle = .fullScreen
+        present(nextVC, animated: true)
     }
     
     @objc func koreanDiaryButtonDidTap(_ gesture: UITapGestureRecognizer) {
-//        let nextVC = DiaryKoreanViewController()
-//        present(nextVC, animated: true)
+        let nextVC = StepOneKoreanDiaryViewController()
+        nextVC.modalTransitionStyle = .coverVertical
+        nextVC.modalPresentationStyle = .fullScreen
+        present(nextVC, animated: true)
     }
     
     @objc func dismissButtonDidTap() {

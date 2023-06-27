@@ -179,7 +179,11 @@ final class HomeViewController: UIViewController {
     }
 
     @objc func fullViewButtonDidTap(_ gesture: UITapGestureRecognizer) {
-        // 뷰 이동 - 상세일기
+        let nextVC = DetailDiaryViewController()
+        nextVC.diaryId = homeDiaryDict[currentDate.toString("yyyy-MM-dd")]?.diaryId ?? 0
+        nextVC.modalTransitionStyle = .coverVertical
+        nextVC.modalPresentationStyle = .fullScreen
+        present(nextVC, animated: true)
     }
     
     @objc func floatingViewDidTap(_ gesture: UITapGestureRecognizer) {
@@ -251,7 +255,7 @@ final class HomeViewController: UIViewController {
         }
         
         myPageButton.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(convertByHeightRatio(66)/2-convertByHeightRatio(40)/2)
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(convertByHeightRatio(66)/2-convertByHeightRatio(40)/2+3)
             $0.trailing.equalToSuperview().offset(-convertByWidthRatio(18))
             $0.width.height.equalTo(convertByHeightRatio(40))
         }

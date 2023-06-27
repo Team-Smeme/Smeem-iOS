@@ -15,20 +15,22 @@ final class DetailDiaryViewController: UIViewController {
     var isRandomTopic = String()
     var dateCreated = String()
     var userName = String()
+    var diaryId = Int()
     
     // MARK: - UI Property
     
     private let naviView = UIView()
     
-    private let backButton: UIButton = {
+    private lazy var backButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = .point
+        button.setImage(Constant.Image.icnBack, for: .normal)
+        button.addTarget(self, action: #selector(backButtonDidTap(_:)), for: .touchUpInside)
         return button
     }()
     
     private let editButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = .point
+        button.setImage(Constant.Image.icnMore, for: .normal)
         return button
     }()
     
@@ -45,10 +47,14 @@ final class DetailDiaryViewController: UIViewController {
         
         setBackgroundColor()
         setLayout()
-        detailDiaryWithAPI()
+        detailDiaryWithAPI(diaryID: diaryId)
     }
     
     // MARK: - @objc
+    
+    @objc func backButtonDidTap(_ sender: UIButton) {
+        self.dismiss(animated: true, completion: nil)
+    }
     
     // MARK: - Custom Method
     
@@ -94,8 +100,8 @@ final class DetailDiaryViewController: UIViewController {
 //MARK: - Network
 
 extension DetailDiaryViewController {
-    func detailDiaryWithAPI() {
-        DetailDiaryAPI.shared.getDetailDiary { response in
+    func detailDiaryWithAPI(diaryID: Int) {
+        DetailDiaryAPI.shared.getDetailDiary(diaryID: diaryId) { response in
             guard let detailDiaryData = response?.data else { return }
             self.isRandomTopic = detailDiaryData.topic
             self.diaryContent = detailDiaryData.content

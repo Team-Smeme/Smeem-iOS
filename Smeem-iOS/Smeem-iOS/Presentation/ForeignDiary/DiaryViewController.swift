@@ -169,6 +169,7 @@ class DiaryViewController: UIViewController {
     }
     
     @objc func leftNaviButtonDidTap() {
+        self.dismiss(animated: true, completion: nil)
     }
     
     @objc func rightNavigationButtonDidTap() {

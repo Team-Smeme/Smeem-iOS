@@ -13,8 +13,8 @@ final class DetailDiaryAPI {
     
     private var detailDiaryData: DetailDiaryResponse?
     
-    func getDetailDiary(complention: @escaping (DetailDiaryResponse?) -> Void) {
-        detailDiaryProvider.request(.detailDiary(diaryID: 14)) { response in
+    func getDetailDiary(diaryID: Int, complention: @escaping (DetailDiaryResponse?) -> Void) {
+        detailDiaryProvider.request(.detailDiary(diaryID: diaryID)) { response in
             switch response {
             case .success(let result):
                 do {
