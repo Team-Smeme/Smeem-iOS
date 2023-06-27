@@ -9,7 +9,32 @@ import UIKit
 
 final class StepOneKoreanDiaryViewController: DiaryViewController {
     
+    // MARK: - Property
+    
+    weak var delegate: DataBindProtocol?
+    
+    // MARK: - Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    // MARK: - @objc
+    
+    override func rightNavigationButtonDidTap() {
+        handleRightNavigationButton()
+    }
+    
+    // MARK: - Custom Method
+    
+    private func handleRightNavigationButton() {
+        let stepTwoVC = StepTwoKoreanDiaryViewController()
+        delegate = stepTwoVC
+        
+        if let text = self.inputTextView.text {
+            delegate?.dataBind(text: text)
+        }
+        
+        self.navigationController?.pushViewController(stepTwoVC, animated: true)
     }
 }
