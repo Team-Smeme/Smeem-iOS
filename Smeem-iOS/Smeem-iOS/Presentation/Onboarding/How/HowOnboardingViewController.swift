@@ -86,6 +86,7 @@ final class HowOnboardingViewController: UIViewController {
         
         setBackgroundColor()
         setLayout()
+        swipeRecognizer()
     }
     
     // MARK: - @objc
@@ -96,7 +97,17 @@ final class HowOnboardingViewController: UIViewController {
         self.navigationController?.pushViewController(alarmVC, animated: true)
     }
     
+    @objc func responseToSwipeGesture() {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
     // MARK: - Custom Method
+    
+    private func swipeRecognizer() {
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(responseToSwipeGesture))
+        swipeRight.direction = UISwipeGestureRecognizer.Direction.right
+        self.view.addGestureRecognizer(swipeRight)
+    }
     
     // MARK: - Layout
     

@@ -109,6 +109,7 @@ final class AlarmSettingViewController: UIViewController {
         
         setBackgroundColor()
         setLayout()
+        responseToSwipeGesture()
     }
     
     // MARK: - @objc
@@ -117,7 +118,17 @@ final class AlarmSettingViewController: UIViewController {
         requestNotificationPermission()
     }
     
+    @objc func responseToSwipeGesture() {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
     // MARK: - Custom Method
+    
+    private func swipeRecognizer() {
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(responseToSwipeGesture))
+        swipeRight.direction = UISwipeGestureRecognizer.Direction.right
+        self.view.addGestureRecognizer(swipeRight)
+    }
     
    private func requestNotificationPermission() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert,.sound,.badge], completionHandler: { didAllow, error in
