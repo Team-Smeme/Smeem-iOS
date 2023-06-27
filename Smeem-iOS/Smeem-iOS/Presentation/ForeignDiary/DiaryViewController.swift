@@ -323,27 +323,27 @@ class DiaryViewController: UIViewController {
     }
     
     private func checkTutorial() {
-        if self is StepOneKoreanDiaryViewController {
-            let tutorialDiaryStepOne = UserDefaultsManager.tutorialDiaryStepOne
-            
-            if !tutorialDiaryStepOne {
-                UserDefaultsManager.tutorialDiaryStepOne = true
-                
-                view.addSubviews(tutorialImageView ?? UIImageView(), dismissButton ?? UIButton())
-                
-                tutorialImageView?.snp.makeConstraints {
-                    $0.top.leading.trailing.bottom.equalToSuperview()
-                }
-                dismissButton?.snp.makeConstraints {
-                    $0.top.equalToSuperview().inset(convertByHeightRatio(204))
-                    $0.trailing.equalToSuperview().inset(convertByHeightRatio(10))
-                    $0.width.height.equalTo(convertByHeightRatio(45))
-                }
-            } else {
-                tutorialImageView = nil
-                dismissButton = nil
-            }
-        }
+//        if self is StepOneKoreanDiaryViewController {
+//            let tutorialDiaryStepOne = UserDefaultsManager.tutorialDiaryStepOne
+//            
+//            if !tutorialDiaryStepOne {
+//                UserDefaultsManager.tutorialDiaryStepOne = true
+//                
+//                view.addSubviews(tutorialImageView ?? UIImageView(), dismissButton ?? UIButton())
+//                
+//                tutorialImageView?.snp.makeConstraints {
+//                    $0.top.leading.trailing.bottom.equalToSuperview()
+//                }
+//                dismissButton?.snp.makeConstraints {
+//                    $0.top.equalToSuperview().inset(convertByHeightRatio(204))
+//                    $0.trailing.equalToSuperview().inset(convertByHeightRatio(10))
+//                    $0.width.height.equalTo(convertByHeightRatio(45))
+//                }
+//            } else {
+//                tutorialImageView = nil
+//                dismissButton = nil
+//            }
+//        }
     }
 }
 
