@@ -180,11 +180,9 @@ final class HomeViewController: UIViewController {
     }
 
     @objc func fullViewButtonDidTap(_ gesture: UITapGestureRecognizer) {
-        let nextVC = DetailDiaryViewController()
-        nextVC.diaryId = homeDiaryDict[currentDate.toString("yyyy-MM-dd")]?.diaryId ?? 0
-        nextVC.modalTransitionStyle = .coverVertical
-        nextVC.modalPresentationStyle = .fullScreen
-        present(nextVC, animated: true)
+        let detailDiaryVC = DetailDiaryViewController()
+        detailDiaryVC.diaryId = homeDiaryDict[currentDate.toString("yyyy-MM-dd")]?.diaryId ?? 0
+        self.navigationController?.pushViewController(detailDiaryVC, animated: true)
     }
     
     @objc func floatingViewDidTap(_ gesture: UITapGestureRecognizer) {
@@ -192,10 +190,8 @@ final class HomeViewController: UIViewController {
     }
     
     @objc func myPageButtonDidTap(_ sender: UIButton) {
-        let nextVC = MyPageViewController()
-        nextVC.modalTransitionStyle = .coverVertical
-        nextVC.modalPresentationStyle = .fullScreen
-        present(nextVC, animated: true)
+        let myPageVC = MyPageViewController()
+        self.navigationController?.pushViewController(myPageVC, animated: true)
     }
     
     @objc func xButtonDidTap(_ sender: UIButton) {

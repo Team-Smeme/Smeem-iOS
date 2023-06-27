@@ -53,7 +53,7 @@ final class DetailDiaryViewController: UIViewController {
     // MARK: - @objc
     
     @objc func backButtonDidTap(_ sender: UIButton) {
-        self.dismiss(animated: true, completion: nil)
+        self.navigationController?.popViewController(animated: true)
     }
     
     // MARK: - Custom Method
