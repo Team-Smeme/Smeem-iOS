@@ -27,4 +27,9 @@ struct UserDefaultsManager {
         get { return UserDefaults.standard.bool(forKey: "tutorialWeeklyCorrection")}
         set { UserDefaults.standard.set(newValue, forKey: "tutorialWeeklyCorrection")}
     }
+    
+    static var betaLoginToken: String {
+        get { return UserDefaults.standard.string(forKey: "betaToken") ?? ""}
+        set { UserDefaults.standard.set(newValue, forKey: "betaToken")}
+    }
 }

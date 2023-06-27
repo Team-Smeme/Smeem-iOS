@@ -12,7 +12,13 @@ final class AlarmSettingViewController: UIViewController {
     
     // MARK: - Property
     
-    var isAlarm = true
+    var targetData = String()
+    var trainigDayData: String?
+    var trainingTimeData: (hour: Int, minute: Int)?
+    var userPlanData: UserPlanRequest?
+    var completeButtonData: Bool?
+    
+    var trainingClosure: ((TrainingTime) -> Void)?
     
     // MARK: - UI Property
     
@@ -71,18 +77,30 @@ final class AlarmSettingViewController: UIViewController {
         button.setTitle("나중에 설정하기", for: .normal)
         button.setTitleColor(.gray600, for: .normal)
         button.titleLabel?.font = .b4
-        button.addTarget(self, action: #selector(nextButtonDidTap), for: .touchUpInside)
+        button.addTarget(self, action: #selector(completeButtonDidTap), for: .touchUpInside)
         return button
     }()
     
     private lazy var completeButton: SmeemButton = {
         let button = SmeemButton()
+        button.smeemButtonType = .enabled
         button.setTitle("완료", for: .normal)
-        button.addTarget(self, action: #selector(nextButtonDidTap), for: .touchUpInside)
+        button.addTarget(self, action: #selector(completeButtonDidTap), for: .touchUpInside)
         return button
     }()
     
-    private lazy var alarmCollectionView = AlarmCollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    private lazy var alarmCollectionView: AlarmCollectionView = {
+        let collectionView = AlarmCollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        
+        collectionView.trainingDayClosure = { traingData in
+            self.trainigDayData = traingData.day
+            self.completeButton.smeemButtonType = traingData.type
+        }
+        collectionView.trainingTimeClosure = { data in
+            self.trainingTimeData = data
+        }
+        return collectionView
+    }()
     
     // MARK: - Life Cycle
     
@@ -91,32 +109,89 @@ final class AlarmSettingViewController: UIViewController {
         
         setBackgroundColor()
         setLayout()
+        swipeRecognizer()
     }
     
     // MARK: - @objc
     
-    @objc func nextButtonDidTap(){
+    @objc func completeButtonDidTap(){
         requestNotificationPermission()
+    }
+    
+    @objc func responseToSwipeGesture() {
+        self.navigationController?.popViewController(animated: true)
     }
     
     // MARK: - Custom Method
     
-    func requestNotificationPermission(){
+    private func swipeRecognizer() {
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(responseToSwipeGesture))
+        swipeRight.direction = UISwipeGestureRecognizer.Direction.right
+        self.view.addGestureRecognizer(swipeRight)
+    }
+    
+   private func requestNotificationPermission() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert,.sound,.badge], completionHandler: { didAllow, error in
             if didAllow {
                 print("Push: 권한 허용")
-                self.isAlarm = true
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
-                    self.requestTrackingAuthoriaztion()
+//                    self.userPlanPatchAPICall(target: "DEVELOP", hasAlarm: true)
+                    self.presentBottomSheet(target: "DEVELOP", hasAlarm: true)
                 }
             } else {
                 print("Push: 권한 거부")
-                self.isAlarm = false
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
-                    self.requestTrackingAuthoriaztion()
+//                    self.userPlanPatchAPICall(target: "DEVELOP", hasAlarm: true)
+                    self.presentBottomSheet(target: "DEVELOP", hasAlarm: false)
                 }
             }
         })
+    }
+    
+//    private func userPlanPatchAPICall(target: String, hasAlarm: Bool) {
+//        guard let trainigTimeData = trainingTimeData else { return }
+//
+//        userPlanPatchAPI(userPlan: UserPlanRequest(target: "DEVELOP",
+//                                                   trainingTime: trainingTimeData!,
+//                                                   hasAlarm: hasAlarm))
+//    }
+    
+    private func presentBottomSheet(target: String, hasAlarm: Bool) {
+        let bottomSheetVC = BottomSheetViewController()
+        bottomSheetVC.bottomSheetView.viewType = .login
+        let navigationController = UINavigationController(rootViewController: bottomSheetVC)
+        navigationController.modalPresentationStyle = .overFullScreen
+        navigationController.isNavigationBarHidden = true
+        
+//        guard let trainigTimeData = trainingTimeData else { return }
+        
+        if trainingTimeData == nil && trainigDayData == nil {
+            bottomSheetVC.userPlanRequest = UserPlanRequest(target: target,
+                                                            trainingTime: TrainingTime(day: "MON,TUE,WED,THU,FRI",
+                                                                                       hour: 22,
+                                                                                       minute: 0),
+                                                            hasAlarm: hasAlarm)
+        } else if trainingTimeData == nil && trainigDayData != nil {
+            bottomSheetVC.userPlanRequest = UserPlanRequest(target: target,
+                                                            trainingTime: TrainingTime(day: trainigDayData ?? "",
+                                                                                       hour: 22,
+                                                                                       minute: 0),
+         
+                                                            hasAlarm: hasAlarm)
+        } else {
+            bottomSheetVC.userPlanRequest = UserPlanRequest(target: target,
+                                                            trainingTime: TrainingTime(day: trainigDayData ?? "",
+                                                                                       hour: trainingTimeData?.hour ?? 0,
+                                                                                       minute: trainingTimeData?.minute ?? 0),
+                                                            hasAlarm: hasAlarm)
+        }
+        
+        self.present(navigationController, animated: false) {
+            bottomSheetVC.bottomSheetView.frame.origin.y = self.view.frame.height
+            UIView.animate(withDuration: 0.3) {
+                bottomSheetVC.bottomSheetView.frame.origin.y = self.view.frame.height-bottomSheetVC.defaultLoginHeight
+            }
+        }
     }
     
     func requestTrackingAuthoriaztion() {
@@ -185,5 +260,13 @@ final class AlarmSettingViewController: UIViewController {
             $0.height.equalTo(19)
         }
     }
+}
 
+extension AlarmSettingViewController {
+    private func userPlanPatchAPI(userPlan: UserPlanRequest) {
+        OnboardingAPI.shared.userPlanPathch(param: userPlan) { response in
+            print(response.message)
+            print(response.success)
+        }
+    }
 }

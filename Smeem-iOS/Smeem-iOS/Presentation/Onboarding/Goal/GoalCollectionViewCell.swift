@@ -23,11 +23,7 @@ final class GoalCollectionViewCell: UICollectionViewCell {
     
     // MARK: - UI Property
     
-    private let checkButton: UIButton = {
-        let button = UIButton()
-        return button
-    }()
-    
+    private let checkButton = UIButton()
     private let goalLabel: UILabel = {
         let label = UILabel()
         label.font = .b3
@@ -61,10 +57,10 @@ final class GoalCollectionViewCell: UICollectionViewCell {
     private func setCellSelected(_ selected: Bool) {
         if isSelected {
             layer.borderColor = UIColor.point.cgColor
-            checkButton.backgroundColor = .point
+            checkButton.setImage(Constant.Image.icnCheckActive, for: .normal)
         } else {
             layer.borderColor = UIColor.gray100.cgColor
-            checkButton.backgroundColor = .blue
+            checkButton.setImage(Constant.Image.icnCheckInactive, for: .normal)
         }
     }
     

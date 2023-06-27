@@ -150,6 +150,7 @@ final class HomeViewController: UIViewController {
     
     private lazy var addDiaryButton: SmeemButton = {
         let addDiaryButton = SmeemButton()
+        addDiaryButton.smeemButtonType = .enabled
         addDiaryButton.setTitle("일기 작성하기", for: .normal)
         addDiaryButton.addTarget(self, action: #selector(self.addDiaryButtonDidTap(_:)), for: .touchUpInside)
         return addDiaryButton
