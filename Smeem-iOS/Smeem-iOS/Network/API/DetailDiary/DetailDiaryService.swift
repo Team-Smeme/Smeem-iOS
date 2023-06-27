@@ -15,7 +15,7 @@ extension DetailDiaryService: BaseTargetType {
     var path: String {
         switch self {
         case .detailDiary(let diaryID):
-            return URLConstant.diaryURL + "\(diaryID)"
+            return URLConstant.diaryURL + "/\(diaryID)"
         }
     }
     
