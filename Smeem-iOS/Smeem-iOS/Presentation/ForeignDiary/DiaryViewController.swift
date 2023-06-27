@@ -56,7 +56,7 @@ class DiaryViewController: UIViewController {
         button.titleLabel?.font = .b4
         button.setTitleColor(.black, for: .normal)
         button.setTitle("취소", for: .normal)
-        button.addTarget(self, action: #selector(leftNaviButtonDidTap), for: .touchUpInside)
+        button.addTarget(self, action: #selector(leftNavigationButtonDidTap), for: .touchUpInside)
         return button
     }()
     
@@ -168,7 +168,7 @@ class DiaryViewController: UIViewController {
         }
     }
     
-    @objc func leftNaviButtonDidTap() {
+    @objc func leftNavigationButtonDidTap() {
         self.dismiss(animated: true, completion: nil)
     }
     
