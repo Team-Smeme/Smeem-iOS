@@ -17,9 +17,10 @@ final class MyPageViewController: UIViewController {
     
     private let headerContainerView = UIView()
     
-    private let backButton: UIButton = {
+    private lazy var backButton: UIButton = {
         let button = UIButton()
         button.setImage(Constant.Image.icnBack, for: .normal)
+        button.addTarget(self, action: #selector(backButtonDidTap(_:)), for: .touchUpInside)
         return button
     }()
     
@@ -31,9 +32,10 @@ final class MyPageViewController: UIViewController {
         return label
     }()
     
-    private let moreButton: UIButton = {
+    private lazy var moreButton: UIButton = {
         let button = UIButton()
-        button.setImage(Constant.Image.icnMoreHoriz, for: .normal)
+        button.setImage(Constant.Image.icnMoreMono, for: .normal)
+        button.addTarget(self, action: #selector(moreButtonDidTap(_:)), for: .touchUpInside)
         return button
     }()
     
@@ -46,6 +48,14 @@ final class MyPageViewController: UIViewController {
     }
     
     // MARK: - @objc
+    
+    @objc func backButtonDidTap(_ sender: UIButton) {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    @objc func moreButtonDidTap(_ sender: UIButton) {
+
+    }
     
     // MARK: - Custom Method
     
@@ -60,7 +70,7 @@ final class MyPageViewController: UIViewController {
         hiddenNavigationBar()
         
         view.addSubviews(headerContainerView)
-        headerContainerView.addSubviews(backButton, titleLabel)
+        headerContainerView.addSubviews(backButton, titleLabel, moreButton)
         
         headerContainerView.snp.makeConstraints {
             $0.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
@@ -79,7 +89,7 @@ final class MyPageViewController: UIViewController {
         
         moreButton.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.trailing.equalToSuperview().offset(10)
+            $0.trailing.equalToSuperview().offset(-10)
             $0.width.height.equalTo(45)
         }
         
