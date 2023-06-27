@@ -22,7 +22,7 @@ final class ForeignDiaryViewController: DiaryViewController {
         if rightNavigationButton.titleLabel?.textColor == .point {
             postDiaryAPI()
             let HomeViewController = UINavigationController(rootViewController: HomeViewController())
-            changeRootViewController(HomeViewController)
+            changeRootViewControllerAndPresent(HomeViewController)
         } else {
             view.addSubview(regExToastView)
             regExToastView.snp.makeConstraints {
