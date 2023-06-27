@@ -57,6 +57,7 @@ final class HomeViewFloatingViewController: UIViewController {
     
     private lazy var floatingButton: SmeemButton = {
         let floatingButton = SmeemButton()
+        floatingButton.smeemButtonType = .enabled
         floatingButton.setTitle("취소", for: .normal)
         floatingButton.addTarget(self, action: #selector(self.floatingButtonDidTap(_:)), for: .touchUpInside)
         return floatingButton
@@ -90,31 +91,31 @@ final class HomeViewFloatingViewController: UIViewController {
         
         setBackgroundColor()
         setLayout()
-        checkTutorial()
+//        checkTutorial()
     }
     
     // MARK: - Custom Method
     
     private func checkTutorial() {
-        let tutorialDiaryStepTwo = UserDefaultsManager.tutorialWeeklyTwoMode
-        
-        if !tutorialDiaryStepTwo {
-            UserDefaultsManager.tutorialWeeklyTwoMode = true
-            
-            view.addSubviews(tutorialImageView ?? UIImageView(), dismissButton ?? UIButton())
-            
-            tutorialImageView?.snp.makeConstraints {
-                $0.top.leading.trailing.bottom.equalToSuperview()
-            }
-            dismissButton?.snp.makeConstraints {
-                $0.top.equalToSuperview().inset(convertByHeightRatio(503))
-                $0.trailing.equalToSuperview().inset(convertByHeightRatio(10))
-                $0.width.height.equalTo(convertByHeightRatio(45))
-            }
-        } else {
-            tutorialImageView = nil
-            dismissButton = nil
-        }
+//        let tutorialDiaryStepTwo = UserDefaultsManager.tutorialWeeklyTwoMode
+//
+//        if !tutorialDiaryStepTwo {
+//            UserDefaultsManager.tutorialWeeklyTwoMode = true
+//
+//            view.addSubviews(tutorialImageView ?? UIImageView(), dismissButton ?? UIButton())
+//
+//            tutorialImageView?.snp.makeConstraints {
+//                $0.top.leading.trailing.bottom.equalToSuperview()
+//            }
+//            dismissButton?.snp.makeConstraints {
+//                $0.top.equalToSuperview().inset(convertByHeightRatio(503))
+//                $0.trailing.equalToSuperview().inset(convertByHeightRatio(10))
+//                $0.width.height.equalTo(convertByHeightRatio(45))
+//            }
+//        } else {
+//            tutorialImageView = nil
+//            dismissButton = nil
+//        }
     }
     
     
@@ -126,7 +127,7 @@ final class HomeViewFloatingViewController: UIViewController {
     
     private func setLayout() {
         view.addSubviews(dimView, floatingButton, buttonStackView)
-        buttonStackView.addArrangedSubviews(koreanDiaryButton, border, foreignDiaryButton)
+        buttonStackView.addArrangedSubviews(foreignDiaryButton, border, koreanDiaryButton)
         
         dimView.snp.makeConstraints {
             $0.top.trailing.bottom.leading.equalToSuperview()
@@ -163,13 +164,17 @@ final class HomeViewFloatingViewController: UIViewController {
     }
     
     @objc func foreignDiaryButtonDidTap(_ gesture: UITapGestureRecognizer) {
-//        let nextVC = DiaryForeignViewController()
-//        present(diaryForeignViewController, animated: true)
+        let nextVC = ForeignDiaryViewController()
+        nextVC.modalTransitionStyle = .coverVertical
+        nextVC.modalPresentationStyle = .fullScreen
+        present(nextVC, animated: true)
     }
     
     @objc func koreanDiaryButtonDidTap(_ gesture: UITapGestureRecognizer) {
-//        let nextVC = DiaryKoreanViewController()
-//        present(nextVC, animated: true)
+        let nextVC = StepOneKoreanDiaryViewController()
+        nextVC.modalTransitionStyle = .coverVertical
+        nextVC.modalPresentationStyle = .fullScreen
+        present(nextVC, animated: true)
     }
     
     @objc func dismissButtonDidTap() {

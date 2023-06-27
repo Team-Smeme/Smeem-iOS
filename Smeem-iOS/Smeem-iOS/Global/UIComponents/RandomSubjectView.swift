@@ -17,7 +17,15 @@ import UIKit
 
 import SnapKit
 
+protocol RandomSubjectViewDelegate: AnyObject {
+    func refreshButtonTapped()
+}
+
 final class RandomSubjectView: UIView {
+    
+    // MARK: - Property
+    
+    weak var delegate: RandomSubjectViewDelegate?
     
     // MARK: - UI Property
     
@@ -25,8 +33,8 @@ final class RandomSubjectView: UIView {
         let label = UILabel()
         label.font = .b1
         label.textColor = .point
-        label.setTextWithLineHeight(lineHeight: 21)
         label.text = "Q."
+        label.setTextWithLineHeight(lineHeight: 21)
         return label
     }()
     
@@ -35,16 +43,17 @@ final class RandomSubjectView: UIView {
         label.font = .b4
         label.textColor = .smeemBlack
         label.numberOfLines = 0
-        label.setTextWithLineHeight(lineHeight: 22)
         label.text = "     " + "오늘부터 딱 일주일 후! 설레는 크리스마스네요.\n일주일 전부터 세워보는 나의 크리스마스 계획은?"
+        label.setTextWithLineHeight(lineHeight: 22)
         return label
     }()
     
-    private let refreshButton: UIButton = {
+    private lazy var refreshButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .gray200
         //TODO: 에셋 나오면 추가할게여!
 //        button.setImage(<#T##image: UIImage?##UIImage?#>, for: <#T##UIControl.State#>)
+        button.addTarget(self, action: #selector(refreshButtonDidTap), for: .touchUpInside)
         return button
     }()
     
@@ -61,7 +70,18 @@ final class RandomSubjectView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - @objc
+    
+    @objc func refreshButtonDidTap() {
+        delegate?.refreshButtonTapped()
+    }
+    
     // MARK: - Custom Method
+    
+    func configureData(contentText: String) {
+        contentLabel.text = "     " + contentText
+        contentLabel.setTextWithLineHeight(lineHeight: 22)
+    }
     
     private func setRandomSubjectViewHeight() {
         let labelWidth = UIScreen.main.bounds.width - 36
@@ -71,7 +91,8 @@ final class RandomSubjectView: UIView {
         
         let contentLabelHeight = contentLabel.frame.height
         
-        snp.makeConstraints {
+        snp.remakeConstraints {
+            $0.width.equalTo(convertByWidthRatio(375))
             $0.height.equalTo(contentLabelHeight < 20 ? 88 : 110)
         }
     }

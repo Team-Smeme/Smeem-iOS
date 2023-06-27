@@ -16,16 +16,9 @@ final class HomeViewController: UIViewController {
     
     private let weekdayLabels = ["S", "M", "T", "W", "T", "F", "S"]
     private let gregorian = Calendar(identifier: .gregorian)
-    private var writtenDays = [Date]()
-    private var writtenDaysfromServer = ["2023-05-01","2023-05-03","2023-05-10","2023-05-15","2023-05-20","2023-05-23","2023-05-30","2023-06-03"]
-    private let tmpText = ["I watched Avatar with my boyfriend at Hongdae CGV. I should have skimmed the previous season - Avatar1.. I really couldn’t get what they were saying and the universe(??). What I was annoyed then was 두팔 didn’t know that as me. I think 두팔 who is my boyfriend should study before wathcing…. but Avatar2 is amazing movie I think. In my personal opinion, the jjin main character of Avatar2 is not Sully, but his son.", "4 : 18 PM"]
-    private var isWating30days = true
-    private var isHavingTodayDiary = false {
-        didSet {
-            diaryThumbnail.isHidden = !isHavingTodayDiary
-            emptyView.isHidden = isHavingTodayDiary
-        }
-    }
+    private var homeDiaryDict = [String: HomeDiaryCustom]()
+    private var writtenDaysStringList = [String]()
+    private var currentDate = Date()
     
     // MARK: - UI Property
     
@@ -86,7 +79,7 @@ final class HomeViewController: UIViewController {
         diaryText.textColor = .smeemBlack
         diaryText.font = .b4
         diaryText.numberOfLines = 3
-        diaryText.lineBreakMode = .byWordWrapping
+        diaryText.lineBreakMode = .byTruncatingTail
         return diaryText
     }()
     
@@ -121,6 +114,7 @@ final class HomeViewController: UIViewController {
         floatingView.layer.cornerRadius = 10
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(floatingViewDidTap(_:)))
         floatingView.addGestureRecognizer(tapGesture)
+        floatingView.isHidden = true
         return floatingView
     }()
     
@@ -156,6 +150,7 @@ final class HomeViewController: UIViewController {
     
     private lazy var addDiaryButton: SmeemButton = {
         let addDiaryButton = SmeemButton()
+        addDiaryButton.smeemButtonType = .enabled
         addDiaryButton.setTitle("일기 작성하기", for: .normal)
         addDiaryButton.addTarget(self, action: #selector(self.addDiaryButtonDidTap(_:)), for: .touchUpInside)
         return addDiaryButton
@@ -170,8 +165,10 @@ final class HomeViewController: UIViewController {
         setLayout()
         setDelegate()
         setSwipe()
-        setData()
-        setEvents()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        homeDiaryWithAPI(start: Date().startOfMonth().addingDate(addValue: -7), end: Date().endOfMonth().addingDate(addValue: 7))
     }
     
     // MARK: - @objc
@@ -183,7 +180,11 @@ final class HomeViewController: UIViewController {
     }
 
     @objc func fullViewButtonDidTap(_ gesture: UITapGestureRecognizer) {
-        // 뷰 이동 - 상세일기
+        let nextVC = DetailDiaryViewController()
+        nextVC.diaryId = homeDiaryDict[currentDate.toString("yyyy-MM-dd")]?.diaryId ?? 0
+        nextVC.modalTransitionStyle = .coverVertical
+        nextVC.modalPresentationStyle = .fullScreen
+        present(nextVC, animated: true)
     }
     
     @objc func floatingViewDidTap(_ gesture: UITapGestureRecognizer) {
@@ -226,21 +227,10 @@ final class HomeViewController: UIViewController {
     }
     
     private func setData() {
-        diaryText.text = tmpText[0]
-        diaryDate.text = tmpText[1]
+        diaryText.text = homeDiaryDict[currentDate.toString("yyyy-MM-dd")]?.content
+        diaryDate.text = homeDiaryDict[currentDate.toString("yyyy-MM-dd")]?.createdTime.formatted("h : mm a")
         diaryText.setTextWithLineHeight(lineHeight: 22)
-    }
-    
-    func setEvents() {
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "ko_KR")
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        
-        writtenDays = writtenDaysfromServer
-            .map { dateFormatter.date(from: $0)! }
-        
-        diaryThumbnail.isHidden = !writtenDaysfromServer.contains(dateFormatter.string(from: Date()))
-        emptyView.isHidden = !diaryThumbnail.isHidden
+        diaryText.lineBreakMode = .byTruncatingTail
     }
     
     // MARK: - Layout
@@ -266,7 +256,7 @@ final class HomeViewController: UIViewController {
         }
         
         myPageButton.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(convertByHeightRatio(66)/2-convertByHeightRatio(40)/2)
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(convertByHeightRatio(66)/2-convertByHeightRatio(40)/2+3)
             $0.trailing.equalToSuperview().offset(-convertByWidthRatio(18))
             $0.width.height.equalTo(convertByHeightRatio(40))
         }
@@ -408,7 +398,7 @@ extension HomeViewController: FSCalendarDataSource {
         if gregorian.isDateInToday(date) { /// 오늘인 경우
             return .today
         } else { /// 오늘 아닌경우 -> 일기 있는 날과 없는 날로 구분
-            return writtenDays.contains(date) ? .some : .none
+            return writtenDaysStringList.contains(date.toString("yyyy-MM-dd")) ? .some : .none
         }
     }
 }
@@ -416,7 +406,8 @@ extension HomeViewController: FSCalendarDataSource {
 extension HomeViewController: FSCalendarDelegateAppearance {
     /// 날짜 선택 시 콜백 메소드
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-        isHavingTodayDiary = writtenDays.contains(date)
+        currentDate = date
+        setData()
         configureSelectedUI()
         configureBottomLayout(date: date)
     }
@@ -430,13 +421,42 @@ extension HomeViewController: FSCalendarDelegateAppearance {
         }
     }
     
-    /// 홈뷰 하단 30일전 일기 첨삭 팝업뷰와 일기 작성뷰 레이아웃 설정
+    /// 홈뷰 하단 레이아웃 설정
     private func configureBottomLayout(date: Date) {
+        let isHavingTodayDiary = writtenDaysStringList.contains(date.toString("yyyy-MM-dd"))
+        diaryThumbnail.isHidden = !isHavingTodayDiary
+        emptyView.isHidden = isHavingTodayDiary
         addDiaryButton.isHidden = (gregorian.isDateInToday(date) && !isHavingTodayDiary) ? false : true
         if (!floatingView.isHidden) {
             floatingView.snp.updateConstraints {
                 $0.bottom.equalToSuperview().offset(-convertByHeightRatio(addDiaryButton.isHidden ? 50 : 120))
             }
+        }
+    }
+    
+    /// currentMonth 비교해서 바뀌었을 때 서버 통신
+    func calendarCurrentPageDidChange(_ calendar: FSCalendar) {
+        currentDate = calendar.currentPage
+        homeDiaryWithAPI(start: currentDate.startOfMonth().addingDate(addValue: -7), end: currentDate.endOfMonth().addingDate(addValue: 7))
+        calendar.reloadData()
+    }
+}
+
+// MARK: - Extension : Network
+
+extension HomeViewController {
+    /// 이번 달+a (앞뒤로 일주일 여유분까지) 일기 불러오는 함수
+    func homeDiaryWithAPI(start: String, end: String) {
+        HomeAPI.shared.homeDiaryList(startDate: start, endDate: end) { response in
+            guard let homeDiariesData = response?.data?.diaries else { return }
+            homeDiariesData.forEach {
+                self.homeDiaryDict[String($0.createdAt.prefix(10))] = HomeDiaryCustom(diaryId: $0.diaryId, content: $0.content, createdTime: String($0.createdAt.suffix(5)))
+            }
+            self.writtenDaysStringList = self.homeDiaryDict
+                .map { $0.key }
+            self.setData()
+            self.configureBottomLayout(date: self.currentDate)
+            self.calendar.reloadData()
         }
     }
 }

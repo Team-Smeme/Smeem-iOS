@@ -9,12 +9,15 @@ import UIKit
 
 import SnapKit
 
-final class BottomSheetViewController: UIViewController {
-    
+final class BottomSheetViewController: UIViewController, LoginDelegate {
+
     // MARK: - Property
     
     var defaultLoginHeight: CGFloat = 282
     var defaultSignUpHeight: CGFloat = 394
+    
+    var betaAccessToken = UserDefaultsManager.betaLoginToken
+    var userPlanRequest: UserPlanRequest?
     
     // MARK: - UI Property
     
@@ -25,9 +28,9 @@ final class BottomSheetViewController: UIViewController {
         return view
     }()
     
-    lazy var bottomSheetView: BottomSheetView = {
+    var bottomSheetView: BottomSheetView = {
         let view = BottomSheetView()
-        view.viewType = .login
+        view.viewType = .signUp
         return view
     }()
     
@@ -38,6 +41,7 @@ final class BottomSheetViewController: UIViewController {
         
         setBackgroundColor()
         setLayout()
+        setBottomViewDelegate()
     }
     
     // MARK: - @objc
@@ -45,12 +49,34 @@ final class BottomSheetViewController: UIViewController {
     @objc func dimmedViewDidTap() {
         UIView.animate(withDuration: 0.3, animations: {
             self.bottomSheetView.frame.origin.y = self.view.frame.height
-        }) { (completion) in
+        }) { _ in
             self.dismiss(animated: false, completion: nil)
         }
     }
     
     // MARK: - Custom Method
+    
+    func betaLoginDataSend() {
+        betaLoginAPI()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+            let userNicknameVC = UserNicknameViewController()
+            userNicknameVC.userPlanRequest = self.userPlanRequest
+            self.navigationController?.pushViewController(userNicknameVC, animated: true)
+        }
+    }
+    
+    func dissmissButton() {
+        UIView.animate(withDuration: 0.3, animations: {
+            self.bottomSheetView.frame.origin.y = self.view.frame.height
+        }) { _ in
+            self.dismiss(animated: false, completion: nil)
+        }
+    }
+    
+    private func setBottomViewDelegate() {
+        self.bottomSheetView.delegate = self
+    }
     
     private func setBackgroundColor() {
         view.backgroundColor = .clear
@@ -73,6 +99,17 @@ final class BottomSheetViewController: UIViewController {
                 $0.height.equalTo(defaultSignUpHeight)
                 $0.leading.trailing.bottom.equalToSuperview()
             }
+        }
+    }
+}
+
+// MARK: - Network
+
+extension BottomSheetViewController {
+    private func betaLoginAPI() {
+        AuthAPI.shared.betaTestLoginAPI() { response in
+            guard let token = response.data?.accessToken else { return }
+            UserDefaultsManager.betaLoginToken = token
         }
     }
 }

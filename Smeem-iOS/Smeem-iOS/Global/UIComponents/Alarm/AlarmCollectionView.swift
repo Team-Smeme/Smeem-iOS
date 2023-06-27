@@ -20,6 +20,18 @@ final class AlarmCollectionView: UICollectionView {
     
     private let dayArray = ["월", "화", "수", "목", "금", "토", "일"]
     private let selectedIndexPath = [IndexPath(item: 0, section: 0), IndexPath(item: 1, section: 0), IndexPath(item: 2, section: 0), IndexPath(item: 3, section: 0), IndexPath(item: 4, section: 0)]
+    var dayDicrionary: [String:String] = ["월": "MON", "화": "TUE", "수": "WED", "목": "THU", "금": "FRI", "토": "SAT", "일": "SUN"]
+    
+    var selectedDayArray: Set<String> = ["MON", "TUE", "WED", "THU", "FRI"] {
+        didSet {
+            selectedDayArray.isEmpty ?
+            trainingDayClosure?((day: Array(selectedDayArray).joined(separator: ","), .notEnabled)) :
+            trainingDayClosure?((Array(selectedDayArray).joined(separator: ","), .enabled))
+        }
+    }
+    
+    var trainingDayClosure: (((day: String, type: SmeemButtonType)) -> Void)?
+    var trainingTimeClosure: (((hour: Int, minute: Int)) -> Void)?
     
     // MARK: - UI Property
     
@@ -77,7 +89,15 @@ final class AlarmCollectionView: UICollectionView {
 
 // MARK: - UICollectionViewDelegate
 
-extension AlarmCollectionView: UICollectionViewDelegate { }
+extension AlarmCollectionView: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        selectedDayArray.insert(dayDicrionary[dayArray[indexPath.item]] ?? "")
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        selectedDayArray.remove(dayDicrionary[dayArray[indexPath.item]] ?? "")
+    }
+}
 
 // MARK: - UICollectionViewDataSource
 
@@ -119,6 +139,15 @@ extension AlarmCollectionView: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         guard let footerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: DatePickerFooterView.identifier, for: indexPath) as? DatePickerFooterView else { return UICollectionReusableView() }
+        
+        footerView.trainingTimeClosure = { data in
+//            let dayData = Array(self.selectedDayArray).joined(separator: ",")
+            let hoursData = data.hour
+            let minuteData = data.minute
+            let traingData: (Int, Int) = (hoursData, minuteData)
+            
+            self.trainingTimeClosure?(traingData)
+        }
         return footerView
     }
 }

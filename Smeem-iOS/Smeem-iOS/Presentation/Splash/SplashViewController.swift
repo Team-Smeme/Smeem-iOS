@@ -17,7 +17,7 @@ final class SplashViewController: UIViewController {
     
     private let SmeemLogoIcon: UIImageView = {
         let imageView = UIImageView()
-        imageView.backgroundColor = .blue
+        imageView.image = Constant.Image.logoPointSmeem
         return imageView
     }()
     
@@ -44,6 +44,8 @@ final class SplashViewController: UIViewController {
     
     private lazy var loginButton: UIButton = {
         let button = UIButton()
+        // 임시로 hidden
+        button.isHidden = true
         button.titleLabel?.font = .b4
         button.setTitle("이미 계정이 있어요.", for: .normal)
         button.setTitleColor(.gray600, for: .normal)
@@ -51,9 +53,11 @@ final class SplashViewController: UIViewController {
         return button
     }()
     
-    private let startButton: SmeemButton = {
+    private lazy var startButton: SmeemButton = {
         let button = SmeemButton()
+        button.smeemButtonType = .enabled
         button.setTitle("시작하기", for: .normal)
+        button.addTarget(self, action: #selector(startButtonDidTap), for: .touchUpInside)
         return button
     }()
     
@@ -79,6 +83,11 @@ final class SplashViewController: UIViewController {
         }
     }
     
+    @objc func startButtonDidTap() {
+        let onboardingVC = GoalOnboardingViewController()
+        self.navigationController?.pushViewController(onboardingVC, animated: true)
+    }
+    
     // MARK: - Custom Method
     
     private func setBackgroundColor() {
@@ -90,8 +99,6 @@ final class SplashViewController: UIViewController {
                          loginButton, startButton)
         
         SmeemLogoIcon.snp.makeConstraints {
-            $0.width.equalTo(33)
-            $0.height.equalTo(20)
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(149)
             $0.leading.equalToSuperview().inset(26)
         }
