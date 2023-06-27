@@ -47,10 +47,14 @@ final class DetailDiaryViewController: UIViewController {
         
         setBackgroundColor()
         setLayout()
-        detailDiaryWithAPI()
+        detailDiaryWithAPI(diaryID: diaryId)
     }
     
     // MARK: - @objc
+    
+    @objc func backButtonDidTap(_ sender: UIButton) {
+        self.dismiss(animated: true, completion: nil)
+    }
     
     // MARK: - Custom Method
     
@@ -96,8 +100,8 @@ final class DetailDiaryViewController: UIViewController {
 //MARK: - Network
 
 extension DetailDiaryViewController {
-    func detailDiaryWithAPI() {
-        DetailDiaryAPI.shared.getDetailDiary { response in
+    func detailDiaryWithAPI(diaryID: Int) {
+        DetailDiaryAPI.shared.getDetailDiary(diaryID: diaryId) { response in
             guard let detailDiaryData = response?.data else { return }
             self.isRandomTopic = detailDiaryData.topic
             self.diaryContent = detailDiaryData.content
