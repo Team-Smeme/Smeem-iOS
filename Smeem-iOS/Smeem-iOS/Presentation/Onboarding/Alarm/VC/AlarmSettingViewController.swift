@@ -158,7 +158,7 @@ final class AlarmSettingViewController: UIViewController {
     
     private func presentBottomSheet(target: String, hasAlarm: Bool) {
         let bottomSheetVC = BottomSheetViewController()
-        bottomSheetVC.bottomSheetView.viewType = .signUp
+        bottomSheetVC.bottomSheetView.viewType = .login
         let navigationController = UINavigationController(rootViewController: bottomSheetVC)
         navigationController.modalPresentationStyle = .overFullScreen
         navigationController.isNavigationBarHidden = true
@@ -189,7 +189,7 @@ final class AlarmSettingViewController: UIViewController {
         self.present(navigationController, animated: false) {
             bottomSheetVC.bottomSheetView.frame.origin.y = self.view.frame.height
             UIView.animate(withDuration: 0.3) {
-                bottomSheetVC.bottomSheetView.frame.origin.y = self.view.frame.height-bottomSheetVC.defaultSignUpHeight
+                bottomSheetVC.bottomSheetView.frame.origin.y = self.view.frame.height-bottomSheetVC.defaultLoginHeight
             }
         }
     }

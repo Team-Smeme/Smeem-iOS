@@ -44,6 +44,8 @@ final class SplashViewController: UIViewController {
     
     private lazy var loginButton: UIButton = {
         let button = UIButton()
+        // 임시로 hidden
+        button.isHidden = true
         button.titleLabel?.font = .b4
         button.setTitle("이미 계정이 있어요.", for: .normal)
         button.setTitleColor(.gray600, for: .normal)
