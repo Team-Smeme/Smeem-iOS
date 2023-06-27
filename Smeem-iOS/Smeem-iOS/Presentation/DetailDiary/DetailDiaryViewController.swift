@@ -7,6 +7,8 @@
 
 import UIKit
 
+import SnapKit
+
 final class DetailDiaryViewController: UIViewController {
     
     // MARK: - Property
@@ -28,9 +30,10 @@ final class DetailDiaryViewController: UIViewController {
         return button
     }()
     
-    private let editButton: UIButton = {
+    private lazy var editButton: UIButton = {
         let button = UIButton()
         button.setImage(Constant.Image.icnMore, for: .normal)
+        button.addTarget(self, action: #selector(showActionSheet), for: .touchUpInside)
         return button
     }()
     
@@ -56,6 +59,30 @@ final class DetailDiaryViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
+    @objc func showActionSheet() {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let modifyAction = UIAlertAction (title: "수정", style: .default, handler: nil)
+        let deleteAction = UIAlertAction (title: "삭제", style: .destructive, handler: { (action) in
+            self.showAlert()
+        })
+        let cancelAction = UIAlertAction (title: "취소", style: .cancel, handler: nil)
+        alert.addAction (modifyAction)
+        alert.addAction (deleteAction)
+        alert.addAction (cancelAction)
+        self.present(alert, animated: true, completion: nil)
+    }
+
+    @objc func showAlert() {
+        let alert = UIAlertController(title: "일기를 삭제할까요?", message: "", preferredStyle: .alert)
+        let delete = UIAlertAction(title: "확인", style: .destructive) { (action) in
+            // 삭제를 처리하는 코드
+        }
+        let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+        alert.addAction(delete)
+        alert.addAction(cancel)
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     // MARK: - Custom Method
     
     private func setData() {
@@ -66,6 +93,7 @@ final class DetailDiaryViewController: UIViewController {
     
     private func setBackgroundColor() {
         view.backgroundColor = .white
+        hiddenNavigationBar()
     }
     
     private func setLayout() {
