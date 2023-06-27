@@ -112,7 +112,7 @@ class DiaryViewController: UIViewController {
     lazy var randomSubjectButton: UIButton = {
         let button = UIButton()
         button.addTarget(self, action: #selector(randomTopicButtonDidTap), for: .touchUpInside)
-        button.backgroundColor = .point
+        button.setImage(Constant.Image.btnRandomSubjectInactive, for: .normal)
         return button
     }()
     
@@ -246,8 +246,10 @@ class DiaryViewController: UIViewController {
                 $0.top.equalTo(navigationView.snp.bottom).offset(convertByHeightRatio(16))
                 $0.leading.equalToSuperview()
             }
+            randomSubjectButton.setImage(Constant.Image.btnRandomSubjectActive, for: .normal)
         } else {
             randomSubjectView.removeFromSuperview()
+            randomSubjectButton.setImage(Constant.Image.btnRandomSubjectInactive, for: .normal)
         }
     }
     

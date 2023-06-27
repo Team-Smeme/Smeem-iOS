@@ -66,5 +66,6 @@ final class StepTwoKoreanDiaryStrategy: DiaryStrategy {
     
     func configureRandomSubjectButton(_ button: UIButton) {
         button.isEnabled = false
+        button.setImage(Constant.Image.btnRandomSubjectEnabled, for: .normal)
     }
 }
