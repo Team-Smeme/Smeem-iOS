@@ -15,20 +15,22 @@ final class DetailDiaryViewController: UIViewController {
     var isRandomTopic = String()
     var dateCreated = String()
     var userName = String()
+    var diaryId = Int()
     
     // MARK: - UI Property
     
     private let naviView = UIView()
     
-    private let backButton: UIButton = {
+    private lazy var backButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = .point
+        button.setImage(Constant.Image.icnBack, for: .normal)
+        button.addTarget(self, action: #selector(backButtonDidTap(_:)), for: .touchUpInside)
         return button
     }()
     
     private let editButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = .point
+        button.setImage(Constant.Image.icnMore, for: .normal)
         return button
     }()
     
