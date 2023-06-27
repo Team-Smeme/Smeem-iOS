@@ -17,9 +17,10 @@ class EditNicknameViewController: UIViewController {
     
     private let headerContainerView = UIView()
     
-    private let backButton: UIButton = {
+    private lazy var backButton: UIButton = {
         let button = UIButton()
         button.setImage(Constant.Image.icnBack, for: .normal)
+        button.addTarget(self, action: #selector(backButtonDidTap(_:)), for: .touchUpInside)
         return button
     }()
     // TODO: setImage, addTarget 넣기
@@ -87,6 +88,10 @@ class EditNicknameViewController: UIViewController {
         }
     }
     
+    @objc func backButtonDidTap(_ sender: UIButton) {
+        self.navigationController?.popViewController(animated: true)
+    }
+
     // MARK: - Custom Method
     
     private func setTextFieldDelegate() {
