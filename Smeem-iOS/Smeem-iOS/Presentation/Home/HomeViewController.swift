@@ -179,7 +179,11 @@ final class HomeViewController: UIViewController {
     }
 
     @objc func fullViewButtonDidTap(_ gesture: UITapGestureRecognizer) {
-        // 뷰 이동 - 상세일기
+        let nextVC = DetailDiaryViewController()
+        nextVC.diaryId = homeDiaryDict[currentDate.toString("yyyy-MM-dd")]?.diaryId ?? 0
+        nextVC.modalTransitionStyle = .coverVertical
+        nextVC.modalPresentationStyle = .fullScreen
+        self.present(nextVC, animated: true, completion: nil)
     }
     
     @objc func floatingViewDidTap(_ gesture: UITapGestureRecognizer) {
