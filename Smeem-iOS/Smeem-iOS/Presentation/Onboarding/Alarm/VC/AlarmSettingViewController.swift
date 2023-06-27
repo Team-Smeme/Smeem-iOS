@@ -109,7 +109,7 @@ final class AlarmSettingViewController: UIViewController {
         
         setBackgroundColor()
         setLayout()
-        responseToSwipeGesture()
+        swipeRecognizer()
     }
     
     // MARK: - @objc

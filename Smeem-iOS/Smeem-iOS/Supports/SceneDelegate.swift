@@ -16,8 +16,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let scene = (scene as? UIWindowScene) else { return }
         self.window = UIWindow(windowScene: scene)
-        let rootViewViewController = UINavigationController(rootViewController: GoalOnboardingViewController())
-        self.window?.rootViewController = rootViewViewController
+        
+        var rootViewController = UINavigationController(rootViewController: HomeViewController())
+        
+        if UserDefaultsManager.betaLoginToken == "" {
+            rootViewController = UINavigationController(rootViewController: SplashViewController())
+        }
+        self.window?.rootViewController = rootViewController
         self.window?.makeKeyAndVisible()
     }
     

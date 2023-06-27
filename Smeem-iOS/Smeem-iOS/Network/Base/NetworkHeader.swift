@@ -10,7 +10,7 @@ import Foundation
 enum NetworkConstant {
     
     static let tempTokenHeader = ["Content-Type": "application/json",
-                                  "Authorization": "Bearer "+UserDefaultsManager.betaLoginToken]
+                                  "Authorization": "Bearer "+(UserDefaultsManager.betaLoginToken)]
     
     static let betaTestHeader = ["Content-Type": "application/json",
                                   "Authorization": ""]
