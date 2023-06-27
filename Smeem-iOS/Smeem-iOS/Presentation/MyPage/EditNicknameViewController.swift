@@ -13,6 +13,8 @@ class EditNicknameViewController: UIViewController {
     
     // MARK: - Property
     
+    var nickName = String()
+    
     // MARK: - UI Property
     
     private let headerContainerView = UIView()
@@ -56,11 +58,12 @@ class EditNicknameViewController: UIViewController {
         return label
     }()
     
-    private let doneButton: SmeemButton = {
+    private lazy var doneButton: SmeemButton = {
         let button = SmeemButton()
         button.setTitle("완료", for: .normal)
-        button.isEnabled = false
-        button.backgroundColor = .pointInactive
+        button.isEnabled = true
+        button.backgroundColor = .point
+        button.addTarget(self, action: #selector(doneButtonDidTap(_:)), for: .touchUpInside)
         return button
     }()
     
@@ -69,6 +72,7 @@ class EditNicknameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setData()
         setBackgroundColor()
         setLayout()
         hiddenNavigationBar()
@@ -91,11 +95,20 @@ class EditNicknameViewController: UIViewController {
     @objc func backButtonDidTap(_ sender: UIButton) {
         self.navigationController?.popViewController(animated: true)
     }
+    
+    @objc func doneButtonDidTap(_ sender: UIButton) {
+        changeMyName(userName: nicknameTextField.text ?? nickName)
+        changeRootViewController(HomeViewController())
+    }
 
     // MARK: - Custom Method
     
     private func setTextFieldDelegate() {
         nicknameTextField.delegate = self
+    }
+    
+    private func setData() {
+        nicknameTextField.text = nickName
     }
 
     // MARK: - Layout
@@ -158,5 +171,15 @@ extension EditNicknameViewController: UITextFieldDelegate {
         
         guard self.nicknameTextField.text?.count ?? 0 < 10 else { return false }
         return true
+    }
+}
+
+
+// MARK: - Extension : Network
+
+extension EditNicknameViewController {
+    func changeMyName(userName: String) {
+        MyPageAPI.shared.changeMyNickName(userName: userName) { _ in
+        }
     }
 }

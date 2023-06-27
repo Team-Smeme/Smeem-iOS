@@ -13,8 +13,7 @@ final class MyPageViewController: UIViewController {
     
     // MARK: - Property
     
-    private var nickName: String = "주멩이"
-    private var isPushAlarm = true
+    private var userInfo = MyPageInfo(username: "", target: "", way: "", detail: "", targetLang: "", hasPushAlarm: true, trainingTime: TrainingTime(day: "", hour: 0, minute: 0), badges: [])  
     
     // MARK: - UI Property
     
@@ -52,13 +51,12 @@ final class MyPageViewController: UIViewController {
     
     private lazy var nickNameLabel: UILabel = {
         let nickNameLabel = UILabel()
-        nickNameLabel.text = nickName
         nickNameLabel.font = .h3
         nickNameLabel.textColor = .smeemBlack
         return nickNameLabel
     }()
     
-    private let editButton: UIButton = {
+    private lazy var editButton: UIButton = {
         let editButton = UIButton()
         editButton.setImage(Constant.Image.icnPencil, for: .normal)
         editButton.addTarget(self, action: #selector(editButtonDidTap(_:)), for: .touchUpInside)
@@ -181,6 +179,7 @@ final class MyPageViewController: UIViewController {
         super.viewDidLoad()
     
         setLayout()
+        myPageInfoAPI()
     }
     
     // MARK: - @objc
@@ -195,16 +194,22 @@ final class MyPageViewController: UIViewController {
     
     @objc func editButtonDidTap(_ sender: UIButton) {
         let editVC = EditNicknameViewController()
+        editVC.nickName = userInfo.username
         self.navigationController?.pushViewController(editVC, animated: true)
     }
     
     @objc func pushButtonDidTap(_ sender: UIButton) {
-        isPushAlarm.toggle()
-        let image = isPushAlarm ? Constant.Image.btnToggleActive : Constant.Image.btnToggleInActive
+        userInfo.hasPushAlarm.toggle() // 추후 서버 연결
+        let image = userInfo.hasPushAlarm ? Constant.Image.btnToggleActive : Constant.Image.btnToggleInActive
         alarmPushToggleButton.setImage(image, for: .normal)
     }
     
     // MARK: - Custom Method
+    
+    private func setData() {
+        nickNameLabel.text = userInfo.username
+        //badgeImage.updateServerImage(userInfo.i
+    }
     
     // MARK: - Layout
     
@@ -348,6 +353,18 @@ final class MyPageViewController: UIViewController {
             $0.leading.trailing.equalToSuperview().inset(23)
             $0.height.equalTo(convertByHeightRatio(133))
             $0.bottom.equalToSuperview().offset(-convertByHeightRatio(80))
+        }
+    }
+}
+
+// MARK: - Extension : Network
+
+extension MyPageViewController {
+    func myPageInfoAPI() {
+        MyPageAPI.shared.myPageInfo() { response in
+            guard let myPageInfo = response?.data else { return }
+            self.userInfo = myPageInfo
+            self.setData()
         }
     }
 }
