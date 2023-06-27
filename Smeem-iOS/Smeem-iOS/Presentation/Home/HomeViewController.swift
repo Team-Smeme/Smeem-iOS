@@ -183,7 +183,7 @@ final class HomeViewController: UIViewController {
         nextVC.diaryId = homeDiaryDict[currentDate.toString("yyyy-MM-dd")]?.diaryId ?? 0
         nextVC.modalTransitionStyle = .coverVertical
         nextVC.modalPresentationStyle = .fullScreen
-        self.present(nextVC, animated: true, completion: nil)
+        present(nextVC, animated: true)
     }
     
     @objc func floatingViewDidTap(_ gesture: UITapGestureRecognizer) {
