@@ -40,5 +40,10 @@ extension Constant {
         static let btnAppleLogin = UIImage(named: "btnAppleLogin")
         static let btnKakaoLogin = UIImage(named: "btnKakaoLogin")
         static let btnNonMember = UIImage(named: "btnNonMember")
+        static let btnTranslateActive = UIImage(named: "btnTranslateActive")
+        static let btnTranslateInactive = UIImage(named: "btnTranslateInactive")
+        static let btnRandomSubjectActive = UIImage(named: "btnRandomSubjectActive")
+        static let btnRandomSubjectInactive = UIImage(named: "btnRandomSubjectInactive")
+        static let btnRandomSubjectEnabled = UIImage(named: "btnRandomSubjectEnabled")
     }
 }
