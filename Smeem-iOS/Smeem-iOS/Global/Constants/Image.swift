@@ -26,6 +26,7 @@ extension Constant {
         static let icnCheckActive = UIImage(named: "icnCheckActive")
         static let icnMyPage = UIImage(named: "icnMyPage")
         static let icnRightArrow = UIImage(named: "icnRightArrow")
+        static let icnPencil = UIImage(named: "icnPencil")
         static let noDiary = UIImage(named: "noDiary")
         static let monthday = UIImage(named: "monthday")
         static let monthToday = UIImage(named: "monthToday")
