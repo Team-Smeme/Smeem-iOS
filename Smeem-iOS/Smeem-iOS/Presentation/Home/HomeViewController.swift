@@ -191,7 +191,10 @@ final class HomeViewController: UIViewController {
     }
     
     @objc func myPageButtonDidTap(_ sender: UIButton) {
-        // 뷰 이동 - 마이페이지
+        let nextVC = MyPageViewController()
+        nextVC.modalTransitionStyle = .coverVertical
+        nextVC.modalPresentationStyle = .fullScreen
+        present(nextVC, animated: true)
     }
     
     @objc func xButtonDidTap(_ sender: UIButton) {

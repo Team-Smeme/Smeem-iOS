@@ -90,6 +90,7 @@
 		6F294A482A27818200856CC8 /* HomeViewFloatingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F294A472A27818200856CC8 /* HomeViewFloatingViewController.swift */; };
 		6F31802F2A24D1DB00089870 /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F31802E2A24D1DB00089870 /* CalendarCell.swift */; };
 		6F62668C2A04EA3B000365CD /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F62668B2A04EA3B000365CD /* HomeViewController.swift */; };
+		6FBC856B2A4B1F9200A43F98 /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FBC856A2A4B1F9200A43F98 /* MyPageViewController.swift */; };
 		6FE1298A2A4982DA005536C4 /* HomeAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE129892A4982DA005536C4 /* HomeAPI.swift */; };
 		6FE1298C2A498338005536C4 /* HomeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE1298B2A498338005536C4 /* HomeService.swift */; };
 		6FE1298E2A4986CA005536C4 /* HomeDiaryResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE1298D2A4986CA005536C4 /* HomeDiaryResponse.swift */; };
@@ -176,6 +177,7 @@
 		6F294A472A27818200856CC8 /* HomeViewFloatingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewFloatingViewController.swift; sourceTree = "<group>"; };
 		6F31802E2A24D1DB00089870 /* CalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCell.swift; sourceTree = "<group>"; };
 		6F62668B2A04EA3B000365CD /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		6FBC856A2A4B1F9200A43F98 /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
 		6FE129892A4982DA005536C4 /* HomeAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeAPI.swift; sourceTree = "<group>"; };
 		6FE1298B2A498338005536C4 /* HomeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeService.swift; sourceTree = "<group>"; };
 		6FE1298D2A4986CA005536C4 /* HomeDiaryResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDiaryResponse.swift; sourceTree = "<group>"; };
@@ -591,6 +593,7 @@
 			isa = PBXGroup;
 			children = (
 				A3D7ECB62A26566A009857D6 /* EditNicknameViewController.swift */,
+				6FBC856A2A4B1F9200A43F98 /* MyPageViewController.swift */,
 			);
 			path = MyPage;
 			sourceTree = "<group>";
@@ -698,6 +701,7 @@
 				3761116C2A278D0E0095EC5A /* String+.swift in Sources */,
 				4A3774842A42E6EA00357DD1 /* SharedConstant.swift in Sources */,
 				6F294A402A26178300856CC8 /* HowOnboardingViewController.swift in Sources */,
+				6FBC856B2A4B1F9200A43F98 /* MyPageViewController.swift in Sources */,
 				6F294A482A27818200856CC8 /* HomeViewFloatingViewController.swift in Sources */,
 				37A574C529FF6EA800312453 /* FontLiterals.swift in Sources */,
 				37DCA65D2A475B5100FF8F90 /* RandomSubjectResponse.swift in Sources */,
