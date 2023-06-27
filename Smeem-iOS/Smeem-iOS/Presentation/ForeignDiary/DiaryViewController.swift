@@ -380,14 +380,14 @@ extension DiaryViewController: UITextViewDelegate {
 
 extension DiaryStrategy {
     func englishValidation(with text: String, in viewController: DiaryViewController) -> Bool {
-        return viewController.inputTextView.text.getArrayAfterRegex(regex: "[a-zA-z]").count > 9
+        return viewController.inputTextView.text.getArrayAfterRegex(regex: "[a-zA-z]").count > 1
     }
     
 }
 
 extension StepOneKoreanDiaryStrategy {
     func koreanValidation(with text: String, in viewController: DiaryViewController) -> Bool {
-        return viewController.inputTextView.text.getArrayAfterRegex(regex: "[가-핳ㄱ-ㅎㅏ-ㅣ]").count > 9
+        return viewController.inputTextView.text.getArrayAfterRegex(regex: "[가-핳ㄱ-ㅎㅏ-ㅣ]").count > 1
     }
 }
 
