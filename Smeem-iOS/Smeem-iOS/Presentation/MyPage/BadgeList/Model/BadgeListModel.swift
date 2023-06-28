@@ -11,13 +11,19 @@ import Foundation
 
 // MARK: - DataClass
 
-struct BadgeResponse: Codable {
-    let badges: [BadgesData]
+struct BadgeListResponse: Codable {
+    let badges: [BadgesListData]
 }
 
 // MARK: - Badge
-struct BadgesData: Codable {
+
+struct BadgesListData: Codable {
     let id: Int
     let name, type: String
     let imageURL: String
+    
+    enum CodingKeys: String, CodingKey {
+        case id, name, type
+        case imageURL = "imageUrl"
+    }
 }
