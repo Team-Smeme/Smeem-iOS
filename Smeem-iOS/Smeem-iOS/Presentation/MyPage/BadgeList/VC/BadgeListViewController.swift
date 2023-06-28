@@ -14,20 +14,8 @@ class BadgeListViewController: UIViewController {
     
     // MARK: - Property
     
-    private var badgeHeaderData = [(name: String(), imageURL: String())] {
-        didSet {
-            if !badgeHeaderData.isEmpty  {
-                setHeaderViewData()
-            }
-        }
-    }
-    
-    private var badgeListData = Array(repeating: Array(repeating: (name: String(), imageURL: String()), count: 0), count: 3) {
-        didSet {
-            setBadgeData()
-        }
-    }
-    
+    private var badgeHeaderData = [(name: String(), imageURL: String())]
+    private var badgeListData = Array(repeating: Array(repeating: (name: String(), imageURL: String()), count: 0), count: 3)
     private var totalBadgeData = Array(repeating: Array(repeating: (name: String(), imageURL: String()), count: 4), count: 3)
     private var dummayBadgeData = DummyModel().dummyBadgeData()
 
@@ -40,6 +28,7 @@ class BadgeListViewController: UIViewController {
         button.setImage(Constant.Image.icnCancelBlack, for: .normal)
         return button
     }()
+    
     // TODO: addTarget 넣기
     
     private lazy var badgeListTableView: UITableView = {
@@ -247,10 +236,7 @@ extension BadgeListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: BadgeListTableViewCell.identifier, for: indexPath) as? BadgeListTableViewCell else { return UITableViewCell() }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-            cell.badgeData = self.totalBadgeData[indexPath.section]
-        }
+        cell.badgeData = self.totalBadgeData[indexPath.section]
         return cell
     }
     
@@ -278,8 +264,12 @@ extension BadgeListViewController {
                     self.badgeListData[2].append((name: badge.name, imageURL: badge.imageURL))
                 }
             }
+            
+            DispatchQueue.main.async {
+                self.setHeaderViewData()
+                self.setBadgeData()
+                self.badgeListTableView.reloadData()
+            }
         }
     }
 }
-
-// MARK: - UICollectionViewDataSource

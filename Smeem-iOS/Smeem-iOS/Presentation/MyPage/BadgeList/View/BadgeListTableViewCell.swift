@@ -13,7 +13,11 @@ final class BadgeListTableViewCell: UITableViewCell {
     
     static let identifier = "BadgeListTableViewCell"
     
-    var badgeData = Array(repeating: (name: String(), imageURL: String()), count: 0)
+    var badgeData = Array(repeating: (name: String(), imageURL: String()), count: 0) {
+        didSet {
+            detailBadgeCollectionView.reloadData()
+        }
+    }
     
     // MARK: - UI Property
     
@@ -75,10 +79,7 @@ extension BadgeListTableViewCell: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailBadgeCollectionViewCell.identifier, for: indexPath) as? DetailBadgeCollectionViewCell else { return UICollectionViewCell() }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
             cell.setdummyData(dummy: (self.badgeData[indexPath.row].name, self.badgeData[indexPath.row].imageURL))
-        }
         return cell
     }
 }

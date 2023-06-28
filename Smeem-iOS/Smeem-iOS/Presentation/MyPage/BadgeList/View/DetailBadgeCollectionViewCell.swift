@@ -15,10 +15,7 @@ final class DetailBadgeCollectionViewCell: UICollectionViewCell {
     
     // MARK: - UI Property
     
-    private let badgeImage: UIImageView = {
-        let imageView = UIImageView()
-        return imageView
-    }()
+    private let badgeImage = UIImageView()
     
     private let badgeNameLabel: UILabel = {
         let label = UILabel()
