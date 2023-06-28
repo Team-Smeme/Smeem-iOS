@@ -15,16 +15,11 @@ final class DetailBadgeCollectionViewCell: UICollectionViewCell {
     
     // MARK: - UI Property
     
-    private let badgeImage: UIImageView = {
-        let imageView = UIImageView()
-        imageView.backgroundColor = .point
-        return imageView
-    }()
+    private let badgeImage = UIImageView()
     
     private let badgeNameLabel: UILabel = {
         let label = UILabel()
         label.font = .c3
-        label.backgroundColor = .smeemBlack
         label.textColor = .smeemBlack
         return label
     }()
@@ -33,8 +28,6 @@ final class DetailBadgeCollectionViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        backgroundColor = .brown
         
         setLayout()
     }
@@ -45,6 +38,17 @@ final class DetailBadgeCollectionViewCell: UICollectionViewCell {
     
     // MARK: - @objc
     // MARK: - Custom Method
+    
+    func setdummyData(dummy: (name: String, image: String)) {
+        if dummy.image.hasPrefix("https") {
+            let url = URL(string: dummy.image)
+            badgeImage.kf.setImage(with: url)
+            badgeNameLabel.text = dummy.name
+        } else {
+            badgeImage.image = UIImage(named: dummy.image)
+            badgeNameLabel.text = dummy.name
+        }
+    }
     // MARK: - Layout
     
     private func setLayout() {
@@ -56,7 +60,7 @@ final class DetailBadgeCollectionViewCell: UICollectionViewCell {
         }
         
         badgeNameLabel.snp.makeConstraints {
-            $0.top.equalTo(badgeImage.snp.bottom).offset(2)
+            $0.top.equalTo(badgeImage.snp.bottom).offset(convertByHeightRatio(8))
             $0.centerX.equalToSuperview()
         }
     }

@@ -42,5 +42,22 @@ extension Constant {
         static let btnNonMember = UIImage(named: "btnNonMember")
         static let btnToggleActive = UIImage(named: "btnToggleActive")
         static let btnToggleInActive = UIImage(named: "btnToggleInActive")
+        
+        static let eventBadgeWelcome = UIImage(named: "eventBadgeWelcome")
+        
+        static let diaryCountingBadge1st = "diaryCountingBadge1st"
+        static let diaryCountingBadge10th = "diaryCountingBadge10th"
+        static let diaryCountingBadge30th = "diaryCountingBadge30th"
+        static let diaryCountingBadge50th = "diaryCountingBadge50th"
+        
+        static let diaryComboBadge3days = "diaryComboBadge3days"
+        static let diaryComboBadge7days = "diaryComboBadge7days"
+        static let diaryComboBadge15days = "diaryComboBadge15days"
+        static let diaryComboBadge30days = "diaryComboBadge30days"
+        
+        static let explorationBadge1st = "explorationBadge1st"
+        static let explorationBadge3rd = "explorationBadge3rd"
+        static let explorationBadge5th = "explorationBadge5th"
+        static let explorationBadgeGoodLuck = "explorationBadgeGoodLuck"
     }
 }
