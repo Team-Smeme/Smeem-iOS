@@ -26,6 +26,7 @@ class BadgeListViewController: UIViewController {
     private let cancelButton: UIButton = {
         let button = UIButton()
         button.setImage(Constant.Image.icnCancelBlack, for: .normal)
+        button.addTarget(self, action: #selector(cancelButtonDidtap), for: .touchUpInside)
         return button
     }()
     
@@ -78,6 +79,10 @@ class BadgeListViewController: UIViewController {
 
     
     // MARK: - @objc
+    
+    @objc func cancelButtonDidtap() {
+        self.navigationController?.popViewController(animated: true)
+    }
     
     // MARK: - Custom Method
     
