@@ -170,7 +170,7 @@ class DiaryViewController: UIViewController {
         randomSubjectView.setData(contentText: topicContent)
     }
     
-    @objc func leftNaviButtonDidTap() {
+    @objc func leftNavigationButtonDidTap() {
         self.navigationController?.popViewController(animated: true)
     }
     
