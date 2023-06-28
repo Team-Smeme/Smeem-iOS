@@ -17,14 +17,12 @@ final class DetailBadgeCollectionViewCell: UICollectionViewCell {
     
     private let badgeImage: UIImageView = {
         let imageView = UIImageView()
-        imageView.backgroundColor = .point
         return imageView
     }()
     
     private let badgeNameLabel: UILabel = {
         let label = UILabel()
         label.font = .c3
-        label.backgroundColor = .smeemBlack
         label.textColor = .smeemBlack
         return label
     }()
@@ -33,8 +31,6 @@ final class DetailBadgeCollectionViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        backgroundColor = .brown
         
         setLayout()
     }
@@ -45,6 +41,11 @@ final class DetailBadgeCollectionViewCell: UICollectionViewCell {
     
     // MARK: - @objc
     // MARK: - Custom Method
+    
+    func setdummyData(dummy: (name: String, image: String)) {
+        badgeImage.image = UIImage(named: dummy.image)
+        badgeNameLabel.text = dummy.name
+    }
     // MARK: - Layout
     
     private func setLayout() {

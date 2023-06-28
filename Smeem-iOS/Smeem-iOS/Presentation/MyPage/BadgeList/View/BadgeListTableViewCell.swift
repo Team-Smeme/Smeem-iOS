@@ -14,13 +14,13 @@ final class BadgeListTableViewCell: UITableViewCell {
     static let identifier = "BadgeListTableViewCell"
     
     var badgeData = Array(repeating: (name: String(), imageURL: String()), count: 0)
+    var dummyData = Array(repeating: (name: String(), imageURL: String()), count: 0)
     
     // MARK: - UI Property
     
     private lazy var detailBadgeCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.backgroundColor = .blue
         collectionView.showsVerticalScrollIndicator = false
         return collectionView
     }()
@@ -75,6 +75,7 @@ extension BadgeListTableViewCell: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailBadgeCollectionViewCell.identifier, for: indexPath) as? DetailBadgeCollectionViewCell else { return UICollectionViewCell() }
+        cell.setdummyData(dummy: (dummyData[indexPath.row].name, dummyData[indexPath.row].imageURL))
         return cell
     }
 }

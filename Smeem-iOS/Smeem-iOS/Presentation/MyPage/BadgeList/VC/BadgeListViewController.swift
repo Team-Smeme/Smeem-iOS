@@ -14,13 +14,16 @@ class BadgeListViewController: UIViewController {
     
     // MARK: - Property
     
-    private var badgeHeaderData = (name: String(), imageURL: String()) {
+    private var badgeHeaderData = [(name: String(), imageURL: String())] {
         didSet {
-            setHeaderViewData()
+            if !badgeHeaderData.isEmpty  {
+                setHeaderViewData()
+            }
         }
     }
     
     private var badgeListData = Array(repeating: Array(repeating: (name: String(), imageURL: String()), count: 0), count: 3)
+    private let dummyData = DummyModel().dummyBadgeData()
 
     // MARK: - UI Property
     
@@ -51,7 +54,11 @@ class BadgeListViewController: UIViewController {
         return label
     }()
     
-    private let welcomeImage = UIImageView()
+    private let welcomeImage: UIImageView = {
+        let image = UIImageView()
+        image.image = Constant.Image.eventBadgeWelcome
+        return image
+    }()
     
     private let detailWelcomeLabel: UILabel = {
         let label = UILabel()
@@ -71,6 +78,9 @@ class BadgeListViewController: UIViewController {
         setDelegate()
         setRegister()
         badgeListGetAPI()
+        
+        print(dummyData[0])
+        print(badgeListData[0])
     }
 
     
@@ -89,9 +99,9 @@ class BadgeListViewController: UIViewController {
     }
     
     private func setHeaderViewData() {
-        let url = URL(string: badgeHeaderData.imageURL) ?? nil
+        let url = URL(string: badgeHeaderData[0].imageURL) ?? nil
         welcomeImage.kf.setImage(with: url)
-        detailWelcomeLabel.text = badgeHeaderData.name
+        detailWelcomeLabel.text = badgeHeaderData[0].name
     }
 
     
@@ -184,7 +194,8 @@ extension BadgeListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: BadgeListTableViewCell.identifier, for: indexPath) as? BadgeListTableViewCell else { return UITableViewCell() }
-        print("몇개의 section이 떠요?", indexPath.section)
+        // 더미 넣기
+        cell.dummyData = dummyData[indexPath.section]
         cell.badgeData = badgeListData[indexPath.section]
         return cell
     }
@@ -205,7 +216,7 @@ extension BadgeListViewController {
             // 섹션에 따라 배열 데이터 담는 로직
             for badge in badges {
                 if badge.type == "EVENT" {
-                    self.badgeHeaderData = (badge.name, badge.imageURL)
+                    self.badgeHeaderData = [(badge.name, badge.imageURL)]
                 } else if badge.type == "COUNTING" {
                     self.badgeListData[0].append((name: badge.name, imageURL: badge.imageURL))
                 } else if badge.type == "COMBO" {
