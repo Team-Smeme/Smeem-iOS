@@ -22,8 +22,14 @@ class BadgeListViewController: UIViewController {
         }
     }
     
-    private var badgeListData = Array(repeating: Array(repeating: (name: String(), imageURL: String()), count: 0), count: 3)
-    private let dummyData = DummyModel().dummyBadgeData()
+    private var badgeListData = Array(repeating: Array(repeating: (name: String(), imageURL: String()), count: 0), count: 3) {
+        didSet {
+            setBadgeData()
+        }
+    }
+    
+    private var totalBadgeData = Array(repeating: Array(repeating: (name: String(), imageURL: String()), count: 4), count: 3)
+    private var dummayBadgeData = DummyModel().dummyBadgeData()
 
     // MARK: - UI Property
     
@@ -78,9 +84,6 @@ class BadgeListViewController: UIViewController {
         setDelegate()
         setRegister()
         badgeListGetAPI()
-        
-        print(dummyData[0])
-        print(badgeListData[0])
     }
 
     
@@ -102,6 +105,55 @@ class BadgeListViewController: UIViewController {
         let url = URL(string: badgeHeaderData[0].imageURL) ?? nil
         welcomeImage.kf.setImage(with: url)
         detailWelcomeLabel.text = badgeHeaderData[0].name
+    }
+    
+    // 획득하지 않은 더미 배지와 획득한 서버 데이터 배지를 합쳐 주는 함수
+    private func setBadgeData() {
+        if !badgeListData[0].isEmpty {
+            var globalIndex = 0
+            for (index, (name, image)) in badgeListData[0].enumerated() {
+                globalIndex = index
+                totalBadgeData[0][index] = (name, image)
+            }
+            
+            for i in globalIndex+1..<4 {
+                totalBadgeData[0][i] = dummayBadgeData[0][i]
+            }
+        } else {
+            for i in 0..<4 {
+                totalBadgeData[0][i] = dummayBadgeData[0][i]
+            }
+        }
+
+        if !badgeListData[1].isEmpty {
+            var globalIndex = 0
+            for (index, (name, image)) in badgeListData[1].enumerated() {
+                globalIndex = index
+                totalBadgeData[1][index] = (name, image)
+            }
+            for i in globalIndex+1..<4 {
+                totalBadgeData[1][i] = dummayBadgeData[1][i]
+            }
+        } else {
+            for i in 0..<4 {
+                totalBadgeData[1][i] = dummayBadgeData[1][i]
+            }
+        }
+
+        if !badgeListData[2].isEmpty {
+            var globalIndex = 0
+            for (index, (name, image)) in badgeListData[2].enumerated() {
+                globalIndex = index
+                totalBadgeData[2][index] = (name, image)
+            }
+            for i in globalIndex+1..<4 {
+                totalBadgeData[2][i] = dummayBadgeData[2][i]
+            }
+        } else {
+            for i in 0..<4 {
+                totalBadgeData[2][i] = dummayBadgeData[2][i]
+            }
+        }
     }
 
     
@@ -194,9 +246,10 @@ extension BadgeListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: BadgeListTableViewCell.identifier, for: indexPath) as? BadgeListTableViewCell else { return UITableViewCell() }
-        // 더미 넣기
-        cell.dummyData = dummyData[indexPath.section]
-        cell.badgeData = badgeListData[indexPath.section]
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            cell.badgeData = self.totalBadgeData[indexPath.section]
+        }
         return cell
     }
     
@@ -210,7 +263,6 @@ extension BadgeListViewController: UITableViewDataSource {
 extension BadgeListViewController {
     private func badgeListGetAPI() {
         MyPageAPI.shared.badgeListAPI() { response in
-            print("여기서사라짐?")
             guard let badges = response?.data?.badges else { return }
             
             // 섹션에 따라 배열 데이터 담는 로직

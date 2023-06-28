@@ -14,7 +14,6 @@ final class BadgeListTableViewCell: UITableViewCell {
     static let identifier = "BadgeListTableViewCell"
     
     var badgeData = Array(repeating: (name: String(), imageURL: String()), count: 0)
-    var dummyData = Array(repeating: (name: String(), imageURL: String()), count: 0)
     
     // MARK: - UI Property
     
@@ -50,6 +49,14 @@ final class BadgeListTableViewCell: UITableViewCell {
     private func setRegister() {
         detailBadgeCollectionView.register(DetailBadgeCollectionViewCell.self, forCellWithReuseIdentifier: DetailBadgeCollectionViewCell.identifier)
     }
+        
+        
+//        for (index, (name, imageURL)) in badgeData.enumerated() {
+//            let url = URL(string: badgeData[index].imageURL) ?? nil
+//            welcomeImage.kf.setImage(with: url)
+//            detailWelcomeLabel.text = badgeData[index].name
+//        }
+//    }
     
     // MARK: - Layout
     
@@ -75,7 +82,10 @@ extension BadgeListTableViewCell: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailBadgeCollectionViewCell.identifier, for: indexPath) as? DetailBadgeCollectionViewCell else { return UICollectionViewCell() }
-        cell.setdummyData(dummy: (dummyData[indexPath.row].name, dummyData[indexPath.row].imageURL))
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            cell.setdummyData(dummy: (self.badgeData[indexPath.row].name, self.badgeData[indexPath.row].imageURL))
+        }
         return cell
     }
 }

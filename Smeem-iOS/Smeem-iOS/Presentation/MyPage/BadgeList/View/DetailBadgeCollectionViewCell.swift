@@ -43,8 +43,14 @@ final class DetailBadgeCollectionViewCell: UICollectionViewCell {
     // MARK: - Custom Method
     
     func setdummyData(dummy: (name: String, image: String)) {
-        badgeImage.image = UIImage(named: dummy.image)
-        badgeNameLabel.text = dummy.name
+        if dummy.image.hasPrefix("https") {
+            let url = URL(string: dummy.image)
+            badgeImage.kf.setImage(with: url)
+            badgeNameLabel.text = dummy.name
+        } else {
+            badgeImage.image = UIImage(named: dummy.image)
+            badgeNameLabel.text = dummy.name
+        }
     }
     // MARK: - Layout
     
