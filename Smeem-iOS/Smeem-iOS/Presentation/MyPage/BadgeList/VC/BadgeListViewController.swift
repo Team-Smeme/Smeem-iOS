@@ -13,6 +13,14 @@ import SnapKit
 class BadgeListViewController: UIViewController {
     
     // MARK: - Property
+    
+    private var badgeHeaderData = (name: String(), imageURL: String()) {
+        didSet {
+            setHeaderViewData()
+        }
+    }
+    
+    private var badgeListData = Array(repeating: Array(repeating: (name: String(), imageURL: String()), count: 0), count: 3)
 
     // MARK: - UI Property
     
@@ -35,7 +43,6 @@ class BadgeListViewController: UIViewController {
         return tableView
     }()
     
-    
     private let welcomeLabel: UILabel = {
         let label = UILabel()
         label.text = "웰컴 배지"
@@ -44,15 +51,10 @@ class BadgeListViewController: UIViewController {
         return label
     }()
     
-    private let welcomeImage: UIImageView = {
-        let image = UIImageView()
-        image.backgroundColor = .point
-        return image
-    }()
+    private let welcomeImage = UIImageView()
     
     private let detailWelcomeLabel: UILabel = {
         let label = UILabel()
-        label.text = "웰컴 배지"
         label.font = .c3
         label.textColor = .smeemBlack
         return label
@@ -68,6 +70,7 @@ class BadgeListViewController: UIViewController {
         hiddenNavigationBar()
         setDelegate()
         setRegister()
+        badgeListGetAPI()
     }
 
     
@@ -83,6 +86,12 @@ class BadgeListViewController: UIViewController {
     private func setRegister() {
         badgeListTableView.register(BadgeListTableViewCell.self, forCellReuseIdentifier: BadgeListTableViewCell.identifier)
         badgeListTableView.register(BadgeHeaderView.self, forHeaderFooterViewReuseIdentifier: BadgeHeaderView.identifier)
+    }
+    
+    private func setHeaderViewData() {
+        let url = URL(string: badgeHeaderData.imageURL) ?? nil
+        welcomeImage.kf.setImage(with: url)
+        detailWelcomeLabel.text = badgeHeaderData.name
     }
 
     
@@ -175,6 +184,8 @@ extension BadgeListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: BadgeListTableViewCell.identifier, for: indexPath) as? BadgeListTableViewCell else { return UITableViewCell() }
+        print("몇개의 section이 떠요?", indexPath.section)
+        cell.badgeData = badgeListData[indexPath.section]
         return cell
     }
     
@@ -183,31 +194,28 @@ extension BadgeListViewController: UITableViewDataSource {
     }
 }
 
-extension BadgeListViewController: UICollectionViewDelegateFlowLayout {
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-//        return CGSize(width: convertByWidthRatio(375), height: convertByHeightRatio(30))
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-//        guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: BadgeHeaderView.identifier, for: indexPath) as? BadgeHeaderView else { return UICollectionReusableView() }
-//        switch indexPath.section {
-//        case 0:
-//            headerView.labelType = .welcome
-//        case 1:
-//            headerView.labelType = .diaryCount
-//        case 2:
-//            headerView.labelType = .dailyDiary
-//        case 3:
-//            headerView.labelType = .otherBadge
-//        default:
-//            break
-//        }
-//        return headerView
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-//        return UIEdgeInsets(top: 0, left: 0, bottom: 36, right: 0)
-//    }
+// MARK: - Network
+
+extension BadgeListViewController {
+    private func badgeListGetAPI() {
+        MyPageAPI.shared.badgeListAPI() { response in
+            print("여기서사라짐?")
+            guard let badges = response?.data?.badges else { return }
+            
+            // 섹션에 따라 배열 데이터 담는 로직
+            for badge in badges {
+                if badge.type == "EVENT" {
+                    self.badgeHeaderData = (badge.name, badge.imageURL)
+                } else if badge.type == "COUNTING" {
+                    self.badgeListData[0].append((name: badge.name, imageURL: badge.imageURL))
+                } else if badge.type == "COMBO" {
+                    self.badgeListData[1].append((name: badge.name, imageURL: badge.imageURL))
+                } else {
+                    self.badgeListData[2].append((name: badge.name, imageURL: badge.imageURL))
+                }
+            }
+        }
+    }
 }
 
 // MARK: - UICollectionViewDataSource

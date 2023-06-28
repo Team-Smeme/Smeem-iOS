@@ -13,6 +13,8 @@ final class BadgeListTableViewCell: UITableViewCell {
     
     static let identifier = "BadgeListTableViewCell"
     
+    var badgeData = Array(repeating: (name: String(), imageURL: String()), count: 0)
+    
     // MARK: - UI Property
     
     private lazy var detailBadgeCollectionView: UICollectionView = {
