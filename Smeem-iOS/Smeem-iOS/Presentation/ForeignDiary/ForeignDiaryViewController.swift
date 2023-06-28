@@ -20,8 +20,9 @@ final class ForeignDiaryViewController: DiaryViewController {
     
     override func rightNavigationButtonDidTap() {
         if rightNavigationButton.titleLabel?.textColor == .point {
-            //TODO: HomeView로 돌아가는 코드
             postDiaryAPI()
+            let HomeViewController = UINavigationController(rootViewController: HomeViewController())
+            changeRootViewControllerAndPresent(HomeViewController)
         } else {
             view.addSubview(regExToastView)
             regExToastView.snp.makeConstraints {
