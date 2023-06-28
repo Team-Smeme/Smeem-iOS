@@ -33,7 +33,7 @@ class BadgeListViewController: UIViewController {
     }()
     // TODO: addTarget 넣기
     
-    private lazy var badgeListCollectionView: UICollectionView = {
+    private lazy var badgeListTableView: UITableView = {
         let layout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
