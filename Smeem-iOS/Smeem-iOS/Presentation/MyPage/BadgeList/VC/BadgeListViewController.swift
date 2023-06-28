@@ -36,7 +36,7 @@ class BadgeListViewController: UIViewController {
         tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
         tableView.showsVerticalScrollIndicator = false
-        let welcomeHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: convertByHeightRatio(196)))
+        let welcomeHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 196))
         setHeaderViewLayout(headerView: welcomeHeaderView)
         tableView.tableHeaderView = welcomeHeaderView
         return tableView
@@ -164,12 +164,12 @@ class BadgeListViewController: UIViewController {
         
         cancelButton.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.leading.equalToSuperview().offset(10)
-            $0.height.equalTo(45)
+            $0.leading.equalToSuperview().offset(convertByHeightRatio(10))
+            $0.height.equalTo(convertByHeightRatio(45))
         }
         
         badgeListTableView.snp.makeConstraints {
-            $0.top.equalTo(headerContainerView.snp.bottom).offset(31)
+            $0.top.equalTo(headerContainerView.snp.bottom).offset(convertByHeightRatio(31))
             $0.leading.trailing.bottom.equalToSuperview()
         }
     }
@@ -177,19 +177,19 @@ class BadgeListViewController: UIViewController {
     private func setHeaderViewLayout(headerView: UIView) {
         headerView.addSubviews(welcomeLabel, welcomeImage, detailWelcomeLabel)
         welcomeLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(4)
-            $0.leading.equalToSuperview().inset(24)
+            $0.top.equalToSuperview().inset(convertByHeightRatio(4))
+            $0.leading.equalToSuperview().inset(convertByHeightRatio(24))
         }
         
         welcomeImage.snp.makeConstraints {
-            $0.top.equalTo(welcomeLabel.snp.bottom).offset(6)
-            $0.leading.equalToSuperview().inset(20)
+            $0.top.equalTo(welcomeLabel.snp.bottom).offset(convertByHeightRatio(6))
+            $0.leading.equalToSuperview().inset(convertByHeightRatio(20))
             $0.width.height.equalTo(100)
         }
         
         detailWelcomeLabel.snp.makeConstraints {
-            $0.top.equalTo(welcomeImage.snp.bottom).offset(8)
-            $0.leading.equalToSuperview().inset(44)
+            $0.top.equalTo(welcomeImage.snp.bottom).offset(convertByHeightRatio(8))
+            $0.leading.equalToSuperview().inset(convertByHeightRatio(44))
         }
     }
 }
@@ -197,14 +197,6 @@ class BadgeListViewController: UIViewController {
 // MARK: - UICollectionViewDelegate
 
 extension BadgeListViewController: UITableViewDelegate {
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        if indexPath.section == 0 {
-//            return CGSize(width: convertByWidthRatio(375), height: convertByHeightRatio(130))
-//        } else {
-//            return CGSize(width: convertByWidthRatio(375), height: convertByHeightRatio(276))
-//        }
-//    }
-//
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return convertByHeightRatio(30)
     }
@@ -241,7 +233,7 @@ extension BadgeListViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return convertByHeightRatio(306)
+        return constraintByNotch(convertByHeightRatio(296), 286)
     }
 }
 

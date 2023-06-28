@@ -69,7 +69,7 @@ final class BadgeHeaderView: UITableViewHeaderFooterView {
         addSubview(headerLabel)
         
         headerLabel.snp.makeConstraints {
-            $0.leading.equalToSuperview().inset(24)
+            $0.leading.equalToSuperview().inset(convertByHeightRatio(24))
             $0.centerY.equalToSuperview()
         }
     }
