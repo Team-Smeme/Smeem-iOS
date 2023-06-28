@@ -7,11 +7,11 @@
 
 import UIKit
 
-final class BadgeListCollectionViewCell: UICollectionViewCell {
+final class BadgeListTableViewCell: UITableViewCell {
     
     // MARK: - Property
     
-    static let identifier = "BadgeListCollectionViewCell"
+    static let identifier = "BadgeListTableViewCell"
     
     // MARK: - UI Property
     
@@ -25,9 +25,9 @@ final class BadgeListCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Life Cycle
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
         setDelegate()
         setRegister()
         setLayout()
@@ -62,11 +62,11 @@ final class BadgeListCollectionViewCell: UICollectionViewCell {
     // MARK: - UITableView Delegate
 }
 
-extension BadgeListCollectionViewCell: UICollectionViewDelegate {
+extension BadgeListTableViewCell: UICollectionViewDelegate {
 
 }
 
-extension BadgeListCollectionViewCell: UICollectionViewDataSource {
+extension BadgeListTableViewCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {        
         return 4
     }
@@ -77,7 +77,7 @@ extension BadgeListCollectionViewCell: UICollectionViewDataSource {
     }
 }
 
-extension BadgeListCollectionViewCell: UICollectionViewDelegateFlowLayout {
+extension BadgeListTableViewCell: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: convertByWidthRatio(100), height: convertByHeightRatio(128))

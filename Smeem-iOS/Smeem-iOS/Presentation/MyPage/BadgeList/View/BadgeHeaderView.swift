@@ -16,7 +16,7 @@ enum HeaderLabelType {
     case otherBadge
 }
 
-final class BadgeHeaderView: UICollectionReusableView {
+final class BadgeHeaderView: UITableViewHeaderFooterView {
     
     static let identifier = "BadgeHeaderView"
     
@@ -37,9 +37,8 @@ final class BadgeHeaderView: UICollectionReusableView {
     }()
     
     // MARK: - Life Cycle
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    override init(reuseIdentifier: String?) {
+        super.init(reuseIdentifier: reuseIdentifier)
         
         setLayout()
     }
