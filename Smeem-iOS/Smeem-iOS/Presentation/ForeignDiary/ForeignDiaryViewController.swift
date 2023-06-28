@@ -10,22 +10,28 @@ import UIKit
 final class ForeignDiaryViewController: DiaryViewController {
     
     var keyboardHeight: CGFloat = 0.0
+    var isKeyboardVisible: Bool = false
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
         handleRightNavitationButton()
     }
     
-    @objc override func keyboardWillShow(notification: NSNotification) {
+    override func keyboardWillShow(notification: NSNotification) {
+        super.keyboardWillShow(notification: notification)
         guard let userInfo = notification.userInfo,
               let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect
         else { return }
         
         keyboardHeight = keyboardFrame.height
+        isKeyboardVisible = true
     }
     
-    @objc override func keyboardWillHide(notification: NSNotification) {
+    override func keyboardWillHide(notification: NSNotification) {
+        super.keyboardWillHide(notification: notification)
         keyboardHeight = 0.0
+        isKeyboardVisible = false
     }
     
     override func rightNavigationButtonDidTap() {
@@ -43,9 +49,10 @@ final class ForeignDiaryViewController: DiaryViewController {
     
     func showToast(toastType: ToastViewType) {
         regExToastView?.removeFromSuperview()
-
         regExToastView = SmeemToastView(type: toastType)
-        regExToastView?.show(in: view, offset: 20, keyboardHeight: keyboardHeight)
+        
+        let offset = convertByHeightRatio(73)
+        regExToastView?.show(in: view, offset: CGFloat(offset), keyboardHeight: keyboardHeight)
         regExToastView?.hide(after: 1)
     }
 }
