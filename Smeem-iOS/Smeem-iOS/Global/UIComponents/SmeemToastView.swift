@@ -112,16 +112,16 @@ final class SmeemToastView: UIView {
     
     // MARK: - Custom Method
     
-    public func show(duration: TimeInterval = 0.7) {
-        UIView.animate(withDuration: 0.3, animations: {
-            self.alpha = 1
-        })
-        UIView.animate(withDuration: 0.3, delay: duration, animations: {
-            self.alpha = 0
-        }) { _ in
-            self.removeFromSuperview()
-        }
-    }
+    //    public func show(duration: TimeInterval = 0.7) {
+    //        UIView.animate(withDuration: 0.3, animations: {
+    //            self.alpha = 1
+    //        })
+    //        UIView.animate(withDuration: 0.3, delay: duration, animations: {
+    //            self.alpha = 0
+    //        }) { _ in
+    //            self.removeFromSuperview()
+    //        }
+    //    }
     
     // MARK: - Layout
     
@@ -149,10 +149,10 @@ final class SmeemToastView: UIView {
         }
         
         let determinedLineHeight = lineHeight(for: self.type)
-
+        
         bodyLabel.text = bodyText
         bodyLabel.setTextWithLineHeight(lineHeight: determinedLineHeight)
-
+        
         clipsToBounds = true
         layer.cornerRadius = 6
     }
@@ -197,3 +197,40 @@ final class SmeemToastView: UIView {
         }
     }
 }
+
+extension SmeemToastView {
+    func show(in view: UIView, offset: CGFloat, keyboardHeight: CGFloat, animated: Bool = true) {
+        view.addSubview(self)
+        
+        snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.bottom.equalTo(view.snp.bottom).offset(-offset - keyboardHeight)
+        }
+        
+        if animated {
+            alpha = 0
+            UIView.animate(withDuration: 0.3) {
+                self.alpha = 1
+            }
+        } else {
+            alpha = 1
+        }
+    }
+    
+    func hide(after delay: TimeInterval, animated: Bool = true) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay) { [weak self] in
+            guard let self = self else { return }
+            
+            if animated {
+                UIView.animate(withDuration: 0.3, animations: {
+                    self.alpha = 0
+                }, completion: { _ in
+                    self.removeFromSuperview()
+                })
+            } else {
+                self.removeFromSuperview()
+            }
+        }
+    }
+}
+

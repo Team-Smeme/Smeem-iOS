@@ -128,7 +128,7 @@ class DiaryViewController: UIViewController {
         return button
     }()
     
-    let regExToastView = SmeemToastView(type: .defaultToast(bodyType: .regEx))
+    var regExToastView: SmeemToastView?
     
     // MARK: - Life Cycle
     
@@ -154,7 +154,7 @@ class DiaryViewController: UIViewController {
     
     deinit {
         randomSubjectView.removeFromSuperview()
-        regExToastView.removeFromSuperview()
+        regExToastView?.removeFromSuperview()
         NotificationCenter.default.removeObserver(self)
     }
     
