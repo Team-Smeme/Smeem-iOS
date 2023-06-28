@@ -77,7 +77,7 @@ final class MyPageViewController: UIViewController {
         return badgeLabel
     }()
     
-    private let badgeContainer: UIView = {
+    private lazy var badgeContainer: UIView = {
         let badgeContainer = UIView()
         badgeContainer.backgroundColor = .clear
         badgeContainer.layer.borderWidth = 1.5
@@ -86,9 +86,10 @@ final class MyPageViewController: UIViewController {
         return badgeContainer
     }()
     
-    private let badgeImage: UIImageView = {
+    private lazy var badgeImage: UIImageView = {
         let image = UIImageView()
-        image.backgroundColor = .gray600
+        image.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(badgeImageDidTap)))
+        image.isUserInteractionEnabled = true
         return image
     }()
     
@@ -102,7 +103,6 @@ final class MyPageViewController: UIViewController {
     
     private let badgeSummaryLabel: UILabel = {
         let badgeSummaryLabel = UILabel()
-        badgeSummaryLabel.text = "축하해요! 웰컴 배지를 획득했어요!"
         badgeSummaryLabel.font = .b4
         badgeSummaryLabel.textColor = .gray600
         return badgeSummaryLabel
@@ -204,11 +204,19 @@ final class MyPageViewController: UIViewController {
         alarmPushToggleButton.setImage(image, for: .normal)
     }
     
+    @objc func badgeImageDidTap() {
+        let badgeListVC = BadgeListViewController()
+        self.navigationController?.pushViewController(badgeListVC, animated: true)
+    }
+    
     // MARK: - Custom Method
     
     private func setData() {
         nickNameLabel.text = userInfo.username
-        //badgeImage.updateServerImage(userInfo.i
+        let url = URL(string: userInfo.badges[0].imageURL)
+        badgeImage.kf.setImage(with: url)
+        badgeNameLabel.text = (userInfo.badges[0].name)
+        badgeSummaryLabel.text = "축하해요! \(userInfo.badges[0].name)를 획득했어요!"
     }
     
     // MARK: - Layout
