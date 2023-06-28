@@ -45,8 +45,9 @@ class BadgeListViewController: UIViewController {
     private lazy var badgeListTableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.backgroundColor = .clear
+        tableView.separatorStyle = .none
         tableView.showsVerticalScrollIndicator = false
-        let welcomeHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 196))
+        let welcomeHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: convertByHeightRatio(196)))
         setHeaderViewLayout(headerView: welcomeHeaderView)
         tableView.tableHeaderView = welcomeHeaderView
         return tableView
@@ -192,7 +193,7 @@ class BadgeListViewController: UIViewController {
         }
         
         welcomeImage.snp.makeConstraints {
-            $0.top.equalTo(welcomeLabel.snp.bottom).offset(2)
+            $0.top.equalTo(welcomeLabel.snp.bottom).offset(6)
             $0.leading.equalToSuperview().inset(20)
             $0.width.height.equalTo(100)
         }
@@ -216,7 +217,7 @@ extension BadgeListViewController: UITableViewDelegate {
 //    }
 //
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 30
+        return convertByHeightRatio(30)
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -247,14 +248,14 @@ extension BadgeListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: BadgeListTableViewCell.identifier, for: indexPath) as? BadgeListTableViewCell else { return UITableViewCell() }
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
             cell.badgeData = self.totalBadgeData[indexPath.section]
         }
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return convertByHeightRatio(276)
+        return convertByHeightRatio(306)
     }
 }
 

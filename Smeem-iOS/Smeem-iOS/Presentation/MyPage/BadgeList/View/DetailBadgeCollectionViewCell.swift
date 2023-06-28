@@ -63,7 +63,7 @@ final class DetailBadgeCollectionViewCell: UICollectionViewCell {
         }
         
         badgeNameLabel.snp.makeConstraints {
-            $0.top.equalTo(badgeImage.snp.bottom).offset(2)
+            $0.top.equalTo(badgeImage.snp.bottom).offset(8)
             $0.centerX.equalToSuperview()
         }
     }
