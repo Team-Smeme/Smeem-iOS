@@ -170,8 +170,8 @@ class DiaryViewController: UIViewController {
         randomSubjectView.setData(contentText: topicContent)
     }
     
-    @objc func leftNavigationButtonDidTap() {
-        self.dismiss(animated: true, completion: nil)
+    @objc func leftNaviButtonDidTap() {
+        self.navigationController?.popViewController(animated: true)
     }
     
     @objc func rightNavigationButtonDidTap() {

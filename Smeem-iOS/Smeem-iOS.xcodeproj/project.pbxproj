@@ -48,7 +48,6 @@
 		4A0EA4552A014027006CCE52 /* GeneralResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EA4542A014027006CCE52 /* GeneralResponse.swift */; };
 		4A0EA4572A01403E006CCE52 /* MoyaLoggingPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EA4562A01403E006CCE52 /* MoyaLoggingPlugin.swift */; };
 		4A0EA4592A014103006CCE52 /* URLConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EA4582A014103006CCE52 /* URLConstant.swift */; };
-		4A0EA4622A01413D006CCE52 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EA4612A01413D006CCE52 /* DataModel.swift */; };
 		4A0EA4642A014710006CCE52 /* SmeemButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EA4632A014710006CCE52 /* SmeemButton.swift */; };
 		4A3373F52A45BF6600EFE6C4 /* OnboardingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3373F42A45BF6600EFE6C4 /* OnboardingService.swift */; };
 		4A3373F82A461ABC00EFE6C4 /* OnboardingAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3373F72A461ABC00EFE6C4 /* OnboardingAPI.swift */; };
@@ -95,6 +94,15 @@
 		6F294A482A27818200856CC8 /* HomeViewFloatingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F294A472A27818200856CC8 /* HomeViewFloatingViewController.swift */; };
 		6F31802F2A24D1DB00089870 /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F31802E2A24D1DB00089870 /* CalendarCell.swift */; };
 		6F62668C2A04EA3B000365CD /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F62668B2A04EA3B000365CD /* HomeViewController.swift */; };
+		6FBC856B2A4B1F9200A43F98 /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FBC856A2A4B1F9200A43F98 /* MyPageViewController.swift */; };
+		6FBC85702A4B5FA200A43F98 /* MyPageAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FBC856F2A4B5FA200A43F98 /* MyPageAPI.swift */; };
+		6FBC85722A4B5FAB00A43F98 /* MyPageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FBC85712A4B5FAB00A43F98 /* MyPageService.swift */; };
+		6FBC85742A4B603A00A43F98 /* MyPageInfoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FBC85732A4B603A00A43F98 /* MyPageInfoResponse.swift */; };
+		A301B0A22A30720F006BE0BA /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = A301B0A12A30720F006BE0BA /* Kingfisher */; };
+		A301B0A42A307289006BE0BA /* BadgeListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A301B0A32A307289006BE0BA /* BadgeListViewController.swift */; };
+		A345020F2A4B39B600ED91F7 /* BadgeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A345020E2A4B39B600ED91F7 /* BadgeHeaderView.swift */; };
+		A34502132A4B3EFA00ED91F7 /* BadgeListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A34502122A4B3EFA00ED91F7 /* BadgeListCollectionViewCell.swift */; };
+		A34502152A4B45E000ED91F7 /* DetailBadgeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A34502142A4B45E000ED91F7 /* DetailBadgeCollectionViewCell.swift */; };
 		6FE1298A2A4982DA005536C4 /* HomeAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE129892A4982DA005536C4 /* HomeAPI.swift */; };
 		6FE1298C2A498338005536C4 /* HomeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE1298B2A498338005536C4 /* HomeService.swift */; };
 		6FE1298E2A4986CA005536C4 /* HomeDiaryResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE1298D2A4986CA005536C4 /* HomeDiaryResponse.swift */; };
@@ -144,7 +152,6 @@
 		4A0EA4542A014027006CCE52 /* GeneralResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralResponse.swift; sourceTree = "<group>"; };
 		4A0EA4562A01403E006CCE52 /* MoyaLoggingPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoyaLoggingPlugin.swift; sourceTree = "<group>"; };
 		4A0EA4582A014103006CCE52 /* URLConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLConstant.swift; sourceTree = "<group>"; };
-		4A0EA4612A01413D006CCE52 /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 		4A0EA4632A014710006CCE52 /* SmeemButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmeemButton.swift; sourceTree = "<group>"; };
 		4A13B7582A13D37000F4FB1E /* UserNickNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNickNameViewController.swift; sourceTree = "<group>"; };
 		4A3373F42A45BF6600EFE6C4 /* OnboardingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingService.swift; sourceTree = "<group>"; };
@@ -186,6 +193,14 @@
 		6F294A472A27818200856CC8 /* HomeViewFloatingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewFloatingViewController.swift; sourceTree = "<group>"; };
 		6F31802E2A24D1DB00089870 /* CalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCell.swift; sourceTree = "<group>"; };
 		6F62668B2A04EA3B000365CD /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		6FBC856A2A4B1F9200A43F98 /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
+		6FBC856F2A4B5FA200A43F98 /* MyPageAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageAPI.swift; sourceTree = "<group>"; };
+		6FBC85712A4B5FAB00A43F98 /* MyPageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageService.swift; sourceTree = "<group>"; };
+		6FBC85732A4B603A00A43F98 /* MyPageInfoResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageInfoResponse.swift; sourceTree = "<group>"; };
+		A301B0A32A307289006BE0BA /* BadgeListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeListViewController.swift; sourceTree = "<group>"; };
+		A345020E2A4B39B600ED91F7 /* BadgeHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeHeaderView.swift; sourceTree = "<group>"; };
+		A34502122A4B3EFA00ED91F7 /* BadgeListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeListCollectionViewCell.swift; sourceTree = "<group>"; };
+		A34502142A4B45E000ED91F7 /* DetailBadgeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailBadgeCollectionViewCell.swift; sourceTree = "<group>"; };
 		6FE129892A4982DA005536C4 /* HomeAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeAPI.swift; sourceTree = "<group>"; };
 		6FE1298B2A498338005536C4 /* HomeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeService.swift; sourceTree = "<group>"; };
 		6FE1298D2A4986CA005536C4 /* HomeDiaryResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDiaryResponse.swift; sourceTree = "<group>"; };
@@ -201,6 +216,7 @@
 				4AA942D22A276AFF00A552A0 /* FirebaseMessaging in Frameworks */,
 				4AA942D72A276C7900A552A0 /* KakaoSDKCommon in Frameworks */,
 				4AA942C22A2767D000A552A0 /* FSCalendar in Frameworks */,
+				A301B0A22A30720F006BE0BA /* Kingfisher in Frameworks */,
 				4AA942CD2A276A9F00A552A0 /* Moya in Frameworks */,
 				4AA942D92A276C7900A552A0 /* KakaoSDKUser in Frameworks */,
 				4AA942D02A276AFF00A552A0 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
@@ -294,7 +310,6 @@
 			children = (
 				4A0EA4532A014018006CCE52 /* Base */,
 				4A0EA45A2A014111006CCE52 /* API */,
-				4A0EA45B2A01411C006CCE52 /* Service */,
 				4A0EA45C2A014126006CCE52 /* DataModel */,
 			);
 			path = Network;
@@ -434,23 +449,16 @@
 		4A0EA45A2A014111006CCE52 /* API */ = {
 			isa = PBXGroup;
 			children = (
+				6FBC856D2A4B5F8D00A43F98 /* MyPage */,
+				6FBC856C2A4B5F8500A43F98 /* Home */,
 				4AF58CEB2A48544700305248 /* Auth */,
 				4A3373F62A461AAC00EFE6C4 /* Onboarding */,
 				37DCA6752A488CBA00FF8F90 /* Papago */,
 				37DCA66C2A484D1000FF8F90 /* PostDiary */,
 				37DCA6632A4804F800FF8F90 /* DetailDiary */,
 				37DCA6532A4755FA00FF8F90 /* RandomSubject */,
-				6FE129892A4982DA005536C4 /* HomeAPI.swift */,
 			);
 			path = API;
-			sourceTree = "<group>";
-		};
-		4A0EA45B2A01411C006CCE52 /* Service */ = {
-			isa = PBXGroup;
-			children = (
-				6FE1298B2A498338005536C4 /* HomeService.swift */,
-			);
-			path = Service;
 			sourceTree = "<group>";
 		};
 		4A0EA45C2A014126006CCE52 /* DataModel */ = {
@@ -460,8 +468,8 @@
 				37DCA66A2A484CF900FF8F90 /* PostDiary */,
 				37DCA6612A4804E800FF8F90 /* DetailDiary */,
 				37DCA65B2A475B5100FF8F90 /* RandomSubject */,
-				4A0EA4612A01413D006CCE52 /* DataModel.swift */,
 				6FE1298D2A4986CA005536C4 /* HomeDiaryResponse.swift */,
+				6FBC85732A4B603A00A43F98 /* MyPageInfoResponse.swift */,
 			);
 			path = DataModel;
 			sourceTree = "<group>";
@@ -658,10 +666,33 @@
 			path = Home;
 			sourceTree = "<group>";
 		};
+		6FBC856C2A4B5F8500A43F98 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				6FE129892A4982DA005536C4 /* HomeAPI.swift */,
+				6FE1298B2A498338005536C4 /* HomeService.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		6FBC856D2A4B5F8D00A43F98 /* MyPage */ = {
+			isa = PBXGroup;
+			children = (
+				6FBC856F2A4B5FA200A43F98 /* MyPageAPI.swift */,
+				6FBC85712A4B5FAB00A43F98 /* MyPageService.swift */,
+			);
+			path = MyPage;
+			sourceTree = "<group>";
+		};
 		A3D7ECB82A26566F009857D6 /* MyPage */ = {
 			isa = PBXGroup;
 			children = (
 				A3D7ECB62A26566A009857D6 /* EditNicknameViewController.swift */,
+				6FBC856A2A4B1F9200A43F98 /* MyPageViewController.swift */,
+				A301B0A32A307289006BE0BA /* BadgeListViewController.swift */,
+				A345020E2A4B39B600ED91F7 /* BadgeHeaderView.swift */,
+				A34502122A4B3EFA00ED91F7 /* BadgeListCollectionViewCell.swift */,
+				A34502142A4B45E000ED91F7 /* DetailBadgeCollectionViewCell.swift */,
 			);
 			path = MyPage;
 			sourceTree = "<group>";
@@ -691,6 +722,7 @@
 				4AA942D42A276C7900A552A0 /* KakaoSDKAuth */,
 				4AA942D62A276C7900A552A0 /* KakaoSDKCommon */,
 				4AA942D82A276C7900A552A0 /* KakaoSDKUser */,
+				A301B0A12A30720F006BE0BA /* Kingfisher */,
 			);
 			productName = "Smeem-iOS";
 			productReference = 4A8FFA4C29C9E1FD00FB76C0 /* Smeem-iOS.app */;
@@ -729,6 +761,7 @@
 				4AA942CB2A276A9F00A552A0 /* XCRemoteSwiftPackageReference "Moya" */,
 				4AA942CE2A276AFF00A552A0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				4AA942D32A276C7900A552A0 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
+				A301B0A02A30720F006BE0BA /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = 4A8FFA4D29C9E1FD00FB76C0 /* Products */;
 			projectDirPath = "";
@@ -762,6 +795,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6FBC85722A4B5FAB00A43F98 /* MyPageService.swift in Sources */,
 				4A3774822A42DF4500357DD1 /* NetworkHeader.swift in Sources */,
 				37DCA6742A484D5900FF8F90 /* PostDiaryAPI.swift in Sources */,
 				373E38592A2F889500DF96F0 /* DiaryDetailRandomSubjectView.swift in Sources */,
@@ -770,6 +804,8 @@
 				3761116C2A278D0E0095EC5A /* String+.swift in Sources */,
 				4A3774842A42E6EA00357DD1 /* SharedConstant.swift in Sources */,
 				6F294A402A26178300856CC8 /* HowOnboardingViewController.swift in Sources */,
+				6FBC856B2A4B1F9200A43F98 /* MyPageViewController.swift in Sources */,
+				6FBC85742A4B603A00A43F98 /* MyPageInfoResponse.swift in Sources */,
 				6F294A482A27818200856CC8 /* HomeViewFloatingViewController.swift in Sources */,
 				37A574C529FF6EA800312453 /* FontLiterals.swift in Sources */,
 				37DCA65D2A475B5100FF8F90 /* RandomSubjectResponse.swift in Sources */,
@@ -777,23 +813,26 @@
 				6F294A462A2617D500856CC8 /* HowLearningView.swift in Sources */,
 				37A574CC29FF990E00312453 /* UIViewController+.swift in Sources */,
 				4A9E10E42A43468600295D07 /* BaseTargetType.swift in Sources */,
+				A34502132A4B3EFA00ED91F7 /* BadgeListCollectionViewCell.swift in Sources */,
 				37A574C329FF6E9C00312453 /* Image.swift in Sources */,
 				37DCA67C2A48927400FF8F90 /* PapagoService.swift in Sources */,
 				4A3F2EA02A0C18B600F6AC60 /* DatePickerFooterView.swift in Sources */,
+				A345020F2A4B39B600ED91F7 /* BadgeHeaderView.swift in Sources */,
 				6FE1298C2A498338005536C4 /* HomeService.swift in Sources */,
 				4AD04B3D2A190E9A004B7A58 /* UITextView+.swift in Sources */,
-				4A0EA4622A01413D006CCE52 /* DataModel.swift in Sources */,
 				6F31802F2A24D1DB00089870 /* CalendarCell.swift in Sources */,
 				6FE1298A2A4982DA005536C4 /* HomeAPI.swift in Sources */,
 				4A3F2E972A0ABBAA00F6AC60 /* AlarmCollectionViewCell.swift in Sources */,
 				37DCA6572A47574300FF8F90 /* RandomSubjectAPI.swift in Sources */,
 				37DCA6672A480A7300FF8F90 /* DetailDiaryService.swift in Sources */,
 				A3D7ECB72A26566A009857D6 /* EditNicknameViewController.swift in Sources */,
+				A34502152A4B45E000ED91F7 /* DetailBadgeCollectionViewCell.swift in Sources */,
 				6FE129902A49A5A6005536C4 /* Date+.swift in Sources */,
 				6F294A412A26178600856CC8 /* AlarmSettingViewController.swift in Sources */,
 				6F62668C2A04EA3B000365CD /* HomeViewController.swift in Sources */,
 				4AD04B3B2A1905BB004B7A58 /* DiaryScrollerView.swift in Sources */,
 				4A3373F52A45BF6600EFE6C4 /* OnboardingService.swift in Sources */,
+				6FBC85702A4B5FA200A43F98 /* MyPageAPI.swift in Sources */,
 				4A3F2E9C2A0B4C7100F6AC60 /* AlarmCollectionView.swift in Sources */,
 				37DCA6602A48033400FF8F90 /* DetailDiaryViewController.swift in Sources */,
 				4A0EA4572A01403E006CCE52 /* MoyaLoggingPlugin.swift in Sources */,
@@ -802,6 +841,7 @@
 				37A574C829FF6F1C00312453 /* UIView+.swift in Sources */,
 				37A574D029FF9AEE00312453 /* UILabel+.swift in Sources */,
 				37A574CE29FF9A2D00312453 /* UIScreen+.swift in Sources */,
+				A301B0A42A307289006BE0BA /* BadgeListViewController.swift in Sources */,
 				37DCA6722A484D5000FF8F90 /* PostDiaryService.swift in Sources */,
 				37DCA67A2A4891BD00FF8F90 /* PapagoAPI.swift in Sources */,
 				37DCA6702A484D3700FF8F90 /* PostDiaryRequest.swift in Sources */,
@@ -1110,6 +1150,14 @@
 				kind = branch;
 			};
 		};
+		A301B0A02A30720F006BE0BA /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1152,6 +1200,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4AA942D32A276C7900A552A0 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
 			productName = KakaoSDKUser;
+		};
+		A301B0A12A30720F006BE0BA /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A301B0A02A30720F006BE0BA /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
