@@ -34,4 +34,8 @@ extension UIView {
     func convertByHeightRatio(_ convert: CGFloat) -> CGFloat {
         return (convert / 812) * UIScreen.main.bounds.height
     }
+    
+    func constraintByNotch(_ hasNotch: CGFloat, _ noNotch: CGFloat) -> CGFloat {
+        return UIScreen.main.hasNotch ? hasNotch : noNotch
+    }
 }

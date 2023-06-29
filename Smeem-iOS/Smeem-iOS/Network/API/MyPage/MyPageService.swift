@@ -12,6 +12,7 @@ import Moya
 enum MyPageService {
     case MyPageInfo
     case ChangeMyNickName(param: NicknameRequest)
+    case badgeList
 }
 
 extension MyPageService: BaseTargetType {
@@ -21,12 +22,14 @@ extension MyPageService: BaseTargetType {
             return URLConstant.myPageURL
         case .ChangeMyNickName:
             return URLConstant.userURL
+        case .badgeList:
+            return URLConstant.badgesListURL
         }
     }
     
     var method: Moya.Method {
         switch self {
-        case .MyPageInfo:
+        case .MyPageInfo, .badgeList:
             return .get
         case .ChangeMyNickName:
             return .patch
@@ -35,7 +38,7 @@ extension MyPageService: BaseTargetType {
     
     var task: Moya.Task {
         switch self {
-        case .MyPageInfo:
+        case .MyPageInfo, .badgeList:
             return .requestPlain
         case .ChangeMyNickName(let param):
             return .requestJSONEncodable(param)
@@ -44,7 +47,7 @@ extension MyPageService: BaseTargetType {
     
     var headers: [String : String]? {
         switch self {
-        case .MyPageInfo, .ChangeMyNickName:
+        case .MyPageInfo, .ChangeMyNickName, .badgeList:
             return NetworkConstant.tempTokenHeader
         }
     }
