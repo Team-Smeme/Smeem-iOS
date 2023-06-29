@@ -11,8 +11,6 @@ final class ForeignDiaryViewController: DiaryViewController {
     
     // MARK: - Property
     
-    var isKeyboardVisible: Bool = false
-    
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -33,7 +31,7 @@ final class ForeignDiaryViewController: DiaryViewController {
             let HomeViewController = UINavigationController(rootViewController: HomeViewController())
             changeRootViewControllerAndPresent(HomeViewController)
         } else {
-            showToast(toastType: .defaultToast(bodyType: .regEx))
+            showToastIfNeeded(toastType: .defaultToast(bodyType: .regEx))
         }
     }
     
@@ -48,23 +46,11 @@ final class ForeignDiaryViewController: DiaryViewController {
         else { return }
         
         keyboardHeight = keyboardFrame.height
-        isKeyboardVisible = true
+
     }
     
     override func keyboardWillHide(notification: NSNotification) {
         super.keyboardWillHide(notification: notification)
         keyboardHeight = 0.0
-        isKeyboardVisible = false
-    }
-    
-    // MARK: - Custom Method
-    
-    private func showToast(toastType: ToastViewType) {
-        smeemToastView?.removeFromSuperview()
-        smeemToastView = SmeemToastView(type: toastType)
-        
-        let offset = convertByHeightRatio(107)
-        smeemToastView?.show(in: view, offset: CGFloat(offset), keyboardHeight: keyboardHeight)
-        smeemToastView?.hide(after: 1)
     }
 }

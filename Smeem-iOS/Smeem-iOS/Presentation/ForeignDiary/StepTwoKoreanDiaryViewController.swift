@@ -71,7 +71,7 @@ final class StepTwoKoreanDiaryViewController: DiaryViewController {
             postDiaryAPI()
         } else {
             print("✅")
-            showToast(toastType: .defaultToast(bodyType: .regEx))
+            showToastIfNeeded(toastType: .defaultToast(bodyType: .regEx))
         }
     }
     
@@ -114,15 +114,6 @@ final class StepTwoKoreanDiaryViewController: DiaryViewController {
     
     private func handleRightNavitationButton() {
         rightNavigationButton.addTarget(self, action: #selector(rightNavigationButtonDidTap), for: .touchUpInside)
-    }
-    
-    private func showToast(toastType: ToastViewType) {
-        smeemToastView?.removeFromSuperview()
-        smeemToastView = SmeemToastView(type: toastType)
-        
-        let offset = convertByHeightRatio(107)
-        smeemToastView?.show(in: view, offset: CGFloat(offset), keyboardHeight: keyboardHeight)
-        smeemToastView?.hide(after: 1)
     }
     
     // MARK: - Layout

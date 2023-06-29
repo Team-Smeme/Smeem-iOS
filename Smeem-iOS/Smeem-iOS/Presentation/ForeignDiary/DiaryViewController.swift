@@ -367,6 +367,18 @@ class DiaryViewController: UIViewController {
     }
 }
 
+// MARK: - Extensions
+extension DiaryViewController {
+    func showToastIfNeeded(toastType: ToastViewType) {
+        smeemToastView?.removeFromSuperview()
+        smeemToastView = SmeemToastView(type: toastType)
+        
+        let offset = convertByHeightRatio(107)
+        smeemToastView?.show(in: view, offset: CGFloat(offset), keyboardHeight: keyboardHeight)
+        smeemToastView?.hide(after: 1)
+    }
+}
+
 // MARK: - UITextViewDelegate
 
 extension DiaryViewController: UITextViewDelegate {
