@@ -36,10 +36,10 @@ class DiaryViewController: UIViewController {
     var topicContent = String()
     
     var isTopicCalled: Bool = false
+    var isKeyboardVisible: Bool = false
+    var keyboardHeight: CGFloat = 0.0
     
     // MARK: - UI Property
-    
-    var keyboardHeight: CGFloat = 0.0
     
     let navigationView = UIView()
     private lazy var randomSubjectView = RandomSubjectView()
@@ -190,6 +190,9 @@ class DiaryViewController: UIViewController {
         inputTextView.scrollIndicatorInsets = insets
         self.bottomView.transform = CGAffineTransform(translationX: 0, y: -keyboardHeight)
         
+        self.keyboardHeight = keyboardFrame.height
+        isKeyboardVisible = true
+        
         UIView.animate(withDuration: 0.3) {
             self.bottomView.snp.updateConstraints {
                 $0.height.equalTo(53)
@@ -202,6 +205,8 @@ class DiaryViewController: UIViewController {
         inputTextView.contentInset = .zero
         inputTextView.scrollIndicatorInsets = .zero
         self.bottomView.transform = CGAffineTransform.identity
+        
+        isKeyboardVisible = false
         
         UIView.animate(withDuration: 0.3) {
             self.bottomView.snp.updateConstraints {
@@ -373,7 +378,12 @@ extension DiaryViewController {
         smeemToastView?.removeFromSuperview()
         smeemToastView = SmeemToastView(type: toastType)
         
-        let offset = convertByHeightRatio(107)
+        let onKeyboardOffset = convertByHeightRatio(73)
+        let offKeyboardOffset = convertByHeightRatio(107)
+
+        // 키보드가 보이는지 확인하여 오프셋을 변경합니다.
+        let offset = isKeyboardVisible ?  onKeyboardOffset : offKeyboardOffset
+        
         smeemToastView?.show(in: view, offset: CGFloat(offset), keyboardHeight: keyboardHeight)
         smeemToastView?.hide(after: 1)
     }

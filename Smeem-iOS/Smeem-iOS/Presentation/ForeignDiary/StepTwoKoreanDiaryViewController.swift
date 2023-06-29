@@ -13,8 +13,6 @@ final class StepTwoKoreanDiaryViewController: DiaryViewController {
     
     // MARK: - Property
     
-    var isKeyboardVisible: Bool = false
-    
     var isHintShowed: Bool = false
     var hintText: String?
     
@@ -70,7 +68,6 @@ final class StepTwoKoreanDiaryViewController: DiaryViewController {
         if rightNavigationButton.titleLabel?.textColor == .point {
             postDiaryAPI()
         } else {
-            print("✅")
             showToastIfNeeded(toastType: .defaultToast(bodyType: .regEx))
         }
     }
@@ -101,13 +98,11 @@ final class StepTwoKoreanDiaryViewController: DiaryViewController {
         else { return }
         
         keyboardHeight = keyboardFrame.height
-        isKeyboardVisible = true
     }
     
     override func keyboardWillHide(notification: NSNotification) {
         super.keyboardWillHide(notification: notification)
         keyboardHeight = 0.0
-        isKeyboardVisible = false
     }
     
     // MARK: - Custom Method
