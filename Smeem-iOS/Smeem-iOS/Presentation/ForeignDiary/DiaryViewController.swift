@@ -58,7 +58,7 @@ class DiaryViewController: UIViewController {
         button.titleLabel?.font = .b4
         button.setTitleColor(.black, for: .normal)
         button.setTitle("취소", for: .normal)
-        button.addTarget(self, action: #selector(leftNaviButtonDidTap), for: .touchUpInside)
+        button.addTarget(self, action: #selector(leftNavigationButtonDidTap), for: .touchUpInside)
         return button
     }()
     
@@ -114,7 +114,7 @@ class DiaryViewController: UIViewController {
     lazy var randomSubjectButton: UIButton = {
         let button = UIButton()
         button.addTarget(self, action: #selector(randomTopicButtonDidTap), for: .touchUpInside)
-        button.backgroundColor = .point
+        button.setImage(Constant.Image.btnRandomSubjectInactive, for: .normal)
         return button
     }()
     
@@ -130,7 +130,7 @@ class DiaryViewController: UIViewController {
         return button
     }()
     
-    let regExToastView = SmeemToastView(type: .defaultToast(bodyType: .regEx))
+    var regExToastView: SmeemToastView?
     
     // MARK: - Life Cycle
     
@@ -156,7 +156,7 @@ class DiaryViewController: UIViewController {
     
     deinit {
         randomSubjectView.removeFromSuperview()
-        regExToastView.removeFromSuperview()
+        regExToastView?.removeFromSuperview()
         NotificationCenter.default.removeObserver(self)
     }
     
@@ -164,13 +164,15 @@ class DiaryViewController: UIViewController {
     
     @objc func randomTopicButtonDidTap() {
         setRandomTopicButtonToggle()
-        if isTopicCalled {
+        if !isTopicCalled {
+            randomSubjectButton.setImage(Constant.Image.btnRandomSubjectActive, for: .normal)
             randomSubjectWithAPI()
             isTopicCalled = true
         }
+        randomSubjectView.setData(contentText: topicContent)
     }
     
-    @objc func leftNaviButtonDidTap() {
+    @objc func leftNavigationButtonDidTap() {
         self.navigationController?.popViewController(animated: true)
     }
     
@@ -203,7 +205,7 @@ class DiaryViewController: UIViewController {
     // MARK: - Custom Method
     
     private func setData() {
-        randomSubjectView.configureData(contentText: topicContent)
+        randomSubjectView.setData(contentText: topicContent)
     }
     
     private func setupUI() {
@@ -248,8 +250,10 @@ class DiaryViewController: UIViewController {
                 $0.top.equalTo(navigationView.snp.bottom).offset(convertByHeightRatio(16))
                 $0.leading.equalToSuperview()
             }
+            randomSubjectButton.setImage(Constant.Image.btnRandomSubjectActive, for: .normal)
         } else {
             randomSubjectView.removeFromSuperview()
+            randomSubjectButton.setImage(Constant.Image.btnRandomSubjectInactive, for: .normal)
         }
     }
     
@@ -325,27 +329,27 @@ class DiaryViewController: UIViewController {
     }
     
     private func checkTutorial() {
-//        if self is StepOneKoreanDiaryViewController {
-//            let tutorialDiaryStepOne = UserDefaultsManager.tutorialDiaryStepOne
-//            
-//            if !tutorialDiaryStepOne {
-//                UserDefaultsManager.tutorialDiaryStepOne = true
-//                
-//                view.addSubviews(tutorialImageView ?? UIImageView(), dismissButton ?? UIButton())
-//                
-//                tutorialImageView?.snp.makeConstraints {
-//                    $0.top.leading.trailing.bottom.equalToSuperview()
-//                }
-//                dismissButton?.snp.makeConstraints {
-//                    $0.top.equalToSuperview().inset(convertByHeightRatio(204))
-//                    $0.trailing.equalToSuperview().inset(convertByHeightRatio(10))
-//                    $0.width.height.equalTo(convertByHeightRatio(45))
-//                }
-//            } else {
-//                tutorialImageView = nil
-//                dismissButton = nil
-//            }
-//        }
+        //        if self is StepOneKoreanDiaryViewController {
+        //            let tutorialDiaryStepOne = UserDefaultsManager.tutorialDiaryStepOne
+        //
+        //            if !tutorialDiaryStepOne {
+        //                UserDefaultsManager.tutorialDiaryStepOne = true
+        //
+        //                view.addSubviews(tutorialImageView ?? UIImageView(), dismissButton ?? UIButton())
+        //
+        //                tutorialImageView?.snp.makeConstraints {
+        //                    $0.top.leading.trailing.bottom.equalToSuperview()
+        //                }
+        //                dismissButton?.snp.makeConstraints {
+        //                    $0.top.equalToSuperview().inset(convertByHeightRatio(204))
+        //                    $0.trailing.equalToSuperview().inset(convertByHeightRatio(10))
+        //                    $0.width.height.equalTo(convertByHeightRatio(45))
+        //                }
+        //            } else {
+        //                tutorialImageView = nil
+        //                dismissButton = nil
+        //            }
+        //        }
     }
 }
 
@@ -382,21 +386,21 @@ extension DiaryViewController: UITextViewDelegate {
 
 extension DiaryStrategy {
     func englishValidation(with text: String, in viewController: DiaryViewController) -> Bool {
-        return viewController.inputTextView.text.getArrayAfterRegex(regex: "[a-zA-z]").count > 9
+        return viewController.inputTextView.text.getArrayAfterRegex(regex: "[a-zA-z]").count > 1
     }
     
 }
 
 extension StepOneKoreanDiaryStrategy {
     func koreanValidation(with text: String, in viewController: DiaryViewController) -> Bool {
-        return viewController.inputTextView.text.getArrayAfterRegex(regex: "[가-핳ㄱ-ㅎㅏ-ㅣ]").count > 9
+        return viewController.inputTextView.text.getArrayAfterRegex(regex: "[가-핳ㄱ-ㅎㅏ-ㅣ]").count > 1
     }
 }
 
 //MARK: - RandomSubjectViewDelegate
 
 extension DiaryViewController: RandomSubjectViewDelegate {
-    func refreshButtonTapped() {
+    func refreshButtonTapped(completion: @escaping (String?) -> Void) {
         randomSubjectWithAPI()
     }
 }

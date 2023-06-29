@@ -33,7 +33,7 @@ final class StepTwoKoreanDiaryViewController: DiaryViewController {
     private lazy var hintButton: UIButton = {
         let button = UIButton()
         button.addTarget(self, action: #selector(hintButtondidTap), for: .touchUpInside)
-        button.backgroundColor = .gray200
+        button.setImage(Constant.Image.btnTranslateInactive, for: .normal)
         return button
     }()
     
@@ -66,6 +66,10 @@ final class StepTwoKoreanDiaryViewController: DiaryViewController {
         dismissButton?.removeFromSuperview()
     }
     
+    override func leftNavigationButtonDidTap() {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
     override func rightNavigationButtonDidTap() {
         postDiaryAPI()
     }
@@ -75,10 +79,11 @@ final class StepTwoKoreanDiaryViewController: DiaryViewController {
         isHintShowed.toggle()
         if isHintShowed {
             postPapagoApi(diaryText: hintTextView.text)
-            hintButton.backgroundColor = .point
+            hintButton.setImage(Constant.Image.btnTranslateActive, for: .normal)
         } else {
             hintButton.backgroundColor = .gray200
             hintTextView.text = hintText
+            hintButton.setImage(Constant.Image.btnTranslateInactive, for: .normal)
         }
         
     }
@@ -143,7 +148,16 @@ final class StepTwoKoreanDiaryViewController: DiaryViewController {
     }
 }
 
-//MARK: - Network
+// MARK: - DataBindProtocol
+
+extension StepTwoKoreanDiaryViewController: DataBindProtocol {
+    func dataBind(text: String) {
+        hintTextView.text = text
+    }
+}
+
+
+// MARK: - Network
 
 extension StepTwoKoreanDiaryViewController {
     func postPapagoApi(diaryText: String) {
