@@ -9,13 +9,36 @@ import UIKit
 
 final class ForeignDiaryViewController: DiaryViewController {
     
+    // MARK: - Property
+    
     var keyboardHeight: CGFloat = 0.0
     var isKeyboardVisible: Bool = false
 
+    // MARK: - Life Cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         handleRightNavitationButton()
+    }
+    
+    // MARK: - @objc
+    
+    override func leftNavigationButtonDidTap() {
+        self.presentingViewController?.dismiss(animated: true)
+    }
+    
+    override func rightNavigationButtonDidTap() {
+        if rightNavigationButton.titleLabel?.textColor == .point {
+            postDiaryAPI()
+            let HomeViewController = UINavigationController(rootViewController: HomeViewController())
+            changeRootViewControllerAndPresent(HomeViewController)
+        } else {
+            showToast(toastType: .defaultToast(bodyType: .regEx))
+            }
+        }
+    
+    private func handleRightNavitationButton() {
+        rightNavigationButton.addTarget(self, action: #selector(rightNavigationButtonDidTap), for: .touchUpInside)
     }
     
     override func keyboardWillShow(notification: NSNotification) {
@@ -34,25 +57,13 @@ final class ForeignDiaryViewController: DiaryViewController {
         isKeyboardVisible = false
     }
     
-    override func rightNavigationButtonDidTap() {
-        if rightNavigationButton.titleLabel?.textColor == .point {
-            postDiaryAPI()
-            let HomeViewController = UINavigationController(rootViewController: HomeViewController())
-            changeRootViewControllerAndPresent(HomeViewController)
-        } else {
-            showToast(toastType: .defaultToast(bodyType: .regEx))
-            }
-        }
+    // MARK: - Custom Method
     
-    private func handleRightNavitationButton() {
-        rightNavigationButton.addTarget(self, action: #selector(rightNavigationButtonDidTap), for: .touchUpInside)
-    }
-    
-    func showToast(toastType: ToastViewType) {
+    private func showToast(toastType: ToastViewType) {
         regExToastView?.removeFromSuperview()
         regExToastView = SmeemToastView(type: toastType)
         
-        let offset = convertByHeightRatio(73)
+        let offset = convertByHeightRatio(107)
         regExToastView?.show(in: view, offset: CGFloat(offset), keyboardHeight: keyboardHeight)
         regExToastView?.hide(after: 1)
     }

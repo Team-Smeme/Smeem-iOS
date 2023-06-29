@@ -187,12 +187,26 @@ class DiaryViewController: UIViewController {
         inputTextView.contentInset = insets
         inputTextView.scrollIndicatorInsets = insets
         self.bottomView.transform = CGAffineTransform(translationX: 0, y: -keyboardHeight)
+        
+        UIView.animate(withDuration: 0.3) {
+            self.bottomView.snp.updateConstraints {
+                $0.height.equalTo(53)
+            }
+            self.view.layoutIfNeeded()
+        }
     }
     
     @objc func keyboardWillHide(notification: NSNotification) {
         inputTextView.contentInset = .zero
         inputTextView.scrollIndicatorInsets = .zero
         self.bottomView.transform = CGAffineTransform.identity
+        
+        UIView.animate(withDuration: 0.3) {
+            self.bottomView.snp.updateConstraints {
+                $0.height.equalTo(87)
+            }
+            self.view.layoutIfNeeded()
+        }
     }
     
     @objc func dismissButtonDidTap() {
@@ -310,7 +324,7 @@ class DiaryViewController: UIViewController {
         
         bottomView.snp.makeConstraints {
             $0.bottom.leading.trailing.equalToSuperview()
-            $0.height.equalTo(constraintByNotch(53, 87))
+            $0.height.equalTo(convertByHeightRatio(87))
         }
         
         thinLine.snp.makeConstraints {
