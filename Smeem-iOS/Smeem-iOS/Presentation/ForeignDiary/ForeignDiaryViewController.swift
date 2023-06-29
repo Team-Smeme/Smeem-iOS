@@ -11,11 +11,10 @@ final class ForeignDiaryViewController: DiaryViewController {
     
     // MARK: - Property
     
-    var keyboardHeight: CGFloat = 0.0
     var isKeyboardVisible: Bool = false
-
+    
     // MARK: - Life Cycle
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         handleRightNavitationButton()
@@ -30,12 +29,13 @@ final class ForeignDiaryViewController: DiaryViewController {
     override func rightNavigationButtonDidTap() {
         if rightNavigationButton.titleLabel?.textColor == .point {
             postDiaryAPI()
+            
             let HomeViewController = UINavigationController(rootViewController: HomeViewController())
             changeRootViewControllerAndPresent(HomeViewController)
         } else {
             showToast(toastType: .defaultToast(bodyType: .regEx))
-            }
         }
+    }
     
     private func handleRightNavitationButton() {
         rightNavigationButton.addTarget(self, action: #selector(rightNavigationButtonDidTap), for: .touchUpInside)
@@ -60,11 +60,11 @@ final class ForeignDiaryViewController: DiaryViewController {
     // MARK: - Custom Method
     
     private func showToast(toastType: ToastViewType) {
-        regExToastView?.removeFromSuperview()
-        regExToastView = SmeemToastView(type: toastType)
+        smeemToastView?.removeFromSuperview()
+        smeemToastView = SmeemToastView(type: toastType)
         
         let offset = convertByHeightRatio(107)
-        regExToastView?.show(in: view, offset: CGFloat(offset), keyboardHeight: keyboardHeight)
-        regExToastView?.hide(after: 1)
+        smeemToastView?.show(in: view, offset: CGFloat(offset), keyboardHeight: keyboardHeight)
+        smeemToastView?.hide(after: 1)
     }
 }

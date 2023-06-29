@@ -39,6 +39,8 @@ class DiaryViewController: UIViewController {
     
     // MARK: - UI Property
     
+    var keyboardHeight: CGFloat = 0.0
+    
     let navigationView = UIView()
     private lazy var randomSubjectView = RandomSubjectView()
     
@@ -128,7 +130,7 @@ class DiaryViewController: UIViewController {
         return button
     }()
     
-    var regExToastView: SmeemToastView?
+    var smeemToastView: SmeemToastView?
     
     // MARK: - Life Cycle
     
@@ -154,7 +156,7 @@ class DiaryViewController: UIViewController {
     
     deinit {
         randomSubjectView.removeFromSuperview()
-        regExToastView?.removeFromSuperview()
+        smeemToastView?.removeFromSuperview()
         NotificationCenter.default.removeObserver(self)
     }
     
@@ -431,8 +433,7 @@ extension DiaryViewController {
     
     func postDiaryAPI() {
         PostDiaryAPI.shared.postDiary(param: PostDiaryRequest(content: inputTextView.text, topicId: topicID)) { response in
-            //            guard let postDiaryResponse = response?.data else { return }
-            //            self.diaryID = postDiaryResponse.
+            guard let postDiaryResponse = response?.data else { return }
         }
     }
 }

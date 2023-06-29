@@ -13,6 +13,8 @@ final class StepTwoKoreanDiaryViewController: DiaryViewController {
     
     // MARK: - Property
     
+    var isKeyboardVisible: Bool = false
+    
     var isHintShowed: Bool = false
     var hintText: String?
     
@@ -53,25 +55,29 @@ final class StepTwoKoreanDiaryViewController: DiaryViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        setLayout()
         handleRightNavitationButton()
+        setLayout()
         checkTutorial()
     }
     
     // MARK: - @objc
-
-    @objc override func dismissButtonDidTap() {
-        tutorialImageView?.removeFromSuperview()
-        dismissButton?.removeFromSuperview()
-    }
     
     override func leftNavigationButtonDidTap() {
         self.navigationController?.popViewController(animated: true)
     }
     
     override func rightNavigationButtonDidTap() {
-        postDiaryAPI()
+        if rightNavigationButton.titleLabel?.textColor == .point {
+            postDiaryAPI()
+        } else {
+            print("✅")
+            showToast(toastType: .defaultToast(bodyType: .regEx))
+        }
+    }
+    
+    @objc override func dismissButtonDidTap() {
+        tutorialImageView?.removeFromSuperview()
+        dismissButton?.removeFromSuperview()
     }
     
     @objc func hintButtondidTap() {
@@ -88,10 +94,35 @@ final class StepTwoKoreanDiaryViewController: DiaryViewController {
         
     }
     
+    override func keyboardWillShow(notification: NSNotification) {
+        super.keyboardWillShow(notification: notification)
+        guard let userInfo = notification.userInfo,
+              let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect
+        else { return }
+        
+        keyboardHeight = keyboardFrame.height
+        isKeyboardVisible = true
+    }
+    
+    override func keyboardWillHide(notification: NSNotification) {
+        super.keyboardWillHide(notification: notification)
+        keyboardHeight = 0.0
+        isKeyboardVisible = false
+    }
+    
     // MARK: - Custom Method
     
     private func handleRightNavitationButton() {
         rightNavigationButton.addTarget(self, action: #selector(rightNavigationButtonDidTap), for: .touchUpInside)
+    }
+    
+    private func showToast(toastType: ToastViewType) {
+        smeemToastView?.removeFromSuperview()
+        smeemToastView = SmeemToastView(type: toastType)
+        
+        let offset = convertByHeightRatio(107)
+        smeemToastView?.show(in: view, offset: CGFloat(offset), keyboardHeight: keyboardHeight)
+        smeemToastView?.hide(after: 1)
     }
     
     // MARK: - Layout
@@ -127,12 +158,12 @@ final class StepTwoKoreanDiaryViewController: DiaryViewController {
     
     private func checkTutorial() {
 //        let tutorialDiaryStepTwo = UserDefaultsManager.tutorialDiaryStepTwo
-//        
+//
 //        if !tutorialDiaryStepTwo {
 //            UserDefaultsManager.tutorialDiaryStepTwo = true
-//            
+//
 //            view.addSubviews(tutorialImageView ?? UIImageView(), dismissButton ?? UIButton())
-//            
+//
 //            tutorialImageView?.snp.makeConstraints {
 //                $0.top.leading.trailing.bottom.equalToSuperview()
 //            }

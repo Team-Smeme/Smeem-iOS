@@ -43,8 +43,6 @@ final class StepOneKoreanDiaryViewController: DiaryViewController {
             delegate?.dataBind(text: text)
         }
         
-        let stepOneVC = StepOneKoreanDiaryViewController()
-//        let navigationController = UINavigationController(rootViewController: stepOneVC)
         self.navigationController?.pushViewController(stepTwoVC, animated: true)
     }
 }
