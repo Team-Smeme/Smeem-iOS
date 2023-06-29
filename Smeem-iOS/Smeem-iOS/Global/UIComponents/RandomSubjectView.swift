@@ -100,8 +100,6 @@ final class RandomSubjectView: UIView {
             let newHeight: CGFloat = contentLabelHeight <= 22 ? 88 : contentLabelHeight + 66
             heightConstraint.update(offset: newHeight)
         }
-        print(contentLabelHeight)
-
     }
 
     // MARK: - Layout
