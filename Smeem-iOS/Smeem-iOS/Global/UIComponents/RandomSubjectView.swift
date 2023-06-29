@@ -10,7 +10,7 @@
  let randomSubjectView = RandomSubjectView()
  
  2. view에 addSubView 후 y축 레이아웃 값만 입력해서 사용
-**/
+ **/
 
 
 import UIKit
@@ -18,7 +18,7 @@ import UIKit
 import SnapKit
 
 protocol RandomSubjectViewDelegate: AnyObject {
-    func refreshButtonTapped()
+    func refreshButtonTapped(completion: @escaping (String?) -> Void)
 }
 
 final class RandomSubjectView: UIView {
@@ -26,6 +26,8 @@ final class RandomSubjectView: UIView {
     // MARK: - Property
     
     weak var delegate: RandomSubjectViewDelegate?
+    
+    private var heightConstraint: Constraint?
     
     // MARK: - UI Property
     
@@ -50,9 +52,7 @@ final class RandomSubjectView: UIView {
     
     private lazy var refreshButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = .gray200
-        //TODO: 에셋 나오면 추가할게여!
-//        button.setImage(<#T##image: UIImage?##UIImage?#>, for: <#T##UIControl.State#>)
+        button.setImage(Constant.Image.icnRefresh, for: .normal)
         button.addTarget(self, action: #selector(refreshButtonDidTap), for: .touchUpInside)
         return button
     }()
@@ -73,34 +73,44 @@ final class RandomSubjectView: UIView {
     // MARK: - @objc
     
     @objc func refreshButtonDidTap() {
-        delegate?.refreshButtonTapped()
+        delegate?.refreshButtonTapped { [weak self] newContentText in
+            DispatchQueue.main.async {
+                self?.setData(contentText: newContentText ?? "")
+            }
+        }
     }
     
     // MARK: - Custom Method
-    
-    func configureData(contentText: String) {
+
+    func setData(contentText: String) {
         contentLabel.text = "     " + contentText
         contentLabel.setTextWithLineHeight(lineHeight: 22)
+        updateViewHeightForNewContent()
     }
-    
-    private func setRandomSubjectViewHeight() {
+
+    private func updateViewHeightForNewContent() {
         let labelWidth = UIScreen.main.bounds.width - 36
         contentLabel.preferredMaxLayoutWidth = labelWidth
         contentLabel.setNeedsLayout()
         contentLabel.layoutIfNeeded()
         
-        let contentLabelHeight = contentLabel.frame.height
+        let contentLabelHeight: CGFloat = contentLabel.intrinsicContentSize.height
         
-        snp.remakeConstraints {
-            $0.width.equalTo(convertByWidthRatio(375))
-            $0.height.equalTo(contentLabelHeight < 20 ? 88 : 110)
+        if let heightConstraint = heightConstraint {
+            let newHeight: CGFloat = contentLabelHeight <= 22 ? 88 : contentLabelHeight + 66
+            heightConstraint.update(offset: newHeight)
         }
+        print(contentLabelHeight)
+
     }
-    
+
     // MARK: - Layout
     
     private func setRandomSubjectViewUI() {
         backgroundColor = .gray100
+        
+        contentLabel.numberOfLines = 0
+        contentLabel.lineBreakMode = .byWordWrapping
     }
     
     private func setRandomSubjectViewLayout() {
@@ -109,6 +119,10 @@ final class RandomSubjectView: UIView {
             $0.centerX.equalTo(self)
             $0.width.equalTo(convertByWidthRatio(375))
         }
+        
+        snp.makeConstraints {
+                heightConstraint = $0.height.equalTo(128).constraint
+            }
         
         addSubviews(questionLabel, contentLabel, refreshButton)
         
@@ -126,10 +140,6 @@ final class RandomSubjectView: UIView {
         refreshButton.snp.makeConstraints {
             $0.bottom.equalToSuperview().offset(convertByHeightRatio(-20))
             $0.trailing.equalToSuperview().offset(convertByWidthRatio(-18))
-            //TODO: 에셋 나오면 삭제 예정
-            $0.width.height.equalTo(18)
         }
-        
-        setRandomSubjectViewHeight()
     }
 }
