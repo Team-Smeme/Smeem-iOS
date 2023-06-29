@@ -51,9 +51,14 @@ final class DetailDiaryViewController: UIViewController {
         setBackgroundColor()
         setLayout()
         detailDiaryWithAPI(diaryID: diaryId)
+        swipeRecognizer()
     }
     
     // MARK: - @objc
+    
+    @objc func responseToSwipeGesture() {
+        self.navigationController?.popViewController(animated: true)
+    }
     
     @objc func backButtonDidTap(_ sender: UIButton) {
         self.navigationController?.popViewController(animated: true)
@@ -87,6 +92,12 @@ final class DetailDiaryViewController: UIViewController {
     
     private func setData() {
         diaryScrollerView.configureDiaryScrollerView(contentText: diaryContent, date: dateCreated, nickname: userName)
+    }
+    
+    private func swipeRecognizer() {
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(responseToSwipeGesture))
+        swipeRight.direction = UISwipeGestureRecognizer.Direction.right
+        self.view.addGestureRecognizer(swipeRight)
     }
     
     // MARK: - Layout
