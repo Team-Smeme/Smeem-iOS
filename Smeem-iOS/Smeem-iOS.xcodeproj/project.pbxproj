@@ -43,6 +43,7 @@
 		37DCA6782A488CEB00FF8F90 /* PapagoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DCA6772A488CEB00FF8F90 /* PapagoResponse.swift */; };
 		37DCA67A2A4891BD00FF8F90 /* PapagoAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DCA6792A4891BD00FF8F90 /* PapagoAPI.swift */; };
 		37DCA67C2A48927400FF8F90 /* PapagoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DCA67B2A48927400FF8F90 /* PapagoService.swift */; };
+		37EB69E62A4B3BC400075E4E /* DataBindProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EB69E52A4B3BC400075E4E /* DataBindProtocol.swift */; };
 		4A0E8D5829F8362E00E0FC23 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0E8D5729F8362E00E0FC23 /* AuthViewController.swift */; };
 		4A0EA4552A014027006CCE52 /* GeneralResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EA4542A014027006CCE52 /* GeneralResponse.swift */; };
 		4A0EA4572A01403E006CCE52 /* MoyaLoggingPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EA4562A01403E006CCE52 /* MoyaLoggingPlugin.swift */; };
@@ -147,6 +148,7 @@
 		37DCA6772A488CEB00FF8F90 /* PapagoResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PapagoResponse.swift; sourceTree = "<group>"; };
 		37DCA6792A4891BD00FF8F90 /* PapagoAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PapagoAPI.swift; sourceTree = "<group>"; };
 		37DCA67B2A48927400FF8F90 /* PapagoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PapagoService.swift; sourceTree = "<group>"; };
+		37EB69E52A4B3BC400075E4E /* DataBindProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataBindProtocol.swift; sourceTree = "<group>"; };
 		4A0E8D5729F8362E00E0FC23 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 		4A0EA4542A014027006CCE52 /* GeneralResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralResponse.swift; sourceTree = "<group>"; };
 		4A0EA4562A01403E006CCE52 /* MoyaLoggingPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoyaLoggingPlugin.swift; sourceTree = "<group>"; };
@@ -236,6 +238,7 @@
 				37A574B829FE209900312453 /* Literals */,
 				37A574B929FE209F00312453 /* Resources */,
 				4AC4B82B2A2F9F5300E147AA /* Constants */,
+				37EB69E42A4B3B6B00075E4E /* Protocols */,
 			);
 			path = Global;
 			sourceTree = "<group>";
@@ -422,6 +425,14 @@
 				37DCA6772A488CEB00FF8F90 /* PapagoResponse.swift */,
 			);
 			path = Papago;
+			sourceTree = "<group>";
+		};
+		37EB69E42A4B3B6B00075E4E /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				37EB69E52A4B3BC400075E4E /* DataBindProtocol.swift */,
+			);
+			path = Protocols;
 			sourceTree = "<group>";
 		};
 		4A0EA4532A014018006CCE52 /* Base */ = {
@@ -918,6 +929,7 @@
 				4A3373F82A461ABC00EFE6C4 /* OnboardingAPI.swift in Sources */,
 				37A574E82A02424F00312453 /* RandomSubjectView.swift in Sources */,
 				4A0EA4642A014710006CCE52 /* SmeemButton.swift in Sources */,
+				37EB69E62A4B3BC400075E4E /* DataBindProtocol.swift in Sources */,
 				4AF58CE32A481E8C00305248 /* AuthService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

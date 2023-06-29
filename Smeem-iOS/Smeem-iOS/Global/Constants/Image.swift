@@ -28,6 +28,7 @@ extension Constant {
         static let icnMyPage = UIImage(named: "icnMyPage")
         static let icnRightArrow = UIImage(named: "icnRightArrow")
         static let icnPencil = UIImage(named: "icnPencil")
+        static let icnRefresh = UIImage(named: "icnRefresh")
         static let noDiary = UIImage(named: "noDiary")
         static let monthday = UIImage(named: "monthday")
         static let monthToday = UIImage(named: "monthToday")
@@ -42,6 +43,11 @@ extension Constant {
         static let btnNonMember = UIImage(named: "btnNonMember")
         static let btnToggleActive = UIImage(named: "btnToggleActive")
         static let btnToggleInActive = UIImage(named: "btnToggleInActive")
+        static let btnTranslateActive = UIImage(named: "btnTranslateActive")
+        static let btnTranslateInactive = UIImage(named: "btnTranslateInactive")
+        static let btnRandomSubjectActive = UIImage(named: "btnRandomSubjectActive")
+        static let btnRandomSubjectInactive = UIImage(named: "btnRandomSubjectInactive")
+        static let btnRandomSubjectEnabled = UIImage(named: "btnRandomSubjectEnabled")
         
         static let eventBadgeWelcome = UIImage(named: "eventBadgeWelcome")
         
