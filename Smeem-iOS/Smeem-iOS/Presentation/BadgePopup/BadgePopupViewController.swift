@@ -23,12 +23,18 @@ final class BadgePopupViewController: UIViewController {
         return view
     }()
     
-    private let badgeImage = UIImageView()
+    private let badgeImage: UIImageView = {
+        let image = UIImageView()
+        image.image = Constant.Image.colorWelcomeBadge
+        image.contentMode = .scaleAspectFit
+        return image
+    }()
     
     private let badgeTitleLabel: UILabel = {
         let label = UILabel()
         label.font = .s3
         label.textColor = .black
+        label.text = "웰컴 배지"
         return label
     }()
     
@@ -38,6 +44,10 @@ final class BadgePopupViewController: UIViewController {
         label.textColor = .gray600
         label.textAlignment = .center
         label.numberOfLines = 2
+        label.text = """
+                     축하해요!
+                     웰컴 배지를 획득했어요!
+                     """
         return label
     }()
     

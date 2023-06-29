@@ -13,7 +13,7 @@ final class MyPageViewController: UIViewController {
     
     // MARK: - Property
     
-    private var userInfo = MyPageInfo(username: "", target: "", way: "", detail: "", targetLang: "", hasPushAlarm: true, trainingTime: TrainingTime(day: "", hour: 0, minute: 0), badges: [])  
+    private var userInfo = MyPageInfo(username: "", target: "", way: "", detail: "", targetLang: "", hasPushAlarm: true, trainingTime: TrainingTime(day: "", hour: 0, minute: 0), badges: [])
     
     // MARK: - UI Property
     
@@ -182,6 +182,12 @@ final class MyPageViewController: UIViewController {
         myPageInfoAPI()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        isShownWelcomeBadgePopup()
+    }
+    
     // MARK: - @objc
     
     @objc func backButtonDidTap(_ sender: UIButton) {
@@ -217,6 +223,18 @@ final class MyPageViewController: UIViewController {
         badgeImage.kf.setImage(with: url)
         badgeNameLabel.text = (userInfo.badges[0].name)
         badgeSummaryLabel.text = "축하해요! \(userInfo.badges[0].name)를 획득했어요!"
+    }
+    
+    private func isShownWelcomeBadgePopup() {
+        let welcomeBadgePopup = UserDefaultsManager.isShownWelcomeBadgePopup
+        
+        if !welcomeBadgePopup {
+            UserDefaultsManager.isShownWelcomeBadgePopup = true
+            let badgePopupVC = BadgePopupViewController()
+            badgePopupVC.modalTransitionStyle = .crossDissolve
+            badgePopupVC.modalPresentationStyle = .overFullScreen
+            self.present(badgePopupVC, animated: true)
+        }
     }
     
     // MARK: - Layout

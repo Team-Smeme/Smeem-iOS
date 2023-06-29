@@ -23,7 +23,7 @@ class BadgeListViewController: UIViewController {
     
     private let headerContainerView = UIView()
     
-    private let cancelButton: UIButton = {
+    private lazy var cancelButton: UIButton = {
         let button = UIButton()
         button.setImage(Constant.Image.icnCancelBlack, for: .normal)
         button.addTarget(self, action: #selector(cancelButtonDidtap), for: .touchUpInside)
@@ -53,7 +53,7 @@ class BadgeListViewController: UIViewController {
     
     private let welcomeImage: UIImageView = {
         let image = UIImageView()
-        image.image = Constant.Image.eventBadgeWelcome
+        image.image = Constant.Image.colorWelcomeBadge
         return image
     }()
     
