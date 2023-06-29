@@ -86,8 +86,23 @@ final class DetailDiaryViewController: UIViewController {
     // MARK: - Custom Method
     
     private func setData() {
-        diaryScrollerView.configureDiaryScrollerView(contentText: diaryContent, date: dateCreated, nickname: userName)
+        let formattedDate = formatDate(dateCreated)
+        diaryScrollerView.configureDiaryScrollerView(contentText: diaryContent, date: formattedDate, nickname: userName)
     }
+    
+    func formatDate(_ dateString: String) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+
+        guard let date = dateFormatter.date(from: dateString) else { return "Invalid date" }
+        dateFormatter.dateFormat = "yyyy년 MM월 dd일 hh:mm a"
+        dateFormatter.amSymbol = "AM"
+        dateFormatter.pmSymbol = "PM"
+        
+        return dateFormatter.string(from: date)
+    }
+
     
     // MARK: - Layout
     
