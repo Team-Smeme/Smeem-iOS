@@ -26,7 +26,9 @@ final class StepOneKoreanDiaryViewController: DiaryViewController {
     }
     
     override func rightNavigationButtonDidTap() {
-        handleRightNavigationButton()
+        if rightNavigationButton.titleLabel?.textColor == .point {
+            handleRightNavigationButton()
+        }
     }
     
     // MARK: - Custom Method
