@@ -243,6 +243,7 @@ final class HomeViewController: UIViewController {
             popupVC.modalPresentationStyle = .overCurrentContext
             self.present(popupVC, animated: true)
         }
+        badgePopupData = []
     }
     
     // MARK: - Layout
