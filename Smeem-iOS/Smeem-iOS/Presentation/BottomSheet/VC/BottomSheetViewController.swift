@@ -58,12 +58,6 @@ final class BottomSheetViewController: UIViewController, LoginDelegate {
     
     func betaLoginDataSend() {
         betaLoginAPI()
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
-            let userNicknameVC = UserNicknameViewController()
-            userNicknameVC.userPlanRequest = self.userPlanRequest
-            self.navigationController?.pushViewController(userNicknameVC, animated: true)
-        }
     }
     
     func dissmissButton() {
@@ -110,6 +104,11 @@ extension BottomSheetViewController {
         AuthAPI.shared.betaTestLoginAPI() { response in
             guard let token = response.data?.accessToken else { return }
             UserDefaultsManager.betaLoginToken = token
+            
+            print(UserDefaultsManager.betaLoginToken, "값이 담긴 거야, 뭐야?")
+            let userNicknameVC = UserNicknameViewController()
+            userNicknameVC.userPlanRequest = self.userPlanRequest
+            self.navigationController?.pushViewController(userNicknameVC, animated: true)
         }
     }
 }

@@ -136,13 +136,13 @@ final class AlarmSettingViewController: UIViewController {
                 print("Push: 권한 허용")
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
 //                    self.userPlanPatchAPICall(target: "DEVELOP", hasAlarm: true)
-                    self.presentBottomSheet(target: "DEVELOP", hasAlarm: true)
+                    self.presentBottomSheet(target: self.targetData, hasAlarm: true)
                 }
             } else {
                 print("Push: 권한 거부")
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
 //                    self.userPlanPatchAPICall(target: "DEVELOP", hasAlarm: true)
-                    self.presentBottomSheet(target: "DEVELOP", hasAlarm: false)
+                    self.presentBottomSheet(target: self.targetData, hasAlarm: false)
                 }
             }
         })

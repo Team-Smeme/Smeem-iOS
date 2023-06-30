@@ -11,8 +11,11 @@ final class GoalOnboardingViewController: UIViewController {
     
     // MARK: - Property
     
-    let goalLabelList = ["자기계발", "취미로 즐기기", "현지 언어에 적응하기", "외국어 시험 고득점하기",
-                         "외국어 원서 독해", "아직 모르겠어요"]
+    var goalLabelList = [Plan]() {
+        didSet {
+            learningListCollectionView.reloadData()
+        }
+    }
     var selectedGoalLabel = String()
     
     var targetClosure: ((String) -> Void)?
@@ -95,6 +98,7 @@ final class GoalOnboardingViewController: UIViewController {
         setDelgate()
         setCellReigster()
         hiddenNavigationBar()
+        planListGetAPI()
     }
     
     // MARK: - @objc
@@ -162,11 +166,20 @@ final class GoalOnboardingViewController: UIViewController {
     }
 }
 
+extension GoalOnboardingViewController {
+    func planListGetAPI() {
+        OnboardingAPI.shared.planList() { response in
+            guard let data = response.data?.goals else { return }
+            self.goalLabelList = data
+        }
+    }
+}
+
 // MARK: - UICollectionViewDelegate
 
 extension GoalOnboardingViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        selectedGoalLabel = goalLabelList[indexPath.item]
+        selectedGoalLabel = goalLabelList[indexPath.item].goalType
         nextButton.smeemButtonType = .enabled
     }
 }
@@ -180,7 +193,7 @@ extension GoalOnboardingViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GoalCollectionViewCell.identifier, for: indexPath) as? GoalCollectionViewCell else { return UICollectionViewCell() }
-        cell.setData(goalLabelList[indexPath.item])
+        cell.setData(goalLabelList[indexPath.item].name)
         return cell
     }
 }

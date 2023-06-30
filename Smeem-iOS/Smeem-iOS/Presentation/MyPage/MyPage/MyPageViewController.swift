@@ -166,12 +166,17 @@ final class MyPageViewController: UIViewController {
     
     private lazy var alarmPushToggleButton: UIButton = {
         let button = UIButton()
+        button.isUserInteractionEnabled = false
         button.setImage(Constant.Image.btnToggleActive, for: .normal)
         button.addTarget(self, action: #selector(pushButtonDidTap(_:)), for: .touchUpInside)
         return button
     }()
     
-    private lazy var alarmCollectionView = AlarmCollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    private lazy var alarmCollectionView: AlarmCollectionView = {
+        let collectionView = AlarmCollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        collectionView.isUserInteractionEnabled = false
+        return collectionView
+    }()
     
     // MARK: - Life Cycle
     
@@ -180,6 +185,7 @@ final class MyPageViewController: UIViewController {
     
         setLayout()
         myPageInfoAPI()
+        swipeRecognizer()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -215,9 +221,19 @@ final class MyPageViewController: UIViewController {
         self.navigationController?.pushViewController(badgeListVC, animated: true)
     }
     
+    @objc func responseToSwipeGesture() {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
     // MARK: - Custom Method
     
     private func setData() {
+        let planNameList = userInfo.way.split(separator: "이상 ").map{String($0)}
+        let planWayOne = planNameList[0] + " 이상"
+        let planWayTwo = planNameList[1]
+        let detailPlan = userInfo.detail.split(separator: "\n").map{String($0)}
+        
+        howLearningView.setData(planName: userInfo.target, planWayOne: planWayOne, planWayTwo: planWayTwo, detailPlanOne: detailPlan[0], detailPlanTwo: detailPlan[1])
         nickNameLabel.text = userInfo.username
         let url = URL(string: userInfo.badges[0].imageURL)
         badgeImage.kf.setImage(with: url)
@@ -235,6 +251,12 @@ final class MyPageViewController: UIViewController {
             badgePopupVC.modalPresentationStyle = .overFullScreen
             self.present(badgePopupVC, animated: true)
         }
+    }
+    
+    private func swipeRecognizer() {
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(responseToSwipeGesture))
+        swipeRight.direction = UISwipeGestureRecognizer.Direction.right
+        self.view.addGestureRecognizer(swipeRight)
     }
     
     // MARK: - Layout
