@@ -136,7 +136,7 @@ final class StepTwoKoreanDiaryViewController: DiaryViewController {
         
         hintButton.snp.makeConstraints {
             $0.centerY.equalTo(randomSubjectButton)
-            $0.leading.equalTo(placeHolderLabel)
+            $0.leading.equalTo(cancelButton)
             $0.width.equalTo(convertByWidthRatio(92))
             $0.height.equalTo(convertByHeightRatio(29))
         }

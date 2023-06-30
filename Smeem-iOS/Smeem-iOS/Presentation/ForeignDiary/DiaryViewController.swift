@@ -53,7 +53,7 @@ class DiaryViewController: UIViewController {
         return stackView
     }()
     
-    private lazy var cancelButton: UIButton = {
+    lazy var cancelButton: UIButton = {
         let button = UIButton()
         button.titleLabel?.font = .b4
         button.setTitleColor(.black, for: .normal)
@@ -422,14 +422,14 @@ extension DiaryViewController: UITextViewDelegate {
 
 extension DiaryStrategy {
     func englishValidation(with text: String, in viewController: DiaryViewController) -> Bool {
-        return viewController.inputTextView.text.getArrayAfterRegex(regex: "[a-zA-z]").count > 1
+        return viewController.inputTextView.text.getArrayAfterRegex(regex: "[a-zA-z]").count > 0
     }
     
 }
 
 extension StepOneKoreanDiaryStrategy {
     func koreanValidation(with text: String, in viewController: DiaryViewController) -> Bool {
-        return viewController.inputTextView.text.getArrayAfterRegex(regex: "[가-핳ㄱ-ㅎㅏ-ㅣ]").count > 1
+        return viewController.inputTextView.text.getArrayAfterRegex(regex: "[가-핳ㄱ-ㅎㅏ-ㅣ]").count > 0
     }
 }
 
