@@ -280,14 +280,10 @@
 		37A574B729FE208A00312453 /* UIComponents */ = {
 			isa = PBXGroup;
 			children = (
+				4A1EE9552A4DFB86007BFEF3 /* SmeemComponent */,
+				4A1EE9542A4DFB76007BFEF3 /* Onboarding */,
+				4A1EE9532A4DFB42007BFEF3 /* Diary */,
 				4A3F2E952A0ABB9C00F6AC60 /* Alarm */,
-				37A574DF2A00CDCD00312453 /* SeparationLine.swift */,
-				4A0EA4632A014710006CCE52 /* SmeemButton.swift */,
-				37A574E52A02178D00312453 /* SmeemToastView.swift */,
-				37A574E72A02424F00312453 /* RandomSubjectView.swift */,
-				4AEFD4C92A1392DF00DAB2BD /* HowLearningView.swift */,
-				4AD04B3A2A1905BB004B7A58 /* DiaryScrollerView.swift */,
-				373E38582A2F889500DF96F0 /* DiaryDetailRandomSubjectView.swift */,
 			);
 			path = UIComponents;
 			sourceTree = "<group>";
@@ -485,6 +481,34 @@
 				4A13B7582A13D37000F4FB1E /* UserNickNameViewController.swift */,
 			);
 			path = Nickname;
+			sourceTree = "<group>";
+		};
+		4A1EE9532A4DFB42007BFEF3 /* Diary */ = {
+			isa = PBXGroup;
+			children = (
+				4AD04B3A2A1905BB004B7A58 /* DiaryScrollerView.swift */,
+				37A574E72A02424F00312453 /* RandomSubjectView.swift */,
+				373E38582A2F889500DF96F0 /* DiaryDetailRandomSubjectView.swift */,
+				37A574DF2A00CDCD00312453 /* SeparationLine.swift */,
+			);
+			path = Diary;
+			sourceTree = "<group>";
+		};
+		4A1EE9542A4DFB76007BFEF3 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				4AEFD4C92A1392DF00DAB2BD /* HowLearningView.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		4A1EE9552A4DFB86007BFEF3 /* SmeemComponent */ = {
+			isa = PBXGroup;
+			children = (
+				4A0EA4632A014710006CCE52 /* SmeemButton.swift */,
+				37A574E52A02178D00312453 /* SmeemToastView.swift */,
+			);
+			path = SmeemComponent;
 			sourceTree = "<group>";
 		};
 		4A3373F62A461AAC00EFE6C4 /* Onboarding */ = {
