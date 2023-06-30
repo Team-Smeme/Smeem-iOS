@@ -84,6 +84,7 @@
 		4AD923E72A0650B600FF5E27 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD923E62A0650B600FF5E27 /* SplashViewController.swift */; };
 		4AD923E92A0692C600FF5E27 /* BottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD923E82A0692C600FF5E27 /* BottomSheetViewController.swift */; };
 		4AD923EB2A0692EA00FF5E27 /* BottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD923EA2A0692EA00FF5E27 /* BottomSheetView.swift */; };
+		4AEB82952A4CB4F200C1114B /* BadgePopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEB82942A4CB4F100C1114B /* BadgePopupViewController.swift */; };
 		4AF58CE32A481E8C00305248 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF58CE22A481E8C00305248 /* AuthService.swift */; };
 		4AF58CE52A48203B00305248 /* AuthAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF58CE42A48203B00305248 /* AuthAPI.swift */; };
 		4AF58CE92A4820AA00305248 /* AuthModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF58CE82A4820AA00305248 /* AuthModel.swift */; };
@@ -188,6 +189,7 @@
 		4AD923E62A0650B600FF5E27 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		4AD923E82A0692C600FF5E27 /* BottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetViewController.swift; sourceTree = "<group>"; };
 		4AD923EA2A0692EA00FF5E27 /* BottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetView.swift; sourceTree = "<group>"; };
+		4AEB82942A4CB4F100C1114B /* BadgePopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgePopupViewController.swift; sourceTree = "<group>"; };
 		4AEFD4C42A136EE100DAB2BD /* HowOnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HowOnboardingViewController.swift; sourceTree = "<group>"; };
 		4AEFD4C72A13908E00DAB2BD /* AlarmSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSettingViewController.swift; sourceTree = "<group>"; };
 		4AEFD4C92A1392DF00DAB2BD /* HowLearningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HowLearningView.swift; sourceTree = "<group>"; };
@@ -254,6 +256,7 @@
 				6F62668A2A04E889000365CD /* Home */,
 				4AD04B3E2A19217B004B7A58 /* Correction */,
 				A3D7ECB82A26566F009857D6 /* MyPage */,
+				4AEB82962A4CB4F900C1114B /* BadgePopup */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -277,14 +280,10 @@
 		37A574B729FE208A00312453 /* UIComponents */ = {
 			isa = PBXGroup;
 			children = (
+				4A1EE9552A4DFB86007BFEF3 /* SmeemComponent */,
+				4A1EE9542A4DFB76007BFEF3 /* Onboarding */,
+				4A1EE9532A4DFB42007BFEF3 /* Diary */,
 				4A3F2E952A0ABB9C00F6AC60 /* Alarm */,
-				37A574DF2A00CDCD00312453 /* SeparationLine.swift */,
-				4A0EA4632A014710006CCE52 /* SmeemButton.swift */,
-				37A574E52A02178D00312453 /* SmeemToastView.swift */,
-				37A574E72A02424F00312453 /* RandomSubjectView.swift */,
-				4AEFD4C92A1392DF00DAB2BD /* HowLearningView.swift */,
-				4AD04B3A2A1905BB004B7A58 /* DiaryScrollerView.swift */,
-				373E38582A2F889500DF96F0 /* DiaryDetailRandomSubjectView.swift */,
 			);
 			path = UIComponents;
 			sourceTree = "<group>";
@@ -484,6 +483,34 @@
 			path = Nickname;
 			sourceTree = "<group>";
 		};
+		4A1EE9532A4DFB42007BFEF3 /* Diary */ = {
+			isa = PBXGroup;
+			children = (
+				4AD04B3A2A1905BB004B7A58 /* DiaryScrollerView.swift */,
+				37A574E72A02424F00312453 /* RandomSubjectView.swift */,
+				373E38582A2F889500DF96F0 /* DiaryDetailRandomSubjectView.swift */,
+				37A574DF2A00CDCD00312453 /* SeparationLine.swift */,
+			);
+			path = Diary;
+			sourceTree = "<group>";
+		};
+		4A1EE9542A4DFB76007BFEF3 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				4AEFD4C92A1392DF00DAB2BD /* HowLearningView.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		4A1EE9552A4DFB86007BFEF3 /* SmeemComponent */ = {
+			isa = PBXGroup;
+			children = (
+				4A0EA4632A014710006CCE52 /* SmeemButton.swift */,
+				37A574E52A02178D00312453 /* SmeemToastView.swift */,
+			);
+			path = SmeemComponent;
+			sourceTree = "<group>";
+		};
 		4A3373F62A461AAC00EFE6C4 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
@@ -643,6 +670,14 @@
 				4AF58CE62A48209500305248 /* VC */,
 			);
 			path = BottomSheet;
+			sourceTree = "<group>";
+		};
+		4AEB82962A4CB4F900C1114B /* BadgePopup */ = {
+			isa = PBXGroup;
+			children = (
+				4AEB82942A4CB4F100C1114B /* BadgePopupViewController.swift */,
+			);
+			path = BadgePopup;
 			sourceTree = "<group>";
 		};
 		4AEFD4C22A136E5F00DAB2BD /* Goal */ = {
@@ -854,6 +889,7 @@
 				6F294A3E2A26177B00856CC8 /* GoalOnboardingViewController.swift in Sources */,
 				4AF58CE92A4820AA00305248 /* AuthModel.swift in Sources */,
 				3761116C2A278D0E0095EC5A /* String+.swift in Sources */,
+				4AEB82952A4CB4F200C1114B /* BadgePopupViewController.swift in Sources */,
 				4A3774842A42E6EA00357DD1 /* SharedConstant.swift in Sources */,
 				6F294A402A26178300856CC8 /* HowOnboardingViewController.swift in Sources */,
 				6FBC856B2A4B1F9200A43F98 /* MyPageViewController.swift in Sources */,

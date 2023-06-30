@@ -37,12 +37,14 @@ final class DiaryScrollerView: UIScrollView {
         case detailDiaryHasRandomSubject
     }
     
-    var viewType: ViewType = .correction {
+    var viewType: ViewType = .detailDiary {
         didSet {
             viewTypeContentViewLayout()
             setDelegate()
         }
     }
+    
+    var lineBreakCount = 0
     
     // MARK: - UI Property
     
@@ -57,6 +59,8 @@ final class DiaryScrollerView: UIScrollView {
         return label
     }()
     
+    private lazy var randomSubjectView = DiaryDetailRandomSubjectView()
+    
     private let contentTextView: UITextView = {
         let textView = UITextView()
         textView.textColor = .black
@@ -65,7 +69,7 @@ final class DiaryScrollerView: UIScrollView {
         textView.isScrollEnabled = false
         textView.text = "I watched Avatar with my boyfriend at Hongdae CGV. I should have skimmed the previous season - Avatar1.. I really couldn’t get what they were saying and the universe(??). What I was annoyed then was 두팔 didn’t know that as me. I think 두팔 who is my boyfriend should study before wathcing…. but Avatar2 is amazing movie I think. In my personal opinion, the jjin main character of Avatar2 is not Sully, but his son. "
         textView.tintColor = .point
-        textView.configureAttributedText()
+//        textView.configureAttributedText()
         return textView
     }()
     
@@ -110,7 +114,9 @@ final class DiaryScrollerView: UIScrollView {
     
     // MARK: - Custom Method
     
-    func configureDiaryScrollerView(contentText: String, date: String, nickname: String) {
+    func configureDiaryScrollerView(topic: String, contentText: String, date: String, nickname: String) {
+        topic != "" ? randomSubjectView.setData(contentText: topic) : print("랜덤주제없음")
+        lineBreakCount = checkDiaryContentLineBreak(contentText: contentText)
         contentTextView.text = contentText
         dateLabel.text = date
         nicknameLabel.text = nickname
@@ -122,12 +128,24 @@ final class DiaryScrollerView: UIScrollView {
                                 y: 0,
                                 width: 339,
                                 height: CGFloat.greatestFiniteMagnitude)
-        
+
         let fixedWidth = textView.frame.size.width
-        let newSize = textView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.greatestFiniteMagnitude))
-        textView.frame.size.height = newSize.height
-        
-        return ceil(newSize.height)
+        let style = NSMutableParagraphStyle()
+        style.lineSpacing = 2.5
+        let attributedString = NSAttributedString(string: textView.text, attributes: [.paragraphStyle: style, .font: UIFont.b4])
+        let newHeight = attributedString.boundingRect(with: CGSize(width: fixedWidth, height: CGFloat.greatestFiniteMagnitude), options: .usesLineFragmentOrigin, context: nil).height
+        textView.attributedText = attributedString
+        textView.sizeToFit()
+
+        return ceil(newHeight)
+    }
+    
+    private func checkDiaryContentLineBreak(contentText: String) -> Int {
+        var lineBreakCount = 0
+        if contentText.contains("\n") {
+            lineBreakCount += 1
+        }
+        return lineBreakCount
     }
     
     private func setDelegate() {
@@ -149,12 +167,15 @@ final class DiaryScrollerView: UIScrollView {
         let detailbottomInset: CGFloat = 78
         let correctionTopInset: CGFloat = 41
         let correctionbottomInset: CGFloat = 78
-            
-        let detailDiaryTotalContentViewHeight = detailDiaryTopInset+detailbottomInset+calculateTextViewHeight(textView: contentTextView)
-        let correctiontextViewTotalHeight = correctionTopInset+correctionbottomInset+calculateTextViewHeight(textView: contentTextView)
+        
+        // bottomInset 값을 주었는데, 이상하게 적용이 안돼서 78을 또 더해줌...
+        let detailDiaryViewHeight = detailDiaryTopInset+detailbottomInset+calculateTextViewHeight(textView: contentTextView)+78
+        // 임의로 한줄일 때의 랜덤주제 높이값 지정
+        let detailDiaryRandomSubjectViewHeight = detailDiaryTopInset+detailbottomInset+calculateTextViewHeight(textView: contentTextView)+62+78
+        let correctiontextViewHeight = correctionTopInset+correctionbottomInset+calculateTextViewHeight(textView: contentTextView)
             
         addSubview(contentView)
-        contentView.addSubviews(correnctionLabel, contentTextView, labelStackView)
+        contentView.addSubviews(correnctionLabel, randomSubjectView, contentTextView, labelStackView)
         labelStackView.addArrangedSubviews(dateLabel, nicknameLabel)
             
         contentView.snp.makeConstraints {
@@ -170,7 +191,7 @@ final class DiaryScrollerView: UIScrollView {
         switch viewType {
         case .correction:
             contentView.snp.makeConstraints {
-                $0.height.equalTo(correctiontextViewTotalHeight)
+                $0.height.equalTo(correctiontextViewHeight)
             }
                 
             contentTextView.snp.makeConstraints {
@@ -181,17 +202,19 @@ final class DiaryScrollerView: UIScrollView {
         case .correctionHasRandomSubject:
             // 랜덤 주제 추가된 레이아웃으로 수정
             contentView.snp.makeConstraints {
-                $0.height.equalTo(correctiontextViewTotalHeight)
+                $0.height.equalTo(correctiontextViewHeight)
             }
+            
         case .detailDiary:
             correnctionLabel.isHidden = true
+            randomSubjectView.isHidden = true
                 
             contentView.snp.makeConstraints {
-                $0.height.equalTo(detailDiaryTotalContentViewHeight)
+                $0.height.equalTo(detailDiaryViewHeight)
             }
                 
             contentTextView.snp.makeConstraints {
-                $0.top.equalToSuperview().inset(16)
+                $0.top.equalToSuperview().inset(8)
                 $0.leading.trailing.equalToSuperview().inset(18)
             }
                 
@@ -200,7 +223,17 @@ final class DiaryScrollerView: UIScrollView {
                 
             // 랜덤 주제 추가된 레이아웃으로 수정
             contentView.snp.makeConstraints {
-                $0.height.equalTo(detailDiaryTotalContentViewHeight)
+                $0.height.equalTo(detailDiaryRandomSubjectViewHeight)
+            }
+            
+            randomSubjectView.snp.makeConstraints {
+                $0.top.leading.equalToSuperview()
+            }
+            
+            contentTextView.snp.makeConstraints {
+                // 텍스트뷰와의 간격을 위해 임의의 값 지정
+                $0.top.equalTo(randomSubjectView.snp.bottom).offset(5)
+                $0.leading.trailing.equalToSuperview().inset(18)
             }
         }
             

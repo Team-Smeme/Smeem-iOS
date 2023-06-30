@@ -123,7 +123,7 @@ extension AlarmCollectionView: UICollectionViewDataSource {
 extension AlarmCollectionView: UICollectionViewDelegateFlowLayout {
     // (cell size, itemSpacing)
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let cellSize = CGSize(width: convertByWidthRatio(47), height: convertByHeightRatio(49))
+        let cellSize = CGSize(width: convertByHeightRatio(47), height: convertByHeightRatio(49))
         return cellSize
     }
     
@@ -133,7 +133,7 @@ extension AlarmCollectionView: UICollectionViewDelegateFlowLayout {
     
     // footer
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        let footerSize = CGSize(width: collectionView.bounds.width, height: convertByHeightRatio(84))
+        let footerSize = CGSize(width: collectionView.frame.width, height: convertByHeightRatio(84))
         return footerSize
     }
     
@@ -141,7 +141,6 @@ extension AlarmCollectionView: UICollectionViewDelegateFlowLayout {
         guard let footerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: DatePickerFooterView.identifier, for: indexPath) as? DatePickerFooterView else { return UICollectionReusableView() }
         
         footerView.trainingTimeClosure = { data in
-//            let dayData = Array(self.selectedDayArray).joined(separator: ",")
             let hoursData = data.hour
             let minuteData = data.minute
             let traingData: (Int, Int) = (hoursData, minuteData)

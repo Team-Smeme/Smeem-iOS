@@ -145,12 +145,12 @@ final class DatePickerFooterView: UICollectionReusableView {
         
         alarmLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalToSuperview().inset(20)
+            $0.top.equalToSuperview().inset(convertByHeightRatio(20))
         }
         
         inputTextField.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(alarmLabel.snp.bottom).offset(4)
+            $0.top.equalTo(alarmLabel.snp.bottom).offset(convertByHeightRatio(4))
         }
     }
 }

@@ -23,7 +23,7 @@ class BadgeListViewController: UIViewController {
     
     private let headerContainerView = UIView()
     
-    private let cancelButton: UIButton = {
+    private lazy var cancelButton: UIButton = {
         let button = UIButton()
         button.setImage(Constant.Image.icnCancelBlack, for: .normal)
         button.addTarget(self, action: #selector(cancelButtonDidtap), for: .touchUpInside)
@@ -53,7 +53,7 @@ class BadgeListViewController: UIViewController {
     
     private let welcomeImage: UIImageView = {
         let image = UIImageView()
-        image.image = Constant.Image.eventBadgeWelcome
+        image.image = Constant.Image.colorWelcomeBadge
         return image
     }()
     
@@ -82,6 +82,7 @@ class BadgeListViewController: UIViewController {
     
     @objc func cancelButtonDidtap() {
         self.navigationController?.popViewController(animated: true)
+        self.presentingViewController?.presentingViewController?.dismiss(animated: true)
     }
     
     // MARK: - Custom Method
@@ -189,7 +190,7 @@ class BadgeListViewController: UIViewController {
         welcomeImage.snp.makeConstraints {
             $0.top.equalTo(welcomeLabel.snp.bottom).offset(convertByHeightRatio(6))
             $0.leading.equalToSuperview().inset(convertByHeightRatio(20))
-            $0.width.height.equalTo(100)
+            $0.width.height.equalTo(convertByHeightRatio(100))
         }
         
         detailWelcomeLabel.snp.makeConstraints {
@@ -262,11 +263,9 @@ extension BadgeListViewController {
                 }
             }
             
-            DispatchQueue.main.async {
-                self.setHeaderViewData()
-                self.setBadgeData()
-                self.badgeListTableView.reloadData()
-            }
+            self.setHeaderViewData()
+            self.setBadgeData()
+            self.badgeListTableView.reloadData()
         }
     }
 }

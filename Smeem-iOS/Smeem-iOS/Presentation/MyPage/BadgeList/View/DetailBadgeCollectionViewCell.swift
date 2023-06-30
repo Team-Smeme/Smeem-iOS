@@ -55,7 +55,7 @@ final class DetailBadgeCollectionViewCell: UICollectionViewCell {
         addSubviews(badgeImage, badgeNameLabel)
         
         badgeImage.snp.makeConstraints {
-            $0.top.leading.trailing.equalToSuperview()
+            $0.top.leading.equalToSuperview()
             $0.width.height.equalTo(100)
         }
         
