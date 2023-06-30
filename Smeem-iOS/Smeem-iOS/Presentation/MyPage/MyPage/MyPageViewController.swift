@@ -184,7 +184,7 @@ final class MyPageViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+
         isShownWelcomeBadgePopup()
     }
     
@@ -227,7 +227,7 @@ final class MyPageViewController: UIViewController {
     
     private func isShownWelcomeBadgePopup() {
         let welcomeBadgePopup = UserDefaultsManager.isShownWelcomeBadgePopup
-        
+
         if !welcomeBadgePopup {
             UserDefaultsManager.isShownWelcomeBadgePopup = true
             let badgePopupVC = BadgePopupViewController()

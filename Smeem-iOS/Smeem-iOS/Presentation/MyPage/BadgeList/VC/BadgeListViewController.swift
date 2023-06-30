@@ -82,6 +82,7 @@ class BadgeListViewController: UIViewController {
     
     @objc func cancelButtonDidtap() {
         self.navigationController?.popViewController(animated: true)
+        self.presentingViewController?.presentingViewController?.dismiss(animated: true)
     }
     
     // MARK: - Custom Method

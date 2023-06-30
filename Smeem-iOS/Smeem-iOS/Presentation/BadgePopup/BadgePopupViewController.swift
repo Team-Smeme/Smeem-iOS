@@ -83,7 +83,12 @@ final class BadgePopupViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        setPopupViewAnimate()
+        appearPopupViewAnimate()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        
+        disappearPopupViewAnimate()
     }
     
     // MARK: - @objc
@@ -93,14 +98,25 @@ final class BadgePopupViewController: UIViewController {
     }
     
     @objc func badgeButtonDidTap() {
-        print("배지 목록 뷰로 이동")
+        let badgeListVC = BadgeListViewController()
+        badgeListVC.modalTransitionStyle = .crossDissolve
+        badgeListVC.modalPresentationStyle = .fullScreen
+        self.present(badgeListVC, animated: true)
     }
     
     // MARK: - Custom Method
     
-    private func setPopupViewAnimate() {
+    private func appearPopupViewAnimate() {
         UIView.animate(withDuration: 0.1, delay: 0.0, options: .curveEaseIn) { [weak self] in
             self?.popupView.transform = .identity
+            self?.popupView.isHidden = false
+        }
+    }
+    
+    private func disappearPopupViewAnimate() {
+        UIView.animate(withDuration: 0.1, delay: 0.0, options: .curveEaseIn) { [weak self] in
+            self?.popupView.transform = .identity
+            self?.popupView.isHidden = true
         }
     }
     
