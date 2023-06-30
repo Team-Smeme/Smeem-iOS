@@ -48,8 +48,8 @@ extension Constant {
         static let btnRandomSubjectActive = UIImage(named: "btnRandomSubjectActive")
         static let btnRandomSubjectInactive = UIImage(named: "btnRandomSubjectInactive")
         static let btnRandomSubjectEnabled = UIImage(named: "btnRandomSubjectEnabled")
-        
-        static let eventBadgeWelcome = UIImage(named: "eventBadgeWelcome")
+
+        static let colorWelcomeBadge = UIImage(named: "colorWelcomeBadge")
         
         static let diaryCountingBadge1st = "diaryCountingBadge1st"
         static let diaryCountingBadge10th = "diaryCountingBadge10th"

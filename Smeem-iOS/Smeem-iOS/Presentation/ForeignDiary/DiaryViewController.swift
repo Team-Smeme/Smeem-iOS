@@ -34,6 +34,8 @@ class DiaryViewController: UIViewController {
     
     var topicID: Int?
     var topicContent = String()
+    var diaryID: Int?
+    var badgePopupContent = [PopupBadge]()
     
     var isTopicCalled: Bool = false
     
@@ -417,8 +419,19 @@ extension DiaryViewController {
     
     func postDiaryAPI() {
         PostDiaryAPI.shared.postDiary(param: PostDiaryRequest(content: inputTextView.text, topicId: topicID)) { response in
-            //            guard let postDiaryResponse = response?.data else { return }
-            //            self.diaryID = postDiaryResponse.
+            guard let postDiaryResponse = response?.data else { return }
+            self.diaryID = postDiaryResponse.diaryID
+            
+            if !postDiaryResponse.badges.isEmpty {
+                self.badgePopupContent = postDiaryResponse.badges
+            } else {
+                self.badgePopupContent = []
+            }
+            
+            let homeVC = HomeViewController()
+            homeVC.badgePopupData = self.badgePopupContent
+            let rootVC = UINavigationController(rootViewController: homeVC)
+            self.changeRootViewControllerAndPresent(rootVC)
         }
     }
 }

@@ -20,6 +20,8 @@ final class HomeViewController: UIViewController {
     private var writtenDaysStringList = [String]()
     private var currentDate = Date()
     
+    var badgePopupData = [PopupBadge]()
+    
     // MARK: - UI Property
     
     private lazy var calendar: FSCalendar = {
@@ -169,6 +171,7 @@ final class HomeViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         homeDiaryWithAPI(start: Date().startOfMonth().addingDate(addValue: -7), end: Date().endOfMonth().addingDate(addValue: 7))
+        checkPopupView()
     }
     
     // MARK: - @objc
@@ -230,6 +233,16 @@ final class HomeViewController: UIViewController {
         diaryDate.text = homeDiaryDict[currentDate.toString("yyyy-MM-dd")]?.createdTime.formatted("h : mm a")
         diaryText.setTextWithLineHeight(lineHeight: 22)
         diaryText.lineBreakMode = .byTruncatingTail
+    }
+    
+    private func checkPopupView() {
+        if !badgePopupData.isEmpty {
+            let popupVC = BadgePopupViewController()
+            popupVC.setData(self.badgePopupData)
+            popupVC.modalTransitionStyle = .crossDissolve
+            popupVC.modalPresentationStyle = .overCurrentContext
+            self.present(popupVC, animated: true)
+        }
     }
     
     // MARK: - Layout
