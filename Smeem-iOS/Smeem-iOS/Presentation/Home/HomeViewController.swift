@@ -20,7 +20,7 @@ final class HomeViewController: UIViewController {
     private var writtenDaysStringList = [String]()
     private var currentDate = Date()
     
-    var badgePopupData: [PopupBadge]?
+    var badgePopupData = [PopupBadge]()
     
     // MARK: - UI Property
     
@@ -236,14 +236,13 @@ final class HomeViewController: UIViewController {
     }
     
     private func checkPopupView() {
-        if badgePopupData != nil {
+        if !badgePopupData.isEmpty {
             let popupVC = BadgePopupViewController()
-            popupVC.setData(self.badgePopupData!)
+            popupVC.setData(self.badgePopupData)
             popupVC.modalTransitionStyle = .crossDissolve
             popupVC.modalPresentationStyle = .overCurrentContext
             self.present(popupVC, animated: true)
         }
-        badgePopupData = nil
     }
     
     // MARK: - Layout

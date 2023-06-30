@@ -35,7 +35,7 @@ class DiaryViewController: UIViewController {
     var topicID: Int?
     var topicContent = String()
     var diaryID: Int?
-    var badgePopupContent: [PopupBadge]?
+    var badgePopupContent = [PopupBadge]()
     
     var isTopicCalled: Bool = false
     
@@ -420,14 +420,12 @@ extension DiaryViewController {
     func postDiaryAPI() {
         PostDiaryAPI.shared.postDiary(param: PostDiaryRequest(content: inputTextView.text, topicId: topicID)) { response in
             guard let postDiaryResponse = response?.data else { return }
-            print("여거는 어케 오고 잇카요?", postDiaryResponse)
             self.diaryID = postDiaryResponse.diaryID
-            print("여기는 괜춘??", postDiaryResponse.badges)
             
-            if postDiaryResponse.badges != nil {
+            if !postDiaryResponse.badges.isEmpty {
                 self.badgePopupContent = postDiaryResponse.badges
             } else {
-                self.badgePopupContent = nil
+                self.badgePopupContent = []
             }
             
             let homeVC = HomeViewController()
