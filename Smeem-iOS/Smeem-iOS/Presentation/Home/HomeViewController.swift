@@ -167,6 +167,7 @@ final class HomeViewController: UIViewController {
         setLayout()
         setDelegate()
         setSwipe()
+        print(UserDefaultsManager.betaLoginToken, "뭐암???")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -243,6 +244,7 @@ final class HomeViewController: UIViewController {
             popupVC.modalPresentationStyle = .overCurrentContext
             self.present(popupVC, animated: true)
         }
+        badgePopupData = []
     }
     
     // MARK: - Layout

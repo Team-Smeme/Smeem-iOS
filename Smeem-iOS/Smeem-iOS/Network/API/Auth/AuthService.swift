@@ -30,6 +30,6 @@ extension AuthService: TargetType {
     }
     
     var headers: [String : String]? {
-        return NetworkConstant.betaTestHeader
+        return NetworkConstant.noTokenHeader
     }
 }

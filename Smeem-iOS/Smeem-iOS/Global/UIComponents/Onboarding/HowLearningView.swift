@@ -162,6 +162,14 @@ final class HowLearningView: UIView {
         }
     }
     
+    func setData(planName: String, planWayOne: String, planWayTwo: String, detailPlanOne: String, detailPlanTwo: String) {
+        selectedMyGoalLabel.text = planName
+        firstSelectedLearningHowLabel.text = planWayOne
+        secondSelectedLearningHowLabel.text = planWayTwo
+        firstDetailLabel.text = detailPlanOne
+        secondDetailLabel.text = detailPlanTwo
+    }
+    
     // MARK: - Layout
     
     private func setUI() {

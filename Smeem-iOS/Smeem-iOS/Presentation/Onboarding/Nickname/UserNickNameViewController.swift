@@ -77,6 +77,11 @@ final class UserNicknameViewController: UIViewController {
         setTextFieldDelegate()
         showKeyboard(textView: nicknameTextField)
         addTextFieldNotification()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
         userPlanPatchAPI(userPlan: userPlanRequest!)
     }
     
