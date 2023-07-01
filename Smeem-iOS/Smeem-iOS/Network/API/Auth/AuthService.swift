@@ -26,7 +26,7 @@ extension AuthService: TargetType {
     }
     
     var task: Moya.Task {
-        return .requestPlain
+        return .requestJSONEncodable(UserDefaultsManager.fcmToken)
     }
     
     var headers: [String : String]? {

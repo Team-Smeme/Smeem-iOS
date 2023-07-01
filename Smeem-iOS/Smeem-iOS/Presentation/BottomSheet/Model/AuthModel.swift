@@ -9,4 +9,5 @@ import Foundation
 
 struct BetaTestResponse: Codable {
     let accessToken: String
+    let badges: [Badge]
 }

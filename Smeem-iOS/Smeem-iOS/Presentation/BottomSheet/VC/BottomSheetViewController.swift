@@ -105,7 +105,6 @@ extension BottomSheetViewController {
             guard let token = response.data?.accessToken else { return }
             UserDefaultsManager.betaLoginToken = token
             
-            print(UserDefaultsManager.betaLoginToken, "값이 담긴 거야, 뭐야?")
             let userNicknameVC = UserNicknameViewController()
             userNicknameVC.userPlanRequest = self.userPlanRequest
             self.navigationController?.pushViewController(userNicknameVC, animated: true)

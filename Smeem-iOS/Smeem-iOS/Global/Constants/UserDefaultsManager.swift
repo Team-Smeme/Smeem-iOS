@@ -37,4 +37,9 @@ struct UserDefaultsManager {
         get { return UserDefaults.standard.bool(forKey: "isShownWelcomeBadgePopup")}
         set { UserDefaults.standard.set(newValue, forKey: "isShownWelcomeBadgePopup")}
     }
+    
+    static var fcmToken: String {
+        get { return UserDefaults.standard.string(forKey: "fcmToken") ?? ""}
+        set { UserDefaults.standard.set(newValue, forKey: "fcmToken")}
+    }
 }
