@@ -61,7 +61,6 @@ final class DiaryDetailRandomSubjectView: UIView {
         
         if let heightConstraint = heightConstraint {
             let newHeight: CGFloat = contentLabelHeight <= 22 ? 62 : contentLabelHeight + 40
-            print(newHeight, "그치???")
             heightConstraint.update(offset: newHeight)
         }
         

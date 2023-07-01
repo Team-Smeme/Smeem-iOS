@@ -12,7 +12,7 @@ struct MyPageInfo: Codable {
     let targetLang: String
     var hasPushAlarm: Bool
     let trainingTime: TrainingTime
-    let badges: [Badge]
+    let badge: Badge
 }
 
 struct Badge: Codable {
