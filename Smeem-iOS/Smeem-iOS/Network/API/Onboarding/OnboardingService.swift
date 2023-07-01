@@ -9,6 +9,8 @@ import Foundation
 import Moya
 
 enum OnboardingService {
+    case planList
+    case detailPlanList(param: String)
     case userPlan(param: UserPlanRequest)
     case nickname(param: NicknameRequest)
 }
@@ -16,15 +18,21 @@ enum OnboardingService {
 extension OnboardingService: BaseTargetType {
     var path: String {
         switch self {
+        case .planList:
+            return URLConstant.planListURL
+        case .detailPlanList(let type):
+            return URLConstant.planListURL+"/\(type)"
         case .userPlan:
-            return "/members/plan"
+            return URLConstant.userPlanURL
         case .nickname:
-            return "/members"
+            return URLConstant.userURL
         }
     }
     
     var method: Moya.Method {
         switch self {
+        case .planList, .detailPlanList:
+            return .get
         case .userPlan, .nickname:
             return .patch
         }
@@ -32,6 +40,8 @@ extension OnboardingService: BaseTargetType {
     
     var task: Moya.Task {
         switch self {
+        case .planList, .detailPlanList:
+            return .requestPlain
         case .userPlan(let param):
             return .requestJSONEncodable(param)
         case .nickname(let param):
@@ -40,6 +50,11 @@ extension OnboardingService: BaseTargetType {
     }
     
     var headers: [String : String]? {
-        return NetworkConstant.tempTokenHeader
+        switch self {
+        case .planList, .detailPlanList:
+            return NetworkConstant.noTokenHeader
+        case .userPlan, .nickname:
+            return NetworkConstant.tempTokenHeader
+        }
     }
 }

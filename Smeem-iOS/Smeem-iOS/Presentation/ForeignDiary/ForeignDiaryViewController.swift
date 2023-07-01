@@ -27,9 +27,10 @@ final class ForeignDiaryViewController: DiaryViewController {
     override func rightNavigationButtonDidTap() {
         if rightNavigationButton.titleLabel?.textColor == .point {
             postDiaryAPI()
-            
-            let HomeViewController = UINavigationController(rootViewController: HomeViewController())
-            changeRootViewControllerAndPresent(HomeViewController)
+            let homeVC = HomeViewController()
+            homeVC.badgePopupData = self.badgePopupContent
+            let rootVC = UINavigationController(rootViewController: homeVC)
+            changeRootViewControllerAndPresent(rootVC)
         } else {
             showToastIfNeeded(toastType: .defaultToast(bodyType: .regEx))
         }

@@ -37,9 +37,8 @@ final class DetailDiaryViewController: UIViewController {
         return button
     }()
     
-    private let diaryScrollerView: DiaryScrollerView = {
+    let diaryScrollerView: DiaryScrollerView = {
         let scrollerView = DiaryScrollerView()
-        scrollerView.viewType = .detailDiary
         return scrollerView
     }()
     
@@ -51,9 +50,14 @@ final class DetailDiaryViewController: UIViewController {
         setBackgroundColor()
         setLayout()
         detailDiaryWithAPI(diaryID: diaryId)
+        swipeRecognizer()
     }
     
     // MARK: - @objc
+    
+    @objc func responseToSwipeGesture() {
+        self.navigationController?.popViewController(animated: true)
+    }
     
     @objc func backButtonDidTap(_ sender: UIButton) {
         self.navigationController?.popViewController(animated: true)
@@ -86,23 +90,22 @@ final class DetailDiaryViewController: UIViewController {
     // MARK: - Custom Method
     
     private func setData() {
-        let formattedDate = formatDate(dateCreated)
-        diaryScrollerView.configureDiaryScrollerView(contentText: diaryContent, date: formattedDate, nickname: userName)
+        diaryScrollerView.configureDiaryScrollerView(topic: isRandomTopic, contentText: diaryContent, date: dateCreated, nickname: userName)
     }
     
-    func formatDate(_ dateString: String) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
-        dateFormatter.locale = Locale(identifier: "ko_KR")
-
-        guard let date = dateFormatter.date(from: dateString) else { return "Invalid date" }
-        dateFormatter.dateFormat = "yyyy년 MM월 dd일 hh:mm a"
-        dateFormatter.amSymbol = "AM"
-        dateFormatter.pmSymbol = "PM"
-        
-        return dateFormatter.string(from: date)
+    private func swipeRecognizer() {
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(responseToSwipeGesture))
+        swipeRight.direction = UISwipeGestureRecognizer.Direction.right
+        self.view.addGestureRecognizer(swipeRight)
     }
-
+    
+    private func setScrollerViewType() {
+        if isRandomTopic == "" {
+            diaryScrollerView.viewType = .detailDiary
+        } else if isRandomTopic != "" {
+            diaryScrollerView.viewType = .detailDiaryHasRandomSubject
+        }
+    }
     
     // MARK: - Layout
     
@@ -151,6 +154,7 @@ extension DetailDiaryViewController {
             self.dateCreated = detailDiaryData.createdAt
             self.userName = detailDiaryData.username
             self.setData()
+            self.setScrollerViewType()
         }
     }
 }

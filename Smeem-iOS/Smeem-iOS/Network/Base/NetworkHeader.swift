@@ -12,7 +12,7 @@ enum NetworkConstant {
     static let tempTokenHeader = ["Content-Type": "application/json",
                                   "Authorization": "Bearer "+(UserDefaultsManager.betaLoginToken)]
     
-    static let betaTestHeader = ["Content-Type": "application/json",
+    static let noTokenHeader = ["Content-Type": "application/json",
                                   "Authorization": ""]
     
     static let papagoHeader = ["Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",

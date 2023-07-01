@@ -132,7 +132,6 @@ final class RandomSubjectView: UIView {
         contentLabel.snp.makeConstraints {
             $0.top.equalTo(questionLabel)
             $0.leading.equalTo(questionLabel)
-            $0.width.equalToSuperview().offset(convertByWidthRatio(-36))
         }
         
         refreshButton.snp.makeConstraints {

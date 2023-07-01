@@ -13,6 +13,7 @@ final class UserNicknameViewController: UIViewController {
     
     var userPlanRequest: UserPlanRequest?
     var checkDouble = Bool()
+    var badgeListData: [PopupBadge]?
     
     // MARK: - UI Property
     
@@ -77,6 +78,11 @@ final class UserNicknameViewController: UIViewController {
         setTextFieldDelegate()
         showKeyboard(textView: nicknameTextField)
         addTextFieldNotification()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
         userPlanPatchAPI(userPlan: userPlanRequest!)
     }
     
@@ -91,8 +97,9 @@ final class UserNicknameViewController: UIViewController {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
             if self.checkDouble {
-                let HomeVC = HomeViewController()
-                self.changeRootViewController(HomeVC)
+                let homeVC = HomeViewController()
+                homeVC.badgePopupData = self.badgeListData ?? []
+                self.changeRootViewController(homeVC)
             } else {
                 self.nextButton.smeemButtonType = .notEnabled
                 self.doubleCheckLabel.isHidden = false
@@ -144,35 +151,35 @@ final class UserNicknameViewController: UIViewController {
                          doubleCheckLabel, nextButton)
         
         titleNicknameLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(120)
-            $0.leading.equalToSuperview().inset(26)
+            $0.top.equalToSuperview().inset(convertByHeightRatio(120))
+            $0.leading.equalToSuperview().inset(convertByHeightRatio(26))
         }
         
         detailNicknameLabel.snp.makeConstraints {
-            $0.top.equalTo(titleNicknameLabel.snp.bottom).offset(6)
-            $0.leading.equalToSuperview().inset(26)
+            $0.top.equalTo(titleNicknameLabel.snp.bottom).offset(convertByHeightRatio(6))
+            $0.leading.equalToSuperview().inset(convertByHeightRatio(26))
         }
         
         nicknameTextField.snp.makeConstraints {
-            $0.top.equalTo(detailNicknameLabel.snp.bottom).offset(28)
-            $0.leading.trailing.equalToSuperview().inset(26)
+            $0.top.equalTo(detailNicknameLabel.snp.bottom).offset(convertByHeightRatio(28))
+            $0.leading.trailing.equalToSuperview().inset(convertByHeightRatio(26))
             $0.height.equalTo(convertByHeightRatio(60))
         }
         
         doubleCheckLabel.snp.makeConstraints {
-            $0.top.equalTo(nicknameTextField.snp.bottom).offset(10)
-            $0.left.equalToSuperview().inset(20)
+            $0.top.equalTo(nicknameTextField.snp.bottom).offset(convertByHeightRatio(10))
+            $0.leading.equalToSuperview().inset(convertByHeightRatio(26))
         }
         
         nicknameLimitLabel.snp.makeConstraints {
-            $0.top.equalTo(nicknameTextField.snp.bottom).offset(10)
-            $0.trailing.equalToSuperview().inset(26)
+            $0.top.equalTo(nicknameTextField.snp.bottom).offset(convertByHeightRatio(10))
+            $0.trailing.equalToSuperview().inset(convertByHeightRatio(26))
         }
         
         nextButton.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(18)
+            $0.leading.trailing.equalToSuperview().inset(convertByHeightRatio(18))
             $0.height.equalTo(convertByHeightRatio(60))
-            $0.bottom.equalToSuperview().inset(336+10)
+            $0.bottom.equalToSuperview().inset(convertByHeightRatio(336+10))
         }
     }
 }

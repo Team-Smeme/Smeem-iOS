@@ -136,13 +136,13 @@ final class AlarmSettingViewController: UIViewController {
                 print("Push: 권한 허용")
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
 //                    self.userPlanPatchAPICall(target: "DEVELOP", hasAlarm: true)
-                    self.presentBottomSheet(target: "DEVELOP", hasAlarm: true)
+                    self.presentBottomSheet(target: self.targetData, hasAlarm: true)
                 }
             } else {
                 print("Push: 권한 거부")
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
 //                    self.userPlanPatchAPICall(target: "DEVELOP", hasAlarm: true)
-                    self.presentBottomSheet(target: "DEVELOP", hasAlarm: false)
+                    self.presentBottomSheet(target: self.targetData, hasAlarm: false)
                 }
             }
         })
@@ -223,41 +223,42 @@ final class AlarmSettingViewController: UIViewController {
         timeSettingLabelStackView.addArrangedSubviews(titleTimeSettingLabel, deatilTimeSettingLabel)
         
         nowStepOneLabel.snp.makeConstraints {
-            $0.leading.equalToSuperview().inset(26)
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(36)
+            $0.leading.equalToSuperview().inset(convertByHeightRatio(26))
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(convertByHeightRatio(36))
         }
         
         divisionLabel.snp.makeConstraints {
-            $0.leading.equalTo(nowStepOneLabel.snp.trailing).offset(2)
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(40)
+            $0.leading.equalTo(nowStepOneLabel.snp.trailing).offset(convertByHeightRatio(2))
+            $0.top.equalTo(view.safeAreaLayoutGuide).inset(convertByHeightRatio(40))
         }
         
         totalStepLabel.snp.makeConstraints {
-            $0.leading.equalTo(divisionLabel.snp.trailing).offset(1)
+            $0.leading.equalTo(divisionLabel.snp.trailing).offset(convertByHeightRatio(1))
             $0.top.equalTo(divisionLabel.snp.top)
         }
         
         timeSettingLabelStackView.snp.makeConstraints {
-            $0.leading.equalToSuperview().inset(26)
-            $0.top.equalTo(totalStepLabel.snp.bottom).offset(19)
+            $0.leading.equalToSuperview().inset(convertByHeightRatio(26))
+            $0.top.equalTo(totalStepLabel.snp.bottom).offset(convertByHeightRatio(19))
         }
         
         alarmCollectionView.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(23)
             $0.top.equalTo(timeSettingLabelStackView.snp.bottom).offset(28)
+            $0.leading.equalToSuperview().inset(convertByWidthRatio(23))
+            $0.centerX.equalToSuperview()
             $0.height.equalTo(convertByHeightRatio(133))
         }
         
         completeButton.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(18)
-            $0.bottom.equalToSuperview().inset(50)
+            $0.leading.trailing.equalToSuperview().inset(convertByHeightRatio(18))
+            $0.bottom.equalToSuperview().inset(convertByHeightRatio(50))
             $0.height.equalTo(convertByHeightRatio(60))
         }
         
         laterButton.snp.makeConstraints {
-            $0.bottom.equalTo(completeButton.snp.top).offset(-19)
+            $0.bottom.equalTo(completeButton.snp.top).offset(convertByHeightRatio(-19))
             $0.centerX.equalToSuperview()
-            $0.height.equalTo(19)
+            $0.height.equalTo(convertByHeightRatio(19))
         }
     }
 }

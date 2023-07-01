@@ -13,7 +13,7 @@ final class MyPageViewController: UIViewController {
     
     // MARK: - Property
     
-    private var userInfo = MyPageInfo(username: "", target: "", way: "", detail: "", targetLang: "", hasPushAlarm: true, trainingTime: TrainingTime(day: "", hour: 0, minute: 0), badges: [])  
+    private var userInfo = MyPageInfo(username: "", target: "", way: "", detail: "", targetLang: "", hasPushAlarm: true, trainingTime: TrainingTime(day: "", hour: 0, minute: 0), badge: Badge(id: 0, name: "", type: "", imageURL: ""))
     
     // MARK: - UI Property
     
@@ -77,7 +77,7 @@ final class MyPageViewController: UIViewController {
         return badgeLabel
     }()
     
-    private let badgeContainer: UIView = {
+    private lazy var badgeContainer: UIView = {
         let badgeContainer = UIView()
         badgeContainer.backgroundColor = .clear
         badgeContainer.layer.borderWidth = 1.5
@@ -86,9 +86,10 @@ final class MyPageViewController: UIViewController {
         return badgeContainer
     }()
     
-    private let badgeImage: UIImageView = {
+    private lazy var badgeImage: UIImageView = {
         let image = UIImageView()
-        image.backgroundColor = .gray600
+        image.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(badgeImageDidTap)))
+        image.isUserInteractionEnabled = true
         return image
     }()
     
@@ -102,7 +103,6 @@ final class MyPageViewController: UIViewController {
     
     private let badgeSummaryLabel: UILabel = {
         let badgeSummaryLabel = UILabel()
-        badgeSummaryLabel.text = "축하해요! 웰컴 배지를 획득했어요!"
         badgeSummaryLabel.font = .b4
         badgeSummaryLabel.textColor = .gray600
         return badgeSummaryLabel
@@ -166,12 +166,17 @@ final class MyPageViewController: UIViewController {
     
     private lazy var alarmPushToggleButton: UIButton = {
         let button = UIButton()
+        button.isUserInteractionEnabled = false
         button.setImage(Constant.Image.btnToggleActive, for: .normal)
         button.addTarget(self, action: #selector(pushButtonDidTap(_:)), for: .touchUpInside)
         return button
     }()
     
-    private lazy var alarmCollectionView = AlarmCollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    private lazy var alarmCollectionView: AlarmCollectionView = {
+        let collectionView = AlarmCollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        collectionView.isUserInteractionEnabled = false
+        return collectionView
+    }()
     
     // MARK: - Life Cycle
     
@@ -179,6 +184,14 @@ final class MyPageViewController: UIViewController {
         super.viewDidLoad()
     
         setLayout()
+        myPageInfoAPI()
+        swipeRecognizer()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+//        isShownWelcomeBadgePopup()
         myPageInfoAPI()
     }
     
@@ -204,11 +217,47 @@ final class MyPageViewController: UIViewController {
         alarmPushToggleButton.setImage(image, for: .normal)
     }
     
+    @objc func badgeImageDidTap() {
+        let badgeListVC = BadgeListViewController()
+        self.navigationController?.pushViewController(badgeListVC, animated: true)
+    }
+    
+    @objc func responseToSwipeGesture() {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
     // MARK: - Custom Method
     
     private func setData() {
+        let planNameList = userInfo.way.split(separator: "이상 ").map{String($0)}
+        let planWayOne = planNameList[0] + " 이상"
+        let planWayTwo = planNameList[1]
+        let detailPlan = userInfo.detail.split(separator: "\n").map{String($0)}
+        
+        howLearningView.setData(planName: userInfo.target, planWayOne: planWayOne, planWayTwo: planWayTwo, detailPlanOne: detailPlan[0], detailPlanTwo: detailPlan[1])
         nickNameLabel.text = userInfo.username
-        //badgeImage.updateServerImage(userInfo.i
+        let url = URL(string: userInfo.badge.imageURL)
+        badgeImage.kf.setImage(with: url)
+        badgeNameLabel.text = (userInfo.badge.name)
+        badgeSummaryLabel.text = "축하해요! \(userInfo.badge.name)를 획득했어요!"
+    }
+    
+//    private func isShownWelcomeBadgePopup() {
+//        let welcomeBadgePopup = UserDefaultsManager.isShownWelcomeBadgePopup
+//
+//        if !welcomeBadgePopup {
+//            UserDefaultsManager.isShownWelcomeBadgePopup = true
+//            let badgePopupVC = BadgePopupViewController()
+//            badgePopupVC.modalTransitionStyle = .crossDissolve
+//            badgePopupVC.modalPresentationStyle = .overFullScreen
+//            self.present(badgePopupVC, animated: true)
+//        }
+//    }
+    
+    private func swipeRecognizer() {
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(responseToSwipeGesture))
+        swipeRight.direction = UISwipeGestureRecognizer.Direction.right
+        self.view.addGestureRecognizer(swipeRight)
     }
     
     // MARK: - Layout
