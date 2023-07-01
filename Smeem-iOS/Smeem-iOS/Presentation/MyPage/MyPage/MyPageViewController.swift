@@ -13,7 +13,7 @@ final class MyPageViewController: UIViewController {
     
     // MARK: - Property
     
-    private var userInfo = MyPageInfo(username: "", target: "", way: "", detail: "", targetLang: "", hasPushAlarm: true, trainingTime: TrainingTime(day: "", hour: 0, minute: 0), badges: [])
+    private var userInfo = MyPageInfo(username: "", target: "", way: "", detail: "", targetLang: "", hasPushAlarm: true, trainingTime: TrainingTime(day: "", hour: 0, minute: 0), badge: Badge(id: 0, name: "", type: "", imageURL: ""))
     
     // MARK: - UI Property
     
@@ -191,7 +191,8 @@ final class MyPageViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        isShownWelcomeBadgePopup()
+//        isShownWelcomeBadgePopup()
+        myPageInfoAPI()
     }
     
     // MARK: - @objc
@@ -235,23 +236,23 @@ final class MyPageViewController: UIViewController {
         
         howLearningView.setData(planName: userInfo.target, planWayOne: planWayOne, planWayTwo: planWayTwo, detailPlanOne: detailPlan[0], detailPlanTwo: detailPlan[1])
         nickNameLabel.text = userInfo.username
-        let url = URL(string: userInfo.badges[0].imageURL)
+        let url = URL(string: userInfo.badge.imageURL)
         badgeImage.kf.setImage(with: url)
-        badgeNameLabel.text = (userInfo.badges[0].name)
-        badgeSummaryLabel.text = "축하해요! \(userInfo.badges[0].name)를 획득했어요!"
+        badgeNameLabel.text = (userInfo.badge.name)
+        badgeSummaryLabel.text = "축하해요! \(userInfo.badge.name)를 획득했어요!"
     }
     
-    private func isShownWelcomeBadgePopup() {
-        let welcomeBadgePopup = UserDefaultsManager.isShownWelcomeBadgePopup
-
-        if !welcomeBadgePopup {
-            UserDefaultsManager.isShownWelcomeBadgePopup = true
-            let badgePopupVC = BadgePopupViewController()
-            badgePopupVC.modalTransitionStyle = .crossDissolve
-            badgePopupVC.modalPresentationStyle = .overFullScreen
-            self.present(badgePopupVC, animated: true)
-        }
-    }
+//    private func isShownWelcomeBadgePopup() {
+//        let welcomeBadgePopup = UserDefaultsManager.isShownWelcomeBadgePopup
+//
+//        if !welcomeBadgePopup {
+//            UserDefaultsManager.isShownWelcomeBadgePopup = true
+//            let badgePopupVC = BadgePopupViewController()
+//            badgePopupVC.modalTransitionStyle = .crossDissolve
+//            badgePopupVC.modalPresentationStyle = .overFullScreen
+//            self.present(badgePopupVC, animated: true)
+//        }
+//    }
     
     private func swipeRecognizer() {
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(responseToSwipeGesture))
@@ -410,8 +411,10 @@ final class MyPageViewController: UIViewController {
 extension MyPageViewController {
     func myPageInfoAPI() {
         MyPageAPI.shared.myPageInfo() { response in
+            print("오ㅔ 없냐구", response)
             guard let myPageInfo = response?.data else { return }
             self.userInfo = myPageInfo
+            print("오ㅔ 없냐구", myPageInfo)
             self.setData()
         }
     }
