@@ -101,7 +101,7 @@ final class BottomSheetViewController: UIViewController, LoginDelegate {
 
 extension BottomSheetViewController {
     private func betaLoginAPI() {
-        AuthAPI.shared.betaTestLoginAPI() { response in
+        AuthAPI.shared.betaTestLoginAPI(param: BetaTestRequest(fcmToken: UserDefaultsManager.fcmToken)) { response in
             guard let token = response.data?.accessToken else { return }
             UserDefaultsManager.betaLoginToken = token
             

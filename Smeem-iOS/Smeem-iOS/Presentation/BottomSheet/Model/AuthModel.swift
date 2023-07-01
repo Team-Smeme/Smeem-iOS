@@ -7,6 +7,10 @@
 
 import Foundation
 
+struct BetaTestRequest: Codable {
+    let fcmToken: String
+}
+
 struct BetaTestResponse: Codable {
     let accessToken: String
     let badges: [Badge]

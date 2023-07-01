@@ -9,7 +9,7 @@ import Foundation
 import Moya
 
 enum AuthService {
-    case beta
+    case beta(param: BetaTestRequest)
 }
 
 extension AuthService: TargetType {
@@ -26,7 +26,10 @@ extension AuthService: TargetType {
     }
     
     var task: Moya.Task {
-        return .requestJSONEncodable(UserDefaultsManager.fcmToken)
+        switch self {
+        case .beta(let param):
+            return .requestJSONEncodable(param)
+        }
     }
     
     var headers: [String : String]? {
