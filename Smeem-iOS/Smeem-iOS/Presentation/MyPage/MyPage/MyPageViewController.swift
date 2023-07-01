@@ -411,10 +411,8 @@ final class MyPageViewController: UIViewController {
 extension MyPageViewController {
     func myPageInfoAPI() {
         MyPageAPI.shared.myPageInfo() { response in
-            print("오ㅔ 없냐구", response)
             guard let myPageInfo = response?.data else { return }
             self.userInfo = myPageInfo
-            print("오ㅔ 없냐구", myPageInfo)
             self.setData()
         }
     }
