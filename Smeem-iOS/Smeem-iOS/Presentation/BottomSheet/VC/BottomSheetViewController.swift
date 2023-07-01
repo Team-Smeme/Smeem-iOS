@@ -17,6 +17,7 @@ final class BottomSheetViewController: UIViewController, LoginDelegate {
     var defaultSignUpHeight: CGFloat = 394
     
     var betaAccessToken = UserDefaultsManager.betaLoginToken
+    var popupBadgeData: [PopupBadge]?
     var userPlanRequest: UserPlanRequest?
     
     // MARK: - UI Property
@@ -102,11 +103,13 @@ final class BottomSheetViewController: UIViewController, LoginDelegate {
 extension BottomSheetViewController {
     private func betaLoginAPI() {
         AuthAPI.shared.betaTestLoginAPI(param: BetaTestRequest(fcmToken: UserDefaultsManager.fcmToken)) { response in
-            guard let token = response.data?.accessToken else { return }
-            UserDefaultsManager.betaLoginToken = token
+            guard let data = response.data else { return }
+            UserDefaultsManager.betaLoginToken = data.accessToken
+            self.popupBadgeData = [PopupBadge(name: data.badges[0].name, imageURL: data.badges[0].imageURL)]
             
             let userNicknameVC = UserNicknameViewController()
             userNicknameVC.userPlanRequest = self.userPlanRequest
+            userNicknameVC.badgeListData = self.popupBadgeData
             self.navigationController?.pushViewController(userNicknameVC, animated: true)
         }
     }

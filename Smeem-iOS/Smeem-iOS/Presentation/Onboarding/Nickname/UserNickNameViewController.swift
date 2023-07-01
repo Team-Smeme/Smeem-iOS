@@ -13,6 +13,7 @@ final class UserNicknameViewController: UIViewController {
     
     var userPlanRequest: UserPlanRequest?
     var checkDouble = Bool()
+    var badgeListData: [PopupBadge]?
     
     // MARK: - UI Property
     
@@ -96,8 +97,9 @@ final class UserNicknameViewController: UIViewController {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
             if self.checkDouble {
-                let HomeVC = HomeViewController()
-                self.changeRootViewController(HomeVC)
+                let homeVC = HomeViewController()
+                homeVC.badgePopupData = self.badgeListData ?? []
+                self.changeRootViewController(homeVC)
             } else {
                 self.nextButton.smeemButtonType = .notEnabled
                 self.doubleCheckLabel.isHidden = false
