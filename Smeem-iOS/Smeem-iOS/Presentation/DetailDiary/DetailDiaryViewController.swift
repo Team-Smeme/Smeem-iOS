@@ -79,7 +79,8 @@ final class DetailDiaryViewController: UIViewController {
     @objc func showAlert() {
         let alert = UIAlertController(title: "일기를 삭제할까요?", message: "", preferredStyle: .alert)
         let delete = UIAlertAction(title: "확인", style: .destructive) { (action) in
-            // 삭제를 처리하는 코드
+            self.deleteDiaryWithAPI(diaryID: self.diaryId)
+            self.changeRootViewControllerAndPresent(HomeViewController())
         }
         let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
         alert.addAction(delete)
@@ -155,6 +156,11 @@ extension DetailDiaryViewController {
             self.userName = detailDiaryData.username
             self.setData()
             self.setScrollerViewType()
+        }
+    }
+    
+    func deleteDiaryWithAPI(diaryID: Int) {
+        DetailDiaryAPI.shared.deleteDiary(diaryID: diaryId) { _ in
         }
     }
 }

@@ -28,4 +28,16 @@ final class DetailDiaryAPI {
             }
         }
     }
+    
+    func deleteDiary(diaryID: Int, complention: @escaping (GeneralResponse<String>?) -> Void) {
+        detailDiaryProvider.request(.deleteDiary(diaryID: diaryID)) { response in
+            switch response {
+            case .success(_):
+                print(response)
+            case .failure(let err):
+                print(err)
+            }
+        }
+        
+    }
 }
