@@ -112,16 +112,16 @@ final class SmeemToastView: UIView {
     
     // MARK: - Custom Method
     
-    //    public func show(duration: TimeInterval = 0.7) {
-    //        UIView.animate(withDuration: 0.3, animations: {
-    //            self.alpha = 1
-    //        })
-    //        UIView.animate(withDuration: 0.3, delay: duration, animations: {
-    //            self.alpha = 0
-    //        }) { _ in
-    //            self.removeFromSuperview()
-    //        }
-    //    }
+        public func show(duration: TimeInterval = 0.7) {
+            UIView.animate(withDuration: 0.3, animations: {
+                self.alpha = 1
+            })
+            UIView.animate(withDuration: 0.3, delay: duration, animations: {
+                self.alpha = 0
+            }) { _ in
+                self.removeFromSuperview()
+            }
+        }
     
     // MARK: - Layout
     
