@@ -119,7 +119,7 @@ final class RandomSubjectView: UIView {
         }
         
         snp.makeConstraints {
-                heightConstraint = $0.height.equalTo(128).constraint
+                heightConstraint = $0.height.equalTo(110).constraint
             }
         
         addSubviews(questionLabel, contentLabel, refreshButton)
