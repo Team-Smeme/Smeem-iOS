@@ -21,11 +21,21 @@ final class StepOneKoreanDiaryViewController: DiaryViewController {
     
     // MARK: - @objc
     
+    override func leftNavigationButtonDidTap() {
+        handleLeftNavigationButton()
+    }
+    
     override func rightNavigationButtonDidTap() {
-        handleRightNavigationButton()
+        if rightNavigationButton.titleLabel?.textColor == .point {
+            handleRightNavigationButton()
+        }
     }
     
     // MARK: - Custom Method
+    
+    private func handleLeftNavigationButton() {
+        self.presentingViewController?.dismiss(animated: true)
+    }
     
     private func handleRightNavigationButton() {
         let stepTwoVC = StepTwoKoreanDiaryViewController()

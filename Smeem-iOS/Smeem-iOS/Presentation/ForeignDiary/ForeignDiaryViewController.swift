@@ -9,29 +9,19 @@ import UIKit
 
 final class ForeignDiaryViewController: DiaryViewController {
     
-    var keyboardHeight: CGFloat = 0.0
-    var isKeyboardVisible: Bool = false
-
-
+    // MARK: - Property
+    
+    // MARK: - Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         handleRightNavitationButton()
     }
     
-    override func keyboardWillShow(notification: NSNotification) {
-        super.keyboardWillShow(notification: notification)
-        guard let userInfo = notification.userInfo,
-              let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect
-        else { return }
-        
-        keyboardHeight = keyboardFrame.height
-        isKeyboardVisible = true
-    }
+    // MARK: - @objc
     
-    override func keyboardWillHide(notification: NSNotification) {
-        super.keyboardWillHide(notification: notification)
-        keyboardHeight = 0.0
-        isKeyboardVisible = false
+    override func leftNavigationButtonDidTap() {
+        self.presentingViewController?.dismiss(animated: true)
     }
     
     override func rightNavigationButtonDidTap() {
@@ -42,20 +32,26 @@ final class ForeignDiaryViewController: DiaryViewController {
             let rootVC = UINavigationController(rootViewController: homeVC)
             changeRootViewControllerAndPresent(rootVC)
         } else {
-            showToast(toastType: .defaultToast(bodyType: .regEx))
-            }
+            showToastIfNeeded(toastType: .defaultToast(bodyType: .regEx))
         }
+    }
     
     private func handleRightNavitationButton() {
         rightNavigationButton.addTarget(self, action: #selector(rightNavigationButtonDidTap), for: .touchUpInside)
     }
     
-    func showToast(toastType: ToastViewType) {
-        regExToastView?.removeFromSuperview()
-        regExToastView = SmeemToastView(type: toastType)
+    override func keyboardWillShow(notification: NSNotification) {
+        super.keyboardWillShow(notification: notification)
+        guard let userInfo = notification.userInfo,
+              let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect
+        else { return }
         
-        let offset = convertByHeightRatio(73)
-        regExToastView?.show(in: view, offset: CGFloat(offset), keyboardHeight: keyboardHeight)
-        regExToastView?.hide(after: 1)
+        keyboardHeight = keyboardFrame.height
+
+    }
+    
+    override func keyboardWillHide(notification: NSNotification) {
+        super.keyboardWillHide(notification: notification)
+        keyboardHeight = 0.0
     }
 }

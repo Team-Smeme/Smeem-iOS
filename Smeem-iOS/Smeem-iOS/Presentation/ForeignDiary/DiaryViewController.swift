@@ -38,6 +38,8 @@ class DiaryViewController: UIViewController {
     var badgePopupContent = [PopupBadge]()
     
     var isTopicCalled: Bool = false
+    var isKeyboardVisible: Bool = false
+    var keyboardHeight: CGFloat = 0.0
     
     // MARK: - UI Property
     
@@ -53,7 +55,7 @@ class DiaryViewController: UIViewController {
         return stackView
     }()
     
-    private lazy var cancelButton: UIButton = {
+    lazy var cancelButton: UIButton = {
         let button = UIButton()
         button.titleLabel?.font = .b4
         button.setTitleColor(.black, for: .normal)
@@ -130,7 +132,7 @@ class DiaryViewController: UIViewController {
         return button
     }()
     
-    var regExToastView: SmeemToastView?
+    var smeemToastView: SmeemToastView?
     
     // MARK: - Life Cycle
     
@@ -156,7 +158,7 @@ class DiaryViewController: UIViewController {
     
     deinit {
         randomSubjectView.removeFromSuperview()
-        regExToastView?.removeFromSuperview()
+        smeemToastView?.removeFromSuperview()
         NotificationCenter.default.removeObserver(self)
     }
     
@@ -189,12 +191,31 @@ class DiaryViewController: UIViewController {
         inputTextView.contentInset = insets
         inputTextView.scrollIndicatorInsets = insets
         self.bottomView.transform = CGAffineTransform(translationX: 0, y: -keyboardHeight)
+        
+        self.keyboardHeight = keyboardFrame.height
+        isKeyboardVisible = true
+        
+        UIView.animate(withDuration: 0.3) {
+            self.bottomView.snp.updateConstraints {
+                $0.height.equalTo(53)
+            }
+            self.view.layoutIfNeeded()
+        }
     }
     
     @objc func keyboardWillHide(notification: NSNotification) {
         inputTextView.contentInset = .zero
         inputTextView.scrollIndicatorInsets = .zero
         self.bottomView.transform = CGAffineTransform.identity
+        
+        isKeyboardVisible = false
+        
+        UIView.animate(withDuration: 0.3) {
+            self.bottomView.snp.updateConstraints {
+                $0.height.equalTo(87)
+            }
+            self.view.layoutIfNeeded()
+        }
     }
     
     @objc func dismissButtonDidTap() {
@@ -312,7 +333,7 @@ class DiaryViewController: UIViewController {
         
         bottomView.snp.makeConstraints {
             $0.bottom.leading.trailing.equalToSuperview()
-            $0.height.equalTo(constraintByNotch(53, 87))
+            $0.height.equalTo(convertByHeightRatio(87))
         }
         
         thinLine.snp.makeConstraints {
@@ -353,6 +374,23 @@ class DiaryViewController: UIViewController {
     }
 }
 
+// MARK: - Extensions
+extension DiaryViewController {
+    func showToastIfNeeded(toastType: ToastViewType) {
+        smeemToastView?.removeFromSuperview()
+        smeemToastView = SmeemToastView(type: toastType)
+        
+        let onKeyboardOffset = convertByHeightRatio(73)
+        let offKeyboardOffset = convertByHeightRatio(107)
+
+        // 키보드가 보이는지 확인하여 오프셋을 변경합니다.
+        let offset = isKeyboardVisible ?  onKeyboardOffset : offKeyboardOffset
+        
+        smeemToastView?.show(in: view, offset: CGFloat(offset), keyboardHeight: keyboardHeight)
+        smeemToastView?.hide(after: 1)
+    }
+}
+
 // MARK: - UITextViewDelegate
 
 extension DiaryViewController: UITextViewDelegate {
@@ -386,14 +424,14 @@ extension DiaryViewController: UITextViewDelegate {
 
 extension DiaryStrategy {
     func englishValidation(with text: String, in viewController: DiaryViewController) -> Bool {
-        return viewController.inputTextView.text.getArrayAfterRegex(regex: "[a-zA-z]").count > 1
+        return viewController.inputTextView.text.getArrayAfterRegex(regex: "[a-zA-z]").count > 0
     }
     
 }
 
 extension StepOneKoreanDiaryStrategy {
     func koreanValidation(with text: String, in viewController: DiaryViewController) -> Bool {
-        return viewController.inputTextView.text.getArrayAfterRegex(regex: "[가-핳ㄱ-ㅎㅏ-ㅣ]").count > 1
+        return viewController.inputTextView.text.getArrayAfterRegex(regex: "[가-핳ㄱ-ㅎㅏ-ㅣ]").count > 0
     }
 }
 

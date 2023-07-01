@@ -172,9 +172,10 @@ final class HomeViewFloatingViewController: UIViewController {
     
     @objc func koreanDiaryButtonDidTap(_ gesture: UITapGestureRecognizer) {
         let nextVC = StepOneKoreanDiaryViewController()
-        nextVC.modalTransitionStyle = .coverVertical
-        nextVC.modalPresentationStyle = .fullScreen
-        present(nextVC, animated: true)
+        let navigationController = UINavigationController(rootViewController: nextVC)
+        navigationController.modalTransitionStyle = .coverVertical
+        navigationController.modalPresentationStyle = .fullScreen
+        present(navigationController, animated: true)
     }
     
     @objc func dismissButtonDidTap() {

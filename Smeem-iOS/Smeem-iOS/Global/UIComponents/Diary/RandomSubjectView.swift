@@ -100,8 +100,6 @@ final class RandomSubjectView: UIView {
             let newHeight: CGFloat = contentLabelHeight <= 22 ? 88 : contentLabelHeight + 66
             heightConstraint.update(offset: newHeight)
         }
-        print(contentLabelHeight)
-
     }
 
     // MARK: - Layout
@@ -121,8 +119,8 @@ final class RandomSubjectView: UIView {
         }
         
         snp.makeConstraints {
-            heightConstraint = $0.height.equalTo(128).constraint
-        }
+                heightConstraint = $0.height.equalTo(110).constraint
+            }
         
         addSubviews(questionLabel, contentLabel, refreshButton)
         
