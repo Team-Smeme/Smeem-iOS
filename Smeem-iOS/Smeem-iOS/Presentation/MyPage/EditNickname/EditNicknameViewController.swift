@@ -79,7 +79,7 @@ class EditNicknameViewController: UIViewController {
         setTextFieldDelegate()
         showKeyboard(textView: nicknameTextField)
     }
-
+    
     // MARK: - @objc
     
     @objc private func textFieldEditingChanged(_ textField: UITextField) {
@@ -100,7 +100,7 @@ class EditNicknameViewController: UIViewController {
         changeMyName(userName: nicknameTextField.text ?? nickName)
         changeRootViewController(HomeViewController())
     }
-
+    
     // MARK: - Custom Method
     
     private func setTextFieldDelegate() {
@@ -110,9 +110,9 @@ class EditNicknameViewController: UIViewController {
     private func setData() {
         nicknameTextField.text = nickName
     }
-
+    
     // MARK: - Layout
- 
+    
     private func setBackgroundColor() {
         view.backgroundColor = .smeemWhite
     }
@@ -162,18 +162,24 @@ class EditNicknameViewController: UIViewController {
 
 extension EditNicknameViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if let char = string.cString(using: String.Encoding.utf8) {
-               let isBackSpace = strcmp(char, "\\b")
-               if isBackSpace == -92 {
-                   return true
-               }
-         }
-        
-        guard self.nicknameTextField.text?.count ?? 0 < 10 else { return false }
+        guard let text = textField.text, let textRange = Range(range, in: text) else {
+            return true
+        }
+        let updatedText = text.replacingCharacters(in: textRange, with: string)
+        if text.isEmpty && string == " " {
+            
+            return false
+        }
+        let maxLength = 10
+        let currentLength = updatedText.count
+        if currentLength > maxLength {
+            
+            return false
+        }
+
         return true
     }
 }
-
 
 // MARK: - Extension : Network
 
