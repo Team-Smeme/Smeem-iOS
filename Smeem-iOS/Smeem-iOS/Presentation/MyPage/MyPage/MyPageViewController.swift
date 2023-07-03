@@ -44,6 +44,7 @@ final class MyPageViewController: UIViewController {
     
     private lazy var moreButton: UIButton = {
         let button = UIButton()
+        button.isHidden = true
         button.setImage(Constant.Image.icnMoreMono, for: .normal)
         button.addTarget(self, action: #selector(moreButtonDidTap(_:)), for: .touchUpInside)
         return button
