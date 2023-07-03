@@ -171,8 +171,13 @@ final class HomeViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         homeDiaryWithAPI(start: Date().startOfMonth().addingDate(addValue: -7), end: Date().endOfMonth().addingDate(addValue: 7))
+        calendar.reloadData()
         checkPopupView()
     }
+    
+//    override func viewDidAppear(_ animated: Bool) {
+//        homeDiaryWithAPI(start: Date().startOfMonth().addingDate(addValue: -7), end: Date().endOfMonth().addingDate(addValue: 7))
+//    }
     
     // MARK: - @objc
     
