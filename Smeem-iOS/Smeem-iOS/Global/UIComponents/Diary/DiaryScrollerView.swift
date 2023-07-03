@@ -127,15 +127,16 @@ final class DiaryScrollerView: UIScrollView {
         textView.frame = CGRect(x: 0,
                                 y: 0,
                                 width: 339,
-                                height: CGFloat.greatestFiniteMagnitude)
+                                height: .zero)
 
         let fixedWidth = textView.frame.size.width
         let style = NSMutableParagraphStyle()
         style.lineSpacing = 2.5
         let attributedString = NSAttributedString(string: textView.text, attributes: [.paragraphStyle: style, .font: UIFont.b4])
-        let newHeight = attributedString.boundingRect(with: CGSize(width: fixedWidth, height: CGFloat.greatestFiniteMagnitude), options: .usesLineFragmentOrigin, context: nil).height
+        let newHeight = attributedString.boundingRect(with: CGSize(width: fixedWidth, height: .zero), options: .usesLineFragmentOrigin, context: nil).height
         textView.attributedText = attributedString
-        textView.sizeToFit()
+//        textView.sizeToFit()
+        print("ㄹ아ㅓㅗㄹㅁㅇ", newHeight)
 
         return ceil(newHeight)
     }
@@ -169,9 +170,9 @@ final class DiaryScrollerView: UIScrollView {
         let correctionbottomInset: CGFloat = 78
         
         // bottomInset 값을 주었는데, 이상하게 적용이 안돼서 78을 또 더해줌...
-        let detailDiaryViewHeight = detailDiaryTopInset+detailbottomInset+calculateTextViewHeight(textView: contentTextView)+78
-        // 임의로 한줄일 때의 랜덤주제 높이값 지정
-        let detailDiaryRandomSubjectViewHeight = detailDiaryTopInset+detailbottomInset+calculateTextViewHeight(textView: contentTextView)+62+78
+        let detailDiaryViewHeight = detailDiaryTopInset+detailbottomInset+calculateTextViewHeight(textView: contentTextView)
+        // 임의로 한줄일 때의 랜덤주제 높이값 지정 +(2줄기준 84 높이 추가)
+        let detailDiaryRandomSubjectViewHeight = detailDiaryTopInset+detailbottomInset+calculateTextViewHeight(textView: contentTextView)+84
         let correctiontextViewHeight = correctionTopInset+correctionbottomInset+calculateTextViewHeight(textView: contentTextView)
             
         addSubview(contentView)

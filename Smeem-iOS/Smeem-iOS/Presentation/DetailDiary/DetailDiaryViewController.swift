@@ -10,6 +10,7 @@ import UIKit
 import SnapKit
 
 final class DetailDiaryViewController: UIViewController {
+    // id 값을 보장해 줘야 함...
     
     // MARK: - Property
     
@@ -49,10 +50,16 @@ final class DetailDiaryViewController: UIViewController {
         
         setBackgroundColor()
         setLayout()
-        detailDiaryWithAPI(diaryID: diaryId)
         swipeRecognizer()
+        detailDiaryWithAPI(diaryID: diaryId)
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        detailDiaryWithAPI(diaryID: diaryId)
+    }
+
     // MARK: - @objc
     
     @objc func responseToSwipeGesture() {
@@ -65,7 +72,19 @@ final class DetailDiaryViewController: UIViewController {
     
     @objc func showActionSheet() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let modifyAction = UIAlertAction (title: "수정", style: .default, handler: nil)
+        let modifyAction = UIAlertAction (title: "수정", style: .default, handler: { (action) in
+            let editVC = EditDiaryViewController()
+            editVC.diaryID = self.diaryId
+            editVC.randomContent = self.isRandomTopic
+            editVC.diaryTextView.text = self.diaryContent
+            editVC.randomSubjectView.setData(contentText: self.isRandomTopic)
+            
+            editVC.diaryIdClosure = { response in
+                self.diaryId = response
+            }
+            
+            self.navigationController?.pushViewController(editVC, animated: true)
+        })
         let deleteAction = UIAlertAction (title: "삭제", style: .destructive, handler: { (action) in
             self.showAlert()
         })
@@ -80,7 +99,7 @@ final class DetailDiaryViewController: UIViewController {
         let alert = UIAlertController(title: "일기를 삭제할까요?", message: "", preferredStyle: .alert)
         let delete = UIAlertAction(title: "확인", style: .destructive) { (action) in
             self.deleteDiaryWithAPI(diaryID: self.diaryId)
-            self.changeRootViewControllerAndPresent(HomeViewController())
+            self.changeRootViewController(HomeViewController())
         }
         let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
         alert.addAction(delete)
@@ -90,7 +109,7 @@ final class DetailDiaryViewController: UIViewController {
     
     // MARK: - Custom Method
     
-    private func setData() {
+    func setData() {
         diaryScrollerView.configureDiaryScrollerView(topic: isRandomTopic, contentText: diaryContent, date: dateCreated, nickname: userName)
     }
     

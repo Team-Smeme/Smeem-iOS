@@ -58,6 +58,9 @@
 		4A3F2E9C2A0B4C7100F6AC60 /* AlarmCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3F2E9B2A0B4C7100F6AC60 /* AlarmCollectionView.swift */; };
 		4A3F2EA02A0C18B600F6AC60 /* DatePickerFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3F2E9F2A0C18B600F6AC60 /* DatePickerFooterView.swift */; };
 		4A47164F29F907FE00CBE9C8 /* Shared.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 4A47164E29F907FE00CBE9C8 /* Shared.xcconfig */; };
+		4A6630362A51B0AD00D19CC9 /* EditDiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6630352A51B0AD00D19CC9 /* EditDiaryViewController.swift */; };
+		4A6630392A51E04600D19CC9 /* PatchDiaryRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6630382A51E04600D19CC9 /* PatchDiaryRequest.swift */; };
+		4A66303B2A51E1B000D19CC9 /* PatchDiaryResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A66303A2A51E1B000D19CC9 /* PatchDiaryResponse.swift */; };
 		4A8FFA5029C9E1FD00FB76C0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8FFA4F29C9E1FD00FB76C0 /* AppDelegate.swift */; };
 		4A8FFA5229C9E1FD00FB76C0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8FFA5129C9E1FD00FB76C0 /* SceneDelegate.swift */; };
 		4A8FFA5929C9E1FE00FB76C0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A8FFA5829C9E1FE00FB76C0 /* Assets.xcassets */; };
@@ -168,6 +171,9 @@
 		4A3F2E9F2A0C18B600F6AC60 /* DatePickerFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerFooterView.swift; sourceTree = "<group>"; };
 		4A47164E29F907FE00CBE9C8 /* Shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Shared.xcconfig; sourceTree = "<group>"; };
 		4A4E21EE29D9B02500BF8747 /* Smeem-iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Smeem-iOS.entitlements"; sourceTree = "<group>"; };
+		4A6630352A51B0AD00D19CC9 /* EditDiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditDiaryViewController.swift; sourceTree = "<group>"; };
+		4A6630382A51E04600D19CC9 /* PatchDiaryRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatchDiaryRequest.swift; sourceTree = "<group>"; };
+		4A66303A2A51E1B000D19CC9 /* PatchDiaryResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatchDiaryResponse.swift; sourceTree = "<group>"; };
 		4A8275D22A1513120083A4AB /* ServiceAcceptViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAcceptViewController.swift; sourceTree = "<group>"; };
 		4A8275D42A1519550083A4AB /* ServiceAcceptCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAcceptCollectionViewCell.swift; sourceTree = "<group>"; };
 		4A8FFA4C29C9E1FD00FB76C0 /* Smeem-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Smeem-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -349,6 +355,7 @@
 				3728B8D22A2CFED300EF4CF8 /* ForeignDiaryViewController.swift */,
 				3728B8D42A2CFF2C00EF4CF8 /* StepOneKoreanDiaryViewController.swift */,
 				3728B8D62A2CFF3A00EF4CF8 /* StepTwoKoreanDiaryViewController.swift */,
+				4A6630352A51B0AD00D19CC9 /* EditDiaryViewController.swift */,
 			);
 			path = ForeignDiary;
 			sourceTree = "<group>";
@@ -469,6 +476,7 @@
 		4A0EA45C2A014126006CCE52 /* DataModel */ = {
 			isa = PBXGroup;
 			children = (
+				4A6630372A51E03B00D19CC9 /* PatchDiary */,
 				37DCA6762A488CC800FF8F90 /* Papago */,
 				37DCA66A2A484CF900FF8F90 /* PostDiary */,
 				37DCA6612A4804E800FF8F90 /* DetailDiary */,
@@ -548,6 +556,15 @@
 				4A3F2E9F2A0C18B600F6AC60 /* DatePickerFooterView.swift */,
 			);
 			path = Alarm;
+			sourceTree = "<group>";
+		};
+		4A6630372A51E03B00D19CC9 /* PatchDiary */ = {
+			isa = PBXGroup;
+			children = (
+				4A6630382A51E04600D19CC9 /* PatchDiaryRequest.swift */,
+				4A66303A2A51E1B000D19CC9 /* PatchDiaryResponse.swift */,
+			);
+			path = PatchDiary;
 			sourceTree = "<group>";
 		};
 		4A8275D12A15129B0083A4AB /* Service */ = {
@@ -933,6 +950,7 @@
 				4A9FAB472A4C3D1200C40D5A /* BadgeListTableViewCell.swift in Sources */,
 				373E38592A2F889500DF96F0 /* DiaryDetailRandomSubjectView.swift in Sources */,
 				6F294A3E2A26177B00856CC8 /* GoalOnboardingViewController.swift in Sources */,
+				4A6630392A51E04600D19CC9 /* PatchDiaryRequest.swift in Sources */,
 				4AF58CE92A4820AA00305248 /* AuthModel.swift in Sources */,
 				3761116C2A278D0E0095EC5A /* String+.swift in Sources */,
 				4AEB82952A4CB4F200C1114B /* BadgePopupViewController.swift in Sources */,
@@ -966,6 +984,7 @@
 				4AD04B3B2A1905BB004B7A58 /* DiaryScrollerView.swift in Sources */,
 				4A3373F52A45BF6600EFE6C4 /* OnboardingService.swift in Sources */,
 				6FBC85702A4B5FA200A43F98 /* MyPageAPI.swift in Sources */,
+				4A6630362A51B0AD00D19CC9 /* EditDiaryViewController.swift in Sources */,
 				4A3F2E9C2A0B4C7100F6AC60 /* AlarmCollectionView.swift in Sources */,
 				37DCA6602A48033400FF8F90 /* DetailDiaryViewController.swift in Sources */,
 				4A974B062A4F416100418DD9 /* DetailPlanListResponse.swift in Sources */,
@@ -986,6 +1005,7 @@
 				3728B8D32A2CFED300EF4CF8 /* ForeignDiaryViewController.swift in Sources */,
 				4AD923EB2A0692EA00FF5E27 /* BottomSheetView.swift in Sources */,
 				4A9FAB492A4C3D1200C40D5A /* DetailBadgeCollectionViewCell.swift in Sources */,
+				4A66303B2A51E1B000D19CC9 /* PatchDiaryResponse.swift in Sources */,
 				37DCA6652A48052200FF8F90 /* DetailDiaryResponse.swift in Sources */,
 				4AC4B82D2A2F9FE200E147AA /* UserDefaultsManager.swift in Sources */,
 				37A574E02A00CDCD00312453 /* SeparationLine.swift in Sources */,
