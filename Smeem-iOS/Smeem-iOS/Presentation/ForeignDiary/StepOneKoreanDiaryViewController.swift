@@ -26,8 +26,11 @@ final class StepOneKoreanDiaryViewController: DiaryViewController {
     }
     
     override func rightNavigationButtonDidTap() {
+        rightNavigationButton.isUserInteractionEnabled = true
         if rightNavigationButton.titleLabel?.textColor == .point {
             handleRightNavigationButton()
+        } else {
+            showToastIfNeeded(toastType: .defaultToast(bodyType: .regEx))
         }
     }
     

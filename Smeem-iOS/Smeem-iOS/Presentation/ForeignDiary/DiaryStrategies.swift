@@ -57,7 +57,7 @@ final class StepTwoKoreanDiaryStrategy: DiaryStrategy {
     }
     
     func configureRightNavigationButton(_ button: UIButton) {
-        button.setTitle("다음", for: .normal)
+        button.setTitle("완료", for: .normal)
     }
     
     func configureStepLabel(_ label: UILabel) {

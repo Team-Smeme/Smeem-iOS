@@ -32,6 +32,7 @@ final class StepTwoKoreanDiaryViewController: DiaryViewController {
     
     private lazy var hintButton: UIButton = {
         let button = UIButton()
+        button.backgroundColor = .clear
         button.addTarget(self, action: #selector(hintButtondidTap), for: .touchUpInside)
         button.setImage(Constant.Image.btnTranslateInactive, for: .normal)
         return button
@@ -65,6 +66,7 @@ final class StepTwoKoreanDiaryViewController: DiaryViewController {
     }
     
     override func rightNavigationButtonDidTap() {
+        rightNavigationButton.isUserInteractionEnabled = true
         if rightNavigationButton.titleLabel?.textColor == .point {
             postDiaryAPI()
         } else {
