@@ -14,8 +14,6 @@ final class EditDiaryViewController: UIViewController {
     var diaryID = Int()
     var randomContent = String()
     
-    var diaryIdClosure: ((Int) -> Void)?
-    
     // MARK: - UI Property
     
     private let naviView = UIView()
@@ -83,7 +81,6 @@ final class EditDiaryViewController: UIViewController {
     @objc func completeButtonDidTap() {
         patchDiaryAPI()
         self.navigationController?.popViewController(animated: true)
-        self.diaryIdClosure?(diaryID)
     }
     
     @objc func keyboardWillShow(notification: Notification) {

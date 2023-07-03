@@ -29,11 +29,13 @@ final class DetailDiaryAPI {
         }
     }
     
-    func deleteDiary(diaryID: Int, complention: @escaping (GeneralResponse<String>?) -> Void) {
+    func deleteDiary(diaryID: Int, complention: @escaping (GeneralResponse<VoidType>?) -> Void) {
         detailDiaryProvider.request(.deleteDiary(diaryID: diaryID)) { response in
             switch response {
-            case .success(_):
-                print(response)
+            case .success(let result):
+                guard let data = try? result.map(GeneralResponse<VoidType>.self) else { return }
+                print("그럴수가있어???", data)
+                print(data)
             case .failure(let err):
                 print(err)
             }

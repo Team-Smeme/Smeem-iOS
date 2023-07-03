@@ -10,7 +10,6 @@ import UIKit
 import SnapKit
 
 final class DetailDiaryViewController: UIViewController {
-    // id 값을 보장해 줘야 함...
     
     // MARK: - Property
     
@@ -78,11 +77,6 @@ final class DetailDiaryViewController: UIViewController {
             editVC.randomContent = self.isRandomTopic
             editVC.diaryTextView.text = self.diaryContent
             editVC.randomSubjectView.setData(contentText: self.isRandomTopic)
-            
-            editVC.diaryIdClosure = { response in
-                self.diaryId = response
-            }
-            
             self.navigationController?.pushViewController(editVC, animated: true)
         })
         let deleteAction = UIAlertAction (title: "삭제", style: .destructive, handler: { (action) in
@@ -179,7 +173,8 @@ extension DetailDiaryViewController {
     }
     
     func deleteDiaryWithAPI(diaryID: Int) {
-        DetailDiaryAPI.shared.deleteDiary(diaryID: diaryId) { _ in
+        DetailDiaryAPI.shared.deleteDiary(diaryID: diaryId) { response in
+            print(response)
         }
     }
 }
