@@ -132,6 +132,15 @@ class DiaryViewController: UIViewController {
         return button
     }()
     
+    private lazy var randomSubjectToolTip: UIImageView? = {
+        let image = UIImageView()
+        image.image = Constant.Image.icnToolTip
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(randomSubjectToolTipDidTap))
+        image.addGestureRecognizer(tapGesture)
+        image.isUserInteractionEnabled = true
+        return image
+    }()
+    
     var smeemToastView: SmeemToastView?
     
     // MARK: - Life Cycle
@@ -150,6 +159,7 @@ class DiaryViewController: UIViewController {
         setupUI()
         setDelegate()
         checkTutorial()
+        checkTooltip()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -166,9 +176,9 @@ class DiaryViewController: UIViewController {
     
     @objc func randomTopicButtonDidTap() {
         setRandomTopicButtonToggle()
+        randomSubjectWithAPI()
         if !isTopicCalled {
             randomSubjectButton.setImage(Constant.Image.btnRandomSubjectActive, for: .normal)
-            randomSubjectWithAPI()
             isTopicCalled = true
         }
         randomSubjectView.setData(contentText: topicContent)
@@ -221,6 +231,11 @@ class DiaryViewController: UIViewController {
     @objc func dismissButtonDidTap() {
         tutorialImageView?.removeFromSuperview()
         dismissButton?.removeFromSuperview()
+    }
+    
+    @objc func randomSubjectToolTipDidTap() {
+        self.randomSubjectToolTip?.isHidden = true
+        UserDefaultsManager.randomSubjectToolTip = true
     }
     
     // MARK: - Custom Method
@@ -346,6 +361,24 @@ class DiaryViewController: UIViewController {
             $0.trailing.equalToSuperview().offset(convertByWidthRatio(-18))
             $0.width.equalTo(convertByWidthRatio(78))
             $0.height.equalTo(convertByHeightRatio(19))
+        }
+    }
+    
+    private func checkTooltip() {
+        let randomSubjectToolTipe = UserDefaultsManager.randomSubjectToolTip
+        
+        if !randomSubjectToolTipe {
+            
+            view.addSubview(randomSubjectToolTip ?? UIImageView())
+            
+            randomSubjectToolTip?.snp.makeConstraints {
+                $0.width.equalTo(convertByWidthRatio(180))
+                $0.height.equalTo(convertByHeightRatio(48))
+                $0.bottom.equalToSuperview().inset(336+37)
+                $0.trailing.equalToSuperview().inset(convertByHeightRatio(18))
+            }
+        } else {
+            randomSubjectToolTip = nil
         }
     }
     
