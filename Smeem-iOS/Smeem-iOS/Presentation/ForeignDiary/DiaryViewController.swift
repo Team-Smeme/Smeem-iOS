@@ -40,6 +40,7 @@ class DiaryViewController: UIViewController {
     var isTopicCalled: Bool = false
     var isKeyboardVisible: Bool = false
     var keyboardHeight: CGFloat = 0.0
+    var rightButtonFlag = false
     
     // MARK: - UI Property
     
@@ -189,6 +190,9 @@ class DiaryViewController: UIViewController {
     }
     
     @objc func rightNavigationButtonDidTap() {
+        if !rightNavigationButton.isEnabled {
+            showToastIfNeeded(toastType: .defaultToast(bodyType: .regEx))
+        }
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
@@ -433,17 +437,25 @@ extension DiaryViewController: UITextViewDelegate {
         placeHolderLabel.isHidden = !isTextEmpty
         
         guard let strategy = diaryStrategy else {
-            rightNavigationButton.setTitleColor(.gray400, for: .normal)
+            rightNavigationButton.setTitleColor(.gray300, for: .normal)
             return
         }
         
         if let koreanStrategy = strategy as? StepOneKoreanDiaryStrategy {
-            rightNavigationButton.isEnabled = koreanStrategy.koreanValidation(with: textView.text, in: self)
+            if koreanStrategy.koreanValidation(with: textView.text, in: self) {
+                rightButtonFlag = true
+            } else {
+                rightButtonFlag = false
+            }
         } else {
-            rightNavigationButton.isEnabled = strategy.englishValidation(with: textView.text, in: self)
+            if strategy.englishValidation(with: textView.text, in: self) {
+                rightButtonFlag = true
+            } else {
+                rightButtonFlag = false
+            }
         }
         
-        rightNavigationButton.setTitleColor(rightNavigationButton.isEnabled ? .point : .gray400, for: .normal)
+        rightNavigationButton.setTitleColor(rightButtonFlag ? .point : .gray300, for: .normal)
     }
     
     func textViewDidChangeSelection(_ textView: UITextView) {
@@ -501,8 +513,6 @@ extension DiaryViewController {
             
             let homeVC = HomeViewController()
             homeVC.badgePopupData = self.badgePopupContent
-            let rootVC = UINavigationController(rootViewController: homeVC)
-            self.changeRootViewControllerAndPresent(rootVC)
         }
     }
 }

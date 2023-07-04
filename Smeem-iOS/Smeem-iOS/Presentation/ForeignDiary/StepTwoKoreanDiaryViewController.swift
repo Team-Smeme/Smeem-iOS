@@ -66,9 +66,15 @@ final class StepTwoKoreanDiaryViewController: DiaryViewController {
     }
     
     override func rightNavigationButtonDidTap() {
-        rightNavigationButton.isUserInteractionEnabled = true
         if rightNavigationButton.titleLabel?.textColor == .point {
             postDiaryAPI()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                let homeVC = HomeViewController()
+                homeVC.toastMessageFlag = true
+                homeVC.badgePopupData = self.badgePopupContent
+                let rootVC = UINavigationController(rootViewController: homeVC)
+                self.changeRootViewControllerAndPresent(rootVC)
+            }
         } else {
             showToastIfNeeded(toastType: .defaultToast(bodyType: .regEx))
         }
@@ -80,13 +86,11 @@ final class StepTwoKoreanDiaryViewController: DiaryViewController {
     }
     
     @objc func hintButtondidTap() {
-        
         isHintShowed.toggle()
         if isHintShowed {
             postPapagoApi(diaryText: hintTextView.text)
             hintButton.setImage(Constant.Image.btnTranslateActive, for: .normal)
         } else {
-            hintButton.backgroundColor = .gray200
             hintTextView.text = hintText
             hintButton.setImage(Constant.Image.btnTranslateInactive, for: .normal)
         }
