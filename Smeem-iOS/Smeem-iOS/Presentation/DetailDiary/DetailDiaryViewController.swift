@@ -42,6 +42,8 @@ final class DetailDiaryViewController: UIViewController {
         return scrollerView
     }()
     
+    private let loadingView = LoadingView()
+    
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -50,12 +52,9 @@ final class DetailDiaryViewController: UIViewController {
         setBackgroundColor()
         setLayout()
         swipeRecognizer()
-        detailDiaryWithAPI(diaryID: diaryId)
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
+    override func viewWillAppear(_ animated: Bool) {
         detailDiaryWithAPI(diaryID: diaryId)
     }
 
@@ -93,7 +92,6 @@ final class DetailDiaryViewController: UIViewController {
         let alert = UIAlertController(title: "일기를 삭제할까요?", message: "", preferredStyle: .alert)
         let delete = UIAlertAction(title: "확인", style: .destructive) { (action) in
             self.deleteDiaryWithAPI(diaryID: self.diaryId)
-            self.changeRootViewController(HomeViewController())
         }
         let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
         alert.addAction(delete)
@@ -160,9 +158,13 @@ final class DetailDiaryViewController: UIViewController {
 //MARK: - Network
 
 extension DetailDiaryViewController {
+    
     func detailDiaryWithAPI(diaryID: Int) {
+        self.showLodingView(loadingView: self.loadingView)
         DetailDiaryAPI.shared.getDetailDiary(diaryID: diaryId) { response in
             guard let detailDiaryData = response?.data else { return }
+            self.hideLodingView(loadingView: self.loadingView)
+            
             self.isRandomTopic = detailDiaryData.topic
             self.diaryContent = detailDiaryData.content
             self.dateCreated = detailDiaryData.createdAt
@@ -173,8 +175,10 @@ extension DetailDiaryViewController {
     }
     
     func deleteDiaryWithAPI(diaryID: Int) {
+        self.showLodingView(loadingView: self.loadingView)
         DetailDiaryAPI.shared.deleteDiary(diaryID: diaryId) { response in
-            print(response)
+                self.hideLodingView(loadingView: self.loadingView)
+                self.changeRootViewControllerAndPresent(HomeViewController())
         }
     }
 }

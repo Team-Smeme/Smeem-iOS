@@ -34,8 +34,7 @@ final class DetailDiaryAPI {
             switch response {
             case .success(let result):
                 guard let data = try? result.map(GeneralResponse<VoidType>.self) else { return }
-                print("그럴수가있어???", data)
-                print(data)
+                complention(data)
             case .failure(let err):
                 print(err)
             }

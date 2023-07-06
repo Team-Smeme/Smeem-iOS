@@ -20,7 +20,7 @@
  diaryScrollerView.snp.makeConstraints {
      $0.top.leading.trailing.bottom.equalToSuperview()
  }
- */
+ **/
 
 import UIKit
 
@@ -39,12 +39,11 @@ final class DiaryScrollerView: UIScrollView {
     
     var viewType: ViewType = .detailDiary {
         didSet {
+            print("이게 호출이되니?")
             viewTypeContentViewLayout()
             setDelegate()
         }
     }
-    
-    var lineBreakCount = 0
     
     // MARK: - UI Property
     
@@ -116,7 +115,6 @@ final class DiaryScrollerView: UIScrollView {
     
     func configureDiaryScrollerView(topic: String, contentText: String, date: String, nickname: String) {
         topic != "" ? randomSubjectView.setData(contentText: topic) : print("랜덤주제없음")
-        lineBreakCount = checkDiaryContentLineBreak(contentText: contentText)
         contentTextView.text = contentText
         dateLabel.text = date
         nicknameLabel.text = nickname
@@ -135,18 +133,10 @@ final class DiaryScrollerView: UIScrollView {
         let attributedString = NSAttributedString(string: textView.text, attributes: [.paragraphStyle: style, .font: UIFont.b4])
         let newHeight = attributedString.boundingRect(with: CGSize(width: fixedWidth, height: .zero), options: .usesLineFragmentOrigin, context: nil).height
         textView.attributedText = attributedString
-//        textView.sizeToFit()
+        textView.sizeToFit()
         print("ㄹ아ㅓㅗㄹㅁㅇ", newHeight)
 
         return ceil(newHeight)
-    }
-    
-    private func checkDiaryContentLineBreak(contentText: String) -> Int {
-        var lineBreakCount = 0
-        if contentText.contains("\n") {
-            lineBreakCount += 1
-        }
-        return lineBreakCount
     }
     
     private func setDelegate() {
@@ -169,10 +159,10 @@ final class DiaryScrollerView: UIScrollView {
         let correctionTopInset: CGFloat = 41
         let correctionbottomInset: CGFloat = 78
         
-        // bottomInset 값을 주었는데, 이상하게 적용이 안돼서 78을 또 더해줌...
-        let detailDiaryViewHeight = detailDiaryTopInset+detailbottomInset+calculateTextViewHeight(textView: contentTextView)
+        // bottomInset 값을 주었는데, 이상하게 적용이 안돼서 78을 또 더해줌... + 일기 수정 후 viewWillAppear에서 TextView 높이 계산 적용 안되는 이슈 해결
+        let detailDiaryViewHeight = detailDiaryTopInset+detailbottomInset+calculateTextViewHeight(textView: contentTextView)+78
         // 임의로 한줄일 때의 랜덤주제 높이값 지정 +(2줄기준 84 높이 추가)
-        let detailDiaryRandomSubjectViewHeight = detailDiaryTopInset+detailbottomInset+calculateTextViewHeight(textView: contentTextView)+84
+        let detailDiaryRandomSubjectViewHeight = detailDiaryTopInset+detailbottomInset+calculateTextViewHeight(textView: contentTextView)+84+78
         let correctiontextViewHeight = correctionTopInset+correctionbottomInset+calculateTextViewHeight(textView: contentTextView)
             
         addSubview(contentView)

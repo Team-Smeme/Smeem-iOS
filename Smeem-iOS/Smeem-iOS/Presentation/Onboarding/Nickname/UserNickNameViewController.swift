@@ -99,7 +99,8 @@ final class UserNicknameViewController: UIViewController {
             if self.checkDouble {
                 let homeVC = HomeViewController()
                 homeVC.badgePopupData = self.badgeListData ?? []
-                self.changeRootViewController(homeVC)
+                let rootVC = UINavigationController(rootViewController: homeVC)
+                self.changeRootViewControllerAndPresent(rootVC)
             } else {
                 self.nextButton.smeemButtonType = .notEnabled
                 self.doubleCheckLabel.isHidden = false

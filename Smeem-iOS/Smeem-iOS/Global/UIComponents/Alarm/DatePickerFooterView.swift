@@ -28,7 +28,7 @@ final class DatePickerFooterView: UICollectionReusableView {
     
     // MARK: - UI Property
     
-    private let alarmLabel: UILabel = {
+    let alarmLabel: UILabel = {
         let label = UILabel()
         label.text = "알림 시간"
         label.font = .c2
@@ -36,7 +36,7 @@ final class DatePickerFooterView: UICollectionReusableView {
         return label
     }()
     
-    private lazy var inputTextField: UITextField = {
+    lazy var inputTextField: UITextField = {
         let textField = UITextField()
         textField.text = "10:00 PM"
         textField.textColor = .point
@@ -111,7 +111,7 @@ final class DatePickerFooterView: UICollectionReusableView {
     
     // MARK: - Custom Method
     
-    private func calculateTime(dayAndNight: String, hours: String) -> Int {
+    func calculateTime(dayAndNight: String, hours: String) -> Int {
         if dayAndNight == "PM" {
             if hours == "12" {
                 return Int(hours) ?? 0
@@ -123,6 +123,39 @@ final class DatePickerFooterView: UICollectionReusableView {
             }
         }
         return hours == "00" ? 0 : 30
+    }
+    
+    func calculateMyPageTime(hour: Int, minute: Int) -> String {
+        var dayAndNight = ""
+        var hourString = ""
+        var minuteString = ""
+        if hour >= 12 {
+            dayAndNight = "PM"
+            if hour > 12 {
+                hourString = String(hour-12)
+                if minute == 0 {
+                    minuteString = String(minute)+"0"
+                } else {
+                    minuteString = String(minute)
+                }
+            } else {
+                hourString = String(hour)
+                if minute == 0 {
+                    minuteString = String(minute)+"0"
+                } else {
+                    minuteString = String(minute)
+                }
+            }
+        } else {
+            hourString = String(hour)
+            dayAndNight = "AM"
+            if minute == 0 {
+                minuteString = String(minute)+"0"
+            } else {
+                minuteString = String(minute)
+            }
+        }
+        return hourString + ":" + String(minuteString) + " " + dayAndNight
     }
     
     private func setPickerViewDelegate() {

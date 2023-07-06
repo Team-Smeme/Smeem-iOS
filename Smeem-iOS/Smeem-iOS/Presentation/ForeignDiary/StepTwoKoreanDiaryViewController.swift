@@ -67,14 +67,8 @@ final class StepTwoKoreanDiaryViewController: DiaryViewController {
     
     override func rightNavigationButtonDidTap() {
         if rightNavigationButton.titleLabel?.textColor == .point {
+            self.hideLodingView(loadingView: self.loadingView)
             postDiaryAPI()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                let homeVC = HomeViewController()
-                homeVC.toastMessageFlag = true
-                homeVC.badgePopupData = self.badgePopupContent
-                let rootVC = UINavigationController(rootViewController: homeVC)
-                self.changeRootViewControllerAndPresent(rootVC)
-            }
         } else {
             showToastIfNeeded(toastType: .defaultToast(bodyType: .regEx))
         }

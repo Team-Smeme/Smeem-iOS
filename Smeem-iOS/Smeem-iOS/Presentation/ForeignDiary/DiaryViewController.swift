@@ -46,6 +46,7 @@ class DiaryViewController: UIViewController {
     
     let navigationView = UIView()
     private lazy var randomSubjectView = RandomSubjectView()
+    let loadingView = LoadingView()
     
     private let navibarContentStackView: UIStackView = {
         let stackView = UIStackView()
@@ -504,15 +505,21 @@ extension DiaryViewController {
         PostDiaryAPI.shared.postDiary(param: PostDiaryRequest(content: inputTextView.text, topicId: topicID)) { response in
             guard let postDiaryResponse = response?.data else { return }
             self.diaryID = postDiaryResponse.diaryID
-            
+
             if !postDiaryResponse.badges.isEmpty {
                 self.badgePopupContent = postDiaryResponse.badges
             } else {
                 self.badgePopupContent = []
             }
-            
-            let homeVC = HomeViewController()
-            homeVC.badgePopupData = self.badgePopupContent
+
+            DispatchQueue.main.async {
+                self.hideLodingView(loadingView: self.loadingView)
+                let homeVC = HomeViewController()
+                homeVC.toastMessageFlag = true
+                homeVC.badgePopupData = self.badgePopupContent
+                let rootVC = UINavigationController(rootViewController: HomeViewController())
+                self.changeRootViewControllerAndPresent(rootVC)
+            }
         }
     }
 }

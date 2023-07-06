@@ -54,6 +54,7 @@ final class EditDiaryViewController: UIViewController {
     }()
     
     lazy var randomSubjectView = DiaryDetailRandomSubjectView()
+    private let loadingView = LoadingView()
     
     // MARK: - Life Cycle
     
@@ -79,8 +80,8 @@ final class EditDiaryViewController: UIViewController {
     }
     
     @objc func completeButtonDidTap() {
+        self.showLodingView(loadingView: self.loadingView)
         patchDiaryAPI()
-        self.navigationController?.popViewController(animated: true)
     }
     
     @objc func keyboardWillShow(notification: Notification) {
@@ -165,7 +166,10 @@ final class EditDiaryViewController: UIViewController {
 extension EditDiaryViewController {
     func patchDiaryAPI() {
         PostDiaryAPI.shared.patchDiary(param: PatchDiaryRequest(content: diaryTextView.text), diaryID: diaryID) { response in
-
+            DispatchQueue.main.async {
+                self.hideLodingView(loadingView: self.loadingView)
+                self.navigationController?.popViewController(animated: true)
+            }
         }
     }
 }

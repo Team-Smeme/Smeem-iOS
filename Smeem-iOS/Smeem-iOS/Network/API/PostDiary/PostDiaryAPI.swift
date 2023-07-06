@@ -33,8 +33,9 @@ final class PostDiaryAPI {
     func patchDiary(param: PatchDiaryRequest, diaryID: Int, completion: @escaping (GeneralResponse<VoidType>?) -> Void) {
         postDiaryProvider.request(.patchDiary(param: param, query: diaryID)) { response in
             switch response {
-            case .success(_):
-                print(response)
+            case .success(let result):
+                guard let data = try? result.map(GeneralResponse<VoidType>.self) else { return }
+                completion(data)
             case .failure(let err):
                 print(err)
             }

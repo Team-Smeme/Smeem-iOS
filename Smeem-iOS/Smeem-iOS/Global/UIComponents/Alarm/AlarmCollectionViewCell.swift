@@ -11,13 +11,20 @@ final class AlarmCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "AlarmCollectionViewCell"
     
+    var dayCellColor = true
+    
     // MARK: - Property
     
     override var isSelected: Bool {
         didSet {
             if isSelected {
-                backgroundColor = .point
-                dayLabel.textColor = .white
+                if dayCellColor {
+                    backgroundColor = .point
+                    dayLabel.textColor = .white
+                } else {
+                    backgroundColor = .gray300
+                    dayLabel.textColor = .white
+                }
             } else {
                 backgroundColor = .white
                 dayLabel.textColor = .gray400
