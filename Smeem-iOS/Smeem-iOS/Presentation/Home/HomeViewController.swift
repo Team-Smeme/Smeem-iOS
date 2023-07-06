@@ -24,7 +24,7 @@ final class HomeViewController: UIViewController {
     var keyboardHeight: CGFloat = 0.0
     var toastMessageFlag = false {
         didSet {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 self.loadToastMessage()
             }
         }
@@ -178,11 +178,11 @@ final class HomeViewController: UIViewController {
         setLayout()
         setDelegate()
         setSwipe()
-        hiddenNavigationBar()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         homeDiaryWithAPI(start: Date().startOfMonth().addingDate(addValue: -7), end: Date().endOfMonth().addingDate(addValue: 7))
+        hiddenNavigationBar()
         checkPopupView()
     }
     
@@ -252,13 +252,16 @@ final class HomeViewController: UIViewController {
     }
     
     private func checkPopupView() {
+        self.showLodingView(loadingView: loadingView)
         if !badgePopupData.isEmpty {
+            self.hideLodingView(loadingView: loadingView)
             let popupVC = BadgePopupViewController()
             popupVC.setData(self.badgePopupData)
             popupVC.modalTransitionStyle = .crossDissolve
             popupVC.modalPresentationStyle = .overCurrentContext
             self.present(popupVC, animated: true)
         }
+        self.hideLodingView(loadingView: loadingView)
         badgePopupData = []
     }
     

@@ -517,7 +517,7 @@ extension DiaryViewController {
                 let homeVC = HomeViewController()
                 homeVC.toastMessageFlag = true
                 homeVC.badgePopupData = self.badgePopupContent
-                let rootVC = UINavigationController(rootViewController: HomeViewController())
+                let rootVC = UINavigationController(rootViewController: homeVC)
                 self.changeRootViewControllerAndPresent(rootVC)
             }
         }

@@ -124,7 +124,10 @@ final class BadgePopupViewController: UIViewController {
     func setData(_ popupData: [PopupBadge]) {
         for popup in popupData {
             let url = URL(string: popup.imageURL)
-            badgeImage.kf.setImage(with: url)
+            badgeImage.kf.setImage(with: url,
+                                   placeholder: nil,
+                                   options: [.transition(.fade(0.5))],
+                                   completionHandler: nil)
             badgeTitleLabel.text = popup.name
             badgeDetailLabel.text = """
                                     축하해요!
