@@ -187,7 +187,6 @@ final class MyPageViewController: UIViewController {
         super.viewDidLoad()
     
         setLayout()
-        myPageInfoAPI()
         swipeRecognizer()
     }
     
@@ -231,7 +230,7 @@ final class MyPageViewController: UIViewController {
     // MARK: - Custom Method
     
     private func setData() {
-        let planNameList = userInfo.way.split(separator: "이상 ").map{String($0)}
+        let planNameList = userInfo.way.components(separatedBy: " 이상 ")
         let planWayOne = planNameList[0] + " 이상"
         let planWayTwo = planNameList[1]
         let detailPlan = userInfo.detail.split(separator: "\n").map{String($0)}

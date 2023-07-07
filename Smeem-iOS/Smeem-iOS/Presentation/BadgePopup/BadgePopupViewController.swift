@@ -83,12 +83,12 @@ final class BadgePopupViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        appearPopupViewAnimate()
+//        appearPopupViewAnimate()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         
-        disappearPopupViewAnimate()
+//        disappearPopupViewAnimate()
     }
     
     // MARK: - @objc
@@ -124,10 +124,7 @@ final class BadgePopupViewController: UIViewController {
     func setData(_ popupData: [PopupBadge]) {
         for popup in popupData {
             let url = URL(string: popup.imageURL)
-            badgeImage.kf.setImage(with: url,
-                                   placeholder: nil,
-                                   options: [.transition(.fade(0.5))],
-                                   completionHandler: nil)
+            badgeImage.kf.setImage(with: url)
             badgeTitleLabel.text = popup.name
             badgeDetailLabel.text = """
                                     축하해요!

@@ -91,6 +91,7 @@ final class DetailDiaryViewController: UIViewController {
     @objc func showAlert() {
         let alert = UIAlertController(title: "일기를 삭제할까요?", message: "", preferredStyle: .alert)
         let delete = UIAlertAction(title: "확인", style: .destructive) { (action) in
+            self.showLodingView(loadingView: self.loadingView)
             self.deleteDiaryWithAPI(diaryID: self.diaryId)
         }
         let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
@@ -175,10 +176,11 @@ extension DetailDiaryViewController {
     }
     
     func deleteDiaryWithAPI(diaryID: Int) {
-        self.showLodingView(loadingView: self.loadingView)
         DetailDiaryAPI.shared.deleteDiary(diaryID: diaryId) { response in
-                self.hideLodingView(loadingView: self.loadingView)
-                self.changeRootViewControllerAndPresent(HomeViewController())
+            self.hideLodingView(loadingView: self.loadingView)
+            let homeVC = HomeViewController()
+            let rootVC = UINavigationController(rootViewController: homeVC)
+            self.changeRootViewControllerAndPresent(rootVC)
         }
     }
 }

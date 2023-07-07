@@ -19,15 +19,21 @@ final class AlarmCollectionViewCell: UICollectionViewCell {
         didSet {
             if isSelected {
                 if dayCellColor {
+                    layer.borderWidth = 1.5
+                    layer.borderColor = UIColor.point.cgColor
                     backgroundColor = .point
                     dayLabel.textColor = .white
                 } else {
-                    backgroundColor = .gray300
+                    backgroundColor = .gray400
                     dayLabel.textColor = .white
+                    layer.borderWidth = 0.0
+                    layer.borderColor = nil
                 }
             } else {
                 backgroundColor = .white
                 dayLabel.textColor = .gray400
+                layer.borderWidth = 0.0
+                layer.borderColor = nil
             }
         }
     }

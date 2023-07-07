@@ -201,7 +201,20 @@ extension UserNicknameViewController: UITextFieldDelegate {
 extension UserNicknameViewController {
     private func nicknamePatchAPI(nickname: String) {
         OnboardingAPI.shared.nicknamePatch(param: NicknameRequest(username: nickname)) { response in
+            self.hideLodingView(loadingView: self.loadingView)
             self.checkDouble = response.success
+            
+            DispatchQueue.main.async {
+                if self.checkDouble {
+                    let homeVC = HomeViewController()
+                    homeVC.badgePopupData = self.badgeListData ?? []
+                    let rootVC = UINavigationController(rootViewController: homeVC)
+                    self.changeRootViewControllerAndPresent(rootVC)
+                } else {
+                    self.nextButton.smeemButtonType = .notEnabled
+                    self.doubleCheckLabel.isHidden = false
+                }
+            }
         }
     }
     
