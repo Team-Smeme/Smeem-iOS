@@ -165,6 +165,7 @@ final class AlarmSettingViewController: UIViewController {
         
 //        guard let trainigTimeData = trainingTimeData else { return }
         
+        
         if trainingTimeData == nil && trainigDayData == nil {
             bottomSheetVC.userPlanRequest = UserPlanRequest(target: target,
                                                             trainingTime: TrainingTime(day: "MON,TUE,WED,THU,FRI",
@@ -177,6 +178,12 @@ final class AlarmSettingViewController: UIViewController {
                                                                                        hour: 22,
                                                                                        minute: 0),
          
+                                                            hasAlarm: hasAlarm)
+        } else if trainingTimeData != nil && trainigDayData == nil {
+            bottomSheetVC.userPlanRequest = UserPlanRequest(target: target,
+                                                            trainingTime: TrainingTime(day: "MON,TUE,WED,THU,FRI",
+                                                                                       hour: trainingTimeData?.hour ?? 0,
+                                                                                       minute: trainingTimeData?.minute ?? 0),
                                                             hasAlarm: hasAlarm)
         } else {
             bottomSheetVC.userPlanRequest = UserPlanRequest(target: target,

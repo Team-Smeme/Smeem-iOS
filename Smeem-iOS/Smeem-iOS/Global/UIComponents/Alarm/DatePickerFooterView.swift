@@ -77,6 +77,7 @@ final class DatePickerFooterView: UICollectionReusableView {
         setLayout()
         setPickerViewDelegate()
         setTextFieldDelgate()
+        setSettingTime()
     }
     
     required init?(coder: NSCoder) {
@@ -165,6 +166,21 @@ final class DatePickerFooterView: UICollectionReusableView {
     
     private func setTextFieldDelgate() {
         inputTextField.delegate = self
+    }
+    
+    private func setSettingTime() {
+        let desiredHoursRow = 9 // 시작 시간으로 설정할 행 인덱스
+        let desiredMinuteRow = 0 // 시작 분으로 설정할 행 인덱스
+        let desiredDayAndNightRow = 1 // 시작 AM/PM으로 설정할 행 인덱스
+        
+        pickerView.selectRow(desiredHoursRow, inComponent: 0, animated: false)
+        pickerView.selectRow(desiredMinuteRow, inComponent: 1, animated: false)
+        pickerView.selectRow(desiredDayAndNightRow, inComponent: 2, animated: false)
+        
+        // 선택한 값 업데이트
+        selectedHours = hoursArray[desiredHoursRow]
+        selectedMinute = minuteArray[desiredMinuteRow]
+        selectedDayAndNight = dayAndNightArray[desiredDayAndNightRow]
     }
     
     // MARK: - Layout

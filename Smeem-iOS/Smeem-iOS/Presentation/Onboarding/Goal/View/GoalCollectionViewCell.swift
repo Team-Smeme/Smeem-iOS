@@ -56,12 +56,13 @@ final class GoalCollectionViewCell: UICollectionViewCell {
     
     private func setCellSelected(_ selected: Bool) {
         if isSelected {
-            goalLabel.font = .b3
+            goalLabel.font = .b1
             goalLabel.textColor = .point
             layer.borderColor = UIColor.point.cgColor
             checkButton.setImage(Constant.Image.icnCheckActive, for: .normal)
         } else {
             goalLabel.font = .b3
+            goalLabel.textColor = .gray600
             layer.borderColor = UIColor.gray100.cgColor
             checkButton.setImage(Constant.Image.icnCheckInactive, for: .normal)
         }

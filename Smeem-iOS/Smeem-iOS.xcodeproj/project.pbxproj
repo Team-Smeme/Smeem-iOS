@@ -72,6 +72,7 @@
 		4A9FAB472A4C3D1200C40D5A /* BadgeListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9FAB422A4C3D1200C40D5A /* BadgeListTableViewCell.swift */; };
 		4A9FAB482A4C3D1200C40D5A /* BadgeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9FAB432A4C3D1200C40D5A /* BadgeHeaderView.swift */; };
 		4A9FAB492A4C3D1200C40D5A /* DetailBadgeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9FAB442A4C3D1200C40D5A /* DetailBadgeCollectionViewCell.swift */; };
+		4AA1EEEA2A5873A00017FF97 /* Urbanist-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4AA1EEE92A5870690017FF97 /* Urbanist-SemiBold.otf */; };
 		4AA942C22A2767D000A552A0 /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 4AA942C12A2767D000A552A0 /* FSCalendar */; };
 		4AA942C52A2767D900A552A0 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4AA942C42A2767D900A552A0 /* SnapKit */; };
 		4AA942CD2A276A9F00A552A0 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 4AA942CC2A276A9F00A552A0 /* Moya */; };
@@ -191,6 +192,7 @@
 		4A9FAB422A4C3D1200C40D5A /* BadgeListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeListTableViewCell.swift; sourceTree = "<group>"; };
 		4A9FAB432A4C3D1200C40D5A /* BadgeHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeHeaderView.swift; sourceTree = "<group>"; };
 		4A9FAB442A4C3D1200C40D5A /* DetailBadgeCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailBadgeCollectionViewCell.swift; sourceTree = "<group>"; };
+		4AA1EEE92A5870690017FF97 /* Urbanist-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Urbanist-SemiBold.otf"; sourceTree = "<group>"; };
 		4AC4B82C2A2F9FE200E147AA /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		4AC9489729ED800800489C2B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		4AD04B382A190020004B7A58 /* UITextField+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+.swift"; sourceTree = "<group>"; };
@@ -344,6 +346,7 @@
 		37A574C629FF6EC000312453 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				4AA1EEE92A5870690017FF97 /* Urbanist-SemiBold.otf */,
 				37A574D829FF9FFF00312453 /* Pretendard-Bold.otf */,
 				37A574D729FF9FFF00312453 /* Pretendard-Medium.otf */,
 				37A574D629FF9FFF00312453 /* Pretendard-Regular.otf */,
@@ -951,6 +954,7 @@
 				4A8FFA5C29C9E1FE00FB76C0 /* LaunchScreen.storyboard in Resources */,
 				4A47164F29F907FE00CBE9C8 /* Shared.xcconfig in Resources */,
 				4AC9489829ED800800489C2B /* GoogleService-Info.plist in Resources */,
+				4AA1EEEA2A5873A00017FF97 /* Urbanist-SemiBold.otf in Resources */,
 				37A574DB29FF9FFF00312453 /* Pretendard-Medium.otf in Resources */,
 				37A574D929FF9FFF00312453 /* Pretendard-SemiBold.otf in Resources */,
 				37A574DA29FF9FFF00312453 /* Pretendard-Regular.otf in Resources */,
@@ -1210,6 +1214,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1248,6 +1253,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

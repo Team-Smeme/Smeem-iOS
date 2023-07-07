@@ -67,6 +67,10 @@ extension UIFont {
     @nonobjc class var c4: UIFont {
         return UIFont.font(.pretendardRegular, ofSize: 12)
     }
+    
+    @nonobjc class var u1: UIFont {
+        return UIFont.font(.urbanistSemiBold, ofSize: 28)
+    }
 }
 
 enum FontName: String {
@@ -74,6 +78,7 @@ enum FontName: String {
     case pretendardSemiBold = "Pretendard-SemiBold"
     case pretendardMedium = "Pretendard-Medium"
     case pretendardRegular = "Pretendard-Regular"
+    case urbanistSemiBold = "Urbanist-SemiBold"
 }
 
 extension UIFont {

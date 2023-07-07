@@ -43,6 +43,7 @@
 	<string>$(X_NAVER_CLIENT_SECRET)</string>
 	<key>UIAppFonts</key>
 	<array>
+		<string>Urbanist-SemiBold.otf</string>
 		<string>Pretendard-Bold.otf</string>
 		<string>Pretendard-Medium.otf</string>
 		<string>Pretendard-Regular.otf</string>
