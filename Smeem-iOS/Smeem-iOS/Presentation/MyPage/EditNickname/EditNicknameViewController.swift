@@ -207,7 +207,7 @@ class EditNicknameViewController: UIViewController {
         doneButton.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(18)
             $0.height.equalTo(convertByHeightRatio(60))
-            $0.bottom.equalToSuperview().inset(336+10)
+            $0.bottom.equalTo(view.keyboardLayoutGuide.snp.top).offset(-10)
         }
     }
 }

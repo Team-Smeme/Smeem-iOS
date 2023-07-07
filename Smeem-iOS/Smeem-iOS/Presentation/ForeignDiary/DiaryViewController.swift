@@ -379,7 +379,7 @@ class DiaryViewController: UIViewController {
             randomSubjectToolTip?.snp.makeConstraints {
                 $0.width.equalTo(convertByWidthRatio(180))
                 $0.height.equalTo(convertByHeightRatio(48))
-                $0.bottom.equalToSuperview().inset(336+37)
+                $0.bottom.equalTo(view.keyboardLayoutGuide.snp.top).offset(-37)
                 $0.trailing.equalToSuperview().inset(convertByHeightRatio(18))
             }
         } else {

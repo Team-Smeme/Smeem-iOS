@@ -180,7 +180,7 @@ final class UserNicknameViewController: UIViewController {
         nextButton.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(convertByHeightRatio(18))
             $0.height.equalTo(convertByHeightRatio(60))
-            $0.bottom.equalToSuperview().inset(convertByHeightRatio(336+10))
+            $0.bottom.equalTo(view.keyboardLayoutGuide.snp.top).offset(-10)
         }
     }
 }
