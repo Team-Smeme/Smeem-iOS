@@ -134,7 +134,7 @@ class DiaryViewController: UIViewController {
         return button
     }()
     
-    private lazy var randomSubjectToolTip: UIImageView? = {
+    lazy var randomSubjectToolTip: UIImageView? = {
         let image = UIImageView()
         image.image = Constant.Image.icnToolTip
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(randomSubjectToolTipDidTap))
@@ -166,6 +166,7 @@ class DiaryViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         keyboardRemoveObserver()
+        randomSubjectToolTip?.removeFromSuperview()
     }
     
     deinit {

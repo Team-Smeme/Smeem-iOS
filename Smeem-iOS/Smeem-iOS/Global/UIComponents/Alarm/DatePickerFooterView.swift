@@ -112,26 +112,30 @@ final class DatePickerFooterView: UICollectionReusableView {
     
     // MARK: - Custom Method
     
+    // 1 ~ 24
     func calculateTime(dayAndNight: String, hours: String) -> Int {
         if dayAndNight == "PM" {
             if hours == "12" {
-                return Int(hours) ?? 0
+                return 12 // 12 PM 그대로
             }
-            return Int(hours)!+12
+            return Int(hours)!+12 // 13~23시까지
         } else {
-            if hours == "12" {
-                return 0
+            if hours == "12" { // AM 00:00
+                return 24
+            } else {
+                return Int(hours)!
             }
         }
-        return hours == "00" ? 0 : 30
     }
     
     func calculateMyPageTime(hour: Int, minute: Int) -> String {
-        var dayAndNight = ""
+        var dayAndNight = "" // 1 ~ 24
         var hourString = ""
         var minuteString = ""
-        if hour >= 12 {
+        // 12부터 23
+        if 12 <= hour && hour < 24 {
             dayAndNight = "PM"
+            // 13부터
             if hour > 12 {
                 hourString = String(hour-12)
                 if minute == 0 {
@@ -148,8 +152,14 @@ final class DatePickerFooterView: UICollectionReusableView {
                 }
             }
         } else {
-            hourString = String(hour)
+            // 24, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 11
             dayAndNight = "AM"
+            if hour == 24 {
+                hourString = "12"
+            } else {
+                hourString = String(hour)
+            }
+            
             if minute == 0 {
                 minuteString = String(minute)+"0"
             } else {

@@ -131,16 +131,16 @@ final class AlarmSettingViewController: UIViewController {
     }
     
    private func requestNotificationPermission() {
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert,.sound,.badge], completionHandler: { didAllow, error in
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge], completionHandler: { didAllow, error in
             if didAllow {
                 print("Push: 권한 허용")
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
 //                    self.userPlanPatchAPICall(target: "DEVELOP", hasAlarm: true)
                     self.presentBottomSheet(target: self.targetData, hasAlarm: true)
                 }
             } else {
                 print("Push: 권한 거부")
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
 //                    self.userPlanPatchAPICall(target: "DEVELOP", hasAlarm: true)
                     self.presentBottomSheet(target: self.targetData, hasAlarm: false)
                 }
