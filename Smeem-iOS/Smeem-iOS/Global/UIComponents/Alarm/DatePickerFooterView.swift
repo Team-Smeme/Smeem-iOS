@@ -28,7 +28,7 @@ final class DatePickerFooterView: UICollectionReusableView {
     
     // MARK: - UI Property
     
-    private let alarmLabel: UILabel = {
+    let alarmLabel: UILabel = {
         let label = UILabel()
         label.text = "알림 시간"
         label.font = .c2
@@ -36,7 +36,7 @@ final class DatePickerFooterView: UICollectionReusableView {
         return label
     }()
     
-    private lazy var inputTextField: UITextField = {
+    lazy var inputTextField: UITextField = {
         let textField = UITextField()
         textField.text = "10:00 PM"
         textField.textColor = .point
@@ -77,6 +77,7 @@ final class DatePickerFooterView: UICollectionReusableView {
         setLayout()
         setPickerViewDelegate()
         setTextFieldDelgate()
+        setSettingTime()
     }
     
     required init?(coder: NSCoder) {
@@ -111,18 +112,61 @@ final class DatePickerFooterView: UICollectionReusableView {
     
     // MARK: - Custom Method
     
-    private func calculateTime(dayAndNight: String, hours: String) -> Int {
+    // 1 ~ 24
+    func calculateTime(dayAndNight: String, hours: String) -> Int {
         if dayAndNight == "PM" {
             if hours == "12" {
-                return Int(hours) ?? 0
+                return 12 // 12 PM 그대로
             }
-            return Int(hours)!+12
+            return Int(hours)!+12 // 13~23시까지
         } else {
-            if hours == "12" {
-                return 0
+            if hours == "12" { // AM 00:00
+                return 24
+            } else {
+                return Int(hours)!
             }
         }
-        return hours == "00" ? 0 : 30
+    }
+    
+    func calculateMyPageTime(hour: Int, minute: Int) -> String {
+        var dayAndNight = "" // 1 ~ 24
+        var hourString = ""
+        var minuteString = ""
+        // 12부터 23
+        if 12 <= hour && hour < 24 {
+            dayAndNight = "PM"
+            // 13부터
+            if hour > 12 {
+                hourString = String(hour-12)
+                if minute == 0 {
+                    minuteString = String(minute)+"0"
+                } else {
+                    minuteString = String(minute)
+                }
+            } else {
+                hourString = String(hour)
+                if minute == 0 {
+                    minuteString = String(minute)+"0"
+                } else {
+                    minuteString = String(minute)
+                }
+            }
+        } else {
+            // 24, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 11
+            dayAndNight = "AM"
+            if hour == 24 {
+                hourString = "12"
+            } else {
+                hourString = String(hour)
+            }
+            
+            if minute == 0 {
+                minuteString = String(minute)+"0"
+            } else {
+                minuteString = String(minute)
+            }
+        }
+        return hourString + ":" + String(minuteString) + " " + dayAndNight
     }
     
     private func setPickerViewDelegate() {
@@ -132,6 +176,21 @@ final class DatePickerFooterView: UICollectionReusableView {
     
     private func setTextFieldDelgate() {
         inputTextField.delegate = self
+    }
+    
+    private func setSettingTime() {
+        let desiredHoursRow = 9 // 시작 시간으로 설정할 행 인덱스
+        let desiredMinuteRow = 0 // 시작 분으로 설정할 행 인덱스
+        let desiredDayAndNightRow = 1 // 시작 AM/PM으로 설정할 행 인덱스
+        
+        pickerView.selectRow(desiredHoursRow, inComponent: 0, animated: false)
+        pickerView.selectRow(desiredMinuteRow, inComponent: 1, animated: false)
+        pickerView.selectRow(desiredDayAndNightRow, inComponent: 2, animated: false)
+        
+        // 선택한 값 업데이트
+        selectedHours = hoursArray[desiredHoursRow]
+        selectedMinute = minuteArray[desiredMinuteRow]
+        selectedDayAndNight = dayAndNightArray[desiredDayAndNightRow]
     }
     
     // MARK: - Layout

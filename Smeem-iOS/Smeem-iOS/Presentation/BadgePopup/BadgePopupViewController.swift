@@ -83,12 +83,12 @@ final class BadgePopupViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        appearPopupViewAnimate()
+//        appearPopupViewAnimate()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         
-        disappearPopupViewAnimate()
+//        disappearPopupViewAnimate()
     }
     
     // MARK: - @objc

@@ -19,7 +19,7 @@ final class AlarmCollectionView: UICollectionView {
     // MARK: - Property
     
     private let dayArray = ["월", "화", "수", "목", "금", "토", "일"]
-    private let selectedIndexPath = [IndexPath(item: 0, section: 0), IndexPath(item: 1, section: 0), IndexPath(item: 2, section: 0), IndexPath(item: 3, section: 0), IndexPath(item: 4, section: 0)]
+    var selectedIndexPath = [IndexPath(item: 0, section: 0), IndexPath(item: 1, section: 0), IndexPath(item: 2, section: 0), IndexPath(item: 3, section: 0), IndexPath(item: 4, section: 0)]
     var dayDicrionary: [String:String] = ["월": "MON", "화": "TUE", "수": "WED", "목": "THU", "금": "FRI", "토": "SAT", "일": "SUN"]
     
     var selectedDayArray: Set<String> = ["MON", "TUE", "WED", "THU", "FRI"] {
@@ -32,6 +32,13 @@ final class AlarmCollectionView: UICollectionView {
     
     var trainingDayClosure: (((day: String, type: SmeemButtonType)) -> Void)?
     var trainingTimeClosure: (((hour: Int, minute: Int)) -> Void)?
+    
+    var myPageTime = (time: 100, minute: 100)
+    var hasAlarm = true {
+        didSet {
+            self.reloadData()
+        }
+    }
     
     // MARK: - UI Property
     
@@ -113,6 +120,11 @@ extension AlarmCollectionView: UICollectionViewDataSource {
         initalSelectedIndexPaths.forEach {
             collectionView.selectItem(at: $0, animated: false, scrollPosition: .init())
         }
+        
+        if !hasAlarm {
+            cell.dayCellColor = hasAlarm
+        }
+        
         cell.setData(dayArray[indexPath.item])
         return cell
     }
@@ -139,6 +151,18 @@ extension AlarmCollectionView: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         guard let footerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: DatePickerFooterView.identifier, for: indexPath) as? DatePickerFooterView else { return UICollectionReusableView() }
+        
+        if myPageTime != (100, 100) {
+            if !hasAlarm {
+                footerView.inputTextField.text = footerView.calculateMyPageTime(hour: myPageTime.time, minute: myPageTime.minute)
+                footerView.inputTextField.textColor = .gray300
+                footerView.alarmLabel.textColor = .gray300
+            } else {
+                footerView.inputTextField.text = footerView.calculateMyPageTime(hour: myPageTime.time, minute: myPageTime.minute)
+            }
+        } else {
+            print("온보딩")
+        }
         
         footerView.trainingTimeClosure = { data in
             let hoursData = data.hour

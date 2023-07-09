@@ -26,11 +26,8 @@ final class ForeignDiaryViewController: DiaryViewController {
     
     override func rightNavigationButtonDidTap() {
         if rightNavigationButton.titleLabel?.textColor == .point {
+            showLodingView(loadingView: self.loadingView)
             postDiaryAPI()
-            let homeVC = HomeViewController()
-            homeVC.badgePopupData = self.badgePopupContent
-            let rootVC = UINavigationController(rootViewController: homeVC)
-            changeRootViewControllerAndPresent(rootVC)
         } else {
             showToastIfNeeded(toastType: .defaultToast(bodyType: .regEx))
         }

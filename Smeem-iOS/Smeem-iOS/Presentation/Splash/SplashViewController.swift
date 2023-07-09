@@ -24,7 +24,7 @@ final class SplashViewController: UIViewController {
     private let SmeemNameLabel: UILabel = {
         let label = UILabel()
         label.text = "smeem"
-        label.font = .h1
+        label.font = .u1
         label.textColor = .black
         return label
     }()
