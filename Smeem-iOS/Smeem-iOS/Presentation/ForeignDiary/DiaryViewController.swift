@@ -10,10 +10,11 @@ import UIKit
 import SnapKit
 
 protocol DiaryStrategy {
+    func configureToolTipView(_ imageView: UIImageView)
+    func configureRandomSubjectButton(_ button: UIButton)
     func configureLanguageLabel(_ label: UILabel)
     func configureRightNavigationButton(_ button: UIButton)
     func configureStepLabel(_ label: UILabel)
-    func configureRandomSubjectButton(_ button: UIButton)
 }
 
 class DiaryViewController: UIViewController {
@@ -94,6 +95,7 @@ class DiaryViewController: UIViewController {
         let textView = UITextView()
         textView.configureDiaryTextView(topInset: 20)
         textView.configureTypingAttributes()
+        textView.textContentType = .init(rawValue: "ko-KR")
         textView.delegate = self
         return textView
     }()
@@ -113,7 +115,7 @@ class DiaryViewController: UIViewController {
         return view
     }()
     
-    private let thinLine = SeparationLine(height: .thin)
+    let thinLine = SeparationLine(height: .thin)
     
     lazy var randomSubjectButton: UIButton = {
         let button = UIButton()
@@ -217,6 +219,9 @@ class DiaryViewController: UIViewController {
             }
             self.view.layoutIfNeeded()
         }
+        
+        updateAdditionalViewsForKeyboard(notification: notification, keyboardHeight: keyboardHeight)
+
     }
     
     @objc func keyboardWillHide(notification: NSNotification) {
@@ -232,6 +237,8 @@ class DiaryViewController: UIViewController {
             }
             self.view.layoutIfNeeded()
         }
+        
+        updateAdditionalViewsForKeyboard(notification: notification, keyboardHeight: 0)
     }
     
     @objc func dismissButtonDidTap() {
@@ -271,10 +278,14 @@ class DiaryViewController: UIViewController {
     }
     
     private func configureUI() {
+        if let randomSubjectToolTip = randomSubjectToolTip {
+            diaryStrategy?.configureToolTipView(randomSubjectToolTip)
+        }
+        
+        diaryStrategy?.configureRandomSubjectButton(randomSubjectButton)
         diaryStrategy?.configureLanguageLabel(languageLabel)
         diaryStrategy?.configureRightNavigationButton(rightNavigationButton)
         diaryStrategy?.configureStepLabel(stepLabel)
-        diaryStrategy?.configureRandomSubjectButton(randomSubjectButton)
     }
     
     private func setBackgroundColor() {
@@ -306,6 +317,8 @@ class DiaryViewController: UIViewController {
             $0.bottom.equalTo(bottomView.snp.top)
         }
     }
+    
+    func updateAdditionalViewsForKeyboard(notification: NSNotification, keyboardHeight: CGFloat) {}
     
     private func keyboardAddObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
