@@ -40,11 +40,13 @@ class DiaryViewController: UIViewController {
     var isTopicCalled: Bool = false
     var isKeyboardVisible: Bool = false
     var keyboardHeight: CGFloat = 0.0
+    var rightButtonFlag = false
     
     // MARK: - UI Property
     
     let navigationView = UIView()
     private lazy var randomSubjectView = RandomSubjectView()
+    let loadingView = LoadingView()
     
     private let navibarContentStackView: UIStackView = {
         let stackView = UIStackView()
@@ -132,6 +134,15 @@ class DiaryViewController: UIViewController {
         return button
     }()
     
+    lazy var randomSubjectToolTip: UIImageView? = {
+        let image = UIImageView()
+        image.image = Constant.Image.icnToolTip
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(randomSubjectToolTipDidTap))
+        image.addGestureRecognizer(tapGesture)
+        image.isUserInteractionEnabled = true
+        return image
+    }()
+    
     var smeemToastView: SmeemToastView?
     
     // MARK: - Life Cycle
@@ -150,10 +161,12 @@ class DiaryViewController: UIViewController {
         setupUI()
         setDelegate()
         checkTutorial()
+        checkTooltip()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         keyboardRemoveObserver()
+        randomSubjectToolTip?.removeFromSuperview()
     }
     
     deinit {
@@ -166,9 +179,9 @@ class DiaryViewController: UIViewController {
     
     @objc func randomTopicButtonDidTap() {
         setRandomTopicButtonToggle()
+        randomSubjectWithAPI()
         if !isTopicCalled {
             randomSubjectButton.setImage(Constant.Image.btnRandomSubjectActive, for: .normal)
-            randomSubjectWithAPI()
             isTopicCalled = true
         }
         randomSubjectView.setData(contentText: topicContent)
@@ -179,6 +192,9 @@ class DiaryViewController: UIViewController {
     }
     
     @objc func rightNavigationButtonDidTap() {
+        if !rightNavigationButton.isEnabled {
+            showToastIfNeeded(toastType: .defaultToast(bodyType: .regEx))
+        }
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
@@ -221,6 +237,11 @@ class DiaryViewController: UIViewController {
     @objc func dismissButtonDidTap() {
         tutorialImageView?.removeFromSuperview()
         dismissButton?.removeFromSuperview()
+    }
+    
+    @objc func randomSubjectToolTipDidTap() {
+        self.randomSubjectToolTip?.isHidden = true
+        UserDefaultsManager.randomSubjectToolTip = true
     }
     
     // MARK: - Custom Method
@@ -349,6 +370,24 @@ class DiaryViewController: UIViewController {
         }
     }
     
+    private func checkTooltip() {
+        let randomSubjectToolTipe = UserDefaultsManager.randomSubjectToolTip
+        
+        if !randomSubjectToolTipe {
+            
+            view.addSubview(randomSubjectToolTip ?? UIImageView())
+            
+            randomSubjectToolTip?.snp.makeConstraints {
+                $0.width.equalTo(convertByWidthRatio(180))
+                $0.height.equalTo(convertByHeightRatio(48))
+                $0.bottom.equalTo(view.keyboardLayoutGuide.snp.top).offset(-37)
+                $0.trailing.equalToSuperview().inset(convertByHeightRatio(18))
+            }
+        } else {
+            randomSubjectToolTip = nil
+        }
+    }
+    
     private func checkTutorial() {
         //        if self is StepOneKoreanDiaryViewController {
         //            let tutorialDiaryStepOne = UserDefaultsManager.tutorialDiaryStepOne
@@ -400,17 +439,25 @@ extension DiaryViewController: UITextViewDelegate {
         placeHolderLabel.isHidden = !isTextEmpty
         
         guard let strategy = diaryStrategy else {
-            rightNavigationButton.setTitleColor(.gray400, for: .normal)
+            rightNavigationButton.setTitleColor(.gray300, for: .normal)
             return
         }
         
         if let koreanStrategy = strategy as? StepOneKoreanDiaryStrategy {
-            rightNavigationButton.isEnabled = koreanStrategy.koreanValidation(with: textView.text, in: self)
+            if koreanStrategy.koreanValidation(with: textView.text, in: self) {
+                rightButtonFlag = true
+            } else {
+                rightButtonFlag = false
+            }
         } else {
-            rightNavigationButton.isEnabled = strategy.englishValidation(with: textView.text, in: self)
+            if strategy.englishValidation(with: textView.text, in: self) {
+                rightButtonFlag = true
+            } else {
+                rightButtonFlag = false
+            }
         }
         
-        rightNavigationButton.setTitleColor(rightNavigationButton.isEnabled ? .point : .gray400, for: .normal)
+        rightNavigationButton.setTitleColor(rightButtonFlag ? .point : .gray300, for: .normal)
     }
     
     func textViewDidChangeSelection(_ textView: UITextView) {
@@ -459,17 +506,22 @@ extension DiaryViewController {
         PostDiaryAPI.shared.postDiary(param: PostDiaryRequest(content: inputTextView.text, topicId: topicID)) { response in
             guard let postDiaryResponse = response?.data else { return }
             self.diaryID = postDiaryResponse.diaryID
-            
+
             if !postDiaryResponse.badges.isEmpty {
                 self.badgePopupContent = postDiaryResponse.badges
             } else {
                 self.badgePopupContent = []
             }
-            
-            let homeVC = HomeViewController()
-            homeVC.badgePopupData = self.badgePopupContent
-            let rootVC = UINavigationController(rootViewController: homeVC)
-            self.changeRootViewControllerAndPresent(rootVC)
+
+            DispatchQueue.main.async {
+                self.hideLodingView(loadingView: self.loadingView)
+                let homeVC = HomeViewController()
+                homeVC.toastMessageFlag = true
+                homeVC.badgePopupData = self.badgePopupContent
+                self.randomSubjectToolTip = nil
+                let rootVC = UINavigationController(rootViewController: homeVC)
+                self.changeRootViewControllerAndPresent(rootVC)
+            }
         }
     }
 }

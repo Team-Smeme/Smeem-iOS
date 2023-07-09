@@ -32,6 +32,7 @@ final class StepTwoKoreanDiaryViewController: DiaryViewController {
     
     private lazy var hintButton: UIButton = {
         let button = UIButton()
+        button.backgroundColor = .clear
         button.addTarget(self, action: #selector(hintButtondidTap), for: .touchUpInside)
         button.setImage(Constant.Image.btnTranslateInactive, for: .normal)
         return button
@@ -66,6 +67,7 @@ final class StepTwoKoreanDiaryViewController: DiaryViewController {
     
     override func rightNavigationButtonDidTap() {
         if rightNavigationButton.titleLabel?.textColor == .point {
+            self.hideLodingView(loadingView: self.loadingView)
             postDiaryAPI()
         } else {
             showToastIfNeeded(toastType: .defaultToast(bodyType: .regEx))
@@ -78,13 +80,11 @@ final class StepTwoKoreanDiaryViewController: DiaryViewController {
     }
     
     @objc func hintButtondidTap() {
-        
         isHintShowed.toggle()
         if isHintShowed {
             postPapagoApi(diaryText: hintTextView.text)
             hintButton.setImage(Constant.Image.btnTranslateActive, for: .normal)
         } else {
-            hintButton.backgroundColor = .gray200
             hintTextView.text = hintText
             hintButton.setImage(Constant.Image.btnTranslateInactive, for: .normal)
         }

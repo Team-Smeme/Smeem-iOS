@@ -123,7 +123,7 @@ final class HowOnboardingViewController: UIViewController {
     private func configurePlanData() {
 //        let startindex = planWay.index(planWay.startIndex, offsetBy: 7)
 //        let endIndex = planWay.index(planWay.endIndex, offsetBy: planWay.count-1)
-        let planNameList = planWay.split(separator: "이상 ").map{String($0)}
+        let planNameList = planWay.components(separatedBy: " 이상 ")
         let planWayOne = planNameList[0] + " 이상"
         let planWayTwo = planNameList[1]
         let detailPlan = planDetailWay.split(separator: "\n").map{String($0)}

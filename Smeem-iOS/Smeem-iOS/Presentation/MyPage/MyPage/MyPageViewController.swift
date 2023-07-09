@@ -14,6 +14,8 @@ final class MyPageViewController: UIViewController {
     // MARK: - Property
     
     private var userInfo = MyPageInfo(username: "", target: "", way: "", detail: "", targetLang: "", hasPushAlarm: true, trainingTime: TrainingTime(day: "", hour: 0, minute: 0), badge: Badge(id: 0, name: "", type: "", imageURL: ""))
+    var myPageSelectedIndexPath = ["MON": IndexPath(item: 0, section: 0), "TUE":IndexPath(item: 1, section: 0), "WED":IndexPath(item: 2, section: 0), "THU":IndexPath(item: 3, section: 0), "FRI":IndexPath(item: 4, section: 0), "SAT":IndexPath(item: 5, section: 0), "SUN":IndexPath(item: 6, section: 0)]
+    var indexPathArray: [IndexPath] = []
     
     // MARK: - UI Property
     
@@ -44,6 +46,7 @@ final class MyPageViewController: UIViewController {
     
     private lazy var moreButton: UIButton = {
         let button = UIButton()
+        button.isHidden = true
         button.setImage(Constant.Image.icnMoreMono, for: .normal)
         button.addTarget(self, action: #selector(moreButtonDidTap(_:)), for: .touchUpInside)
         return button
@@ -184,14 +187,12 @@ final class MyPageViewController: UIViewController {
         super.viewDidLoad()
     
         setLayout()
-        myPageInfoAPI()
         swipeRecognizer()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-//        isShownWelcomeBadgePopup()
         myPageInfoAPI()
     }
     
@@ -229,7 +230,7 @@ final class MyPageViewController: UIViewController {
     // MARK: - Custom Method
     
     private func setData() {
-        let planNameList = userInfo.way.split(separator: "이상 ").map{String($0)}
+        let planNameList = userInfo.way.components(separatedBy: " 이상 ")
         let planWayOne = planNameList[0] + " 이상"
         let planWayTwo = planNameList[1]
         let detailPlan = userInfo.detail.split(separator: "\n").map{String($0)}
@@ -240,6 +241,19 @@ final class MyPageViewController: UIViewController {
         badgeImage.kf.setImage(with: url)
         badgeNameLabel.text = (userInfo.badge.name)
         badgeSummaryLabel.text = "축하해요! \(userInfo.badge.name)를 획득했어요!"
+        
+        alarmCollectionView.hasAlarm = userInfo.hasPushAlarm
+        
+        if !userInfo.hasPushAlarm {
+            alarmPushToggleButton.setImage(Constant.Image.btnToggleInActive, for: .normal)
+        }
+        // 마이페이지 알람 cell 바꾸는 로직
+        let dayArray = userInfo.trainingTime.day.split(separator: ",")
+        for i in 0..<dayArray.count {
+            indexPathArray.append(myPageSelectedIndexPath[String(dayArray[i])]!)
+        }
+        alarmCollectionView.selectedIndexPath = indexPathArray
+        alarmCollectionView.myPageTime = (userInfo.trainingTime.hour, userInfo.trainingTime.minute)
     }
     
 //    private func isShownWelcomeBadgePopup() {

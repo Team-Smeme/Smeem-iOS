@@ -13,11 +13,11 @@ enum PapagoService {
     case papago(param: String)
 }
 
-extension PapagoService: BaseTargetType {
-    private var baseURL: String {
+extension PapagoService: TargetType {
+    var baseURL: URL {
         switch self {
         case .papago:
-            return URLConstant.papagoBaseURL
+            return URL(string: URLConstant.papagoBaseURL)!
         }
     }
     
@@ -45,6 +45,4 @@ extension PapagoService: BaseTargetType {
     var headers: [String : String]? {
         return NetworkConstant.papagoHeader
     }
-    
-
 }
