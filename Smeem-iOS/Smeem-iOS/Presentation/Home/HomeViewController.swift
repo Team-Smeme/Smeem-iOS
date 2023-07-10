@@ -385,6 +385,13 @@ extension HomeViewController: FSCalendarDelegate {
 // MARK: - Extension : FSCalendarDataSource
 
 extension HomeViewController: FSCalendarDataSource {
+    /// 페이지 바뀔 때 호출되는 함수
+    func calendarCurrentPageDidChange(_ calendar: FSCalendar) {
+        homeDiaryWithAPI(start: calendar.currentPage.startOfMonth().addingDate(addValue: -7), end: calendar.currentPage.endOfMonth().addingDate(addValue: 7))
+        calendar.reloadData()
+        configureBottomLayout(date: currentDate)
+    }
+    
     func calendar(_ calendar: FSCalendar, cellFor date: Date, at position: FSCalendarMonthPosition) -> FSCalendarCell {
         guard let cell = calendar.dequeueReusableCell(
             withIdentifier: "cell",
@@ -444,13 +451,6 @@ extension HomeViewController: FSCalendarDelegateAppearance {
                 $0.bottom.equalToSuperview().offset(-convertByHeightRatio(addDiaryButton.isHidden ? 50 : 120))
             }
         }
-    }
-    
-    /// currentMonth 비교해서 바뀌었을 때 서버 통신
-    func calendarCurrentPageDidChange(_ calendar: FSCalendar) {
-        currentDate = calendar.currentPage
-        homeDiaryWithAPI(start: currentDate.startOfMonth().addingDate(addValue: -7), end: currentDate.endOfMonth().addingDate(addValue: 7))
-        calendar.reloadData()
     }
 }
 
