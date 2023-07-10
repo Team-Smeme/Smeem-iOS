@@ -12,6 +12,13 @@ final class HowOnboardingViewController: UIViewController {
     // MARK: - Property
     
     var tempTarget = String()
+    var planName = String()
+    var planWay = String()
+    var planDetailWay = "" {
+        didSet {
+            configurePlanData()
+        }
+    }
     
     // MARK: - UI Property
     
@@ -89,6 +96,10 @@ final class HowOnboardingViewController: UIViewController {
         swipeRecognizer()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        detailPlanListGetAPI(tempTarget: tempTarget)
+    }
+    
     // MARK: - @objc
     
     @objc func nextButtonDidTap() {
@@ -107,6 +118,17 @@ final class HowOnboardingViewController: UIViewController {
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(responseToSwipeGesture))
         swipeRight.direction = UISwipeGestureRecognizer.Direction.right
         self.view.addGestureRecognizer(swipeRight)
+    }
+    
+    private func configurePlanData() {
+//        let startindex = planWay.index(planWay.startIndex, offsetBy: 7)
+//        let endIndex = planWay.index(planWay.endIndex, offsetBy: planWay.count-1)
+        let planNameList = planWay.components(separatedBy: " 이상 ")
+        let planWayOne = planNameList[0] + " 이상"
+        let planWayTwo = planNameList[1]
+        let detailPlan = planDetailWay.split(separator: "\n").map{String($0)}
+        
+        howLearningView.setData(planName: planName, planWayOne: planWayOne, planWayTwo: planWayTwo, detailPlanOne: detailPlan[0], detailPlanTwo: detailPlan[1])
     }
     
     // MARK: - Layout
@@ -148,6 +170,19 @@ final class HowOnboardingViewController: UIViewController {
             $0.leading.trailing.equalToSuperview().inset(18)
             $0.bottom.equalToSuperview().inset(50)
             $0.height.equalTo(convertByHeightRatio(60))
+        }
+    }
+}
+
+extension HowOnboardingViewController {
+    func detailPlanListGetAPI(tempTarget: String) {
+        OnboardingAPI.shared.detailPlanList(param: tempTarget) { response in
+            guard let data = response.data else { return }
+            self.planName = data.name
+            self.planWay = data.way
+            self.planDetailWay = data.detail
+            
+            self.configurePlanData()
         }
     }
 }

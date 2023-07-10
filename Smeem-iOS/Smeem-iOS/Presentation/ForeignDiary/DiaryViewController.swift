@@ -10,10 +10,11 @@ import UIKit
 import SnapKit
 
 protocol DiaryStrategy {
+    func configureToolTipView(_ imageView: UIImageView)
+    func configureRandomSubjectButton(_ button: UIButton)
     func configureLanguageLabel(_ label: UILabel)
     func configureRightNavigationButton(_ button: UIButton)
     func configureStepLabel(_ label: UILabel)
-    func configureRandomSubjectButton(_ button: UIButton)
 }
 
 class DiaryViewController: UIViewController {
@@ -38,11 +39,15 @@ class DiaryViewController: UIViewController {
     var badgePopupContent = [PopupBadge]()
     
     var isTopicCalled: Bool = false
+    var isKeyboardVisible: Bool = false
+    var keyboardHeight: CGFloat = 0.0
+    var rightButtonFlag = false
     
     // MARK: - UI Property
     
     let navigationView = UIView()
     private lazy var randomSubjectView = RandomSubjectView()
+    let loadingView = LoadingView()
     
     private let navibarContentStackView: UIStackView = {
         let stackView = UIStackView()
@@ -53,7 +58,7 @@ class DiaryViewController: UIViewController {
         return stackView
     }()
     
-    private lazy var cancelButton: UIButton = {
+    lazy var cancelButton: UIButton = {
         let button = UIButton()
         button.titleLabel?.font = .b4
         button.setTitleColor(.black, for: .normal)
@@ -90,6 +95,7 @@ class DiaryViewController: UIViewController {
         let textView = UITextView()
         textView.configureDiaryTextView(topInset: 20)
         textView.configureTypingAttributes()
+        textView.textContentType = .init(rawValue: "ko-KR")
         textView.delegate = self
         return textView
     }()
@@ -109,7 +115,7 @@ class DiaryViewController: UIViewController {
         return view
     }()
     
-    private let thinLine = SeparationLine(height: .thin)
+    let thinLine = SeparationLine(height: .thin)
     
     lazy var randomSubjectButton: UIButton = {
         let button = UIButton()
@@ -130,7 +136,16 @@ class DiaryViewController: UIViewController {
         return button
     }()
     
-    var regExToastView: SmeemToastView?
+    lazy var randomSubjectToolTip: UIImageView? = {
+        let image = UIImageView()
+        image.image = Constant.Image.icnToolTip
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(randomSubjectToolTipDidTap))
+        image.addGestureRecognizer(tapGesture)
+        image.isUserInteractionEnabled = true
+        return image
+    }()
+    
+    var smeemToastView: SmeemToastView?
     
     // MARK: - Life Cycle
     
@@ -148,15 +163,17 @@ class DiaryViewController: UIViewController {
         setupUI()
         setDelegate()
         checkTutorial()
+        checkTooltip()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         keyboardRemoveObserver()
+        randomSubjectToolTip?.removeFromSuperview()
     }
     
     deinit {
         randomSubjectView.removeFromSuperview()
-        regExToastView?.removeFromSuperview()
+        smeemToastView?.removeFromSuperview()
         NotificationCenter.default.removeObserver(self)
     }
     
@@ -164,9 +181,9 @@ class DiaryViewController: UIViewController {
     
     @objc func randomTopicButtonDidTap() {
         setRandomTopicButtonToggle()
+        randomSubjectWithAPI()
         if !isTopicCalled {
             randomSubjectButton.setImage(Constant.Image.btnRandomSubjectActive, for: .normal)
-            randomSubjectWithAPI()
             isTopicCalled = true
         }
         randomSubjectView.setData(contentText: topicContent)
@@ -177,6 +194,9 @@ class DiaryViewController: UIViewController {
     }
     
     @objc func rightNavigationButtonDidTap() {
+        if !rightNavigationButton.isEnabled {
+            showToastIfNeeded(toastType: .defaultToast(bodyType: .regEx))
+        }
     }
     
     @objc func keyboardWillShow(notification: NSNotification) {
@@ -189,17 +209,46 @@ class DiaryViewController: UIViewController {
         inputTextView.contentInset = insets
         inputTextView.scrollIndicatorInsets = insets
         self.bottomView.transform = CGAffineTransform(translationX: 0, y: -keyboardHeight)
+        
+        self.keyboardHeight = keyboardFrame.height
+        isKeyboardVisible = true
+        
+        UIView.animate(withDuration: 0.3) {
+            self.bottomView.snp.updateConstraints {
+                $0.height.equalTo(53)
+            }
+            self.view.layoutIfNeeded()
+        }
+        
+        updateAdditionalViewsForKeyboard(notification: notification, keyboardHeight: keyboardHeight)
+
     }
     
     @objc func keyboardWillHide(notification: NSNotification) {
         inputTextView.contentInset = .zero
         inputTextView.scrollIndicatorInsets = .zero
         self.bottomView.transform = CGAffineTransform.identity
+        
+        isKeyboardVisible = false
+        
+        UIView.animate(withDuration: 0.3) {
+            self.bottomView.snp.updateConstraints {
+                $0.height.equalTo(87)
+            }
+            self.view.layoutIfNeeded()
+        }
+        
+        updateAdditionalViewsForKeyboard(notification: notification, keyboardHeight: 0)
     }
     
     @objc func dismissButtonDidTap() {
         tutorialImageView?.removeFromSuperview()
         dismissButton?.removeFromSuperview()
+    }
+    
+    @objc func randomSubjectToolTipDidTap() {
+        self.randomSubjectToolTip?.isHidden = true
+        UserDefaultsManager.randomSubjectToolTip = true
     }
     
     // MARK: - Custom Method
@@ -229,10 +278,14 @@ class DiaryViewController: UIViewController {
     }
     
     private func configureUI() {
+        if let randomSubjectToolTip = randomSubjectToolTip {
+            diaryStrategy?.configureToolTipView(randomSubjectToolTip)
+        }
+        
+        diaryStrategy?.configureRandomSubjectButton(randomSubjectButton)
         diaryStrategy?.configureLanguageLabel(languageLabel)
         diaryStrategy?.configureRightNavigationButton(rightNavigationButton)
         diaryStrategy?.configureStepLabel(stepLabel)
-        diaryStrategy?.configureRandomSubjectButton(randomSubjectButton)
     }
     
     private func setBackgroundColor() {
@@ -264,6 +317,8 @@ class DiaryViewController: UIViewController {
             $0.bottom.equalTo(bottomView.snp.top)
         }
     }
+    
+    func updateAdditionalViewsForKeyboard(notification: NSNotification, keyboardHeight: CGFloat) {}
     
     private func keyboardAddObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
@@ -312,7 +367,7 @@ class DiaryViewController: UIViewController {
         
         bottomView.snp.makeConstraints {
             $0.bottom.leading.trailing.equalToSuperview()
-            $0.height.equalTo(constraintByNotch(53, 87))
+            $0.height.equalTo(convertByHeightRatio(87))
         }
         
         thinLine.snp.makeConstraints {
@@ -325,6 +380,24 @@ class DiaryViewController: UIViewController {
             $0.trailing.equalToSuperview().offset(convertByWidthRatio(-18))
             $0.width.equalTo(convertByWidthRatio(78))
             $0.height.equalTo(convertByHeightRatio(19))
+        }
+    }
+    
+    private func checkTooltip() {
+        let randomSubjectToolTipe = UserDefaultsManager.randomSubjectToolTip
+        
+        if !randomSubjectToolTipe {
+            
+            view.addSubview(randomSubjectToolTip ?? UIImageView())
+            
+            randomSubjectToolTip?.snp.makeConstraints {
+                $0.width.equalTo(convertByWidthRatio(180))
+                $0.height.equalTo(convertByHeightRatio(48))
+                $0.bottom.equalTo(view.keyboardLayoutGuide.snp.top).offset(-37)
+                $0.trailing.equalToSuperview().inset(convertByHeightRatio(18))
+            }
+        } else {
+            randomSubjectToolTip = nil
         }
     }
     
@@ -353,6 +426,23 @@ class DiaryViewController: UIViewController {
     }
 }
 
+// MARK: - Extensions
+extension DiaryViewController {
+    func showToastIfNeeded(toastType: ToastViewType) {
+        smeemToastView?.removeFromSuperview()
+        smeemToastView = SmeemToastView(type: toastType)
+        
+        let onKeyboardOffset = convertByHeightRatio(73)
+        let offKeyboardOffset = convertByHeightRatio(107)
+
+        // 키보드가 보이는지 확인하여 오프셋을 변경합니다.
+        let offset = isKeyboardVisible ?  onKeyboardOffset : offKeyboardOffset
+        
+        smeemToastView?.show(in: view, offset: CGFloat(offset), keyboardHeight: keyboardHeight)
+        smeemToastView?.hide(after: 1)
+    }
+}
+
 // MARK: - UITextViewDelegate
 
 extension DiaryViewController: UITextViewDelegate {
@@ -362,17 +452,25 @@ extension DiaryViewController: UITextViewDelegate {
         placeHolderLabel.isHidden = !isTextEmpty
         
         guard let strategy = diaryStrategy else {
-            rightNavigationButton.setTitleColor(.gray400, for: .normal)
+            rightNavigationButton.setTitleColor(.gray300, for: .normal)
             return
         }
         
         if let koreanStrategy = strategy as? StepOneKoreanDiaryStrategy {
-            rightNavigationButton.isEnabled = koreanStrategy.koreanValidation(with: textView.text, in: self)
+            if koreanStrategy.koreanValidation(with: textView.text, in: self) {
+                rightButtonFlag = true
+            } else {
+                rightButtonFlag = false
+            }
         } else {
-            rightNavigationButton.isEnabled = strategy.englishValidation(with: textView.text, in: self)
+            if strategy.englishValidation(with: textView.text, in: self) {
+                rightButtonFlag = true
+            } else {
+                rightButtonFlag = false
+            }
         }
         
-        rightNavigationButton.setTitleColor(rightNavigationButton.isEnabled ? .point : .gray400, for: .normal)
+        rightNavigationButton.setTitleColor(rightButtonFlag ? .point : .gray300, for: .normal)
     }
     
     func textViewDidChangeSelection(_ textView: UITextView) {
@@ -386,14 +484,14 @@ extension DiaryViewController: UITextViewDelegate {
 
 extension DiaryStrategy {
     func englishValidation(with text: String, in viewController: DiaryViewController) -> Bool {
-        return viewController.inputTextView.text.getArrayAfterRegex(regex: "[a-zA-z]").count > 1
+        return viewController.inputTextView.text.getArrayAfterRegex(regex: "[a-zA-z]").count > 0
     }
     
 }
 
 extension StepOneKoreanDiaryStrategy {
     func koreanValidation(with text: String, in viewController: DiaryViewController) -> Bool {
-        return viewController.inputTextView.text.getArrayAfterRegex(regex: "[가-핳ㄱ-ㅎㅏ-ㅣ]").count > 1
+        return viewController.inputTextView.text.getArrayAfterRegex(regex: "[가-핳ㄱ-ㅎㅏ-ㅣ]").count > 0
     }
 }
 
@@ -421,17 +519,22 @@ extension DiaryViewController {
         PostDiaryAPI.shared.postDiary(param: PostDiaryRequest(content: inputTextView.text, topicId: topicID)) { response in
             guard let postDiaryResponse = response?.data else { return }
             self.diaryID = postDiaryResponse.diaryID
-            
+
             if !postDiaryResponse.badges.isEmpty {
                 self.badgePopupContent = postDiaryResponse.badges
             } else {
                 self.badgePopupContent = []
             }
-            
-            let homeVC = HomeViewController()
-            homeVC.badgePopupData = self.badgePopupContent
-            let rootVC = UINavigationController(rootViewController: homeVC)
-            self.changeRootViewControllerAndPresent(rootVC)
+
+            DispatchQueue.main.async {
+                self.hideLodingView(loadingView: self.loadingView)
+                let homeVC = HomeViewController()
+                homeVC.toastMessageFlag = true
+                homeVC.badgePopupData = self.badgePopupContent
+                self.randomSubjectToolTip = nil
+                let rootVC = UINavigationController(rootViewController: homeVC)
+                self.changeRootViewControllerAndPresent(rootVC)
+            }
         }
     }
 }

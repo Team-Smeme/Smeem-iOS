@@ -17,6 +17,7 @@ enum URLConstant {
     
     // MARK: Onboarding
     
+    static let planListURL = "/goals"
     static let userURL = "/members"
     static let userPlanURL = "/members/plan"
     
@@ -46,4 +47,8 @@ enum URLConstant {
     
     static let papagoBaseURL = "https://openapi.naver.com"
     static let papagoPathURL = "/v1/papago/n2mt"
+    
+    // MARK: - Push
+    
+    static let pushTestURL = "/test/alarm"
 }

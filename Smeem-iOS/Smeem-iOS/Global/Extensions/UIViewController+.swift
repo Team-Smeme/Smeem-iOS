@@ -107,4 +107,18 @@ extension UIViewController {
             window.rootViewController = rootVC
         })
     }
+    
+    /// showLodingView
+    func showLodingView(loadingView: LoadingView) {
+        view.addSubview(loadingView)
+        loadingView.snp.makeConstraints {
+            $0.top.leading.trailing.bottom.equalToSuperview()
+        }
+        
+        loadingView.isLoading = true
+    }
+    
+    func hideLodingView(loadingView: LoadingView) {
+        loadingView.isLoading = false
+    }
 }

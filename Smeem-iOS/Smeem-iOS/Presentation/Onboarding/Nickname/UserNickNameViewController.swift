@@ -13,6 +13,7 @@ final class UserNicknameViewController: UIViewController {
     
     var userPlanRequest: UserPlanRequest?
     var checkDouble = Bool()
+    var badgeListData: [PopupBadge]?
     
     // MARK: - UI Property
     
@@ -77,6 +78,11 @@ final class UserNicknameViewController: UIViewController {
         setTextFieldDelegate()
         showKeyboard(textView: nicknameTextField)
         addTextFieldNotification()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
         userPlanPatchAPI(userPlan: userPlanRequest!)
     }
     
@@ -91,8 +97,10 @@ final class UserNicknameViewController: UIViewController {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
             if self.checkDouble {
-                let HomeVC = HomeViewController()
-                self.changeRootViewController(HomeVC)
+                let homeVC = HomeViewController()
+                homeVC.badgePopupData = self.badgeListData ?? []
+                let rootVC = UINavigationController(rootViewController: homeVC)
+                self.changeRootViewControllerAndPresent(rootVC)
             } else {
                 self.nextButton.smeemButtonType = .notEnabled
                 self.doubleCheckLabel.isHidden = false
@@ -172,7 +180,7 @@ final class UserNicknameViewController: UIViewController {
         nextButton.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(convertByHeightRatio(18))
             $0.height.equalTo(convertByHeightRatio(60))
-            $0.bottom.equalToSuperview().inset(convertByHeightRatio(336+10))
+            $0.bottom.equalTo(view.keyboardLayoutGuide.snp.top).offset(-10)
         }
     }
 }
@@ -193,7 +201,20 @@ extension UserNicknameViewController: UITextFieldDelegate {
 extension UserNicknameViewController {
     private func nicknamePatchAPI(nickname: String) {
         OnboardingAPI.shared.nicknamePatch(param: NicknameRequest(username: nickname)) { response in
+//            self.hideLodingView(loadingView: self.loadingView)
             self.checkDouble = response.success
+            
+            DispatchQueue.main.async {
+                if self.checkDouble {
+                    let homeVC = HomeViewController()
+                    homeVC.badgePopupData = self.badgeListData ?? []
+                    let rootVC = UINavigationController(rootViewController: homeVC)
+                    self.changeRootViewControllerAndPresent(rootVC)
+                } else {
+                    self.nextButton.smeemButtonType = .notEnabled
+                    self.doubleCheckLabel.isHidden = false
+                }
+            }
         }
     }
     

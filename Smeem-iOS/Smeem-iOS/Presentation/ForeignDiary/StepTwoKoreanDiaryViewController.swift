@@ -32,6 +32,7 @@ final class StepTwoKoreanDiaryViewController: DiaryViewController {
     
     private lazy var hintButton: UIButton = {
         let button = UIButton()
+        button.backgroundColor = .clear
         button.addTarget(self, action: #selector(hintButtondidTap), for: .touchUpInside)
         button.setImage(Constant.Image.btnTranslateInactive, for: .normal)
         return button
@@ -53,39 +54,55 @@ final class StepTwoKoreanDiaryViewController: DiaryViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        setLayout()
         handleRightNavitationButton()
+        setLayout()
         checkTutorial()
     }
     
     // MARK: - @objc
-
-    @objc override func dismissButtonDidTap() {
-        tutorialImageView?.removeFromSuperview()
-        dismissButton?.removeFromSuperview()
-    }
     
     override func leftNavigationButtonDidTap() {
         self.navigationController?.popViewController(animated: true)
     }
     
     override func rightNavigationButtonDidTap() {
-        postDiaryAPI()
+        if rightNavigationButton.titleLabel?.textColor == .point {
+            self.hideLodingView(loadingView: self.loadingView)
+            postDiaryAPI()
+        } else {
+            showToastIfNeeded(toastType: .defaultToast(bodyType: .regEx))
+        }
+    }
+    
+    @objc override func dismissButtonDidTap() {
+        tutorialImageView?.removeFromSuperview()
+        dismissButton?.removeFromSuperview()
     }
     
     @objc func hintButtondidTap() {
-        
         isHintShowed.toggle()
         if isHintShowed {
             postPapagoApi(diaryText: hintTextView.text)
             hintButton.setImage(Constant.Image.btnTranslateActive, for: .normal)
         } else {
-            hintButton.backgroundColor = .gray200
             hintTextView.text = hintText
             hintButton.setImage(Constant.Image.btnTranslateInactive, for: .normal)
         }
         
+    }
+    
+    override func keyboardWillShow(notification: NSNotification) {
+        super.keyboardWillShow(notification: notification)
+        guard let userInfo = notification.userInfo,
+              let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect
+        else { return }
+        
+        keyboardHeight = keyboardFrame.height
+    }
+    
+    override func keyboardWillHide(notification: NSNotification) {
+        super.keyboardWillHide(notification: notification)
+        keyboardHeight = 0.0
     }
     
     // MARK: - Custom Method
@@ -119,7 +136,7 @@ final class StepTwoKoreanDiaryViewController: DiaryViewController {
         
         hintButton.snp.makeConstraints {
             $0.centerY.equalTo(randomSubjectButton)
-            $0.leading.equalTo(placeHolderLabel)
+            $0.leading.equalTo(cancelButton)
             $0.width.equalTo(convertByWidthRatio(92))
             $0.height.equalTo(convertByHeightRatio(29))
         }
@@ -127,12 +144,12 @@ final class StepTwoKoreanDiaryViewController: DiaryViewController {
     
     private func checkTutorial() {
 //        let tutorialDiaryStepTwo = UserDefaultsManager.tutorialDiaryStepTwo
-//        
+//
 //        if !tutorialDiaryStepTwo {
 //            UserDefaultsManager.tutorialDiaryStepTwo = true
-//            
+//
 //            view.addSubviews(tutorialImageView ?? UIImageView(), dismissButton ?? UIButton())
-//            
+//
 //            tutorialImageView?.snp.makeConstraints {
 //                $0.top.leading.trailing.bottom.equalToSuperview()
 //            }

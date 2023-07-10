@@ -7,6 +7,7 @@
 
 import AuthenticationServices
 import UIKit
+import UserNotifications
 
 import Firebase
 import FirebaseCore
@@ -47,6 +48,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // 메시지 대리자 설정
         Messaging.messaging().delegate = self
         
+        // userNotificationCenter 생성
+        UNUserNotificationCenter.current().delegate = self
+        
         // APNs 등록
         application.registerForRemoteNotifications()
         
@@ -77,6 +81,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 }
 
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    // foreground (앱 켜진 상태)에서 알림 오는 설정 (알림 안 오게 빈 배열 전송)
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([])
+    }
+    
+    // 푸시 알림 클릭시 홈에서 시작하도록
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        let userInfo = response.notification.request.content.userInfo
+        Messaging.messaging().appDidReceiveMessage(userInfo)
+        
+        // 푸시 알림 클릭시
+        if let _ = userInfo["aps"] as? Dictionary<String, Any> {
+            guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
+            guard let window = windowScene.windows.first  else { return }
+            let rootViewController = UINavigationController(rootViewController: HomeViewController())
+            
+            window.rootViewController = rootViewController
+            window.makeKeyAndVisible()
+        }
+    }
+}
+
 // MARK: - MessagingDelegate
 
 extension AppDelegate: MessagingDelegate {
@@ -87,6 +114,7 @@ extension AppDelegate: MessagingDelegate {
             print("Error fetching FCM registration token: \(error)")
           } else if let token = token {
             print("FCM registration token: \(token)")
+              UserDefaultsManager.fcmToken = token
           }
         }
     }

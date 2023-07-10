@@ -42,6 +42,8 @@ final class DetailDiaryViewController: UIViewController {
         return scrollerView
     }()
     
+    private let loadingView = LoadingView()
+    
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -49,10 +51,13 @@ final class DetailDiaryViewController: UIViewController {
         
         setBackgroundColor()
         setLayout()
-        detailDiaryWithAPI(diaryID: diaryId)
         swipeRecognizer()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        detailDiaryWithAPI(diaryID: diaryId)
+    }
+
     // MARK: - @objc
     
     @objc func responseToSwipeGesture() {
@@ -65,7 +70,14 @@ final class DetailDiaryViewController: UIViewController {
     
     @objc func showActionSheet() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let modifyAction = UIAlertAction (title: "수정", style: .default, handler: nil)
+        let modifyAction = UIAlertAction (title: "수정", style: .default, handler: { (action) in
+            let editVC = EditDiaryViewController()
+            editVC.diaryID = self.diaryId
+            editVC.randomContent = self.isRandomTopic
+            editVC.diaryTextView.text = self.diaryContent
+            editVC.randomSubjectView.setData(contentText: self.isRandomTopic)
+            self.navigationController?.pushViewController(editVC, animated: true)
+        })
         let deleteAction = UIAlertAction (title: "삭제", style: .destructive, handler: { (action) in
             self.showAlert()
         })
@@ -79,6 +91,7 @@ final class DetailDiaryViewController: UIViewController {
     @objc func showAlert() {
         let alert = UIAlertController(title: "일기를 삭제할까요?", message: "", preferredStyle: .alert)
         let delete = UIAlertAction(title: "확인", style: .destructive) { (action) in
+            self.showLodingView(loadingView: self.loadingView)
             self.deleteDiaryWithAPI(diaryID: self.diaryId)
             let rootVC = UINavigationController(rootViewController: HomeViewController())
             self.changeRootViewControllerAndPresent(rootVC)
@@ -91,7 +104,7 @@ final class DetailDiaryViewController: UIViewController {
     
     // MARK: - Custom Method
     
-    private func setData() {
+    func setData() {
         diaryScrollerView.configureDiaryScrollerView(topic: isRandomTopic, contentText: diaryContent, date: dateCreated, nickname: userName)
     }
     
@@ -148,9 +161,13 @@ final class DetailDiaryViewController: UIViewController {
 //MARK: - Network
 
 extension DetailDiaryViewController {
+    
     func detailDiaryWithAPI(diaryID: Int) {
+        self.showLodingView(loadingView: self.loadingView)
         DetailDiaryAPI.shared.getDetailDiary(diaryID: diaryId) { response in
             guard let detailDiaryData = response?.data else { return }
+            self.hideLodingView(loadingView: self.loadingView)
+            
             self.isRandomTopic = detailDiaryData.topic
             self.diaryContent = detailDiaryData.content
             self.dateCreated = detailDiaryData.createdAt
@@ -161,7 +178,11 @@ extension DetailDiaryViewController {
     }
     
     func deleteDiaryWithAPI(diaryID: Int) {
-        DetailDiaryAPI.shared.deleteDiary(diaryID: diaryId) { _ in
+        DetailDiaryAPI.shared.deleteDiary(diaryID: diaryId) { response in
+            self.hideLodingView(loadingView: self.loadingView)
+            let homeVC = HomeViewController()
+            let rootVC = UINavigationController(rootViewController: homeVC)
+            self.changeRootViewControllerAndPresent(rootVC)
         }
     }
 }

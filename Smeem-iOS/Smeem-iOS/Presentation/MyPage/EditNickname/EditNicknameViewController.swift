@@ -14,6 +14,7 @@ class EditNicknameViewController: UIViewController {
     // MARK: - Property
     
     var nickName = String()
+    var checkDouble = Bool()
     
     // MARK: - UI Property
     
@@ -46,7 +47,6 @@ class EditNicknameViewController: UIViewController {
         textField.layer.borderWidth = 1.5
         textField.layer.borderColor = UIColor.gray100.cgColor
         textField.layer.masksToBounds = true
-        textField.addTarget(self, action: #selector(textFieldEditingChanged(_:)), for: .editingChanged)
         return textField
     }()
     
@@ -58,14 +58,25 @@ class EditNicknameViewController: UIViewController {
         return label
     }()
     
+    private let doubleCheckLabel: UILabel = {
+        let label = UILabel()
+        label.text = "이미 사용 중인 닉네임이에요 :("
+        label.font = .c4
+        label.textColor = .point
+        label.isHidden = true
+        return label
+    }()
+    
     private lazy var doneButton: SmeemButton = {
         let button = SmeemButton()
         button.setTitle("완료", for: .normal)
         button.isEnabled = true
         button.backgroundColor = .point
-        button.addTarget(self, action: #selector(doneButtonDidTap(_:)), for: .touchUpInside)
+        button.addTarget(self, action: #selector(doneButtonDidTap), for: .touchUpInside)
         return button
     }()
+    
+    private let loadingView = LoadingView()
     
     // MARK: - Life Cycle
     
@@ -78,33 +89,70 @@ class EditNicknameViewController: UIViewController {
         hiddenNavigationBar()
         setTextFieldDelegate()
         showKeyboard(textView: nicknameTextField)
+        addTextFieldNotification()
+    }
+    
+    deinit {
+        removeTextFieldNotification()
     }
 
     // MARK: - @objc
     
-    @objc private func textFieldEditingChanged(_ textField: UITextField) {
-        if let text = textField.text, !text.isEmpty {
-            doneButton.isEnabled = true // 텍스트 필드에 텍스트가 입력되었을 때 버튼 활성화
-            doneButton.backgroundColor = .point
-        } else {
-            doneButton.isEnabled = false // 텍스트 필드가 비어있을 때 버튼 비활성화
-            doneButton.backgroundColor = .pointInactive
-        }
-    }
+//    @objc private func textFieldEditingChanged(_ textField: UITextField) {
+//        if let text = textField.text, !text.isEmpty {
+//            doneButton.isEnabled = true // 텍스트 필드에 텍스트가 입력되었을 때 버튼 활성화
+//            doneButton.backgroundColor = .point
+//        } else {
+//            doneButton.isEnabled = false // 텍스트 필드가 비어있을 때 버튼 비활성화
+//            doneButton.backgroundColor = .pointInactive
+//        }
+//    }
     
     @objc func backButtonDidTap(_ sender: UIButton) {
         self.navigationController?.popViewController(animated: true)
     }
     
-    @objc func doneButtonDidTap(_ sender: UIButton) {
-        changeMyName(userName: nicknameTextField.text ?? nickName)
-        changeRootViewController(HomeViewController())
+//    @objc func doneButtonDidTap(_ sender: UIButton) {
+//        changeMyName(userName: nicknameTextField.text ?? nickName)
+//        changeRootViewController(HomeViewController())
+//    }
+    
+    @objc func doneButtonDidTap() {
+        self.showLodingView(loadingView: self.loadingView)
+        nicknamePatchAPI(nickname: nicknameTextField.text ?? "")
+    }
+    
+    @objc func nicknameDidChange(_ notification: Notification) {
+        if let textField = notification.object as? UITextField {
+            if let text = textField.text {
+                if text.first == " " {
+                    doneButton.smeemButtonType = .notEnabled
+                } else if text.filter({ $0 == " " }).count == text.count {
+                    doneButton.smeemButtonType = .notEnabled
+                } else {
+                    doneButton.smeemButtonType = .enabled
+                }
+            }
+        }
     }
 
     // MARK: - Custom Method
     
     private func setTextFieldDelegate() {
         nicknameTextField.delegate = self
+    }
+    
+    private func addTextFieldNotification() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(nicknameDidChange),
+                                               name: UITextField.textDidChangeNotification,
+                                               object: nicknameTextField)
+    }
+    
+    private func removeTextFieldNotification() {
+        NotificationCenter.default.removeObserver(self,
+                                                  name: UITextField.textDidChangeNotification,
+                                                  object: nicknameTextField)
     }
     
     private func setData() {
@@ -121,6 +169,7 @@ class EditNicknameViewController: UIViewController {
         view.addSubviews(headerContainerView,
                          nicknameTextField,
                          nicknameLimitLabel,
+                         doubleCheckLabel,
                          doneButton)
         headerContainerView.addSubviews(backButton, titleLabel)
         
@@ -145,6 +194,11 @@ class EditNicknameViewController: UIViewController {
             $0.height.equalTo(convertByHeightRatio(66))
         }
         
+        doubleCheckLabel.snp.makeConstraints {
+            $0.top.equalTo(nicknameTextField.snp.bottom).offset(convertByHeightRatio(10))
+            $0.leading.equalToSuperview().inset(convertByHeightRatio(26))
+        }
+        
         nicknameLimitLabel.snp.makeConstraints{
             $0.top.equalTo(nicknameTextField.snp.bottom).offset(10)
             $0.trailing.equalTo(nicknameTextField)
@@ -153,7 +207,7 @@ class EditNicknameViewController: UIViewController {
         doneButton.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(18)
             $0.height.equalTo(convertByHeightRatio(60))
-            $0.bottom.equalToSuperview().inset(336+10)
+            $0.bottom.equalTo(view.keyboardLayoutGuide.snp.top).offset(-10)
         }
     }
 }
@@ -162,14 +216,13 @@ class EditNicknameViewController: UIViewController {
 
 extension EditNicknameViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if let char = string.cString(using: String.Encoding.utf8) {
-               let isBackSpace = strcmp(char, "\\b")
-               if isBackSpace == -92 {
-                   return true
-               }
-         }
+        guard let text = self.nicknameTextField.text else { return false }
+        let maxLength = 9
         
-        guard self.nicknameTextField.text?.count ?? 0 < 10 else { return false }
+        if text.count > maxLength && range.length == 0 && range.location > maxLength {
+            return false
+        }
+        
         return true
     }
 }
@@ -178,8 +231,19 @@ extension EditNicknameViewController: UITextFieldDelegate {
 // MARK: - Extension : Network
 
 extension EditNicknameViewController {
-    func changeMyName(userName: String) {
-        MyPageAPI.shared.changeMyNickName(userName: userName) { _ in
+    private func nicknamePatchAPI(nickname: String) {
+        OnboardingAPI.shared.nicknamePatch(param: NicknameRequest(username: nickname)) { response in
+            self.checkDouble = response.success
+            self.hideLodingView(loadingView: self.loadingView)
+            
+            DispatchQueue.main.async {
+                if self.checkDouble {
+                    self.navigationController?.popViewController(animated: true)
+                } else {
+                    self.doneButton.smeemButtonType = .notEnabled
+                    self.doubleCheckLabel.isHidden = false
+                }
+            }
         }
     }
 }

@@ -9,13 +9,32 @@ import UIKit
 
 final class ForeignDiaryViewController: DiaryViewController {
     
-    var keyboardHeight: CGFloat = 0.0
-    var isKeyboardVisible: Bool = false
-
-
+    // MARK: - Property
+    
+    // MARK: - Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         handleRightNavitationButton()
+    }
+    
+    // MARK: - @objc
+    
+    override func leftNavigationButtonDidTap() {
+        self.presentingViewController?.dismiss(animated: true)
+    }
+    
+    override func rightNavigationButtonDidTap() {
+        if rightNavigationButton.titleLabel?.textColor == .point {
+            showLodingView(loadingView: self.loadingView)
+            postDiaryAPI()
+        } else {
+            showToastIfNeeded(toastType: .defaultToast(bodyType: .regEx))
+        }
+    }
+    
+    private func handleRightNavitationButton() {
+        rightNavigationButton.addTarget(self, action: #selector(rightNavigationButtonDidTap), for: .touchUpInside)
     }
     
     override func keyboardWillShow(notification: NSNotification) {
@@ -25,37 +44,11 @@ final class ForeignDiaryViewController: DiaryViewController {
         else { return }
         
         keyboardHeight = keyboardFrame.height
-        isKeyboardVisible = true
+
     }
     
     override func keyboardWillHide(notification: NSNotification) {
         super.keyboardWillHide(notification: notification)
         keyboardHeight = 0.0
-        isKeyboardVisible = false
-    }
-    
-    override func rightNavigationButtonDidTap() {
-        if rightNavigationButton.titleLabel?.textColor == .point {
-            postDiaryAPI()
-            let homeVC = HomeViewController()
-            homeVC.badgePopupData = self.badgePopupContent
-            let rootVC = UINavigationController(rootViewController: homeVC)
-            changeRootViewControllerAndPresent(rootVC)
-        } else {
-            showToast(toastType: .defaultToast(bodyType: .regEx))
-            }
-        }
-    
-    private func handleRightNavitationButton() {
-        rightNavigationButton.addTarget(self, action: #selector(rightNavigationButtonDidTap), for: .touchUpInside)
-    }
-    
-    func showToast(toastType: ToastViewType) {
-        regExToastView?.removeFromSuperview()
-        regExToastView = SmeemToastView(type: toastType)
-        
-        let offset = convertByHeightRatio(73)
-        regExToastView?.show(in: view, offset: CGFloat(offset), keyboardHeight: keyboardHeight)
-        regExToastView?.hide(after: 1)
     }
 }
