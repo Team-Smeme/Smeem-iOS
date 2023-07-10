@@ -18,6 +18,10 @@ final class ForeignDiaryViewController: DiaryViewController {
         handleRightNavitationButton()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        randomSubjectToolTip?.removeFromSuperview()
+    }
+    
     // MARK: - @objc
     
     override func leftNavigationButtonDidTap() {
