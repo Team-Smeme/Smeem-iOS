@@ -80,7 +80,8 @@ final class DetailDiaryViewController: UIViewController {
         let alert = UIAlertController(title: "일기를 삭제할까요?", message: "", preferredStyle: .alert)
         let delete = UIAlertAction(title: "확인", style: .destructive) { (action) in
             self.deleteDiaryWithAPI(diaryID: self.diaryId)
-            self.changeRootViewControllerAndPresent(HomeViewController())
+            let rootVC = UINavigationController(rootViewController: HomeViewController())
+            self.changeRootViewControllerAndPresent(rootVC)
         }
         let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
         alert.addAction(delete)
