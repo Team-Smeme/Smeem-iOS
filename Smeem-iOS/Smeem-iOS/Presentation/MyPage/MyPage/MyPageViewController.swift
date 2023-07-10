@@ -413,9 +413,9 @@ final class MyPageViewController: UIViewController {
         
         alarmCollectionView.snp.makeConstraints {
             $0.top.equalTo(alarmContainer.snp.bottom).offset(convertByHeightRatio(10))
-            $0.leading.trailing.equalToSuperview().inset(23)
-            $0.height.equalTo(convertByHeightRatio(133))
+            $0.leading.trailing.equalToSuperview().inset(convertByWidthRatio(23))
             $0.bottom.equalToSuperview().offset(-convertByHeightRatio(80))
+            $0.height.equalTo(convertByHeightRatio(133))
         }
     }
 }
