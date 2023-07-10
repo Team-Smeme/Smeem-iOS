@@ -68,6 +68,14 @@ final class UserNicknameViewController: UIViewController {
         return button
     }()
     
+    private let loadingView = LoadingView()
+    
+    private let welcomeView = UIImageView()
+    private let firstDiaryView = UIImageView()
+    private let tenDiaryBadgeView = UIImageView()
+    private let day3BadgeView = UIImageView()
+    private let day7BadgeView = UIImageView()
+    
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -78,6 +86,7 @@ final class UserNicknameViewController: UIViewController {
         setTextFieldDelegate()
         showKeyboard(textView: nicknameTextField)
         addTextFieldNotification()
+        setImage()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -93,19 +102,8 @@ final class UserNicknameViewController: UIViewController {
     // MARK: - @objc
     
     @objc func nextButtonDidTap() {
+        self.showLodingView(loadingView: loadingView)
         nicknamePatchAPI(nickname: nicknameTextField.text ?? "")
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
-            if self.checkDouble {
-                let homeVC = HomeViewController()
-                homeVC.badgePopupData = self.badgeListData ?? []
-                let rootVC = UINavigationController(rootViewController: homeVC)
-                self.changeRootViewControllerAndPresent(rootVC)
-            } else {
-                self.nextButton.smeemButtonType = .notEnabled
-                self.doubleCheckLabel.isHidden = false
-            }
-        }
     }
     
     @objc func nicknameDidChange(_ notification: Notification) {
@@ -183,6 +181,20 @@ final class UserNicknameViewController: UIViewController {
             $0.bottom.equalTo(view.keyboardLayoutGuide.snp.top).offset(-10)
         }
     }
+    
+    private func setImage() {
+        let welcomeBadge = URL(string: "https://github.com/Team-Smeme/Smeme-plan/assets/120551217/6b3319cb-4c6f-4bf2-86dd-7576a44b46c7")
+        let firstDiarybadge = URL(string: "https://github.com/Team-Smeme/Smeme-plan/assets/120551217/10ed4dd9-276a-4344-87a8-f39b91deebd5")
+        let tenDiaryBadge = URL(string: "https://github.com/Team-Smeme/Smeme-plan/assets/120551217/645082e3-9c25-4698-b614-b575b75be188")
+        let day3Badge = URL(string: "https://github.com/Team-Smeme/Smeme-plan/assets/120551217/3b26b274-722f-4dca-a560-e28c266efe69")
+        let day7Badge = URL(string: "https://github.com/Team-Smeme/Smeme-plan/assets/120551217/9f0c9af4-fd5e-4436-adac-7755312f00de")
+        
+        welcomeView.kf.setImage(with: welcomeBadge)
+        firstDiaryView.kf.setImage(with: firstDiarybadge)
+        tenDiaryBadgeView.kf.setImage(with: tenDiaryBadge)
+        day3BadgeView.kf.setImage(with: day3Badge)
+        day7BadgeView.kf.setImage(with: day7Badge)
+    }
 }
 
 extension UserNicknameViewController: UITextFieldDelegate {
@@ -201,7 +213,7 @@ extension UserNicknameViewController: UITextFieldDelegate {
 extension UserNicknameViewController {
     private func nicknamePatchAPI(nickname: String) {
         OnboardingAPI.shared.nicknamePatch(param: NicknameRequest(username: nickname)) { response in
-//            self.hideLodingView(loadingView: self.loadingView)
+            self.hideLodingView(loadingView: self.loadingView)
             self.checkDouble = response.success
             
             DispatchQueue.main.async {
