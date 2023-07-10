@@ -168,7 +168,21 @@ class DiaryViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         keyboardRemoveObserver()
-        randomSubjectToolTip?.removeFromSuperview()
+        
+        if let currentChildViewController = children.first {
+            switch currentChildViewController {
+            case is DiaryViewController:
+                print("DiaryViewController")
+            case is ForeignDiaryViewController:
+                randomSubjectToolTip?.removeFromSuperview()
+            case is StepOneKoreanDiaryViewController:
+                print("StepOneKoreanDiaryViewController")
+            case is StepTwoKoreanDiaryViewController:
+                randomSubjectToolTip?.removeFromSuperview()
+            default:
+                break
+            }
+        }
     }
     
     deinit {
@@ -221,7 +235,7 @@ class DiaryViewController: UIViewController {
         }
         
         updateAdditionalViewsForKeyboard(notification: notification, keyboardHeight: keyboardHeight)
-
+        
     }
     
     @objc func keyboardWillHide(notification: NSNotification) {
@@ -434,7 +448,7 @@ extension DiaryViewController {
         
         let onKeyboardOffset = convertByHeightRatio(73)
         let offKeyboardOffset = convertByHeightRatio(107)
-
+        
         // 키보드가 보이는지 확인하여 오프셋을 변경합니다.
         let offset = isKeyboardVisible ?  onKeyboardOffset : offKeyboardOffset
         
@@ -519,13 +533,13 @@ extension DiaryViewController {
         PostDiaryAPI.shared.postDiary(param: PostDiaryRequest(content: inputTextView.text, topicId: topicID)) { response in
             guard let postDiaryResponse = response?.data else { return }
             self.diaryID = postDiaryResponse.diaryID
-
+            
             if !postDiaryResponse.badges.isEmpty {
                 self.badgePopupContent = postDiaryResponse.badges
             } else {
                 self.badgePopupContent = []
             }
-
+            
             DispatchQueue.main.async {
                 self.hideLodingView(loadingView: self.loadingView)
                 let homeVC = HomeViewController()
