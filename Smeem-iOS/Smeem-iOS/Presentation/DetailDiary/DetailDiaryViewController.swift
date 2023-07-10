@@ -93,6 +93,8 @@ final class DetailDiaryViewController: UIViewController {
         let delete = UIAlertAction(title: "확인", style: .destructive) { (action) in
             self.showLodingView(loadingView: self.loadingView)
             self.deleteDiaryWithAPI(diaryID: self.diaryId)
+            let rootVC = UINavigationController(rootViewController: HomeViewController())
+            self.changeRootViewControllerAndPresent(rootVC)
         }
         let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
         alert.addAction(delete)
