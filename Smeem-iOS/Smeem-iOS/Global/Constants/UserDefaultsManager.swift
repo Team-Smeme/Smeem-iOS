@@ -47,4 +47,9 @@ struct UserDefaultsManager {
         get { return UserDefaults.standard.bool(forKey: "randomSubjectToolTip")}
         set { UserDefaults.standard.set(newValue, forKey: "randomSubjectToolTip")}
     }
+    
+    static var tipView: Bool {
+        get { return UserDefaults.standard.bool(forKey: "tipView")}
+        set { UserDefaults.standard.set(newValue, forKey: "tipView")}
+    }
 }

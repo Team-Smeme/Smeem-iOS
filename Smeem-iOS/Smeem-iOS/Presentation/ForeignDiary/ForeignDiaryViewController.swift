@@ -18,6 +18,10 @@ final class ForeignDiaryViewController: DiaryViewController {
         handleRightNavitationButton()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        randomSubjectToolTip?.removeFromSuperview()
+    }
+    
     // MARK: - @objc
     
     override func leftNavigationButtonDidTap() {
@@ -44,7 +48,6 @@ final class ForeignDiaryViewController: DiaryViewController {
         else { return }
         
         keyboardHeight = keyboardFrame.height
-
     }
     
     override func keyboardWillHide(notification: NSNotification) {
