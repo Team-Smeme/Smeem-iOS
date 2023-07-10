@@ -48,7 +48,6 @@ final class ForeignDiaryViewController: DiaryViewController {
         else { return }
         
         keyboardHeight = keyboardFrame.height
-
     }
     
     override func keyboardWillHide(notification: NSNotification) {
