@@ -135,12 +135,17 @@ extension AlarmCollectionView: UICollectionViewDataSource {
 extension AlarmCollectionView: UICollectionViewDelegateFlowLayout {
     // (cell size, itemSpacing)
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let cellSize = CGSize(width: convertByHeightRatio(47), height: convertByHeightRatio(49))
+        let width = (UIScreen.main.bounds.width-46)/7
+        let cellSize = CGSize(width: width, height: 49)
         return cellSize
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: 23, bottom: 0, right: 23)
     }
     
     // footer
