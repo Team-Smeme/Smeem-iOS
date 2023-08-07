@@ -216,16 +216,12 @@ extension UserNicknameViewController {
             self.hideLodingView(loadingView: self.loadingView)
             self.checkDouble = response.success
             
-            DispatchQueue.main.async {
-                if self.checkDouble {
-                    let homeVC = HomeViewController()
-                    homeVC.badgePopupData = self.badgeListData ?? []
-                    let rootVC = UINavigationController(rootViewController: homeVC)
-                    self.changeRootViewControllerAndPresent(rootVC)
-                } else {
-                    self.nextButton.smeemButtonType = .notEnabled
-                    self.doubleCheckLabel.isHidden = false
-                }
+            if self.checkDouble {
+                let serviceVC = ServiceAcceptViewController()
+                self.navigationController?.pushViewController(serviceVC, animated: true)
+            } else {
+                self.nextButton.smeemButtonType = .notEnabled
+                self.doubleCheckLabel.isHidden = false
             }
         }
     }

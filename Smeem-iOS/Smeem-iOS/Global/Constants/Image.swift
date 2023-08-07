@@ -29,6 +29,7 @@ extension Constant {
         static let icnRightArrow = UIImage(named: "icnRightArrow")
         static let icnPencil = UIImage(named: "icnPencil")
         static let icnRefresh = UIImage(named: "icnRefresh")
+        static let icnForward = UIImage(named: "icnForward")
         static let noDiary = UIImage(named: "noDiary")
         static let monthday = UIImage(named: "monthday")
         static let monthToday = UIImage(named: "monthToday")
