@@ -38,6 +38,21 @@ struct UserDefaultsManager {
         set { UserDefaults.standard.set(newValue, forKey: "isShownWelcomeBadgePopup")}
     }
     
+    static var socialToken: String {
+        get { return UserDefaults.standard.string(forKey: "socialToken") ?? ""}
+        set { UserDefaults.standard.set(newValue, forKey: "socialToken")}
+    }
+    
+    static var accessToken: String {
+        get { return UserDefaults.standard.string(forKey: "accessToken") ?? ""}
+        set { UserDefaults.standard.set(newValue, forKey: "accessToken")}
+    }
+    
+    static var refreshToken: String {
+        get { return UserDefaults.standard.string(forKey: "refreshToken") ?? ""}
+        set { UserDefaults.standard.set(newValue, forKey: "refreshToken")}
+    }
+    
     static var fcmToken: String {
         get { return UserDefaults.standard.string(forKey: "fcmToken") ?? ""}
         set { UserDefaults.standard.set(newValue, forKey: "fcmToken")}

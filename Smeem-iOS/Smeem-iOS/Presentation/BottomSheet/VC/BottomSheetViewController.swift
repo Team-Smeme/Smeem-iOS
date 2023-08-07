@@ -9,14 +9,45 @@ import UIKit
 
 import SnapKit
 
+import AuthenticationServices
+import KakaoSDKAuth
+import KakaoSDKUser
+
 final class BottomSheetViewController: UIViewController, LoginDelegate {
+    
+    private var hasPlan = false
+    private var isRegistered = false
+    private var badges: [badges] = []
+    
+    private var kakaoAccessToken: String? {
+        didSet {
+            guard let kakaoAccessToken = self.kakaoAccessToken else {
+                print("⭐️⭐️⭐️ 언래핑 실패했을 경우 ⭐️⭐️⭐️")
+                return
+            }
+            
+            UserDefaultsManager.socialToken = kakaoAccessToken
+            self.loginAPI(socialParam: "KAKAO")
+        }
+    }
+    
+    private var appleAccessToken: String? {
+        didSet {
+            guard let appleAccessToken = self.appleAccessToken else {
+                print("⭐️⭐️⭐️ 언래핑 실패했을 경우 ⭐️⭐️⭐️")
+                return
+            }
+            
+            UserDefaultsManager.socialToken = appleAccessToken
+            self.loginAPI(socialParam: "APPLE")
+        }
+    }
 
     // MARK: - Property
     
     var defaultLoginHeight: CGFloat = 282
     var defaultSignUpHeight: CGFloat = 394
     
-    var betaAccessToken = UserDefaultsManager.betaLoginToken
     var popupBadgeData: [PopupBadge]?
     var userPlanRequest: UserPlanRequest?
     
@@ -58,11 +89,48 @@ final class BottomSheetViewController: UIViewController, LoginDelegate {
     // MARK: - Custom Method
     
     func kakaoLoginDataSend() {
-        betaLoginAPI()
+        if UserApi.isKakaoTalkLoginAvailable() {
+            loginKakaoWithApp()
+        } else {
+            loginKakaoWithWeb()
+        }
+    }
+    
+    private func loginKakaoWithApp() {
+        UserApi.shared.loginWithKakaoTalk { oAuthToken, error in
+            if let error = error {
+                print("⭐️⭐️⭐️ 에러 발생 ⭐️⭐️⭐️")
+                return
+            }
+            
+            print("Login with KAKAO App Success !!")
+            
+            self.kakaoAccessToken = oAuthToken?.accessToken
+        }
+    }
+    
+    private func loginKakaoWithWeb() {
+        UserApi.shared.loginWithKakaoAccount { oAuthToken, error in
+            if let error = error {
+                print("⭐️⭐️⭐️ 에러 발생 ⭐️⭐️⭐️")
+                return
+            }
+            
+            print("Login with KAKAO App Success !!")
+            
+            self.kakaoAccessToken = oAuthToken?.accessToken
+        }
     }
     
     func appleLoginDataSend() {
-        ///
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        let request = appleIDProvider.createRequest()
+        request.requestedScopes = [.fullName, .email]
+          
+        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+        authorizationController.delegate = self
+        authorizationController.presentationContextProvider = self
+        authorizationController.performRequests()
     }
     
     func dismissBottomSheet() {
@@ -102,19 +170,51 @@ final class BottomSheetViewController: UIViewController, LoginDelegate {
     }
 }
 
+// MARK: - Apple Login
+
+extension BottomSheetViewController: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        self.view.window!
+    }
+    
+    // 사용자 인증 후 처리
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        switch authorization.credential {
+              // Apple ID
+          case let appleIDCredential as ASAuthorizationAppleIDCredential:
+            let _ = appleIDCredential.user
+            let idToken = appleIDCredential.identityToken!
+            guard let appleTokenString = String(data: idToken, encoding: .utf8) else { return }
+            
+            self.appleAccessToken = appleTokenString
+              
+          default:
+              break
+          }
+    }
+    
+    // 사용자 인증 실패했을 때
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+      // Handle error.
+    }
+}
+
 // MARK: - Network
 
 extension BottomSheetViewController {
-    private func betaLoginAPI() {
-        AuthAPI.shared.betaTestLoginAPI(param: BetaTestRequest(fcmToken: UserDefaultsManager.fcmToken)) { response in
-            guard let data = response.data else { return }
-            UserDefaultsManager.betaLoginToken = data.accessToken
-            self.popupBadgeData = [PopupBadge(name: data.badges[0].name, imageURL: data.badges[0].imageURL)]
+    private func loginAPI(socialParam: String) {
+        AuthAPI.shared.loginAPI(param: LoginRequest(social: socialParam,
+                                                    fcmToken: UserDefaultsManager.fcmToken)) { response in
             
-            let userNicknameVC = UserNicknameViewController()
-            userNicknameVC.userPlanRequest = self.userPlanRequest
-            userNicknameVC.badgeListData = self.popupBadgeData
-            self.navigationController?.pushViewController(userNicknameVC, animated: true)
+            guard let data = response else { return }
+            
+            UserDefaultsManager.accessToken = data.accessToken
+            UserDefaultsManager.refreshToken = data.refreshToken
+            self.hasPlan = data.hasPlan
+            self.isRegistered = data.isRegistered
+            
+            /// badge noti로 띄워 줄 준비
+            self.badges = data.badges
         }
     }
 }

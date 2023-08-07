@@ -9,16 +9,12 @@ import Foundation
 import Moya
 
 enum AuthService {
-    case beta(param: BetaTestRequest)
+    case login(param: LoginRequest)
 }
 
-extension AuthService: TargetType {
-    var baseURL: URL {
-        return URL(string: SharedConstant.betaBaseURL)!
-    }
-    
+extension AuthService: BaseTargetType {
     var path: String {
-        return "api/beta/token"
+        return URLConstant.loginURL
     }
     
     var method: Moya.Method {
@@ -27,12 +23,12 @@ extension AuthService: TargetType {
     
     var task: Moya.Task {
         switch self {
-        case .beta(let param):
+        case .login(let param):
             return .requestJSONEncodable(param)
         }
     }
     
     var headers: [String : String]? {
-        return NetworkConstant.noTokenHeader
+        return NetworkConstant.hasSocialTokenHeader
     }
 }
