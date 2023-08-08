@@ -19,6 +19,7 @@ final class HomeViewController: UIViewController {
     private var homeDiaryDict = [String: HomeDiaryCustom]()
     private var writtenDaysStringList = [String]()
     private var currentDate = Date()
+    private var emptyViewWithTopConstraint: Constraint?
     var badgePopupData = [PopupBadge]()
     var isKeyboardVisible: Bool = false
     var keyboardHeight: CGFloat = 0.0
@@ -108,6 +109,9 @@ final class HomeViewController: UIViewController {
     }()
     
     private let emptyView = UIView()
+    
+    private let emptyPaddingView = UIView()
+    
     private let emptySymbol = UIImageView(image: Constant.Image.noDiary)
     
     private let emptyText: UILabel = {
@@ -167,6 +171,7 @@ final class HomeViewController: UIViewController {
     }()
     
     var smeemToastView: SmeemToastView?
+    
     private let loadingView = LoadingView()
     
     // MARK: - Life Cycle
@@ -190,11 +195,17 @@ final class HomeViewController: UIViewController {
     // MARK: - @objc
     
     @objc func swipeEvent(_ swipe: UISwipeGestureRecognizer) {
-        if (swipe.location(in: self.view).y < border.frame.origin.y+20) {
-            calendar.setScope((swipe.direction == .up) ? .week : .month, animated: true)
+        if (swipe.location(in: self.view).y < border.frame.origin.y + 20) {
+            let topConstant: CGFloat = (swipe.direction == .up) ? 168 : 60
+            let newScopeMode: FSCalendarScope = (swipe.direction == .up) ? .week : .month
+            calendar.setScope(newScopeMode, animated: true)
+            emptyViewWithTopConstraint?.update(offset: topConstant)
+            UIView.animate(withDuration: 0.3) {
+                self.view.layoutIfNeeded()
+            }
         }
     }
-
+    
     @objc func fullViewButtonDidTap(_ gesture: UITapGestureRecognizer) {
         let detailDiaryVC = DetailDiaryViewController()
         detailDiaryVC.diaryId = homeDiaryDict[currentDate.toString("yyyy-MM-dd")]?.diaryId ?? 0
@@ -292,7 +303,7 @@ final class HomeViewController: UIViewController {
         view.addSubviews(calendar, myPageButton, indicator, border, diaryThumbnail, emptyView, floatingView, addDiaryButton)
         diaryThumbnail.addSubviews(diaryDate, fullViewButton, diaryText)
         fullViewButton.addSubviews(fullViewButtonText, fullViewButtonSymbol)
-        emptyView.addSubviews(emptySymbol, emptyText)
+        emptyView.addSubviews(emptyPaddingView, emptySymbol, emptyText)
         floatingView.addSubviews(waitingLabel, adviceLabel, xButton)
         
         calendar.snp.makeConstraints {
@@ -362,8 +373,13 @@ final class HomeViewController: UIViewController {
             $0.bottom.equalToSuperview()
         }
         
+        emptyPaddingView.snp.makeConstraints {
+            $0.top.leading.trailing.equalTo(diaryThumbnail)
+            self.emptyViewWithTopConstraint = $0.height.equalTo(168).constraint
+        }
+        
         emptySymbol.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(convertByHeightRatio(168))
+            $0.top.equalTo(emptyPaddingView.snp.bottom)
             $0.centerX.equalToSuperview()
             $0.height.equalTo(convertByHeightRatio(47))
             $0.width.equalTo(convertByWidthRatio(65))
