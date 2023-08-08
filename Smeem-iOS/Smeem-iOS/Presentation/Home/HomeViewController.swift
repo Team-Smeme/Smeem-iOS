@@ -56,7 +56,7 @@ final class HomeViewController: UIViewController {
     
     private let indicator: UIView = {
         let indicator = UIView()
-        indicator.layer.cornerRadius = 5
+        indicator.layer.cornerRadius = 2
         indicator.backgroundColor = .gray300
         return indicator
     }()
