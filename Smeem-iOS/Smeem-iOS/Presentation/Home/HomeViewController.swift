@@ -362,7 +362,7 @@ final class HomeViewController: UIViewController {
         }
         
         emptySymbol.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(convertByHeightRatio(60))
+            $0.top.equalToSuperview().offset(convertByHeightRatio(168))
             $0.centerX.equalToSuperview()
             $0.height.equalTo(convertByHeightRatio(47))
             $0.width.equalTo(convertByWidthRatio(65))
