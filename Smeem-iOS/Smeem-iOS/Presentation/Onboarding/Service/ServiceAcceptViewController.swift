@@ -14,6 +14,7 @@ final class ServiceAcceptViewController: UIViewController {
     let serviceAccptArray = ["[필수] 서비스 이용약관", "[필수] 개인정보 수집 및 이용 동의",
                              "[선택] 마케팅 정보 활용 동의"]
     var acceptCheckArray: Set<Int> = []
+    var nickNameData = ""
 
     private var selectedTotal = false {
         didSet {
@@ -48,10 +49,11 @@ final class ServiceAcceptViewController: UIViewController {
         return collectionView
     }()
     
-    private let nextButton: SmeemButton = {
+    private lazy var nextButton: SmeemButton = {
         let button = SmeemButton()
         button.smeemButtonType = .notEnabled
         button.setTitle("다음", for: .normal)
+        button.addTarget(self, action: #selector(nextButtonDidTap), for: .touchUpInside)
         return button
     }()
     
@@ -67,6 +69,10 @@ final class ServiceAcceptViewController: UIViewController {
     }
     
     // MARK: - @objc
+    
+    @objc func nextButtonDidTap() {
+        nicknamePatchAPI()
+    }
     
     // MARK: - Custom Method
     
@@ -125,6 +131,17 @@ final class ServiceAcceptViewController: UIViewController {
             $0.leading.trailing.equalToSuperview().inset(18)
             $0.bottom.equalToSuperview().inset(50)
             $0.height.equalTo(convertByHeightRatio(60))
+        }
+    }
+}
+
+// MARK: - Network
+
+extension ServiceAcceptViewController {
+    private func nicknamePatchAPI() {
+        OnboardingAPI.shared.serviceAcceptedPatch(param: ServiceAcceptRequest(username: nickNameData,
+                                                                              termAccepted: true)) { response in
+            print(response.data)
         }
     }
 }

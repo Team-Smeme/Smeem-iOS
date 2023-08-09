@@ -12,7 +12,8 @@ enum OnboardingService {
     case planList
     case detailPlanList(param: String)
     case userPlan(param: UserPlanRequest)
-    case nickname(param: NicknameRequest)
+    case serviceAccept(param: ServiceAcceptRequest)
+    case checkNickname(param: String)
 }
 
 extension OnboardingService: BaseTargetType {
@@ -24,16 +25,18 @@ extension OnboardingService: BaseTargetType {
             return URLConstant.planListURL+"/\(type)"
         case .userPlan:
             return URLConstant.userPlanURL
-        case .nickname:
+        case .serviceAccept:
             return URLConstant.userURL
+        case .checkNickname:
+            return URLConstant.checkNickname
         }
     }
     
     var method: Moya.Method {
         switch self {
-        case .planList, .detailPlanList:
+        case .planList, .detailPlanList, .checkNickname:
             return .get
-        case .userPlan, .nickname:
+        case .userPlan, .serviceAccept:
             return .patch
         }
     }
@@ -44,8 +47,10 @@ extension OnboardingService: BaseTargetType {
             return .requestPlain
         case .userPlan(let param):
             return .requestJSONEncodable(param)
-        case .nickname(let param):
+        case .serviceAccept(let param):
             return .requestJSONEncodable(param)
+        case .checkNickname(let param):
+            return .requestParameters(parameters: ["name": param], encoding: URLEncoding.queryString)
         }
     }
     
@@ -53,8 +58,8 @@ extension OnboardingService: BaseTargetType {
         switch self {
         case .planList, .detailPlanList:
             return NetworkConstant.noTokenHeader
-        case .userPlan, .nickname:
-            return NetworkConstant.tempTokenHeader
+        case .userPlan, .serviceAccept, .checkNickname:
+            return NetworkConstant.hasAccessTokenHeader
         }
     }
 }

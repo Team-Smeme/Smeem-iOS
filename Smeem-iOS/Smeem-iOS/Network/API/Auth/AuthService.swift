@@ -10,25 +10,41 @@ import Moya
 
 enum AuthService {
     case login(param: LoginRequest)
+    case reLogin
 }
 
 extension AuthService: BaseTargetType {
     var path: String {
-        return URLConstant.loginURL
+        switch self {
+        case .login:
+            return URLConstant.loginURL
+        case .reLogin:
+            return URLConstant.reLoginURL
+        }
     }
     
     var method: Moya.Method {
-        return .post
+        switch self {
+        case .login, .reLogin:
+            return .post
+        }
     }
     
     var task: Moya.Task {
         switch self {
         case .login(let param):
             return .requestJSONEncodable(param)
+        case .reLogin:
+            return .requestPlain
         }
     }
     
     var headers: [String : String]? {
-        return NetworkConstant.hasSocialTokenHeader
+        switch self {
+        case .login:
+            return NetworkConstant.hasSocialTokenHeader
+        case .reLogin:
+            return NetworkConstant.hasRefreshTokenHeader
+        }
     }
 }

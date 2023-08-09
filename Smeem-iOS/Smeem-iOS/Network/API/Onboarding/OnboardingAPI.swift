@@ -12,7 +12,7 @@ public class OnboardingAPI {
     
     static let shared = OnboardingAPI()
     private let onboardingProvider = MoyaProvider<OnboardingService>(plugins: [MoyaLoggingPlugin()])
-    private var nicknameResponse: NicknameResponse?
+//    private var nicknameResponse: NicknameResponse?
     
     func planList(completion: @escaping (GeneralResponse<PlanListResponse>) -> Void) {
         onboardingProvider.request(.planList) { response in
@@ -50,11 +50,26 @@ public class OnboardingAPI {
         }
     }
     
-    func nicknamePatch(param: NicknameRequest, completion: @escaping ((NicknameResponse)) -> Void) {
-        onboardingProvider.request(.nickname(param: param)) { response in
+    func serviceAcceptedPatch(param: ServiceAcceptRequest, completion: @escaping (GeneralResponse<VoidType>) -> Void) {
+        onboardingProvider.request(.serviceAccept(param: param)) { response in
             switch response {
             case .success(let result):
-                guard let data = try? result.map(NicknameResponse.self) else { return }
+                guard let data = try? result.map(GeneralResponse<VoidType>.self) else { return }
+                completion(data)
+            case .failure(let err):
+                print(err)
+            }
+        }
+    }
+    
+    func ninknameCheckAPI(userName: String, completion: @escaping (GeneralResponse<NicknameCheckResponse>) -> Void) {
+        onboardingProvider.request(.checkNickname(param: userName)) { response in
+            switch response {
+            case .success(let result):
+                guard let data = try? result.map(GeneralResponse<NicknameCheckResponse>.self) else {
+                    print("⭐️⭐️⭐️ 디코더 에러 ⭐️⭐️⭐️")
+                    return
+                }
                 completion(data)
             case .failure(let err):
                 print(err)

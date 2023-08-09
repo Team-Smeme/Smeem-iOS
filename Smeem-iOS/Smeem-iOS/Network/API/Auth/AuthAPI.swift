@@ -12,14 +12,32 @@ public class AuthAPI {
     
     static let shared = AuthAPI()
     private let authProvider = MoyaProvider<AuthService>(plugins: [MoyaLoggingPlugin()])
-    private var loginResponse: LoginResponse?
+    private var loginResponse: GeneralResponse<LoginResponse>?
     
-    func loginAPI(param: LoginRequest, completion: @escaping ((LoginResponse)?) -> Void) {
+    func loginAPI(param: LoginRequest, completion: @escaping (GeneralResponse<LoginResponse>) -> Void) {
         authProvider.request(.login(param: param)) { response in
             switch response {
             case .success(let result):
-                guard let response = try? result.map(LoginResponse.self) else { return }
-                completion(response)
+                guard let data = try? result.map(GeneralResponse<LoginResponse>.self) else {
+                    print("⭐️⭐️⭐️ 디코더 에러 ⭐️⭐️⭐️")
+                    return
+                }
+                completion(data)
+            case .failure(let err):
+                print(err)
+            }
+        }
+    }
+    
+    func reLoginAPI(completion: @escaping (GeneralResponse<LoginResponse>) -> Void) {
+        authProvider.request(.reLogin) { response in
+            switch response {
+            case .success(let result):
+                guard let data = try? result.map(GeneralResponse<LoginResponse>.self) else {
+                    print("⭐️⭐️⭐️ 디코더 에러 ⭐️⭐️⭐️")
+                    return
+                }
+                completion(data)
             case .failure(let err):
                 print(err)
             }

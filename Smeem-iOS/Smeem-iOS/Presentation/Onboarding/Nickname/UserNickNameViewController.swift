@@ -12,7 +12,7 @@ final class UserNicknameViewController: UIViewController {
     // MARK: - Property
     
     var userPlanRequest: UserPlanRequest?
-    var checkDouble = Bool()
+    var isExistNinkname = Bool()
     var badgeListData: [PopupBadge]?
     
     // MARK: - UI Property
@@ -103,7 +103,13 @@ final class UserNicknameViewController: UIViewController {
     
     @objc func nextButtonDidTap() {
         self.showLodingView(loadingView: loadingView)
-        nicknamePatchAPI(nickname: nicknameTextField.text ?? "")
+        checkNicknameGetAPI(nickname: nicknameTextField.text ?? "")
+        
+        if self.isExistNinkname {
+            let serviceVC = ServiceAcceptViewController()
+            serviceVC.nickNameData = nicknameTextField.text ?? ""
+            self.navigationController?.pushViewController(serviceVC, animated: true)
+        }
     }
     
     @objc func nicknameDidChange(_ notification: Notification) {
@@ -211,17 +217,18 @@ extension UserNicknameViewController: UITextFieldDelegate {
 }
 
 extension UserNicknameViewController {
-    private func nicknamePatchAPI(nickname: String) {
-        OnboardingAPI.shared.nicknamePatch(param: NicknameRequest(username: nickname)) { response in
+    private func checkNicknameGetAPI(nickname: String) {
+        OnboardingAPI.shared.ninknameCheckAPI(userName: nickname) { response in
+            guard let data = response.data else { return }
             self.hideLodingView(loadingView: self.loadingView)
-            self.checkDouble = response.success
+            self.isExistNinkname = data.isExist
             
-            if self.checkDouble {
-                let serviceVC = ServiceAcceptViewController()
-                self.navigationController?.pushViewController(serviceVC, animated: true)
-            } else {
-                self.nextButton.smeemButtonType = .notEnabled
+            if self.isExistNinkname {
                 self.doubleCheckLabel.isHidden = false
+                self.nextButton.smeemButtonType = .notEnabled
+            } else {
+                self.doubleCheckLabel.isHidden = true
+                self.nextButton.smeemButtonType = .enabled
             }
         }
     }

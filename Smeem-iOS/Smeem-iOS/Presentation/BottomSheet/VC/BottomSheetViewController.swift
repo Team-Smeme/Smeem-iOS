@@ -17,7 +17,7 @@ final class BottomSheetViewController: UIViewController, LoginDelegate {
     
     private var hasPlan = false
     private var isRegistered = false
-    private var badges: [badges] = []
+    private var badges: [Badges] = []
     
     private var kakaoAccessToken: String? {
         didSet {
@@ -26,7 +26,7 @@ final class BottomSheetViewController: UIViewController, LoginDelegate {
                 return
             }
             
-            UserDefaultsManager.socialToken = kakaoAccessToken
+            UserDefaultsManager.socialToken = self.kakaoAccessToken!
             self.loginAPI(socialParam: "KAKAO")
         }
     }
@@ -38,7 +38,7 @@ final class BottomSheetViewController: UIViewController, LoginDelegate {
                 return
             }
             
-            UserDefaultsManager.socialToken = appleAccessToken
+            UserDefaultsManager.socialToken = self.appleAccessToken!
             self.loginAPI(socialParam: "APPLE")
         }
     }
@@ -76,6 +76,10 @@ final class BottomSheetViewController: UIViewController, LoginDelegate {
         setBottomViewDelegate()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        notificationAddObserver()
+    }
+    
     // MARK: - @objc
     
     @objc func dimmedViewDidTap() {
@@ -93,32 +97,6 @@ final class BottomSheetViewController: UIViewController, LoginDelegate {
             loginKakaoWithApp()
         } else {
             loginKakaoWithWeb()
-        }
-    }
-    
-    private func loginKakaoWithApp() {
-        UserApi.shared.loginWithKakaoTalk { oAuthToken, error in
-            if let error = error {
-                print("⭐️⭐️⭐️ 에러 발생 ⭐️⭐️⭐️")
-                return
-            }
-            
-            print("Login with KAKAO App Success !!")
-            
-            self.kakaoAccessToken = oAuthToken?.accessToken
-        }
-    }
-    
-    private func loginKakaoWithWeb() {
-        UserApi.shared.loginWithKakaoAccount { oAuthToken, error in
-            if let error = error {
-                print("⭐️⭐️⭐️ 에러 발생 ⭐️⭐️⭐️")
-                return
-            }
-            
-            print("Login with KAKAO App Success !!")
-            
-            self.kakaoAccessToken = oAuthToken?.accessToken
         }
     }
     
@@ -140,9 +118,39 @@ final class BottomSheetViewController: UIViewController, LoginDelegate {
             self.dismiss(animated: false, completion: nil)
         }
     }
+    
+    private func loginKakaoWithApp() {
+        UserApi.shared.loginWithKakaoTalk { oAuthToken, error in
+            if let _ = error {
+                print("⭐️⭐️⭐️ 에러 발생 ⭐️⭐️⭐️")
+                return
+            }
+            
+            print("Login with KAKAO App Success !!")
+            
+            self.kakaoAccessToken = oAuthToken?.accessToken
+        }
+    }
+    
+    private func loginKakaoWithWeb() {
+        UserApi.shared.loginWithKakaoAccount { oAuthToken, error in
+            if let _ = error {
+                print("⭐️⭐️⭐️ 에러 발생 ⭐️⭐️⭐️")
+                return
+            }
+            
+            print("Login with KAKAO App Success !!")
+            
+            self.kakaoAccessToken = oAuthToken?.accessToken
+        }
+    }
 
     private func setBottomViewDelegate() {
         self.bottomSheetView.delegate = self
+    }
+    
+    private func notificationAddObserver() {
+        NotificationCenter.default.post(name: NSNotification.Name("dataSendBadgeArray"), object: badges, userInfo: nil)
     }
     
     private func setBackgroundColor() {
@@ -206,15 +214,26 @@ extension BottomSheetViewController {
         AuthAPI.shared.loginAPI(param: LoginRequest(social: socialParam,
                                                     fcmToken: UserDefaultsManager.fcmToken)) { response in
             
-            guard let data = response else { return }
+            guard let data = response.data else { return }
             
             UserDefaultsManager.accessToken = data.accessToken
             UserDefaultsManager.refreshToken = data.refreshToken
-            self.hasPlan = data.hasPlan
-            self.isRegistered = data.isRegistered
+            UserDefaultsManager.hasPlan = data.hasPlan
+            UserDefaultsManager.isRegistered = data.isRegistered
             
             /// badge noti로 띄워 줄 준비
             self.badges = data.badges
+            
+            // 학습 계획 온보딩 거치지 않은 유저일 경우
+            if UserDefaultsManager.isRegistered == false {
+                // 두 번째 온보딩
+                self.presentOnboardingAcceptVC()
+            } else if UserDefaultsManager.hasPlan == false {
+                // 첫 번째 온보딩
+                self.presentOnboardingPlanVC()
+            } else {
+                self.presentHomeVC()
+            }
         }
     }
 }

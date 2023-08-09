@@ -198,6 +198,7 @@ final class AlarmSettingViewController: UIViewController {
         } else {
         /// 로그인한 유저라면 닉네임 설정 뷰로 이동
             let userNicknameVC = UserNicknameViewController()
+            userNicknameVC.userPlanRequest = userPlanData
             self.navigationController?.pushViewController(userNicknameVC, animated: true)
         }
     }

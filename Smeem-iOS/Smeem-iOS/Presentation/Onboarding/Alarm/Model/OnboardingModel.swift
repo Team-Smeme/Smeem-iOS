@@ -22,14 +22,19 @@ struct TrainingTime: Codable {
 
 // MARK: - Nickname
 
-struct NicknameRequest: Codable {
+struct ServiceAcceptRequest: Codable {
     let username: String
+    let termAccepted: Bool
 }
 
-struct NicknameResponse: Codable {
-    let success: Bool
-    let message: String
-    let data: ObjectID?
+struct NicknameCheckResponse: Codable {
+    let isExist: Bool
 }
 
-struct ObjectID: Codable {}
+//struct NicknameResponse: Codable {
+//    let success: Bool
+//    let message: String
+//    let data: ObjectID?
+//}
+//
+//struct ObjectID: Codable {}

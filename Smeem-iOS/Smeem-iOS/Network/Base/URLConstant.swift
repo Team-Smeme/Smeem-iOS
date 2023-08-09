@@ -13,13 +13,14 @@ enum URLConstant {
     
     static let loginURL = "/auth"
     static let logoutURL = "/auth/sign-out"
-    static let tokenURL = "/auth/token"
+    static let reLoginURL = "/auth/token"
     
     // MARK: Onboarding
     
     static let planListURL = "/goals"
     static let userURL = "/members"
     static let userPlanURL = "/members/plan"
+    static let checkNickname = "/members/nickname/check"
     
     // MARK: - MyPage
     

@@ -17,12 +17,17 @@ struct LoginResponse: Codable {
     let refreshToken: String
     let isRegistered: Bool
     let hasPlan: Bool
-    let badges: [badges]
+    let badges: [Badges]
 }
 
-struct badges: Codable {
+struct Badges: Codable {
     let id: Int
     let name: String
     let type: String
     let imageUrl: String
+}
+
+struct ReLoginResponse: Codable {
+    let accessToken: String
+    let refreshToken: String
 }
