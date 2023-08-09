@@ -10,17 +10,17 @@ import Foundation
 import Moya
 
 enum MyPageService {
-    case MyPageInfo
-    case ChangeMyNickName(param: NicknameRequest)
+    case myPageInfo
+    case changeMyNickName(param: NicknameRequest)
     case badgeList
 }
 
 extension MyPageService: BaseTargetType {
     var path: String {
         switch self {
-        case .MyPageInfo:
+        case .myPageInfo:
             return URLConstant.myPageURL
-        case .ChangeMyNickName:
+        case .changeMyNickName:
             return URLConstant.userURL
         case .badgeList:
             return URLConstant.badgesListURL
@@ -29,26 +29,26 @@ extension MyPageService: BaseTargetType {
     
     var method: Moya.Method {
         switch self {
-        case .MyPageInfo, .badgeList:
+        case .myPageInfo, .badgeList:
             return .get
-        case .ChangeMyNickName:
+        case .changeMyNickName:
             return .patch
         }
     }
     
     var task: Moya.Task {
         switch self {
-        case .MyPageInfo, .badgeList:
+        case .myPageInfo, .badgeList:
             return .requestPlain
-        case .ChangeMyNickName(let param):
+        case .changeMyNickName(let param):
             return .requestJSONEncodable(param)
         }
     }
     
     var headers: [String : String]? {
         switch self {
-        case .MyPageInfo, .ChangeMyNickName, .badgeList:
-            return NetworkConstant.tempTokenHeader
+        case .myPageInfo, .changeMyNickName, .badgeList:
+            return NetworkConstant.hasAccessTokenHeader
         }
     }
 }

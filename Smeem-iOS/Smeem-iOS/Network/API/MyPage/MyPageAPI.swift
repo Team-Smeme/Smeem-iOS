@@ -17,7 +17,7 @@ public class MyPageAPI {
     private var badgeList: GeneralResponse<BadgeListResponse>?
     
     func myPageInfo(completion: @escaping (GeneralResponse<MyPageInfo>?) -> Void) {
-        myPageProvider.request(.MyPageInfo) { response in
+        myPageProvider.request(.myPageInfo) { response in
             switch response {
             case .success(let result):
                 do {
@@ -33,7 +33,7 @@ public class MyPageAPI {
     }
     
     func changeMyNickName(userName: String, completion: @escaping (GeneralResponse<String>?) -> Void) {
-        myPageProvider.request(.ChangeMyNickName(param: NicknameRequest(username: userName))) { response in
+        myPageProvider.request(.changeMyNickName(param: NicknameRequest(username: userName))) { response in
             switch response {
             case .success(_):
                 print(response)
@@ -48,7 +48,6 @@ public class MyPageAPI {
             switch response {
             case .success(let result):
                 guard let badgeList = try? result.map(GeneralResponse<BadgeListResponse>.self) else { return }
-                print("출력이 되나요?", badgeList)
                 completion(badgeList)
             case .failure(let err):
                 print(err)
