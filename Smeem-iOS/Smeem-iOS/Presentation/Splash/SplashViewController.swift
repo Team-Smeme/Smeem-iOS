@@ -44,10 +44,8 @@ final class SplashViewController: UIViewController {
     
     private lazy var loginButton: UIButton = {
         let button = UIButton()
-        // 임시로 hidden
-        button.isHidden = true
         button.titleLabel?.font = .b4
-        button.setTitle("이미 계정이 있어요.", for: .normal)
+        button.setTitle("이미 계정이 있으신가요?", for: .normal)
         button.setTitleColor(.gray600, for: .normal)
         button.addTarget(self, action: #selector(loginButtonDidTap), for: .touchUpInside)
         return button
@@ -74,6 +72,7 @@ final class SplashViewController: UIViewController {
     
     @objc func loginButtonDidTap() {
         let bottomSheetVC = BottomSheetViewController()
+        bottomSheetVC.bottomSheetView.viewType = .login
         bottomSheetVC.modalPresentationStyle = .overFullScreen
         present(bottomSheetVC, animated: false) {
             bottomSheetVC.bottomSheetView.frame.origin.y = self.view.frame.height

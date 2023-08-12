@@ -18,6 +18,8 @@ final class AlarmSettingViewController: UIViewController {
     var userPlanData: UserPlanRequest?
     var completeButtonData: Bool?
     
+    private var hasAlarm = false
+    
     var trainingClosure: ((TrainingTime) -> Void)?
     
     // MARK: - UI Property
@@ -135,69 +137,68 @@ final class AlarmSettingViewController: UIViewController {
             if didAllow {
                 print("Push: 권한 허용")
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-//                    self.userPlanPatchAPICall(target: "DEVELOP", hasAlarm: true)
-                    self.presentBottomSheet(target: self.targetData, hasAlarm: true)
+                    self.hasAlarm = true
+                    self.requestTrackingAuthoriaztion()
                 }
             } else {
                 print("Push: 권한 거부")
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-//                    self.userPlanPatchAPICall(target: "DEVELOP", hasAlarm: true)
-                    self.presentBottomSheet(target: self.targetData, hasAlarm: false)
+                    self.hasAlarm = false
+                    self.requestTrackingAuthoriaztion()
                 }
             }
         })
     }
     
-//    private func userPlanPatchAPICall(target: String, hasAlarm: Bool) {
-//        guard let trainigTimeData = trainingTimeData else { return }
-//
-//        userPlanPatchAPI(userPlan: UserPlanRequest(target: "DEVELOP",
-//                                                   trainingTime: trainingTimeData!,
-//                                                   hasAlarm: hasAlarm))
-//    }
-    
     private func presentBottomSheet(target: String, hasAlarm: Bool) {
-        let bottomSheetVC = BottomSheetViewController()
-        bottomSheetVC.bottomSheetView.viewType = .login
-        let navigationController = UINavigationController(rootViewController: bottomSheetVC)
+        let signupBottomSheetVC = BottomSheetViewController()
+        signupBottomSheetVC.bottomSheetView.viewType = .signUp
+        let navigationController = UINavigationController(rootViewController: signupBottomSheetVC)
         navigationController.modalPresentationStyle = .overFullScreen
         navigationController.isNavigationBarHidden = true
         
-//        guard let trainigTimeData = trainingTimeData else { return }
-        
         
         if trainingTimeData == nil && trainigDayData == nil {
-            bottomSheetVC.userPlanRequest = UserPlanRequest(target: target,
+            signupBottomSheetVC.userPlanRequest = UserPlanRequest(target: target,
                                                             trainingTime: TrainingTime(day: "MON,TUE,WED,THU,FRI",
                                                                                        hour: 22,
                                                                                        minute: 0),
                                                             hasAlarm: hasAlarm)
         } else if trainingTimeData == nil && trainigDayData != nil {
-            bottomSheetVC.userPlanRequest = UserPlanRequest(target: target,
+            signupBottomSheetVC.userPlanRequest = UserPlanRequest(target: target,
                                                             trainingTime: TrainingTime(day: trainigDayData ?? "",
                                                                                        hour: 22,
                                                                                        minute: 0),
          
                                                             hasAlarm: hasAlarm)
         } else if trainingTimeData != nil && trainigDayData == nil {
-            bottomSheetVC.userPlanRequest = UserPlanRequest(target: target,
+            signupBottomSheetVC.userPlanRequest = UserPlanRequest(target: target,
                                                             trainingTime: TrainingTime(day: "MON,TUE,WED,THU,FRI",
                                                                                        hour: trainingTimeData?.hour ?? 0,
                                                                                        minute: trainingTimeData?.minute ?? 0),
                                                             hasAlarm: hasAlarm)
         } else {
-            bottomSheetVC.userPlanRequest = UserPlanRequest(target: target,
+            signupBottomSheetVC.userPlanRequest = UserPlanRequest(target: target,
                                                             trainingTime: TrainingTime(day: trainigDayData ?? "",
                                                                                        hour: trainingTimeData?.hour ?? 0,
                                                                                        minute: trainingTimeData?.minute ?? 0),
                                                             hasAlarm: hasAlarm)
         }
         
-        self.present(navigationController, animated: false) {
-            bottomSheetVC.bottomSheetView.frame.origin.y = self.view.frame.height
-            UIView.animate(withDuration: 0.3) {
-                bottomSheetVC.bottomSheetView.frame.origin.y = self.view.frame.height-bottomSheetVC.defaultLoginHeight
+        /// 로그인하지 않은 유저일 경우, 회원가입 바텀시트 띄우기
+        if UserDefaultsManager.betaLoginToken == "" {
+            signupBottomSheetVC.bottomSheetView.viewType = .signUp
+            signupBottomSheetVC.modalPresentationStyle = .overFullScreen
+            self.present(navigationController, animated: false) {
+                signupBottomSheetVC.bottomSheetView.frame.origin.y = self.view.frame.height
+                UIView.animate(withDuration: 0.3) {
+                    signupBottomSheetVC.bottomSheetView.frame.origin.y = self.view.frame.height-signupBottomSheetVC.defaultSignUpHeight
+                }
             }
+        } else {
+        /// 로그인한 유저라면 닉네임 설정 뷰로 이동
+            let userNicknameVC = UserNicknameViewController()
+            self.navigationController?.pushViewController(userNicknameVC, animated: true)
         }
     }
     
@@ -206,8 +207,14 @@ final class AlarmSettingViewController: UIViewController {
             switch status {
             case .authorized:
                 print("성공")
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    self.presentBottomSheet(target: self.targetData, hasAlarm: self.hasAlarm)
+                }
             case .denied:
                 print("해당 앱 추적 권한 거부 또는 아이폰 설정 -> 개인정보보호 -> 추적 거부 상태")
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    self.presentBottomSheet(target: self.targetData, hasAlarm: self.hasAlarm)
+                }
             case .notDetermined:
                 print("승인 요청을 받기 전 상태값")
             case .restricted:
@@ -251,7 +258,7 @@ final class AlarmSettingViewController: UIViewController {
         
         alarmCollectionView.snp.makeConstraints {
             $0.top.equalTo(timeSettingLabelStackView.snp.bottom).offset(28)
-            $0.leading.equalToSuperview().inset(convertByWidthRatio(23))
+            $0.leading.trailing.equalToSuperview()
             $0.centerX.equalToSuperview()
             $0.height.equalTo(convertByHeightRatio(133))
         }

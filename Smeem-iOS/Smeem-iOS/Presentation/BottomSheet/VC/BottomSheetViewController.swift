@@ -57,18 +57,22 @@ final class BottomSheetViewController: UIViewController, LoginDelegate {
     
     // MARK: - Custom Method
     
-    func betaLoginDataSend() {
+    func kakaoLoginDataSend() {
         betaLoginAPI()
     }
     
-    func dissmissButton() {
+    func appleLoginDataSend() {
+        ///
+    }
+    
+    func dismissBottomSheet() {
         UIView.animate(withDuration: 0.3, animations: {
             self.bottomSheetView.frame.origin.y = self.view.frame.height
         }) { _ in
             self.dismiss(animated: false, completion: nil)
         }
     }
-    
+
     private func setBottomViewDelegate() {
         self.bottomSheetView.delegate = self
     }
