@@ -188,6 +188,7 @@ final class MyPageViewController: UIViewController {
     
         setLayout()
         swipeRecognizer()
+        setupHowLearningViewTapGestureRecognizer()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -272,6 +273,17 @@ final class MyPageViewController: UIViewController {
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(responseToSwipeGesture))
         swipeRight.direction = UISwipeGestureRecognizer.Direction.right
         self.view.addGestureRecognizer(swipeRight)
+    }
+    
+    func setupHowLearningViewTapGestureRecognizer() {
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(howLearningViewTapped))
+        howLearningView.addGestureRecognizer(tapRecognizer)
+    }
+    
+    @objc func howLearningViewTapped() {
+        let goalVC = GoalViewController(viewtype: .myPage)
+        
+        self.navigationController?.pushViewController(goalVC, animated: true)
     }
     
     // MARK: - Layout
