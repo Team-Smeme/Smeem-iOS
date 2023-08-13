@@ -7,11 +7,20 @@
 
 import UIKit
 
-final class GoalOnboardingViewController: UIViewController {
+enum GoalViewType {
+    case onboarding
+    case myPage
+}
+
+final class GoalViewController: UIViewController {
     
     // MARK: - Property
     
+    private var viewtype: GoalViewType
+    
     private let goalOnboardingView = GoalOnboardingView()
+    private let goalEditMypageView = GoalEditMypageView()
+    
     private let datasource = GoalOnboardingDataSource()
     
     var targetClosure: ((String) -> Void)?
@@ -20,19 +29,28 @@ final class GoalOnboardingViewController: UIViewController {
     
     // MARK: - Life Cycle
     
+    init(viewtype: GoalViewType, targetClosure: ( (String) -> Void)? = nil, selectedGoalLabel: String = String()) {
+        self.viewtype = viewtype
+        self.targetClosure = targetClosure
+        self.selectedGoalLabel = selectedGoalLabel
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func loadView() {
         super.loadView()
         
-        view = goalOnboardingView
+        configureViewType()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         hiddenNavigationBar()
-        goalOnboardingView.setCollectionViewDataSource(dataSource: datasource)
-        goalOnboardingView.setCollectionViewDelgate(delegate: self)
-        setDelegate()
         planListGetAPI()
         setCollectionViewOnDataSourceUpdate()
     }
@@ -40,38 +58,65 @@ final class GoalOnboardingViewController: UIViewController {
 
 // MARK: - NextButtonDelegate
 
-extension GoalOnboardingViewController: NextButtonDelegate {
+extension GoalViewController: NextButtonDelegate {
     func nextButtonDidTap() {
         let howOnboardingVC = HowOnboardingViewController()
         howOnboardingVC.tempTarget = selectedGoalLabel
         self.navigationController?.pushViewController(howOnboardingVC, animated: true)
     }
+    
+    func backButtonDidTap() {
+        self.navigationController?.popViewController(animated: true)
+    }
 }
 
 // MARK: - Extensions
 
-extension GoalOnboardingViewController {
-    func setDelegate() {
-        goalOnboardingView.delegate = self
+extension GoalViewController {
+    
+    private func configureViewType() {
+        switch viewtype {
+        case .onboarding:
+            view = goalOnboardingView
+            goalOnboardingView.delegate = self
+            goalOnboardingView.setCollectionViewDataSource(dataSource: datasource)
+            goalOnboardingView.setCollectionViewDelgate(delegate: self)
+        case .myPage:
+            view = goalEditMypageView
+            goalEditMypageView.delegate = self
+            goalEditMypageView.setCollectionViewDataSource(dataSource: datasource)
+            goalEditMypageView.setCollectionViewDelgate(delegate: self)
+        }
     }
     
     func setCollectionViewOnDataSourceUpdate() {
         goalOnboardingView.onDataSourceUpdated = { [weak self] in
-            self?.goalOnboardingView.setCollectionViewDataSource(dataSource: self!.datasource)
+            self?.refreshCollectionViewDataSource()
         }
+    }
+    
+    func refreshCollectionViewDataSource() {
+        goalOnboardingView.setCollectionViewDataSource(dataSource: datasource)
+        goalEditMypageView.setCollectionViewDataSource(dataSource: datasource)
     }
 }
 
 // MARK: - UICollectionViewDelegate
 
-extension GoalOnboardingViewController: UICollectionViewDelegate {
+extension GoalViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         selectedGoalLabel = datasource.goalLabelList[indexPath.item].goalType
-        goalOnboardingView.enableNextButton()
+        
+        switch viewtype {
+        case .onboarding:
+            goalOnboardingView.enableNextButton()
+        case .myPage:
+            goalEditMypageView.enableNextButton()
+        }
     }
 }
 
-extension GoalOnboardingViewController: UICollectionViewDelegateFlowLayout {
+extension GoalViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = collectionView.frame.width
         let height = convertByHeightRatio(60)
@@ -86,7 +131,7 @@ extension GoalOnboardingViewController: UICollectionViewDelegateFlowLayout {
 
 // MARK: - Network
 
-extension GoalOnboardingViewController {
+extension GoalViewController {
     func planListGetAPI() {
         OnboardingAPI.shared.planList() { response in
             guard let data = response.data?.goals else { return }
