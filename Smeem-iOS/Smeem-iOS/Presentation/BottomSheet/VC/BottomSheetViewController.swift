@@ -223,12 +223,10 @@ extension BottomSheetViewController {
                 self.hideLodingView(loadingView: self.loadingView)
                 
                 UserDefaultsManager.clientToken = data.accessToken
-                UserDefaultsManager.clientAuthType = AuthType.login.rawValue
 
-                
+                // hasPlan으로 바뀔 예정
                 if data.isRegistered == false {
                     self.presentOnboardingPlanVC()
-                    // noti로 트레이닝 시간 설정 뷰로 데이터를 쏘자
                 } else if data.isRegistered == false {
                     self.presentOnboardingAcceptVC()
                 } else {
@@ -237,7 +235,8 @@ extension BottomSheetViewController {
                     self.presentHomeVC()
                 }
             case .signup:
-                self.userPlanPatchAPI(userPlan: self.userPlanRequest!, accessToken: data.accessToken)
+                guard let userPlanRequest = self.userPlanRequest else { return }
+                self.userPlanPatchAPI(userPlan: userPlanRequest, accessToken: data.accessToken)
             }
         }
     }
@@ -247,7 +246,6 @@ extension BottomSheetViewController {
             self.hideLodingView(loadingView: self.loadingView)
             if response.success == true {
                 UserDefaultsManager.clientToken = accessToken
-                UserDefaultsManager.clientAuthType = AuthType.signup.rawValue
 
                 let userNicknameVC = UserNicknameViewController()
                 self.navigationController?.pushViewController(userNicknameVC, animated: true)

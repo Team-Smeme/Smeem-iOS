@@ -112,14 +112,12 @@ final class AlarmSettingViewController: UIViewController {
         setBackgroundColor()
         setLayout()
         swipeRecognizer()
-        
-        print("⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️")
-        print(UserDefaults.standard.string(forKey: "accessToken"))
     }
     
     // MARK: - @objc
     
     @objc func completeButtonDidTap(){
+        
         requestNotificationPermission()
     }
     
@@ -210,7 +208,7 @@ final class AlarmSettingViewController: UIViewController {
         if UserDefaultsManager.clientAuthType == AuthType.signup.rawValue {
             signupBottomSheetVC.authType = .signup
             signupBottomSheetVC.bottomSheetView.viewType = .login
-            signupBottomSheetVC.userPlanRequest = userPlanData
+            signupBottomSheetVC.userPlanRequest = userPlanRequest
             signupBottomSheetVC.modalPresentationStyle = .overFullScreen
             self.present(navigationController, animated: false) {
                 signupBottomSheetVC.bottomSheetView.frame.origin.y = self.view.frame.height

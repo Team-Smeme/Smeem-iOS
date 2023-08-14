@@ -67,15 +67,13 @@ final class SmeemStartViewController: UIViewController {
         setBackgroundColor()
         setLayout()
         hiddenNavigationBar()
-        
-        print(UserDefaults.standard.string(forKey: "accessToken"))
-        print(UserDefaultsManager.accessToken)
     }
     
     // MARK: - @objc
     
     @objc func loginButtonDidTap() {
         let loginBottomSheetVC = BottomSheetViewController()
+        UserDefaultsManager.clientAuthType = AuthType.login.rawValue
         loginBottomSheetVC.authType = .login
         loginBottomSheetVC.bottomSheetView.viewType = .login
         let navigationController = UINavigationController(rootViewController: loginBottomSheetVC)
@@ -90,6 +88,7 @@ final class SmeemStartViewController: UIViewController {
     }
     
     @objc func startButtonDidTap() {
+        UserDefaultsManager.clientAuthType = AuthType.signup.rawValue
         let onboardingVC = GoalOnboardingViewController()
         self.navigationController?.pushViewController(onboardingVC, animated: true)
     }
