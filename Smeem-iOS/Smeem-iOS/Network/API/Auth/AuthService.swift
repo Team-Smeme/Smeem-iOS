@@ -47,7 +47,8 @@ extension AuthService: BaseTargetType {
         case .login:
             return NetworkConstant.hasSocialTokenHeader
         case .resign:
-            return NetworkConstant.hasAccessTokenHeader
+            return ["Content-Type": "application/json",
+                    "Authorization": "Bearer " + UserDefaultsManager.accessToken]
         case .reLogin:
             return NetworkConstant.hasRefreshTokenHeader
         }

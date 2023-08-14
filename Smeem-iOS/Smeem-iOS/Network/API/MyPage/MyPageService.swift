@@ -53,7 +53,8 @@ extension MyPageService: BaseTargetType {
     var headers: [String : String]? {
         switch self {
         case .myPageInfo, .editNinkname, .badgeList, .myPageUserPlan:
-            return NetworkConstant.hasAccessTokenHeader
+            return ["Content-Type": "application/json",
+                    "Authorization": "Bearer " + UserDefaultsManager.accessToken]
         }
     }
 }

@@ -42,6 +42,7 @@ extension PostDiaryService: BaseTargetType {
     }
     
     var headers: [String : String]? {
-        return NetworkConstant.hasAccessTokenHeader
+        return ["Content-Type": "application/json",
+                "Authorization": "Bearer " + UserDefaultsManager.accessToken]
     }
 }

@@ -152,10 +152,7 @@ extension ServiceAcceptViewController {
             guard let data = response.data else { return }
             
             // 성공했을 때 UserDefaults에 저장
-            UserDefaultsManager.accessToken = UserDefaultsManager.clientToken
-            
-            print(UserDefaultsManager.accessToken)
-            print(UserDefaultsManager.clientToken)
+            UserDefaults.standard.set(UserDefaultsManager.clientToken, forKey: "accessToken")
             
             let homeVC = HomeViewController()
             homeVC.badgePopupData = data.badges
