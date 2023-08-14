@@ -17,6 +17,17 @@ final class MyPageViewController: UIViewController {
     var myPageSelectedIndexPath = ["MON": IndexPath(item: 0, section: 0), "TUE":IndexPath(item: 1, section: 0), "WED":IndexPath(item: 2, section: 0), "THU":IndexPath(item: 3, section: 0), "FRI":IndexPath(item: 4, section: 0), "SAT":IndexPath(item: 5, section: 0), "SUN":IndexPath(item: 6, section: 0)]
     var indexPathArray: [IndexPath] = []
     
+    var onTargetRecived: ((_ target: String) -> Void)?
+    
+    let goalTextToIndex: [String: Int] = [
+        "자기계발": 0,
+        "취미로 즐기기": 1,
+        "현지 언어 체득": 2,
+        "유창한 비즈니스 영어": 3,
+        "어학 시험 고득점": 4,
+        "아직 모르겠어요": 5
+    ]
+    
     // MARK: - UI Property
     
     private let headerContainerView = UIView()
@@ -228,6 +239,16 @@ final class MyPageViewController: UIViewController {
         self.navigationController?.popViewController(animated: true)
     }
     
+    @objc func howLearningViewTapped() {
+        let goalVC = GoalViewController(viewtype: .myPage)
+        
+        if let selectedIndex = getIndexFromGoalText(goalText: userInfo.target) {
+            goalVC.selectedGoalIndex = selectedIndex
+        }
+        
+        self.navigationController?.pushViewController(goalVC, animated: true)
+    }
+    
     // MARK: - Custom Method
     
     private func setData() {
@@ -280,10 +301,8 @@ final class MyPageViewController: UIViewController {
         howLearningView.addGestureRecognizer(tapRecognizer)
     }
     
-    @objc func howLearningViewTapped() {
-        let goalVC = GoalViewController(viewtype: .myPage)
-        
-        self.navigationController?.pushViewController(goalVC, animated: true)
+    func getIndexFromGoalText(goalText: String) -> Int? {
+        return goalTextToIndex[goalText]
     }
     
     // MARK: - Layout

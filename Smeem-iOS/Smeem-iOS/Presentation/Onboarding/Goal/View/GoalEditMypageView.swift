@@ -13,9 +13,11 @@ final class GoalEditMypageView: UIView {
     
     // MARK: - Property
     
-    weak var delegate: NextButtonDelegate?
+    weak var nextButtonDelegate: NextButtonDelegate?
     
     var onDataSourceUpdated: (() -> Void)?
+    
+    var initialIndexPath: IndexPath?
     
     // MARK: - UI Property
     
@@ -30,7 +32,7 @@ final class GoalEditMypageView: UIView {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "마이 페이지"
+        label.text = "트레이닝 목표 변경"
         label.font = .s2
         label.textColor = .smeemBlack
         return label
@@ -65,8 +67,9 @@ final class GoalEditMypageView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
 }
+
+//MARK: - Extensions
 
 extension GoalEditMypageView {
     
@@ -108,11 +111,11 @@ extension GoalEditMypageView {
     // MARK: - @objc
     
     @objc func nextButtonDidTap() {
-        delegate?.nextButtonDidTap()
+        nextButtonDelegate?.nextButtonDidTap()
     }
     
     @objc func backButtonDidTap() {
-        delegate?.backButtonDidTap()
+        nextButtonDelegate?.backButtonDidTap()
     }
     
     // MARK: - Custom Method
@@ -138,6 +141,15 @@ extension GoalEditMypageView {
     
     private func setCellReigster() {
         learningListCollectionView.register(GoalCollectionViewCell.self, forCellWithReuseIdentifier: GoalCollectionViewCell.identifier)
+    }
+    
+    func setData(selectedGoalIndex: Int) {
+        if let dataSource = learningListCollectionView.dataSource as? GoalCollectionViewDataSource {
+            // 데이터 소스의 selectedIndex 값을 업데이트
+            dataSource.setSelectedIndex(selectedGoalIndex)
+            // collectionView reloadData 호출
+            learningListCollectionView.reloadData()
+        }
     }
     
     private func setBackgroundColor() {

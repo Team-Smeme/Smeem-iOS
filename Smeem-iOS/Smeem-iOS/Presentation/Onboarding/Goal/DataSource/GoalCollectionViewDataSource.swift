@@ -7,11 +7,17 @@
 
 import UIKit
 
-class GoalOnboardingDataSource: NSObject {
+class GoalCollectionViewDataSource: NSObject {
     var goalLabelList = [Plan]()
+    
+    var selectedIndex: Int?
+    
+    func setSelectedIndex(_ index: Int) {
+        selectedIndex = index
+    }
 }
 
-extension GoalOnboardingDataSource: UICollectionViewDataSource {
+extension GoalCollectionViewDataSource: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return goalLabelList.count
     }

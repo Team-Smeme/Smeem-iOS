@@ -21,11 +21,12 @@ final class GoalViewController: UIViewController {
     private let goalOnboardingView = GoalOnboardingView()
     private let goalEditMypageView = GoalEditMypageView()
     
-    private let datasource = GoalOnboardingDataSource()
+    private let datasource = GoalCollectionViewDataSource()
     
     var targetClosure: ((String) -> Void)?
     
     var selectedGoalLabel = String()
+    var selectedGoalIndex: Int?
     
     // MARK: - Life Cycle
     
@@ -53,6 +54,10 @@ final class GoalViewController: UIViewController {
         hiddenNavigationBar()
         planListGetAPI()
         setCollectionViewOnDataSourceUpdate()
+        
+        if let selectedGoalIndex = selectedGoalIndex {
+            datasource.setSelectedIndex(selectedGoalIndex)
+        }
     }
 }
 
@@ -83,7 +88,7 @@ extension GoalViewController {
             goalOnboardingView.setCollectionViewDelgate(delegate: self)
         case .myPage:
             view = goalEditMypageView
-            goalEditMypageView.delegate = self
+            goalEditMypageView.nextButtonDelegate = self
             goalEditMypageView.setCollectionViewDataSource(dataSource: datasource)
             goalEditMypageView.setCollectionViewDelgate(delegate: self)
         }

@@ -20,7 +20,7 @@ final class EditGoalViewController: UIViewController {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "마이 페이지"
+        label.text = "트레이닝 목표 변경"
         label.font = .s2
         label.textColor = .smeemBlack
         return label
