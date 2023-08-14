@@ -27,6 +27,8 @@ final class SplashViewController: UIViewController {
 
         setLayout()
         checkDidLogin()
+        
+        print(UserDefaults.standard.string(forKey: "accessToken"))
     }
     
     // MARK: - @objc
@@ -37,11 +39,11 @@ final class SplashViewController: UIViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             // access 토큰을 가지고 있음
             if UserDefaultsManager.accessToken != "" {
-                // 첫 번째 온보딩을 거치지 않은 경우
-                self.presentUserFlow()
-            // 토큰을 가지고 있지 않음
+                // 첫 번째 온보딩을 거치지 않은 경우\
+                self.changeRootViewController(HomeViewController())
             } else {
-                self.changeRootViewController(SmeemStartViewController())
+                // 토큰을 가지고 있지 않음
+                self.presentSmeemStartVC()
             }
         }
     }

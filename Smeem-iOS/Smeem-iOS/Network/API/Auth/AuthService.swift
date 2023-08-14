@@ -11,12 +11,13 @@ import Moya
 enum AuthService {
     case login(param: LoginRequest)
     case reLogin
+    case resign
 }
 
 extension AuthService: BaseTargetType {
     var path: String {
         switch self {
-        case .login:
+        case .login, .resign:
             return URLConstant.loginURL
         case .reLogin:
             return URLConstant.reLoginURL
@@ -27,6 +28,8 @@ extension AuthService: BaseTargetType {
         switch self {
         case .login, .reLogin:
             return .post
+        case .resign:
+            return .delete
         }
     }
     
@@ -34,7 +37,7 @@ extension AuthService: BaseTargetType {
         switch self {
         case .login(let param):
             return .requestJSONEncodable(param)
-        case .reLogin:
+        case .reLogin, .resign:
             return .requestPlain
         }
     }
@@ -43,6 +46,8 @@ extension AuthService: BaseTargetType {
         switch self {
         case .login:
             return NetworkConstant.hasSocialTokenHeader
+        case .resign:
+            return NetworkConstant.hasAccessTokenHeader
         case .reLogin:
             return NetworkConstant.hasRefreshTokenHeader
         }

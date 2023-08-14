@@ -67,18 +67,24 @@ final class SmeemStartViewController: UIViewController {
         setBackgroundColor()
         setLayout()
         hiddenNavigationBar()
+        
+        print(UserDefaults.standard.string(forKey: "accessToken"))
+        print(UserDefaultsManager.accessToken)
     }
     
     // MARK: - @objc
     
     @objc func loginButtonDidTap() {
-        let bottomSheetVC = BottomSheetViewController()
-        bottomSheetVC.bottomSheetView.viewType = .login
-        bottomSheetVC.modalPresentationStyle = .overFullScreen
-        present(bottomSheetVC, animated: false) {
-            bottomSheetVC.bottomSheetView.frame.origin.y = self.view.frame.height
+        let loginBottomSheetVC = BottomSheetViewController()
+        loginBottomSheetVC.authType = .login
+        loginBottomSheetVC.bottomSheetView.viewType = .login
+        let navigationController = UINavigationController(rootViewController: loginBottomSheetVC)
+        navigationController.modalPresentationStyle = .overFullScreen
+        
+        present(navigationController, animated: false) {
+            loginBottomSheetVC.bottomSheetView.frame.origin.y = self.view.frame.height
             UIView.animate(withDuration: 0.3) {
-                bottomSheetVC.bottomSheetView.frame.origin.y = self.view.frame.height-bottomSheetVC.defaultLoginHeight
+                loginBottomSheetVC.bottomSheetView.frame.origin.y = self.view.frame.height-loginBottomSheetVC.defaultLoginHeight
             }
         }
     }

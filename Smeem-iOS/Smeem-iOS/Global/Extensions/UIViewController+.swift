@@ -124,14 +124,16 @@ extension UIViewController {
     
     func presentOnboardingPlanVC() {
         let onboardingGoalVC = GoalOnboardingViewController()
-        let _ = UINavigationController(rootViewController: onboardingGoalVC)
         self.navigationController?.pushViewController(onboardingGoalVC, animated: true)
     }
     
     func presentOnboardingAcceptVC() {
+        let bottomSheetVC = BottomSheetViewController()
         let onboardingAcceptVC = UserNicknameViewController()
+        onboardingAcceptVC.userPlanRequest = bottomSheetVC.userPlanRequest
         let _ = UINavigationController(rootViewController: onboardingAcceptVC)
         self.navigationController?.pushViewController(onboardingAcceptVC, animated: true)
+        
     }
     
     func presentHomeVC() {
@@ -141,7 +143,6 @@ extension UIViewController {
     
     func presentSmeemStartVC() {
         let smeemStartVC = SmeemStartViewController()
-        let _ = UINavigationController(rootViewController: smeemStartVC)
-        self.navigationController?.pushViewController(smeemStartVC, animated: true)
+        changeRootViewController(smeemStartVC)
     }
 }

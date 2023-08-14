@@ -27,6 +27,10 @@ struct ServiceAcceptRequest: Codable {
     let termAccepted: Bool
 }
 
+struct ServiceAcceptResponse: Codable {
+    let badges: [PopupBadge]
+}
+
 struct NicknameCheckResponse: Codable {
     let isExist: Bool
 }

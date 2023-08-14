@@ -87,12 +87,9 @@ final class UserNicknameViewController: UIViewController {
         showKeyboard(textView: nicknameTextField)
         addTextFieldNotification()
         setImage()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         
-        userPlanPatchAPI(userPlan: userPlanRequest!)
+        print("⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️")
+        print(UserDefaults.standard.string(forKey: "accessToken"))
     }
     
     deinit {
@@ -104,12 +101,6 @@ final class UserNicknameViewController: UIViewController {
     @objc func nextButtonDidTap() {
         self.showLodingView(loadingView: loadingView)
         checkNicknameGetAPI(nickname: nicknameTextField.text ?? "")
-        
-        if self.isExistNinkname {
-            let serviceVC = ServiceAcceptViewController()
-            serviceVC.nickNameData = nicknameTextField.text ?? ""
-            self.navigationController?.pushViewController(serviceVC, animated: true)
-        }
     }
     
     @objc func nicknameDidChange(_ notification: Notification) {
@@ -218,8 +209,9 @@ extension UserNicknameViewController: UITextFieldDelegate {
 
 extension UserNicknameViewController {
     private func checkNicknameGetAPI(nickname: String) {
-        OnboardingAPI.shared.ninknameCheckAPI(userName: nickname) { response in
+        OnboardingAPI.shared.ninknameCheckAPI(userName: nickname, accessToken: UserDefaultsManager.clientToken) { response in
             guard let data = response.data else { return }
+            
             self.hideLodingView(loadingView: self.loadingView)
             self.isExistNinkname = data.isExist
             
@@ -230,13 +222,19 @@ extension UserNicknameViewController {
                 self.doubleCheckLabel.isHidden = true
                 self.nextButton.smeemButtonType = .enabled
             }
+            
+            if !self.isExistNinkname {
+                let serviceVC = ServiceAcceptViewController()
+                serviceVC.nickNameData = self.nicknameTextField.text ?? ""
+                self.navigationController?.pushViewController(serviceVC, animated: true)
+            }
         }
     }
     
-    private func userPlanPatchAPI(userPlan: UserPlanRequest) {
-        OnboardingAPI.shared.userPlanPathch(param: userPlan) { response in
-            print(response.message)
-            print(response.success)
-        }
-    }
+//    private func userPlanPatchAPI(userPlan: UserPlanRequest) {
+//        OnboardingAPI.shared.userPlanPathch(param: userPlan) { response in
+//            print(response.message)
+//            print(response.success)
+//        }
+//    }
 }

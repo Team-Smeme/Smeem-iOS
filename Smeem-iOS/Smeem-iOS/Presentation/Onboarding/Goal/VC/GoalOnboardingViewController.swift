@@ -99,6 +99,11 @@ final class GoalOnboardingViewController: UIViewController {
         setCellReigster()
         hiddenNavigationBar()
         planListGetAPI()
+        
+        print(UserDefaults.standard.string(forKey: "accessToken"))
+        print(UserDefaultsManager.accessToken)
+        print("⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️")
+        print(NetworkConstant.hasAccessTokenHeader)
     }
     
     // MARK: - @objc

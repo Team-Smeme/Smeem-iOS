@@ -142,17 +142,19 @@ final class BottomSheetView: UIView {
             bottomSheetLabel.text = "로그인"
             guestLoginButton.isHidden = true
         case .signUp:
-            bottomSheetLabel.text = "회원가입"
-            
-            guestLoginButton.snp.makeConstraints {
-                $0.top.equalTo(appleLoginButton.snp.bottom).offset(22)
-                $0.centerX.equalToSuperview()
-            }
-            
-            guestLoginTooltip.snp.makeConstraints {
-                $0.top.equalTo(guestLoginButton.snp.bottom).offset(3)
-                $0.centerX.equalToSuperview()
-            }
+//            bottomSheetLabel.text = "회원가입"
+//
+//            guestLoginButton.snp.makeConstraints {
+//                $0.top.equalTo(appleLoginButton.snp.bottom).offset(22)
+//                $0.centerX.equalToSuperview()
+//            }
+//
+//            guestLoginTooltip.snp.makeConstraints {
+//                $0.top.equalTo(guestLoginButton.snp.bottom).offset(3)
+//                $0.centerX.equalToSuperview()
+//            }
+            bottomSheetLabel.text = "로그인"
+            guestLoginButton.isHidden = true
         }
     }
 }

@@ -11,9 +11,9 @@ import Moya
 enum OnboardingService {
     case planList
     case detailPlanList(param: String)
-    case userPlan(param: UserPlanRequest)
-    case serviceAccept(param: ServiceAcceptRequest)
-    case checkNickname(param: String)
+    case onboardingUserPlan(param: UserPlanRequest, token: String)
+    case serviceAccept(param: ServiceAcceptRequest, token: String)
+    case checkNickname(param: String, token: String)
 }
 
 extension OnboardingService: BaseTargetType {
@@ -23,7 +23,7 @@ extension OnboardingService: BaseTargetType {
             return URLConstant.planListURL
         case .detailPlanList(let type):
             return URLConstant.planListURL+"/\(type)"
-        case .userPlan:
+        case .onboardingUserPlan:
             return URLConstant.userPlanURL
         case .serviceAccept:
             return URLConstant.userURL
@@ -36,7 +36,7 @@ extension OnboardingService: BaseTargetType {
         switch self {
         case .planList, .detailPlanList, .checkNickname:
             return .get
-        case .userPlan, .serviceAccept:
+        case .onboardingUserPlan, .serviceAccept:
             return .patch
         }
     }
@@ -45,11 +45,11 @@ extension OnboardingService: BaseTargetType {
         switch self {
         case .planList, .detailPlanList:
             return .requestPlain
-        case .userPlan(let param):
+        case .onboardingUserPlan(let param, _):
             return .requestJSONEncodable(param)
-        case .serviceAccept(let param):
+        case .serviceAccept(let param, _):
             return .requestJSONEncodable(param)
-        case .checkNickname(let param):
+        case .checkNickname(let param, _):
             return .requestParameters(parameters: ["name": param], encoding: URLEncoding.queryString)
         }
     }
@@ -58,8 +58,9 @@ extension OnboardingService: BaseTargetType {
         switch self {
         case .planList, .detailPlanList:
             return NetworkConstant.noTokenHeader
-        case .userPlan, .serviceAccept, .checkNickname:
-            return NetworkConstant.hasAccessTokenHeader
+        case .onboardingUserPlan(_, let token), .serviceAccept(_, let token), .checkNickname(_, let token):
+            return ["Content-Type": "application/json",
+                    "Authorization": "Bearer " + token]
         }
     }
 }

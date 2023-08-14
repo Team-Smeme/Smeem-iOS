@@ -178,12 +178,22 @@ final class HomeViewController: UIViewController {
         setLayout()
         setDelegate()
         setSwipe()
+        
+        print("⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️")
+        print(UserDefaults.standard.string(forKey: "accessToken"))
     }
     
     override func viewWillAppear(_ animated: Bool) {
         homeDiaryWithAPI(start: Date().startOfMonth().addingDate(addValue: -7), end: Date().endOfMonth().addingDate(addValue: 7))
         hiddenNavigationBar()
         checkPopupView()
+        
+        print("⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️")
+        print(UserDefaults.standard.string(forKey: "accessToken"))
+        
+        print("⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️")
+        print(UserDefaultsManager.accessToken)
+        print(UserDefaultsManager.clientToken)
     }
     
     // MARK: - @objc
@@ -273,11 +283,11 @@ final class HomeViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(notificationPushShowPage), name: NSNotification.Name("goToHome"), object: nil)
     }
     
-//    private func getSomeData(completion: @escaping () -> ()) {
-//      DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-//        completion()
-//      }
-//    }
+    private func getSomeData(completion: @escaping () -> ()) {
+      DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+        completion()
+      }
+    }
     
     // MARK: - Layout
     

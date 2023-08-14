@@ -38,6 +38,7 @@ extension HomeService: BaseTargetType {
     }
     
     var headers: [String : String]? {
-        return NetworkConstant.tempTokenHeader
+        
+        return NetworkConstant.hasAccessTokenHeader
     }
 }

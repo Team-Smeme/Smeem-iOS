@@ -13,6 +13,11 @@ import AuthenticationServices
 import KakaoSDKAuth
 import KakaoSDKUser
 
+enum AuthType: String {
+    case login
+    case signup
+}
+
 final class BottomSheetViewController: UIViewController, LoginDelegate {
     
     private var hasPlan = false
@@ -51,7 +56,11 @@ final class BottomSheetViewController: UIViewController, LoginDelegate {
     var popupBadgeData: [PopupBadge]?
     var userPlanRequest: UserPlanRequest?
     
+    var authType: AuthType = .login
+    
     // MARK: - UI Property
+    
+    private let loadingView = LoadingView()
     
     private lazy var dimmedView: UIView = {
         let view = UIView()
@@ -74,10 +83,6 @@ final class BottomSheetViewController: UIViewController, LoginDelegate {
         setBackgroundColor()
         setLayout()
         setBottomViewDelegate()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        notificationAddObserver()
     }
     
     // MARK: - @objc
@@ -149,10 +154,6 @@ final class BottomSheetViewController: UIViewController, LoginDelegate {
         self.bottomSheetView.delegate = self
     }
     
-    private func notificationAddObserver() {
-        NotificationCenter.default.post(name: NSNotification.Name("dataSendBadgeArray"), object: badges, userInfo: nil)
-    }
-    
     private func setBackgroundColor() {
         view.backgroundColor = .clear
     }
@@ -213,26 +214,45 @@ extension BottomSheetViewController {
     private func loginAPI(socialParam: String) {
         AuthAPI.shared.loginAPI(param: LoginRequest(social: socialParam,
                                                     fcmToken: UserDefaultsManager.fcmToken)) { response in
-            
+            self.showLodingView(loadingView: self.loadingView)
             guard let data = response.data else { return }
             
-            UserDefaultsManager.accessToken = data.accessToken
-            UserDefaultsManager.refreshToken = data.refreshToken
-            UserDefaultsManager.hasPlan = data.hasPlan
-            UserDefaultsManager.isRegistered = data.isRegistered
-            
-            /// badge noti로 띄워 줄 준비
-            self.badges = data.badges
-            
-            // 학습 계획 온보딩 거치지 않은 유저일 경우
-            if UserDefaultsManager.isRegistered == false {
-                // 두 번째 온보딩
-                self.presentOnboardingAcceptVC()
-            } else if UserDefaultsManager.hasPlan == false {
-                // 첫 번째 온보딩
-                self.presentOnboardingPlanVC()
+            switch self.authType {
+            case .login:
+                // hasPlan이라고 가정
+                self.hideLodingView(loadingView: self.loadingView)
+                
+                UserDefaultsManager.clientToken = data.accessToken
+                UserDefaultsManager.clientAuthType = AuthType.login.rawValue
+
+                
+                if data.isRegistered == false {
+                    self.presentOnboardingPlanVC()
+                    // noti로 트레이닝 시간 설정 뷰로 데이터를 쏘자
+                } else if data.isRegistered == false {
+                    self.presentOnboardingAcceptVC()
+                } else {
+                    // 삭제했다가 로그인한 유저
+                    UserDefaultsManager.accessToken = data.accessToken
+                    self.presentHomeVC()
+                }
+            case .signup:
+                self.userPlanPatchAPI(userPlan: self.userPlanRequest!, accessToken: data.accessToken)
+            }
+        }
+    }
+    
+    private func userPlanPatchAPI(userPlan: UserPlanRequest, accessToken: String) {
+        OnboardingAPI.shared.userPlanPathAPI(param: userPlan, accessToken: accessToken) { response in
+            self.hideLodingView(loadingView: self.loadingView)
+            if response.success == true {
+                UserDefaultsManager.clientToken = accessToken
+                UserDefaultsManager.clientAuthType = AuthType.signup.rawValue
+
+                let userNicknameVC = UserNicknameViewController()
+                self.navigationController?.pushViewController(userNicknameVC, animated: true)
             } else {
-                self.presentHomeVC()
+                print("학습 목표 API 호출 실패")
             }
         }
     }

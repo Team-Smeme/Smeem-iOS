@@ -16,7 +16,7 @@ enum NetworkConstant {
                                  "Authorization": "Bearer "+(UserDefaultsManager.socialToken)]
     
     static let hasAccessTokenHeader = ["Content-Type": "application/json",
-                                       "Authorization": "Bearer "+(UserDefaultsManager.accessToken)]
+                                       "Authorization": "Bearer " + (UserDefaults.standard.string(forKey: "accessToken") ?? "")]
     
     static let hasRefreshTokenHeader = ["Content-Type": "application/json",
                                         "Authorization": "Bearer "+(UserDefaultsManager.refreshToken)]

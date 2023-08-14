@@ -15,6 +15,7 @@ final class ServiceAcceptViewController: UIViewController {
                              "[선택] 마케팅 정보 활용 동의"]
     var acceptCheckArray: Set<Int> = []
     var nickNameData = ""
+    private var notiAccessToken = ""
 
     private var selectedTotal = false {
         didSet {
@@ -23,6 +24,8 @@ final class ServiceAcceptViewController: UIViewController {
     }
     
     // MARK: - UI Property
+    
+    private let loadingView = LoadingView()
     
     private let titleServiceLabel: UILabel = {
         let label = UILabel()
@@ -66,11 +69,15 @@ final class ServiceAcceptViewController: UIViewController {
         setLayout()
         setDelegate()
         setCellRegister()
+        
+        print("⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️")
+        print(UserDefaults.standard.string(forKey: "accessToken"))
     }
     
     // MARK: - @objc
     
     @objc func nextButtonDidTap() {
+        showLodingView(loadingView: loadingView)
         nicknamePatchAPI()
     }
     
@@ -140,8 +147,21 @@ final class ServiceAcceptViewController: UIViewController {
 extension ServiceAcceptViewController {
     private func nicknamePatchAPI() {
         OnboardingAPI.shared.serviceAcceptedPatch(param: ServiceAcceptRequest(username: nickNameData,
-                                                                              termAccepted: true)) { response in
-            print(response.data)
+                                                                              termAccepted: true),
+                                                  accessToken: UserDefaultsManager.clientToken) { response in
+            guard let data = response.data else { return }
+            
+            // 성공했을 때 UserDefaults에 저장
+            UserDefaultsManager.accessToken = UserDefaultsManager.clientToken
+            
+            print(UserDefaultsManager.accessToken)
+            print(UserDefaultsManager.clientToken)
+            
+            let homeVC = HomeViewController()
+            homeVC.badgePopupData = data.badges
+            self.changeRootViewController(homeVC)
+            
+            self.hideLodingView(loadingView: self.loadingView)
         }
     }
 }

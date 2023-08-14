@@ -79,7 +79,7 @@ final class AlarmSettingViewController: UIViewController {
         button.setTitle("나중에 설정하기", for: .normal)
         button.setTitleColor(.gray600, for: .normal)
         button.titleLabel?.font = .b4
-        button.addTarget(self, action: #selector(completeButtonDidTap), for: .touchUpInside)
+//        button.addTarget(self, action: #selector(completeButtonDidTap), for: .touchUpInside)
         return button
     }()
     
@@ -112,6 +112,9 @@ final class AlarmSettingViewController: UIViewController {
         setBackgroundColor()
         setLayout()
         swipeRecognizer()
+        
+        print("⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️")
+        print(UserDefaults.standard.string(forKey: "accessToken"))
     }
     
     // MARK: - @objc
@@ -123,6 +126,19 @@ final class AlarmSettingViewController: UIViewController {
     @objc func responseToSwipeGesture() {
         self.navigationController?.popViewController(animated: true)
     }
+    
+    // 로그인 플로우로 들어온 사람 -> NotiToken(accessToken, loginType)
+    // 회원가입 플로우로 들어온 사람 -> NotiToken(_, signupType)
+    
+    // objc func notification : loginType일 경우, accessToken 깡으로 담아서 요청 서버 통신 완료 후, 닉네임 변경 뷰로 이동
+    // objc func notification : signupTupe일 경우, 바텀시트를 먼저 보여 준 후, 바텀 시트에서 acessToken을 받아오고, 깡으로 요청 서버서 보냄. 그리고 다시 해당 acessToken을 noti로 쏴줌 다음에 닉네임 변경 뷰로 이동
+    // 이용약관 동의에서 어떤 노티든 구독해서 acess 받아줌.
+    
+    // 로그인 플로우로 들어온 사람 -> 임시 토큰으로 (accessToken, loginType 값 들고 있기)
+    // 이탈했을 경우 : 다시 로그인하기 때문에, 임시 토큰도 다시 넣음 ( 고정적이지 않음 )
+    // 회원가입 플로우로 들어온 사람 임시 토큰으로 AccessToken, signin 값 들고 있기 1. 대환 토큰
+    // 이탈했을 경우, 다시 회원가입 바텀시트로 시작해도 다시 임시 토큰 넣음 2. 수민 토큰
+    // 이탈했다가 로그인할 경우, hasPlan은 true이기 때문에, 닉네임 수정뷰로 이동시키고 가장 마지막 토큰을 가지고 api 요청
     
     // MARK: - Custom Method
     
@@ -157,28 +173,32 @@ final class AlarmSettingViewController: UIViewController {
         navigationController.modalPresentationStyle = .overFullScreen
         navigationController.isNavigationBarHidden = true
         
+        var userPlanRequest = UserPlanRequest(target: String(),
+                                              trainingTime: TrainingTime(day: String(), hour: Int(), minute: Int()),
+                                              hasAlarm: Bool())
+        
         
         if trainingTimeData == nil && trainigDayData == nil {
-            signupBottomSheetVC.userPlanRequest = UserPlanRequest(target: target,
+            userPlanRequest = UserPlanRequest(target: target,
                                                             trainingTime: TrainingTime(day: "MON,TUE,WED,THU,FRI",
                                                                                        hour: 22,
                                                                                        minute: 0),
                                                             hasAlarm: hasAlarm)
         } else if trainingTimeData == nil && trainigDayData != nil {
-            signupBottomSheetVC.userPlanRequest = UserPlanRequest(target: target,
+            userPlanRequest = UserPlanRequest(target: target,
                                                             trainingTime: TrainingTime(day: trainigDayData ?? "",
                                                                                        hour: 22,
                                                                                        minute: 0),
          
                                                             hasAlarm: hasAlarm)
         } else if trainingTimeData != nil && trainigDayData == nil {
-            signupBottomSheetVC.userPlanRequest = UserPlanRequest(target: target,
+            userPlanRequest = UserPlanRequest(target: target,
                                                             trainingTime: TrainingTime(day: "MON,TUE,WED,THU,FRI",
                                                                                        hour: trainingTimeData?.hour ?? 0,
                                                                                        minute: trainingTimeData?.minute ?? 0),
                                                             hasAlarm: hasAlarm)
         } else {
-            signupBottomSheetVC.userPlanRequest = UserPlanRequest(target: target,
+            userPlanRequest = UserPlanRequest(target: target,
                                                             trainingTime: TrainingTime(day: trainigDayData ?? "",
                                                                                        hour: trainingTimeData?.hour ?? 0,
                                                                                        minute: trainingTimeData?.minute ?? 0),
@@ -186,20 +206,21 @@ final class AlarmSettingViewController: UIViewController {
         }
         
         /// 로그인하지 않은 유저일 경우, 회원가입 바텀시트 띄우기
-        if UserDefaultsManager.betaLoginToken == "" {
-            signupBottomSheetVC.bottomSheetView.viewType = .signUp
+        /// 앞에서 로그인하고 온 유저라는 것을 어떻게 아는가?
+        if UserDefaultsManager.clientAuthType == AuthType.signup.rawValue {
+            signupBottomSheetVC.authType = .signup
+            signupBottomSheetVC.bottomSheetView.viewType = .login
+            signupBottomSheetVC.userPlanRequest = userPlanData
             signupBottomSheetVC.modalPresentationStyle = .overFullScreen
             self.present(navigationController, animated: false) {
                 signupBottomSheetVC.bottomSheetView.frame.origin.y = self.view.frame.height
                 UIView.animate(withDuration: 0.3) {
-                    signupBottomSheetVC.bottomSheetView.frame.origin.y = self.view.frame.height-signupBottomSheetVC.defaultSignUpHeight
+                    signupBottomSheetVC.bottomSheetView.frame.origin.y = self.view.frame.height-signupBottomSheetVC.defaultLoginHeight
                 }
             }
         } else {
         /// 로그인한 유저라면 닉네임 설정 뷰로 이동
-            let userNicknameVC = UserNicknameViewController()
-            userNicknameVC.userPlanRequest = userPlanData
-            self.navigationController?.pushViewController(userNicknameVC, animated: true)
+            self.userPlanPatchAPI(userPlan: userPlanRequest, accessToken: UserDefaultsManager.clientToken)
         }
     }
     
@@ -279,10 +300,14 @@ final class AlarmSettingViewController: UIViewController {
 }
 
 extension AlarmSettingViewController {
-    private func userPlanPatchAPI(userPlan: UserPlanRequest) {
-        OnboardingAPI.shared.userPlanPathch(param: userPlan) { response in
-            print(response.message)
-            print(response.success)
+    private func userPlanPatchAPI(userPlan: UserPlanRequest, accessToken: String) {
+        OnboardingAPI.shared.userPlanPathAPI(param: userPlan, accessToken: accessToken) { response in
+            if response.success == true {
+                let userNicknameVC = UserNicknameViewController()
+                self.navigationController?.pushViewController(userNicknameVC, animated: true)
+            } else {
+                print("학습 목표 API 호출 실패")
+            }
         }
     }
 }

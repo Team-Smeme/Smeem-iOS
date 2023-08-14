@@ -36,6 +36,14 @@ final class MyPageViewController: UIViewController {
         return button
     }()
     
+    private lazy var tempButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("탈퇴하기", for: .normal)
+        button.backgroundColor = .point
+        button.addTarget(self, action: #selector(tempButtonDidTap), for: .touchUpInside)
+        return button
+    }()
+    
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "마이 페이지"
@@ -227,6 +235,10 @@ final class MyPageViewController: UIViewController {
         self.navigationController?.popViewController(animated: true)
     }
     
+    @objc func tempButtonDidTap() {
+        resignAPI()
+    }
+    
     // MARK: - Custom Method
     
     private func setData() {
@@ -284,13 +296,17 @@ final class MyPageViewController: UIViewController {
         setBackgroundColor()
         hiddenNavigationBar()
         
-        view.addSubviews(headerContainerView, scrollView)
+        view.addSubviews(headerContainerView, scrollView, tempButton)
         headerContainerView.addSubviews(backButton, titleLabel, moreButton)
         scrollView.addSubview(contentView)
         contentView.addSubviews(nickNameLabel, editButton, howLearningView, badgeLabel, badgeContainer, languageLabel, languageContainer, alarmLabel, alarmContainer, alarmCollectionView)
         badgeContainer.addSubviews(badgeImage, badgeNameLabel, badgeSummaryLabel)
         languageContainer.addSubviews(languageLabelEnglish, languageCheckButton)
         alarmContainer.addSubviews(alarmPushLabel, alarmPushToggleButton)
+        
+        tempButton.snp.makeConstraints {
+            $0.centerX.centerY.equalToSuperview()
+        }
     
         headerContainerView.snp.makeConstraints {
             $0.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
@@ -428,6 +444,19 @@ extension MyPageViewController {
             guard let myPageInfo = response?.data else { return }
             self.userInfo = myPageInfo
             self.setData()
+        }
+    }
+    
+    func resignAPI() {
+        AuthAPI.shared.resignAPI() { response in
+            guard let data = response.data else { return }
+            
+            UserDefaults.standard.removeObject(forKey: "accessToken")
+            print(UserDefaults.standard.string(forKey: "accessToken"))
+            UserDefaultsManager.clientToken = ""
+            UserDefaultsManager.refreshToken = ""
+            
+            self.changeRootViewController(SplashViewController())
         }
     }
 }

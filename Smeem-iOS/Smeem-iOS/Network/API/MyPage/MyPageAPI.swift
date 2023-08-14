@@ -33,7 +33,7 @@ public class MyPageAPI {
     }
     
     func changeMyNickName(userName: String, completion: @escaping (GeneralResponse<String>?) -> Void) {
-        myPageProvider.request(.changeMyNickName(param: NicknameRequest(username: userName))) { response in
+        myPageProvider.request(.editNinkname(param: EditnicknameRequest(username: userName))) { response in
             switch response {
             case .success(_):
                 print(response)
@@ -49,6 +49,18 @@ public class MyPageAPI {
             case .success(let result):
                 guard let badgeList = try? result.map(GeneralResponse<BadgeListResponse>.self) else { return }
                 completion(badgeList)
+            case .failure(let err):
+                print(err)
+            }
+        }
+    }
+    
+    func userPlanPathAPI(param: UserPlanRequest, completion: @escaping (GeneralResponse<VoidType>) -> Void) {
+        myPageProvider.request(.myPageUserPlan(param: param)) { response in
+            switch response {
+            case .success(let result):
+                guard let data = try? result.map(GeneralResponse<VoidType>.self) else { return }
+                completion(data)
             case .failure(let err):
                 print(err)
             }
