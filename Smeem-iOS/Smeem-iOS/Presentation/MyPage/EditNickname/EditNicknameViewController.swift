@@ -119,7 +119,7 @@ class EditNicknameViewController: UIViewController {
     
     @objc func doneButtonDidTap() {
         self.showLodingView(loadingView: self.loadingView)
-        nicknamePatchAPI(nickname: nicknameTextField.text ?? "")
+//        nicknamePatchAPI(nickname: nicknameTextField.text ?? "")
     }
     
     @objc func nicknameDidChange(_ notification: Notification) {
@@ -230,20 +230,22 @@ extension EditNicknameViewController: UITextFieldDelegate {
 
 // MARK: - Extension : Network
 
-extension EditNicknameViewController {
-    private func nicknamePatchAPI(nickname: String) {
-        OnboardingAPI.shared.nicknamePatch(param: NicknameRequest(username: nickname)) { response in
-            self.checkDouble = response.success
-            self.hideLodingView(loadingView: self.loadingView)
-            
-            DispatchQueue.main.async {
-                if self.checkDouble {
-                    self.navigationController?.popViewController(animated: true)
-                } else {
-                    self.doneButton.smeemButtonType = .notEnabled
-                    self.doubleCheckLabel.isHidden = false
-                }
-            }
-        }
-    }
-}
+//extension EditNicknameViewController {
+//    private func nicknamePatchAPI(nickname: String) {
+//        MyPageAPI.shared.changeMyNickName(userName: EditnicknameRequest(username: nickname)) { response in
+//            guard let data = response?.data else { return }
+//
+//            self.checkDouble = response.success
+//            self.hideLodingView(loadingView: self.loadingView)
+//
+//            DispatchQueue.main.async {
+//                if self.checkDouble {
+//                    self.navigationController?.popViewController(animated: true)
+//                } else {
+//                    self.doneButton.smeemButtonType = .notEnabled
+//                    self.doubleCheckLabel.isHidden = false
+//                }
+//            }
+//        }
+//    }
+//}

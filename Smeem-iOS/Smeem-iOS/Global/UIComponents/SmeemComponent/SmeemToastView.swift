@@ -49,6 +49,7 @@ enum BodyType: String {
     case completed = "작성 완료"
     case changed = "변경 완료"
     case edited = "첨삭 완료"
+    case serverError = "로그인에 실패했어요. 다시 시도해 주세요."
     
     var displayText: String {
         return self.rawValue

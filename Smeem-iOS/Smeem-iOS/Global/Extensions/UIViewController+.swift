@@ -121,4 +121,28 @@ extension UIViewController {
     func hideLodingView(loadingView: LoadingView) {
         loadingView.isLoading = false
     }
+    
+    func presentOnboardingPlanVC() {
+        let onboardingGoalVC = GoalOnboardingViewController()
+        self.navigationController?.pushViewController(onboardingGoalVC, animated: true)
+    }
+    
+    func presentOnboardingAcceptVC() {
+        let bottomSheetVC = BottomSheetViewController()
+        let onboardingAcceptVC = UserNicknameViewController()
+        onboardingAcceptVC.userPlanRequest = bottomSheetVC.userPlanRequest
+        let _ = UINavigationController(rootViewController: onboardingAcceptVC)
+        self.navigationController?.pushViewController(onboardingAcceptVC, animated: true)
+        
+    }
+    
+    func presentHomeVC() {
+        let onboardingAcceptVC = HomeViewController()
+        changeRootViewController(onboardingAcceptVC)
+    }
+    
+    func presentSmeemStartVC() {
+        let smeemStartVC = SmeemStartViewController()
+        changeRootViewController(smeemStartVC)
+    }
 }

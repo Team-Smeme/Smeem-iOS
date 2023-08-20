@@ -68,5 +68,7 @@ extension Constant {
         static let explorationBadgeGoodLuck = "explorationBadgeGoodLuck"
         
         static let icnToolTip = UIImage(named: "icnToolTip")
+        
+        static let splashImage = UIImage(named: "splash")
     }
 }

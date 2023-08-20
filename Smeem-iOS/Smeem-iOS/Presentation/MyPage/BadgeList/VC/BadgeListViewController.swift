@@ -22,6 +22,7 @@ class BadgeListViewController: UIViewController {
     // MARK: - UI Property
     
     private let headerContainerView = UIView()
+    private let loadingView = LoadingView()
     
     private lazy var cancelButton: UIButton = {
         let button = UIButton()
@@ -75,6 +76,10 @@ class BadgeListViewController: UIViewController {
         setDelegate()
         setRegister()
         badgeListGetAPI()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.showLodingView(loadingView: loadingView)
     }
 
     
@@ -249,6 +254,8 @@ extension BadgeListViewController {
     private func badgeListGetAPI() {
         MyPageAPI.shared.badgeListAPI() { response in
             guard let badges = response?.data?.badges else { return }
+            
+            self.hideLodingView(loadingView: self.loadingView)
             
             // 섹션에 따라 배열 데이터 담는 로직
             for badge in badges {

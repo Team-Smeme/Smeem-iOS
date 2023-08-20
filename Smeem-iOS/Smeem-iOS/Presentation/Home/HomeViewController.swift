@@ -285,11 +285,11 @@ final class HomeViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(notificationPushShowPage), name: NSNotification.Name("goToHome"), object: nil)
     }
     
-//    private func getSomeData(completion: @escaping () -> ()) {
-//      DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-//        completion()
-//      }
-//    }
+    private func getSomeData(completion: @escaping () -> ()) {
+      DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+        completion()
+      }
+    }
     
     // MARK: - Layout
     

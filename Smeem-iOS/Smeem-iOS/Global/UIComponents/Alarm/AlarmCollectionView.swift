@@ -144,10 +144,6 @@ extension AlarmCollectionView: UICollectionViewDelegateFlowLayout {
         return 0
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 23, bottom: 0, right: 23)
-    }
-    
     // footer
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
         let footerSize = CGSize(width: collectionView.frame.width, height: convertByHeightRatio(84))
