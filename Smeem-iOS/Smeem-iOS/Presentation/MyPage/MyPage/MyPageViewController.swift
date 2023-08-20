@@ -21,6 +21,7 @@ final class MyPageViewController: UIViewController {
     
     private let headerContainerView = UIView()
     private let contentView = UIView()
+    private let loadingView = LoadingView()
     
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -36,14 +37,6 @@ final class MyPageViewController: UIViewController {
         return button
     }()
     
-    private lazy var tempButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("탈퇴하기", for: .normal)
-        button.backgroundColor = .point
-        button.addTarget(self, action: #selector(tempButtonDidTap), for: .touchUpInside)
-        return button
-    }()
-    
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "마이 페이지"
@@ -54,7 +47,6 @@ final class MyPageViewController: UIViewController {
     
     private lazy var moreButton: UIButton = {
         let button = UIButton()
-        button.isHidden = true
         button.setImage(Constant.Image.icnMoreMono, for: .normal)
         button.addTarget(self, action: #selector(moreButtonDidTap(_:)), for: .touchUpInside)
         return button
@@ -200,7 +192,8 @@ final class MyPageViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
+        
+        self.showLodingView(loadingView: loadingView)
         myPageInfoAPI()
     }
     
@@ -211,7 +204,8 @@ final class MyPageViewController: UIViewController {
     }
     
     @objc func moreButtonDidTap(_ sender: UIButton) {
-        
+        let authManagetmentVC = AuthManagementViewController()
+        self.navigationController?.pushViewController(authManagetmentVC, animated: true)
     }
     
     @objc func editButtonDidTap(_ sender: UIButton) {
@@ -233,10 +227,6 @@ final class MyPageViewController: UIViewController {
     
     @objc func responseToSwipeGesture() {
         self.navigationController?.popViewController(animated: true)
-    }
-    
-    @objc func tempButtonDidTap() {
-        resignAPI()
     }
     
     // MARK: - Custom Method
@@ -296,17 +286,13 @@ final class MyPageViewController: UIViewController {
         setBackgroundColor()
         hiddenNavigationBar()
         
-        view.addSubviews(headerContainerView, scrollView, tempButton)
+        view.addSubviews(headerContainerView, scrollView)
         headerContainerView.addSubviews(backButton, titleLabel, moreButton)
         scrollView.addSubview(contentView)
         contentView.addSubviews(nickNameLabel, editButton, howLearningView, badgeLabel, badgeContainer, languageLabel, languageContainer, alarmLabel, alarmContainer, alarmCollectionView)
         badgeContainer.addSubviews(badgeImage, badgeNameLabel, badgeSummaryLabel)
         languageContainer.addSubviews(languageLabelEnglish, languageCheckButton)
         alarmContainer.addSubviews(alarmPushLabel, alarmPushToggleButton)
-        
-        tempButton.snp.makeConstraints {
-            $0.centerX.centerY.equalToSuperview()
-        }
     
         headerContainerView.snp.makeConstraints {
             $0.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
@@ -442,21 +428,11 @@ extension MyPageViewController {
     func myPageInfoAPI() {
         MyPageAPI.shared.myPageInfo() { response in
             guard let myPageInfo = response?.data else { return }
+            
+            self.hideLodingView(loadingView: self.loadingView)
+            
             self.userInfo = myPageInfo
             self.setData()
-        }
-    }
-    
-    func resignAPI() {
-        AuthAPI.shared.resignAPI() { response in
-            guard let data = response.data else { return }
-            
-            UserDefaults.standard.removeObject(forKey: "accessToken")
-            print(UserDefaults.standard.string(forKey: "accessToken"))
-            UserDefaultsManager.clientToken = ""
-            UserDefaultsManager.refreshToken = ""
-            
-            self.changeRootViewController(SplashViewController())
         }
     }
 }

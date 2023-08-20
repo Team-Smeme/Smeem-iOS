@@ -22,6 +22,8 @@ final class GoalOnboardingViewController: UIViewController {
     
     // MARK: - UI Property
     
+    private let loadingView = LoadingView()
+    
     private let nowStepOneLabel: UILabel = {
         let label = UILabel()
         label.text = "1"
@@ -99,11 +101,6 @@ final class GoalOnboardingViewController: UIViewController {
         setCellReigster()
         hiddenNavigationBar()
         planListGetAPI()
-        
-        print(UserDefaults.standard.string(forKey: "accessToken"))
-        print(UserDefaultsManager.accessToken)
-        print("⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️")
-        print(NetworkConstant.hasAccessTokenHeader)
     }
     
     // MARK: - @objc
@@ -173,8 +170,12 @@ final class GoalOnboardingViewController: UIViewController {
 
 extension GoalOnboardingViewController {
     func planListGetAPI() {
+        self.showLodingView(loadingView: loadingView)
         OnboardingAPI.shared.planList() { response in
             guard let data = response.data?.goals else { return }
+            
+            self.hideLodingView(loadingView: self.loadingView)
+            
             self.goalLabelList = data
         }
     }

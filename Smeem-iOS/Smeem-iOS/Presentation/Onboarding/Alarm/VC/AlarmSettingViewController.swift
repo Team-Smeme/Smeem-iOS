@@ -24,6 +24,9 @@ final class AlarmSettingViewController: UIViewController {
     
     // MARK: - UI Property
     
+    let loginErrorToast = SmeemToastView(type: .defaultToast(bodyType: .serverError))
+    private let loadingView = LoadingView()
+    
     private let nowStepOneLabel: UILabel = {
         let label = UILabel()
         label.text = "3"
@@ -79,7 +82,7 @@ final class AlarmSettingViewController: UIViewController {
         button.setTitle("나중에 설정하기", for: .normal)
         button.setTitleColor(.gray600, for: .normal)
         button.titleLabel?.font = .b4
-//        button.addTarget(self, action: #selector(completeButtonDidTap), for: .touchUpInside)
+        button.addTarget(self, action: #selector(laterButtonDidTap), for: .touchUpInside)
         return button
     }()
     
@@ -117,12 +120,17 @@ final class AlarmSettingViewController: UIViewController {
     // MARK: - @objc
     
     @objc func completeButtonDidTap(){
-        
+        self.hasAlarm = true
         requestNotificationPermission()
     }
     
     @objc func responseToSwipeGesture() {
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    @objc func laterButtonDidTap() {
+        self.hasAlarm = false
+        requestNotificationPermission()
     }
     
     // 로그인 플로우로 들어온 사람 -> NotiToken(accessToken, loginType)
@@ -151,13 +159,11 @@ final class AlarmSettingViewController: UIViewController {
             if didAllow {
                 print("Push: 권한 허용")
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    self.hasAlarm = true
                     self.requestTrackingAuthoriaztion()
                 }
             } else {
                 print("Push: 권한 거부")
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    self.hasAlarm = false
                     self.requestTrackingAuthoriaztion()
                 }
             }
@@ -218,7 +224,8 @@ final class AlarmSettingViewController: UIViewController {
             }
         } else {
         /// 로그인한 유저라면 닉네임 설정 뷰로 이동
-            self.userPlanPatchAPI(userPlan: userPlanRequest, accessToken: UserDefaultsManager.clientToken)
+            self.showLodingView(loadingView: loadingView)
+            self.userPlanPatchAPI(userPlan: userPlanRequest, accessToken: UserDefaultsManager.clientAccessToken)
         }
     }
     
@@ -253,7 +260,7 @@ final class AlarmSettingViewController: UIViewController {
     
     private func setLayout() {
         view.addSubviews(nowStepOneLabel, divisionLabel, totalStepLabel, timeSettingLabelStackView,
-                         alarmCollectionView, laterButton, completeButton)
+                         alarmCollectionView, laterButton, completeButton, loginErrorToast)
         timeSettingLabelStackView.addArrangedSubviews(titleTimeSettingLabel, deatilTimeSettingLabel)
         
         nowStepOneLabel.snp.makeConstraints {
@@ -278,7 +285,7 @@ final class AlarmSettingViewController: UIViewController {
         
         alarmCollectionView.snp.makeConstraints {
             $0.top.equalTo(timeSettingLabelStackView.snp.bottom).offset(28)
-            $0.leading.trailing.equalToSuperview()
+            $0.leading.trailing.equalToSuperview().inset(23)
             $0.centerX.equalToSuperview()
             $0.height.equalTo(convertByHeightRatio(133))
         }
@@ -294,17 +301,24 @@ final class AlarmSettingViewController: UIViewController {
             $0.centerX.equalToSuperview()
             $0.height.equalTo(convertByHeightRatio(19))
         }
+        
+        loginErrorToast.snp.makeConstraints {
+            $0.bottom.equalToSuperview().inset(20)
+        }
     }
 }
 
 extension AlarmSettingViewController {
     private func userPlanPatchAPI(userPlan: UserPlanRequest, accessToken: String) {
         OnboardingAPI.shared.userPlanPathAPI(param: userPlan, accessToken: accessToken) { response in
+            self.hideLodingView(loadingView: self.loadingView)
+            
             if response.success == true {
                 let userNicknameVC = UserNicknameViewController()
                 self.navigationController?.pushViewController(userNicknameVC, animated: true)
             } else {
                 print("학습 목표 API 호출 실패")
+                self.loginErrorToast.show()
             }
         }
     }
