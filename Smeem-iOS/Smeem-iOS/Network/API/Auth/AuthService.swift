@@ -12,6 +12,7 @@ enum AuthService {
     case login(param: LoginRequest)
     case reLogin
     case resign
+    case logout
 }
 
 extension AuthService: BaseTargetType {
@@ -21,12 +22,14 @@ extension AuthService: BaseTargetType {
             return URLConstant.loginURL
         case .reLogin:
             return URLConstant.reLoginURL
+        case .logout:
+            return URLConstant.logoutURL
         }
     }
     
     var method: Moya.Method {
         switch self {
-        case .login, .reLogin:
+        case .login, .reLogin, .logout:
             return .post
         case .resign:
             return .delete
@@ -37,7 +40,7 @@ extension AuthService: BaseTargetType {
         switch self {
         case .login(let param):
             return .requestJSONEncodable(param)
-        case .reLogin, .resign:
+        case .reLogin, .resign, .logout:
             return .requestPlain
         }
     }
@@ -45,12 +48,14 @@ extension AuthService: BaseTargetType {
     var headers: [String : String]? {
         switch self {
         case .login:
-            return NetworkConstant.hasSocialTokenHeader
-        case .resign:
+            return ["Content-Type": "application/json",
+                    "Authorization": "Bearer " + UserDefaultsManager.socialToken]
+        case .resign, .logout:
             return ["Content-Type": "application/json",
                     "Authorization": "Bearer " + UserDefaultsManager.accessToken]
         case .reLogin:
-            return NetworkConstant.hasRefreshTokenHeader
+            return ["Content-Type": "application/json",
+                    "Authorization": "Bearer " + UserDefaultsManager.refreshToken]
         }
     }
 }

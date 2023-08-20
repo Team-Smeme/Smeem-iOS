@@ -44,6 +44,21 @@ public class AuthAPI {
         }
     }
     
+    func logoutAPI(completion: @escaping (GeneralResponse<VoidType>) -> Void) {
+        authProvider.request(.logout) { response in
+            switch response {
+            case .success(let result):
+                guard let data = try? result.map(GeneralResponse<VoidType>.self) else {
+                    print("⭐️⭐️⭐️ 디코더 에러 ⭐️⭐️⭐️")
+                    return
+                }
+                completion(data)
+            case .failure(let err):
+                print(err)
+            }
+        }
+    }
+    
     func resignAPI(completion: @escaping (GeneralResponse<VoidType>) -> Void) {
         authProvider.request(.resign) { response in
             switch response {
