@@ -16,6 +16,7 @@ struct LoginResponse: Codable {
     let accessToken: String
     let refreshToken: String
     let isRegistered: Bool
+    let hasPlan: Bool
 }
 
 struct Badges: Codable {

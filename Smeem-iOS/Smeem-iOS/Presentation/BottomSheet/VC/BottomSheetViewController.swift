@@ -32,6 +32,7 @@ final class BottomSheetViewController: UIViewController, LoginDelegate {
             }
             
             UserDefaultsManager.socialToken = self.kakaoAccessToken!
+            UserDefaultsManager.hasKakaoToken = true
             self.loginAPI(socialParam: "KAKAO")
         }
     }
@@ -44,6 +45,7 @@ final class BottomSheetViewController: UIViewController, LoginDelegate {
             }
             
             UserDefaultsManager.socialToken = self.appleAccessToken!
+            UserDefaultsManager.hasKakaoToken = false
             self.loginAPI(socialParam: "APPLE")
         }
     }
@@ -215,23 +217,26 @@ extension BottomSheetViewController {
         AuthAPI.shared.loginAPI(param: LoginRequest(social: socialParam,
                                                     fcmToken: UserDefaultsManager.fcmToken)) { response in
             self.showLodingView(loadingView: self.loadingView)
+            
             guard let data = response.data else { return }
             
             switch self.authType {
             case .login:
                 // hasPlan이라고 가정
-                self.hideLodingView(loadingView: self.loadingView)
                 
-                UserDefaultsManager.clientToken = data.accessToken
+                UserDefaultsManager.clientAccessToken = data.accessToken
+                UserDefaultsManager.clientRefreshToken = data.refreshToken
 
                 // hasPlan으로 바뀔 예정
-                if data.isRegistered == false {
+                if data.hasPlan == false {
                     self.presentOnboardingPlanVC()
-                } else if data.isRegistered == false {
+                } else if data.hasPlan == true && data.isRegistered == false {
                     self.presentOnboardingAcceptVC()
                 } else {
                     // 삭제했다가 로그인한 유저
                     UserDefaultsManager.accessToken = data.accessToken
+                    UserDefaultsManager.refreshToken = data.refreshToken
+                    
                     self.presentHomeVC()
                 }
             case .signup:
@@ -245,7 +250,7 @@ extension BottomSheetViewController {
         OnboardingAPI.shared.userPlanPathAPI(param: userPlan, accessToken: accessToken) { response in
             self.hideLodingView(loadingView: self.loadingView)
             if response.success == true {
-                UserDefaultsManager.clientToken = accessToken
+                UserDefaultsManager.clientAccessToken = accessToken
 
                 let userNicknameVC = UserNicknameViewController()
                 self.navigationController?.pushViewController(userNicknameVC, animated: true)

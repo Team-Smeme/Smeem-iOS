@@ -58,14 +58,24 @@ struct UserDefaultsManager {
         set { UserDefaults.standard.set(newValue, forKey: "fcmToken")}
     }
     
-    static var clientToken: String {
+    static var clientAccessToken: String {
         get { return UserDefaults.standard.string(forKey: "clientToken") ?? ""}
         set { UserDefaults.standard.set(newValue, forKey: "clientToken")}
+    }
+    
+    static var clientRefreshToken: String {
+        get { return UserDefaults.standard.string(forKey: "clientRefreshToken") ?? ""}
+        set { UserDefaults.standard.set(newValue, forKey: "clientRefreshToken")}
     }
     
     static var clientAuthType: String {
         get { return UserDefaults.standard.string(forKey: "clientAuthType") ?? ""}
         set { UserDefaults.standard.set(newValue, forKey: "clientAuthType")}
+    }
+    
+    static var hasKakaoToken: Bool? {
+        get { return UserDefaults.standard.bool(forKey: "hasKakaoToken")}
+        set { UserDefaults.standard.set(newValue, forKey: "hasKakaoToken")}
     }
     
     static var randomSubjectToolTip: Bool {
