@@ -87,9 +87,7 @@ final class UserNicknameViewController: UIViewController {
         showKeyboard(textView: nicknameTextField)
         addTextFieldNotification()
         setImage()
-        
-        print("⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️")
-        print(UserDefaults.standard.string(forKey: "accessToken"))
+        hiddenNavigationBar()
     }
     
     deinit {
@@ -209,7 +207,7 @@ extension UserNicknameViewController: UITextFieldDelegate {
 
 extension UserNicknameViewController {
     private func checkNicknameGetAPI(nickname: String) {
-        OnboardingAPI.shared.ninknameCheckAPI(userName: nickname, accessToken: UserDefaultsManager.clientToken) { response in
+        OnboardingAPI.shared.ninknameCheckAPI(userName: nickname, accessToken: UserDefaultsManager.clientAccessToken) { response in
             guard let data = response.data else { return }
             
             self.hideLodingView(loadingView: self.loadingView)

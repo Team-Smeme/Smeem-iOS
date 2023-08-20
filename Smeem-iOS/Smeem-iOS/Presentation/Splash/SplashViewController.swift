@@ -27,8 +27,6 @@ final class SplashViewController: UIViewController {
 
         setLayout()
         checkDidLogin()
-        
-        print(UserDefaults.standard.string(forKey: "accessToken"))
     }
     
     // MARK: - @objc
@@ -39,8 +37,16 @@ final class SplashViewController: UIViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             // access 토큰을 가지고 있음
             if UserDefaultsManager.accessToken != "" {
-                // 첫 번째 온보딩을 거치지 않은 경우\
-                self.changeRootViewController(HomeViewController())
+                AuthAPI.shared.reLoginAPI() { response in
+                    // 토큰 재발급 성공 (refreshToken)
+                    if response.success {
+                        self.changeRootViewController(HomeViewController())
+                    }
+                    // 토큰 만료(재로그인)
+                    else {
+                        self.presentSmeemStartVC()
+                    }
+                }
             } else {
                 // 토큰을 가지고 있지 않음
                 self.presentSmeemStartVC()
@@ -53,6 +59,16 @@ final class SplashViewController: UIViewController {
         
         splashImageView.snp.makeConstraints {
             $0.top.trailing.leading.bottom.equalToSuperview()
+        }
+    }
+}
+
+// MARK: - Network
+
+extension SplashViewController {
+    private func reloginAPI() {
+        AuthAPI.shared.reLoginAPI() { response in
+            guard let _ = response.data else { return }
         }
     }
 }
