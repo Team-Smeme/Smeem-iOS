@@ -154,14 +154,25 @@ extension AlarmCollectionView: UICollectionViewDelegateFlowLayout {
         guard let footerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: DatePickerFooterView.identifier, for: indexPath) as? DatePickerFooterView else { return UICollectionReusableView() }
         
         if myPageTime != (100, 100) {
+            let str = footerView.calculateMyPageTime(hour: myPageTime.time, minute: myPageTime.minute)
+            let splitStrOne = str.split(separator: ":")
+            let splitStrTwo = splitStrOne[1].split(separator: " ")
+            
+            let hour = String(splitStrOne[0])
+            let time = String(splitStrTwo[0])
+            let amAndPm = String(splitStrTwo[1])
+            
+            footerView.inputTextField.text = str
+            footerView.mypageData = (hour, time, amAndPm)
+            
             if !hasAlarm {
-                footerView.inputTextField.text = footerView.calculateMyPageTime(hour: myPageTime.time, minute: myPageTime.minute)
                 footerView.inputTextField.textColor = .gray300
                 footerView.alarmLabel.textColor = .gray300
             } else {
-                footerView.inputTextField.text = footerView.calculateMyPageTime(hour: myPageTime.time, minute: myPageTime.minute)
+                // 마이페이지일 경우
             }
         } else {
+            // 온보딩
             print("온보딩")
         }
         

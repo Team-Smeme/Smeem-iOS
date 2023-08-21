@@ -94,6 +94,7 @@
 		4ADA41722A546D0B001C0285 /* PushTestAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADA41712A546D0B001C0285 /* PushTestAPI.swift */; };
 		4ADA41742A546D13001C0285 /* PushTestService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADA41732A546D13001C0285 /* PushTestService.swift */; };
 		4ADA41772A556209001C0285 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADA41762A556209001C0285 /* LoadingView.swift */; };
+		4ADCA2D62A9272E9002904EB /* EditAlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADCA2D52A9272E9002904EB /* EditAlarmViewController.swift */; };
 		4AE35E9C2A7FDC4200465FD5 /* ServiceAcceptTotalCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE35E9B2A7FDC4200465FD5 /* ServiceAcceptTotalCollectionViewCell.swift */; };
 		4AE35E9E2A7FE8CE00465FD5 /* UICollectionViewCell+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE35E9D2A7FE8CE00465FD5 /* UICollectionViewCell+.swift */; };
 		4AEB82952A4CB4F200C1114B /* BadgePopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEB82942A4CB4F100C1114B /* BadgePopupViewController.swift */; };
@@ -211,6 +212,7 @@
 		4ADA41712A546D0B001C0285 /* PushTestAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushTestAPI.swift; sourceTree = "<group>"; };
 		4ADA41732A546D13001C0285 /* PushTestService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushTestService.swift; sourceTree = "<group>"; };
 		4ADA41762A556209001C0285 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		4ADCA2D52A9272E9002904EB /* EditAlarmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAlarmViewController.swift; sourceTree = "<group>"; };
 		4AE35E9B2A7FDC4200465FD5 /* ServiceAcceptTotalCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAcceptTotalCollectionViewCell.swift; sourceTree = "<group>"; };
 		4AE35E9D2A7FE8CE00465FD5 /* UICollectionViewCell+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewCell+.swift"; sourceTree = "<group>"; };
 		4AEB82942A4CB4F100C1114B /* BadgePopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgePopupViewController.swift; sourceTree = "<group>"; };
@@ -768,6 +770,14 @@
 			path = LodingView;
 			sourceTree = "<group>";
 		};
+		4ADCA2D42A9272D6002904EB /* EditAlarm */ = {
+			isa = PBXGroup;
+			children = (
+				4ADCA2D52A9272E9002904EB /* EditAlarmViewController.swift */,
+			);
+			path = EditAlarm;
+			sourceTree = "<group>";
+		};
 		4AE4B5172A06BF4A00D45F87 /* BottomSheet */ = {
 			isa = PBXGroup;
 			children = (
@@ -886,6 +896,7 @@
 				4AC047232A8FCA9700EBDC0E /* AuthManagement */,
 				4A9FAB4B2A4C3D4A00C40D5A /* MyPage */,
 				4A9FAB4A2A4C3D3D00C40D5A /* EditNickname */,
+				4ADCA2D42A9272D6002904EB /* EditAlarm */,
 				4A9FAB3C2A4C3D1200C40D5A /* BadgeList */,
 			);
 			path = MyPage;
@@ -1048,6 +1059,7 @@
 				37DCA6702A484D3700FF8F90 /* PostDiaryRequest.swift in Sources */,
 				4A0EA4592A014103006CCE52 /* URLConstant.swift in Sources */,
 				4ADA41772A556209001C0285 /* LoadingView.swift in Sources */,
+				4ADCA2D62A9272E9002904EB /* EditAlarmViewController.swift in Sources */,
 				6F294A432A26179700856CC8 /* ServiceAcceptViewController.swift in Sources */,
 				4AD04B402A1921AE004B7A58 /* CorrectionViewController.swift in Sources */,
 				4A37748A2A433A6500357DD1 /* OnboardingModel.swift in Sources */,
