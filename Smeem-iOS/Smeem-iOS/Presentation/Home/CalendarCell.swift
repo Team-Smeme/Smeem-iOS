@@ -48,8 +48,10 @@ final class CalendarCell: FSCalendarCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         let width = 38.0
-        let frame = CGRect(x: self.contentView.bounds.minX + 6.0,
-                           y: self.contentView.bounds.minY + 2.0,
+        let frame = CGRect(x: self.contentView.bounds.minX
+                              + (self.contentView.bounds.width - 38) / 2,
+                           y: self.contentView.bounds.minY
+                              + (self.contentView.bounds.height - 38) / 4,
                            width: width,
                            height: width)
         rectangleImageView.frame = frame
