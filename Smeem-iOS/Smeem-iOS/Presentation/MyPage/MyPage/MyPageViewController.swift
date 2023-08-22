@@ -16,6 +16,7 @@ final class MyPageViewController: UIViewController {
     private var userInfo = MyPageInfo(username: "", target: "", way: "", detail: "", targetLang: "", hasPushAlarm: true, trainingTime: TrainingTime(day: "", hour: 0, minute: 0), badge: Badge(id: 0, name: "", type: "", imageURL: ""))
     var myPageSelectedIndexPath = ["MON": IndexPath(item: 0, section: 0), "TUE":IndexPath(item: 1, section: 0), "WED":IndexPath(item: 2, section: 0), "THU":IndexPath(item: 3, section: 0), "FRI":IndexPath(item: 4, section: 0), "SAT":IndexPath(item: 5, section: 0), "SUN":IndexPath(item: 6, section: 0)]
     var indexPathArray: [IndexPath] = []
+    var hasAlarm = Bool()
     
     var onTargetRecived: ((_ target: String) -> Void)?
     
@@ -232,13 +233,10 @@ final class MyPageViewController: UIViewController {
     }
     
     @objc func pushButtonDidTap(_ sender: UIButton) {
-        let pushData = !userInfo.hasPushAlarm
+        hasAlarm = !hasAlarm
 //        userInfo.hasPushAlarm.toggle() // 추후 서버 연결
-        if pushData == true {
-            alarmPushToggleButton.onTintColor = .point
-        } else {
-            alarmPushToggleButton.tintColor = .lightGray
-        }
+        // 반대값 넣음
+        editPushPatchAPI(pushData: editPushRequest(hasAlarm: hasAlarm))
     }
     
     @objc func badgeImageDidTap() {
@@ -284,6 +282,9 @@ final class MyPageViewController: UIViewController {
         badgeImage.kf.setImage(with: url)
         badgeNameLabel.text = (userInfo.badge.name)
         badgeSummaryLabel.text = "축하해요! \(userInfo.badge.name)를 획득했어요!"
+        
+        // 알람 값 저장
+        self.hasAlarm = userInfo.hasPushAlarm
         
         alarmCollectionView.hasAlarm = userInfo.hasPushAlarm
         
@@ -475,15 +476,34 @@ final class MyPageViewController: UIViewController {
 // MARK: - Extension : Network
 
 extension MyPageViewController {
-    func myPageInfoAPI() {
+    private func myPageInfoAPI() {
         MyPageAPI.shared.myPageInfo() { response in
             guard let myPageInfo = response?.data else { return }
-            
-//            self.hideLodingView(loadingView: self.loadingView)
             
             self.userInfo = myPageInfo
             self.setData()
             self.hideLodingView(loadingView: self.loadingView)
+        }
+    }
+    
+    private func editPushPatchAPI(pushData: editPushRequest) {
+        MyPageAPI.shared.editPushAPI(param: pushData) { response in
+            // 성공했으면
+            if response.success == true {
+                
+                // 그에 맞춰서 색깔 변화
+                self.alarmCollectionView.hasAlarm = pushData.hasAlarm
+                self.alarmCollectionView.reloadData()
+                
+                print("어떤값?", pushData.hasAlarm)
+                if !pushData.hasAlarm {
+                    self.alarmPushToggleButton.isOn = false
+                    self.alarmPushToggleButton.tintColor = .lightGray
+                } else {
+                    self.alarmPushToggleButton.isOn = true
+                    self.alarmPushToggleButton.onTintColor = .point
+                }
+            }
         }
     }
 }

@@ -78,4 +78,16 @@ public class MyPageAPI {
             }
         }
     }
+    
+    func editPushAPI(param: editPushRequest, completion: @escaping (GeneralResponse<VoidType>) -> Void) {
+        myPageProvider.request(.editPush(param: param)) { response in
+            switch response {
+            case .success(let result):
+                guard let data = try? result.map(GeneralResponse<VoidType>.self) else { return }
+                completion(data)
+            case .failure(let err):
+                print(err)
+            }
+        }
+    }
 }

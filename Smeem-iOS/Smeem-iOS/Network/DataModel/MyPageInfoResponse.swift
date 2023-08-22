@@ -33,3 +33,7 @@ struct EditnicknameRequest: Codable {
 struct EditAlarmTime: Codable {
     let trainingTime: TrainingTime
 }
+
+struct editPushRequest: Codable {
+    let hasAlarm: Bool
+}

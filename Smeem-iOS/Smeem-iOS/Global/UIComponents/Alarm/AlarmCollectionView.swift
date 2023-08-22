@@ -125,6 +125,8 @@ extension AlarmCollectionView: UICollectionViewDataSource {
         
         if !hasAlarm {
             cell.dayCellColor = hasAlarm
+        } else {
+            cell.dayCellColor = hasAlarm
         }
         
         cell.setData(dayArray[indexPath.item])
@@ -170,6 +172,9 @@ extension AlarmCollectionView: UICollectionViewDelegateFlowLayout {
             if !hasAlarm {
                 footerView.inputTextField.textColor = .gray300
                 footerView.alarmLabel.textColor = .gray300
+            } else {
+                footerView.inputTextField.textColor = .point
+                footerView.alarmLabel.textColor = .point
             }
         } else {
             // 온보딩

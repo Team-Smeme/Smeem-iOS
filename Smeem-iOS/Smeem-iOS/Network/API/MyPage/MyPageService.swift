@@ -15,6 +15,7 @@ enum MyPageService {
     case badgeList
     case myPageUserPlan(param: UserPlanRequest)
     case editAlarmTime(param: EditAlarmTime)
+    case editPush(param: editPushRequest)
 }
 
 extension MyPageService: BaseTargetType {
@@ -30,6 +31,8 @@ extension MyPageService: BaseTargetType {
             return URLConstant.userPlanURL
         case .editAlarmTime:
             return URLConstant.userPlanURL
+        case .editPush:
+            return URLConstant.pushURL
         }
     }
     
@@ -37,7 +40,7 @@ extension MyPageService: BaseTargetType {
         switch self {
         case .myPageInfo, .badgeList:
             return .get
-        case .editNinkname, .myPageUserPlan, .editAlarmTime:
+        case .editNinkname, .myPageUserPlan, .editAlarmTime, .editPush:
             return .patch
         }
     }
@@ -52,12 +55,14 @@ extension MyPageService: BaseTargetType {
             return .requestJSONEncodable(param)
         case .editAlarmTime(let param):
             return .requestJSONEncodable(param)
+        case .editPush(let param):
+            return .requestJSONEncodable(param)
         }
     }
     
     var headers: [String : String]? {
         switch self {
-        case .myPageInfo, .editNinkname, .badgeList, .myPageUserPlan, .editAlarmTime:
+        case .myPageInfo, .editNinkname, .badgeList, .myPageUserPlan, .editAlarmTime, .editPush:
             return ["Content-Type": "application/json",
                     "Authorization": "Bearer " + UserDefaultsManager.accessToken]
         }
