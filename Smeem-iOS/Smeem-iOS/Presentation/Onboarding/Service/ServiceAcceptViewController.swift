@@ -13,7 +13,13 @@ final class ServiceAcceptViewController: UIViewController {
     
     let serviceAccptArray = ["[필수] 서비스 이용약관", "[필수] 개인정보 수집 및 이용 동의",
                              "[선택] 마케팅 정보 활용 동의"]
-    var acceptCheckArray: Set<Int> = []
+    var acceptCheckArray: Set<Int> = [] {
+        didSet {
+            checkAccptButtonType()
+        }
+    }
+    var nickNameData = ""
+    private var notiAccessToken = ""
 
     private var selectedTotal = false {
         didSet {
@@ -21,7 +27,15 @@ final class ServiceAcceptViewController: UIViewController {
         }
     }
     
+//    private var acceptCheckArray = [] {
+//        didSet {
+//            checkAccptButtonType()
+//        }
+//    }
+    
     // MARK: - UI Property
+    
+    private let loadingView = LoadingView()
     
     private let titleServiceLabel: UILabel = {
         let label = UILabel()
@@ -48,10 +62,11 @@ final class ServiceAcceptViewController: UIViewController {
         return collectionView
     }()
     
-    private let nextButton: SmeemButton = {
+    private lazy var nextButton: SmeemButton = {
         let button = SmeemButton()
         button.smeemButtonType = .notEnabled
         button.setTitle("다음", for: .normal)
+        button.addTarget(self, action: #selector(nextButtonDidTap), for: .touchUpInside)
         return button
     }()
     
@@ -67,6 +82,11 @@ final class ServiceAcceptViewController: UIViewController {
     }
     
     // MARK: - @objc
+    
+    @objc func nextButtonDidTap() {
+        showLodingView(loadingView: loadingView)
+        nicknamePatchAPI()
+    }
     
     // MARK: - Custom Method
     
@@ -90,8 +110,11 @@ final class ServiceAcceptViewController: UIViewController {
     
     private func checkAccptButtonType() {
        if acceptCheckArray.contains(0) && acceptCheckArray.contains(1) {
+           
+//           self.serviceCollectionView.reloadData()
             nextButton.smeemButtonType = .enabled
         } else {
+//            self.serviceCollectionView.reloadData()
             nextButton.smeemButtonType = .notEnabled
         }
     }
@@ -125,6 +148,28 @@ final class ServiceAcceptViewController: UIViewController {
             $0.leading.trailing.equalToSuperview().inset(18)
             $0.bottom.equalToSuperview().inset(50)
             $0.height.equalTo(convertByHeightRatio(60))
+        }
+    }
+}
+
+// MARK: - Network
+
+extension ServiceAcceptViewController {
+    private func nicknamePatchAPI() {
+        OnboardingAPI.shared.serviceAcceptedPatch(param: ServiceAcceptRequest(username: nickNameData,
+                                                                              termAccepted: true),
+                                                  accessToken: UserDefaultsManager.clientAccessToken) { response in
+            guard let data = response.data else { return }
+            
+            // 성공했을 때 UserDefaults에 저장
+            UserDefaults.standard.set(UserDefaultsManager.clientAccessToken, forKey: "accessToken")
+            UserDefaults.standard.set(UserDefaultsManager.clientRefreshToken, forKey: "refreshToken")
+            
+            let homeVC = HomeViewController()
+            homeVC.badgePopupData = data.badges
+            self.changeRootViewController(homeVC)
+            
+            self.hideLodingView(loadingView: self.loadingView)
         }
     }
 }
@@ -169,8 +214,12 @@ extension ServiceAcceptViewController: UICollectionViewDataSource {
         if indexPath.section == 0 {
             selectedTotal.toggle()
             if selectedTotal {
+                acceptCheckArray = [0, 1, 2]
+                collectionView.reloadData()
                 nextButton.smeemButtonType = .enabled
             } else {
+                acceptCheckArray.removeAll()
+                collectionView.reloadData()
                 nextButton.smeemButtonType = .notEnabled
             }
         } else if indexPath.section == 1 {
@@ -181,6 +230,15 @@ extension ServiceAcceptViewController: UICollectionViewDataSource {
                 /// indexPath.item에 해당하는 cell 클릭시 cell 활성화
                 acceptDataInsert(indexPathItem: indexPath.item)
             }
+            
+//            if !selectedTotal && acceptCheckArray.count == 3 {
+//                selectedTotal.toggle()
+//                if selectedTotal {
+//                    collectionView.reloadItems(at: [IndexPath(item: 0, section: 0)])
+//                } else {
+//                    collectionView.reloadItems(at: [IndexPath(item: 0, section: 0)])
+//                }
+//            }
             
             /// 하단 VC 버튼 활성화 로직
             checkAccptButtonType()

@@ -25,7 +25,7 @@ extension Constant {
         static let icnMoreHoriz = UIImage(named: "icnMoreHoriz")
         static let icnMoreMono = UIImage(named: "icnMoreMono")
         static let icnCheckActive = UIImage(named: "icnCheckActive")
-        static let icnMyPage = UIImage(named: "icnMypage")
+        static let icnMyPage = UIImage(named: "icnMyPage")
         static let icnRightArrow = UIImage(named: "icnRightArrow")
         static let icnPencil = UIImage(named: "icnPencil")
         static let icnRefresh = UIImage(named: "icnRefresh")
@@ -68,5 +68,7 @@ extension Constant {
         static let explorationBadgeGoodLuck = "explorationBadgeGoodLuck"
         
         static let icnToolTip = UIImage(named: "icnToolTip")
+        
+        static let splashImage = UIImage(named: "splash")
     }
 }

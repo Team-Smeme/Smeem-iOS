@@ -7,11 +7,26 @@
 
 import Foundation
 
-struct BetaTestRequest: Codable {
+struct LoginRequest: Codable {
+    let social: String
     let fcmToken: String
 }
 
-struct BetaTestResponse: Codable {
+struct LoginResponse: Codable {
     let accessToken: String
-    let badges: [Badge]
+    let refreshToken: String
+    let isRegistered: Bool
+    let hasPlan: Bool
+}
+
+struct Badges: Codable {
+    let id: Int
+    let name: String
+    let type: String
+    let imageUrl: String
+}
+
+struct ReLoginResponse: Codable {
+    let accessToken: String
+    let refreshToken: String
 }

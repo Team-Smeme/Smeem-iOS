@@ -17,11 +17,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let scene = (scene as? UIWindowScene) else { return }
         self.window = UIWindow(windowScene: scene)
         
-        var rootViewController = UINavigationController(rootViewController: HomeViewController())
-        
-        if UserDefaultsManager.betaLoginToken == "" {
-            rootViewController = UINavigationController(rootViewController: SplashViewController())
-        }
+        let rootViewController = UINavigationController(rootViewController: SplashViewController())
         self.window?.rootViewController = rootViewController
         self.window?.makeKeyAndVisible()
     }

@@ -9,30 +9,53 @@ import Foundation
 import Moya
 
 enum AuthService {
-    case beta(param: BetaTestRequest)
+    case login(param: LoginRequest)
+    case reLogin
+    case resign
+    case logout
 }
 
-extension AuthService: TargetType {
-    var baseURL: URL {
-        return URL(string: SharedConstant.betaBaseURL)!
-    }
-    
+extension AuthService: BaseTargetType {
     var path: String {
-        return "api/beta/token"
+        switch self {
+        case .login, .resign:
+            return URLConstant.loginURL
+        case .reLogin:
+            return URLConstant.reLoginURL
+        case .logout:
+            return URLConstant.logoutURL
+        }
     }
     
     var method: Moya.Method {
-        return .post
+        switch self {
+        case .login, .reLogin, .logout:
+            return .post
+        case .resign:
+            return .delete
+        }
     }
     
     var task: Moya.Task {
         switch self {
-        case .beta(let param):
+        case .login(let param):
             return .requestJSONEncodable(param)
+        case .reLogin, .resign, .logout:
+            return .requestPlain
         }
     }
     
     var headers: [String : String]? {
-        return NetworkConstant.noTokenHeader
+        switch self {
+        case .login:
+            return ["Content-Type": "application/json",
+                    "Authorization": "Bearer " + UserDefaultsManager.socialToken]
+        case .resign, .logout:
+            return ["Content-Type": "application/json",
+                    "Authorization": "Bearer " + UserDefaultsManager.accessToken]
+        case .reLogin:
+            return ["Content-Type": "application/json",
+                    "Authorization": "Bearer " + UserDefaultsManager.refreshToken]
+        }
     }
 }

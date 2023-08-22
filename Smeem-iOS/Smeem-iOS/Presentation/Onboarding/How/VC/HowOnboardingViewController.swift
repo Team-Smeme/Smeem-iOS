@@ -22,6 +22,8 @@ final class HowOnboardingViewController: UIViewController {
     
     // MARK: - UI Property
     
+    private let loadingView = LoadingView()
+    
     private let nowStepOneLabel: UILabel = {
         let label = UILabel()
         label.text = "2"
@@ -174,8 +176,12 @@ final class HowOnboardingViewController: UIViewController {
 
 extension HowOnboardingViewController {
     func detailPlanListGetAPI(tempTarget: String) {
+        self.showLodingView(loadingView: loadingView)
         OnboardingAPI.shared.detailPlanList(param: tempTarget) { response in
             guard let data = response.data else { return }
+            
+            self.hideLodingView(loadingView: self.loadingView)
+            
             self.planName = data.name
             self.planWay = data.way
             self.planDetailWay = data.detail

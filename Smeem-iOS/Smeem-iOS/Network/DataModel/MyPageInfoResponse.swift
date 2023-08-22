@@ -25,3 +25,7 @@ struct Badge: Codable {
         case imageURL = "imageUrl"
     }
 }
+
+struct EditnicknameRequest: Codable {
+    let username: String
+}

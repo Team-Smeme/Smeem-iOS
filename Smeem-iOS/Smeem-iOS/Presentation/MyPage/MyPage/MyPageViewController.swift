@@ -32,6 +32,7 @@ final class MyPageViewController: UIViewController {
     
     private let headerContainerView = UIView()
     private let contentView = UIView()
+    private let loadingView = LoadingView()
     
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -57,7 +58,6 @@ final class MyPageViewController: UIViewController {
     
     private lazy var moreButton: UIButton = {
         let button = UIButton()
-        button.isHidden = true
         button.setImage(Constant.Image.icnMoreMono, for: .normal)
         button.addTarget(self, action: #selector(moreButtonDidTap(_:)), for: .touchUpInside)
         return button
@@ -204,7 +204,8 @@ final class MyPageViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
+        
+        self.showLodingView(loadingView: loadingView)
         myPageInfoAPI()
     }
     
@@ -215,7 +216,8 @@ final class MyPageViewController: UIViewController {
     }
     
     @objc func moreButtonDidTap(_ sender: UIButton) {
-        
+        let authManagetmentVC = AuthManagementViewController()
+        self.navigationController?.pushViewController(authManagetmentVC, animated: true)
     }
     
     @objc func editButtonDidTap(_ sender: UIButton) {
@@ -457,6 +459,9 @@ extension MyPageViewController {
     func myPageInfoAPI() {
         MyPageAPI.shared.myPageInfo() { response in
             guard let myPageInfo = response?.data else { return }
+            
+            self.hideLodingView(loadingView: self.loadingView)
+            
             self.userInfo = myPageInfo
             self.setData()
         }
