@@ -58,7 +58,7 @@ final class EditGoalViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        detailPlanListGetAPI(tempTarget: tempTarget)
+        patchGoalAPI(target: tempTarget)
     }
     
     private func setBackgroundColor() {
@@ -125,9 +125,9 @@ extension EditGoalViewController {
 }
 
 extension EditGoalViewController {
-    func detailPlanListGetAPI(tempTarget: String) {
-        self.showLodingView(loadingView: loadingView)
-        OnboardingAPI.shared.detailPlanList(param: tempTarget) { response in
+    func patchGoalAPI(target: String) {
+        
+        MyPageAPI.shared.changeGoal(param: EditGoalRequest(target: target)) { response in
             guard let data = response.data else { return }
             
             self.hideLodingView(loadingView: self.loadingView)

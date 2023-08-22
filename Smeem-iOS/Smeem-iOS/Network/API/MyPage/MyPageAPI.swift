@@ -32,11 +32,23 @@ public class MyPageAPI {
         }
     }
     
-    func changeMyNickName(userName: String, completion: @escaping (GeneralResponse<String>?) -> Void) {
-        myPageProvider.request(.editNinkname(param: EditnicknameRequest(username: userName))) { response in
+    func changeMyNickName(request: EditNicknameRequest, completion: @escaping (GeneralResponse<String>?) -> Void) {
+        myPageProvider.request(.editNickname(param: request)) { response in
             switch response {
             case .success(_):
                 print(response)
+            case .failure(let err):
+                print(err)
+            }
+        }
+    }
+    
+    func changeGoal(param: EditGoalRequest, completion: @escaping (GeneralResponse<DetailPlanListResponse>) -> Void) {
+        myPageProvider.request(.editGoal(param: param)) { response in
+            switch response {
+            case .success(let result):
+                guard let data = try? result.map(GeneralResponse<DetailPlanListResponse>.self) else { return }
+                completion(data)
             case .failure(let err):
                 print(err)
             }

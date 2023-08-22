@@ -47,8 +47,8 @@ final class HomeViewController: UIViewController {
         calendar.appearance.headerDateFormat = "YYYY년 M월"
         calendar.appearance.borderRadius = 0.4
         calendar.register(CalendarCell.self, forCellReuseIdentifier: "cell")
-        calendar.headerHeight = convertByHeightRatio(66)
-        calendar.weekdayHeight = convertByHeightRatio(41)
+        calendar.headerHeight = convertByHeightRatio(77)
+        calendar.weekdayHeight = convertByHeightRatio(17)
         for i in 0...6 {
             calendar.calendarWeekdayView.weekdayLabels[i].text = weekdayLabels[i]
         }
@@ -314,13 +314,13 @@ final class HomeViewController: UIViewController {
         }
         
         myPageButton.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(convertByHeightRatio(66)/2-convertByHeightRatio(40)/2+3)
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(convertByHeightRatio(77)/2-convertByHeightRatio(40)/2+3)
             $0.trailing.equalToSuperview().offset(-convertByWidthRatio(18))
             $0.width.height.equalTo(convertByHeightRatio(40))
         }
         
         indicator.snp.makeConstraints {
-            $0.top.equalTo(calendar.snp.bottom).offset(convertByWidthRatio(12))
+            $0.top.equalTo(calendar.snp.bottom).offset(convertByWidthRatio(4))
             $0.centerX.equalToSuperview()
             $0.height.equalTo(convertByWidthRatio(4))
             $0.width.equalTo(convertByWidthRatio(72))
@@ -354,7 +354,7 @@ final class HomeViewController: UIViewController {
         fullViewButton.snp.makeConstraints {
             $0.top.equalToSuperview().offset(convertByHeightRatio(20))
             $0.trailing.equalToSuperview().offset(-convertByWidthRatio(22))
-            $0.width.equalTo(convertByWidthRatio(61))
+            $0.width.equalTo(convertByWidthRatio(59))
             $0.height.equalTo(17)
         }
         
@@ -512,9 +512,7 @@ extension HomeViewController {
     func homeDiaryWithAPI(start: String, end: String) {
         HomeAPI.shared.homeDiaryList(startDate: start, endDate: end) { response in
             
-            guard let homeDiariesData = response?.data?.diaries else {
-                return
-            }
+            guard let homeDiariesData = response?.data?.diaries else { return }
             homeDiariesData.forEach {
                 self.homeDiaryDict[String($0.createdAt.prefix(10))] = HomeDiaryCustom(diaryId: $0.diaryId, content: $0.content, createdTime: String($0.createdAt.suffix(5)))
             }

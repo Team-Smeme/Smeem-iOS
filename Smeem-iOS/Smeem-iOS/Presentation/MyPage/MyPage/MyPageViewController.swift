@@ -29,6 +29,14 @@ final class MyPageViewController: UIViewController {
         "아직 모르겠어요": 5
     ]
     
+    var toastMessageFlag = false {
+        didSet {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.loadToastMessage()
+            }
+        }
+    }
+    
     // MARK: - UI Property
     
     private let headerContainerView = UIView()
@@ -198,6 +206,9 @@ final class MyPageViewController: UIViewController {
         return view
     }()
     
+    var smeemToastView: SmeemToastView?
+    var keyboardHeight: CGFloat = 0.0
+    
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -228,6 +239,7 @@ final class MyPageViewController: UIViewController {
     
     @objc func editButtonDidTap(_ sender: UIButton) {
         let editVC = EditNicknameViewController()
+        editVC.editNicknameDelegate = self
         editVC.nickName = userInfo.username
         self.navigationController?.pushViewController(editVC, animated: true)
     }
@@ -321,6 +333,10 @@ final class MyPageViewController: UIViewController {
     
     func getIndexFromGoalText(goalText: String) -> Int? {
         return goalTextToIndex[goalText]
+    }
+    
+    private func loadToastMessage() {
+        showToastIfNeeded(toastType: .defaultToast(bodyType: .changed))
     }
     
     // MARK: - Layout
@@ -474,6 +490,14 @@ final class MyPageViewController: UIViewController {
     }
 }
 
+// MARK: - EditNicknameDelegate
+
+extension MyPageViewController: EditNicknameDelegate {
+    func didEditNickname() {
+        toastMessageFlag = true
+    }
+}
+
 // MARK: - Extension : Network
 
 extension MyPageViewController {
@@ -506,5 +530,19 @@ extension MyPageViewController {
                 }
             }
         }
+    }
+}
+
+// MARK: - Toast
+
+extension MyPageViewController {
+    func showToastIfNeeded(toastType: ToastViewType) {
+//        smeemToastView?.removeFromSuperview()
+        smeemToastView = SmeemToastView(type: toastType)
+        
+        let offKeyboardOffset = convertByHeightRatio(54)
+        
+        smeemToastView?.show(in: self.view, offset: offKeyboardOffset, keyboardHeight: keyboardHeight )
+        smeemToastView?.hide(after: 1)
     }
 }

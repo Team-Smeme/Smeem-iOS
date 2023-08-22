@@ -11,11 +11,12 @@ import Moya
 
 enum MyPageService {
     case myPageInfo
-    case editNinkname(param: EditnicknameRequest)
+    case editNickname(param: EditNicknameRequest)
     case badgeList
     case myPageUserPlan(param: UserPlanRequest)
     case editAlarmTime(param: EditAlarmTime)
     case editPush(param: editPushRequest)
+    case editGoal(param: EditGoalRequest)
 }
 
 extension MyPageService: BaseTargetType {
@@ -23,11 +24,11 @@ extension MyPageService: BaseTargetType {
         switch self {
         case .myPageInfo:
             return URLConstant.myPageURL
-        case .editNinkname:
+        case .editNickname:
             return URLConstant.userURL
         case .badgeList:
             return URLConstant.badgesListURL
-        case .myPageUserPlan:
+        case .myPageUserPlan, .editGoal:
             return URLConstant.userPlanURL
         case .editAlarmTime:
             return URLConstant.userPlanURL
@@ -41,6 +42,7 @@ extension MyPageService: BaseTargetType {
         case .myPageInfo, .badgeList:
             return .get
         case .editNinkname, .myPageUserPlan, .editAlarmTime, .editPush:
+        case .editNickname, .myPageUserPlan, .editGoal:
             return .patch
         }
     }
@@ -49,7 +51,9 @@ extension MyPageService: BaseTargetType {
         switch self {
         case .myPageInfo, .badgeList:
             return .requestPlain
-        case .editNinkname(let param):
+        case .editNickname(let param):
+            return .requestJSONEncodable(param)
+        case .editGoal(param: let param):
             return .requestJSONEncodable(param)
         case .myPageUserPlan(let param):
             return .requestJSONEncodable(param)
@@ -62,9 +66,11 @@ extension MyPageService: BaseTargetType {
     
     var headers: [String : String]? {
         switch self {
+        case .myPageInfo, .editNickname, .editGoal, .badgeList, .myPageUserPlan:
         case .myPageInfo, .editNinkname, .badgeList, .myPageUserPlan, .editAlarmTime, .editPush:
             return ["Content-Type": "application/json",
                     "Authorization": "Bearer " + UserDefaultsManager.accessToken]
         }
     }
 }
+

@@ -9,9 +9,15 @@ import UIKit
 
 import SnapKit
 
+protocol EditNicknameDelegate: AnyObject {
+    func didEditNickname()
+}
+
 class EditNicknameViewController: UIViewController {
     
     // MARK: - Property
+    
+    weak var editNicknameDelegate: EditNicknameDelegate?
     
     var nickName = String()
     var checkDouble = Bool()
@@ -112,14 +118,11 @@ class EditNicknameViewController: UIViewController {
         self.navigationController?.popViewController(animated: true)
     }
     
-//    @objc func doneButtonDidTap(_ sender: UIButton) {
-//        changeMyName(userName: nicknameTextField.text ?? nickName)
-//        changeRootViewController(HomeViewController())
-//    }
-    
     @objc func doneButtonDidTap() {
         self.showLodingView(loadingView: self.loadingView)
-//        nicknamePatchAPI(nickname: nicknameTextField.text ?? "")
+        nicknamePatchAPI(nickname: nicknameTextField.text ?? "")
+        changeRootViewController(MyPageViewController())
+        editNicknameDelegate?.didEditNickname()
     }
     
     @objc func nicknameDidChange(_ notification: Notification) {
@@ -230,22 +233,24 @@ extension EditNicknameViewController: UITextFieldDelegate {
 
 // MARK: - Extension : Network
 
-//extension EditNicknameViewController {
-//    private func nicknamePatchAPI(nickname: String) {
-//        MyPageAPI.shared.changeMyNickName(userName: EditnicknameRequest(username: nickname)) { response in
-//            guard let data = response?.data else { return }
-//
-//            self.checkDouble = response.success
-//            self.hideLodingView(loadingView: self.loadingView)
-//
-//            DispatchQueue.main.async {
-//                if self.checkDouble {
-//                    self.navigationController?.popViewController(animated: true)
-//                } else {
-//                    self.doneButton.smeemButtonType = .notEnabled
-//                    self.doubleCheckLabel.isHidden = false
-//                }
-//            }
-//        }
-//    }
-//}
+extension EditNicknameViewController {
+    private func nicknamePatchAPI(nickname: String) {
+        MyPageAPI.shared.changeMyNickName(request: EditNicknameRequest(username: nickname)) { response in
+            guard let data = response?.data else { return }
+            
+            guard let responseData = response else { return }
+            self.checkDouble = responseData.success
+            
+            self.hideLodingView(loadingView: self.loadingView)
+
+            DispatchQueue.main.async {
+                if self.checkDouble {
+                    self.navigationController?.popViewController(animated: true)
+                } else {
+                    self.doneButton.smeemButtonType = .notEnabled
+                    self.doubleCheckLabel.isHidden = false
+                }
+            }
+        }
+    }
+}

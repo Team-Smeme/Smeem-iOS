@@ -450,6 +450,7 @@ class DiaryViewController: UIViewController {
 }
 
 // MARK: - Extensions
+
 extension DiaryViewController {
     func showToastIfNeeded(toastType: ToastViewType) {
         smeemToastView?.removeFromSuperview()
