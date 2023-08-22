@@ -91,15 +91,15 @@ extension UIViewController {
     }
     
     func changeRootViewControllerAndPresent(_ viewControllerToPresent: UIViewController) {
-         if let window = UIApplication.shared.windows.first {
-             window.rootViewController = viewControllerToPresent
-             UIView.transition(with: window, duration: 0.5, options: .transitionCrossDissolve, animations: nil)
-         } else {
-             viewControllerToPresent.modalPresentationStyle = .overFullScreen
-             self.present(viewControllerToPresent, animated: true, completion: nil)
-         }
-     }
-
+        if let window = UIApplication.shared.windows.first {
+            window.rootViewController = viewControllerToPresent
+            UIView.transition(with: window, duration: 0.5, options: .transitionCrossDissolve, animations: nil)
+        } else {
+            viewControllerToPresent.modalPresentationStyle = .overFullScreen
+            self.present(viewControllerToPresent, animated: true, completion: nil)
+        }
+    }
+    
     func changeRootViewController(_ viewController: UIViewController) {
         guard let window = UIApplication.shared.windows.first else { return }
         UIView.transition(with: window, duration: 0.5, options: .transitionCrossDissolve, animations: {
@@ -145,4 +145,10 @@ extension UIViewController {
         let smeemStartVC = SmeemStartViewController()
         changeRootViewController(smeemStartVC)
     }
+    
+    //    func showToast(message: String, duration: TimeInterval = 3, yOffset: CGFloat = 30, keyboardHeight: CGFloat = 0) {
+    //        let toastView = SmeemToastView(type: .defaultToast(bodyType: .custom(message: message)))
+    //        toastView.show(in: view, offset: yOffset, keyboardHeight: keyboardHeight)
+    //        toastView.hide(after: duration)
+    //    }
 }
