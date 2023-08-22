@@ -255,6 +255,7 @@ final class MyPageViewController: UIViewController {
         
         if let selectedIndex = getIndexFromGoalText(goalText: userInfo.target) {
             goalVC.selectedGoalIndex = selectedIndex
+            goalVC.selectedGoalLabel = userInfo.target
         }
         
         self.navigationController?.pushViewController(goalVC, animated: true)
@@ -264,8 +265,8 @@ final class MyPageViewController: UIViewController {
         let alarmEditVC = EditAlarmViewController()
         alarmEditVC.dayIndexPathArray = indexPathArray
         alarmEditVC.trainigDayData = userInfo.trainingTime.day
-        // 시간도 전달해야 됨
         alarmEditVC.trainingTimeData = (userInfo.trainingTime.hour, userInfo.trainingTime.minute)
+        alarmEditVC.trainigDayData = userInfo.trainingTime.day
         self.navigationController?.pushViewController(alarmEditVC, animated: true)
     }
     
@@ -473,7 +474,11 @@ final class MyPageViewController: UIViewController {
 extension MyPageViewController {
     func myPageInfoAPI() {
         MyPageAPI.shared.myPageInfo() { response in
-            guard let myPageInfo = response?.data else { return }
+            print("ㅇㄴㄹㅁㄴㅇㄹ", response)
+            guard let myPageInfo = response?.data else { return
+                print("뭐임>")
+            }
+            print(myPageInfo)
             
             self.hideLodingView(loadingView: self.loadingView)
             

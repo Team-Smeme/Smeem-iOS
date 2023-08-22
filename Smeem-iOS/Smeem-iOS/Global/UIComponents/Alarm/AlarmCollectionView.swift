@@ -18,7 +18,7 @@ final class AlarmCollectionView: UICollectionView {
     
     // MARK: - Property
     
-    private let dayArray = ["월", "화", "수", "목", "금", "토", "일"]
+    var dayArray = ["월", "화", "수", "목", "금", "토", "일"]
     var selectedIndexPath = [IndexPath(item: 0, section: 0), IndexPath(item: 1, section: 0), IndexPath(item: 2, section: 0), IndexPath(item: 3, section: 0), IndexPath(item: 4, section: 0)]
     var dayDicrionary: [String:String] = ["월": "MON", "화": "TUE", "수": "WED", "목": "THU", "금": "FRI", "토": "SAT", "일": "SUN"]
     
@@ -99,10 +99,12 @@ final class AlarmCollectionView: UICollectionView {
 extension AlarmCollectionView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         selectedDayArray.insert(dayDicrionary[dayArray[indexPath.item]] ?? "")
+        print(selectedDayArray)
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         selectedDayArray.remove(dayDicrionary[dayArray[indexPath.item]] ?? "")
+        print(selectedDayArray)
     }
 }
 
@@ -168,8 +170,6 @@ extension AlarmCollectionView: UICollectionViewDelegateFlowLayout {
             if !hasAlarm {
                 footerView.inputTextField.textColor = .gray300
                 footerView.alarmLabel.textColor = .gray300
-            } else {
-                // 마이페이지일 경우
             }
         } else {
             // 온보딩
