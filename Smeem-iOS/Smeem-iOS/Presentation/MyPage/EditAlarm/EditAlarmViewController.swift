@@ -58,7 +58,6 @@ final class EditAlarmViewController: UIViewController {
     private lazy var completeButton: SmeemButton = {
         let button = SmeemButton()
         button.setTitle("완료", for: .normal)
-//        buttonadd
         return button
     }()
     
@@ -87,6 +86,7 @@ final class EditAlarmViewController: UIViewController {
     private func setData() {
         alarmCollectionView.selectedIndexPath = dayIndexPathArray
         alarmCollectionView.myPageTime = (trainingTimeData!.0, trainingTimeData!.1)
+        alarmCollectionView.selectedDayArray = Set(trainigDayData!.components(separatedBy: ","))
     }
     
     private func setBackgroundColor() {
@@ -126,3 +126,19 @@ final class EditAlarmViewController: UIViewController {
         }
     }
 }
+
+//extension EditAlarmViewController {
+//    private func userPlanPatchAPI(userPlan: UserPlanRequest, accessToken: String) {
+//        OnboardingAPI.shared.userPlanPathAPI(param: userPlan, accessToken: accessToken) { response in
+//            self.hideLodingView(loadingView: self.loadingView)
+//            
+//            if response.success == true {
+//                let userNicknameVC = UserNicknameViewController()
+//                self.navigationController?.pushViewController(userNicknameVC, animated: true)
+//            } else {
+//                print("학습 목표 API 호출 실패")
+//                self.loginErrorToast.show()
+//            }
+//        }
+//    }
+//}
