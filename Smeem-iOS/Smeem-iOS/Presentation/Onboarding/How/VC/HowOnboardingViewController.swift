@@ -99,7 +99,7 @@ final class HowOnboardingViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        detailPlanListGetAPI(tempTarget: tempTarget)
+//        detailPlanListGetAPI(tempTarget: tempTarget)
     }
     
     // MARK: - @objc
@@ -174,19 +174,21 @@ final class HowOnboardingViewController: UIViewController {
     }
 }
 
-extension HowOnboardingViewController {
-    func detailPlanListGetAPI(tempTarget: String) {
-        self.showLodingView(loadingView: loadingView)
-        OnboardingAPI.shared.detailPlanList(param: tempTarget) { response in
-            guard let data = response.data else { return }
-            
-            self.hideLodingView(loadingView: self.loadingView)
-            
-            self.planName = data.name
-            self.planWay = data.way
-            self.planDetailWay = data.detail
-            
-            self.configurePlanData()
-        }
-    }
-}
+// MARK: - Network
+
+//extension HowOnboardingViewController {
+//    func detailPlanListGetAPI(tempTarget: String) {
+//        self.showLodingView(loadingView: loadingView)
+//        OnboardingAPI.shared.detailPlanList(param: tempTarget) { response in
+//            guard let data = response.data else { return }
+//
+//            self.hideLodingView(loadingView: self.loadingView)
+//
+//            self.planName = data.name
+//            self.planWay = data.way
+//            self.planDetailWay = data.detail
+//
+//            self.configurePlanData()
+//        }
+//    }
+//}
