@@ -153,7 +153,7 @@ final class BottomSheetView: UIView {
 //                $0.top.equalTo(guestLoginButton.snp.bottom).offset(3)
 //                $0.centerX.equalToSuperview()
 //            }
-            bottomSheetLabel.text = "로그인"
+            bottomSheetLabel.text = "회원가입"
             guestLoginButton.isHidden = true
         }
     }

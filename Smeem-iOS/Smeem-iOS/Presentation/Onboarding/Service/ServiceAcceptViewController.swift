@@ -27,12 +27,6 @@ final class ServiceAcceptViewController: UIViewController {
         }
     }
     
-//    private var acceptCheckArray = [] {
-//        didSet {
-//            checkAccptButtonType()
-//        }
-//    }
-    
     // MARK: - UI Property
     
     private let loadingView = LoadingView()

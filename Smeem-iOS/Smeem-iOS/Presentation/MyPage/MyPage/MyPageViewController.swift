@@ -303,6 +303,7 @@ final class MyPageViewController: UIViewController {
         for i in 0..<dayArray.count {
             indexPathArray.append(myPageSelectedIndexPath[String(dayArray[i])]!)
         }
+        print("dkfjahsfkjhsadkfjdshakf⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️", indexPathArray)
         alarmCollectionView.selectedIndexPath = indexPathArray
         alarmCollectionView.myPageTime = (userInfo.trainingTime.hour, userInfo.trainingTime.minute)
     }
@@ -493,7 +494,7 @@ extension MyPageViewController {
                 
                 // 그에 맞춰서 색깔 변화
                 self.alarmCollectionView.hasAlarm = pushData.hasAlarm
-                self.alarmCollectionView.reloadData()
+                self.alarmCollectionView.selectedIndexPath = self.indexPathArray
                 
                 print("어떤값?", pushData.hasAlarm)
                 if !pushData.hasAlarm {

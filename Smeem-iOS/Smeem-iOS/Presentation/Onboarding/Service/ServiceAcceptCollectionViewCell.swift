@@ -14,8 +14,10 @@ final class ServiceAcceptCollectionViewCell: UICollectionViewCell {
     var checkTotal = false {
         didSet {
             if checkTotal {
+                serviceAcceptLabel.textColor = .black
                 checkButton.setImage(Constant.Image.icnCheckActive, for: .normal)
             } else {
+                serviceAcceptLabel.textColor = .gray600
                 checkButton.setImage(Constant.Image.icnCheckInactive, for: .normal)
             }
         }
