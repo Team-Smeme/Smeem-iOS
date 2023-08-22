@@ -10,6 +10,9 @@ import UIKit
 // MARK: - ForeignDiaryStrategy
 
 final class ForeignDiaryStrategy: DiaryStrategy {
+    func configurePlaceHolderLabel(_ label: UILabel) {
+        label.text = "일기를 작성해주세요."
+    }
     
     func configureToolTipView(_ imageView: UIImageView) {
         imageView.isHidden = false
@@ -35,6 +38,9 @@ final class ForeignDiaryStrategy: DiaryStrategy {
 // MARK: - StepOneKoreanDiaryStrategy
 
 final class StepOneKoreanDiaryStrategy: DiaryStrategy {
+    func configurePlaceHolderLabel(_ label: UILabel) {
+        label.text = "완전한 문장으로 한국어 일기를 작성하면, 더욱 정확한\n힌트를 받을 수 있어요."
+    }
     
     func configureToolTipView(_ imageView: UIImageView) {
         imageView.isHidden = false
@@ -60,6 +66,9 @@ final class StepOneKoreanDiaryStrategy: DiaryStrategy {
 // MARK: - StepTwoKoreanDiaryStrategy
 
 final class StepTwoKoreanDiaryStrategy: DiaryStrategy {
+    func configurePlaceHolderLabel(_ label: UILabel) {
+        label.text = "일기를 작성해주세요."
+    }
     
     func configureToolTipView(_ imageView: UIImageView) {
         imageView.isHidden = true

@@ -10,6 +10,7 @@ import UIKit
 import SnapKit
 
 protocol DiaryStrategy {
+    func configurePlaceHolderLabel(_ label: UILabel)
     func configureToolTipView(_ imageView: UIImageView)
     func configureRandomSubjectButton(_ button: UIButton)
     func configureLanguageLabel(_ label: UILabel)
@@ -102,8 +103,8 @@ class DiaryViewController: UIViewController {
     
     let placeHolderLabel: UILabel = {
         let label = UILabel()
-        label.text = "일기를 작성해주세요."
         label.textColor = .gray400
+        label.numberOfLines = 0
         label.font = .b4
         label.setTextWithLineHeight(lineHeight: 21)
         return label
@@ -300,6 +301,7 @@ class DiaryViewController: UIViewController {
         diaryStrategy?.configureLanguageLabel(languageLabel)
         diaryStrategy?.configureRightNavigationButton(rightNavigationButton)
         diaryStrategy?.configureStepLabel(stepLabel)
+        diaryStrategy?.configurePlaceHolderLabel(placeHolderLabel)
     }
     
     private func setBackgroundColor() {
@@ -375,8 +377,8 @@ class DiaryViewController: UIViewController {
         }
         
         placeHolderLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(convertByHeightRatio(18))
-            $0.leading.equalToSuperview().offset(convertByWidthRatio(20))
+            $0.top.equalToSuperview().offset(convertByHeightRatio(20))
+            $0.leading.equalToSuperview().offset(convertByWidthRatio(21))
         }
         
         bottomView.snp.makeConstraints {
