@@ -46,15 +46,13 @@ final class GoalCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - @objc
-    
     // MARK: - Custom Method
     
     func setData(_ text: String) {
         goalLabel.text = text
     }
     
-    private func setCellSelected(_ selected: Bool) {
+    func setCellSelected(_ selected: Bool) {
         if isSelected {
             goalLabel.font = .b1
             goalLabel.textColor = .point

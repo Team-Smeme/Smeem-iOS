@@ -1,28 +1,23 @@
 //
-//  GoalOnboardingViewController.swift
+//  GoalOnboardingView.swift
 //  Smeem-iOS
 //
-//  Created by 황찬미 on 2023/05/14.
+//  Created by Joon Baek on 2023/08/12.
 //
 
 import UIKit
 
-final class GoalOnboardingViewController: UIViewController {
+import SnapKit
+
+final class GoalOnboardingView: UIView {
     
     // MARK: - Property
     
-    var goalLabelList = [Plan]() {
-        didSet {
-            learningListCollectionView.reloadData()
-        }
-    }
-    var selectedGoalLabel = String()
+    weak var delegate: NextButtonDelegate?
     
-    var targetClosure: ((String) -> Void)?
+    var onDataSourceUpdated: (() -> Void)?
     
     // MARK: - UI Property
-    
-    private let loadingView = LoadingView()
     
     private let nowStepOneLabel: UILabel = {
         let label = UILabel()
@@ -92,56 +87,39 @@ final class GoalOnboardingViewController: UIViewController {
     
     // MARK: - Life Cycle
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         
-        setBackgroundColor()
         setLayout()
-        setDelgate()
+        setBackgroundColor()
         setCellReigster()
-        hiddenNavigationBar()
-        planListGetAPI()
     }
     
-    // MARK: - @objc
-    
-    @objc func nextButtonDidTap() {
-        let howOnboardingVC = HowOnboardingViewController()
-        howOnboardingVC.tempTarget = selectedGoalLabel
-        self.navigationController?.pushViewController(howOnboardingVC, animated: true)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
-    
-    // MARK: - Custom Method
-    
-    private func setDelgate() {
-        learningListCollectionView.delegate = self
-        learningListCollectionView.dataSource = self
-    }
-    
-    private func setCellReigster() {
-        learningListCollectionView.register(GoalCollectionViewCell.self, forCellWithReuseIdentifier: GoalCollectionViewCell.identifier)
-    }
-    
-    private func setBackgroundColor() {
-        view.backgroundColor = .white
-    }
+}
+
+//MARK: - Extensions
+
+extension GoalOnboardingView {
     
     // MARK: - Layout
     
     private func setLayout() {
-        view.addSubviews(nowStepOneLabel, divisionLabel, totalStepLabel,
-                         learningLabelStackView, learningListCollectionView,
-                         nextButton)
+        addSubviews(nowStepOneLabel, divisionLabel, totalStepLabel,
+                    learningLabelStackView, learningListCollectionView,
+                    nextButton)
         learningLabelStackView.addArrangedSubviews(titleLearningLabel, detailLearningLabel)
         
         nowStepOneLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(26)
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(36)
+            $0.top.equalTo(safeAreaLayoutGuide).inset(36)
         }
         
         divisionLabel.snp.makeConstraints {
             $0.leading.equalTo(nowStepOneLabel.snp.trailing).offset(2)
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(40)
+            $0.top.equalTo(safeAreaLayoutGuide).inset(40)
         }
         
         totalStepLabel.snp.makeConstraints {
@@ -166,53 +144,39 @@ final class GoalOnboardingViewController: UIViewController {
             $0.height.equalTo(convertByHeightRatio(60))
         }
     }
-}
-
-extension GoalOnboardingViewController {
-    func planListGetAPI() {
-        self.showLodingView(loadingView: loadingView)
-        OnboardingAPI.shared.planList() { response in
-            guard let data = response.data?.goals else { return }
-            
-            self.hideLodingView(loadingView: self.loadingView)
-            
-            self.goalLabelList = data
-        }
+    
+    // MARK: - @objc
+    
+    @objc func nextButtonDidTap() {
+        delegate?.nextButtonDidTap()
     }
-}
-
-// MARK: - UICollectionViewDelegate
-
-extension GoalOnboardingViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        selectedGoalLabel = goalLabelList[indexPath.item].goalType
+    
+    // MARK: - Custom Method
+    
+    func enableNextButton() {
         nextButton.smeemButtonType = .enabled
     }
-}
-
-// MARK: - UICollectionViewDataSource
-
-extension GoalOnboardingViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return goalLabelList.count
+    
+    func disableNextButton() {
+        // TODO: 이거 disabled로 고치는건 어떨까요?!?
+        
+        nextButton.smeemButtonType = .notEnabled
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GoalCollectionViewCell.identifier, for: indexPath) as? GoalCollectionViewCell else { return UICollectionViewCell() }
-        cell.setData(goalLabelList[indexPath.item].name)
-        return cell
-    }
-}
-
-extension GoalOnboardingViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = collectionView.frame.width
-        let height = convertByHeightRatio(60)
-        return CGSize(width: width, height: height)
+    func setCollectionViewDataSource(dataSource: UICollectionViewDataSource) {
+        learningListCollectionView.dataSource = dataSource
+        learningListCollectionView.reloadData()
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        let cellLineSpacing: CGFloat = 12
-        return cellLineSpacing
+    func setCollectionViewDelgate(delegate: UICollectionViewDelegate & UICollectionViewDelegateFlowLayout) {
+        learningListCollectionView.delegate = delegate
+    }
+    
+    private func setCellReigster() {
+        learningListCollectionView.register(GoalCollectionViewCell.self, forCellWithReuseIdentifier: GoalCollectionViewCell.identifier)
+    }
+    
+    private func setBackgroundColor() {
+        backgroundColor = .white
     }
 }

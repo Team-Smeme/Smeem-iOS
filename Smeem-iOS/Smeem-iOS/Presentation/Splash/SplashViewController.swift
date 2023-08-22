@@ -54,6 +54,17 @@ final class SplashViewController: UIViewController {
         }
     }
     
+    @objc func startButtonDidTap() {
+        let onboardingVC = GoalViewController(viewtype: .onboarding)
+        self.navigationController?.pushViewController(onboardingVC, animated: true)
+    }
+    
+    // MARK: - Custom Method
+    
+    private func setBackgroundColor() {
+        view.backgroundColor = .white
+    }
+
     private func setLayout() {
         view.addSubview(splashImageView)
         
