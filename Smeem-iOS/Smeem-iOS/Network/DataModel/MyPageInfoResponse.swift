@@ -29,3 +29,7 @@ struct Badge: Codable {
 struct EditnicknameRequest: Codable {
     let username: String
 }
+
+struct EditAlarmTime: Codable {
+    let trainingTime: TrainingTime
+}

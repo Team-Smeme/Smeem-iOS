@@ -296,6 +296,9 @@ final class MyPageViewController: UIViewController {
         }
         // 마이페이지 알람 cell 바꾸는 로직
         let dayArray = userInfo.trainingTime.day.split(separator: ",")
+        
+        // 요일 배열 한번 비워 주는 과정 필요
+        indexPathArray.removeAll()
         for i in 0..<dayArray.count {
             indexPathArray.append(myPageSelectedIndexPath[String(dayArray[i])]!)
         }
@@ -474,16 +477,13 @@ final class MyPageViewController: UIViewController {
 extension MyPageViewController {
     func myPageInfoAPI() {
         MyPageAPI.shared.myPageInfo() { response in
-            print("ㅇㄴㄹㅁㄴㅇㄹ", response)
-            guard let myPageInfo = response?.data else { return
-                print("뭐임>")
-            }
-            print(myPageInfo)
+            guard let myPageInfo = response?.data else { return }
             
-            self.hideLodingView(loadingView: self.loadingView)
+//            self.hideLodingView(loadingView: self.loadingView)
             
             self.userInfo = myPageInfo
             self.setData()
+            self.hideLodingView(loadingView: self.loadingView)
         }
     }
 }

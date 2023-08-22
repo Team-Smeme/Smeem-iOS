@@ -13,7 +13,6 @@ final class EditAlarmViewController: UIViewController {
     
     var trainigDayData: String?
     var trainingTimeData: (hour: Int, minute: Int)?
-    var userPlanData: UserPlanRequest?
     var completeButtonData: Bool?
     
     private var hasAlarm = false
@@ -26,6 +25,7 @@ final class EditAlarmViewController: UIViewController {
     
     private let naviView = UIView()
     private let datePickerFooterView = DatePickerFooterView()
+    private let loadingView = LoadingView()
     
     private lazy var backButton: UIButton = {
         let button = UIButton()
@@ -58,6 +58,7 @@ final class EditAlarmViewController: UIViewController {
     private lazy var completeButton: SmeemButton = {
         let button = SmeemButton()
         button.setTitle("완료", for: .normal)
+        button.addTarget(self, action: #selector(completeButtonDidTap), for: .touchUpInside)
         return button
     }()
     
@@ -79,6 +80,13 @@ final class EditAlarmViewController: UIViewController {
     
     @objc func backButtonDidTap() {
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    @objc func completeButtonDidTap() {
+        self.showLodingView(loadingView: loadingView)
+        editAlarmTimePatchAPI(alarmTime: EditAlarmTime(trainingTime: TrainingTime(day: trainigDayData!,
+                                                                                  hour: trainingTimeData!.hour,
+                                                                                  minute: trainingTimeData!.minute)))
     }
     
     // MARK: - Custom Method
@@ -127,18 +135,16 @@ final class EditAlarmViewController: UIViewController {
     }
 }
 
-//extension EditAlarmViewController {
-//    private func userPlanPatchAPI(userPlan: UserPlanRequest, accessToken: String) {
-//        OnboardingAPI.shared.userPlanPathAPI(param: userPlan, accessToken: accessToken) { response in
-//            self.hideLodingView(loadingView: self.loadingView)
-//            
-//            if response.success == true {
-//                let userNicknameVC = UserNicknameViewController()
-//                self.navigationController?.pushViewController(userNicknameVC, animated: true)
-//            } else {
-//                print("학습 목표 API 호출 실패")
+extension EditAlarmViewController {
+    private func editAlarmTimePatchAPI(alarmTime: EditAlarmTime) {
+        MyPageAPI.shared.editAlarmTimeAPI(param: alarmTime) { respons in
+            self.hideLodingView(loadingView: self.loadingView)
+            if respons.success == true {
+                self.navigationController?.popViewController(animated: true)
+            } else {
+                print("학습 목표 API 호출 실패")
 //                self.loginErrorToast.show()
-//            }
-//        }
-//    }
-//}
+            }
+        }
+    }
+}

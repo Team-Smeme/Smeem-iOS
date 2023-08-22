@@ -66,4 +66,16 @@ public class MyPageAPI {
             }
         }
     }
+    
+    func editAlarmTimeAPI(param: EditAlarmTime, completion: @escaping (GeneralResponse<VoidType>) -> Void) {
+        myPageProvider.request(.editAlarmTime(param: param)) { response in
+            switch response {
+            case .success(let result):
+                guard let data = try? result.map(GeneralResponse<VoidType>.self) else { return }
+                completion(data)
+            case .failure(let err):
+                print(err)
+            }
+        }
+    }
 }
