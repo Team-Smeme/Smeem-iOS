@@ -25,8 +25,12 @@ final class GoalViewController: UIViewController {
     
     var targetClosure: ((String) -> Void)?
     
-    var selectedGoalLabel = String()
     var selectedGoalIndex: Int?
+    var selectedGoalLabel = "" {
+        didSet {
+            setButtonType()
+        }
+    }
     
     // MARK: - Life Cycle
     
@@ -59,15 +63,32 @@ final class GoalViewController: UIViewController {
             datasource.setSelectedIndex(selectedGoalIndex)
         }
     }
+    
+    private func setButtonType() {
+        if selectedGoalLabel != "" {
+            goalOnboardingView.enableNextButton()
+            goalEditMypageView.enableNextButton()
+        } else {
+            goalOnboardingView.disableNextButton()
+            goalEditMypageView.disableNextButton()
+        }
+    }
 }
 
 // MARK: - NextButtonDelegate
 
 extension GoalViewController: NextButtonDelegate {
     func nextButtonDidTap() {
-        let howOnboardingVC = HowOnboardingViewController()
-        howOnboardingVC.tempTarget = selectedGoalLabel
-        self.navigationController?.pushViewController(howOnboardingVC, animated: true)
+        switch viewtype {
+        case .onboarding:
+            let howOnboardingVC = HowOnboardingViewController()
+            howOnboardingVC.tempTarget = selectedGoalLabel
+            self.navigationController?.pushViewController(howOnboardingVC, animated: true)
+        case .myPage:
+            let howOnboardingVC = EditGoalViewController()
+            howOnboardingVC.tempTarget = selectedGoalLabel
+            self.navigationController?.pushViewController(howOnboardingVC, animated: true)
+        }
     }
     
     func backButtonDidTap() {
@@ -110,6 +131,9 @@ extension GoalViewController {
 
 extension GoalViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? GoalCollectionViewCell else { return }
+        cell.selctedCell()
+        
         selectedGoalLabel = datasource.goalLabelList[indexPath.item].goalType
         
         switch viewtype {
@@ -118,6 +142,11 @@ extension GoalViewController: UICollectionViewDelegate {
         case .myPage:
             goalEditMypageView.enableNextButton()
         }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? GoalCollectionViewCell else { return }
+        cell.desecltedCell()
     }
 }
 

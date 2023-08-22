@@ -183,11 +183,12 @@ final class AuthManagementViewController: UIViewController {
 extension AuthManagementViewController {
     private func resignAPI() {
         AuthAPI.shared.resignAPI() { response in
-            guard let data = response.data else { return }
+            guard let _ = response.data else { return }
             
             UserDefaultsManager.accessToken = ""
-            UserDefaultsManager.clientAccessToken = ""
             UserDefaultsManager.refreshToken = ""
+            UserDefaultsManager.clientAccessToken = ""
+            UserDefaultsManager.clientRefreshToken = ""
             UserDefaultsManager.hasKakaoToken = nil
             
             self.changeRootViewController(SplashViewController())
@@ -196,10 +197,11 @@ extension AuthManagementViewController {
     
     private func logoutAPI() {
         AuthAPI.shared.logoutAPI() { response in
-            guard let data = response.data else { return }
+            guard let _ = response.data else { return }
             
             UserDefaultsManager.accessToken = ""
             UserDefaultsManager.clientAccessToken = ""
+            UserDefaultsManager.clientRefreshToken = ""
             UserDefaultsManager.refreshToken = ""
             UserDefaultsManager.hasKakaoToken = nil
             

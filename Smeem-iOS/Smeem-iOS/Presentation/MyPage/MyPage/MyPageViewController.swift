@@ -178,11 +178,10 @@ final class MyPageViewController: UIViewController {
         return pushLabel
     }()
     
-    private lazy var alarmPushToggleButton: UIButton = {
-        let button = UIButton()
-        button.isUserInteractionEnabled = false
-        button.setImage(Constant.Image.btnToggleActive, for: .normal)
-        button.addTarget(self, action: #selector(pushButtonDidTap(_:)), for: .touchUpInside)
+    private lazy var alarmPushToggleButton: UISwitch = {
+        let button = UISwitch()
+        button.onTintColor = .point
+        button.addTarget(self, action: #selector(pushButtonDidTap), for: .touchUpInside)
         return button
     }()
     
@@ -190,6 +189,12 @@ final class MyPageViewController: UIViewController {
         let collectionView = AlarmCollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         collectionView.isUserInteractionEnabled = false
         return collectionView
+    }()
+    
+    private lazy var alarmEditButton: UIView = {
+        let view = UIView()
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(alarmEditButtonDidTap)))
+        return view
     }()
     
     // MARK: - Life Cycle
@@ -227,9 +232,13 @@ final class MyPageViewController: UIViewController {
     }
     
     @objc func pushButtonDidTap(_ sender: UIButton) {
-        userInfo.hasPushAlarm.toggle() // 추후 서버 연결
-        let image = userInfo.hasPushAlarm ? Constant.Image.btnToggleActive : Constant.Image.btnToggleInActive
-        alarmPushToggleButton.setImage(image, for: .normal)
+        let pushData = !userInfo.hasPushAlarm
+//        userInfo.hasPushAlarm.toggle() // 추후 서버 연결
+        if pushData == true {
+            alarmPushToggleButton.onTintColor = .point
+        } else {
+            alarmPushToggleButton.tintColor = .lightGray
+        }
     }
     
     @objc func badgeImageDidTap() {
@@ -246,9 +255,19 @@ final class MyPageViewController: UIViewController {
         
         if let selectedIndex = getIndexFromGoalText(goalText: userInfo.target) {
             goalVC.selectedGoalIndex = selectedIndex
+            goalVC.selectedGoalLabel = userInfo.target
         }
         
         self.navigationController?.pushViewController(goalVC, animated: true)
+    }
+    
+    @objc func alarmEditButtonDidTap() {
+        let alarmEditVC = EditAlarmViewController()
+        alarmEditVC.dayIndexPathArray = indexPathArray
+        alarmEditVC.trainigDayData = userInfo.trainingTime.day
+        alarmEditVC.trainingTimeData = (userInfo.trainingTime.hour, userInfo.trainingTime.minute)
+        alarmEditVC.trainigDayData = userInfo.trainingTime.day
+        self.navigationController?.pushViewController(alarmEditVC, animated: true)
     }
     
     // MARK: - Custom Method
@@ -269,7 +288,11 @@ final class MyPageViewController: UIViewController {
         alarmCollectionView.hasAlarm = userInfo.hasPushAlarm
         
         if !userInfo.hasPushAlarm {
-            alarmPushToggleButton.setImage(Constant.Image.btnToggleInActive, for: .normal)
+            alarmPushToggleButton.isOn = false
+            alarmPushToggleButton.tintColor = .lightGray
+        } else {
+            alarmPushToggleButton.isOn = true
+            alarmPushToggleButton.onTintColor = .point
         }
         // 마이페이지 알람 cell 바꾸는 로직
         let dayArray = userInfo.trainingTime.day.split(separator: ",")
@@ -279,18 +302,6 @@ final class MyPageViewController: UIViewController {
         alarmCollectionView.selectedIndexPath = indexPathArray
         alarmCollectionView.myPageTime = (userInfo.trainingTime.hour, userInfo.trainingTime.minute)
     }
-    
-//    private func isShownWelcomeBadgePopup() {
-//        let welcomeBadgePopup = UserDefaultsManager.isShownWelcomeBadgePopup
-//
-//        if !welcomeBadgePopup {
-//            UserDefaultsManager.isShownWelcomeBadgePopup = true
-//            let badgePopupVC = BadgePopupViewController()
-//            badgePopupVC.modalTransitionStyle = .crossDissolve
-//            badgePopupVC.modalPresentationStyle = .overFullScreen
-//            self.present(badgePopupVC, animated: true)
-//        }
-//    }
     
     private func swipeRecognizer() {
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(responseToSwipeGesture))
@@ -320,7 +331,7 @@ final class MyPageViewController: UIViewController {
         view.addSubviews(headerContainerView, scrollView)
         headerContainerView.addSubviews(backButton, titleLabel, moreButton)
         scrollView.addSubview(contentView)
-        contentView.addSubviews(nickNameLabel, editButton, howLearningView, badgeLabel, badgeContainer, languageLabel, languageContainer, alarmLabel, alarmContainer, alarmCollectionView)
+        contentView.addSubviews(nickNameLabel, editButton, howLearningView, badgeLabel, badgeContainer, languageLabel, languageContainer, alarmLabel, alarmContainer, alarmCollectionView, alarmEditButton)
         badgeContainer.addSubviews(badgeImage, badgeNameLabel, badgeSummaryLabel)
         languageContainer.addSubviews(languageLabelEnglish, languageCheckButton)
         alarmContainer.addSubviews(alarmPushLabel, alarmPushToggleButton)
@@ -440,15 +451,20 @@ final class MyPageViewController: UIViewController {
         
         alarmPushToggleButton.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.trailing.equalToSuperview().offset(-convertByWidthRatio(13))
+            $0.trailing.equalTo(alarmContainer.snp.trailing).offset(-28)
             $0.width.equalTo(convertByWidthRatio(36))
         }
         
         alarmCollectionView.snp.makeConstraints {
             $0.top.equalTo(alarmContainer.snp.bottom).offset(convertByHeightRatio(10))
-            $0.leading.trailing.equalToSuperview().inset(convertByWidthRatio(23))
+            $0.leading.trailing.equalToSuperview().inset(23)
             $0.bottom.equalToSuperview().offset(-convertByHeightRatio(80))
             $0.height.equalTo(convertByHeightRatio(133))
+        }
+        
+        alarmEditButton.snp.makeConstraints {
+            $0.edges.equalTo(alarmCollectionView)
+            $0.width.height.equalTo(alarmCollectionView)
         }
     }
 }
@@ -458,7 +474,11 @@ final class MyPageViewController: UIViewController {
 extension MyPageViewController {
     func myPageInfoAPI() {
         MyPageAPI.shared.myPageInfo() { response in
-            guard let myPageInfo = response?.data else { return }
+            print("ㅇㄴㄹㅁㄴㅇㄹ", response)
+            guard let myPageInfo = response?.data else { return
+                print("뭐임>")
+            }
+            print(myPageInfo)
             
             self.hideLodingView(loadingView: self.loadingView)
             

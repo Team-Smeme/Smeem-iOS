@@ -220,12 +220,12 @@ extension BottomSheetViewController {
             
             guard let data = response.data else { return }
             
+            UserDefaultsManager.clientAccessToken = data.accessToken
+            UserDefaultsManager.clientRefreshToken = data.refreshToken
+            
             switch self.authType {
             case .login:
                 // hasPlan이라고 가정
-                
-                UserDefaultsManager.clientAccessToken = data.accessToken
-                UserDefaultsManager.clientRefreshToken = data.refreshToken
 
                 // hasPlan으로 바뀔 예정
                 if data.hasPlan == false {
@@ -240,8 +240,16 @@ extension BottomSheetViewController {
                     self.presentHomeVC()
                 }
             case .signup:
-                guard let userPlanRequest = self.userPlanRequest else { return }
-                self.userPlanPatchAPI(userPlan: userPlanRequest, accessToken: data.accessToken)
+                if data.hasPlan == false || (data.hasPlan == true && data.isRegistered == false) {
+                    guard let userPlanRequest = self.userPlanRequest else { return }
+                    self.userPlanPatchAPI(userPlan: userPlanRequest, accessToken: data.accessToken)
+                } else {
+                    // 계정이 있는 유저
+                    UserDefaultsManager.accessToken = data.accessToken
+                    UserDefaultsManager.refreshToken = data.refreshToken
+                    
+                    self.presentHomeVC()
+                }
             }
         }
     }

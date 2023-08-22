@@ -40,6 +40,13 @@ final class SplashViewController: UIViewController {
                 AuthAPI.shared.reLoginAPI() { response in
                     // 토큰 재발급 성공 (refreshToken)
                     if response.success {
+                        if let accessToken = response.data?.accessToken {
+                            UserDefaultsManager.accessToken = accessToken
+                        }
+                        if let refresToken = response.data?.refreshToken {
+                            UserDefaultsManager.refreshToken = refresToken
+                        }
+                        
                         self.changeRootViewController(HomeViewController())
                     }
                     // 토큰 만료(재로그인)
