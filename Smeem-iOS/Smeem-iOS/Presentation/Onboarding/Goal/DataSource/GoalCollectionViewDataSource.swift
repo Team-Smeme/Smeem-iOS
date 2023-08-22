@@ -25,6 +25,12 @@ extension GoalCollectionViewDataSource: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GoalCollectionViewCell.identifier, for: indexPath) as? GoalCollectionViewCell else { return UICollectionViewCell() }
         cell.setData(goalLabelList[indexPath.item].name)
+        
+        if indexPath.item == selectedIndex {
+            cell.selctedCell()
+            collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .init())
+        }
+        
         return cell
     }
 }

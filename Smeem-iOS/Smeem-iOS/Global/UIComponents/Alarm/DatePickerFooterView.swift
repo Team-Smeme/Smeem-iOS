@@ -17,14 +17,20 @@ final class DatePickerFooterView: UICollectionReusableView {
     
     // MARK: - Property
     
-    let hoursArray = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
-    let minuteArray = ["00", "30"]
-    let dayAndNightArray = ["AM", "PM"]
+    let hoursArray = [("1", 0), ("2", 1), ("3", 2), ("4", 3), ("5", 4), ("6", 5), ("7", 6), ("8", 7), ("9", 8), ("10", 9), ("11", 10), ("12", 11)]
+    let minuteArray = [("00", 0), ("30", 1)]
+    let dayAndNightArray = [("AM", 0), ("PM", 1)]
     
     var selectedHours: String?
     var selectedMinute: String?
     var selectedDayAndNight: String?
     var totalText = ""
+    
+    var mypageData = (hours: "", minute: "", amAndPM: "") {
+        didSet {
+            setSettingTime()
+        }
+    }
     
     // MARK: - UI Property
     
@@ -179,18 +185,31 @@ final class DatePickerFooterView: UICollectionReusableView {
     }
     
     private func setSettingTime() {
-        let desiredHoursRow = 9 // 시작 시간으로 설정할 행 인덱스
-        let desiredMinuteRow = 0 // 시작 분으로 설정할 행 인덱스
-        let desiredDayAndNightRow = 1 // 시작 AM/PM으로 설정할 행 인덱스
+        var desiredHoursRow = 9 // 시작 시간으로 설정할 행 인덱스
+        var desiredMinuteRow = 0 // 시작 분으로 설정할 행 인덱스
+        var desiredDayAndNightRow = 1 // 시작 AM/PM으로 설정할 행 인덱스
+        
+        // 마이페이지 데이터라면
+        if mypageData != ("", "", "") {
+            for hour in hoursArray {
+                if mypageData.hours == hour.0 {
+                    desiredHoursRow = hour.1
+                    break
+                }
+            }
+            
+            desiredMinuteRow = mypageData.minute == "00" ? 0 : 1
+            desiredDayAndNightRow = mypageData.amAndPM == "AM" ? 0 : 1
+        }
         
         pickerView.selectRow(desiredHoursRow, inComponent: 0, animated: false)
         pickerView.selectRow(desiredMinuteRow, inComponent: 1, animated: false)
         pickerView.selectRow(desiredDayAndNightRow, inComponent: 2, animated: false)
         
         // 선택한 값 업데이트
-        selectedHours = hoursArray[desiredHoursRow]
-        selectedMinute = minuteArray[desiredMinuteRow]
-        selectedDayAndNight = dayAndNightArray[desiredDayAndNightRow]
+        selectedHours = hoursArray[desiredHoursRow].0
+        selectedMinute = minuteArray[desiredMinuteRow].0
+        selectedDayAndNight = dayAndNightArray[desiredDayAndNightRow].0
     }
     
     // MARK: - Layout
@@ -229,11 +248,11 @@ extension DatePickerFooterView: UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         switch component {
         case 0:
-            selectedHours = hoursArray[row]
+            selectedHours = hoursArray[row].0
         case 1:
-            selectedMinute = minuteArray[row]
+            selectedMinute = minuteArray[row].0
         default:
-            selectedDayAndNight = dayAndNightArray[row]
+            selectedDayAndNight = dayAndNightArray[row].0
         }
     }
 }
@@ -259,11 +278,11 @@ extension DatePickerFooterView: UIPickerViewDataSource {
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         switch component {
         case 0:
-            return hoursArray[row]
+            return hoursArray[row].0
         case 1:
-            return minuteArray[row]
+            return minuteArray[row].0
         default:
-            return dayAndNightArray[row]
+            return dayAndNightArray[row].0
         }
     }
 }
