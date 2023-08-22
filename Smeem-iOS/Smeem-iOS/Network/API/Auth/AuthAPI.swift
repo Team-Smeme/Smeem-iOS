@@ -29,11 +29,11 @@ public class AuthAPI {
         }
     }
     
-    func reLoginAPI(completion: @escaping (GeneralResponse<LoginResponse>) -> Void) {
+    func reLoginAPI(completion: @escaping (GeneralResponse<ReLoginResponse>) -> Void) {
         authProvider.request(.reLogin) { response in
             switch response {
             case .success(let result):
-                guard let data = try? result.map(GeneralResponse<LoginResponse>.self) else {
+                guard let data = try? result.map(GeneralResponse<ReLoginResponse>.self) else {
                     print("⭐️⭐️⭐️ 디코더 에러 ⭐️⭐️⭐️")
                     return
                 }
