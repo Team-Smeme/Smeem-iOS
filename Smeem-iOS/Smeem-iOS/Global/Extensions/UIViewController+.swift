@@ -123,7 +123,7 @@ extension UIViewController {
     }
     
     func presentOnboardingPlanVC() {
-        let onboardingGoalVC = GoalOnboardingViewController()
+        let onboardingGoalVC = GoalViewController(viewtype: .onboarding)
         self.navigationController?.pushViewController(onboardingGoalVC, animated: true)
     }
     

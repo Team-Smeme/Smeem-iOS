@@ -10,9 +10,12 @@ import UIKit
 import SnapKit
 
 protocol DiaryStrategy {
+    func configureRandomSubjectButtonImage(_ button: UIButton)
+    func configurePlaceHolderLabel(_ label: UILabel)
     func configureToolTipView(_ imageView: UIImageView)
     func configureRandomSubjectButton(_ button: UIButton)
     func configureLanguageLabel(_ label: UILabel)
+    func configureLeftNavigationButton(_ button: UIButton)
     func configureRightNavigationButton(_ button: UIButton)
     func configureStepLabel(_ label: UILabel)
 }
@@ -58,11 +61,10 @@ class DiaryViewController: UIViewController {
         return stackView
     }()
     
-    lazy var cancelButton: UIButton = {
+    lazy var leftNavigationButton: UIButton = {
         let button = UIButton()
         button.titleLabel?.font = .b4
         button.setTitleColor(.black, for: .normal)
-        button.setTitle("취소", for: .normal)
         button.addTarget(self, action: #selector(leftNavigationButtonDidTap), for: .touchUpInside)
         return button
     }()
@@ -102,8 +104,8 @@ class DiaryViewController: UIViewController {
     
     let placeHolderLabel: UILabel = {
         let label = UILabel()
-        label.text = "일기를 작성해주세요."
         label.textColor = .gray400
+        label.numberOfLines = 0
         label.font = .b4
         label.setTextWithLineHeight(lineHeight: 21)
         return label
@@ -297,7 +299,10 @@ class DiaryViewController: UIViewController {
         }
         
         diaryStrategy?.configureRandomSubjectButton(randomSubjectButton)
+        diaryStrategy?.configurePlaceHolderLabel(placeHolderLabel)
+        diaryStrategy?.configureRandomSubjectButton(randomSubjectButton)
         diaryStrategy?.configureLanguageLabel(languageLabel)
+        diaryStrategy?.configureLeftNavigationButton(leftNavigationButton)
         diaryStrategy?.configureRightNavigationButton(rightNavigationButton)
         diaryStrategy?.configureStepLabel(stepLabel)
     }
@@ -349,7 +354,7 @@ class DiaryViewController: UIViewController {
     private func setLayout() {
         view.addSubviews(navigationView, inputTextView, bottomView)
         navigationView.addSubviews(navibarContentStackView, stepLabel)
-        navibarContentStackView.addArrangedSubviews(cancelButton, languageLabel, rightNavigationButton)
+        navibarContentStackView.addArrangedSubviews(leftNavigationButton, languageLabel, rightNavigationButton)
         inputTextView.addSubview(placeHolderLabel)
         bottomView.addSubviews(thinLine, randomSubjectButton)
         
@@ -360,7 +365,11 @@ class DiaryViewController: UIViewController {
         
         navibarContentStackView.snp.makeConstraints {
             $0.center.equalToSuperview()
-            $0.leading.equalToSuperview().offset(convertByWidthRatio(18))
+            if let strategy = diaryStrategy, strategy is ForeignDiaryStrategy || strategy is StepOneKoreanDiaryStrategy {
+                $0.leading.equalToSuperview().offset(convertByWidthRatio(18))
+            } else {
+                $0.leading.equalToSuperview().offset(convertByWidthRatio(12))
+            }
         }
         
         stepLabel.snp.makeConstraints {
@@ -375,8 +384,8 @@ class DiaryViewController: UIViewController {
         }
         
         placeHolderLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(convertByHeightRatio(18))
-            $0.leading.equalToSuperview().offset(convertByWidthRatio(20))
+            $0.top.equalToSuperview().offset(convertByHeightRatio(20))
+            $0.leading.equalToSuperview().offset(convertByWidthRatio(21))
         }
         
         bottomView.snp.makeConstraints {
