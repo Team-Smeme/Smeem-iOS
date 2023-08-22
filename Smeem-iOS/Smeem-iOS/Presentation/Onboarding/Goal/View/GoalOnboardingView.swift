@@ -19,8 +19,6 @@ final class GoalOnboardingView: UIView {
     
     // MARK: - UI Property
     
-    private let loadingView = LoadingView()
-    
     private let nowStepOneLabel: UILabel = {
         let label = UILabel()
         label.text = "1"
@@ -151,18 +149,6 @@ extension GoalOnboardingView {
     
     @objc func nextButtonDidTap() {
         delegate?.nextButtonDidTap()
-}
-
-extension GoalOnboardingViewController {
-    func planListGetAPI() {
-        self.showLodingView(loadingView: loadingView)
-        OnboardingAPI.shared.planList() { response in
-            guard let data = response.data?.goals else { return }
-            
-            self.hideLodingView(loadingView: self.loadingView)
-            
-            self.goalLabelList = data
-        }
     }
     
     // MARK: - Custom Method

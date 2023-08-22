@@ -210,7 +210,7 @@ extension SmeemToastView {
         
         if animated {
             alpha = 0
-            UIView.animate(withDuration: 0.3) {
+            UIView.animate(withDuration: 0.6) {
                 self.alpha = 1
             }
         } else {
@@ -223,7 +223,7 @@ extension SmeemToastView {
             guard let self = self else { return }
             
             if animated {
-                UIView.animate(withDuration: 0.3, animations: {
+                UIView.animate(withDuration: 0.6, animations: {
                     self.alpha = 0
                 }, completion: { _ in
                     self.removeFromSuperview()

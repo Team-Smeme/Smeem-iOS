@@ -10,6 +10,10 @@ import UIKit
 // MARK: - ForeignDiaryStrategy
 
 final class ForeignDiaryStrategy: DiaryStrategy {
+    func configureRandomSubjectButtonImage(_ button: UIButton) {
+        button.setImage(Constant.Image.btnRandomSubjectInactive, for: .normal)
+    }
+    
     func configurePlaceHolderLabel(_ label: UILabel) {
         label.text = "일기를 작성해주세요."
     }
@@ -26,6 +30,10 @@ final class ForeignDiaryStrategy: DiaryStrategy {
         label.text = "English"
     }
     
+    func configureLeftNavigationButton(_ button: UIButton) {
+        button.setTitle("취소", for: .normal)
+    }
+    
     func configureRightNavigationButton(_ button: UIButton) {
         button.setTitle("완료", for: .normal)
     }
@@ -38,6 +46,10 @@ final class ForeignDiaryStrategy: DiaryStrategy {
 // MARK: - StepOneKoreanDiaryStrategy
 
 final class StepOneKoreanDiaryStrategy: DiaryStrategy {
+    func configureRandomSubjectButtonImage(_ button: UIButton) {
+        button.setImage(Constant.Image.btnRandomSubjectInactive, for: .normal)
+    }
+    
     func configurePlaceHolderLabel(_ label: UILabel) {
         label.text = "완전한 문장으로 한국어 일기를 작성하면, 더욱 정확한\n힌트를 받을 수 있어요."
     }
@@ -54,6 +66,10 @@ final class StepOneKoreanDiaryStrategy: DiaryStrategy {
         label.text = "한국어"
     }
     
+    func configureLeftNavigationButton(_ button: UIButton) {
+        button.setTitle("취소", for: .normal)
+    }
+    
     func configureRightNavigationButton(_ button: UIButton) {
         button.setTitle("다음", for: .normal)
     }
@@ -66,6 +82,12 @@ final class StepOneKoreanDiaryStrategy: DiaryStrategy {
 // MARK: - StepTwoKoreanDiaryStrategy
 
 final class StepTwoKoreanDiaryStrategy: DiaryStrategy {
+    func configureRandomSubjectButtonImage(_ button: UIButton) {
+        func configureRandomSubjectButtonImage(_ button: UIButton) {
+            button.setImage(Constant.Image.btnRandomSubjectEnabled, for: .normal)
+        }
+    }
+    
     func configurePlaceHolderLabel(_ label: UILabel) {
         label.text = "일기를 작성해주세요."
     }
@@ -81,6 +103,10 @@ final class StepTwoKoreanDiaryStrategy: DiaryStrategy {
     
     func configureLanguageLabel(_ label: UILabel) {
         label.text = "English"
+    }
+    
+    func configureLeftNavigationButton(_ button: UIButton) {
+        button.setBackgroundImage(Constant.Image.icnBack, for: .normal)
     }
     
     func configureRightNavigationButton(_ button: UIButton) {
