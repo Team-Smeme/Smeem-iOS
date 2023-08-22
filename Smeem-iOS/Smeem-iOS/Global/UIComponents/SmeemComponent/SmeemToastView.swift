@@ -10,9 +10,12 @@
  let regExToastView = SmeemToastView(type: .defaultToast(bodyType: .regEx))
  let regExToastView = SmeemToastView(type: .errorToast(errorType: .networkError))
  
- 2. view에 addSubView 후 y축(bottom) 레이아웃 값만 입력해서 사용
- 
- 
+ 2. func showToast(message: String) {
+ saveToastView = SmeemToastView(type: .defaultToast(bodyType: .custom(message: message)))
+ guard let toastView = saveToastView else { return }
+ toastView.show(in: view, offset: 30, keyboardHeight: 0)
+ toastView.hide(after: 3)
+}
  **/
 
 import UIKit
@@ -34,8 +37,13 @@ enum ToastViewType {
 }
 
 enum ErrorType: String {
+    /// 인터넷 연결을 확인해 주세요 :(
     case networkError = "인터넷 연결을 확인해 주세요 :("
+    
+    /// 죄송합니다, 시스템 오류가 발생했어요 :(
     case systemError = "죄송합니다, 시스템 오류가 발생했어요 :("
+    
+    /// 데이터를 불러올 수 없어요 :(
     case loadDataError = "데이터를 불러올 수 없어요 :("
     
     var displayText: String {
@@ -44,11 +52,22 @@ enum ErrorType: String {
 }
 
 enum BodyType: String {
+    /// 재접속하거나 나중에 다시 시도해 주세요.
     case error = "재접속하거나 나중에 다시 시도해 주세요."
+    
+    ///  외국어를 포함해 작성해 주세요 :(
     case regEx = "외국어를 포함해 작성해 주세요 :("
+    
+    /// 작성 완료
     case completed = "작성 완료"
+    
+    /// 변경 완료
     case changed = "변경 완료"
+    
+    /// 첨삭 완료
     case edited = "첨삭 완료"
+    
+    /// 로그인에 실패했어요. 다시 시도해 주세요.
     case serverError = "로그인에 실패했어요. 다시 시도해 주세요."
     
     var displayText: String {

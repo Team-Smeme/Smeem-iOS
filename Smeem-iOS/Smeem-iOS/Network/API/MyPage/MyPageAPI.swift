@@ -32,8 +32,8 @@ public class MyPageAPI {
         }
     }
     
-    func changeMyNickName(userName: String, completion: @escaping (GeneralResponse<String>?) -> Void) {
-        myPageProvider.request(.editNinkname(param: EditnicknameRequest(username: userName))) { response in
+    func changeMyNickName(request: EditNicknameRequest, completion: @escaping (GeneralResponse<String>?) -> Void) {
+        myPageProvider.request(.editNickname(param: request)) { response in
             switch response {
             case .success(_):
                 print(response)

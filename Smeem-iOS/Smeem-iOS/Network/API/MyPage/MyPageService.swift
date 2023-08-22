@@ -11,7 +11,7 @@ import Moya
 
 enum MyPageService {
     case myPageInfo
-    case editNinkname(param: EditnicknameRequest)
+    case editNickname(param: EditNicknameRequest)
     case badgeList
     case myPageUserPlan(param: UserPlanRequest)
 }
@@ -21,7 +21,7 @@ extension MyPageService: BaseTargetType {
         switch self {
         case .myPageInfo:
             return URLConstant.myPageURL
-        case .editNinkname:
+        case .editNickname:
             return URLConstant.userURL
         case .badgeList:
             return URLConstant.badgesListURL
@@ -34,7 +34,7 @@ extension MyPageService: BaseTargetType {
         switch self {
         case .myPageInfo, .badgeList:
             return .get
-        case .editNinkname, .myPageUserPlan:
+        case .editNickname, .myPageUserPlan:
             return .patch
         }
     }
@@ -43,7 +43,7 @@ extension MyPageService: BaseTargetType {
         switch self {
         case .myPageInfo, .badgeList:
             return .requestPlain
-        case .editNinkname(let param):
+        case .editNickname(let param):
             return .requestJSONEncodable(param)
         case .myPageUserPlan(let param):
             return .requestJSONEncodable(param)
@@ -52,7 +52,7 @@ extension MyPageService: BaseTargetType {
     
     var headers: [String : String]? {
         switch self {
-        case .myPageInfo, .editNinkname, .badgeList, .myPageUserPlan:
+        case .myPageInfo, .editNickname, .badgeList, .myPageUserPlan:
             return ["Content-Type": "application/json",
                     "Authorization": "Bearer " + UserDefaultsManager.accessToken]
         }

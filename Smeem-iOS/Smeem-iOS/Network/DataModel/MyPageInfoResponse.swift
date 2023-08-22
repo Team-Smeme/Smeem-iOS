@@ -26,6 +26,6 @@ struct Badge: Codable {
     }
 }
 
-struct EditnicknameRequest: Codable {
+struct EditNicknameRequest: Codable {
     let username: String
 }
