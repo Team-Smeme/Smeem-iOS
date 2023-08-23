@@ -41,8 +41,7 @@ extension MyPageService: BaseTargetType {
         switch self {
         case .myPageInfo, .badgeList:
             return .get
-        case .editNinkname, .myPageUserPlan, .editAlarmTime, .editPush:
-        case .editNickname, .myPageUserPlan, .editGoal:
+        case .editNickname, .myPageUserPlan, .editAlarmTime, .editPush, .editGoal:
             return .patch
         }
     }
@@ -66,8 +65,7 @@ extension MyPageService: BaseTargetType {
     
     var headers: [String : String]? {
         switch self {
-        case .myPageInfo, .editNickname, .editGoal, .badgeList, .myPageUserPlan:
-        case .myPageInfo, .editNinkname, .badgeList, .myPageUserPlan, .editAlarmTime, .editPush:
+        case .myPageInfo, .editNickname, .badgeList, .myPageUserPlan, .editAlarmTime, .editPush, .editGoal:
             return ["Content-Type": "application/json",
                     "Authorization": "Bearer " + UserDefaultsManager.accessToken]
         }

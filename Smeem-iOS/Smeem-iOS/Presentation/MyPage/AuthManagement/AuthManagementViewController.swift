@@ -7,10 +7,11 @@
 
 import UIKit
 import AuthenticationServices
+import WebKit
 
 import KakaoSDKUser
 
-final class AuthManagementViewController: UIViewController {
+final class AuthManagementViewController: UIViewController, WKNavigationDelegate {
     
     // MARK: - Property
     
@@ -31,13 +32,16 @@ final class AuthManagementViewController: UIViewController {
         return label
     }()
     
-    private let infomationButton: UIButton = {
+    private lazy var infomationButton: UIButton = {
         let button = UIButton()
         button.setTitle("이용 안내", for: .normal)
         button.titleLabel?.font = .b4
         button.setTitleColor(.gray600, for: .normal)
+        button.addTarget(self, action: #selector(infomationButtonDidTap), for: .touchUpInside)
         return button
     }()
+    
+    private var webView = WKWebView()
     
     private let grayLineOne: UIView = {
         let view = UIView()
@@ -111,6 +115,12 @@ final class AuthManagementViewController: UIViewController {
         alert.addAction(cancel)
         alert.addAction(delete)
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    @objc func infomationButtonDidTap() {
+        if let url = URL(string: "https://smeem.notion.site/334e225bb69b45c28f31fe363ca9f25e?pvs=4") {
+            UIApplication.shared.open(url, options: [:])
+        }
     }
     
     // MARK: - Custom Method

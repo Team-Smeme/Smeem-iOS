@@ -11,6 +11,8 @@ final class ServiceAcceptCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "ServiceAcceptCollectionViewCell"
     
+    var trainingClosure: ((IndexPath) -> Void)?
+    
     var checkTotal = false {
         didSet {
             if checkTotal {
@@ -41,9 +43,10 @@ final class ServiceAcceptCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    private let moreButton: UIButton = {
+    private lazy var moreButton: UIButton = {
         let button = UIButton()
         button.setImage(Constant.Image.icnForward, for: .normal)
+        button.addTarget(self, action: #selector(moreButtonDidTap), for: .touchUpInside)
         return button
     }()
     
@@ -60,6 +63,10 @@ final class ServiceAcceptCollectionViewCell: UICollectionViewCell {
     }
     
     // MARK: - @objc
+    
+    @objc func moreButtonDidTap() {
+        trainingClosure?(getIndexPath()!)
+    }
     
     // MARK: - Custom Method
     

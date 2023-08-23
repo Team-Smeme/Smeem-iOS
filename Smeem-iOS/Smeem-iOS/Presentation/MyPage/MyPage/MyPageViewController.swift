@@ -20,13 +20,13 @@ final class MyPageViewController: UIViewController {
     
     var onTargetRecived: ((_ target: String) -> Void)?
     
-    let goalTextToIndex: [String: Int] = [
-        "자기계발": 0,
-        "취미로 즐기기": 1,
-        "현지 언어 체득": 2,
-        "유창한 비즈니스 영어": 3,
-        "어학 시험 고득점": 4,
-        "아직 모르겠어요": 5
+    let goalTextToIndex: [String: (Int, String)] = [
+        "자기계발": (0, "DEVELOP"),
+        "취미로 즐기기": (1, "HOBBY"),
+        "현지 언어 체득": (2, "APPLY"),
+        "유창한 비즈니스 영어": (3, "BUSINESS"),
+        "어학 시험 고득점": (4, "EXAM"),
+        "아직 모르겠어요": (5, "NONE")
     ]
     
     var toastMessageFlag = false {
@@ -265,7 +265,7 @@ final class MyPageViewController: UIViewController {
         
         if let selectedIndex = getIndexFromGoalText(goalText: userInfo.target) {
             goalVC.selectedGoalIndex = selectedIndex
-            goalVC.selectedGoalLabel = userInfo.target
+            goalVC.selectedGoalLabel = goalTextToIndex[userInfo.target]!.1
         }
         
         self.navigationController?.pushViewController(goalVC, animated: true)
@@ -315,7 +315,7 @@ final class MyPageViewController: UIViewController {
         for i in 0..<dayArray.count {
             indexPathArray.append(myPageSelectedIndexPath[String(dayArray[i])]!)
         }
-        print("dkfjahsfkjhsadkfjdshakf⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️", indexPathArray)
+        
         alarmCollectionView.selectedIndexPath = indexPathArray
         alarmCollectionView.myPageTime = (userInfo.trainingTime.hour, userInfo.trainingTime.minute)
     }
@@ -332,7 +332,7 @@ final class MyPageViewController: UIViewController {
     }
     
     func getIndexFromGoalText(goalText: String) -> Int? {
-        return goalTextToIndex[goalText]
+        return goalTextToIndex[goalText]?.0
     }
     
     private func loadToastMessage() {

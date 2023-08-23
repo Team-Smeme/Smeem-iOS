@@ -43,11 +43,11 @@ public class MyPageAPI {
         }
     }
     
-    func changeGoal(param: EditGoalRequest, completion: @escaping (GeneralResponse<DetailPlanListResponse>) -> Void) {
+    func changeGoal(param: EditGoalRequest, completion: @escaping (GeneralResponse<VoidType>) -> Void) {
         myPageProvider.request(.editGoal(param: param)) { response in
             switch response {
             case .success(let result):
-                guard let data = try? result.map(GeneralResponse<DetailPlanListResponse>.self) else { return }
+                guard let data = try? result.map(GeneralResponse<VoidType>.self) else { return }
                 completion(data)
             case .failure(let err):
                 print(err)

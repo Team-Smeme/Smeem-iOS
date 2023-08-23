@@ -200,6 +200,19 @@ extension ServiceAcceptViewController: UICollectionViewDataSource {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ServiceAcceptCollectionViewCell.identifier, for: indexPath) as? ServiceAcceptCollectionViewCell else { return UICollectionViewCell() }
             cell.setData(serviceAccptArray[indexPath.item])
             cell.checkTotal = selectedTotal
+            
+            cell.trainingClosure = { indexPath in
+                if indexPath.item == 0 {
+                    if let url = URL(string: "https://smeem.notion.site/7132b91df0eb4838b435b53ad7cbb588?pvs=4") {
+                        UIApplication.shared.open(url, options: [:])
+                    }
+                } else {
+                    if let url = URL(string: "https://smeem.notion.site/334e225bb69b45c28f31fe363ca9f25e?pvs=4") {
+                        UIApplication.shared.open(url, options: [:])
+                    }
+                }
+            }
+            
             return cell
         }
     }
@@ -220,7 +233,6 @@ extension ServiceAcceptViewController: UICollectionViewDataSource {
             /// accept cell 클릭시
             if let cell = collectionView.cellForItem(at: indexPath) as? ServiceAcceptCollectionViewCell {
                 cell.checkTotal.toggle()
-                
                 /// indexPath.item에 해당하는 cell 클릭시 cell 활성화
                 acceptDataInsert(indexPathItem: indexPath.item)
             }
