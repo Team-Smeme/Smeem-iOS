@@ -9,18 +9,19 @@ import UIKit
 
 import SnapKit
 
-protocol EditNicknameDelegate: AnyObject {
-    func didEditNickname()
+protocol EditMypageDelegate: AnyObject {
+    func editMyPageData()
 }
 
-class EditNicknameViewController: UIViewController {
+final class EditNicknameViewController: UIViewController {
     
     // MARK: - Property
     
-    weak var editNicknameDelegate: EditNicknameDelegate?
+    weak var editNicknameDelegate: EditMypageDelegate?
     
     var nickName = String()
     var checkDouble = Bool()
+    var isExistNinkname = Bool()
     
     // MARK: - UI Property
     
@@ -104,25 +105,13 @@ class EditNicknameViewController: UIViewController {
 
     // MARK: - @objc
     
-//    @objc private func textFieldEditingChanged(_ textField: UITextField) {
-//        if let text = textField.text, !text.isEmpty {
-//            doneButton.isEnabled = true // 텍스트 필드에 텍스트가 입력되었을 때 버튼 활성화
-//            doneButton.backgroundColor = .point
-//        } else {
-//            doneButton.isEnabled = false // 텍스트 필드가 비어있을 때 버튼 비활성화
-//            doneButton.backgroundColor = .pointInactive
-//        }
-//    }
-    
     @objc func backButtonDidTap(_ sender: UIButton) {
         self.navigationController?.popViewController(animated: true)
     }
     
     @objc func doneButtonDidTap() {
         self.showLodingView(loadingView: self.loadingView)
-        nicknamePatchAPI(nickname: nicknameTextField.text ?? "")
-        changeRootViewController(MyPageViewController())
-        editNicknameDelegate?.didEditNickname()
+        checkNinknameAPI(nickname: nicknameTextField.text ?? "")
     }
     
     @objc func nicknameDidChange(_ notification: Notification) {
@@ -236,20 +225,31 @@ extension EditNicknameViewController: UITextFieldDelegate {
 extension EditNicknameViewController {
     private func nicknamePatchAPI(nickname: String) {
         MyPageAPI.shared.changeMyNickName(request: EditNicknameRequest(username: nickname)) { response in
+            guard let _ = response?.data else { return }
+            self.hideLodingView(loadingView: self.loadingView)
+            self.editNicknameDelegate?.editMyPageData()
+            self.navigationController?.popViewController(animated: true)
+        }
+    }
+    
+    private func checkNinknameAPI(nickname: String) {
+        MyPageAPI.shared.checkNinknameAPI(param: nickname) { response in
             guard let data = response?.data else { return }
             
-            guard let responseData = response else { return }
-            self.checkDouble = responseData.success
-            
             self.hideLodingView(loadingView: self.loadingView)
-
-            DispatchQueue.main.async {
-                if self.checkDouble {
-                    self.navigationController?.popViewController(animated: true)
-                } else {
-                    self.doneButton.smeemButtonType = .notEnabled
-                    self.doubleCheckLabel.isHidden = false
-                }
+            self.isExistNinkname = data.isExist
+            
+            if self.isExistNinkname {
+                self.doubleCheckLabel.isHidden = false
+                self.doneButton.smeemButtonType = .notEnabled
+            } else {
+                self.doubleCheckLabel.isHidden = true
+                self.doneButton.smeemButtonType = .enabled
+            }
+            
+            if !self.isExistNinkname {
+                self.showLodingView(loadingView: self.loadingView)
+                self.nicknamePatchAPI(nickname: nickname)
             }
         }
     }

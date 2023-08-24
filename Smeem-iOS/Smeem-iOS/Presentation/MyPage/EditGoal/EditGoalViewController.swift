@@ -127,7 +127,9 @@ extension EditGoalViewController {
     func patchGoalAPI(target: String) {
         MyPageAPI.shared.changeGoal(param: EditGoalRequest(target: target)) { response in
             
-            guard let data = response.data else { return }
+            guard let _ = response.data else { return }
+            
+            NotificationCenter.default.post(name: NSNotification.Name("goalData"), object: true)
             
             if let navigationController = self.navigationController {
                 let viewControllers = navigationController.viewControllers

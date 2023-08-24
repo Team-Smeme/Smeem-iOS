@@ -11,6 +11,8 @@ final class EditAlarmViewController: UIViewController {
     
     // MARK: - Property
     
+    weak var editAlarmDelegate: EditMypageDelegate?
+    
     var trainigDayData: String?
     var trainingTimeData: (hour: Int, minute: Int)?
     var completeButtonData: Bool?
@@ -140,10 +142,10 @@ extension EditAlarmViewController {
         MyPageAPI.shared.editAlarmTimeAPI(param: alarmTime) { respons in
             self.hideLodingView(loadingView: self.loadingView)
             if respons.success == true {
+                self.editAlarmDelegate?.editMyPageData()
                 self.navigationController?.popViewController(animated: true)
             } else {
                 print("학습 목표 API 호출 실패")
-//                self.loginErrorToast.show()
             }
         }
     }

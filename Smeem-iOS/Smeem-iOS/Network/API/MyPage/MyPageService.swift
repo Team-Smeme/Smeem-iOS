@@ -17,6 +17,7 @@ enum MyPageService {
     case editAlarmTime(param: EditAlarmTime)
     case editPush(param: editPushRequest)
     case editGoal(param: EditGoalRequest)
+    case checkNinkname(param: String)
 }
 
 extension MyPageService: BaseTargetType {
@@ -34,12 +35,14 @@ extension MyPageService: BaseTargetType {
             return URLConstant.userPlanURL
         case .editPush:
             return URLConstant.pushURL
+        case .checkNinkname:
+            return URLConstant.checkNickname
         }
     }
     
     var method: Moya.Method {
         switch self {
-        case .myPageInfo, .badgeList:
+        case .myPageInfo, .badgeList, .checkNinkname:
             return .get
         case .editNickname, .myPageUserPlan, .editAlarmTime, .editPush, .editGoal:
             return .patch
@@ -60,12 +63,14 @@ extension MyPageService: BaseTargetType {
             return .requestJSONEncodable(param)
         case .editPush(let param):
             return .requestJSONEncodable(param)
+        case .checkNinkname(let param):
+            return .requestParameters(parameters: ["name": param], encoding: URLEncoding.queryString)
         }
     }
     
     var headers: [String : String]? {
         switch self {
-        case .myPageInfo, .editNickname, .badgeList, .myPageUserPlan, .editAlarmTime, .editPush, .editGoal:
+        case .myPageInfo, .editNickname, .badgeList, .myPageUserPlan, .editAlarmTime, .editPush, .editGoal, .checkNinkname:
             return ["Content-Type": "application/json",
                     "Authorization": "Bearer " + UserDefaultsManager.accessToken]
         }

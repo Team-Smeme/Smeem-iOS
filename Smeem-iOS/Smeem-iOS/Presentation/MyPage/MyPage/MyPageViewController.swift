@@ -246,8 +246,6 @@ final class MyPageViewController: UIViewController {
     
     @objc func pushButtonDidTap(_ sender: UIButton) {
         hasAlarm = !hasAlarm
-//        userInfo.hasPushAlarm.toggle() // 추후 서버 연결
-        // 반대값 넣음
         editPushPatchAPI(pushData: editPushRequest(hasAlarm: hasAlarm))
     }
     
@@ -268,16 +266,26 @@ final class MyPageViewController: UIViewController {
             goalVC.selectedGoalLabel = goalTextToIndex[userInfo.target]!.1
         }
         
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(goalDataReceived),
+                                               name: NSNotification.Name("goalData"),
+                                               object: nil)
+        
         self.navigationController?.pushViewController(goalVC, animated: true)
     }
     
     @objc func alarmEditButtonDidTap() {
         let alarmEditVC = EditAlarmViewController()
+        alarmEditVC.editAlarmDelegate = self
         alarmEditVC.dayIndexPathArray = indexPathArray
         alarmEditVC.trainigDayData = userInfo.trainingTime.day
         alarmEditVC.trainingTimeData = (userInfo.trainingTime.hour, userInfo.trainingTime.minute)
         alarmEditVC.trainigDayData = userInfo.trainingTime.day
         self.navigationController?.pushViewController(alarmEditVC, animated: true)
+    }
+    
+    @objc func goalDataReceived() {
+        toastMessageFlag = true
     }
     
     // MARK: - Custom Method
@@ -316,6 +324,8 @@ final class MyPageViewController: UIViewController {
             indexPathArray.append(myPageSelectedIndexPath[String(dayArray[i])]!)
         }
         
+        print("lkfjsadkfdsakfhsadkjf✅✅✅✅✅✅✅✅✅✅, ", self.indexPathArray)
+        
         alarmCollectionView.selectedIndexPath = indexPathArray
         alarmCollectionView.myPageTime = (userInfo.trainingTime.hour, userInfo.trainingTime.minute)
     }
@@ -326,17 +336,17 @@ final class MyPageViewController: UIViewController {
         self.view.addGestureRecognizer(swipeRight)
     }
     
-    func setupHowLearningViewTapGestureRecognizer() {
+    private func setupHowLearningViewTapGestureRecognizer() {
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(howLearningViewTapped))
         howLearningView.addGestureRecognizer(tapRecognizer)
     }
     
-    func getIndexFromGoalText(goalText: String) -> Int? {
+    private func getIndexFromGoalText(goalText: String) -> Int? {
         return goalTextToIndex[goalText]?.0
     }
     
     private func loadToastMessage() {
-        showToastIfNeeded(toastType: .defaultToast(bodyType: .completed))
+        showToastIfNeeded(toastType: .defaultToast(bodyType: .changed))
     }
     
     // MARK: - Layout
@@ -492,8 +502,8 @@ final class MyPageViewController: UIViewController {
 
 // MARK: - EditNicknameDelegate
 
-extension MyPageViewController: EditNicknameDelegate {
-    func didEditNickname() {
+extension MyPageViewController: EditMypageDelegate {
+    func editMyPageData() {
         toastMessageFlag = true
     }
 }
@@ -515,12 +525,11 @@ extension MyPageViewController {
         MyPageAPI.shared.editPushAPI(param: pushData) { response in
             // 성공했으면
             if response.success == true {
-                
+                print("lkfjsadkfdsakfhsadkjf✅✅✅✅✅✅✅✅✅✅, ", self.indexPathArray)
                 // 그에 맞춰서 색깔 변화
                 self.alarmCollectionView.hasAlarm = pushData.hasAlarm
                 self.alarmCollectionView.selectedIndexPath = self.indexPathArray
                 
-                print("어떤값?", pushData.hasAlarm)
                 if !pushData.hasAlarm {
                     self.alarmPushToggleButton.isOn = false
                     self.alarmPushToggleButton.tintColor = .lightGray

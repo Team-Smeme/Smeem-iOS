@@ -32,11 +32,24 @@ public class MyPageAPI {
         }
     }
     
-    func changeMyNickName(request: EditNicknameRequest, completion: @escaping (GeneralResponse<String>?) -> Void) {
+    func changeMyNickName(request: EditNicknameRequest, completion: @escaping (GeneralResponse<ServiceAcceptResponse>?) -> Void) {
         myPageProvider.request(.editNickname(param: request)) { response in
             switch response {
-            case .success(_):
-                print(response)
+            case .success(let result):
+                guard let data = try? result.map(GeneralResponse<ServiceAcceptResponse>.self) else { return }
+                completion(data)
+            case .failure(let err):
+                print(err)
+            }
+        }
+    }
+    
+    func checkNinknameAPI(param: String, completion: @escaping (GeneralResponse<NicknameCheckResponse>?) -> Void) {
+        myPageProvider.request(.checkNinkname(param: param)) { response in
+            switch response {
+            case .success(let result):
+                guard let data = try? result.map(GeneralResponse<NicknameCheckResponse>.self) else { return }
+                completion(data)
             case .failure(let err):
                 print(err)
             }
