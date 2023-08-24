@@ -143,7 +143,7 @@ final class HomeViewFloatingViewController: UIViewController {
         buttonStackView.snp.makeConstraints {
             $0.bottom.equalToSuperview().offset(-convertByHeightRatio(118))
             $0.centerX.equalToSuperview()
-            $0.height.equalTo(convertByHeightRatio(118))
+            $0.height.equalTo(constraintByNotch(118, 130))
             $0.width.equalTo(convertByWidthRatio(339))
         }
         
