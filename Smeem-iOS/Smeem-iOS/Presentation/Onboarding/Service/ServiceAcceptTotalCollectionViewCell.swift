@@ -13,21 +13,21 @@ final class ServiceAcceptTotalCollectionViewCell: UICollectionViewCell {
     
     private let identifier = "ServiceAcceptCollectionViewCell"
     
-    var selectedCell = false {
-        didSet {
-            if selectedCell {
-                goalLabel.font = .b1
-                goalLabel.textColor = .point
-                layer.borderColor = UIColor.point.cgColor
-                checkButton.setImage(Constant.Image.icnCheckActive, for: .normal)
-            } else {
-                goalLabel.font = .b3
-                goalLabel.textColor = .gray600
-                layer.borderColor = UIColor.gray100.cgColor
-                checkButton.setImage(Constant.Image.icnCheckInactive, for: .normal)
-            }
-        }
-    }
+//    var selectedCell = false {
+//        didSet {
+//            if selectedCell {
+//                goalLabel.font = .b1
+//                goalLabel.textColor = .point
+//                layer.borderColor = UIColor.point.cgColor
+//                checkButton.setImage(Constant.Image.icnCheckActive, for: .normal)
+//            } else {
+//                goalLabel.font = .b3
+//                goalLabel.textColor = .gray600
+//                layer.borderColor = UIColor.gray100.cgColor
+//                checkButton.setImage(Constant.Image.icnCheckInactive, for: .normal)
+//            }
+//        }
+//    }
     
     static let identifier = "OnboardingGoalCollectionViewCell"
     
@@ -56,7 +56,6 @@ final class ServiceAcceptTotalCollectionViewCell: UICollectionViewCell {
         
         setUI()
         setLayout()
-        setCellSelected(selectedCell)
     }
     
     required init?(coder: NSCoder) {

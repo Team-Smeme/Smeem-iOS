@@ -98,11 +98,18 @@ final class AlarmCollectionView: UICollectionView {
 
 extension AlarmCollectionView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? AlarmCollectionViewCell else { return }
+        cell.selctedCell(hasAlarm: hasAlarm)
+        
         selectedDayArray.insert(dayDicrionary[dayArray[indexPath.item]] ?? "")
         print(selectedDayArray)
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? AlarmCollectionViewCell else { return }
+        cell.desecltedCell()
+        
         selectedDayArray.remove(dayDicrionary[dayArray[indexPath.item]] ?? "")
         print(selectedDayArray)
     }
@@ -118,15 +125,13 @@ extension AlarmCollectionView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier:  AlarmCollectionViewCell.identifier, for: indexPath) as? AlarmCollectionViewCell else { return UICollectionViewCell() }
         
-        let initalSelectedIndexPaths = selectedIndexPath
-        initalSelectedIndexPaths.forEach {
-            collectionView.selectItem(at: $0, animated: false, scrollPosition: .init())
-        }
+        let initalSelectedIndexPaths = selectedIndexPath.contains(indexPath)
         
-        if !hasAlarm {
-            cell.dayCellColor = hasAlarm
+        if initalSelectedIndexPaths {
+            cell.selctedCell(hasAlarm: hasAlarm)
+            collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .init())
         } else {
-            cell.dayCellColor = hasAlarm
+            cell.desecltedCell()
         }
         
         cell.setData(dayArray[indexPath.item])

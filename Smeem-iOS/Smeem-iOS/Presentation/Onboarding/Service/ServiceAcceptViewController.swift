@@ -20,7 +20,7 @@ final class ServiceAcceptViewController: UIViewController {
     }
     var nickNameData = ""
     private var notiAccessToken = ""
-
+    
     private var selectedTotal = false {
         didSet {
             serviceCollectionView.reloadData()
@@ -44,6 +44,32 @@ final class ServiceAcceptViewController: UIViewController {
         label.text = "서비스 이용을 위해 약관에 동의해주세요."
         label.font = .b4
         label.textColor = .smeemBlack
+        return label
+    }()
+    
+    private lazy var totalAcceptView: UIView = {
+        let view = UIView()
+        view.layer.borderColor = UIColor.gray100.cgColor
+        view.layer.borderWidth = 1.5
+        view.makeRoundCorner(cornerRadius: 6)
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(totalAcceptViewDidTap))
+        view.addGestureRecognizer(tapGesture)
+        return view
+    }()
+    
+    private lazy var checkButton: UIButton = {
+        let button = UIButton()
+        button.setImage(Constant.Image.icnCheckInactive, for: .normal)
+        button.isUserInteractionEnabled = true
+        button.addTarget(self, action: #selector(totalAcceptViewDidTap), for: .touchUpInside)
+        return button
+    }()
+    
+    private let goalLabel: UILabel = {
+        let label = UILabel()
+        label.font = .b3
+        label.text = "전체 동의하기"
+        label.textColor = .gray600
         return label
     }()
     
@@ -82,6 +108,40 @@ final class ServiceAcceptViewController: UIViewController {
         nicknamePatchAPI()
     }
     
+    @objc func totalAcceptViewDidTap() {
+        selectedTotal.toggle()
+        
+        if selectedTotal {
+            for i in 0..<3 {
+                acceptCheckArray.insert(i)
+            }
+            nextButton.smeemButtonType = .enabled
+            goalLabel.font = .b1
+            goalLabel.textColor = .point
+            totalAcceptView.layer.borderColor = UIColor.point.cgColor
+            totalAcceptView.layer.borderWidth = 1.5
+            checkButton.setImage(Constant.Image.icnCheckActive, for: .normal)
+            
+            for indexPath in 0..<3 {
+                serviceCollectionView.selectItem(at: IndexPath(item: indexPath, section: 0), animated: false, scrollPosition: .init())
+            }
+            
+        } else {
+            acceptCheckArray.removeAll()
+            nextButton.smeemButtonType = .notEnabled
+            goalLabel.font = .b3
+            goalLabel.textColor = .gray600
+            totalAcceptView.layer.borderColor = UIColor.gray100.cgColor
+            totalAcceptView.layer.borderWidth = 1.5
+            checkButton.setImage(Constant.Image.icnCheckInactive, for: .normal)
+            
+            for indexPath in 0..<3 {
+                serviceCollectionView.deselectItem(at: IndexPath(item: indexPath, section: 0), animated: false)
+            }
+        }
+        print(acceptCheckArray)
+    }
+    
     // MARK: - Custom Method
     
     private func setDelegate() {
@@ -103,12 +163,9 @@ final class ServiceAcceptViewController: UIViewController {
     }
     
     private func checkAccptButtonType() {
-       if acceptCheckArray.contains(0) && acceptCheckArray.contains(1) {
-           
-//           self.serviceCollectionView.reloadData()
+        if acceptCheckArray.contains(0) && acceptCheckArray.contains(1) {
             nextButton.smeemButtonType = .enabled
         } else {
-//            self.serviceCollectionView.reloadData()
             nextButton.smeemButtonType = .notEnabled
         }
     }
@@ -120,7 +177,8 @@ final class ServiceAcceptViewController: UIViewController {
     }
     
     private func setLayout() {
-        view.addSubviews(titleServiceLabel, detailServiceLabel, serviceCollectionView, nextButton)
+        view.addSubviews(titleServiceLabel, detailServiceLabel, totalAcceptView, serviceCollectionView, nextButton)
+        totalAcceptView.addSubviews(checkButton, goalLabel)
         
         titleServiceLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(120)
@@ -132,9 +190,25 @@ final class ServiceAcceptViewController: UIViewController {
             $0.leading.equalToSuperview().inset(26)
         }
         
+        totalAcceptView.snp.makeConstraints {
+            $0.top.equalTo(detailServiceLabel.snp.bottom).offset(28)
+            $0.trailing.leading.equalToSuperview().inset(18)
+            $0.height.equalTo(60)
+        }
+        
+        checkButton.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.leading.equalToSuperview().inset(20)
+        }
+        
+        goalLabel.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.leading.equalTo(checkButton.snp.trailing).offset(12)
+        }
+        
         serviceCollectionView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(18)
-            $0.top.equalTo(detailServiceLabel.snp.bottom).offset(28)
+            $0.top.equalTo(totalAcceptView.snp.bottom).offset(28)
             $0.bottom.equalToSuperview()
         }
         
@@ -175,91 +249,94 @@ extension ServiceAcceptViewController: UICollectionViewDelegate { }
 // MARK: - UICollectionViewDataSource
 
 extension ServiceAcceptViewController: UICollectionViewDataSource {
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        let sectionNumber = 2
-        return sectionNumber
-    }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let firstSectionItemsNumber = 1
         let secondSectionItemsNumber = 3
-        
-        if section == 0 {
-            return firstSectionItemsNumber
-        } else {
-            return secondSectionItemsNumber
-        }
+        return secondSectionItemsNumber
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if indexPath.section == 0 {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ServiceAcceptTotalCollectionViewCell.identifier, for: indexPath) as? ServiceAcceptTotalCollectionViewCell else { return UICollectionViewCell() }
-            cell.selectedCell = selectedTotal
-            return cell
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ServiceAcceptCollectionViewCell.identifier, for: indexPath) as? ServiceAcceptCollectionViewCell else { return UICollectionViewCell() }
+        cell.setData(serviceAccptArray[indexPath.item])
+        
+        if selectedTotal {
+            cell.selectedCell()
         } else {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ServiceAcceptCollectionViewCell.identifier, for: indexPath) as? ServiceAcceptCollectionViewCell else { return UICollectionViewCell() }
-            cell.setData(serviceAccptArray[indexPath.item])
-            cell.checkTotal = selectedTotal
-            
-            cell.trainingClosure = { indexPath in
-                if indexPath.item == 0 {
-                    if let url = URL(string: "https://smeem.notion.site/7132b91df0eb4838b435b53ad7cbb588?pvs=4") {
-                        UIApplication.shared.open(url, options: [:])
-                    }
-                } else {
-                    if let url = URL(string: "https://smeem.notion.site/334e225bb69b45c28f31fe363ca9f25e?pvs=4") {
-                        UIApplication.shared.open(url, options: [:])
-                    }
+            cell.deselectedCell()
+        }
+//        cell.checkTotal = selectedTotal
+        
+        cell.trainingClosure = { indexPath in
+            if indexPath.item == 0 {
+                if let url = URL(string: "https://smeem.notion.site/7132b91df0eb4838b435b53ad7cbb588?pvs=4") {
+                    UIApplication.shared.open(url, options: [:])
+                }
+            } else {
+                if let url = URL(string: "https://smeem.notion.site/334e225bb69b45c28f31fe363ca9f25e?pvs=4") {
+                    UIApplication.shared.open(url, options: [:])
                 }
             }
-            
-            return cell
         }
+        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.section == 0 {
-            selectedTotal.toggle()
-            if selectedTotal {
-                acceptCheckArray = [0, 1, 2]
-                collectionView.reloadData()
-                nextButton.smeemButtonType = .enabled
-            } else {
-                acceptCheckArray.removeAll()
-                collectionView.reloadData()
-                nextButton.smeemButtonType = .notEnabled
-            }
-        } else if indexPath.section == 1 {
-            /// accept cell 클릭시
-            if let cell = collectionView.cellForItem(at: indexPath) as? ServiceAcceptCollectionViewCell {
-                cell.checkTotal.toggle()
-                /// indexPath.item에 해당하는 cell 클릭시 cell 활성화
-                acceptDataInsert(indexPathItem: indexPath.item)
-            }
-            
-//            if !selectedTotal && acceptCheckArray.count == 3 {
-//                selectedTotal.toggle()
-//                if selectedTotal {
-//                    collectionView.reloadItems(at: [IndexPath(item: 0, section: 0)])
-//                } else {
-//                    collectionView.reloadItems(at: [IndexPath(item: 0, section: 0)])
-//                }
-//            }
-            
-            /// 하단 VC 버튼 활성화 로직
-            checkAccptButtonType()
+        /// accept cell 클릭시
+        if let cell = collectionView.cellForItem(at: indexPath) as? ServiceAcceptCollectionViewCell {
+            cell.checkTotal.toggle()
+            /// indexPath.item에 해당하는 cell 클릭시 cell 활성화
+            acceptDataInsert(indexPathItem: indexPath.item)
         }
+        
+        print(acceptCheckArray)
+        
+        if acceptCheckArray.count == 3 {
+            nextButton.smeemButtonType = .enabled
+            goalLabel.font = .b1
+            goalLabel.textColor = .point
+            totalAcceptView.layer.borderColor = UIColor.point.cgColor
+            totalAcceptView.layer.borderWidth = 1.5
+            checkButton.setImage(Constant.Image.icnCheckActive, for: .normal)
+        } else if acceptCheckArray.count < 3 {
+            nextButton.smeemButtonType = .notEnabled
+            goalLabel.font = .b3
+            goalLabel.textColor = .gray600
+            totalAcceptView.layer.borderColor = UIColor.gray100.cgColor
+            totalAcceptView.layer.borderWidth = 1.5
+            checkButton.setImage(Constant.Image.icnCheckInactive, for: .normal)
+        }
+        
+        /// 하단 VC 버튼 활성화 로직
+        checkAccptButtonType()
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         if let cell = collectionView.cellForItem(at: indexPath) as? ServiceAcceptCollectionViewCell {
             cell.checkTotal.toggle()
+            
+            /// indexPath.item에 해당하는 cell 클릭시 cell 활성화
+            acceptDataRemove(indexPathItem: indexPath.item)
+            
+            /// 하단 VC 버튼 활성화 로직
         }
-
-        /// indexPath.item에 해당하는 cell 클릭시 cell 활성화
-        acceptDataRemove(indexPathItem: indexPath.item)
+        print(acceptCheckArray)
         
-        /// 하단 VC 버튼 활성화 로직
+        if acceptCheckArray.count == 3 {
+            nextButton.smeemButtonType = .enabled
+            goalLabel.font = .b1
+            goalLabel.textColor = .point
+            totalAcceptView.layer.borderColor = UIColor.point.cgColor
+            totalAcceptView.layer.borderWidth = 1.5
+            checkButton.setImage(Constant.Image.icnCheckActive, for: .normal)
+        } else if acceptCheckArray.count < 3 {
+            nextButton.smeemButtonType = .notEnabled
+            goalLabel.font = .b3
+            goalLabel.textColor = .gray600
+            totalAcceptView.layer.borderColor = UIColor.gray100.cgColor
+            totalAcceptView.layer.borderWidth = 1.5
+            checkButton.setImage(Constant.Image.icnCheckInactive, for: .normal)
+        }
+            
         checkAccptButtonType()
     }
 }
@@ -268,29 +345,13 @@ extension ServiceAcceptViewController: UICollectionViewDataSource {
 
 extension ServiceAcceptViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if indexPath.section == 0 {
-            let width = collectionView.frame.width
-            let height = convertByHeightRatio(60)
-            return CGSize(width: width, height: height)
-        } else {
-            let width = collectionView.frame.width
-            let height = convertByHeightRatio(20)
-            return CGSize(width: width, height: height)
-        }
+        let width = collectionView.frame.width
+        let height = convertByHeightRatio(20)
+        return CGSize(width: width, height: height)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        if section == 1 {
-            let sectionLineSpacing: CGFloat = 32
-            return sectionLineSpacing
-        }
-        return CGFloat()
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        if section == 1 {
-            return UIEdgeInsets(top: 32, left: 0, bottom: 0, right: 0)
-        }
-        return UIEdgeInsets()
+        let sectionLineSpacing: CGFloat = 32
+        return sectionLineSpacing
     }
 }

@@ -82,12 +82,10 @@ extension GoalViewController: NextButtonDelegate {
         switch viewtype {
         case .onboarding:
             let howOnboardingVC = HowOnboardingViewController()
-            print("flaksdjfkasldfjasd", selectedGoalLabel)
             howOnboardingVC.tempTarget = selectedGoalLabel
             self.navigationController?.pushViewController(howOnboardingVC, animated: true)
         case .myPage:
             let howOnboardingVC = EditGoalViewController()
-            print("flaksdjfkasldfjasd", selectedGoalLabel)
             howOnboardingVC.tempTarget = selectedGoalLabel
             self.navigationController?.pushViewController(howOnboardingVC, animated: true)
         }

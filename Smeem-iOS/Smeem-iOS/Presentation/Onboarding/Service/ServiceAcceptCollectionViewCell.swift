@@ -12,6 +12,7 @@ final class ServiceAcceptCollectionViewCell: UICollectionViewCell {
     static let identifier = "ServiceAcceptCollectionViewCell"
     
     var trainingClosure: ((IndexPath) -> Void)?
+    var buttonClosure: ((IndexPath) -> Void)?
     
     var checkTotal = false {
         didSet {
@@ -29,9 +30,10 @@ final class ServiceAcceptCollectionViewCell: UICollectionViewCell {
     
     // MARK: - UI Property
     
-    private let checkButton: UIButton = {
+    private lazy var checkButton: UIButton = {
         let button = UIButton()
         button.setImage(Constant.Image.icnCheckInactive, for: .normal)
+        button.addTarget(self, action: #selector(checkButtonDidTap), for: .touchUpInside)
         return button
     }()
     
@@ -68,10 +70,24 @@ final class ServiceAcceptCollectionViewCell: UICollectionViewCell {
         trainingClosure?(getIndexPath()!)
     }
     
+    @objc func checkButtonDidTap() {
+        buttonClosure?(getIndexPath()!)
+    }
+    
     // MARK: - Custom Method
     
     func setData(_ text: String) {
         serviceAcceptLabel.text = text
+    }
+    
+    func selectedCell() {
+        serviceAcceptLabel.textColor = .black
+        checkButton.setImage(Constant.Image.icnCheckActive, for: .normal)
+    }
+    
+    func deselectedCell() {
+        serviceAcceptLabel.textColor = .gray600
+        checkButton.setImage(Constant.Image.icnCheckInactive, for: .normal)
     }
     
     // MARK: - Layout

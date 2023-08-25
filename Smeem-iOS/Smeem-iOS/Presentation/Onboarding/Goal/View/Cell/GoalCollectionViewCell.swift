@@ -38,7 +38,6 @@ final class GoalCollectionViewCell: UICollectionViewCell {
         
         setUI()
         setLayout()
-//        setCellSelected(isSelected)
         layer.borderColor = UIColor.gray100.cgColor
     }
     
