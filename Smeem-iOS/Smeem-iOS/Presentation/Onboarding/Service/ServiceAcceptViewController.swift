@@ -79,6 +79,7 @@ final class ServiceAcceptViewController: UIViewController {
         collectionView.backgroundColor = .clear
         collectionView.showsVerticalScrollIndicator = false
         collectionView.allowsMultipleSelection = true
+        collectionView.allowsSelection = true
         return collectionView
     }()
     
@@ -167,6 +168,33 @@ final class ServiceAcceptViewController: UIViewController {
             nextButton.smeemButtonType = .enabled
         } else {
             nextButton.smeemButtonType = .notEnabled
+        }
+    }
+    
+    private func totalViewClicked() {
+        if acceptCheckArray.count == 3 {
+            selectedTotal.toggle()
+            nextButton.smeemButtonType = .enabled
+            goalLabel.font = .b1
+            goalLabel.textColor = .point
+            totalAcceptView.layer.borderColor = UIColor.point.cgColor
+            totalAcceptView.layer.borderWidth = 1.5
+            checkButton.setImage(Constant.Image.icnCheckActive, for: .normal)
+        } else if acceptCheckArray.count == 0 {
+            selectedTotal.toggle()
+            nextButton.smeemButtonType = .notEnabled
+            goalLabel.font = .b3
+            goalLabel.textColor = .gray600
+            totalAcceptView.layer.borderColor = UIColor.gray100.cgColor
+            totalAcceptView.layer.borderWidth = 1.5
+            checkButton.setImage(Constant.Image.icnCheckInactive, for: .normal)
+        } else if acceptCheckArray.count < 3 {
+            nextButton.smeemButtonType = .notEnabled
+            goalLabel.font = .b3
+            goalLabel.textColor = .gray600
+            totalAcceptView.layer.borderColor = UIColor.gray100.cgColor
+            totalAcceptView.layer.borderWidth = 1.5
+            checkButton.setImage(Constant.Image.icnCheckInactive, for: .normal)
         }
     }
     
@@ -259,12 +287,13 @@ extension ServiceAcceptViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ServiceAcceptCollectionViewCell.identifier, for: indexPath) as? ServiceAcceptCollectionViewCell else { return UICollectionViewCell() }
         cell.setData(serviceAccptArray[indexPath.item])
         
-        if selectedTotal {
+        let isSelected = acceptCheckArray.contains(indexPath.item)
+        
+        if isSelected {
             cell.selectedCell()
         } else {
             cell.deselectedCell()
         }
-//        cell.checkTotal = selectedTotal
         
         cell.trainingClosure = { indexPath in
             if indexPath.item == 0 {
@@ -283,28 +312,12 @@ extension ServiceAcceptViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         /// accept cell 클릭시
         if let cell = collectionView.cellForItem(at: indexPath) as? ServiceAcceptCollectionViewCell {
-            cell.checkTotal.toggle()
+            cell.selectedCell()
             /// indexPath.item에 해당하는 cell 클릭시 cell 활성화
             acceptDataInsert(indexPathItem: indexPath.item)
         }
         
-        print(acceptCheckArray)
-        
-        if acceptCheckArray.count == 3 {
-            nextButton.smeemButtonType = .enabled
-            goalLabel.font = .b1
-            goalLabel.textColor = .point
-            totalAcceptView.layer.borderColor = UIColor.point.cgColor
-            totalAcceptView.layer.borderWidth = 1.5
-            checkButton.setImage(Constant.Image.icnCheckActive, for: .normal)
-        } else if acceptCheckArray.count < 3 {
-            nextButton.smeemButtonType = .notEnabled
-            goalLabel.font = .b3
-            goalLabel.textColor = .gray600
-            totalAcceptView.layer.borderColor = UIColor.gray100.cgColor
-            totalAcceptView.layer.borderWidth = 1.5
-            checkButton.setImage(Constant.Image.icnCheckInactive, for: .normal)
-        }
+        totalViewClicked()
         
         /// 하단 VC 버튼 활성화 로직
         checkAccptButtonType()
@@ -312,7 +325,7 @@ extension ServiceAcceptViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         if let cell = collectionView.cellForItem(at: indexPath) as? ServiceAcceptCollectionViewCell {
-            cell.checkTotal.toggle()
+            cell.deselectedCell()
             
             /// indexPath.item에 해당하는 cell 클릭시 cell 활성화
             acceptDataRemove(indexPathItem: indexPath.item)
@@ -321,21 +334,7 @@ extension ServiceAcceptViewController: UICollectionViewDataSource {
         }
         print(acceptCheckArray)
         
-        if acceptCheckArray.count == 3 {
-            nextButton.smeemButtonType = .enabled
-            goalLabel.font = .b1
-            goalLabel.textColor = .point
-            totalAcceptView.layer.borderColor = UIColor.point.cgColor
-            totalAcceptView.layer.borderWidth = 1.5
-            checkButton.setImage(Constant.Image.icnCheckActive, for: .normal)
-        } else if acceptCheckArray.count < 3 {
-            nextButton.smeemButtonType = .notEnabled
-            goalLabel.font = .b3
-            goalLabel.textColor = .gray600
-            totalAcceptView.layer.borderColor = UIColor.gray100.cgColor
-            totalAcceptView.layer.borderWidth = 1.5
-            checkButton.setImage(Constant.Image.icnCheckInactive, for: .normal)
-        }
+        totalViewClicked()
             
         checkAccptButtonType()
     }

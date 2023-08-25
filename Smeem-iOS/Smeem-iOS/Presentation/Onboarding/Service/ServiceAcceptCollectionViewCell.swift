@@ -12,19 +12,6 @@ final class ServiceAcceptCollectionViewCell: UICollectionViewCell {
     static let identifier = "ServiceAcceptCollectionViewCell"
     
     var trainingClosure: ((IndexPath) -> Void)?
-    var buttonClosure: ((IndexPath) -> Void)?
-    
-    var checkTotal = false {
-        didSet {
-            if checkTotal {
-                serviceAcceptLabel.textColor = .black
-                checkButton.setImage(Constant.Image.icnCheckActive, for: .normal)
-            } else {
-                serviceAcceptLabel.textColor = .gray600
-                checkButton.setImage(Constant.Image.icnCheckInactive, for: .normal)
-            }
-        }
-    }
     
     // MARK: - Property
     
@@ -71,7 +58,7 @@ final class ServiceAcceptCollectionViewCell: UICollectionViewCell {
     }
     
     @objc func checkButtonDidTap() {
-        buttonClosure?(getIndexPath()!)
+        
     }
     
     // MARK: - Custom Method
