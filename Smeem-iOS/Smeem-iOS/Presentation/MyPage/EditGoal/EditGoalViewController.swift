@@ -55,7 +55,7 @@ final class EditGoalViewController: UIViewController {
         
         setLayout()
         setBackgroundColor()
-        print("dfkajfhdksafjasdf", tempTarget)
+        swipeRecognizer()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -74,6 +74,12 @@ final class EditGoalViewController: UIViewController {
         
         howLearningView.setData(planName: planName, planWayOne: planWayOne, planWayTwo: planWayTwo, detailPlanOne: detailPlan[0], detailPlanTwo: detailPlan[1])
     }
+    
+    private func swipeRecognizer() {
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(responseToSwipeGesture))
+        swipeRight.direction = UISwipeGestureRecognizer.Direction.right
+        self.view.addGestureRecognizer(swipeRight)
+    }
 
 }
 
@@ -87,6 +93,10 @@ extension EditGoalViewController {
     
     @objc func nextButtonDidTap() {
         patchGoalAPI(target: tempTarget)
+    }
+    
+    @objc func responseToSwipeGesture() {
+        self.navigationController?.popViewController(animated: true)
     }
     
     // MARK: - Layout

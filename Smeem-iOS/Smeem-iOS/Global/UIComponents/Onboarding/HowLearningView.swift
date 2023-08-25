@@ -154,9 +154,9 @@ final class HowLearningView: UIView {
     private func showButtonType() {
         switch buttontype {
         case .logo:
-            editButton.isHidden = false
+            editButton.isHidden = true
         case .edit:
-            smeemLogo.isHidden = false
+            smeemLogo.isHidden = true
         }
     }
     

@@ -72,6 +72,7 @@ final class EditAlarmViewController: UIViewController {
         setBackgroundColor()
         setLayout()
         hiddenNavigationBar()
+        swipeRecognizer()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -89,6 +90,16 @@ final class EditAlarmViewController: UIViewController {
         editAlarmTimePatchAPI(alarmTime: EditAlarmTime(trainingTime: TrainingTime(day: trainigDayData!,
                                                                                   hour: trainingTimeData!.hour,
                                                                                   minute: trainingTimeData!.minute)))
+    }
+    
+    @objc func responseToSwipeGesture() {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    private func swipeRecognizer() {
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(responseToSwipeGesture))
+        swipeRight.direction = UISwipeGestureRecognizer.Direction.right
+        self.view.addGestureRecognizer(swipeRight)
     }
     
     // MARK: - Custom Method

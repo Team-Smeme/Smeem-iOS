@@ -312,9 +312,15 @@ extension ServiceAcceptViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         /// accept cell 클릭시
         if let cell = collectionView.cellForItem(at: indexPath) as? ServiceAcceptCollectionViewCell {
-            cell.selectedCell()
-            /// indexPath.item에 해당하는 cell 클릭시 cell 활성화
-            acceptDataInsert(indexPathItem: indexPath.item)
+            let isSelected = acceptCheckArray.contains(indexPath.item)
+            
+            if isSelected {
+                cell.deselectedCell()
+                acceptDataRemove(indexPathItem: indexPath.item)
+            } else {
+                cell.selectedCell()
+                acceptDataInsert(indexPathItem: indexPath.item)
+            }
         }
         
         totalViewClicked()
@@ -332,7 +338,6 @@ extension ServiceAcceptViewController: UICollectionViewDataSource {
             
             /// 하단 VC 버튼 활성화 로직
         }
-        print(acceptCheckArray)
         
         totalViewClicked()
             
