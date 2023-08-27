@@ -11,13 +11,23 @@ final class ServiceAcceptCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "ServiceAcceptCollectionViewCell"
     
+    var checkTotal = false {
+        didSet {
+            if checkTotal {
+                checkButton.setImage(Constant.Image.icnCheckActive, for: .normal)
+            } else {
+                checkButton.setImage(Constant.Image.icnCheckInactive, for: .normal)
+            }
+        }
+    }
+    
     // MARK: - Property
     
     // MARK: - UI Property
     
     private let checkButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = .point
+        button.setImage(Constant.Image.icnCheckInactive, for: .normal)
         return button
     }()
     
@@ -27,6 +37,12 @@ final class ServiceAcceptCollectionViewCell: UICollectionViewCell {
         label.setTextWithLineHeight(lineHeight: 22)
         label.textColor = .smeemBlack
         return label
+    }()
+    
+    private let moreButton: UIButton = {
+        let button = UIButton()
+        button.setImage(Constant.Image.icnForward, for: .normal)
+        return button
     }()
     
     // MARK: - Life Cycle
@@ -52,7 +68,7 @@ final class ServiceAcceptCollectionViewCell: UICollectionViewCell {
     // MARK: - Layout
     
     private func setLayout() {
-        addSubviews(checkButton, serviceAcceptLabel)
+        addSubviews(checkButton, serviceAcceptLabel, moreButton)
         
         checkButton.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(20)
@@ -64,6 +80,10 @@ final class ServiceAcceptCollectionViewCell: UICollectionViewCell {
             $0.leading.equalTo(checkButton.snp.trailing).offset(12)
             $0.top.equalToSuperview()
         }
+        
+        moreButton.snp.makeConstraints {
+            $0.trailing.equalToSuperview()
+            $0.centerY.equalToSuperview()
+        }
     }
-
 }

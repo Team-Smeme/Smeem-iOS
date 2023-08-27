@@ -84,7 +84,7 @@ final class DiaryScrollerView: UIScrollView {
         let label = UILabel()
         label.text = "유진이"
         label.font = .c3
-        label.textColor = .black
+        label.textColor = .gray500
         return label
     }()
     

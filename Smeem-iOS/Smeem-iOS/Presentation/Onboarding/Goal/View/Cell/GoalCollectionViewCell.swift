@@ -11,11 +11,11 @@ import SnapKit
 
 final class GoalCollectionViewCell: UICollectionViewCell {
     
-    override var isSelected: Bool {
-        didSet {
-            setCellSelected(isSelected)
-        }
-    }
+//    override var isSelected: Bool {
+//        didSet {
+//            setCellSelected(isSelected)
+//        }
+//    }
     
     static let identifier = "OnboardingGoalCollectionViewCell"
     
@@ -23,7 +23,12 @@ final class GoalCollectionViewCell: UICollectionViewCell {
     
     // MARK: - UI Property
     
-    private let checkButton = UIButton()
+    private let checkButton: UIButton = {
+        let button = UIButton()
+        button.setImage(Constant.Image.icnCheckInactive, for: .normal)
+        return button
+    }()
+    
     private let goalLabel: UILabel = {
         let label = UILabel()
         label.font = .b3
@@ -39,14 +44,13 @@ final class GoalCollectionViewCell: UICollectionViewCell {
         
         setUI()
         setLayout()
-        setCellSelected(isSelected)
+//        setCellSelected(isSelected)
+        layer.borderColor = UIColor.gray100.cgColor
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    // MARK: - @objc
     
     // MARK: - Custom Method
     
@@ -54,18 +58,18 @@ final class GoalCollectionViewCell: UICollectionViewCell {
         goalLabel.text = text
     }
     
-    private func setCellSelected(_ selected: Bool) {
-        if isSelected {
-            goalLabel.font = .b1
-            goalLabel.textColor = .point
-            layer.borderColor = UIColor.point.cgColor
-            checkButton.setImage(Constant.Image.icnCheckActive, for: .normal)
-        } else {
-            goalLabel.font = .b3
-            goalLabel.textColor = .gray600
-            layer.borderColor = UIColor.gray100.cgColor
-            checkButton.setImage(Constant.Image.icnCheckInactive, for: .normal)
-        }
+    func selctedCell() {
+        goalLabel.font = .b1
+        goalLabel.textColor = .point
+        layer.borderColor = UIColor.point.cgColor
+        checkButton.setImage(Constant.Image.icnCheckActive, for: .normal)
+    }
+
+    func desecltedCell() {
+        goalLabel.font = .b3
+        goalLabel.textColor = .gray600
+        layer.borderColor = UIColor.gray100.cgColor
+        checkButton.setImage(Constant.Image.icnCheckInactive, for: .normal)
     }
     
     // MARK: - Layout

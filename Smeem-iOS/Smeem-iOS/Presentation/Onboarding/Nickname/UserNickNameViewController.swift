@@ -12,7 +12,7 @@ final class UserNicknameViewController: UIViewController {
     // MARK: - Property
     
     var userPlanRequest: UserPlanRequest?
-    var checkDouble = Bool()
+    var isExistNinkname = Bool()
     var badgeListData: [PopupBadge]?
     
     // MARK: - UI Property
@@ -87,12 +87,7 @@ final class UserNicknameViewController: UIViewController {
         showKeyboard(textView: nicknameTextField)
         addTextFieldNotification()
         setImage()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        userPlanPatchAPI(userPlan: userPlanRequest!)
+        hiddenNavigationBar()
     }
     
     deinit {
@@ -103,7 +98,7 @@ final class UserNicknameViewController: UIViewController {
     
     @objc func nextButtonDidTap() {
         self.showLodingView(loadingView: loadingView)
-        nicknamePatchAPI(nickname: nicknameTextField.text ?? "")
+        checkNicknameGetAPI(nickname: nicknameTextField.text ?? "")
     }
     
     @objc func nicknameDidChange(_ notification: Notification) {
@@ -211,29 +206,33 @@ extension UserNicknameViewController: UITextFieldDelegate {
 }
 
 extension UserNicknameViewController {
-    private func nicknamePatchAPI(nickname: String) {
-        OnboardingAPI.shared.nicknamePatch(param: NicknameRequest(username: nickname)) { response in
-            self.hideLodingView(loadingView: self.loadingView)
-            self.checkDouble = response.success
+    private func checkNicknameGetAPI(nickname: String) {
+        OnboardingAPI.shared.ninknameCheckAPI(userName: nickname, accessToken: UserDefaultsManager.clientAccessToken) { response in
+            guard let data = response.data else { return }
             
-            DispatchQueue.main.async {
-                if self.checkDouble {
-                    let homeVC = HomeViewController()
-                    homeVC.badgePopupData = self.badgeListData ?? []
-                    let rootVC = UINavigationController(rootViewController: homeVC)
-                    self.changeRootViewControllerAndPresent(rootVC)
-                } else {
-                    self.nextButton.smeemButtonType = .notEnabled
-                    self.doubleCheckLabel.isHidden = false
-                }
+            self.hideLodingView(loadingView: self.loadingView)
+            self.isExistNinkname = data.isExist
+            
+            if self.isExistNinkname {
+                self.doubleCheckLabel.isHidden = false
+                self.nextButton.smeemButtonType = .notEnabled
+            } else {
+                self.doubleCheckLabel.isHidden = true
+                self.nextButton.smeemButtonType = .enabled
+            }
+            
+            if !self.isExistNinkname {
+                let serviceVC = ServiceAcceptViewController()
+                serviceVC.nickNameData = self.nicknameTextField.text ?? ""
+                self.navigationController?.pushViewController(serviceVC, animated: true)
             }
         }
     }
     
-    private func userPlanPatchAPI(userPlan: UserPlanRequest) {
-        OnboardingAPI.shared.userPlanPathch(param: userPlan) { response in
-            print(response.message)
-            print(response.success)
-        }
-    }
+//    private func userPlanPatchAPI(userPlan: UserPlanRequest) {
+//        OnboardingAPI.shared.userPlanPathch(param: userPlan) { response in
+//            print(response.message)
+//            print(response.success)
+//        }
+//    }
 }

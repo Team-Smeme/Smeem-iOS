@@ -10,45 +10,51 @@ import Foundation
 import Moya
 
 enum MyPageService {
-    case MyPageInfo
-    case ChangeMyNickName(param: NicknameRequest)
+    case myPageInfo
+    case editNinkname(param: EditnicknameRequest)
     case badgeList
+    case myPageUserPlan(param: UserPlanRequest)
 }
 
 extension MyPageService: BaseTargetType {
     var path: String {
         switch self {
-        case .MyPageInfo:
+        case .myPageInfo:
             return URLConstant.myPageURL
-        case .ChangeMyNickName:
+        case .editNinkname:
             return URLConstant.userURL
         case .badgeList:
             return URLConstant.badgesListURL
+        case .myPageUserPlan:
+            return URLConstant.userPlanURL
         }
     }
     
     var method: Moya.Method {
         switch self {
-        case .MyPageInfo, .badgeList:
+        case .myPageInfo, .badgeList:
             return .get
-        case .ChangeMyNickName:
+        case .editNinkname, .myPageUserPlan:
             return .patch
         }
     }
     
     var task: Moya.Task {
         switch self {
-        case .MyPageInfo, .badgeList:
+        case .myPageInfo, .badgeList:
             return .requestPlain
-        case .ChangeMyNickName(let param):
+        case .editNinkname(let param):
+            return .requestJSONEncodable(param)
+        case .myPageUserPlan(let param):
             return .requestJSONEncodable(param)
         }
     }
     
     var headers: [String : String]? {
         switch self {
-        case .MyPageInfo, .ChangeMyNickName, .badgeList:
-            return NetworkConstant.tempTokenHeader
+        case .myPageInfo, .editNinkname, .badgeList, .myPageUserPlan:
+            return ["Content-Type": "application/json",
+                    "Authorization": "Bearer " + UserDefaultsManager.accessToken]
         }
     }
 }

@@ -22,6 +22,8 @@ final class HowOnboardingViewController: UIViewController {
     
     // MARK: - UI Property
     
+    private let loadingView = LoadingView()
+    
     private let nowStepOneLabel: UILabel = {
         let label = UILabel()
         label.text = "2"
@@ -121,8 +123,6 @@ final class HowOnboardingViewController: UIViewController {
     }
     
     private func configurePlanData() {
-//        let startindex = planWay.index(planWay.startIndex, offsetBy: 7)
-//        let endIndex = planWay.index(planWay.endIndex, offsetBy: planWay.count-1)
         let planNameList = planWay.components(separatedBy: " 이상 ")
         let planWayOne = planNameList[0] + " 이상"
         let planWayTwo = planNameList[1]
@@ -176,8 +176,12 @@ final class HowOnboardingViewController: UIViewController {
 
 extension HowOnboardingViewController {
     func detailPlanListGetAPI(tempTarget: String) {
+        self.showLodingView(loadingView: loadingView)
         OnboardingAPI.shared.detailPlanList(param: tempTarget) { response in
             guard let data = response.data else { return }
+            
+            self.hideLodingView(loadingView: self.loadingView)
+            
             self.planName = data.name
             self.planWay = data.way
             self.planDetailWay = data.detail

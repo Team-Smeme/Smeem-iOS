@@ -34,6 +34,7 @@ extension DetailDiaryService: BaseTargetType {
     }
     
     var headers: [String : String]? {
-        return NetworkConstant.tempTokenHeader
+        return ["Content-Type": "application/json",
+                "Authorization": "Bearer " + UserDefaultsManager.accessToken]
     }
 }

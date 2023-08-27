@@ -15,8 +15,9 @@ enum ViewType {
 }
 
 protocol LoginDelegate {
-    func betaLoginDataSend()
-    func dissmissButton()
+    func kakaoLoginDataSend()
+    func appleLoginDataSend()
+    func dismissBottomSheet()
 }
 
 final class BottomSheetView: UIView {
@@ -41,7 +42,7 @@ final class BottomSheetView: UIView {
         return label
     }()
     
-    private let cancelButton: UIButton = {
+    private lazy var cancelButton: UIButton = {
         let button = UIButton()
         button.setImage(Constant.Image.icnCancelGrey, for: .normal)
         button.addTarget(self, action: #selector(cancleButtonDidTap), for: .touchUpInside)
@@ -51,14 +52,14 @@ final class BottomSheetView: UIView {
     private lazy var kakaoLoginButton: UIButton = {
         let button = UIButton()
         button.setImage(Constant.Image.btnKakaoLogin, for: .normal)
-        button.addTarget(self, action: #selector(loginButtonDidTap), for: .touchUpInside)
+        button.addTarget(self, action: #selector(kakaoLoginButtonDidTap), for: .touchUpInside)
         return button
     }()
     
     private lazy var appleLoginButton: UIButton = {
         let button = UIButton()
         button.setImage(Constant.Image.btnAppleLogin, for: .normal)
-        button.addTarget(self, action: #selector(loginButtonDidTap), for: .touchUpInside)
+        button.addTarget(self, action: #selector(appleLoginButtonDidTap), for: .touchUpInside)
         return button
     }()
     
@@ -67,7 +68,6 @@ final class BottomSheetView: UIView {
         button.setTitleColor(.gray600, for: .normal)
         button.titleLabel?.font = .b4
         button.setTitle("비회원으로 시작하기", for: .normal)
-        button.isHidden = true
         return button
     }()
     
@@ -92,12 +92,16 @@ final class BottomSheetView: UIView {
     
     // MARK: - @objc
     
-    @objc func loginButtonDidTap() {
-        delegate?.betaLoginDataSend()
+    @objc func kakaoLoginButtonDidTap() {
+        delegate?.kakaoLoginDataSend()
+    }
+    
+    @objc func appleLoginButtonDidTap() {
+        delegate?.appleLoginDataSend()
     }
     
     @objc func cancleButtonDidTap() {
-        delegate?.dissmissButton()
+        delegate?.dismissBottomSheet()
     }
     
     // MARK: - Custom Method
@@ -136,18 +140,21 @@ final class BottomSheetView: UIView {
         switch viewType {
         case .login:
             bottomSheetLabel.text = "로그인"
+            guestLoginButton.isHidden = true
         case .signUp:
-            bottomSheetLabel.text = "회원가입"
-            
-            guestLoginButton.snp.makeConstraints {
-                $0.top.equalTo(appleLoginButton.snp.bottom).offset(22)
-                $0.centerX.equalToSuperview()
-            }
-            
-            guestLoginTooltip.snp.makeConstraints {
-                $0.top.equalTo(guestLoginButton.snp.bottom).offset(3)
-                $0.centerX.equalToSuperview()
-            }
+//            bottomSheetLabel.text = "회원가입"
+//
+//            guestLoginButton.snp.makeConstraints {
+//                $0.top.equalTo(appleLoginButton.snp.bottom).offset(22)
+//                $0.centerX.equalToSuperview()
+//            }
+//
+//            guestLoginTooltip.snp.makeConstraints {
+//                $0.top.equalTo(guestLoginButton.snp.bottom).offset(3)
+//                $0.centerX.equalToSuperview()
+//            }
+            bottomSheetLabel.text = "로그인"
+            guestLoginButton.isHidden = true
         }
     }
 }

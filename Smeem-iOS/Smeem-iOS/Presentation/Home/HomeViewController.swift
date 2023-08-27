@@ -19,6 +19,7 @@ final class HomeViewController: UIViewController {
     private var homeDiaryDict = [String: HomeDiaryCustom]()
     private var writtenDaysStringList = [String]()
     private var currentDate = Date()
+    private var emptyViewWithTopConstraint: Constraint?
     var badgePopupData = [PopupBadge]()
     var isKeyboardVisible: Bool = false
     var keyboardHeight: CGFloat = 0.0
@@ -46,8 +47,8 @@ final class HomeViewController: UIViewController {
         calendar.appearance.headerDateFormat = "YYYY년 M월"
         calendar.appearance.borderRadius = 0.4
         calendar.register(CalendarCell.self, forCellReuseIdentifier: "cell")
-        calendar.headerHeight = convertByHeightRatio(66)
-        calendar.weekdayHeight = convertByHeightRatio(41)
+        calendar.headerHeight = convertByHeightRatio(77)
+        calendar.weekdayHeight = convertByHeightRatio(17)
         for i in 0...6 {
             calendar.calendarWeekdayView.weekdayLabels[i].text = weekdayLabels[i]
         }
@@ -56,7 +57,7 @@ final class HomeViewController: UIViewController {
     
     private let indicator: UIView = {
         let indicator = UIView()
-        indicator.layer.cornerRadius = 5
+        indicator.layer.cornerRadius = 2
         indicator.backgroundColor = .gray300
         return indicator
     }()
@@ -108,6 +109,9 @@ final class HomeViewController: UIViewController {
     }()
     
     private let emptyView = UIView()
+    
+    private let emptyPaddingView = UIView()
+    
     private let emptySymbol = UIImageView(image: Constant.Image.noDiary)
     
     private let emptyText: UILabel = {
@@ -167,6 +171,7 @@ final class HomeViewController: UIViewController {
     }()
     
     var smeemToastView: SmeemToastView?
+    
     private let loadingView = LoadingView()
     
     // MARK: - Life Cycle
@@ -174,6 +179,7 @@ final class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        configureBottomLayout(date: currentDate)
         setBackgroundColor()
         setLayout()
         setDelegate()
@@ -189,11 +195,17 @@ final class HomeViewController: UIViewController {
     // MARK: - @objc
     
     @objc func swipeEvent(_ swipe: UISwipeGestureRecognizer) {
-        if (swipe.location(in: self.view).y < border.frame.origin.y+20) {
-            calendar.setScope((swipe.direction == .up) ? .week : .month, animated: true)
+        if (swipe.location(in: self.view).y < border.frame.origin.y + 20) {
+            let topConstant: CGFloat = (swipe.direction == .up) ? 168 : 60
+            let newScopeMode: FSCalendarScope = (swipe.direction == .up) ? .week : .month
+            calendar.setScope(newScopeMode, animated: true)
+            emptyViewWithTopConstraint?.update(offset: topConstant)
+            UIView.animate(withDuration: 0.3) {
+                self.view.layoutIfNeeded()
+            }
         }
     }
-
+    
     @objc func fullViewButtonDidTap(_ gesture: UITapGestureRecognizer) {
         let detailDiaryVC = DetailDiaryViewController()
         detailDiaryVC.diaryId = homeDiaryDict[currentDate.toString("yyyy-MM-dd")]?.diaryId ?? 0
@@ -273,11 +285,11 @@ final class HomeViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(notificationPushShowPage), name: NSNotification.Name("goToHome"), object: nil)
     }
     
-//    private func getSomeData(completion: @escaping () -> ()) {
-//      DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-//        completion()
-//      }
-//    }
+    private func getSomeData(completion: @escaping () -> ()) {
+      DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+        completion()
+      }
+    }
     
     // MARK: - Layout
     
@@ -291,7 +303,7 @@ final class HomeViewController: UIViewController {
         view.addSubviews(calendar, myPageButton, indicator, border, diaryThumbnail, emptyView, floatingView, addDiaryButton)
         diaryThumbnail.addSubviews(diaryDate, fullViewButton, diaryText)
         fullViewButton.addSubviews(fullViewButtonText, fullViewButtonSymbol)
-        emptyView.addSubviews(emptySymbol, emptyText)
+        emptyView.addSubviews(emptyPaddingView, emptySymbol, emptyText)
         floatingView.addSubviews(waitingLabel, adviceLabel, xButton)
         
         calendar.snp.makeConstraints {
@@ -302,13 +314,13 @@ final class HomeViewController: UIViewController {
         }
         
         myPageButton.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(convertByHeightRatio(66)/2-convertByHeightRatio(40)/2+3)
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(convertByHeightRatio(77)/2-convertByHeightRatio(40)/2+3)
             $0.trailing.equalToSuperview().offset(-convertByWidthRatio(18))
             $0.width.height.equalTo(convertByHeightRatio(40))
         }
         
         indicator.snp.makeConstraints {
-            $0.top.equalTo(calendar.snp.bottom).offset(convertByWidthRatio(12))
+            $0.top.equalTo(calendar.snp.bottom).offset(convertByWidthRatio(4))
             $0.centerX.equalToSuperview()
             $0.height.equalTo(convertByWidthRatio(4))
             $0.width.equalTo(convertByWidthRatio(72))
@@ -342,7 +354,7 @@ final class HomeViewController: UIViewController {
         fullViewButton.snp.makeConstraints {
             $0.top.equalToSuperview().offset(convertByHeightRatio(20))
             $0.trailing.equalToSuperview().offset(-convertByWidthRatio(22))
-            $0.width.equalTo(convertByWidthRatio(61))
+            $0.width.equalTo(convertByWidthRatio(59))
             $0.height.equalTo(17)
         }
         
@@ -361,8 +373,13 @@ final class HomeViewController: UIViewController {
             $0.bottom.equalToSuperview()
         }
         
+        emptyPaddingView.snp.makeConstraints {
+            $0.top.leading.trailing.equalTo(diaryThumbnail)
+            self.emptyViewWithTopConstraint = $0.height.equalTo(168).constraint
+        }
+        
         emptySymbol.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(convertByHeightRatio(60))
+            $0.top.equalTo(emptyPaddingView.snp.bottom)
             $0.centerX.equalToSuperview()
             $0.height.equalTo(convertByHeightRatio(47))
             $0.width.equalTo(convertByWidthRatio(65))
@@ -495,9 +512,7 @@ extension HomeViewController {
     func homeDiaryWithAPI(start: String, end: String) {
         HomeAPI.shared.homeDiaryList(startDate: start, endDate: end) { response in
             
-            guard let homeDiariesData = response?.data?.diaries else {
-                return
-            }
+            guard let homeDiariesData = response?.data?.diaries else { return }
             homeDiariesData.forEach {
                 self.homeDiaryDict[String($0.createdAt.prefix(10))] = HomeDiaryCustom(diaryId: $0.diaryId, content: $0.content, createdTime: String($0.createdAt.suffix(5)))
             }

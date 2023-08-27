@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		371E940C2A87A1E00098280F /* GoalOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371E940B2A87A1E00098280F /* GoalOnboardingView.swift */; };
+		371E940E2A87A2030098280F /* GoalEditMypageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371E940D2A87A2030098280F /* GoalEditMypageView.swift */; };
+		371E94132A87A8660098280F /* GoalCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371E94122A87A8660098280F /* GoalCollectionViewDataSource.swift */; };
+		371E94162A87B83D0098280F /* NextButtonDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371E94152A87B83D0098280F /* NextButtonDelegate.swift */; };
+		371E94192A87DA960098280F /* EditGoalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371E94182A87DA960098280F /* EditGoalViewController.swift */; };
 		3728B8D12A2CFE0B00EF4CF8 /* DiaryStrategies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3728B8D02A2CFE0B00EF4CF8 /* DiaryStrategies.swift */; };
 		3728B8D32A2CFED300EF4CF8 /* ForeignDiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3728B8D22A2CFED300EF4CF8 /* ForeignDiaryViewController.swift */; };
 		3728B8D52A2CFF2C00EF4CF8 /* StepOneKoreanDiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3728B8D42A2CFF2C00EF4CF8 /* StepOneKoreanDiaryViewController.swift */; };
@@ -49,6 +54,7 @@
 		4A0EA4572A01403E006CCE52 /* MoyaLoggingPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EA4562A01403E006CCE52 /* MoyaLoggingPlugin.swift */; };
 		4A0EA4592A014103006CCE52 /* URLConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EA4582A014103006CCE52 /* URLConstant.swift */; };
 		4A0EA4642A014710006CCE52 /* SmeemButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EA4632A014710006CCE52 /* SmeemButton.swift */; };
+		4A1882FA2A8BBD0D0088F590 /* SmeemStartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD923E62A0650B600FF5E27 /* SmeemStartViewController.swift */; };
 		4A3373F52A45BF6600EFE6C4 /* OnboardingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3373F42A45BF6600EFE6C4 /* OnboardingService.swift */; };
 		4A3373F82A461ABC00EFE6C4 /* OnboardingAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3373F72A461ABC00EFE6C4 /* OnboardingAPI.swift */; };
 		4A3774822A42DF4500357DD1 /* NetworkHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3774812A42DF4500357DD1 /* NetworkHeader.swift */; };
@@ -81,22 +87,26 @@
 		4AA942D52A276C7900A552A0 /* KakaoSDKAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 4AA942D42A276C7900A552A0 /* KakaoSDKAuth */; };
 		4AA942D72A276C7900A552A0 /* KakaoSDKCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 4AA942D62A276C7900A552A0 /* KakaoSDKCommon */; };
 		4AA942D92A276C7900A552A0 /* KakaoSDKUser in Frameworks */ = {isa = PBXBuildFile; productRef = 4AA942D82A276C7900A552A0 /* KakaoSDKUser */; };
+		4ABE3FD12A811F8400D1D22E /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABE3FD02A811F8400D1D22E /* SplashViewController.swift */; };
+		4AC047252A8FCAE100EBDC0E /* AuthManagementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC047242A8FCAE100EBDC0E /* AuthManagementViewController.swift */; };
 		4AC4B82D2A2F9FE200E147AA /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4B82C2A2F9FE200E147AA /* UserDefaultsManager.swift */; };
 		4AC9489829ED800800489C2B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4AC9489729ED800800489C2B /* GoogleService-Info.plist */; };
 		4AD04B3B2A1905BB004B7A58 /* DiaryScrollerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD04B3A2A1905BB004B7A58 /* DiaryScrollerView.swift */; };
 		4AD04B3D2A190E9A004B7A58 /* UITextView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD04B3C2A190E9A004B7A58 /* UITextView+.swift */; };
 		4AD04B402A1921AE004B7A58 /* CorrectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD04B3F2A1921AE004B7A58 /* CorrectionViewController.swift */; };
-		4AD923E72A0650B600FF5E27 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD923E62A0650B600FF5E27 /* SplashViewController.swift */; };
 		4AD923E92A0692C600FF5E27 /* BottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD923E82A0692C600FF5E27 /* BottomSheetViewController.swift */; };
 		4AD923EB2A0692EA00FF5E27 /* BottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD923EA2A0692EA00FF5E27 /* BottomSheetView.swift */; };
 		4ADA41722A546D0B001C0285 /* PushTestAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADA41712A546D0B001C0285 /* PushTestAPI.swift */; };
 		4ADA41742A546D13001C0285 /* PushTestService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADA41732A546D13001C0285 /* PushTestService.swift */; };
 		4ADA41772A556209001C0285 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADA41762A556209001C0285 /* LoadingView.swift */; };
+		4ADCA2D62A9272E9002904EB /* EditAlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADCA2D52A9272E9002904EB /* EditAlarmViewController.swift */; };
+		4AE35E9C2A7FDC4200465FD5 /* ServiceAcceptTotalCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE35E9B2A7FDC4200465FD5 /* ServiceAcceptTotalCollectionViewCell.swift */; };
+		4AE35E9E2A7FE8CE00465FD5 /* UICollectionViewCell+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE35E9D2A7FE8CE00465FD5 /* UICollectionViewCell+.swift */; };
 		4AEB82952A4CB4F200C1114B /* BadgePopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEB82942A4CB4F100C1114B /* BadgePopupViewController.swift */; };
 		4AF58CE32A481E8C00305248 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF58CE22A481E8C00305248 /* AuthService.swift */; };
 		4AF58CE52A48203B00305248 /* AuthAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF58CE42A48203B00305248 /* AuthAPI.swift */; };
 		4AF58CE92A4820AA00305248 /* AuthModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF58CE82A4820AA00305248 /* AuthModel.swift */; };
-		6F294A3E2A26177B00856CC8 /* GoalOnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF507742A10CD4D007C62B1 /* GoalOnboardingViewController.swift */; };
+		6F294A3E2A26177B00856CC8 /* GoalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF507742A10CD4D007C62B1 /* GoalViewController.swift */; };
 		6F294A3F2A26177E00856CC8 /* GoalCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF507762A10CD96007C62B1 /* GoalCollectionViewCell.swift */; };
 		6F294A402A26178300856CC8 /* HowOnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEFD4C42A136EE100DAB2BD /* HowOnboardingViewController.swift */; };
 		6F294A412A26178600856CC8 /* AlarmSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEFD4C72A13908E00DAB2BD /* AlarmSettingViewController.swift */; };
@@ -121,6 +131,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		371E940B2A87A1E00098280F /* GoalOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalOnboardingView.swift; sourceTree = "<group>"; };
+		371E940D2A87A2030098280F /* GoalEditMypageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalEditMypageView.swift; sourceTree = "<group>"; };
+		371E94122A87A8660098280F /* GoalCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalCollectionViewDataSource.swift; sourceTree = "<group>"; };
+		371E94152A87B83D0098280F /* NextButtonDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextButtonDelegate.swift; sourceTree = "<group>"; };
+		371E94182A87DA960098280F /* EditGoalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditGoalViewController.swift; sourceTree = "<group>"; };
 		3728B8D02A2CFE0B00EF4CF8 /* DiaryStrategies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryStrategies.swift; sourceTree = "<group>"; };
 		3728B8D22A2CFED300EF4CF8 /* ForeignDiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForeignDiaryViewController.swift; sourceTree = "<group>"; };
 		3728B8D42A2CFF2C00EF4CF8 /* StepOneKoreanDiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepOneKoreanDiaryViewController.swift; sourceTree = "<group>"; };
@@ -193,23 +208,28 @@
 		4A9FAB432A4C3D1200C40D5A /* BadgeHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeHeaderView.swift; sourceTree = "<group>"; };
 		4A9FAB442A4C3D1200C40D5A /* DetailBadgeCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailBadgeCollectionViewCell.swift; sourceTree = "<group>"; };
 		4AA1EEE92A5870690017FF97 /* Urbanist-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Urbanist-SemiBold.otf"; sourceTree = "<group>"; };
+		4ABE3FD02A811F8400D1D22E /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+		4AC047242A8FCAE100EBDC0E /* AuthManagementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManagementViewController.swift; sourceTree = "<group>"; };
 		4AC4B82C2A2F9FE200E147AA /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		4AC9489729ED800800489C2B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		4AD04B382A190020004B7A58 /* UITextField+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+.swift"; sourceTree = "<group>"; };
 		4AD04B3A2A1905BB004B7A58 /* DiaryScrollerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryScrollerView.swift; sourceTree = "<group>"; };
 		4AD04B3C2A190E9A004B7A58 /* UITextView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+.swift"; sourceTree = "<group>"; };
 		4AD04B3F2A1921AE004B7A58 /* CorrectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CorrectionViewController.swift; sourceTree = "<group>"; };
-		4AD923E62A0650B600FF5E27 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+		4AD923E62A0650B600FF5E27 /* SmeemStartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmeemStartViewController.swift; sourceTree = "<group>"; };
 		4AD923E82A0692C600FF5E27 /* BottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetViewController.swift; sourceTree = "<group>"; };
 		4AD923EA2A0692EA00FF5E27 /* BottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetView.swift; sourceTree = "<group>"; };
 		4ADA41712A546D0B001C0285 /* PushTestAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushTestAPI.swift; sourceTree = "<group>"; };
 		4ADA41732A546D13001C0285 /* PushTestService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushTestService.swift; sourceTree = "<group>"; };
 		4ADA41762A556209001C0285 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		4ADCA2D52A9272E9002904EB /* EditAlarmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAlarmViewController.swift; sourceTree = "<group>"; };
+		4AE35E9B2A7FDC4200465FD5 /* ServiceAcceptTotalCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAcceptTotalCollectionViewCell.swift; sourceTree = "<group>"; };
+		4AE35E9D2A7FE8CE00465FD5 /* UICollectionViewCell+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewCell+.swift"; sourceTree = "<group>"; };
 		4AEB82942A4CB4F100C1114B /* BadgePopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgePopupViewController.swift; sourceTree = "<group>"; };
 		4AEFD4C42A136EE100DAB2BD /* HowOnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HowOnboardingViewController.swift; sourceTree = "<group>"; };
 		4AEFD4C72A13908E00DAB2BD /* AlarmSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSettingViewController.swift; sourceTree = "<group>"; };
 		4AEFD4C92A1392DF00DAB2BD /* HowLearningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HowLearningView.swift; sourceTree = "<group>"; };
-		4AF507742A10CD4D007C62B1 /* GoalOnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalOnboardingViewController.swift; sourceTree = "<group>"; };
+		4AF507742A10CD4D007C62B1 /* GoalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalViewController.swift; sourceTree = "<group>"; };
 		4AF507762A10CD96007C62B1 /* GoalCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalCollectionViewCell.swift; sourceTree = "<group>"; };
 		4AF58CE22A481E8C00305248 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		4AF58CE42A48203B00305248 /* AuthAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthAPI.swift; sourceTree = "<group>"; };
@@ -248,6 +268,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		371E940F2A87A7B10098280F /* DataSource */ = {
+			isa = PBXGroup;
+			children = (
+				371E94122A87A8660098280F /* GoalCollectionViewDataSource.swift */,
+			);
+			path = DataSource;
+			sourceTree = "<group>";
+		};
+		371E94142A87A9A20098280F /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				4AF507762A10CD96007C62B1 /* GoalCollectionViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		371E94172A87DA6E0098280F /* EditGoal */ = {
+			isa = PBXGroup;
+			children = (
+				371E94182A87DA960098280F /* EditGoalViewController.swift */,
+			);
+			path = EditGoal;
+			sourceTree = "<group>";
+		};
 		37A574B429FE203100312453 /* Global */ = {
 			isa = PBXGroup;
 			children = (
@@ -290,6 +334,7 @@
 				4AD04B382A190020004B7A58 /* UITextField+.swift */,
 				4AD04B3C2A190E9A004B7A58 /* UITextView+.swift */,
 				6FE1298F2A49A5A6005536C4 /* Date+.swift */,
+				4AE35E9D2A7FE8CE00465FD5 /* UICollectionViewCell+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -449,6 +494,7 @@
 			isa = PBXGroup;
 			children = (
 				37EB69E52A4B3BC400075E4E /* DataBindProtocol.swift */,
+				371E94152A87B83D0098280F /* NextButtonDelegate.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -580,6 +626,7 @@
 			children = (
 				4A8275D22A1513120083A4AB /* ServiceAcceptViewController.swift */,
 				4A8275D42A1519550083A4AB /* ServiceAcceptCollectionViewCell.swift */,
+				4AE35E9B2A7FDC4200465FD5 /* ServiceAcceptTotalCollectionViewCell.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -618,7 +665,7 @@
 		4A974AFE2A4F3B7700418DD9 /* VC */ = {
 			isa = PBXGroup;
 			children = (
-				4AF507742A10CD4D007C62B1 /* GoalOnboardingViewController.swift */,
+				4AF507742A10CD4D007C62B1 /* GoalViewController.swift */,
 			);
 			path = VC;
 			sourceTree = "<group>";
@@ -626,7 +673,9 @@
 		4A974AFF2A4F3B7D00418DD9 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				4AF507762A10CD96007C62B1 /* GoalCollectionViewCell.swift */,
+				371E94142A87A9A20098280F /* Cell */,
+				371E940B2A87A1E00098280F /* GoalOnboardingView.swift */,
+				371E940D2A87A2030098280F /* GoalEditMypageView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -707,6 +756,14 @@
 			path = MyPage;
 			sourceTree = "<group>";
 		};
+		4AC047232A8FCA9700EBDC0E /* AuthManagement */ = {
+			isa = PBXGroup;
+			children = (
+				4AC047242A8FCAE100EBDC0E /* AuthManagementViewController.swift */,
+			);
+			path = AuthManagement;
+			sourceTree = "<group>";
+		};
 		4AC4B82B2A2F9F5300E147AA /* Constants */ = {
 			isa = PBXGroup;
 			children = (
@@ -727,7 +784,8 @@
 		4AD923E52A0650A000FF5E27 /* Splash */ = {
 			isa = PBXGroup;
 			children = (
-				4AD923E62A0650B600FF5E27 /* SplashViewController.swift */,
+				4AD923E62A0650B600FF5E27 /* SmeemStartViewController.swift */,
+				4ABE3FD02A811F8400D1D22E /* SplashViewController.swift */,
 			);
 			path = Splash;
 			sourceTree = "<group>";
@@ -747,6 +805,14 @@
 				4ADA41762A556209001C0285 /* LoadingView.swift */,
 			);
 			path = LodingView;
+			sourceTree = "<group>";
+		};
+		4ADCA2D42A9272D6002904EB /* EditAlarm */ = {
+			isa = PBXGroup;
+			children = (
+				4ADCA2D52A9272E9002904EB /* EditAlarmViewController.swift */,
+			);
+			path = EditAlarm;
 			sourceTree = "<group>";
 		};
 		4AE4B5172A06BF4A00D45F87 /* BottomSheet */ = {
@@ -772,6 +838,7 @@
 				4A974B002A4F3B8600418DD9 /* Model */,
 				4A974AFE2A4F3B7700418DD9 /* VC */,
 				4A974AFF2A4F3B7D00418DD9 /* View */,
+				371E940F2A87A7B10098280F /* DataSource */,
 			);
 			path = Goal;
 			sourceTree = "<group>";
@@ -864,8 +931,11 @@
 		A3D7ECB82A26566F009857D6 /* MyPage */ = {
 			isa = PBXGroup;
 			children = (
+				4AC047232A8FCA9700EBDC0E /* AuthManagement */,
 				4A9FAB4B2A4C3D4A00C40D5A /* MyPage */,
 				4A9FAB4A2A4C3D3D00C40D5A /* EditNickname */,
+				4ADCA2D42A9272D6002904EB /* EditAlarm */,
+				371E94172A87DA6E0098280F /* EditGoal */,
 				4A9FAB3C2A4C3D1200C40D5A /* BadgeList */,
 			);
 			path = MyPage;
@@ -971,11 +1041,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				6FBC85722A4B5FAB00A43F98 /* MyPageService.swift in Sources */,
+				371E94162A87B83D0098280F /* NextButtonDelegate.swift in Sources */,
 				4A3774822A42DF4500357DD1 /* NetworkHeader.swift in Sources */,
 				37DCA6742A484D5900FF8F90 /* PostDiaryAPI.swift in Sources */,
 				4A9FAB472A4C3D1200C40D5A /* BadgeListTableViewCell.swift in Sources */,
 				373E38592A2F889500DF96F0 /* DiaryDetailRandomSubjectView.swift in Sources */,
-				6F294A3E2A26177B00856CC8 /* GoalOnboardingViewController.swift in Sources */,
+				6F294A3E2A26177B00856CC8 /* GoalViewController.swift in Sources */,
 				4A6630392A51E04600D19CC9 /* PatchDiaryRequest.swift in Sources */,
 				4AF58CE92A4820AA00305248 /* AuthModel.swift in Sources */,
 				3761116C2A278D0E0095EC5A /* String+.swift in Sources */,
@@ -990,10 +1061,12 @@
 				4A9FAB452A4C3D1200C40D5A /* BadgeListViewController.swift in Sources */,
 				4AD923E92A0692C600FF5E27 /* BottomSheetViewController.swift in Sources */,
 				6F294A462A2617D500856CC8 /* HowLearningView.swift in Sources */,
+				371E940C2A87A1E00098280F /* GoalOnboardingView.swift in Sources */,
 				37A574CC29FF990E00312453 /* UIViewController+.swift in Sources */,
 				4A9E10E42A43468600295D07 /* BaseTargetType.swift in Sources */,
 				37A574C329FF6E9C00312453 /* Image.swift in Sources */,
 				4A974B022A4F3B9700418DD9 /* PlanListResponse.swift in Sources */,
+				4AE35E9E2A7FE8CE00465FD5 /* UICollectionViewCell+.swift in Sources */,
 				37DCA67C2A48927400FF8F90 /* PapagoService.swift in Sources */,
 				4A3F2EA02A0C18B600F6AC60 /* DatePickerFooterView.swift in Sources */,
 				6FE1298C2A498338005536C4 /* HomeService.swift in Sources */,
@@ -1001,10 +1074,12 @@
 				6F31802F2A24D1DB00089870 /* CalendarCell.swift in Sources */,
 				6FE1298A2A4982DA005536C4 /* HomeAPI.swift in Sources */,
 				4A3F2E972A0ABBAA00F6AC60 /* AlarmCollectionViewCell.swift in Sources */,
+				4AE35E9C2A7FDC4200465FD5 /* ServiceAcceptTotalCollectionViewCell.swift in Sources */,
 				37DCA6572A47574300FF8F90 /* RandomSubjectAPI.swift in Sources */,
 				37DCA6672A480A7300FF8F90 /* DetailDiaryService.swift in Sources */,
 				4ADA41742A546D13001C0285 /* PushTestService.swift in Sources */,
 				A3D7ECB72A26566A009857D6 /* EditNicknameViewController.swift in Sources */,
+				371E94192A87DA960098280F /* EditGoalViewController.swift in Sources */,
 				6FE129902A49A5A6005536C4 /* Date+.swift in Sources */,
 				6F294A412A26178600856CC8 /* AlarmSettingViewController.swift in Sources */,
 				6F62668C2A04EA3B000365CD /* HomeViewController.swift in Sources */,
@@ -1026,11 +1101,13 @@
 				37DCA6702A484D3700FF8F90 /* PostDiaryRequest.swift in Sources */,
 				4A0EA4592A014103006CCE52 /* URLConstant.swift in Sources */,
 				4ADA41772A556209001C0285 /* LoadingView.swift in Sources */,
+				4ADCA2D62A9272E9002904EB /* EditAlarmViewController.swift in Sources */,
 				6F294A432A26179700856CC8 /* ServiceAcceptViewController.swift in Sources */,
 				4AD04B402A1921AE004B7A58 /* CorrectionViewController.swift in Sources */,
 				4A37748A2A433A6500357DD1 /* OnboardingModel.swift in Sources */,
-				4AD923E72A0650B600FF5E27 /* SplashViewController.swift in Sources */,
+				4A1882FA2A8BBD0D0088F590 /* SmeemStartViewController.swift in Sources */,
 				3728B8D32A2CFED300EF4CF8 /* ForeignDiaryViewController.swift in Sources */,
+				4ABE3FD12A811F8400D1D22E /* SplashViewController.swift in Sources */,
 				4AD923EB2A0692EA00FF5E27 /* BottomSheetView.swift in Sources */,
 				4A9FAB492A4C3D1200C40D5A /* DetailBadgeCollectionViewCell.swift in Sources */,
 				37DCA6652A48052200FF8F90 /* DetailDiaryResponse.swift in Sources */,
@@ -1047,10 +1124,12 @@
 				37A574C129FF6E9100312453 /* ColorLiterals.swift in Sources */,
 				37A574CA29FF980F00312453 /* UIStackView+.swift in Sources */,
 				6F294A422A26178C00856CC8 /* UserNickNameViewController.swift in Sources */,
+				4AC047252A8FCAE100EBDC0E /* AuthManagementViewController.swift in Sources */,
 				374FAF812A2CACCF00237A1A /* DiaryViewController.swift in Sources */,
 				37DCA6782A488CEB00FF8F90 /* PapagoResponse.swift in Sources */,
 				37DCA65A2A47598700FF8F90 /* RandomSubjectService.swift in Sources */,
 				3728B8D12A2CFE0B00EF4CF8 /* DiaryStrategies.swift in Sources */,
+				371E94132A87A8660098280F /* GoalCollectionViewDataSource.swift in Sources */,
 				6F294A442A26179900856CC8 /* ServiceAcceptCollectionViewCell.swift in Sources */,
 				4A9FAB462A4C3D1200C40D5A /* BadgeListModel.swift in Sources */,
 				6F294A3F2A26177E00856CC8 /* GoalCollectionViewCell.swift in Sources */,
@@ -1063,6 +1142,7 @@
 				4A0EA4642A014710006CCE52 /* SmeemButton.swift in Sources */,
 				37EB69E62A4B3BC400075E4E /* DataBindProtocol.swift in Sources */,
 				4AF58CE32A481E8C00305248 /* AuthService.swift in Sources */,
+				371E940E2A87A2030098280F /* GoalEditMypageView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1220,7 +1300,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "Team.Smeem-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1260,7 +1340,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "Team.Smeem-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

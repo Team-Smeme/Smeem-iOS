@@ -12,9 +12,30 @@ final class ServiceAcceptViewController: UIViewController {
     // MARK: - Property
     
     let serviceAccptArray = ["[필수] 서비스 이용약관", "[필수] 개인정보 수집 및 이용 동의",
-                             "[필수] 위치기반 서비스 이용약관 동의", "[선택] 마케팅 정보 활용 동의"]
+                             "[선택] 마케팅 정보 활용 동의"]
+    var acceptCheckArray: Set<Int> = [] {
+        didSet {
+            checkAccptButtonType()
+        }
+    }
+    var nickNameData = ""
+    private var notiAccessToken = ""
+
+    private var selectedTotal = false {
+        didSet {
+            serviceCollectionView.reloadData()
+        }
+    }
+    
+//    private var acceptCheckArray = [] {
+//        didSet {
+//            checkAccptButtonType()
+//        }
+//    }
     
     // MARK: - UI Property
+    
+    private let loadingView = LoadingView()
     
     private let titleServiceLabel: UILabel = {
         let label = UILabel()
@@ -41,9 +62,11 @@ final class ServiceAcceptViewController: UIViewController {
         return collectionView
     }()
     
-    private let nextButton: SmeemButton = {
+    private lazy var nextButton: SmeemButton = {
         let button = SmeemButton()
+        button.smeemButtonType = .notEnabled
         button.setTitle("다음", for: .normal)
+        button.addTarget(self, action: #selector(nextButtonDidTap), for: .touchUpInside)
         return button
     }()
     
@@ -60,6 +83,11 @@ final class ServiceAcceptViewController: UIViewController {
     
     // MARK: - @objc
     
+    @objc func nextButtonDidTap() {
+        showLodingView(loadingView: loadingView)
+        nicknamePatchAPI()
+    }
+    
     // MARK: - Custom Method
     
     private func setDelegate() {
@@ -68,8 +96,27 @@ final class ServiceAcceptViewController: UIViewController {
     }
     
     private func setCellRegister() {
-        serviceCollectionView.register(GoalCollectionViewCell.self, forCellWithReuseIdentifier: GoalCollectionViewCell.identifier)
+        serviceCollectionView.register(ServiceAcceptTotalCollectionViewCell.self, forCellWithReuseIdentifier: ServiceAcceptTotalCollectionViewCell.identifier)
         serviceCollectionView.register(ServiceAcceptCollectionViewCell.self, forCellWithReuseIdentifier: ServiceAcceptCollectionViewCell.identifier)
+    }
+    
+    private func acceptDataInsert(indexPathItem: Int) {
+        acceptCheckArray.insert(indexPathItem)
+    }
+    
+    private func acceptDataRemove(indexPathItem: Int) {
+        acceptCheckArray.remove(indexPathItem)
+    }
+    
+    private func checkAccptButtonType() {
+       if acceptCheckArray.contains(0) && acceptCheckArray.contains(1) {
+           
+//           self.serviceCollectionView.reloadData()
+            nextButton.smeemButtonType = .enabled
+        } else {
+//            self.serviceCollectionView.reloadData()
+            nextButton.smeemButtonType = .notEnabled
+        }
     }
     
     // MARK: - Layout
@@ -105,6 +152,28 @@ final class ServiceAcceptViewController: UIViewController {
     }
 }
 
+// MARK: - Network
+
+extension ServiceAcceptViewController {
+    private func nicknamePatchAPI() {
+        OnboardingAPI.shared.serviceAcceptedPatch(param: ServiceAcceptRequest(username: nickNameData,
+                                                                              termAccepted: true),
+                                                  accessToken: UserDefaultsManager.clientAccessToken) { response in
+            guard let data = response.data else { return }
+            
+            // 성공했을 때 UserDefaults에 저장
+            UserDefaultsManager.accessToken = UserDefaultsManager.clientAccessToken
+            UserDefaultsManager.refreshToken = UserDefaultsManager.clientRefreshToken
+            
+            let homeVC = HomeViewController()
+            homeVC.badgePopupData = data.badges
+            self.changeRootViewController(homeVC)
+            
+            self.hideLodingView(loadingView: self.loadingView)
+        }
+    }
+}
+
 // MARK: - UICollectionViewDelegate
 
 extension ServiceAcceptViewController: UICollectionViewDelegate { }
@@ -119,7 +188,7 @@ extension ServiceAcceptViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let firstSectionItemsNumber = 1
-        let secondSectionItemsNumber = 4
+        let secondSectionItemsNumber = 3
         
         if section == 0 {
             return firstSectionItemsNumber
@@ -127,16 +196,65 @@ extension ServiceAcceptViewController: UICollectionViewDataSource {
             return secondSectionItemsNumber
         }
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.section == 0 {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GoalCollectionViewCell.identifier, for: indexPath) as? GoalCollectionViewCell else { return UICollectionViewCell() }
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ServiceAcceptTotalCollectionViewCell.identifier, for: indexPath) as? ServiceAcceptTotalCollectionViewCell else { return UICollectionViewCell() }
+            cell.selectedCell = selectedTotal
             return cell
         } else {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ServiceAcceptCollectionViewCell.identifier, for: indexPath) as? ServiceAcceptCollectionViewCell else { return UICollectionViewCell() }
             cell.setData(serviceAccptArray[indexPath.item])
+            cell.checkTotal = selectedTotal
             return cell
         }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if indexPath.section == 0 {
+            selectedTotal.toggle()
+            if selectedTotal {
+                acceptCheckArray = [0, 1, 2]
+                collectionView.reloadData()
+                nextButton.smeemButtonType = .enabled
+            } else {
+                acceptCheckArray.removeAll()
+                collectionView.reloadData()
+                nextButton.smeemButtonType = .notEnabled
+            }
+        } else if indexPath.section == 1 {
+            /// accept cell 클릭시
+            if let cell = collectionView.cellForItem(at: indexPath) as? ServiceAcceptCollectionViewCell {
+                cell.checkTotal.toggle()
+                
+                /// indexPath.item에 해당하는 cell 클릭시 cell 활성화
+                acceptDataInsert(indexPathItem: indexPath.item)
+            }
+            
+//            if !selectedTotal && acceptCheckArray.count == 3 {
+//                selectedTotal.toggle()
+//                if selectedTotal {
+//                    collectionView.reloadItems(at: [IndexPath(item: 0, section: 0)])
+//                } else {
+//                    collectionView.reloadItems(at: [IndexPath(item: 0, section: 0)])
+//                }
+//            }
+            
+            /// 하단 VC 버튼 활성화 로직
+            checkAccptButtonType()
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        if let cell = collectionView.cellForItem(at: indexPath) as? ServiceAcceptCollectionViewCell {
+            cell.checkTotal.toggle()
+        }
+
+        /// indexPath.item에 해당하는 cell 클릭시 cell 활성화
+        acceptDataRemove(indexPathItem: indexPath.item)
+        
+        /// 하단 VC 버튼 활성화 로직
+        checkAccptButtonType()
     }
 }
 
