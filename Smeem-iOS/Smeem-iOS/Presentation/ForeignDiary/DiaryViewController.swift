@@ -36,7 +36,7 @@ class DiaryViewController: UIViewController {
         }
     }
     
-    var topicID: Int?
+    var topicID: Int? = nil
     var topicContent = String()
     var diaryID: Int?
     var badgePopupContent = [PopupBadge]()
@@ -201,10 +201,14 @@ class DiaryViewController: UIViewController {
     
     @objc func randomTopicButtonDidTap() {
         setRandomTopicButtonToggle()
-        randomSubjectWithAPI()
+        
         if !isTopicCalled {
+            randomSubjectWithAPI()
             randomSubjectButton.setImage(Constant.Image.btnRandomSubjectActive, for: .normal)
             isTopicCalled = true
+        } else {
+            isTopicCalled = false
+            topicID = nil
         }
         randomSubjectView.setData(contentText: topicContent)
     }
