@@ -169,11 +169,13 @@ final class StepTwoKoreanDiaryViewController: DiaryViewController {
 // MARK: - DataBindProtocol
 
 extension StepTwoKoreanDiaryViewController: DataBindProtocol {
-    func dataBind(text: String) {
-        hintTextView.text = text
+    func dataBind(topicID: Int?, inputText: String) {
+        self.topicID = topicID
+        hintTextView.text = inputText
+        
+        print(topicID, inputText, "🥳")
     }
 }
-
 
 // MARK: - Network
 

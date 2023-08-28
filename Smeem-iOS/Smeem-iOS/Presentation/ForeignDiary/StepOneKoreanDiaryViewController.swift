@@ -52,11 +52,11 @@ final class StepOneKoreanDiaryViewController: DiaryViewController {
     private func handleRightNavigationButton() {
         let stepTwoVC = StepTwoKoreanDiaryViewController()
         delegate = stepTwoVC
-        
+
         if let text = self.inputTextView.text {
-            delegate?.dataBind(text: text)
+            delegate?.dataBind(topicID: topicID, inputText: text)
         }
-        
+
         self.navigationController?.pushViewController(stepTwoVC, animated: true)
     }
 }
