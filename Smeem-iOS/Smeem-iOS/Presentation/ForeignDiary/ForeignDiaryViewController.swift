@@ -37,6 +37,8 @@ final class ForeignDiaryViewController: DiaryViewController {
         }
     }
     
+    // MARK: - Private functions
+    
     private func handleRightNavitationButton() {
         rightNavigationButton.addTarget(self, action: #selector(rightNavigationButtonDidTap), for: .touchUpInside)
     }
