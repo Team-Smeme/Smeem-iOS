@@ -992,7 +992,7 @@
 			};
 			buildConfigurationList = 4A8FFA4729C9E1FD00FB76C0 /* Build configuration list for PBXProject "Smeem-iOS" */;
 			compatibilityVersion = "Xcode 14.0";
-			developmentRegion = en;
+			developmentRegion = ko;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
