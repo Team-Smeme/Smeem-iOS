@@ -51,7 +51,7 @@ final class HowOnboardingViewController: UIViewController {
     
     private let titleLearningLabel: UILabel = {
         let label = UILabel()
-        label.text = "학습 권장 방법"
+        label.text = "추천 트레이닝 방법"
         label.font = .h2
         label.textColor = .black
         return label
@@ -59,7 +59,7 @@ final class HowOnboardingViewController: UIViewController {
     
     private let detailLearningLabel: UILabel = {
         let label = UILabel()
-        label.text = "스밈과 이만큼 함께라면 목표를 이룰 수 있어요."
+        label.text = "스밈과 함께한다면 분명 목표를 이룰 거예요!"
         label.font = .b4
         label.textColor = .black
         return label
