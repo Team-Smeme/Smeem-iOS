@@ -200,6 +200,11 @@ class DiaryViewController: UIViewController {
     // MARK: - @objc
     
     @objc func randomTopicButtonDidTap() {
+        if !UserDefaultsManager.randomSubjectToolTip {
+            UserDefaultsManager.randomSubjectToolTip = true
+            randomSubjectToolTip?.isHidden = true
+        }
+        
         setRandomTopicButtonToggle()
         
         if !isTopicCalled {
