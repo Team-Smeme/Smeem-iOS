@@ -16,16 +16,17 @@ final class MyPageViewController: UIViewController {
     private var userInfo = MyPageInfo(username: "", target: "", way: "", detail: "", targetLang: "", hasPushAlarm: true, trainingTime: TrainingTime(day: "", hour: 0, minute: 0), badge: Badge(id: 0, name: "", type: "", imageURL: ""))
     var myPageSelectedIndexPath = ["MON": IndexPath(item: 0, section: 0), "TUE":IndexPath(item: 1, section: 0), "WED":IndexPath(item: 2, section: 0), "THU":IndexPath(item: 3, section: 0), "FRI":IndexPath(item: 4, section: 0), "SAT":IndexPath(item: 5, section: 0), "SUN":IndexPath(item: 6, section: 0)]
     var indexPathArray: [IndexPath] = []
+    var hasAlarm = Bool()
     
     var onTargetRecived: ((_ target: String) -> Void)?
     
-    let goalTextToIndex: [String: Int] = [
-        "자기계발": 0,
-        "취미로 즐기기": 1,
-        "현지 언어 체득": 2,
-        "유창한 비즈니스 영어": 3,
-        "어학 시험 고득점": 4,
-        "아직 모르겠어요": 5
+    let goalTextToIndex: [String: (Int, String)] = [
+        "자기계발": (0, "DEVELOP"),
+        "취미로 즐기기": (1, "HOBBY"),
+        "현지 언어 체득": (2, "APPLY"),
+        "유창한 비즈니스 영어": (3, "BUSINESS"),
+        "어학 시험 고득점": (4, "EXAM"),
+        "아직 모르겠어요": (5, "NONE")
     ]
     
     var toastMessageFlag = false {
@@ -58,7 +59,7 @@ final class MyPageViewController: UIViewController {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "마이 페이지"
+        label.text = "마이페이지"
         label.font = .s2
         label.textColor = .smeemBlack
         return label
@@ -112,6 +113,12 @@ final class MyPageViewController: UIViewController {
         let image = UIImageView()
         image.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(badgeImageDidTap)))
         image.isUserInteractionEnabled = true
+        return image
+    }()
+    
+    private let badgeMoreButton: UIImageView = {
+        let image = UIImageView()
+        image.image = Constant.Image.icnForward
         return image
     }()
     
@@ -244,13 +251,8 @@ final class MyPageViewController: UIViewController {
     }
     
     @objc func pushButtonDidTap(_ sender: UIButton) {
-        let pushData = !userInfo.hasPushAlarm
-//        userInfo.hasPushAlarm.toggle() // 추후 서버 연결
-        if pushData == true {
-            alarmPushToggleButton.onTintColor = .point
-        } else {
-            alarmPushToggleButton.tintColor = .lightGray
-        }
+        hasAlarm = !hasAlarm
+        editPushPatchAPI(pushData: editPushRequest(hasAlarm: hasAlarm))
     }
     
     @objc func badgeImageDidTap() {
@@ -267,19 +269,29 @@ final class MyPageViewController: UIViewController {
         
         if let selectedIndex = getIndexFromGoalText(goalText: userInfo.target) {
             goalVC.selectedGoalIndex = selectedIndex
-            goalVC.selectedGoalLabel = userInfo.target
+            goalVC.selectedGoalLabel = goalTextToIndex[userInfo.target]!.1
         }
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(goalDataReceived),
+                                               name: NSNotification.Name("goalData"),
+                                               object: nil)
         
         self.navigationController?.pushViewController(goalVC, animated: true)
     }
     
     @objc func alarmEditButtonDidTap() {
         let alarmEditVC = EditAlarmViewController()
+        alarmEditVC.editAlarmDelegate = self
         alarmEditVC.dayIndexPathArray = indexPathArray
         alarmEditVC.trainigDayData = userInfo.trainingTime.day
         alarmEditVC.trainingTimeData = (userInfo.trainingTime.hour, userInfo.trainingTime.minute)
         alarmEditVC.trainigDayData = userInfo.trainingTime.day
         self.navigationController?.pushViewController(alarmEditVC, animated: true)
+    }
+    
+    @objc func goalDataReceived() {
+        toastMessageFlag = true
     }
     
     // MARK: - Custom Method
@@ -297,6 +309,9 @@ final class MyPageViewController: UIViewController {
         badgeNameLabel.text = (userInfo.badge.name)
         badgeSummaryLabel.text = "축하해요! \(userInfo.badge.name)를 획득했어요!"
         
+        // 알람 값 저장
+        self.hasAlarm = userInfo.hasPushAlarm
+        
         alarmCollectionView.hasAlarm = userInfo.hasPushAlarm
         
         if !userInfo.hasPushAlarm {
@@ -308,9 +323,15 @@ final class MyPageViewController: UIViewController {
         }
         // 마이페이지 알람 cell 바꾸는 로직
         let dayArray = userInfo.trainingTime.day.split(separator: ",")
+        
+        // 요일 배열 한번 비워 주는 과정 필요
+        indexPathArray.removeAll()
         for i in 0..<dayArray.count {
             indexPathArray.append(myPageSelectedIndexPath[String(dayArray[i])]!)
         }
+        
+        print("lkfjsadkfdsakfhsadkjf✅✅✅✅✅✅✅✅✅✅, ", self.indexPathArray)
+        
         alarmCollectionView.selectedIndexPath = indexPathArray
         alarmCollectionView.myPageTime = (userInfo.trainingTime.hour, userInfo.trainingTime.minute)
     }
@@ -321,13 +342,13 @@ final class MyPageViewController: UIViewController {
         self.view.addGestureRecognizer(swipeRight)
     }
     
-    func setupHowLearningViewTapGestureRecognizer() {
+    private func setupHowLearningViewTapGestureRecognizer() {
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(howLearningViewTapped))
         howLearningView.addGestureRecognizer(tapRecognizer)
     }
     
-    func getIndexFromGoalText(goalText: String) -> Int? {
-        return goalTextToIndex[goalText]
+    private func getIndexFromGoalText(goalText: String) -> Int? {
+        return goalTextToIndex[goalText]?.0
     }
     
     private func loadToastMessage() {
@@ -348,7 +369,7 @@ final class MyPageViewController: UIViewController {
         headerContainerView.addSubviews(backButton, titleLabel, moreButton)
         scrollView.addSubview(contentView)
         contentView.addSubviews(nickNameLabel, editButton, howLearningView, badgeLabel, badgeContainer, languageLabel, languageContainer, alarmLabel, alarmContainer, alarmCollectionView, alarmEditButton)
-        badgeContainer.addSubviews(badgeImage, badgeNameLabel, badgeSummaryLabel)
+        badgeContainer.addSubviews(badgeImage, badgeNameLabel, badgeSummaryLabel, badgeMoreButton)
         languageContainer.addSubviews(languageLabelEnglish, languageCheckButton)
         alarmContainer.addSubviews(alarmPushLabel, alarmPushToggleButton)
     
@@ -409,6 +430,12 @@ final class MyPageViewController: UIViewController {
             $0.top.equalTo(badgeLabel.snp.bottom).offset(convertByHeightRatio(14))
             $0.leading.trailing.equalTo(howLearningView)
             $0.height.equalTo(convertByHeightRatio(244))
+        }
+        
+        badgeMoreButton.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(6)
+            $0.trailing.equalToSuperview().inset(4)
+            $0.height.width.equalTo(40)
         }
         
         badgeImage.snp.makeConstraints {
@@ -487,8 +514,8 @@ final class MyPageViewController: UIViewController {
 
 // MARK: - EditNicknameDelegate
 
-extension MyPageViewController: EditNicknameDelegate {
-    func didEditNickname() {
+extension MyPageViewController: EditMypageDelegate {
+    func editMyPageData() {
         toastMessageFlag = true
     }
 }
@@ -496,18 +523,33 @@ extension MyPageViewController: EditNicknameDelegate {
 // MARK: - Extension : Network
 
 extension MyPageViewController {
-    func myPageInfoAPI() {
+    private func myPageInfoAPI() {
         MyPageAPI.shared.myPageInfo() { response in
-            print("ㅇㄴㄹㅁㄴㅇㄹ", response)
-            guard let myPageInfo = response?.data else { return
-                print("뭐임>")
-            }
-            print(myPageInfo)
-            
-            self.hideLodingView(loadingView: self.loadingView)
+            guard let myPageInfo = response?.data else { return }
             
             self.userInfo = myPageInfo
             self.setData()
+            self.hideLodingView(loadingView: self.loadingView)
+        }
+    }
+    
+    private func editPushPatchAPI(pushData: editPushRequest) {
+        MyPageAPI.shared.editPushAPI(param: pushData) { response in
+            // 성공했으면
+            if response.success == true {
+                print("lkfjsadkfdsakfhsadkjf✅✅✅✅✅✅✅✅✅✅, ", self.indexPathArray)
+                // 그에 맞춰서 색깔 변화
+                self.alarmCollectionView.hasAlarm = pushData.hasAlarm
+                self.alarmCollectionView.selectedIndexPath = self.indexPathArray
+                
+                if !pushData.hasAlarm {
+                    self.alarmPushToggleButton.isOn = false
+                    self.alarmPushToggleButton.tintColor = .lightGray
+                } else {
+                    self.alarmPushToggleButton.isOn = true
+                    self.alarmPushToggleButton.onTintColor = .point
+                }
+            }
         }
     }
 }
@@ -516,12 +558,12 @@ extension MyPageViewController {
 
 extension MyPageViewController {
     func showToastIfNeeded(toastType: ToastViewType) {
-//        smeemToastView?.removeFromSuperview()
+        smeemToastView?.removeFromSuperview()
         smeemToastView = SmeemToastView(type: toastType)
         
         let offKeyboardOffset = convertByHeightRatio(54)
         
-        smeemToastView?.show(in: self.view, offset: offKeyboardOffset, keyboardHeight: keyboardHeight )
+        smeemToastView?.show(in: self.view, offset: offKeyboardOffset, keyboardHeight: keyboardHeight)
         smeemToastView?.hide(after: 1)
     }
 }

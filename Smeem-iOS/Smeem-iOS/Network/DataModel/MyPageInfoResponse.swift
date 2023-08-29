@@ -30,6 +30,14 @@ struct EditNicknameRequest: Codable {
     let username: String
 }
 
+struct EditAlarmTime: Codable {
+    let trainingTime: TrainingTime
+}
+
+struct editPushRequest: Codable {
+    let hasAlarm: Bool
+}
+
 struct EditGoalRequest: Codable {
     let target: String
 }

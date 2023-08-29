@@ -62,7 +62,7 @@ final class HowLearningView: UIView {
     
     private let editButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = .black
+        button.setImage(Constant.Image.icnEditForward, for: .normal)
         return button
     }()
     
@@ -154,9 +154,9 @@ final class HowLearningView: UIView {
     private func showButtonType() {
         switch buttontype {
         case .logo:
-            editButton.isHidden = true
+            editButton.isHidden = false
         case .edit:
-            smeemLogo.isHidden = true
+            editButton.isHidden = false
         }
     }
     
@@ -204,8 +204,9 @@ final class HowLearningView: UIView {
         }
         
         editButton.snp.makeConstraints {
-            $0.trailing.top.equalToSuperview().inset(8)
-            $0.width.height.equalTo(25)
+            $0.bottom.equalToSuperview().inset(8)
+            $0.trailing.equalToSuperview().inset(4)
+            $0.width.height.equalTo(40)
         }
         
         myGoalLabel.snp.makeConstraints {
@@ -248,5 +249,4 @@ final class HowLearningView: UIView {
             $0.top.equalTo(firstDetailLabel.snp.bottom).offset(6)
         }
     }
-
 }

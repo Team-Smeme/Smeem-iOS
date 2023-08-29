@@ -195,9 +195,11 @@ final class UserNicknameViewController: UIViewController {
 extension UserNicknameViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let text = self.nicknameTextField.text else { return false }
-        let maxLength = 9
+        let maxLength = 10
+        let newText = (text as NSString).replacingCharacters(in: range, with: string)
         
-        if text.count > maxLength && range.length == 0 && range.location > maxLength {
+        if newText.count > maxLength {
+            // 길이가 제한을 초과하면 입력을 막음
             return false
         }
         

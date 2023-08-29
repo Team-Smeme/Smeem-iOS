@@ -28,15 +28,19 @@ final class AuthManagementViewController: UIViewController {
         label.text = "정보"
         label.font = .s2
         label.textColor = .smeemBlack
+        label.setTextWithLineHeight(lineHeight: 21)
         return label
     }()
     
-    private let infomationButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("이용 안내", for: .normal)
-        button.titleLabel?.font = .b4
-        button.setTitleColor(.gray600, for: .normal)
-        return button
+    private lazy var infomationButton: UILabel = {
+        let label = UILabel()
+        label.text = "이용 안내"
+        label.font = .b4
+        label.textColor = .gray600
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(infomationButtonDidTap))
+        label.addGestureRecognizer(tapGesture)
+        label.isUserInteractionEnabled = true
+        return label
     }()
     
     private let grayLineOne: UIView = {
@@ -50,25 +54,30 @@ final class AuthManagementViewController: UIViewController {
         label.text = "계정 관리"
         label.font = .s2
         label.textColor = .smeemBlack
+        label.setTextWithLineHeight(lineHeight: 21)
         return label
     }()
     
-    private lazy var logoutButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("로그아웃", for: .normal)
-        button.titleLabel?.font = .b4
-        button.setTitleColor(.gray600, for: .normal)
-        button.addTarget(self, action: #selector(logoutButtonDidTap), for: .touchUpInside)
-        return button
+    private lazy var logoutButton: UILabel = {
+        let label = UILabel()
+        label.text = "로그아웃"
+        label.font = .b4
+        label.textColor = .gray600
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(logoutButtonDidTap))
+        label.addGestureRecognizer(tapGesture)
+        label.isUserInteractionEnabled = true
+        return label
     }()
     
-    private lazy var resignButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("계정 삭제", for: .normal)
-        button.titleLabel?.font = .b4
-        button.setTitleColor(.gray600, for: .normal)
-        button.addTarget(self, action: #selector(resignButtonDidTap), for: .touchUpInside)
-        return button
+    private lazy var resignButton: UILabel = {
+        let label = UILabel()
+        label.text = "계정 삭제"
+        label.font = .b4
+        label.textColor = .gray600
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(resignButtonDidTap))
+        label.addGestureRecognizer(tapGesture)
+        label.isUserInteractionEnabled = true
+        return label
     }()
     
     private let grayLineTwo: UIView = {
@@ -84,6 +93,7 @@ final class AuthManagementViewController: UIViewController {
         
         setBackgroundColor()
         setLayout()
+        swipeRecognizer()
     }
     
     // MARK: - @objc
@@ -93,7 +103,16 @@ final class AuthManagementViewController: UIViewController {
     }
     
     @objc func logoutButtonDidTap() {
-        self.logoutAPI()
+        let alert = UIAlertController(title: "로그아웃", message: "로그아웃 하시겠습니까?", preferredStyle: .alert)
+        let cancel = UIAlertAction(title: "취소", style: .cancel) { _ in
+            // 로그아웃 로직
+        }
+        let delete = UIAlertAction(title: "로그아웃", style: .destructive) { _ in
+            self.logoutAPI()
+        }
+        alert.addAction(cancel)
+        alert.addAction(delete)
+        self.present(alert, animated: true, completion: nil)
     }
     
     @objc func resignButtonDidTap() {
@@ -112,6 +131,23 @@ final class AuthManagementViewController: UIViewController {
         alert.addAction(delete)
         self.present(alert, animated: true, completion: nil)
     }
+    
+    @objc func infomationButtonDidTap() {
+        if let url = URL(string: "https://smeem.notion.site/334e225bb69b45c28f31fe363ca9f25e?pvs=4") {
+            UIApplication.shared.open(url, options: [:])
+        }
+    }
+    
+    @objc func responseToSwipeGesture() {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    private func swipeRecognizer() {
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(responseToSwipeGesture))
+        swipeRight.direction = UISwipeGestureRecognizer.Direction.right
+        self.view.addGestureRecognizer(swipeRight)
+    }
+    
     
     // MARK: - Custom Method
     
@@ -139,10 +175,11 @@ final class AuthManagementViewController: UIViewController {
         backButton.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(11)
             $0.leading.equalToSuperview().inset(10)
+            $0.height.width.equalTo(45)
         }
         
         infomationTitleLabel.snp.makeConstraints {
-            $0.top.equalTo(backButton.snp.bottom).offset(30)
+            $0.top.equalTo(backButton.snp.bottom).offset(40)
             $0.leading.equalToSuperview().inset(24)
         }
         

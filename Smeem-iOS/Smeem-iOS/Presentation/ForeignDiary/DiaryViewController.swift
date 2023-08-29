@@ -196,6 +196,11 @@ class DiaryViewController: UIViewController {
     // MARK: - @objc
     
     @objc func randomTopicButtonDidTap() {
+        if !UserDefaultsManager.randomSubjectToolTip {
+            UserDefaultsManager.randomSubjectToolTip = true
+            randomSubjectToolTip?.isHidden = true
+        }
+        
         setRandomTopicButtonToggle()
         
         if !isTopicCalled {
@@ -420,7 +425,7 @@ class DiaryViewController: UIViewController {
             randomSubjectToolTip?.snp.makeConstraints {
                 $0.width.equalTo(convertByWidthRatio(180))
                 $0.height.equalTo(convertByHeightRatio(48))
-                $0.bottom.equalTo(view.keyboardLayoutGuide.snp.top).offset(-37)
+                $0.bottom.equalTo(view.keyboardLayoutGuide.snp.top).offset(constraintByNotch(-37, -42))
                 $0.trailing.equalToSuperview().inset(convertByHeightRatio(18))
             }
         } else {

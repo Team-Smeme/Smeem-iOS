@@ -11,12 +11,6 @@ import SnapKit
 
 final class GoalCollectionViewCell: UICollectionViewCell {
     
-//    override var isSelected: Bool {
-//        didSet {
-//            setCellSelected(isSelected)
-//        }
-//    }
-    
     static let identifier = "OnboardingGoalCollectionViewCell"
     
     // MARK: - Property
@@ -44,7 +38,6 @@ final class GoalCollectionViewCell: UICollectionViewCell {
         
         setUI()
         setLayout()
-//        setCellSelected(isSelected)
         layer.borderColor = UIColor.gray100.cgColor
     }
     

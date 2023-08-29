@@ -54,7 +54,7 @@ final class AlarmSettingViewController: UIViewController {
     
     private let titleTimeSettingLabel: UILabel = {
         let label = UILabel()
-        label.text = "학습 시간 설정"
+        label.text = "트레이닝 시간 설정"
         label.font = .h2
         label.textColor = .black
         return label
@@ -62,7 +62,7 @@ final class AlarmSettingViewController: UIViewController {
     
     private let deatilTimeSettingLabel: UILabel = {
         let label = UILabel()
-        label.text = "잊지 않도록 알림을 드릴게요."
+        label.text = "당신의 목표를 이룰 수 있도록 알림을 드릴게요!"
         label.font = .b4
         label.textColor = .black
         return label
@@ -172,7 +172,6 @@ final class AlarmSettingViewController: UIViewController {
     
     private func presentBottomSheet(target: String, hasAlarm: Bool) {
         let signupBottomSheetVC = BottomSheetViewController()
-        signupBottomSheetVC.bottomSheetView.viewType = .signUp
         let navigationController = UINavigationController(rootViewController: signupBottomSheetVC)
         navigationController.modalPresentationStyle = .overFullScreen
         navigationController.isNavigationBarHidden = true
@@ -213,7 +212,7 @@ final class AlarmSettingViewController: UIViewController {
         /// 앞에서 로그인하고 온 유저라는 것을 어떻게 아는가?
         if UserDefaultsManager.clientAuthType == AuthType.signup.rawValue {
             signupBottomSheetVC.authType = .signup
-            signupBottomSheetVC.bottomSheetView.viewType = .login
+            signupBottomSheetVC.bottomSheetView.viewType = .signUp
             signupBottomSheetVC.userPlanRequest = userPlanRequest
             signupBottomSheetVC.modalPresentationStyle = .overFullScreen
             self.present(navigationController, animated: false) {

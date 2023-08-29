@@ -15,29 +15,6 @@ final class AlarmCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Property
     
-    override var isSelected: Bool {
-        didSet {
-            if isSelected {
-                if dayCellColor {
-                    layer.borderWidth = 1.5
-                    layer.borderColor = UIColor.point.cgColor
-                    backgroundColor = .point
-                    dayLabel.textColor = .white
-                } else {
-                    backgroundColor = .gray400
-                    dayLabel.textColor = .white
-                    layer.borderWidth = 0.0
-                    layer.borderColor = nil
-                }
-            } else {
-                backgroundColor = .white
-                dayLabel.textColor = .gray400
-                layer.borderWidth = 0.0
-                layer.borderColor = nil
-            }
-        }
-    }
-    
     // MARK: - UI Property
     
     private let dayLabel: UILabel = {
@@ -72,6 +49,27 @@ final class AlarmCollectionViewCell: UICollectionViewCell {
     
     func setData(_ text: String) {
         dayLabel.text = text
+    }
+    
+    func selctedCell(hasAlarm: Bool) {
+        if hasAlarm {
+            layer.borderWidth = 1.5
+            layer.borderColor = UIColor.point.cgColor
+            backgroundColor = .point
+            dayLabel.textColor = .white
+        } else {
+            backgroundColor = .gray400
+            dayLabel.textColor = .white
+            layer.borderWidth = 0.0
+            layer.borderColor = nil
+        }
+    }
+
+    func desecltedCell() {
+        backgroundColor = .white
+        dayLabel.textColor = .gray400
+        layer.borderWidth = 0.0
+        layer.borderColor = nil
     }
     
     // MARK: - Layout

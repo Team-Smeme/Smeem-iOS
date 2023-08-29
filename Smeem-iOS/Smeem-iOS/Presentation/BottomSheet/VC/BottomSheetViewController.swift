@@ -110,7 +110,7 @@ final class BottomSheetViewController: UIViewController, LoginDelegate {
     func appleLoginDataSend() {
         let appleIDProvider = ASAuthorizationAppleIDProvider()
         let request = appleIDProvider.createRequest()
-        request.requestedScopes = [.fullName, .email]
+        request.requestedScopes = []
           
         let authorizationController = ASAuthorizationController(authorizationRequests: [request])
         authorizationController.delegate = self

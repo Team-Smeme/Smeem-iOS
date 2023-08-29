@@ -55,10 +55,12 @@ final class EditGoalViewController: UIViewController {
         
         setLayout()
         setBackgroundColor()
+        swipeRecognizer()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        patchGoalAPI(target: tempTarget)
+        self.showLodingView(loadingView: loadingView)
+        detailPlanListGetAPI(tempTarget: tempTarget)
     }
     
     private func setBackgroundColor() {
@@ -73,6 +75,12 @@ final class EditGoalViewController: UIViewController {
         
         howLearningView.setData(planName: planName, planWayOne: planWayOne, planWayTwo: planWayTwo, detailPlanOne: detailPlan[0], detailPlanTwo: detailPlan[1])
     }
+    
+    private func swipeRecognizer() {
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(responseToSwipeGesture))
+        swipeRight.direction = UISwipeGestureRecognizer.Direction.right
+        self.view.addGestureRecognizer(swipeRight)
+    }
 
 }
 
@@ -85,9 +93,12 @@ extension EditGoalViewController {
     }
     
     @objc func nextButtonDidTap() {
-        let mypageVC = MyPageViewController()
-        self.navigationController?.pushViewController(mypageVC, animated: true)
-        // 서버 API 통신 후, pop 두번 하기...
+        self.showLodingView(loadingView: loadingView)
+        patchGoalAPI(target: tempTarget)
+    }
+    
+    @objc func responseToSwipeGesture() {
+        self.navigationController?.popViewController(animated: true)
     }
     
     // MARK: - Layout
@@ -126,8 +137,26 @@ extension EditGoalViewController {
 
 extension EditGoalViewController {
     func patchGoalAPI(target: String) {
-        
         MyPageAPI.shared.changeGoal(param: EditGoalRequest(target: target)) { response in
+            
+            guard let _ = response.data else { return }
+            self.hideLodingView(loadingView: self.loadingView)
+            
+            NotificationCenter.default.post(name: NSNotification.Name("goalData"), object: true)
+            
+            if let navigationController = self.navigationController {
+                let viewControllers = navigationController.viewControllers
+                if viewControllers.count >= 2 {
+                    let viewControllerToPopTo = viewControllers[viewControllers.count - 3] // 해당 인덱스에 있는 뷰 컨트롤러로 돌아가려면 -3로 설정합니다.
+                    navigationController.popToViewController(viewControllerToPopTo, animated: true)
+                }
+            }
+        }
+    }
+    
+    func detailPlanListGetAPI(tempTarget: String) {
+        self.showLodingView(loadingView: loadingView)
+        OnboardingAPI.shared.detailPlanList(param: tempTarget) { response in
             guard let data = response.data else { return }
             
             self.hideLodingView(loadingView: self.loadingView)

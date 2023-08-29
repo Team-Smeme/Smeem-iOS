@@ -11,23 +11,16 @@ final class ServiceAcceptCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "ServiceAcceptCollectionViewCell"
     
-    var checkTotal = false {
-        didSet {
-            if checkTotal {
-                checkButton.setImage(Constant.Image.icnCheckActive, for: .normal)
-            } else {
-                checkButton.setImage(Constant.Image.icnCheckInactive, for: .normal)
-            }
-        }
-    }
+    var trainingClosure: ((IndexPath) -> Void)?
     
     // MARK: - Property
     
     // MARK: - UI Property
     
-    private let checkButton: UIButton = {
+    private lazy var checkButton: UIButton = {
         let button = UIButton()
         button.setImage(Constant.Image.icnCheckInactive, for: .normal)
+        button.addTarget(self, action: #selector(checkButtonDidTap), for: .touchUpInside)
         return button
     }()
     
@@ -39,9 +32,10 @@ final class ServiceAcceptCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    private let moreButton: UIButton = {
+    private lazy var moreButton: UIButton = {
         let button = UIButton()
         button.setImage(Constant.Image.icnForward, for: .normal)
+        button.addTarget(self, action: #selector(moreButtonDidTap), for: .touchUpInside)
         return button
     }()
     
@@ -59,10 +53,28 @@ final class ServiceAcceptCollectionViewCell: UICollectionViewCell {
     
     // MARK: - @objc
     
+    @objc func moreButtonDidTap() {
+        trainingClosure?(getIndexPath()!)
+    }
+    
+    @objc func checkButtonDidTap() {
+        
+    }
+    
     // MARK: - Custom Method
     
     func setData(_ text: String) {
         serviceAcceptLabel.text = text
+    }
+    
+    func selectedCell() {
+        serviceAcceptLabel.textColor = .black
+        checkButton.setImage(Constant.Image.icnCheckActive, for: .normal)
+    }
+    
+    func deselectedCell() {
+        serviceAcceptLabel.textColor = .gray600
+        checkButton.setImage(Constant.Image.icnCheckInactive, for: .normal)
     }
     
     // MARK: - Layout

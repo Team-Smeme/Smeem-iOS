@@ -46,7 +46,7 @@ final class GoalOnboardingView: UIView {
     
     private let titleLearningLabel: UILabel = {
         let label = UILabel()
-        label.text = "학습 목표 설정"
+        label.text = "트레이닝 목표 설정"
         label.font = .h2
         label.textColor = .black
         return label
@@ -54,7 +54,7 @@ final class GoalOnboardingView: UIView {
     
     private let detailLearningLabel: UILabel = {
         let label = UILabel()
-        label.text = "학습 목표는 마이페이지에서 수정할 수 있어요"
+        label.text = "마이페이지에서 언제든지 수정할 수 있어요!"
         label.font = .b4
         label.textColor = .black
         return label

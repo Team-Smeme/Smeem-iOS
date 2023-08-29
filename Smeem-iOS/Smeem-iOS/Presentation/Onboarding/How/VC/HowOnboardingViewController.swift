@@ -51,7 +51,7 @@ final class HowOnboardingViewController: UIViewController {
     
     private let titleLearningLabel: UILabel = {
         let label = UILabel()
-        label.text = "학습 권장 방법"
+        label.text = "추천 트레이닝 방법"
         label.font = .h2
         label.textColor = .black
         return label
@@ -59,7 +59,7 @@ final class HowOnboardingViewController: UIViewController {
     
     private let detailLearningLabel: UILabel = {
         let label = UILabel()
-        label.text = "스밈과 이만큼 함께라면 목표를 이룰 수 있어요."
+        label.text = "스밈과 함께한다면 분명 목표를 이룰 거예요!"
         label.font = .b4
         label.textColor = .black
         return label
@@ -99,7 +99,7 @@ final class HowOnboardingViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-//        detailPlanListGetAPI(tempTarget: tempTarget)
+        detailPlanListGetAPI(tempTarget: tempTarget)
     }
     
     // MARK: - @objc
@@ -176,19 +176,19 @@ final class HowOnboardingViewController: UIViewController {
 
 // MARK: - Network
 
-//extension HowOnboardingViewController {
-//    func detailPlanListGetAPI(tempTarget: String) {
-//        self.showLodingView(loadingView: loadingView)
-//        OnboardingAPI.shared.detailPlanList(param: tempTarget) { response in
-//            guard let data = response.data else { return }
-//
-//            self.hideLodingView(loadingView: self.loadingView)
-//
-//            self.planName = data.name
-//            self.planWay = data.way
-//            self.planDetailWay = data.detail
-//
-//            self.configurePlanData()
-//        }
-//    }
-//}
+extension HowOnboardingViewController {
+    func detailPlanListGetAPI(tempTarget: String) {
+        self.showLodingView(loadingView: loadingView)
+        OnboardingAPI.shared.detailPlanList(param: tempTarget) { response in
+            guard let data = response.data else { return }
+
+            self.hideLodingView(loadingView: self.loadingView)
+
+            self.planName = data.name
+            self.planWay = data.way
+            self.planDetailWay = data.detail
+
+            self.configurePlanData()
+        }
+    }
+}
