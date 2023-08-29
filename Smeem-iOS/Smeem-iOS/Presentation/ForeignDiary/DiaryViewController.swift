@@ -45,7 +45,6 @@ class DiaryViewController: UIViewController {
     var isKeyboardVisible: Bool = false
     var keyboardHeight: CGFloat = 0.0
     var rightButtonFlag = false
-    var textViewPlaceholder = "일기를 작성해주세요."
     
     // MARK: - UI Property
     
@@ -98,8 +97,6 @@ class DiaryViewController: UIViewController {
         let textView = UITextView()
         textView.configureDiaryTextView(topInset: 20)
         textView.configureTypingAttributes()
-        textView.text = textViewPlaceholder
-        textView.textColor = .gray400
         textView.textContentType = .init(rawValue: "ko-KR")
         textView.delegate = self
         return textView
@@ -111,7 +108,6 @@ class DiaryViewController: UIViewController {
         label.numberOfLines = 0
         label.font = .b4
         label.setTextWithLineHeight(lineHeight: 21)
-        label.isHidden = true
         return label
     }()
     
@@ -478,20 +474,10 @@ extension DiaryViewController {
 // MARK: - UITextViewDelegate
 
 extension DiaryViewController: UITextViewDelegate {
-
+    
     func textViewDidChange(_ textView: UITextView) {
         let isTextEmpty = textView.text.isEmpty
-//        placeHolderLabel.isHidden = !isTextEmpty
-        
-        if textView.text.contains(textViewPlaceholder) {
-            textView.text = textView.text.replacingOccurrences(of: textViewPlaceholder, with: "")
-            textView.textColor = .smeemBlack
-        }
-        
-        if textView.text.isEmpty {
-            textView.text = textViewPlaceholder
-            textView.textColor = .gray400
-        }
+        placeHolderLabel.isHidden = !isTextEmpty
         
         guard let strategy = diaryStrategy else {
             rightNavigationButton.setTitleColor(.gray300, for: .normal)
