@@ -59,7 +59,7 @@ final class MyPageViewController: UIViewController {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "마이 페이지"
+        label.text = "마이페이지"
         label.font = .s2
         label.textColor = .smeemBlack
         return label
@@ -113,6 +113,12 @@ final class MyPageViewController: UIViewController {
         let image = UIImageView()
         image.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(badgeImageDidTap)))
         image.isUserInteractionEnabled = true
+        return image
+    }()
+    
+    private let badgeMoreButton: UIImageView = {
+        let image = UIImageView()
+        image.image = Constant.Image.icnForward
         return image
     }()
     
@@ -363,7 +369,7 @@ final class MyPageViewController: UIViewController {
         headerContainerView.addSubviews(backButton, titleLabel, moreButton)
         scrollView.addSubview(contentView)
         contentView.addSubviews(nickNameLabel, editButton, howLearningView, badgeLabel, badgeContainer, languageLabel, languageContainer, alarmLabel, alarmContainer, alarmCollectionView, alarmEditButton)
-        badgeContainer.addSubviews(badgeImage, badgeNameLabel, badgeSummaryLabel)
+        badgeContainer.addSubviews(badgeImage, badgeNameLabel, badgeSummaryLabel, badgeMoreButton)
         languageContainer.addSubviews(languageLabelEnglish, languageCheckButton)
         alarmContainer.addSubviews(alarmPushLabel, alarmPushToggleButton)
     
@@ -424,6 +430,12 @@ final class MyPageViewController: UIViewController {
             $0.top.equalTo(badgeLabel.snp.bottom).offset(convertByHeightRatio(14))
             $0.leading.trailing.equalTo(howLearningView)
             $0.height.equalTo(convertByHeightRatio(244))
+        }
+        
+        badgeMoreButton.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(6)
+            $0.trailing.equalToSuperview().inset(4)
+            $0.height.width.equalTo(40)
         }
         
         badgeImage.snp.makeConstraints {

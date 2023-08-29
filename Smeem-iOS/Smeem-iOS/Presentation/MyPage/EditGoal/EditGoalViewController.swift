@@ -59,6 +59,7 @@ final class EditGoalViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        self.showLodingView(loadingView: loadingView)
         detailPlanListGetAPI(tempTarget: tempTarget)
     }
     
@@ -92,6 +93,7 @@ extension EditGoalViewController {
     }
     
     @objc func nextButtonDidTap() {
+        self.showLodingView(loadingView: loadingView)
         patchGoalAPI(target: tempTarget)
     }
     
@@ -138,6 +140,7 @@ extension EditGoalViewController {
         MyPageAPI.shared.changeGoal(param: EditGoalRequest(target: target)) { response in
             
             guard let _ = response.data else { return }
+            self.hideLodingView(loadingView: self.loadingView)
             
             NotificationCenter.default.post(name: NSNotification.Name("goalData"), object: true)
             

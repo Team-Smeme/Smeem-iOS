@@ -62,7 +62,7 @@ final class HowLearningView: UIView {
     
     private let editButton: UIButton = {
         let button = UIButton()
-        button.setImage(Constant.Image.icnForward, for: .normal)
+        button.setImage(Constant.Image.icnEditForward, for: .normal)
         return button
     }()
     
@@ -154,9 +154,9 @@ final class HowLearningView: UIView {
     private func showButtonType() {
         switch buttontype {
         case .logo:
-            editButton.isHidden = true
+            editButton.isHidden = false
         case .edit:
-            smeemLogo.isHidden = true
+            editButton.isHidden = false
         }
     }
     
@@ -249,5 +249,4 @@ final class HowLearningView: UIView {
             $0.top.equalTo(firstDetailLabel.snp.bottom).offset(6)
         }
     }
-
 }
