@@ -18,6 +18,8 @@ protocol DiaryStrategy {
     func configureLeftNavigationButton(_ button: UIButton)
     func configureRightNavigationButton(_ button: UIButton)
     func configureStepLabel(_ label: UILabel)
+    
+    var textViewPlaceholder: String { get }
 }
 
 class DiaryViewController: UIViewController {
@@ -46,7 +48,6 @@ class DiaryViewController: UIViewController {
     var keyboardHeight: CGFloat = 0.0
     var rightButtonFlag = false
     var isInitialInput = true
-    var textViewPlaceholder = "일기를 작성해주세요."
     
     // MARK: - UI Property
     
@@ -102,7 +103,7 @@ class DiaryViewController: UIViewController {
         textView.textContentType = .init(rawValue: "ko-KR")
         textView.delegate = self
         textView.textColor = .gray400
-        textView.text = textViewPlaceholder
+//        textView.text = textViewPlaceholder
         textView.selectedRange = NSRange(location: 0, length: 0)
         return textView
     }()
@@ -469,12 +470,11 @@ extension DiaryViewController {
 // MARK: - UITextViewDelegate
 
 extension DiaryViewController: UITextViewDelegate {
-    
     func textViewDidChange(_ textView: UITextView) {
-        let isTextEmpty = textView.text.isEmpty || textView.text == textViewPlaceholder
+        let isTextEmpty = textView.text.isEmpty || textView.text == diaryStrategy?.textViewPlaceholder
         
         if isTextEmpty {
-            textView.text = textViewPlaceholder
+            textView.text = diaryStrategy?.textViewPlaceholder
             textView.textColor = .gray400
             textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
         } else {
@@ -514,7 +514,7 @@ extension DiaryViewController: UITextViewDelegate {
         let updatedText = (currentText as NSString).replacingCharacters(in: range, with: text)
         
         if updatedText.isEmpty {
-            textView.text = textViewPlaceholder
+            textView.text = diaryStrategy?.textViewPlaceholder
             textView.textColor = .gray400
             textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
             return false
