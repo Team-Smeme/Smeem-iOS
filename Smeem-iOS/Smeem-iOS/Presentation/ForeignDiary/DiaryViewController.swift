@@ -103,8 +103,6 @@ class DiaryViewController: UIViewController {
         textView.textContentType = .init(rawValue: "ko-KR")
         textView.delegate = self
         textView.textColor = .gray400
-//        textView.text = textViewPlaceholder
-        textView.selectedRange = NSRange(location: 0, length: 0)
         return textView
     }()
     
@@ -505,7 +503,8 @@ extension DiaryViewController: UITextViewDelegate {
     
     func textViewDidChangeSelection(_ textView: UITextView) {
         if textView.textColor == .gray400 {
-            textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
+//            textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
+            textView.selectedRange = NSRange(location: 0, length: 0)
         }
     }
     
