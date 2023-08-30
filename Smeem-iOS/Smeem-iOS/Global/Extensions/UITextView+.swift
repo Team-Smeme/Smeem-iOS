@@ -42,7 +42,6 @@ extension UITextView {
     func configureDiaryTextView(topInset: CGFloat) {
         self.textContainerInset = .init(top: topInset, left: 18, bottom: 0, right: 18)
         self.font = .b4
-        self.textColor = .smeemBlack
         self.tintColor = .point
     }
 }

@@ -101,6 +101,8 @@ class DiaryViewController: UIViewController {
         textView.configureTypingAttributes()
         textView.textContentType = .init(rawValue: "ko-KR")
         textView.delegate = self
+        textView.textColor = .gray400
+        textView.text = textViewPlaceholder
         textView.selectedRange = NSRange(location: 0, length: 0)
         return textView
     }()
@@ -111,6 +113,7 @@ class DiaryViewController: UIViewController {
         label.numberOfLines = 0
         label.font = .b4
         label.setTextWithLineHeight(lineHeight: 21)
+        label.isHidden = true
         return label
     }()
     
@@ -484,17 +487,14 @@ extension DiaryViewController {
 extension DiaryViewController: UITextViewDelegate {
     
     func textViewDidChange(_ textView: UITextView) {
-        let isTextEmpty = textView.text.isEmpty
-//        placeHolderLabel.isHidden = !isTextEmpty
+        let isTextEmpty = textView.text.isEmpty || textView.text == textViewPlaceholder
         
-        if textView.text.contains(textViewPlaceholder) {
-            textView.text = textView.text.replacingOccurrences(of: textViewPlaceholder, with: "")
-            textView.textColor = .smeemBlack
-        }
-        
-        if textView.text.isEmpty {
+        if isTextEmpty {
             textView.text = textViewPlaceholder
             textView.textColor = .gray400
+            textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
+        } else {
+            textView.textColor = .smeemBlack
         }
         
         guard let strategy = diaryStrategy else {
@@ -519,13 +519,11 @@ extension DiaryViewController: UITextViewDelegate {
         rightNavigationButton.setTitleColor(rightButtonFlag ? .point : .gray300, for: .normal)
     }
     
-//    func textViewDidChangeSelection(_ textView: UITextView) {
-//        let cursorPosition = textView.selectedTextRange?.end
-//        if let cursorPosition = cursorPosition {
-//            let caretPositionRect = textView.caretRect(for: cursorPosition)
-//            textView.scrollRectToVisible(caretPositionRect, animated: true)
-//        }
-//    }
+    func textViewDidChangeSelection(_ textView: UITextView) {
+        if textView.textColor == .gray400 {
+            textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
+        }
+    }
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         let currentText = textView.text ?? ""
@@ -540,7 +538,6 @@ extension DiaryViewController: UITextViewDelegate {
             textView.text = nil
             textView.textColor = .smeemBlack
         }
-        
         return true
     }
 }
