@@ -11,7 +11,7 @@ import SnapKit
 
 protocol DiaryStrategy {
     func configureRandomSubjectButtonImage(_ button: UIButton)
-    func configurePlaceHolderLabel(_ label: UILabel)
+    func configurePlaceHolder(_ textView: UITextView)
     func configureToolTipView(_ imageView: UIImageView)
     func configureRandomSubjectButton(_ button: UIButton)
     func configureLanguageLabel(_ label: UILabel)
@@ -105,16 +105,6 @@ class DiaryViewController: UIViewController {
         textView.text = textViewPlaceholder
         textView.selectedRange = NSRange(location: 0, length: 0)
         return textView
-    }()
-    
-    let placeHolderLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .gray400
-        label.numberOfLines = 0
-        label.font = .b4
-        label.setTextWithLineHeight(lineHeight: 21)
-        label.isHidden = true
-        return label
     }()
     
     let bottomView: UIView = {
@@ -314,7 +304,7 @@ class DiaryViewController: UIViewController {
         }
         
         diaryStrategy?.configureRandomSubjectButton(randomSubjectButton)
-        diaryStrategy?.configurePlaceHolderLabel(placeHolderLabel)
+        diaryStrategy?.configurePlaceHolder(inputTextView)
         diaryStrategy?.configureRandomSubjectButton(randomSubjectButton)
         diaryStrategy?.configureLanguageLabel(languageLabel)
         diaryStrategy?.configureLeftNavigationButton(leftNavigationButton)
@@ -370,7 +360,6 @@ class DiaryViewController: UIViewController {
         view.addSubviews(navigationView, inputTextView, bottomView)
         navigationView.addSubviews(navibarContentStackView, stepLabel)
         navibarContentStackView.addArrangedSubviews(leftNavigationButton, languageLabel, rightNavigationButton)
-        inputTextView.addSubview(placeHolderLabel)
         bottomView.addSubviews(thinLine, randomSubjectButton)
         
         navigationView.snp.makeConstraints {
@@ -396,11 +385,6 @@ class DiaryViewController: UIViewController {
             $0.top.equalTo(navigationView.snp.bottom)
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalTo(bottomView.snp.top)
-        }
-        
-        placeHolderLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(convertByHeightRatio(20))
-            $0.leading.equalToSuperview().offset(convertByWidthRatio(21))
         }
         
         bottomView.snp.makeConstraints {
