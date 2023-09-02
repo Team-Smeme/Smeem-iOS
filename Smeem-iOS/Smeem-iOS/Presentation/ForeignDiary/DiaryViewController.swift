@@ -503,8 +503,7 @@ extension DiaryViewController: UITextViewDelegate {
     
     func textViewDidChangeSelection(_ textView: UITextView) {
         if textView.textColor == .gray400 {
-//            textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
-            textView.selectedRange = NSRange(location: 0, length: 0)
+            textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
         }
     }
     
@@ -529,7 +528,6 @@ extension DiaryStrategy {
     func englishValidation(with text: String, in viewController: DiaryViewController) -> Bool {
         return viewController.inputTextView.text.getArrayAfterRegex(regex: "[a-zA-z]").count > 0
     }
-    
 }
 
 extension StepOneKoreanDiaryStrategy {
