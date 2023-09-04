@@ -352,7 +352,7 @@ final class MyPageViewController: UIViewController {
     }
     
     private func loadToastMessage() {
-        showToastIfNeeded(toastType: .defaultToast(bodyType: .changed))
+        showToast(toastType: .defaultToast(bodyType: .changed))
     }
     
     // MARK: - Layout
@@ -551,19 +551,5 @@ extension MyPageViewController {
                 }
             }
         }
-    }
-}
-
-// MARK: - Toast
-
-extension MyPageViewController {
-    func showToastIfNeeded(toastType: ToastViewType) {
-        smeemToastView?.removeFromSuperview()
-        smeemToastView = SmeemToastView(type: toastType)
-        
-        let offKeyboardOffset = convertByHeightRatio(54)
-        
-        smeemToastView?.show(in: self.view, offset: offKeyboardOffset, keyboardHeight: keyboardHeight)
-        smeemToastView?.hide(after: 1)
     }
 }

@@ -458,7 +458,7 @@ extension DiaryViewController {
         let offKeyboardOffset = convertByHeightRatio(107)
         
         // 키보드가 보이는지 확인하여 오프셋을 변경합니다.
-        let offset = isKeyboardVisible ?  onKeyboardOffset : offKeyboardOffset
+        let offset = isKeyboardVisible ? onKeyboardOffset : offKeyboardOffset
         
         smeemToastView?.show(in: view, offset: CGFloat(offset), keyboardHeight: keyboardHeight)
         smeemToastView?.hide(after: 1)
