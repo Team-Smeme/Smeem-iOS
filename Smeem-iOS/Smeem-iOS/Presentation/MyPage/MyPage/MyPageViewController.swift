@@ -212,7 +212,6 @@ final class MyPageViewController: UIViewController {
         return view
     }()
     
-    var smeemToastView: SmeemToastView?
     var keyboardHeight: CGFloat = 0.0
     
     // MARK: - Life Cycle

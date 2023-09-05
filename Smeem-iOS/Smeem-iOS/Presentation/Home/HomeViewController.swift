@@ -170,8 +170,6 @@ final class HomeViewController: UIViewController {
         return addDiaryButton
     }()
     
-    var smeemToastView: SmeemToastView?
-    
     private let loadingView = LoadingView()
     
     // MARK: - Life Cycle

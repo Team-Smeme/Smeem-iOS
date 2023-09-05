@@ -24,7 +24,6 @@ final class AlarmSettingViewController: UIViewController {
     
     // MARK: - UI Property
     
-    let loginErrorToast = SmeemToastView(type: .defaultToast(bodyType: .serverError))
     private let loadingView = LoadingView()
     
     private let nowStepOneLabel: UILabel = {
@@ -300,10 +299,6 @@ final class AlarmSettingViewController: UIViewController {
             $0.centerX.equalToSuperview()
             $0.height.equalTo(convertByHeightRatio(19))
         }
-        
-        loginErrorToast.snp.makeConstraints {
-            $0.bottom.equalToSuperview().inset(20)
-        }
     }
 }
 
@@ -317,7 +312,7 @@ extension AlarmSettingViewController {
                 self.navigationController?.pushViewController(userNicknameVC, animated: true)
             } else {
                 print("학습 목표 API 호출 실패")
-                self.loginErrorToast.show()
+                showToast(toastType: .errorToast(errorType: .serverError))
             }
         }
     }
