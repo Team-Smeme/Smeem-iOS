@@ -22,7 +22,6 @@
 		379789032AAC705B00C61EF4 /* Navigatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379789022AAC705B00C61EF4 /* Navigatable.swift */; };
 		379789052AAC706800C61EF4 /* SmeemNavigationFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379789042AAC706800C61EF4 /* SmeemNavigationFactory.swift */; };
 		379789072AAC707700C61EF4 /* NavigationBarType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379789062AAC707700C61EF4 /* NavigationBarType.swift */; };
-		3797891A2AAD5D1D00C61EF4 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379789192AAD5D1D00C61EF4 /* Constants.swift */; };
 		3797891C2AAE11D400C61EF4 /* NavigationBarConfigurationBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3797891B2AAE11D400C61EF4 /* NavigationBarConfigurationBuilder.swift */; };
 		37A271642AA6078C001FFC38 /* BaseNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A271632AA6078C001FFC38 /* BaseNavigationBar.swift */; };
 		37A574C129FF6E9100312453 /* ColorLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574C029FF6E9100312453 /* ColorLiterals.swift */; };
@@ -152,7 +151,6 @@
 		379789022AAC705B00C61EF4 /* Navigatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigatable.swift; sourceTree = "<group>"; };
 		379789042AAC706800C61EF4 /* SmeemNavigationFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmeemNavigationFactory.swift; sourceTree = "<group>"; };
 		379789062AAC707700C61EF4 /* NavigationBarType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarType.swift; sourceTree = "<group>"; };
-		379789192AAD5D1D00C61EF4 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		3797891B2AAE11D400C61EF4 /* NavigationBarConfigurationBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarConfigurationBuilder.swift; sourceTree = "<group>"; };
 		37A271632AA6078C001FFC38 /* BaseNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseNavigationBar.swift; sourceTree = "<group>"; };
 		37A574C029FF6E9100312453 /* ColorLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorLiterals.swift; sourceTree = "<group>"; };
@@ -311,7 +309,6 @@
 				379789062AAC707700C61EF4 /* NavigationBarType.swift */,
 				379789042AAC706800C61EF4 /* SmeemNavigationFactory.swift */,
 				37A271632AA6078C001FFC38 /* BaseNavigationBar.swift */,
-				379789192AAD5D1D00C61EF4 /* Constants.swift */,
 				3797891B2AAE11D400C61EF4 /* NavigationBarConfigurationBuilder.swift */,
 			);
 			path = SmeemNavigationBar;
@@ -1137,7 +1134,6 @@
 				4A37748A2A433A6500357DD1 /* OnboardingModel.swift in Sources */,
 				4A1882FA2A8BBD0D0088F590 /* SmeemStartViewController.swift in Sources */,
 				3728B8D32A2CFED300EF4CF8 /* ForeignDiaryViewController.swift in Sources */,
-				3797891A2AAD5D1D00C61EF4 /* Constants.swift in Sources */,
 				4ABE3FD12A811F8400D1D22E /* SplashViewController.swift in Sources */,
 				4AD923EB2A0692EA00FF5E27 /* BottomSheetView.swift in Sources */,
 				4A9FAB492A4C3D1200C40D5A /* DetailBadgeCollectionViewCell.swift in Sources */,

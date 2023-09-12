@@ -21,21 +21,23 @@ final class DetailDiaryViewController: UIViewController {
     
     // MARK: - UI Property
     
-    private let naviView = UIView()
+//    private let naviView = UIView()
+//
+//    private lazy var backButton: UIButton = {
+//        let button = UIButton()
+//        button.setImage(Constant.Image.icnBack, for: .normal)
+//        button.addTarget(self, action: #selector(backButtonDidTap(_:)), for: .touchUpInside)
+//        return button
+//    }()
+//
+//    private lazy var editButton: UIButton = {
+//        let button = UIButton()
+//        button.setImage(Constant.Image.icnMore, for: .normal)
+//        button.addTarget(self, action: #selector(showActionSheet), for: .touchUpInside)
+//        return button
+//    }()
     
-    private lazy var backButton: UIButton = {
-        let button = UIButton()
-        button.setImage(Constant.Image.icnBack, for: .normal)
-        button.addTarget(self, action: #selector(backButtonDidTap(_:)), for: .touchUpInside)
-        return button
-    }()
-    
-    private lazy var editButton: UIButton = {
-        let button = UIButton()
-        button.setImage(Constant.Image.icnMore, for: .normal)
-        button.addTarget(self, action: #selector(showActionSheet), for: .touchUpInside)
-        return button
-    }()
+    private var naviView = SmeemNavigationFactory.create(type: .detail)
     
     let diaryScrollerView: DiaryScrollerView = {
         let scrollerView = DiaryScrollerView()
@@ -129,7 +131,7 @@ final class DetailDiaryViewController: UIViewController {
     
     private func setLayout() {
         view.addSubviews(naviView, diaryScrollerView)
-        naviView.addSubviews(backButton, editButton)
+//        naviView.addSubviews(backButton, editButton)
         
         naviView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(44)
@@ -137,17 +139,17 @@ final class DetailDiaryViewController: UIViewController {
             $0.height.equalTo(66)
         }
         
-        backButton.snp.makeConstraints {
-            $0.leading.equalToSuperview().inset(12)
-            $0.centerY.equalToSuperview()
-            $0.height.width.equalTo(40)
-        }
-        
-        editButton.snp.makeConstraints {
-            $0.trailing.equalToSuperview().inset(18)
-            $0.centerY.equalToSuperview()
-            $0.height.width.equalTo(40)
-        }
+//        backButton.snp.makeConstraints {
+//            $0.leading.equalToSuperview().inset(12)
+//            $0.centerY.equalToSuperview()
+//            $0.height.width.equalTo(40)
+//        }
+//
+//        editButton.snp.makeConstraints {
+//            $0.trailing.equalToSuperview().inset(18)
+//            $0.centerY.equalToSuperview()
+//            $0.height.width.equalTo(40)
+//        }
         
         diaryScrollerView.snp.makeConstraints {
             $0.top.equalTo(naviView.snp.bottom)

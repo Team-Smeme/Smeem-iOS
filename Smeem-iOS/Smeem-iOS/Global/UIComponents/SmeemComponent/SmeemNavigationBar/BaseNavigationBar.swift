@@ -23,6 +23,7 @@ class BaseNavigationBar: UIView {
     private let rightButton: UIButton = {
         let button = UIButton()
         button.titleLabel?.font = .b1
+        button.setTitleColor(.gray300, for: .normal)
         return button
     }()
     
@@ -82,20 +83,20 @@ class BaseNavigationBar: UIView {
         rightButton.addTarget(target, action: action, for: event)
     }
     
-    func setButtonLayouts(leftMargin: CGFloat, rightMargin: CGFloat) {
+    private func setButtonLayouts(leftMargin: CGFloat, rightMargin: CGFloat) {
             setLeftButtonLayout(leftMargin)
             setRightButtonLayout(rightMargin)
         }
     
-    func setLeftButtonLayout(_ margin: CGFloat) {
+    private func setLeftButtonLayout(_ margin: CGFloat) {
         leftButton.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(margin)
         }
     }
     
-    func setRightButtonLayout(_ margin: CGFloat) {
+    private func setRightButtonLayout(_ margin: CGFloat) {
         rightButton.snp.makeConstraints { make in
-            make.leading.equalToSuperview().offset(margin)
+            make.trailing.equalToSuperview().offset(-margin)
         }
     }
     
@@ -124,6 +125,17 @@ class BaseNavigationBar: UIView {
 //MARK: - Extensions
 
 extension BaseNavigationBar {
+    
+    private enum Constants {
+        static let horizontalLeftButtonGap: CGFloat = 12
+        static let horizontalRightButtonGap: CGFloat = 18
+        static let horizontalEditCommentButtonsGap: CGFloat = 18
+        static let horizontalArrowButtonGap: CGFloat = 20
+        static let horizontalDotsIconButtonGap: CGFloat = 16
+        static let horizontalMypageButtonGap: CGFloat = 26
+        static let verticalSteplabelGap: CGFloat = 3
+    }
+    
     private func setLayout() {
         addSubviews(leftButton, titleLabel, stepLabel, rightButton)
         

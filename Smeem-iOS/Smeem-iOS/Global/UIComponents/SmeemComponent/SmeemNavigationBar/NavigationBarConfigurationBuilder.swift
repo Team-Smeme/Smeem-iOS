@@ -62,6 +62,11 @@ class NavigationBarConfigurationBuilder {
         return self
     }
     
+    func storeLayout(_ layout: NavigationBarLayout) -> Self {
+        configuration.layout = layout
+        return self
+    }
+    
     func build() -> NavigationBarConfiguration {
         return configuration
     }

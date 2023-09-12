@@ -8,7 +8,7 @@
 import Foundation
 
 class SmeemNavigationFactory {
-    static func create(type: NavigationBarType) -> Navigatable {
+    static func create(type: NavigationBarType) -> BaseNavigationBar {
         let navigationBar: BaseNavigationBar
         var configuration: NavigationBarConfiguration
         
@@ -19,6 +19,7 @@ class SmeemNavigationFactory {
                 .storeLeftButtonTitle("취소")
                 .storeTitle("English")
                 .storeRightButtonTitle("완료")
+                .storeLayout(type.layout)
                 .build()
             navigationBar.applyConfiguraton(configuration)
             return navigationBar
@@ -29,6 +30,7 @@ class SmeemNavigationFactory {
                 .storeTitle("한국어")
                 .storeStepLabelTitle("STEP 1")
                 .storeRightButtonTitle("완료")
+                .storeLayout(type.layout)
                 .build()
             navigationBar.applyConfiguraton(configuration)
             return navigationBar
@@ -39,6 +41,7 @@ class SmeemNavigationFactory {
                 .storeTitle("English")
                 .storeStepLabelTitle("STEP 2")
                 .storeRightButtonTitle("완료")
+                .storeLayout(type.layout)
                 .build()
             navigationBar.applyConfiguraton(configuration)
             return navigationBar
@@ -47,6 +50,8 @@ class SmeemNavigationFactory {
             configuration = NavigationBarConfiguration.builder()
                 .storeLeftButtonImage(Constant.Image.icnBack)
                 .storeRightButtonTitle("완료")
+                .storeLayout(.detail)
+                .storeLayout(type.layout)
                 .build()
             navigationBar.applyConfiguraton(configuration)
             return navigationBar
@@ -56,6 +61,7 @@ class SmeemNavigationFactory {
                 .storeLeftButtonTitle("취소")
                 .storeTitle("첨삭하기")
                 .storeRightButtonTitle("완료")
+                .storeLayout(type.layout)
                 .build()
             navigationBar.applyConfiguraton(configuration)
             return navigationBar
@@ -65,6 +71,7 @@ class SmeemNavigationFactory {
                 .storeLeftButtonTitle("취소")
                 .storeTitle("첨삭하기")
                 .storeRightButtonTitle("완료")
+                .storeLayout(type.layout)
                 .build()
             navigationBar.applyConfiguraton(configuration)
             return navigationBar
@@ -74,6 +81,7 @@ class SmeemNavigationFactory {
                 .storeLeftButtonImage(Constant.Image.icnBack)
                 .storeTitle("마이페이지")
                 .storeRightButtonImage(Constant.Image.icnMore)
+                .storeLayout(type.layout)
                 .build()
             navigationBar.applyConfiguraton(configuration)
             return navigationBar
