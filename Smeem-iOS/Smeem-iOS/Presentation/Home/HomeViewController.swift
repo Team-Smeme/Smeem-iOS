@@ -153,11 +153,19 @@ final class HomeViewController: UIViewController {
         return xButton
     }()
     
-    private lazy var myPageButton: UIButton = {
+    private let myPageButton: UIButton = {
         let myPageButton = UIButton()
         myPageButton.setImage(Constant.Image.icnMyPage, for: .normal)
-        myPageButton.addTarget(self, action: #selector(self.myPageButtonDidTap(_:)), for: .touchUpInside)
         return myPageButton
+    }()
+    
+    private lazy var myPageBackView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .clear
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(myPageButtonDidTap(_:)))
+        view.addGestureRecognizer(tapGesture)
+        view.isUserInteractionEnabled = true
+        return view
     }()
     
     private lazy var addDiaryButton: SmeemButton = {
@@ -296,7 +304,7 @@ final class HomeViewController: UIViewController {
     private func setLayout() {
         hiddenNavigationBar()
         
-        view.addSubviews(calendar, myPageButton, indicator, border, diaryThumbnail, emptyView, floatingView, addDiaryButton)
+        view.addSubviews(calendar, myPageButton, indicator, border, diaryThumbnail, emptyView, floatingView, addDiaryButton, myPageBackView)
         diaryThumbnail.addSubviews(diaryDate, fullViewButtonText, fullViewButtonSymbol, diaryText)
         emptyView.addSubviews(emptyPaddingView, emptySymbol, emptyText)
         floatingView.addSubviews(waitingLabel, adviceLabel, xButton)
@@ -312,6 +320,11 @@ final class HomeViewController: UIViewController {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(convertByHeightRatio(77)/2-convertByHeightRatio(40)/2+3)
             $0.trailing.equalToSuperview().offset(-convertByWidthRatio(18))
             $0.width.height.equalTo(convertByHeightRatio(40))
+        }
+        
+        myPageBackView.snp.makeConstraints {
+            $0.center.equalTo(myPageButton.snp.center)
+            $0.height.width.equalTo(convertByHeightRatio(55))
         }
         
         indicator.snp.makeConstraints {
