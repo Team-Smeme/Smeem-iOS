@@ -68,21 +68,19 @@ final class HomeViewController: UIViewController {
         return border
     }()
     
-    private let diaryThumbnail = UIView()
+    private lazy var diaryThumbnail: UIView = {
+        let view = UIView()
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(fullViewButtonDidTap(_:)))
+        view.addGestureRecognizer(tapGesture)
+        view.isUserInteractionEnabled = true
+        return view
+    }()
     
     private let diaryDate: UILabel = {
         let diaryDate = UILabel()
         diaryDate.textColor = .smeemBlack
         diaryDate.font = .s3
         return diaryDate
-    }()
-    
-    private lazy var fullViewButton: UIView = {
-        let fullViewButton = UIView()
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(fullViewButtonDidTap(_:)))
-        fullViewButton.addGestureRecognizer(tapGesture)
-        fullViewButton.isUserInteractionEnabled = true
-        return fullViewButton
     }()
  
     private let diaryText: UILabel = {
@@ -299,8 +297,7 @@ final class HomeViewController: UIViewController {
         hiddenNavigationBar()
         
         view.addSubviews(calendar, myPageButton, indicator, border, diaryThumbnail, emptyView, floatingView, addDiaryButton)
-        diaryThumbnail.addSubviews(diaryDate, fullViewButton, diaryText)
-        fullViewButton.addSubviews(fullViewButtonText, fullViewButtonSymbol)
+        diaryThumbnail.addSubviews(diaryDate, fullViewButtonText, fullViewButtonSymbol, diaryText)
         emptyView.addSubviews(emptyPaddingView, emptySymbol, emptyText)
         floatingView.addSubviews(waitingLabel, adviceLabel, xButton)
         
@@ -349,21 +346,16 @@ final class HomeViewController: UIViewController {
             $0.leading.equalTo(diaryText.snp.leading)
         }
         
-        fullViewButton.snp.makeConstraints {
+        fullViewButtonSymbol.snp.makeConstraints {
             $0.top.equalToSuperview().offset(convertByHeightRatio(20))
             $0.trailing.equalToSuperview().offset(-convertByWidthRatio(22))
-            $0.width.equalTo(convertByWidthRatio(59))
-            $0.height.equalTo(17)
+            $0.height.equalTo(convertByHeightRatio(10))
+            $0.width.equalTo(convertByWidthRatio(6))
         }
         
         fullViewButtonText.snp.makeConstraints {
-            $0.leading.equalToSuperview()
-            $0.centerY.equalToSuperview()
-        }
-        
-        fullViewButtonSymbol.snp.makeConstraints {
-            $0.trailing.equalToSuperview()
-            $0.centerY.equalToSuperview()
+            $0.centerY.equalTo(fullViewButtonSymbol.snp.centerY)
+            $0.trailing.equalTo(fullViewButtonSymbol.snp.leading).offset(-convertByWidthRatio(8))
         }
         
         emptyView.snp.makeConstraints {
