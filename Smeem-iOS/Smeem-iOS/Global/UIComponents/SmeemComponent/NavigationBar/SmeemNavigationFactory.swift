@@ -5,12 +5,13 @@
 //  Created by Joon Baek on 2023/09/09.
 //
 
-import Foundation
+import UIKit
 
 class SmeemNavigationFactory {
-    static func create(type: NavigationBarType) -> BaseNavigationBar {
-        let navigationBar = BaseNavigationBar()
+    static func create(type: NavigationBarType) -> (BaseNavigationBar, NavigationBarActionDelegate?) {
+        var actionDelegate: NavigationBarActionDelegate? = nil
         
+        let navigationBar = BaseNavigationBar()
         var configurationBuilder = NavigationBarConfiguration.builder().withLayout(type.layout)
         
         switch type {
@@ -22,7 +23,7 @@ class SmeemNavigationFactory {
                 .withLayout(type.layout)
                 .build()
             navigationBar.applyConfiguraton(configuration)
-            return navigationBar
+            return (navigationBar, actionDelegate)
         case .diaryStepOne:
             let configuration = configurationBuilder
                 .withLeftButtonTitle("취소")
@@ -30,7 +31,8 @@ class SmeemNavigationFactory {
                 .withStepLabelTitle("STEP 1")
                 .withRightButtonTitle("완료")
                 .withLayout(type.layout)
-            return navigationBar
+                .build()
+            return (navigationBar, actionDelegate)
         case .diaryStepTwo:
             let configuration = configurationBuilder
                 .withLeftButtonImage(Constant.Image.icnBack)
@@ -40,15 +42,16 @@ class SmeemNavigationFactory {
                 .withLayout(type.layout)
                 .build()
             navigationBar.applyConfiguraton(configuration)
-            return navigationBar
+            return (navigationBar, actionDelegate)
         case .detail:
             let configuration = configurationBuilder
                 .withLeftButtonImage(Constant.Image.icnBack)
-                .withRightButtonTitle("완료")
+                .withRightButtonImage(Constant.Image.icnMore)
                 .withLayout(type.layout)
                 .build()
             navigationBar.applyConfiguraton(configuration)
-            return navigationBar
+            navigationBar.actionDelegate = DetailDiaryViewController()
+            return (navigationBar, actionDelegate)
         case .edit:
             let configuration = configurationBuilder
                 .withLeftButtonTitle("취소")
@@ -57,7 +60,7 @@ class SmeemNavigationFactory {
                 .withLayout(type.layout)
                 .build()
             navigationBar.applyConfiguraton(configuration)
-            return navigationBar
+            return (navigationBar, actionDelegate)
         case .comment:
             let configuration = configurationBuilder
                 .withLeftButtonTitle("취소")
@@ -66,7 +69,7 @@ class SmeemNavigationFactory {
                 .withLayout(type.layout)
                 .build()
             navigationBar.applyConfiguraton(configuration)
-            return navigationBar
+            return (navigationBar, actionDelegate)
         case .myPage:
             let configuration = configurationBuilder
                 .withLeftButtonImage(Constant.Image.icnBack)
@@ -75,7 +78,7 @@ class SmeemNavigationFactory {
                 .withLayout(type.layout)
                 .build()
             navigationBar.applyConfiguraton(configuration)
-            return navigationBar
+            return (navigationBar, actionDelegate)
         }
     }
 }

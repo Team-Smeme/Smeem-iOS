@@ -13,6 +13,10 @@ import SnapKit
 
 class BaseNavigationBar: UIView {
     
+    // MARK: - Properties
+    
+    var actionDelegate: NavigationBarActionDelegate?
+    
     // MARK: - UI Properties
     
     private let leftButton: UIButton = {
@@ -47,6 +51,7 @@ class BaseNavigationBar: UIView {
         super.init(frame: .zero)
         
         setLayout()
+        addButtonsTarget()
     }
     
     required init?(coder: NSCoder) {
@@ -120,6 +125,14 @@ class BaseNavigationBar: UIView {
             break
         }
     }
+    
+    @objc func leftButtonTapped() {
+        actionDelegate?.didTapLeftButton()
+    }
+    
+    @objc func rightButtonTapped() {
+        actionDelegate?.didTapRightButton()
+    }
 }
 
 //MARK: - Extensions
@@ -155,5 +168,10 @@ extension BaseNavigationBar {
         rightButton.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
         }
+    }
+    
+    private func addButtonsTarget() {
+        leftButton.addTarget(self, action: #selector(leftButtonTapped), for: .touchUpInside)
+        rightButton.addTarget(self, action: #selector(rightButtonTapped), for: .touchUpInside)
     }
 }

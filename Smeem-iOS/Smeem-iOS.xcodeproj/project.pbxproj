@@ -302,7 +302,7 @@
 			path = EditGoal;
 			sourceTree = "<group>";
 		};
-		379789012AAB9B1900C61EF4 /* SmeemNavigationBar */ = {
+		379789012AAB9B1900C61EF4 /* NavigationBar */ = {
 			isa = PBXGroup;
 			children = (
 				379789022AAC705B00C61EF4 /* Navigatable.swift */,
@@ -311,7 +311,7 @@
 				37A271632AA6078C001FFC38 /* BaseNavigationBar.swift */,
 				3797891B2AAE11D400C61EF4 /* NavigationBarConfigurationBuilder.swift */,
 			);
-			path = SmeemNavigationBar;
+			path = NavigationBar;
 			sourceTree = "<group>";
 		};
 		37A574B429FE203100312453 /* Global */ = {
@@ -594,7 +594,7 @@
 		4A1EE9552A4DFB86007BFEF3 /* SmeemComponent */ = {
 			isa = PBXGroup;
 			children = (
-				379789012AAB9B1900C61EF4 /* SmeemNavigationBar */,
+				379789012AAB9B1900C61EF4 /* NavigationBar */,
 				4A0EA4632A014710006CCE52 /* SmeemButton.swift */,
 				37A574E52A02178D00312453 /* SmeemToastView.swift */,
 			);
