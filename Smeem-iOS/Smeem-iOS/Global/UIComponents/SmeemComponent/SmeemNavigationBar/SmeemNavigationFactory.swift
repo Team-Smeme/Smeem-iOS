@@ -10,69 +10,69 @@ import Foundation
 class SmeemNavigationFactory {
     static func create(type: NavigationBarType) -> BaseNavigationBar {
         let navigationBar = BaseNavigationBar()
-        var configurationBuilder = NavigationBarConfiguration.builder().storeLayout(type.layout)
+        
+        var configurationBuilder = NavigationBarConfiguration.builder().withLayout(type.layout)
         
         switch type {
         case .diaryEnglish:
             let configuration = configurationBuilder
-                .storeLeftButtonTitle("취소")
-                .storeTitle("English")
-                .storeRightButtonTitle("완료")
-                .storeLayout(type.layout)
+                .withLeftButtonTitle("취소")
+                .withTitle("English")
+                .withRightButtonTitle("완료")
+                .withLayout(type.layout)
                 .build()
             navigationBar.applyConfiguraton(configuration)
             return navigationBar
         case .diaryStepOne:
             let configuration = configurationBuilder
-                .storeLeftButtonTitle("취소")
-                .storeTitle("한국어")
-                .storeStepLabelTitle("STEP 1")
-                .storeRightButtonTitle("완료")
-                .storeLayout(type.layout)
+                .withLeftButtonTitle("취소")
+                .withTitle("한국어")
+                .withStepLabelTitle("STEP 1")
+                .withRightButtonTitle("완료")
+                .withLayout(type.layout)
             return navigationBar
         case .diaryStepTwo:
             let configuration = configurationBuilder
-                .storeLeftButtonImage(Constant.Image.icnBack)
-                .storeTitle("English")
-                .storeStepLabelTitle("STEP 2")
-                .storeRightButtonTitle("완료")
-                .storeLayout(type.layout)
+                .withLeftButtonImage(Constant.Image.icnBack)
+                .withTitle("English")
+                .withStepLabelTitle("STEP 2")
+                .withRightButtonTitle("완료")
+                .withLayout(type.layout)
                 .build()
             navigationBar.applyConfiguraton(configuration)
             return navigationBar
         case .detail:
             let configuration = configurationBuilder
-                .storeLeftButtonImage(Constant.Image.icnBack)
-                .storeRightButtonTitle("완료")
-                .storeLayout(.detail)
-                .storeLayout(type.layout)
+                .withLeftButtonImage(Constant.Image.icnBack)
+                .withRightButtonTitle("완료")
+                .withLayout(type.layout)
                 .build()
             navigationBar.applyConfiguraton(configuration)
             return navigationBar
         case .edit:
             let configuration = configurationBuilder
-                .storeLeftButtonTitle("취소")
-                .storeTitle("첨삭하기")
-                .storeRightButtonTitle("완료")
-                .storeLayout(type.layout)
+                .withLeftButtonTitle("취소")
+                .withTitle("첨삭하기")
+                .withRightButtonTitle("완료")
+                .withLayout(type.layout)
                 .build()
             navigationBar.applyConfiguraton(configuration)
             return navigationBar
         case .comment:
             let configuration = configurationBuilder
-                .storeLeftButtonTitle("취소")
-                .storeTitle("첨삭하기")
-                .storeRightButtonTitle("완료")
-                .storeLayout(type.layout)
+                .withLeftButtonTitle("취소")
+                .withTitle("첨삭하기")
+                .withRightButtonTitle("완료")
+                .withLayout(type.layout)
                 .build()
             navigationBar.applyConfiguraton(configuration)
             return navigationBar
         case .myPage:
             let configuration = configurationBuilder
-                .storeLeftButtonImage(Constant.Image.icnBack)
-                .storeTitle("마이페이지")
-                .storeRightButtonImage(Constant.Image.icnMore)
-                .storeLayout(type.layout)
+                .withLeftButtonImage(Constant.Image.icnBack)
+                .withTitle("마이페이지")
+                .withRightButtonImage(Constant.Image.icnMore)
+                .withLayout(type.layout)
                 .build()
             navigationBar.applyConfiguraton(configuration)
             return navigationBar

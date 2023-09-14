@@ -54,19 +54,19 @@ class BaseNavigationBar: UIView {
     }
     
     // MARK: - Methods
-
+    
     func setLeftButtonTitle(_ title: String) {
         leftButton.setTitle(title, for: .normal)
     }
-
+    
     func setRightButtonTitle(_ title: String) {
         rightButton.setTitle(title, for: .normal)
     }
-
+    
     func setLeftButtonImage(_ image: UIImage) {
         leftButton.setImage(image, for: .normal)
     }
-
+    
     func setRightButtonImage(_ image: UIImage) {
         rightButton.setImage(image, for: .normal)
     }
@@ -84,9 +84,9 @@ class BaseNavigationBar: UIView {
     }
     
     private func setButtonLayouts(leftMargin: CGFloat, rightMargin: CGFloat) {
-            setLeftButtonLayout(leftMargin)
-            setRightButtonLayout(rightMargin)
-        }
+        setLeftButtonLayout(leftMargin)
+        setRightButtonLayout(rightMargin)
+    }
     
     private func setLeftButtonLayout(_ margin: CGFloat) {
         leftButton.snp.makeConstraints { make in
@@ -108,13 +108,13 @@ class BaseNavigationBar: UIView {
         setTitle(configuration.title ?? "")
         
         switch configuration.layout {
-        case .diary:
+        case .diaryLayout:
             setButtonLayouts(leftMargin: Constants.horizontalLeftButtonGap, rightMargin: Constants.horizontalRightButtonGap)
-        case .detail:
+        case .detailLayout:
             setButtonLayouts(leftMargin: Constants.horizontalArrowButtonGap, rightMargin: Constants.horizontalRightButtonGap)
-        case .edit, .comment:
+        case .editLayout, .commentLayout:
             setButtonLayouts(leftMargin: Constants.horizontalEditCommentButtonsGap, rightMargin: Constants.horizontalEditCommentButtonsGap)
-        case .myPage:
+        case .myPageLayout:
             setButtonLayouts(leftMargin: Constants.horizontalArrowButtonGap, rightMargin: Constants.horizontalDotsIconButtonGap)
         default:
             break

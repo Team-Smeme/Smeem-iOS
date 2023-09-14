@@ -8,11 +8,11 @@
 import UIKit
 
 enum NavigationBarLayout {
-    case diary
-    case detail
-    case edit
-    case comment
-    case myPage
+    case diaryLayout
+    case detailLayout
+    case editLayout
+    case commentLayout
+    case myPageLayout
 }
 
 struct NavigationBarConfiguration {
@@ -30,39 +30,47 @@ struct NavigationBarConfiguration {
 }
 
 class NavigationBarConfigurationBuilder {
-    private var configuration = NavigationBarConfiguration(leftButtonTitle: nil, rightButtonTitle: nil, leftButtonImage: nil, rightButtonImage: nil, title: nil, stepLabelTitle: nil, layout: nil)
+    private var configuration = NavigationBarConfiguration(
+        leftButtonTitle: nil,
+        rightButtonTitle: nil,
+        leftButtonImage: nil,
+        rightButtonImage: nil,
+        title: nil,
+        stepLabelTitle: nil,
+        layout: nil
+    )
     
-    func storeLeftButtonTitle(_ title: String) -> Self {
+    func withLeftButtonTitle(_ title: String) -> Self {
         configuration.leftButtonTitle = title
         return self
     }
     
-    func storeRightButtonTitle(_ title: String) -> Self {
+    func withRightButtonTitle(_ title: String) -> Self {
         configuration.rightButtonTitle = title
         return self
     }
     
-    func storeLeftButtonImage(_ image: UIImage?) -> Self {
+    func withLeftButtonImage(_ image: UIImage?) -> Self {
         configuration.leftButtonImage = image
         return self
     }
     
-    func storeRightButtonImage(_ image: UIImage?) -> Self {
+    func withRightButtonImage(_ image: UIImage?) -> Self {
         configuration.rightButtonImage = image
         return self
     }
     
-    func storeTitle(_ title: String) -> Self {
+    func withTitle(_ title: String) -> Self {
         configuration.title = title
         return self
     }
     
-    func storeStepLabelTitle(_ title: String) -> Self {
+    func withStepLabelTitle(_ title: String) -> Self {
         configuration.stepLabelTitle = title
         return self
     }
     
-    func storeLayout(_ layout: NavigationBarLayout) -> Self {
+    func withLayout(_ layout: NavigationBarLayout) -> Self {
         configuration.layout = layout
         return self
     }

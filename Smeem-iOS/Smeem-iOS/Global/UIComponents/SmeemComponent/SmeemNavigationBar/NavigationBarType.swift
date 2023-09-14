@@ -19,19 +19,19 @@ enum NavigationBarType {
     var layout: NavigationBarLayout {
         switch self {
         case .diaryEnglish:
-            return .diary
+            return .diaryLayout
         case .diaryStepOne:
-            return .diary
+            return .diaryLayout
         case .diaryStepTwo:
-            return .diary
+            return .diaryLayout
         case .detail:
-            return .detail
+            return .detailLayout
         case .edit:
-            return .edit
+            return .editLayout
         case .comment:
-            return .comment
+            return .commentLayout
         case .myPage:
-            return .detail
+            return .detailLayout
         }
     }
 }
