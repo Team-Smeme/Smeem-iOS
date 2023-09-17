@@ -21,7 +21,7 @@ final class DetailDiaryViewController: UIViewController {
     
     // MARK: - UI Property
     
-    private var naviView: BaseNavigationBar?
+    private var naviView: SmeemNavigationBar?
     
     let diaryScrollerView: DiaryScrollerView = {
         let scrollerView = DiaryScrollerView()
@@ -34,12 +34,8 @@ final class DetailDiaryViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let (navigationBar, actionDelegate) = SmeemNavigationFactory.create(type: .detail)
-        
-        self.naviView = navigationBar
-        self.naviView?.actionDelegate = self 
-        
+
+        naviView = createNavigationBar(type: .detail)
         setBackgroundColor()
         setLayout()
         swipeRecognizer()
@@ -54,10 +50,6 @@ final class DetailDiaryViewController: UIViewController {
     @objc func responseToSwipeGesture() {
         self.navigationController?.popViewController(animated: true)
     }
-    
-    //    @objc func backButtonDidTap(_ sender: UIButton) {
-    //        self.navigationController?.popViewController(animated: true)
-    //    }
     
     @objc func showActionSheet() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)

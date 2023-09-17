@@ -151,4 +151,12 @@ extension UIViewController {
     //        toastView.show(in: view, offset: yOffset, keyboardHeight: keyboardHeight)
     //        toastView.hide(after: duration)
     //    }
+    
+    func createNavigationBar(type: NavigationBarType) -> SmeemNavigationBar {
+        let navigationBar = SmeemNavigationFactory.create(type: type)
+        if let actionDelegate = self as? NavigationBarActionDelegate {
+            navigationBar.actionDelegate = actionDelegate
+        }
+        return navigationBar
+    }
 }

@@ -11,7 +11,7 @@ import SnapKit
 
 // MARK: - BaseNavigationBar
 
-class BaseNavigationBar: UIView {
+class SmeemNavigationBar: UIView {
     
     // MARK: - Properties
     
@@ -137,7 +137,7 @@ class BaseNavigationBar: UIView {
 
 //MARK: - Extensions
 
-extension BaseNavigationBar {
+extension SmeemNavigationBar {
     
     private enum Constants {
         static let horizontalLeftButtonGap: CGFloat = 12

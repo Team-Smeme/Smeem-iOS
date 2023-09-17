@@ -23,7 +23,7 @@
 		379789052AAC706800C61EF4 /* SmeemNavigationFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379789042AAC706800C61EF4 /* SmeemNavigationFactory.swift */; };
 		379789072AAC707700C61EF4 /* NavigationBarType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379789062AAC707700C61EF4 /* NavigationBarType.swift */; };
 		3797891C2AAE11D400C61EF4 /* NavigationBarConfigurationBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3797891B2AAE11D400C61EF4 /* NavigationBarConfigurationBuilder.swift */; };
-		37A271642AA6078C001FFC38 /* BaseNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A271632AA6078C001FFC38 /* BaseNavigationBar.swift */; };
+		37A271642AA6078C001FFC38 /* SmeemNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A271632AA6078C001FFC38 /* SmeemNavigationBar.swift */; };
 		37A574C129FF6E9100312453 /* ColorLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574C029FF6E9100312453 /* ColorLiterals.swift */; };
 		37A574C329FF6E9C00312453 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574C229FF6E9C00312453 /* Image.swift */; };
 		37A574C529FF6EA800312453 /* FontLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574C429FF6EA800312453 /* FontLiterals.swift */; };
@@ -152,7 +152,7 @@
 		379789042AAC706800C61EF4 /* SmeemNavigationFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmeemNavigationFactory.swift; sourceTree = "<group>"; };
 		379789062AAC707700C61EF4 /* NavigationBarType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarType.swift; sourceTree = "<group>"; };
 		3797891B2AAE11D400C61EF4 /* NavigationBarConfigurationBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarConfigurationBuilder.swift; sourceTree = "<group>"; };
-		37A271632AA6078C001FFC38 /* BaseNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseNavigationBar.swift; sourceTree = "<group>"; };
+		37A271632AA6078C001FFC38 /* SmeemNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmeemNavigationBar.swift; sourceTree = "<group>"; };
 		37A574C029FF6E9100312453 /* ColorLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorLiterals.swift; sourceTree = "<group>"; };
 		37A574C229FF6E9C00312453 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		37A574C429FF6EA800312453 /* FontLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontLiterals.swift; sourceTree = "<group>"; };
@@ -308,7 +308,7 @@
 				379789022AAC705B00C61EF4 /* Navigatable.swift */,
 				379789062AAC707700C61EF4 /* NavigationBarType.swift */,
 				379789042AAC706800C61EF4 /* SmeemNavigationFactory.swift */,
-				37A271632AA6078C001FFC38 /* BaseNavigationBar.swift */,
+				37A271632AA6078C001FFC38 /* SmeemNavigationBar.swift */,
 				3797891B2AAE11D400C61EF4 /* NavigationBarConfigurationBuilder.swift */,
 			);
 			path = NavigationBar;
@@ -1070,7 +1070,7 @@
 				4A9FAB472A4C3D1200C40D5A /* BadgeListTableViewCell.swift in Sources */,
 				373E38592A2F889500DF96F0 /* DiaryDetailRandomSubjectView.swift in Sources */,
 				6F294A3E2A26177B00856CC8 /* GoalViewController.swift in Sources */,
-				37A271642AA6078C001FFC38 /* BaseNavigationBar.swift in Sources */,
+				37A271642AA6078C001FFC38 /* SmeemNavigationBar.swift in Sources */,
 				4A6630392A51E04600D19CC9 /* PatchDiaryRequest.swift in Sources */,
 				4AF58CE92A4820AA00305248 /* AuthModel.swift in Sources */,
 				3761116C2A278D0E0095EC5A /* String+.swift in Sources */,
