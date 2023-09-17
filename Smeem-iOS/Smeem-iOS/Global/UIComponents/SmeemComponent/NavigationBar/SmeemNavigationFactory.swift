@@ -1,5 +1,5 @@
 //
-//  SmeemNavigationFactory.swift
+//  NavigationBarFactory.swift
 //  Smeem-iOS
 //
 //  Created by Joon Baek on 2023/09/09.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SmeemNavigationFactory {
+class NavigationBarFactory {
     static func create(type: NavigationBarType) -> SmeemNavigationBar {
         
         let navigationBar = SmeemNavigationBar()

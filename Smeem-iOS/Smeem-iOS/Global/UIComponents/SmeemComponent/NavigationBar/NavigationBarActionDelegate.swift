@@ -1,5 +1,5 @@
 //
-//  Navigatable.swift
+//  NavigationBarActionDelegate.swift
 //  Smeem-iOS
 //
 //  Created by Joon Baek on 2023/09/09.
