@@ -82,6 +82,7 @@ final class AlarmSettingViewController: UIViewController {
         button.setTitleColor(.gray600, for: .normal)
         button.titleLabel?.font = .b4
         button.addTarget(self, action: #selector(laterButtonDidTap), for: .touchUpInside)
+        button.backgroundColor = .blue
         return button
     }()
     
@@ -295,9 +296,9 @@ final class AlarmSettingViewController: UIViewController {
         }
         
         laterButton.snp.makeConstraints {
-            $0.bottom.equalTo(completeButton.snp.top).offset(convertByHeightRatio(-19))
+            $0.bottom.equalTo(completeButton.snp.top).offset(convertByHeightRatio(-9))
             $0.centerX.equalToSuperview()
-            $0.height.equalTo(convertByHeightRatio(19))
+            $0.height.equalTo(39)
         }
     }
 }

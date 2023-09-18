@@ -176,7 +176,7 @@ class BadgeListViewController: UIViewController {
         cancelButton.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.leading.equalToSuperview().offset(convertByHeightRatio(10))
-            $0.height.equalTo(convertByHeightRatio(45))
+            $0.width.height.equalTo(55)
         }
         
         badgeListTableView.snp.makeConstraints {

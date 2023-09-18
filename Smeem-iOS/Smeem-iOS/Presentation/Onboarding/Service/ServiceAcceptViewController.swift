@@ -354,12 +354,12 @@ extension ServiceAcceptViewController: UICollectionViewDataSource {
 extension ServiceAcceptViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = collectionView.frame.width
-        let height = convertByHeightRatio(20)
+        let height = convertByHeightRatio(45)
         return CGSize(width: width, height: height)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        let sectionLineSpacing: CGFloat = 32
+        let sectionLineSpacing: CGFloat = 5
         return sectionLineSpacing
     }
 }

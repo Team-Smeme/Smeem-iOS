@@ -45,6 +45,7 @@ final class DatePickerFooterView: UICollectionReusableView {
     lazy var inputTextField: UITextField = {
         let textField = UITextField()
         textField.text = "10:00 PM"
+        textField.textAlignment = .center
         textField.textColor = .point
         textField.font = .s2
         textField.tintColor = .clear
@@ -228,7 +229,9 @@ final class DatePickerFooterView: UICollectionReusableView {
         
         inputTextField.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(alarmLabel.snp.bottom).offset(convertByHeightRatio(4))
+            $0.top.equalTo(alarmLabel.snp.bottom).inset(10)
+            $0.height.equalTo(50)
+            $0.width.equalTo(130)
         }
     }
 }
