@@ -170,8 +170,6 @@ final class HomeViewController: UIViewController {
         return addDiaryButton
     }()
     
-    var smeemToastView: SmeemToastView?
-    
     private let loadingView = LoadingView()
     
     // MARK: - Life Cycle
@@ -278,7 +276,7 @@ final class HomeViewController: UIViewController {
     }
     
     private func loadToastMessage() {
-        showToastIfNeeded(toastType: .defaultToast(bodyType: .completed))
+        showToast(toastType: .defaultToast(bodyType: .completed))
     }
     
     private func pushShowPage() {
@@ -522,17 +520,5 @@ extension HomeViewController {
             self.configureBottomLayout(date: self.currentDate)
             self.calendar.reloadData()
         }
-    }
-}
-
-extension HomeViewController {
-    func showToastIfNeeded(toastType: ToastViewType) {
-        smeemToastView?.removeFromSuperview()
-        smeemToastView = SmeemToastView(type: toastType)
-        
-        let offKeyboardOffset = convertByHeightRatio(54)
-        
-        smeemToastView?.show(in: self.view, offset: offKeyboardOffset, keyboardHeight: keyboardHeight)
-        smeemToastView?.hide(after: 1)
     }
 }
