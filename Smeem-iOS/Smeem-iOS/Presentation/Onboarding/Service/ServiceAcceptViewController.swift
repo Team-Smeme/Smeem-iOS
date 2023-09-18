@@ -300,8 +300,12 @@ extension ServiceAcceptViewController: UICollectionViewDataSource {
                 if let url = URL(string: "https://smeem.notion.site/7132b91df0eb4838b435b53ad7cbb588?pvs=4") {
                     UIApplication.shared.open(url, options: [:])
                 }
-            } else {
+            } else if indexPath.item == 1 {
                 if let url = URL(string: "https://smeem.notion.site/334e225bb69b45c28f31fe363ca9f25e?pvs=4") {
+                    UIApplication.shared.open(url, options: [:])
+                }
+            } else {
+                if let url = URL(string: "https://smeem.notion.site/793bae40ccd14654828b68ee41ac51b6") {
                     UIApplication.shared.open(url, options: [:])
                 }
             }
