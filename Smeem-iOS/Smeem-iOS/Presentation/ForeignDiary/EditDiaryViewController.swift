@@ -7,6 +7,8 @@
 
 import UIKit
 
+import SnapKit
+
 final class EditDiaryViewController: UIViewController {
     
     // MARK: - Property
@@ -115,8 +117,10 @@ final class EditDiaryViewController: UIViewController {
         }
         
         backButton.snp.makeConstraints {
-            $0.leading.equalToSuperview().inset(18)
+            $0.leading.equalToSuperview().inset(18 - 5)
             $0.centerY.equalToSuperview()
+            $0.width.equalTo(28 + 10)
+            $0.height.equalTo(42)
         }
         
         editTitleLabel.snp.makeConstraints {
@@ -124,8 +128,10 @@ final class EditDiaryViewController: UIViewController {
         }
         
         completeButton.snp.makeConstraints {
-            $0.trailing.equalToSuperview().inset(18)
+            $0.trailing.equalToSuperview().inset(18 - 5)
             $0.centerY.equalToSuperview()
+            $0.width.equalTo(28 + 10)
+            $0.height.equalTo(42)
         }
     }
     
