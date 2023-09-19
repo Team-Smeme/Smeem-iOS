@@ -82,7 +82,6 @@ final class AlarmSettingViewController: UIViewController {
         button.setTitleColor(.gray600, for: .normal)
         button.titleLabel?.font = .b4
         button.addTarget(self, action: #selector(laterButtonDidTap), for: .touchUpInside)
-        button.backgroundColor = .blue
         return button
     }()
     

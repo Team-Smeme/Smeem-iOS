@@ -25,6 +25,11 @@ final class SplashViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+//        setLayout()
+//        checkDidLogin()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         setLayout()
         checkDidLogin()
     }
@@ -35,28 +40,34 @@ final class SplashViewController: UIViewController {
     
     private func checkDidLogin() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            // access 토큰을 가지고 있음
-            if UserDefaultsManager.accessToken != "" {
-                AuthAPI.shared.reLoginAPI() { response in
-                    // 토큰 재발급 성공 (refreshToken)
-                    if response.success {
-                        if let accessToken = response.data?.accessToken {
-                            UserDefaultsManager.accessToken = accessToken
+            
+            // 업데이트하지 않아도 되는 유저
+            if !self.needUpdate() {
+                
+                if UserDefaultsManager.accessToken != "" {
+                    AuthAPI.shared.reLoginAPI() { response in
+                        // 토큰 재발급 성공 (refreshToken)
+                        if response.success {
+                            if let accessToken = response.data?.accessToken {
+                                UserDefaultsManager.accessToken = accessToken
+                            }
+                            if let refresToken = response.data?.refreshToken {
+                                UserDefaultsManager.refreshToken = refresToken
+                            }
+                            
+                            self.changeRootViewController(HomeViewController())
                         }
-                        if let refresToken = response.data?.refreshToken {
-                            UserDefaultsManager.refreshToken = refresToken
+                        // 토큰 만료(재로그인)
+                        else {
+                            self.presentSmeemStartVC()
                         }
-                        
-                        self.changeRootViewController(HomeViewController())
                     }
-                    // 토큰 만료(재로그인)
-                    else {
-                        self.presentSmeemStartVC()
-                    }
+                } else {
+                    // 토큰을 가지고 있지 않음
+                    self.presentSmeemStartVC()
                 }
             } else {
-                // 토큰을 가지고 있지 않음
-                self.presentSmeemStartVC()
+                // 업데이트 해야 하는 유저
             }
         }
     }
@@ -78,6 +89,31 @@ final class SplashViewController: UIViewController {
         splashImageView.snp.makeConstraints {
             $0.top.trailing.leading.bottom.equalToSuperview()
         }
+    }
+    
+    private func needUpdate() -> Bool {
+        Task {
+            let appStoreVersion = try await System().latestVersion()!.split(separator: ".").map{$0}
+            let currentProjectVersion = System.appVersion!.split(separator: ".").map{$0}
+
+            // 강제 업데이트 팝업
+            if appStoreVersion[0] < currentProjectVersion[0] {
+                let alert = UIAlertController(title: "업데이트 알림", message: "보다 나아진 스밈의 최신 버전을 준비했어요! 새로운 버전으로 업데이트 후 이용해주세요.", preferredStyle: UIAlertController.Style.alert)
+                
+                let update = UIAlertAction(title: "업데이트", style: UIAlertAction.Style.default) { (_) in
+                    System().openAppStore()
+                }
+                
+                alert.addAction(update)
+                self.present(alert, animated: false)
+                
+                return true
+            }
+            
+            return false
+        }
+        
+        return false
     }
 }
 
