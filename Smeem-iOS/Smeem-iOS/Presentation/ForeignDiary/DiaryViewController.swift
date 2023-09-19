@@ -60,7 +60,7 @@ class DiaryViewController: UIViewController {
         stackView.alignment = .center
         stackView.distribution = .equalSpacing
         // FIXME: 기기대응시 문제가 생길수도..?
-        stackView.spacing = 110
+        stackView.spacing = 100
         return stackView
     }()
     
@@ -68,6 +68,7 @@ class DiaryViewController: UIViewController {
         let button = UIButton()
         button.titleLabel?.font = .b4
         button.setTitleColor(.black, for: .normal)
+        button.contentEdgeInsets = UIEdgeInsets(top: 5, left: 0, bottom: 5, right: 5)
         button.addTarget(self, action: #selector(leftNavigationButtonDidTap), for: .touchUpInside)
         return button
     }()
@@ -92,6 +93,7 @@ class DiaryViewController: UIViewController {
         button.titleLabel?.font = .b1
         button.setTitleColor(.gray300, for: .normal)
         button.setTitle("완료", for: .normal)
+        button.contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 0)
         button.addTarget(self, action: #selector(rightNavigationButtonDidTap) , for: .touchUpInside)
         return button
     }()
@@ -373,6 +375,7 @@ class DiaryViewController: UIViewController {
             } else {
                 $0.leading.equalToSuperview().offset(convertByWidthRatio(12))
             }
+            $0.height.equalTo(42)
         }
         
         stepLabel.snp.makeConstraints {
@@ -397,10 +400,10 @@ class DiaryViewController: UIViewController {
         }
         
         randomSubjectButton.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(convertByHeightRatio(17))
-            $0.trailing.equalToSuperview().offset(convertByWidthRatio(-18))
-            $0.width.equalTo(convertByWidthRatio(78))
-            $0.height.equalTo(convertByHeightRatio(19))
+            $0.top.equalToSuperview().offset(convertByHeightRatio(17 - 5))
+            $0.trailing.equalToSuperview().offset(convertByWidthRatio(-18 + 5))
+            $0.width.equalTo(convertByWidthRatio(78 + 10))
+            $0.height.equalTo(convertByHeightRatio(19 + 10))
         }
     }
     

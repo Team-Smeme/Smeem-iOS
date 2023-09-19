@@ -258,7 +258,7 @@ final class AlarmSettingViewController: UIViewController {
     
     private func setLayout() {
         view.addSubviews(nowStepOneLabel, divisionLabel, totalStepLabel, timeSettingLabelStackView,
-                         alarmCollectionView, laterButton, completeButton, loginErrorToast)
+                         alarmCollectionView, laterButton, completeButton)
         timeSettingLabelStackView.addArrangedSubviews(titleTimeSettingLabel, deatilTimeSettingLabel)
         
         nowStepOneLabel.snp.makeConstraints {
@@ -312,7 +312,6 @@ extension AlarmSettingViewController {
                 self.navigationController?.pushViewController(userNicknameVC, animated: true)
             } else {
                 print("학습 목표 API 호출 실패")
-                showToast(toastType: .errorToast(errorType: .serverError))
             }
         }
     }
