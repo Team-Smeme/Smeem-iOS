@@ -33,9 +33,6 @@ final class HomeViewFloatingViewController: UIViewController {
         let foreignButton = UILabel()
         foreignButton.font = .s4
         foreignButton.attributedText = changePartialStringStyle(mainString: "외국어로 바로 작성하기", pointString: "외국어로 바로", pointFont: .s2, pointColor: .point)
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(foreignDiaryButtonDidTap(_:)))
-        foreignButton.addGestureRecognizer(tapGesture)
-        foreignButton.isUserInteractionEnabled = true
         return foreignButton
     }()
     
@@ -49,9 +46,6 @@ final class HomeViewFloatingViewController: UIViewController {
         let koreanButton = UILabel()
         koreanButton.font = .s4
         koreanButton.attributedText = changePartialStringStyle(mainString: "한국어로 먼저 작성하기", pointString: "한국어로 먼저", pointFont: .s2, pointColor: .point)
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(koreanDiaryButtonDidTap(_:)))
-        koreanButton.addGestureRecognizer(tapGesture)
-        koreanButton.isUserInteractionEnabled = true
         return koreanButton
     }()
     
@@ -82,6 +76,24 @@ final class HomeViewFloatingViewController: UIViewController {
         let button = UIButton()
         button.addTarget(self, action: #selector(dismissButtonDidTap), for: .touchUpInside)
         return button
+    }()
+    
+    private lazy var foreginTouchBackView: UIView = {
+        let backView = UIView()
+        backView.backgroundColor = .clear
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(foreignDiaryButtonDidTap(_:)))
+        backView.addGestureRecognizer(tapGesture)
+        backView.isUserInteractionEnabled = true
+        return backView
+    }()
+    
+    private lazy var koreanTouchBackView: UIView = {
+        let backView = UIView()
+        backView.backgroundColor = .clear
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(koreanDiaryButtonDidTap(_:)))
+        backView.addGestureRecognizer(tapGesture)
+        backView.isUserInteractionEnabled = true
+        return backView
     }()
     
     // MARK: - Life Cycle
@@ -126,7 +138,7 @@ final class HomeViewFloatingViewController: UIViewController {
     }
     
     private func setLayout() {
-        view.addSubviews(dimView, floatingButton, buttonStackView)
+        view.addSubviews(dimView, floatingButton, buttonStackView, foreginTouchBackView, koreanTouchBackView)
         buttonStackView.addArrangedSubviews(foreignDiaryButton, border, koreanDiaryButton)
         
         dimView.snp.makeConstraints {
@@ -150,6 +162,20 @@ final class HomeViewFloatingViewController: UIViewController {
         border.snp.makeConstraints {
             $0.height.equalTo(convertByHeightRatio(2))
             $0.width.equalTo(convertByWidthRatio(331))
+        }
+        
+        foreginTouchBackView.snp.makeConstraints {
+            $0.top.equalTo(buttonStackView.snp.top)
+            $0.centerX.equalToSuperview()
+            $0.width.equalTo(buttonStackView.snp.width)
+            $0.height.equalTo(constraintByNotch(118, 130) / 2)
+        }
+        
+        koreanTouchBackView.snp.makeConstraints {
+            $0.bottom.equalTo(buttonStackView.snp.bottom)
+            $0.centerX.equalToSuperview()
+            $0.width.equalTo(buttonStackView.snp.width)
+            $0.height.equalTo(constraintByNotch(118, 130) / 2)
         }
     }
     
