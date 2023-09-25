@@ -13,14 +13,9 @@ protocol BaseEndPoint {
     
     var path: String { get }
     var httpMethod: HttpMethod { get }
+    var query: [String:String]? { get }
     var requestBody: Data? { get }
     var header: [String:String] { get }
     
-    func request() -> NetworkReqeust
-}
-
-extension BaseEndPoint {
-    var baseURL: URL {
-        return URL(string: SharedConstant.baseURL)!
-    }
+    func makeUrlRequest() -> NetworkRequest
 }

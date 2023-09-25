@@ -10,11 +10,10 @@ import Foundation
 enum NetworkError: Error, CustomStringConvertible {
     case urlEncodingError
     case jsonDecodingError
-    case badCastingError
-    case fetchImageError
     case unAuthorizedError
     case clientError(message: String)
     case serverError
+    case jsonEncodingError
     
     var description: String {
         switch self {
@@ -22,16 +21,17 @@ enum NetworkError: Error, CustomStringConvertible {
             return "URL Encoding Error"
         case .jsonDecodingError:
             return "Json Decoding Error"
-        case .badCastingError:
-            return "Bad Casting Error"
-        case .fetchImageError:
-            return "Fetch Image Error"
         case .unAuthorizedError:
             return "Token Error"
         case .clientError(let message):
             return "Clinet Error \(message)"
         case .serverError:
             return "Server Error"
+        case .jsonEncodingError:
+            return "Json Encoding Error"
         }
     }
 }
+
+// case fetchImageError
+// case badCastingError
