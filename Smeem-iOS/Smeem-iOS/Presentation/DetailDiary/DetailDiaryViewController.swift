@@ -138,15 +138,15 @@ final class DetailDiaryViewController: UIViewController {
         }
         
         backButton.snp.makeConstraints {
-            $0.leading.equalToSuperview().inset(12)
+            $0.leading.equalToSuperview().inset(12 - 5)
             $0.centerY.equalToSuperview()
-            $0.height.width.equalTo(40)
+            $0.height.width.equalTo(40 + 10)
         }
         
         editButton.snp.makeConstraints {
-            $0.trailing.equalToSuperview().inset(18)
+            $0.trailing.equalToSuperview().inset(18 - 5)
             $0.centerY.equalToSuperview()
-            $0.height.width.equalTo(40)
+            $0.height.width.equalTo(40 + 10)
         }
         
         diaryScrollerView.snp.makeConstraints {

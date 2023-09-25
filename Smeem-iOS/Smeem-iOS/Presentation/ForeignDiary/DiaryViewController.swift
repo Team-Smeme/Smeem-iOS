@@ -11,13 +11,15 @@ import SnapKit
 
 protocol DiaryStrategy {
     func configureRandomSubjectButtonImage(_ button: UIButton)
-    func configurePlaceHolderLabel(_ label: UILabel)
+    func configurePlaceHolder(_ textView: UITextView)
     func configureToolTipView(_ imageView: UIImageView)
     func configureRandomSubjectButton(_ button: UIButton)
     func configureLanguageLabel(_ label: UILabel)
     func configureLeftNavigationButton(_ button: UIButton)
     func configureRightNavigationButton(_ button: UIButton)
     func configureStepLabel(_ label: UILabel)
+    
+    var textViewPlaceholder: String { get }
 }
 
 class DiaryViewController: UIViewController {
@@ -45,6 +47,7 @@ class DiaryViewController: UIViewController {
     var isKeyboardVisible: Bool = false
     var keyboardHeight: CGFloat = 0.0
     var rightButtonFlag = false
+    var isInitialInput = true
     
     // MARK: - UI Property
     
@@ -57,7 +60,7 @@ class DiaryViewController: UIViewController {
         stackView.alignment = .center
         stackView.distribution = .equalSpacing
         // FIXME: 기기대응시 문제가 생길수도..?
-        stackView.spacing = 110
+        stackView.spacing = 100
         return stackView
     }()
     
@@ -65,6 +68,7 @@ class DiaryViewController: UIViewController {
         let button = UIButton()
         button.titleLabel?.font = .b4
         button.setTitleColor(.black, for: .normal)
+        button.contentEdgeInsets = UIEdgeInsets(top: 5, left: 0, bottom: 5, right: 5)
         button.addTarget(self, action: #selector(leftNavigationButtonDidTap), for: .touchUpInside)
         return button
     }()
@@ -89,6 +93,7 @@ class DiaryViewController: UIViewController {
         button.titleLabel?.font = .b1
         button.setTitleColor(.gray300, for: .normal)
         button.setTitle("완료", for: .normal)
+        button.contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 0)
         button.addTarget(self, action: #selector(rightNavigationButtonDidTap) , for: .touchUpInside)
         return button
     }()
@@ -99,16 +104,8 @@ class DiaryViewController: UIViewController {
         textView.configureTypingAttributes()
         textView.textContentType = .init(rawValue: "ko-KR")
         textView.delegate = self
+        textView.textColor = .gray400
         return textView
-    }()
-    
-    let placeHolderLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .gray400
-        label.numberOfLines = 0
-        label.font = .b4
-        label.setTextWithLineHeight(lineHeight: 21)
-        return label
     }()
     
     let bottomView: UIView = {
@@ -308,7 +305,7 @@ class DiaryViewController: UIViewController {
         }
         
         diaryStrategy?.configureRandomSubjectButton(randomSubjectButton)
-        diaryStrategy?.configurePlaceHolderLabel(placeHolderLabel)
+        diaryStrategy?.configurePlaceHolder(inputTextView)
         diaryStrategy?.configureRandomSubjectButton(randomSubjectButton)
         diaryStrategy?.configureLanguageLabel(languageLabel)
         diaryStrategy?.configureLeftNavigationButton(leftNavigationButton)
@@ -364,7 +361,6 @@ class DiaryViewController: UIViewController {
         view.addSubviews(navigationView, inputTextView, bottomView)
         navigationView.addSubviews(navibarContentStackView, stepLabel)
         navibarContentStackView.addArrangedSubviews(leftNavigationButton, languageLabel, rightNavigationButton)
-        inputTextView.addSubview(placeHolderLabel)
         bottomView.addSubviews(thinLine, randomSubjectButton)
         
         navigationView.snp.makeConstraints {
@@ -379,6 +375,7 @@ class DiaryViewController: UIViewController {
             } else {
                 $0.leading.equalToSuperview().offset(convertByWidthRatio(12))
             }
+            $0.height.equalTo(42)
         }
         
         stepLabel.snp.makeConstraints {
@@ -392,11 +389,6 @@ class DiaryViewController: UIViewController {
             $0.bottom.equalTo(bottomView.snp.top)
         }
         
-        placeHolderLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(convertByHeightRatio(20))
-            $0.leading.equalToSuperview().offset(convertByWidthRatio(21))
-        }
-        
         bottomView.snp.makeConstraints {
             $0.bottom.leading.trailing.equalToSuperview()
             $0.height.equalTo(convertByHeightRatio(87))
@@ -408,10 +400,10 @@ class DiaryViewController: UIViewController {
         }
         
         randomSubjectButton.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(convertByHeightRatio(17))
-            $0.trailing.equalToSuperview().offset(convertByWidthRatio(-18))
-            $0.width.equalTo(convertByWidthRatio(78))
-            $0.height.equalTo(convertByHeightRatio(19))
+            $0.top.equalToSuperview().offset(convertByHeightRatio(17 - 5))
+            $0.trailing.equalToSuperview().offset(convertByWidthRatio(-18 + 5))
+            $0.width.equalTo(convertByWidthRatio(78 + 10))
+            $0.height.equalTo(convertByHeightRatio(19 + 10))
         }
     }
     
@@ -469,7 +461,7 @@ extension DiaryViewController {
         let offKeyboardOffset = convertByHeightRatio(107)
         
         // 키보드가 보이는지 확인하여 오프셋을 변경합니다.
-        let offset = isKeyboardVisible ?  onKeyboardOffset : offKeyboardOffset
+        let offset = isKeyboardVisible ? onKeyboardOffset : offKeyboardOffset
         
         smeemToastView?.show(in: view, offset: CGFloat(offset), keyboardHeight: keyboardHeight)
         smeemToastView?.hide(after: 1)
@@ -479,10 +471,16 @@ extension DiaryViewController {
 // MARK: - UITextViewDelegate
 
 extension DiaryViewController: UITextViewDelegate {
-    
     func textViewDidChange(_ textView: UITextView) {
-        let isTextEmpty = textView.text.isEmpty
-        placeHolderLabel.isHidden = !isTextEmpty
+        let isTextEmpty = textView.text.isEmpty || textView.text == diaryStrategy?.textViewPlaceholder
+        
+        if isTextEmpty {
+            textView.text = diaryStrategy?.textViewPlaceholder
+            textView.textColor = .gray400
+            textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
+        } else {
+            textView.textColor = .smeemBlack
+        }
         
         guard let strategy = diaryStrategy else {
             rightNavigationButton.setTitleColor(.gray300, for: .normal)
@@ -507,11 +505,25 @@ extension DiaryViewController: UITextViewDelegate {
     }
     
     func textViewDidChangeSelection(_ textView: UITextView) {
-        let cursorPosition = textView.selectedTextRange?.end
-        if let cursorPosition = cursorPosition {
-            let caretPositionRect = textView.caretRect(for: cursorPosition)
-            textView.scrollRectToVisible(caretPositionRect, animated: true)
+        if textView.textColor == .gray400 {
+            textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
         }
+    }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        let currentText = textView.text ?? ""
+        let updatedText = (currentText as NSString).replacingCharacters(in: range, with: text)
+        
+        if updatedText.isEmpty {
+            textView.text = diaryStrategy?.textViewPlaceholder
+            textView.textColor = .gray400
+            textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
+            return false
+        } else if textView.textColor == .gray400 && !text.isEmpty {
+            textView.text = nil
+            textView.textColor = .smeemBlack
+        }
+        return true
     }
 }
 
@@ -519,7 +531,6 @@ extension DiaryStrategy {
     func englishValidation(with text: String, in viewController: DiaryViewController) -> Bool {
         return viewController.inputTextView.text.getArrayAfterRegex(regex: "[a-zA-z]").count > 0
     }
-    
 }
 
 extension StepOneKoreanDiaryStrategy {
