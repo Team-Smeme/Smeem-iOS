@@ -228,7 +228,7 @@ extension AuthManagementViewController {
             UserDefaultsManager.clientRefreshToken = ""
             UserDefaultsManager.hasKakaoToken = nil
             
-            self.changeRootViewController(SplashViewController())
+            self.changeRootViewController(SplashViewController(splahManager: SplashManagerImpl(splashService: SplashServiceImpl(requestable: APIService()))))
         }
     }
     
@@ -242,7 +242,7 @@ extension AuthManagementViewController {
             UserDefaultsManager.refreshToken = ""
             UserDefaultsManager.hasKakaoToken = nil
             
-            self.changeRootViewController(SplashViewController())
+            self.changeRootViewController(SplashViewController(splahManager: SplashManagerImpl(splashService: SplashServiceImpl(requestable: APIService()))))
         }
     }
 }

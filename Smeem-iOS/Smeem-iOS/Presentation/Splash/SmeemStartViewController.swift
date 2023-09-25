@@ -72,7 +72,7 @@ final class SmeemStartViewController: UIViewController {
     // MARK: - @objc
     
     @objc func loginButtonDidTap() {
-        let loginBottomSheetVC = BottomSheetViewController()
+        let loginBottomSheetVC = LoginBottomSheetViewController(loginManager: LoginManagerImpl(loginService: LoginServiceImpl(requestable: APIService())))
         UserDefaultsManager.clientAuthType = AuthType.login.rawValue
         loginBottomSheetVC.authType = .login
         loginBottomSheetVC.bottomSheetView.viewType = .login
