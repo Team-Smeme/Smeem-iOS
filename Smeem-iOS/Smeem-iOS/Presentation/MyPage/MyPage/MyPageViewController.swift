@@ -106,13 +106,13 @@ final class MyPageViewController: UIViewController {
         badgeContainer.layer.borderWidth = 1.5
         badgeContainer.layer.borderColor = UIColor.gray100.cgColor
         badgeContainer.makeRoundCorner(cornerRadius: 6)
+        badgeContainer.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(badgeImageDidTap)))
+        badgeContainer.isUserInteractionEnabled = true
         return badgeContainer
     }()
     
     private lazy var badgeImage: UIImageView = {
         let image = UIImageView()
-        image.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(badgeImageDidTap)))
-        image.isUserInteractionEnabled = true
         return image
     }()
     
@@ -380,7 +380,7 @@ final class MyPageViewController: UIViewController {
         backButton.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.leading.equalToSuperview().offset(10)
-            $0.width.height.equalTo(45)
+            $0.width.height.equalTo(55)
         }
         
         titleLabel.snp.makeConstraints{
@@ -390,7 +390,7 @@ final class MyPageViewController: UIViewController {
         moreButton.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.trailing.equalToSuperview().offset(-10)
-            $0.width.height.equalTo(45)
+            $0.width.height.equalTo(55)
         }
         
         scrollView.snp.makeConstraints {
@@ -410,8 +410,8 @@ final class MyPageViewController: UIViewController {
         
         editButton.snp.makeConstraints {
             $0.centerY.equalTo(nickNameLabel.snp.centerY)
-            $0.leading.equalTo(nickNameLabel.snp.trailing)
-            $0.width.height.equalTo(convertByWidthRatio(25))
+            $0.leading.equalTo(nickNameLabel.snp.trailing).offset(-15)
+            $0.width.height.equalTo(55)
         }
         
         howLearningView.snp.makeConstraints {

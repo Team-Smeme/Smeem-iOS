@@ -295,9 +295,9 @@ final class AlarmSettingViewController: UIViewController {
         }
         
         laterButton.snp.makeConstraints {
-            $0.bottom.equalTo(completeButton.snp.top).offset(convertByHeightRatio(-19))
+            $0.bottom.equalTo(completeButton.snp.top).offset(convertByHeightRatio(-9))
             $0.centerX.equalToSuperview()
-            $0.height.equalTo(convertByHeightRatio(19))
+            $0.height.equalTo(39)
         }
     }
 }
@@ -312,6 +312,7 @@ extension AlarmSettingViewController {
                 self.navigationController?.pushViewController(userNicknameVC, animated: true)
             } else {
                 print("학습 목표 API 호출 실패")
+                self.showToast(toastType: .errorToast(errorType: .networkError))
             }
         }
     }

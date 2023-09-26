@@ -60,10 +60,10 @@ final class HowLearningView: UIView {
         return imageView
     }()
     
-    private let editButton: UIButton = {
-        let button = UIButton()
-        button.setImage(Constant.Image.icnEditForward, for: .normal)
-        return button
+    private let editImageView: UIImageView = {
+        let image = UIImageView()
+        image.image = Constant.Image.icnEditForward
+        return image
     }()
     
     private let myGoalLabel: UILabel = {
@@ -154,9 +154,9 @@ final class HowLearningView: UIView {
     private func showButtonType() {
         switch buttontype {
         case .logo:
-            editButton.isHidden = false
+            editImageView.isHidden = false
         case .edit:
-            editButton.isHidden = false
+            editImageView.isHidden = false
         }
     }
     
@@ -183,7 +183,7 @@ final class HowLearningView: UIView {
         
         addSubviews(pointBackgroudView, learningHowLabel, firstSelectedLearningHowLabel, secondSelectedLearningHowLabel,
                     deatilGoalLabel, firstDetailLabel, secondDetailLabel)
-        pointBackgroudView.addSubviews(smeemLogo, editButton, myGoalLabel, selectedMyGoalLabel)
+        pointBackgroudView.addSubviews(smeemLogo, editImageView, myGoalLabel, selectedMyGoalLabel)
         
         self.snp.makeConstraints {
             $0.width.equalTo(howLearningViewWidth)
@@ -203,7 +203,7 @@ final class HowLearningView: UIView {
             $0.height.equalTo(20)
         }
         
-        editButton.snp.makeConstraints {
+        editImageView.snp.makeConstraints {
             $0.bottom.equalToSuperview().inset(8)
             $0.trailing.equalToSuperview().inset(4)
             $0.width.height.equalTo(40)
