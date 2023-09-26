@@ -33,5 +33,6 @@ enum NetworkError: Error, CustomStringConvertible {
     }
 }
 
+/// 임의 주석 처리
 // case fetchImageError
 // case badCastingError
