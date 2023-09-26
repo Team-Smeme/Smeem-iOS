@@ -24,7 +24,6 @@ class BadgeListViewController: UIViewController {
     // MARK: - UI Property
     
     private let headerContainerView = UIView()
-    private let loadingView = LoadingView()
     
     private lazy var cancelButton: UIButton = {
         let button = UIButton()
@@ -294,30 +293,3 @@ extension BadgeListViewController: ViewControllerServiceable {
         }
     }
 }
-
-//extension BadgeListViewController {
-//    private func badgeListGetAPI() {
-//        MyPageAPI.shared.badgeListAPI() { response in
-//            guard let badges = response?.data?.badges else { return }
-//
-//            self.hideLodingView(loadingView: self.loadingView)
-//
-//            // 섹션에 따라 배열 데이터 담는 로직
-//            for badge in badges {
-//                if badge.type == "EVENT" {
-//                    self.badgeHeaderData = [(badge.name, badge.imageURL)]
-//                } else if badge.type == "COUNTING" {
-//                    self.badgeListData[0].append((name: badge.name, imageURL: badge.imageURL))
-//                } else if badge.type == "COMBO" {
-//                    self.badgeListData[1].append((name: badge.name, imageURL: badge.imageURL))
-//                } else {
-//                    self.badgeListData[2].append((name: badge.name, imageURL: badge.imageURL))
-//                }
-//            }
-//
-//            self.setHeaderViewData()
-//            self.setBadgeData()
-//            self.badgeListTableView.reloadData()
-//        }
-//    }
-//}

@@ -29,7 +29,6 @@ final class EditAlarmViewController: UIViewController {
     
     private let naviView = UIView()
     private let datePickerFooterView = DatePickerFooterView()
-    private let loadingView = LoadingView()
     
     private lazy var backButton: UIButton = {
         let button = UIButton()
