@@ -12,7 +12,6 @@ public class OnboardingAPI {
     
     static let shared = OnboardingAPI()
     private let onboardingProvider = MoyaProvider<OnboardingService>(plugins: [MoyaLoggingPlugin()])
-//    private var nicknameResponse: NicknameResponse?
     
     func planList(completion: @escaping (GeneralResponse<PlanListResponse>) -> Void) {
         onboardingProvider.request(.planList) { response in

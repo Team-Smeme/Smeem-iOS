@@ -24,10 +24,10 @@ struct DummyModel {
 // MARK: BadgeListResponse
 
 struct BadgeListResponse: Codable {
-    let badges: [BadgesListData]
+    let badges: [BadgesListArray]
 }
 
-struct BadgesListData: Codable {
+struct BadgesListArray: Codable {
     let id: Int
     let name, type: String
     let imageURL: String
@@ -36,4 +36,8 @@ struct BadgesListData: Codable {
         case id, name, type
         case imageURL = "imageUrl"
     }
+}
+
+extension BadgesListArray {
+    static let empty = [BadgesListArray(id: 0, name: "", type: "", imageURL: "")]
 }

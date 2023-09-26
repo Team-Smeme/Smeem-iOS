@@ -7,22 +7,26 @@
 
 import Foundation
 
+//typealias nilData = String?
+
 protocol Requestable {
-    func request<T: Decodable>(_ request: NetworkRequest) async throws -> T?
+    func request<T: Decodable>(_ request: NetworkRequest) async throws -> BaseResponse<T>?
 }
 
 final class APIService: Requestable {
     
-    func request<T: Decodable>(_ request: NetworkRequest) async throws -> T? {
+    func request<T: Decodable>(_ request: NetworkRequest) async throws -> BaseResponse<T>? {
         let (data, _) = try await URLSession.shared.data(for: request.makeUrlRequest())
         let decoder = JSONDecoder()
+        
+        let decodeData = try? decoder.decode(BaseResponse<T>.self, from: data)
         
         guard let decodeData = try? decoder.decode(BaseResponse<T>.self, from: data) else {
             throw NetworkError.jsonDecodingError
         }
         
-        if decodeData.success {
-            return decodeData.data
+        if decodeData.success == true {
+            return decodeData
         } else {
             throw NetworkError.clientError(message: "decode까지 성공했는데 API 결과가 false인 경우")
         }

@@ -57,7 +57,7 @@ extension OnboardingService: BaseTargetType {
     var headers: [String : String]? {
         switch self {
         case .planList, .detailPlanList:
-            return NetworkConstant.noTokenHeader
+            return NetworkHeader.noTokenHeader
         case .onboardingUserPlan(_, let token), .serviceAccept(_, let token), .checkNickname(_, let token):
             return ["Content-Type": "application/json",
                     "Authorization": "Bearer " + token]

@@ -21,7 +21,7 @@ struct SplashManagerImpl: SplashManager {
     }
     
     func relogin() async throws -> ReLoginResponse {
-        guard let response = try await splashService.relogin() else { return ReLoginResponse(accessToken: "", refreshToken: "")}
+        guard let response = try await splashService.relogin()?.data else { return ReLoginResponse(accessToken: "", refreshToken: "")}
         return response
     }
     

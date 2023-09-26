@@ -7,12 +7,18 @@
 
 import Foundation
 
-struct MyPageInfo: Codable {
+struct MyPageResponse: Codable {
     let username, target, way, detail: String
     let targetLang: String
     var hasPushAlarm: Bool
     let trainingTime: TrainingTime
     let badge: Badge
+}
+
+extension MyPageResponse {
+    static let empty = MyPageResponse(username: "", target: "", way: "", detail: "", targetLang: "", hasPushAlarm: false,
+                                      trainingTime: TrainingTime(day: "", hour: 0, minute: 0),
+                                      badge: Badge(id: 0, name: "", type: "", imageURL: ""))
 }
 
 struct Badge: Codable {
@@ -34,7 +40,7 @@ struct EditAlarmTime: Codable {
     let trainingTime: TrainingTime
 }
 
-struct editPushRequest: Codable {
+struct EditPushRequest: Codable {
     let hasAlarm: Bool
 }
 

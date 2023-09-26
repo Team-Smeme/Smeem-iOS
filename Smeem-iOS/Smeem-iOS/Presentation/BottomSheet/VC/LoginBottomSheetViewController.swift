@@ -29,7 +29,7 @@ final class LoginBottomSheetViewController: UIViewController, LoginDelegate {
     
     private var kakaoAccessToken: String? {
         didSet {
-            guard let kakaoAccessToken = self.kakaoAccessToken else {
+            guard let _ = self.kakaoAccessToken else {
                 print("⭐️⭐️⭐️ 언래핑 실패했을 경우 ⭐️⭐️⭐️")
                 return
             }
@@ -42,7 +42,7 @@ final class LoginBottomSheetViewController: UIViewController, LoginDelegate {
     
     private var appleAccessToken: String? {
         didSet {
-            guard let appleAccessToken = self.appleAccessToken else {
+            guard let _ = self.appleAccessToken else {
                 print("⭐️⭐️⭐️ 언래핑 실패했을 경우 ⭐️⭐️⭐️")
                 return
             }
@@ -285,59 +285,3 @@ extension LoginBottomSheetViewController: ViewControllerServiceable {
         }
     }
 }
-    
-    
-//    private func loginAPI(socialParam: String) {
-//        AuthAPI.shared.loginAPI(param: LoginRequest(social: socialParam,
-//                                                    fcmToken: UserDefaultsManager.fcmToken)) { response in
-//            self.showLodingView(loadingView: self.loadingView)
-//
-//            guard let data = response.data else { return }
-//
-//            UserDefaultsManager.clientAccessToken = data.accessToken
-//            UserDefaultsManager.clientRefreshToken = data.refreshToken
-//
-//            switch self.authType {
-//            case .login:
-//                // hasPlan이라고 가정
-//
-//                // hasPlan으로 바뀔 예정
-//                if data.hasPlan == false {
-//                    self.presentOnboardingPlanVC()
-//                } else if data.hasPlan == true && data.isRegistered == false {
-//                    self.presentOnboardingAcceptVC()
-//                } else {
-//                    // 삭제했다가 로그인한 유저
-//                    UserDefaultsManager.accessToken = data.accessToken
-//                    UserDefaultsManager.refreshToken = data.refreshToken
-//
-//                    self.presentHomeVC()
-//                }
-//            case .signup:
-//                if data.hasPlan == false || (data.hasPlan == true && data.isRegistered == false) {
-//                    guard let userPlanRequest = self.userPlanRequest else { return }
-//                    self.userPlanPatchAPI(userPlan: userPlanRequest, accessToken: data.accessToken)
-//                } else {
-//                    // 계정이 있는 유저
-//                    UserDefaultsManager.accessToken = data.accessToken
-//                    UserDefaultsManager.refreshToken = data.refreshToken
-//
-//                    self.presentHomeVC()
-//                }
-//            }
-//        }
-//    }
-    
-//    private func userPlanPatchAPI(userPlan: UserPlanRequest, accessToken: String) {
-//        OnboardingAPI.shared.userPlanPathAPI(param: userPlan, accessToken: accessToken) { response in
-//            self.hideLodingView(loadingView: self.loadingView)
-//            if response.success == true {
-//                UserDefaultsManager.clientAccessToken = accessToken
-//
-//                let userNicknameVC = UserNicknameViewController()
-//                self.navigationController?.pushViewController(userNicknameVC, animated: true)
-//            } else {
-//                print("학습 목표 API 호출 실패")
-//            }
-//        }
-//    }

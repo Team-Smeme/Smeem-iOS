@@ -19,6 +19,10 @@ struct LoginResponse: Codable {
     let hasPlan: Bool
 }
 
+extension LoginResponse {
+    static let empty = LoginResponse(accessToken: "", refreshToken: "", isRegistered: false, hasPlan: false)
+}
+
 struct Badges: Codable {
     let id: Int
     let name: String

@@ -21,7 +21,7 @@ struct LoginManagerImpl: LoginManager {
     }
     
     func login(model: LoginRequest) async throws -> LoginResponse {
-        guard let response = try await loginService.login(model: model) else { return LoginResponse.empty }
+        guard let response = try await loginService.login(model: model)?.data else { return LoginResponse.empty }
         return response
     }
     

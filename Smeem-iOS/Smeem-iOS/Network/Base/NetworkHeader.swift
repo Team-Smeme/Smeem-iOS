@@ -7,24 +7,30 @@
 
 import Foundation
 
-enum NetworkConstant {
+enum NetworkHeader {
     
     static let tempTokenHeader = ["Content-Type": "application/json",
                                   "Authorization": "Bearer "]
     
     static let hasSocialTokenHeader = ["Content-Type": "application/json",
-                                 "Authorization": "Bearer "+(UserDefaultsManager.socialToken)]
+                                       "Authorization": "Bearer " + UserDefaultsManager.socialToken]
     
     static let hasAccessTokenHeader = ["Content-Type": "application/json",
-                                       "Authorization": "Bearer " + (UserDefaultsManager.accessToken)]
+                                       "Authorization": "Bearer " + UserDefaultsManager.accessToken]
     
     static let hasRefreshTokenHeader = ["Content-Type": "application/json",
-                                        "Authorization": "Bearer "+(UserDefaultsManager.refreshToken)]
+                                        "Authorization": "Bearer " + UserDefaultsManager.refreshToken]
     
     static let noTokenHeader = ["Content-Type": "application/json",
-                                  "Authorization": ""]
+                                "Authorization": ""]
     
     static let papagoHeader = ["Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
                                "X-Naver-Client-Id": SharedConstant.papagoID,
                                "X-Naver-Client-Secret": SharedConstant.papagoSecret]
+}
+
+enum NetworkHeaderField: String {
+    case authorization = "Authorization"
+    case contentType = "Content-Type"
+    case json = "application/json"
 }
