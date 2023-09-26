@@ -24,9 +24,6 @@ final class SplashViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-//        setLayout()
-//        checkDidLogin()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -123,19 +120,6 @@ final class SplashViewController: UIViewController {
                 restartAlert.addAction(restart)
                 self.present(restartAlert, animated: true)
             }
-            
-            /// 아닌 버전
-//            let restartAlert = UIAlertController(title: "업데이트 완료", message: "앱을 재실행합니다.", preferredStyle: UIAlertController.Style.alert)
-//            let restart = UIAlertAction(title: "확인", style: UIAlertAction.Style.default) { (_) in
-//
-//                UIApplication.shared.perform(#selector(NSXPCConnection.suspend))
-//                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-//                    exit(0)
-//                }
-//            }
-//
-//            restartAlert.addAction(restart)
-//            self.present(restartAlert, animated: true)
         }
         
         updateAlert.addAction(update)

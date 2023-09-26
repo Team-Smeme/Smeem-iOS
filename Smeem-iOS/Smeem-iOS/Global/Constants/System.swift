@@ -46,10 +46,8 @@ struct System {
     func openAppStore() {
         guard let url = URL(string: "itms-apps://itunes.apple.com/app/apple-store/6450711685") else { return }
         
-//        DispatchQueue.main.async {
             if UIApplication.shared.canOpenURL(url) {
                 UIApplication.shared.open(url, options: [:], completionHandler: nil)
-//            }
         }
     }
 }
