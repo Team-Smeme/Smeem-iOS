@@ -31,10 +31,10 @@
 	</array>
 	<key>NATIVE_APP_KEY</key>
 	<string>$(NATIVE_APP_KEY)</string>
-	<key>BASE_URL</key>
-	<string>$(BASE_URL)</string>
-	<key>BETA_BASE_URL</key>
-	<string>$(BETA_BASE_URL)</string>
+	<key>DEV_BASE_URL</key>
+	<string>$(DEV_BASE_URL)</string>
+	<key>PRO_BASE_URL</key>
+	<string>$(PRO_BASE_URL)</string>
 	<key>TEMP_TOKEN</key>
 	<string>$(TEMP_TOKEN)</string>
 	<key>X_NAVER_CLIENT_ID</key>

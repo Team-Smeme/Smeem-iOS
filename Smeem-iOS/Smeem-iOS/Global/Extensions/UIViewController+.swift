@@ -146,9 +146,10 @@ extension UIViewController {
         changeRootViewController(smeemStartVC)
     }
     
-    //    func showToast(message: String, duration: TimeInterval = 3, yOffset: CGFloat = 30, keyboardHeight: CGFloat = 0) {
-    //        let toastView = SmeemToastView(type: .defaultToast(bodyType: .custom(message: message)))
-    //        toastView.show(in: view, offset: yOffset, keyboardHeight: keyboardHeight)
-    //        toastView.hide(after: duration)
-    //    }
+    func showToast(toastType: ToastViewType, keyboardHeight: CGFloat = 0, delay: TimeInterval = 1) {
+        let toastView = SmeemToastView(type: toastType)
+        let offKeyboardOffset = convertByHeightRatio(54)
+        toastView.show(in: self.view, offset: offKeyboardOffset, keyboardHeight: keyboardHeight)
+        toastView.hide(after: delay)
+    }
 }

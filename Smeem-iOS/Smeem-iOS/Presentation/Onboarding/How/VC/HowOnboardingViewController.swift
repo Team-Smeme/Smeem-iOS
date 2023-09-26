@@ -163,7 +163,7 @@ final class HowOnboardingViewController: UIViewController {
         
         howLearningView.snp.makeConstraints {
             $0.top.equalTo(learningLabelStackView.snp.bottom).offset(28)
-            $0.centerX.equalToSuperview()
+            $0.leading.trailing.equalToSuperview().inset(24)
         }
         
         nextButton.snp.makeConstraints {

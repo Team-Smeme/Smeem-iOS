@@ -17,10 +17,10 @@ final class GoalCollectionViewCell: UICollectionViewCell {
     
     // MARK: - UI Property
     
-    private let checkButton: UIButton = {
-        let button = UIButton()
-        button.setImage(Constant.Image.icnCheckInactive, for: .normal)
-        return button
+    private let checkImageView: UIImageView = {
+        let image = UIImageView()
+        image.image = Constant.Image.icnCheckInactive
+        return image
     }()
     
     private let goalLabel: UILabel = {
@@ -55,14 +55,14 @@ final class GoalCollectionViewCell: UICollectionViewCell {
         goalLabel.font = .b1
         goalLabel.textColor = .point
         layer.borderColor = UIColor.point.cgColor
-        checkButton.setImage(Constant.Image.icnCheckActive, for: .normal)
+        checkImageView.image = Constant.Image.icnCheckActive
     }
 
     func desecltedCell() {
         goalLabel.font = .b3
         goalLabel.textColor = .gray600
         layer.borderColor = UIColor.gray100.cgColor
-        checkButton.setImage(Constant.Image.icnCheckInactive, for: .normal)
+        checkImageView.image = Constant.Image.icnCheckInactive
     }
     
     // MARK: - Layout
@@ -73,16 +73,16 @@ final class GoalCollectionViewCell: UICollectionViewCell {
     }
     
     private func setLayout() {
-        addSubviews(checkButton, goalLabel)
+        addSubviews(checkImageView, goalLabel)
         
-        checkButton.snp.makeConstraints {
+        checkImageView.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(20)
             $0.centerY.equalToSuperview()
             $0.width.height.equalTo(20)
         }
         
         goalLabel.snp.makeConstraints {
-            $0.leading.equalTo(checkButton.snp.trailing).offset(12)
+            $0.leading.equalTo(checkImageView.snp.trailing).offset(12)
             $0.centerY.equalToSuperview()
         }
     }

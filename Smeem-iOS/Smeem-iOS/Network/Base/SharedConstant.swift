@@ -13,8 +13,8 @@ enum SharedConstant {
     static let nativeAppKey = Bundle.main.object(forInfoDictionaryKey: "NATIVE_APP_KEY") as? String ?? ""
     
     // MARK: - Base URL
-    static let baseURL = Bundle.main.object(forInfoDictionaryKey: "BASE_URL") as? String ?? ""
-    static let betaBaseURL = Bundle.main.object(forInfoDictionaryKey: "BETA_BASE_URL") as? String ?? ""
+    static let devBaseURL = Bundle.main.object(forInfoDictionaryKey: "DEV_BASE_URL") as? String ?? ""
+    static let proBaseURL = Bundle.main.object(forInfoDictionaryKey: "PRO_BASE_URL") as? String ?? ""
     
     // MARK: - token
     static let tempToken = Bundle.main.object(forInfoDictionaryKey: "TEMP_TOKEN") as? String ?? ""
