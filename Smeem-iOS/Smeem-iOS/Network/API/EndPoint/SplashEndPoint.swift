@@ -47,10 +47,10 @@ extension SplashEndPoint: BaseEndPoint {
         switch self {
         case .logout:
             return ["Content-Type": "application/json",
-                    "Authorization": "Bearer " + UserDefaultsManager.accessToken!]
+                    "Authorization": "Bearer " + UserDefaultsManager.accessToken]
         case .reLogin:
             return ["Content-Type": "application/json",
-                    "Authorization": "Bearer " + UserDefaultsManager.refreshToken!]
+                    "Authorization": "Bearer " + UserDefaultsManager.refreshToken]
         }
     }
     

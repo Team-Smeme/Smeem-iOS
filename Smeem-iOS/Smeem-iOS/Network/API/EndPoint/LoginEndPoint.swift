@@ -51,7 +51,7 @@ extension LoginEndPoint: BaseEndPoint {
         switch self {
         case .login:
             return ["Content-Type": "application/json",
-                    "Authorization": "Bearer " + UserDefaultsManager.socialToken!]
+                    "Authorization": "Bearer " + UserDefaultsManager.socialToken]
         case .userPlan(_, let accessToken):
             return ["Content-Type": "application/json",
                     "Authorization": "Bearer " + accessToken]
