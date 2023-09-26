@@ -18,6 +18,7 @@ final class EditNicknameViewController: UIViewController {
     // MARK: - Property
     
     private let editNicknameManager: MyPageEditManager
+    private let nicknameValidManager: NicknameValidManager
     
     weak var editNicknameDelegate: EditMypageDelegate?
     
@@ -89,8 +90,9 @@ final class EditNicknameViewController: UIViewController {
     
     // MARK: - Life Cycle
     
-    init(editNicknameManager: MyPageEditManager) {
+    init(editNicknameManager: MyPageEditManager, nicknameValidManager: NicknameValidManager) {
         self.editNicknameManager = editNicknameManager
+        self.nicknameValidManager = nicknameValidManager
         
         super.init(nibName: nil , bundle: nil)
     }
@@ -123,8 +125,7 @@ final class EditNicknameViewController: UIViewController {
     }
     
     @objc func doneButtonDidTap() {
-        self.showLodingView(loadingView: self.loadingView)
-        checkNinknameAPI(nickname: nicknameTextField.text ?? "")
+        nicknameValidAPI(nickname: nicknameTextField.text ?? "")
     }
     
     @objc func nicknameDidChange(_ notification: Notification) {
@@ -262,28 +263,31 @@ extension EditNicknameViewController: ViewControllerServiceable {
             }
         }
     }
-}
-
-extension EditNicknameViewController {
     
-    private func checkNinknameAPI(nickname: String) {
-        MyPageAPI.shared.checkNinknameAPI(param: nickname) { response in
-            guard let data = response?.data else { return }
-            
-            self.hideLodingView(loadingView: self.loadingView)
-            self.isExistNinkname = data.isExist
-            
-            if self.isExistNinkname {
-                self.doubleCheckLabel.isHidden = false
-                self.doneButton.smeemButtonType = .notEnabled
-            } else {
-                self.doubleCheckLabel.isHidden = true
-                self.doneButton.smeemButtonType = .enabled
-            }
-            
-            if !self.isExistNinkname {
-                self.showLodingView(loadingView: self.loadingView)
-                self.editNicknameAPI(nickname: nickname)
+    private func nicknameValidAPI(nickname: String) {
+        showLoadingView()
+        
+        Task {
+            do {
+                let isExistNickname = try await nicknameValidManager.nicknameValid(param: nickname)
+                
+                hideLoadingView()
+                
+                if isExistNickname {
+                    self.doubleCheckLabel.isHidden = false
+                    self.doneButton.smeemButtonType = .notEnabled
+                } else {
+                    self.doubleCheckLabel.isHidden = true
+                    self.doneButton.smeemButtonType = .enabled
+                }
+                
+                if !isExistNickname {
+                    showLoadingView()
+                    editNicknameAPI(nickname: nickname)
+                }
+            } catch {
+                guard let error = error as? NetworkError else { return }
+                handlerError(error)
             }
         }
     }

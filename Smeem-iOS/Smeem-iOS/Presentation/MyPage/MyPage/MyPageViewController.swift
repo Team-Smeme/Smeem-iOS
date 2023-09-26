@@ -44,7 +44,6 @@ final class MyPageViewController: UIViewController {
     
     private let headerContainerView = UIView()
     private let contentView = UIView()
-    private let loadingView = LoadingView()
     
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -241,7 +240,6 @@ final class MyPageViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-//        self.showLodingView(loadingView: loadingView)
         myPageGetAPI()
     }
     
@@ -257,7 +255,7 @@ final class MyPageViewController: UIViewController {
     }
     
     @objc func editButtonDidTap(_ sender: UIButton) {
-        let editVC = EditNicknameViewController(editNicknameManager: MyPageEditManagerImpl(myPageEditService: MyPageEditServiceImpl(requestable: APIService())))
+        let editVC = EditNicknameViewController(editNicknameManager: MyPageEditManagerImpl(myPageEditService: MyPageEditServiceImpl(requestable: APIService())), nicknameValidManager: NicknameValidManagerImpl(nicknameValidService: NicknameValidServiceImpl(requestable: APIService())))
         editVC.editNicknameDelegate = self
         editVC.nickName = userInfo.username
         self.navigationController?.pushViewController(editVC, animated: true)
