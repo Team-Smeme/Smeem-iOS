@@ -15,8 +15,8 @@ class BadgeListViewController: UIViewController {
     // MARK: - Property
     
     private var badgeHeaderData = [(name: String(), imageURL: String())]
-    private var badgeListData = Array(repeating: Array(repeating: (name: String(), imageURL: String()), count: 0), count: 3)
-    private var totalBadgeData = Array(repeating: Array(repeating: (name: String(), imageURL: String()), count: 4), count: 3)
+    private var badgeListData = Array(repeating: Array(repeating: (name: String(), imageURL: String()), count: 0), count: 2)
+    private var totalBadgeData = Array(repeating: Array(repeating: (name: String(), imageURL: String()), count: 4), count: 2)
     private var dummayBadgeData = DummyModel().dummyBadgeData()
 
     // MARK: - UI Property
@@ -141,20 +141,20 @@ class BadgeListViewController: UIViewController {
             }
         }
 
-        if !badgeListData[2].isEmpty {
-            var globalIndex = 0
-            for (index, (name, image)) in badgeListData[2].enumerated() {
-                globalIndex = index
-                totalBadgeData[2][index] = (name, image)
-            }
-            for i in globalIndex+1..<4 {
-                totalBadgeData[2][i] = dummayBadgeData[2][i]
-            }
-        } else {
-            for i in 0..<4 {
-                totalBadgeData[2][i] = dummayBadgeData[2][i]
-            }
-        }
+//        if !badgeListData[2].isEmpty {
+//            var globalIndex = 0
+//            for (index, (name, image)) in badgeListData[2].enumerated() {
+//                globalIndex = index
+//                totalBadgeData[2][index] = (name, image)
+//            }
+//            for i in globalIndex+1..<4 {
+//                totalBadgeData[2][i] = dummayBadgeData[2][i]
+//            }
+//        } else {
+//            for i in 0..<4 {
+//                totalBadgeData[2][i] = dummayBadgeData[2][i]
+//            }
+//        }
     }
 
     
@@ -219,8 +219,9 @@ extension BadgeListViewController: UITableViewDelegate {
             headerView.labelType = .diaryCount
         case 1:
             headerView.labelType = .dailyDiary
-        case 2:
-            headerView.labelType = .otherBadge
+            /// ToDo: 없어도 되는지 확인
+//        case 2:
+//            headerView.labelType = .otherBadge
         default:
             break
         }
@@ -230,7 +231,7 @@ extension BadgeListViewController: UITableViewDelegate {
 
 extension BadgeListViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return 2
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -266,7 +267,7 @@ extension BadgeListViewController {
                 } else if badge.type == "COMBO" {
                     self.badgeListData[1].append((name: badge.name, imageURL: badge.imageURL))
                 } else {
-                    self.badgeListData[2].append((name: badge.name, imageURL: badge.imageURL))
+//                    self.badgeListData[2].append((name: badge.name, imageURL: badge.imageURL))
                 }
             }
             
