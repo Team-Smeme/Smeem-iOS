@@ -47,7 +47,6 @@ extension ViewControllerServiceable {
     func handlerError(_ error: NetworkError) {
         switch error {
         case .urlEncodingError:
-//            showToast(toastType: .errorToast(errorType: self.description))
             showToast(toastType: .errorToast(errorType: .urlEncodingError))
         case .jsonDecodingError:
             showToast(toastType: .errorToast(errorType: .jsonDecodingError))
