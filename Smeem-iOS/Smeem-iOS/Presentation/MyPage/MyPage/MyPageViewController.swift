@@ -13,7 +13,10 @@ final class MyPageViewController: UIViewController {
     
     // MARK: - Property
     
-    private var userInfo = MyPageInfo(username: "", target: "", way: "", detail: "", targetLang: "", hasPushAlarm: true, trainingTime: TrainingTime(day: "", hour: 0, minute: 0), badge: Badge(id: 0, name: "", type: "", imageURL: ""))
+    private let mypageManager: MyPageManager
+    private let editPushManager: MyPageEditManager
+    
+    private var userInfo = MyPageResponse(username: "", target: "", way: "", detail: "", targetLang: "", hasPushAlarm: true, trainingTime: TrainingTime(day: "", hour: 0, minute: 0), badge: Badge(id: 0, name: "", type: "", imageURL: ""))
     var myPageSelectedIndexPath = ["MON": IndexPath(item: 0, section: 0), "TUE":IndexPath(item: 1, section: 0), "WED":IndexPath(item: 2, section: 0), "THU":IndexPath(item: 3, section: 0), "FRI":IndexPath(item: 4, section: 0), "SAT":IndexPath(item: 5, section: 0), "SUN":IndexPath(item: 6, section: 0)]
     var indexPathArray: [IndexPath] = []
     var hasAlarm = Bool()
@@ -216,6 +219,17 @@ final class MyPageViewController: UIViewController {
     
     // MARK: - Life Cycle
     
+    init(myPageManager: MyPageManager, editPushManager: MyPageEditManager) {
+        self.mypageManager = myPageManager
+        self.editPushManager = editPushManager
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     
@@ -227,8 +241,8 @@ final class MyPageViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.showLodingView(loadingView: loadingView)
-        myPageInfoAPI()
+//        self.showLodingView(loadingView: loadingView)
+        myPageGetAPI()
     }
     
     // MARK: - @objc
@@ -238,12 +252,12 @@ final class MyPageViewController: UIViewController {
     }
     
     @objc func moreButtonDidTap(_ sender: UIButton) {
-        let authManagetmentVC = AuthManagementViewController()
+        let authManagetmentVC = AuthManagementViewController(myPageAuthManager: MyPageAuthManagerImpl(myPageAuthService: MyPageAuthServiceImpl(requestable: APIService())))
         self.navigationController?.pushViewController(authManagetmentVC, animated: true)
     }
     
     @objc func editButtonDidTap(_ sender: UIButton) {
-        let editVC = EditNicknameViewController()
+        let editVC = EditNicknameViewController(editNicknameManager: MyPageEditManagerImpl(myPageEditService: MyPageEditServiceImpl(requestable: APIService())))
         editVC.editNicknameDelegate = self
         editVC.nickName = userInfo.username
         self.navigationController?.pushViewController(editVC, animated: true)
@@ -251,11 +265,11 @@ final class MyPageViewController: UIViewController {
     
     @objc func pushButtonDidTap(_ sender: UIButton) {
         hasAlarm = !hasAlarm
-        editPushPatchAPI(pushData: editPushRequest(hasAlarm: hasAlarm))
+        editPushPatchAPI(hasAlarm: hasAlarm)
     }
     
     @objc func badgeImageDidTap() {
-        let badgeListVC = BadgeListViewController()
+        let badgeListVC = BadgeListViewController(myPageManager: MyPageManagerImpl(myPageService: MyPageServiceImpl(requestable: APIService())))
         self.navigationController?.pushViewController(badgeListVC, animated: true)
     }
     
@@ -280,7 +294,7 @@ final class MyPageViewController: UIViewController {
     }
     
     @objc func alarmEditButtonDidTap() {
-        let alarmEditVC = EditAlarmViewController()
+        let alarmEditVC = EditAlarmViewController(editAlarmManager: MyPageEditManagerImpl(myPageEditService: MyPageEditServiceImpl(requestable: APIService())))
         alarmEditVC.editAlarmDelegate = self
         alarmEditVC.dayIndexPathArray = indexPathArray
         alarmEditVC.trainigDayData = userInfo.trainingTime.day
@@ -521,33 +535,43 @@ extension MyPageViewController: EditMypageDelegate {
 
 // MARK: - Extension : Network
 
-extension MyPageViewController {
-    private func myPageInfoAPI() {
-        MyPageAPI.shared.myPageInfo() { response in
-            guard let myPageInfo = response?.data else { return }
-            
-            self.userInfo = myPageInfo
-            self.setData()
-            self.hideLodingView(loadingView: self.loadingView)
+extension MyPageViewController: ViewControllerServiceable {
+    private func myPageGetAPI() {
+        showLoadingView()
+        Task {
+            do {
+                self.userInfo = try await mypageManager.getMypage()
+                self.setData()
+                hideLoadingView()
+            } catch {
+                guard let error = error as? NetworkError else { return }
+                handlerError(error)
+            }
         }
     }
     
-    private func editPushPatchAPI(pushData: editPushRequest) {
-        MyPageAPI.shared.editPushAPI(param: pushData) { response in
-            // 성공했으면
-            if response.success == true {
-                print("lkfjsadkfdsakfhsadkjf✅✅✅✅✅✅✅✅✅✅, ", self.indexPathArray)
-                // 그에 맞춰서 색깔 변화
-                self.alarmCollectionView.hasAlarm = pushData.hasAlarm
+    private func editPushPatchAPI(hasAlarm: Bool) {
+        showLoadingView()
+        
+        Task {
+            do {
+                try await editPushManager.editPush(model: EditPushRequest(hasAlarm: hasAlarm))
+                
+                self.alarmCollectionView.hasAlarm = hasAlarm
                 self.alarmCollectionView.selectedIndexPath = self.indexPathArray
                 
-                if !pushData.hasAlarm {
-                    self.alarmPushToggleButton.isOn = false
-                    self.alarmPushToggleButton.tintColor = .lightGray
-                } else {
+                if hasAlarm {
                     self.alarmPushToggleButton.isOn = true
                     self.alarmPushToggleButton.onTintColor = .point
+                } else {
+                    self.alarmPushToggleButton.isOn = false
+                    self.alarmPushToggleButton.tintColor = .lightGray
                 }
+                
+                hideLoadingView()
+            } catch {
+                guard let error = error as? NetworkError else { return }
+                handlerError(error)
             }
         }
     }
