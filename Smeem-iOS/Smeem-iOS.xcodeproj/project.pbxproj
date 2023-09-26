@@ -55,8 +55,6 @@
 		4A01235B2AAA178500E09646 /* HttpMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A01235A2AAA178500E09646 /* HttpMethod.swift */; };
 		4A01235D2AAA2BFA00E09646 /* ViewControllerServiceable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A01235C2AAA2BFA00E09646 /* ViewControllerServiceable.swift */; };
 		4A01235F2AAA2C1500E09646 /* SmeemLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A01235E2AAA2C1500E09646 /* SmeemLoadingView.swift */; };
-		4A0123632AAA311D00E09646 /* AuthService2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0123622AAA311D00E09646 /* AuthService2.swift */; };
-		4A0629562AAC871500BACCE8 /* AuthEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0629552AAC871500BACCE8 /* AuthEndPoint.swift */; };
 		4A0E8D5829F8362E00E0FC23 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0E8D5729F8362E00E0FC23 /* AuthViewController.swift */; };
 		4A0EA4552A014027006CCE52 /* GeneralResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EA4542A014027006CCE52 /* GeneralResponse.swift */; };
 		4A0EA4572A01403E006CCE52 /* MoyaLoggingPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EA4562A01403E006CCE52 /* MoyaLoggingPlugin.swift */; };
@@ -89,6 +87,12 @@
 		4A9FAB482A4C3D1200C40D5A /* BadgeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9FAB432A4C3D1200C40D5A /* BadgeHeaderView.swift */; };
 		4A9FAB492A4C3D1200C40D5A /* DetailBadgeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9FAB442A4C3D1200C40D5A /* DetailBadgeCollectionViewCell.swift */; };
 		4AA1EEEA2A5873A00017FF97 /* Urbanist-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4AA1EEE92A5870690017FF97 /* Urbanist-SemiBold.otf */; };
+		4AA626652AC1B6B000F31AAE /* MyPageEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA626642AC1B6B000F31AAE /* MyPageEndPoint.swift */; };
+		4AA626672AC1B92D00F31AAE /* MyPageServiceImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA626662AC1B92D00F31AAE /* MyPageServiceImpl.swift */; };
+		4AA626692AC1BB9200F31AAE /* MyPageManagerImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA626682AC1BB9200F31AAE /* MyPageManagerImpl.swift */; };
+		4AA6266B2AC1BD9800F31AAE /* MyPageAuthEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA6266A2AC1BD9800F31AAE /* MyPageAuthEndPoint.swift */; };
+		4AA6266D2AC1C2AF00F31AAE /* MyPageAuthServiceImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA6266C2AC1C2AF00F31AAE /* MyPageAuthServiceImpl.swift */; };
+		4AA6266F2AC1C2C700F31AAE /* MyPageAuthManagerImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA6266E2AC1C2C700F31AAE /* MyPageAuthManagerImpl.swift */; };
 		4AA942C22A2767D000A552A0 /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 4AA942C12A2767D000A552A0 /* FSCalendar */; };
 		4AA942C52A2767D900A552A0 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4AA942C42A2767D900A552A0 /* SnapKit */; };
 		4AA942CD2A276A9F00A552A0 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 4AA942CC2A276A9F00A552A0 /* Moya */; };
@@ -100,6 +104,9 @@
 		4AB6FEBA2AC02CAF0060E8CA /* SplashManagerImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB6FEB92AC02CAF0060E8CA /* SplashManagerImpl.swift */; };
 		4AB6FEBC2AC02D250060E8CA /* SplashServiceImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB6FEBB2AC02D250060E8CA /* SplashServiceImpl.swift */; };
 		4AB6FEBE2AC03C9E0060E8CA /* SplashEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB6FEBD2AC03C9E0060E8CA /* SplashEndPoint.swift */; };
+		4AB8ED802AC2B00C00177106 /* MyPageEditEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB8ED7F2AC2B00C00177106 /* MyPageEditEndPoint.swift */; };
+		4AB8ED822AC2DFFD00177106 /* MyPageEditServiceImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB8ED812AC2DFFD00177106 /* MyPageEditServiceImpl.swift */; };
+		4AB8ED842AC2E8DD00177106 /* MyPageEditManagerImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB8ED832AC2E8DD00177106 /* MyPageEditManagerImpl.swift */; };
 		4ABE3FD12A811F8400D1D22E /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABE3FD02A811F8400D1D22E /* SplashViewController.swift */; };
 		4AC047252A8FCAE100EBDC0E /* AuthManagementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC047242A8FCAE100EBDC0E /* AuthManagementViewController.swift */; };
 		4AC4B82D2A2F9FE200E147AA /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4B82C2A2F9FE200E147AA /* UserDefaultsManager.swift */; };
@@ -121,8 +128,6 @@
 		4AF1D2AC2AC06F81004C3AB7 /* LoginManagerImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF1D2AB2AC06F81004C3AB7 /* LoginManagerImpl.swift */; };
 		4AF1D2AE2AC06FA1004C3AB7 /* LoginServiceImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF1D2AD2AC06FA1004C3AB7 /* LoginServiceImpl.swift */; };
 		4AF1D2B02AC08090004C3AB7 /* Encodable+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF1D2AF2AC08090004C3AB7 /* Encodable+.swift */; };
-		4AF58CE32A481E8C00305248 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF58CE22A481E8C00305248 /* AuthService.swift */; };
-		4AF58CE52A48203B00305248 /* AuthAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF58CE42A48203B00305248 /* AuthAPI.swift */; };
 		4AF58CE92A4820AA00305248 /* AuthModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF58CE82A4820AA00305248 /* AuthModel.swift */; };
 		6F294A3E2A26177B00856CC8 /* GoalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF507742A10CD4D007C62B1 /* GoalViewController.swift */; };
 		6F294A3F2A26177E00856CC8 /* GoalCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF507762A10CD96007C62B1 /* GoalCollectionViewCell.swift */; };
@@ -138,7 +143,7 @@
 		6F62668C2A04EA3B000365CD /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F62668B2A04EA3B000365CD /* HomeViewController.swift */; };
 		6FBC856B2A4B1F9200A43F98 /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FBC856A2A4B1F9200A43F98 /* MyPageViewController.swift */; };
 		6FBC85702A4B5FA200A43F98 /* MyPageAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FBC856F2A4B5FA200A43F98 /* MyPageAPI.swift */; };
-		6FBC85722A4B5FAB00A43F98 /* MyPageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FBC85712A4B5FAB00A43F98 /* MyPageService.swift */; };
+		6FBC85722A4B5FAB00A43F98 /* MyPageService2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FBC85712A4B5FAB00A43F98 /* MyPageService2.swift */; };
 		6FBC85742A4B603A00A43F98 /* MyPageInfoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FBC85732A4B603A00A43F98 /* MyPageInfoResponse.swift */; };
 		6FE1298A2A4982DA005536C4 /* HomeAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE129892A4982DA005536C4 /* HomeAPI.swift */; };
 		6FE1298C2A498338005536C4 /* HomeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FE1298B2A498338005536C4 /* HomeService.swift */; };
@@ -197,8 +202,6 @@
 		4A01235A2AAA178500E09646 /* HttpMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpMethod.swift; sourceTree = "<group>"; };
 		4A01235C2AAA2BFA00E09646 /* ViewControllerServiceable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerServiceable.swift; sourceTree = "<group>"; };
 		4A01235E2AAA2C1500E09646 /* SmeemLoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmeemLoadingView.swift; sourceTree = "<group>"; };
-		4A0123622AAA311D00E09646 /* AuthService2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService2.swift; sourceTree = "<group>"; };
-		4A0629552AAC871500BACCE8 /* AuthEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthEndPoint.swift; sourceTree = "<group>"; };
 		4A0E8D5729F8362E00E0FC23 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 		4A0EA4542A014027006CCE52 /* GeneralResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralResponse.swift; sourceTree = "<group>"; };
 		4A0EA4562A01403E006CCE52 /* MoyaLoggingPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoyaLoggingPlugin.swift; sourceTree = "<group>"; };
@@ -236,9 +239,18 @@
 		4A9FAB432A4C3D1200C40D5A /* BadgeHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeHeaderView.swift; sourceTree = "<group>"; };
 		4A9FAB442A4C3D1200C40D5A /* DetailBadgeCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailBadgeCollectionViewCell.swift; sourceTree = "<group>"; };
 		4AA1EEE92A5870690017FF97 /* Urbanist-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Urbanist-SemiBold.otf"; sourceTree = "<group>"; };
+		4AA626642AC1B6B000F31AAE /* MyPageEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageEndPoint.swift; sourceTree = "<group>"; };
+		4AA626662AC1B92D00F31AAE /* MyPageServiceImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageServiceImpl.swift; sourceTree = "<group>"; };
+		4AA626682AC1BB9200F31AAE /* MyPageManagerImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageManagerImpl.swift; sourceTree = "<group>"; };
+		4AA6266A2AC1BD9800F31AAE /* MyPageAuthEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageAuthEndPoint.swift; sourceTree = "<group>"; };
+		4AA6266C2AC1C2AF00F31AAE /* MyPageAuthServiceImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageAuthServiceImpl.swift; sourceTree = "<group>"; };
+		4AA6266E2AC1C2C700F31AAE /* MyPageAuthManagerImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageAuthManagerImpl.swift; sourceTree = "<group>"; };
 		4AB6FEB92AC02CAF0060E8CA /* SplashManagerImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashManagerImpl.swift; sourceTree = "<group>"; };
 		4AB6FEBB2AC02D250060E8CA /* SplashServiceImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashServiceImpl.swift; sourceTree = "<group>"; };
 		4AB6FEBD2AC03C9E0060E8CA /* SplashEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashEndPoint.swift; sourceTree = "<group>"; };
+		4AB8ED7F2AC2B00C00177106 /* MyPageEditEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageEditEndPoint.swift; sourceTree = "<group>"; };
+		4AB8ED812AC2DFFD00177106 /* MyPageEditServiceImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageEditServiceImpl.swift; sourceTree = "<group>"; };
+		4AB8ED832AC2E8DD00177106 /* MyPageEditManagerImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageEditManagerImpl.swift; sourceTree = "<group>"; };
 		4AB9F5272AA9F78C00EBEE35 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		4AB9F5292AAA035300EBEE35 /* BaseResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseResponse.swift; sourceTree = "<group>"; };
 		4ABE3FD02A811F8400D1D22E /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
@@ -269,15 +281,13 @@
 		4AF1D2AF2AC08090004C3AB7 /* Encodable+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+.swift"; sourceTree = "<group>"; };
 		4AF507742A10CD4D007C62B1 /* GoalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalViewController.swift; sourceTree = "<group>"; };
 		4AF507762A10CD96007C62B1 /* GoalCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalCollectionViewCell.swift; sourceTree = "<group>"; };
-		4AF58CE22A481E8C00305248 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
-		4AF58CE42A48203B00305248 /* AuthAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthAPI.swift; sourceTree = "<group>"; };
 		4AF58CE82A4820AA00305248 /* AuthModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthModel.swift; sourceTree = "<group>"; };
 		6F294A472A27818200856CC8 /* HomeViewFloatingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewFloatingViewController.swift; sourceTree = "<group>"; };
 		6F31802E2A24D1DB00089870 /* CalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCell.swift; sourceTree = "<group>"; };
 		6F62668B2A04EA3B000365CD /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		6FBC856A2A4B1F9200A43F98 /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
 		6FBC856F2A4B5FA200A43F98 /* MyPageAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageAPI.swift; sourceTree = "<group>"; };
-		6FBC85712A4B5FAB00A43F98 /* MyPageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageService.swift; sourceTree = "<group>"; };
+		6FBC85712A4B5FAB00A43F98 /* MyPageService2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageService2.swift; sourceTree = "<group>"; };
 		6FBC85732A4B603A00A43F98 /* MyPageInfoResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageInfoResponse.swift; sourceTree = "<group>"; };
 		6FE129892A4982DA005536C4 /* HomeAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeAPI.swift; sourceTree = "<group>"; };
 		6FE1298B2A498338005536C4 /* HomeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeService.swift; sourceTree = "<group>"; };
@@ -575,7 +585,6 @@
 				4AF1D2A62AC06D18004C3AB7 /* EndPoint */,
 				6FBC856D2A4B5F8D00A43F98 /* MyPage */,
 				6FBC856C2A4B5F8500A43F98 /* Home */,
-				4AF58CEB2A48544700305248 /* Auth */,
 				4A3373F62A461AAC00EFE6C4 /* Onboarding */,
 				37DCA6752A488CBA00FF8F90 /* Papago */,
 				37DCA66C2A484D1000FF8F90 /* PostDiary */,
@@ -927,6 +936,9 @@
 			children = (
 				4AB6FEBD2AC03C9E0060E8CA /* SplashEndPoint.swift */,
 				4AF1D2A92AC06D41004C3AB7 /* LoginEndPoint.swift */,
+				4AA626642AC1B6B000F31AAE /* MyPageEndPoint.swift */,
+				4AA6266A2AC1BD9800F31AAE /* MyPageAuthEndPoint.swift */,
+				4AB8ED7F2AC2B00C00177106 /* MyPageEditEndPoint.swift */,
 			);
 			path = EndPoint;
 			sourceTree = "<group>";
@@ -936,6 +948,9 @@
 			children = (
 				4AB6FEBB2AC02D250060E8CA /* SplashServiceImpl.swift */,
 				4AF1D2AD2AC06FA1004C3AB7 /* LoginServiceImpl.swift */,
+				4AA626662AC1B92D00F31AAE /* MyPageServiceImpl.swift */,
+				4AA6266C2AC1C2AF00F31AAE /* MyPageAuthServiceImpl.swift */,
+				4AB8ED812AC2DFFD00177106 /* MyPageEditServiceImpl.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -945,6 +960,9 @@
 			children = (
 				4AB6FEB92AC02CAF0060E8CA /* SplashManagerImpl.swift */,
 				4AF1D2AB2AC06F81004C3AB7 /* LoginManagerImpl.swift */,
+				4AA626682AC1BB9200F31AAE /* MyPageManagerImpl.swift */,
+				4AA6266E2AC1C2C700F31AAE /* MyPageAuthManagerImpl.swift */,
+				4AB8ED832AC2E8DD00177106 /* MyPageEditManagerImpl.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -979,17 +997,6 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		4AF58CEB2A48544700305248 /* Auth */ = {
-			isa = PBXGroup;
-			children = (
-				4AF58CE42A48203B00305248 /* AuthAPI.swift */,
-				4AF58CE22A481E8C00305248 /* AuthService.swift */,
-				4A0123622AAA311D00E09646 /* AuthService2.swift */,
-				4A0629552AAC871500BACCE8 /* AuthEndPoint.swift */,
-			);
-			path = Auth;
-			sourceTree = "<group>";
-		};
 		6F62668A2A04E889000365CD /* Home */ = {
 			isa = PBXGroup;
 			children = (
@@ -1013,7 +1020,7 @@
 			isa = PBXGroup;
 			children = (
 				6FBC856F2A4B5FA200A43F98 /* MyPageAPI.swift */,
-				6FBC85712A4B5FAB00A43F98 /* MyPageService.swift */,
+				6FBC85712A4B5FAB00A43F98 /* MyPageService2.swift */,
 			);
 			path = MyPage;
 			sourceTree = "<group>";
@@ -1131,7 +1138,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4AF1D2AC2AC06F81004C3AB7 /* LoginManagerImpl.swift in Sources */,
-				6FBC85722A4B5FAB00A43F98 /* MyPageService.swift in Sources */,
+				6FBC85722A4B5FAB00A43F98 /* MyPageService2.swift in Sources */,
 				371E94162A87B83D0098280F /* NextButtonDelegate.swift in Sources */,
 				4AF1D2AE2AC06FA1004C3AB7 /* LoginServiceImpl.swift in Sources */,
 				4A3774822A42DF4500357DD1 /* NetworkHeader.swift in Sources */,
@@ -1139,11 +1146,13 @@
 				37DCA6742A484D5900FF8F90 /* PostDiaryAPI.swift in Sources */,
 				4A9FAB472A4C3D1200C40D5A /* BadgeListTableViewCell.swift in Sources */,
 				373E38592A2F889500DF96F0 /* DiaryDetailRandomSubjectView.swift in Sources */,
+				4AA6266B2AC1BD9800F31AAE /* MyPageAuthEndPoint.swift in Sources */,
 				6F294A3E2A26177B00856CC8 /* GoalViewController.swift in Sources */,
 				4A6630392A51E04600D19CC9 /* PatchDiaryRequest.swift in Sources */,
 				4AF58CE92A4820AA00305248 /* AuthModel.swift in Sources */,
 				3761116C2A278D0E0095EC5A /* String+.swift in Sources */,
 				4AEB82952A4CB4F200C1114B /* BadgePopupViewController.swift in Sources */,
+				4AB8ED822AC2DFFD00177106 /* MyPageEditServiceImpl.swift in Sources */,
 				4A3774842A42E6EA00357DD1 /* SharedConstant.swift in Sources */,
 				4AB6FEBE2AC03C9E0060E8CA /* SplashEndPoint.swift in Sources */,
 				6F294A402A26178300856CC8 /* HowOnboardingViewController.swift in Sources */,
@@ -1160,11 +1169,9 @@
 				4A9E10E42A43468600295D07 /* BaseTargetType.swift in Sources */,
 				37A574C329FF6E9C00312453 /* Image.swift in Sources */,
 				4A0123552AAA087D00E09646 /* BaseResponse.swift in Sources */,
-				4A0123632AAA311D00E09646 /* AuthService2.swift in Sources */,
 				4A974B022A4F3B9700418DD9 /* PlanListResponse.swift in Sources */,
 				4AE35E9E2A7FE8CE00465FD5 /* UICollectionViewCell+.swift in Sources */,
 				37DCA67C2A48927400FF8F90 /* PapagoService.swift in Sources */,
-				4A0629562AAC871500BACCE8 /* AuthEndPoint.swift in Sources */,
 				4A3F2EA02A0C18B600F6AC60 /* DatePickerFooterView.swift in Sources */,
 				6FE1298C2A498338005536C4 /* HomeService.swift in Sources */,
 				4AD04B3D2A190E9A004B7A58 /* UITextView+.swift in Sources */,
@@ -1179,11 +1186,13 @@
 				A3D7ECB72A26566A009857D6 /* EditNicknameViewController.swift in Sources */,
 				371E94192A87DA960098280F /* EditGoalViewController.swift in Sources */,
 				6FE129902A49A5A6005536C4 /* Date+.swift in Sources */,
+				4AA6266D2AC1C2AF00F31AAE /* MyPageAuthServiceImpl.swift in Sources */,
 				6F294A412A26178600856CC8 /* AlarmSettingViewController.swift in Sources */,
 				6F62668C2A04EA3B000365CD /* HomeViewController.swift in Sources */,
 				4AD04B3B2A1905BB004B7A58 /* DiaryScrollerView.swift in Sources */,
 				4A3373F52A45BF6600EFE6C4 /* OnboardingService.swift in Sources */,
 				6FBC85702A4B5FA200A43F98 /* MyPageAPI.swift in Sources */,
+				4AA626692AC1BB9200F31AAE /* MyPageManagerImpl.swift in Sources */,
 				4A6630362A51B0AD00D19CC9 /* EditDiaryViewController.swift in Sources */,
 				4A3F2E9C2A0B4C7100F6AC60 /* AlarmCollectionView.swift in Sources */,
 				37DCA6602A48033400FF8F90 /* DetailDiaryViewController.swift in Sources */,
@@ -1196,6 +1205,7 @@
 				37A574CE29FF9A2D00312453 /* UIScreen+.swift in Sources */,
 				37DCA6722A484D5000FF8F90 /* PostDiaryService.swift in Sources */,
 				37DCA67A2A4891BD00FF8F90 /* PapagoAPI.swift in Sources */,
+				4AB8ED842AC2E8DD00177106 /* MyPageEditManagerImpl.swift in Sources */,
 				37DCA6702A484D3700FF8F90 /* PostDiaryRequest.swift in Sources */,
 				4A7BE75D2ABB4B9800070E83 /* BaseEndPoint.swift in Sources */,
 				4A01235D2AAA2BFA00E09646 /* ViewControllerServiceable.swift in Sources */,
@@ -1209,6 +1219,7 @@
 				3728B8D32A2CFED300EF4CF8 /* ForeignDiaryViewController.swift in Sources */,
 				4ABE3FD12A811F8400D1D22E /* SplashViewController.swift in Sources */,
 				4AD923EB2A0692EA00FF5E27 /* BottomSheetView.swift in Sources */,
+				4AA6266F2AC1C2C700F31AAE /* MyPageAuthManagerImpl.swift in Sources */,
 				4A9FAB492A4C3D1200C40D5A /* DetailBadgeCollectionViewCell.swift in Sources */,
 				37DCA6652A48052200FF8F90 /* DetailDiaryResponse.swift in Sources */,
 				4AC4B82D2A2F9FE200E147AA /* UserDefaultsManager.swift in Sources */,
@@ -1220,6 +1231,7 @@
 				4A7BE7612ABB5BC800070E83 /* Requestable.swift in Sources */,
 				4A9FAB482A4C3D1200C40D5A /* BadgeHeaderView.swift in Sources */,
 				4A8FFA5029C9E1FD00FB76C0 /* AppDelegate.swift in Sources */,
+				4AA626672AC1B92D00F31AAE /* MyPageServiceImpl.swift in Sources */,
 				4AF1D2AA2AC06D41004C3AB7 /* LoginEndPoint.swift in Sources */,
 				6FE1298E2A4986CA005536C4 /* HomeDiaryResponse.swift in Sources */,
 				3728B8D52A2CFF2C00EF4CF8 /* StepOneKoreanDiaryViewController.swift in Sources */,
@@ -1236,6 +1248,7 @@
 				3728B8D12A2CFE0B00EF4CF8 /* DiaryStrategies.swift in Sources */,
 				4AF1D2B02AC08090004C3AB7 /* Encodable+.swift in Sources */,
 				4AB6FEBA2AC02CAF0060E8CA /* SplashManagerImpl.swift in Sources */,
+				4AB8ED802AC2B00C00177106 /* MyPageEditEndPoint.swift in Sources */,
 				371E94132A87A8660098280F /* GoalCollectionViewDataSource.swift in Sources */,
 				6F294A442A26179900856CC8 /* ServiceAcceptCollectionViewCell.swift in Sources */,
 				4A9FAB462A4C3D1200C40D5A /* BadgeListModel.swift in Sources */,
@@ -1243,13 +1256,12 @@
 				37A574E62A02178D00312453 /* SmeemToastView.swift in Sources */,
 				4A8FFA5229C9E1FD00FB76C0 /* SceneDelegate.swift in Sources */,
 				4ADA41722A546D0B001C0285 /* PushTestAPI.swift in Sources */,
-				4AF58CE52A48203B00305248 /* AuthAPI.swift in Sources */,
 				4A3373F82A461ABC00EFE6C4 /* OnboardingAPI.swift in Sources */,
+				4AA626652AC1B6B000F31AAE /* MyPageEndPoint.swift in Sources */,
 				4AB6FEBC2AC02D250060E8CA /* SplashServiceImpl.swift in Sources */,
 				37A574E82A02424F00312453 /* RandomSubjectView.swift in Sources */,
 				4A0EA4642A014710006CCE52 /* SmeemButton.swift in Sources */,
 				37EB69E62A4B3BC400075E4E /* DataBindProtocol.swift in Sources */,
-				4AF58CE32A481E8C00305248 /* AuthService.swift in Sources */,
 				371E940E2A87A2030098280F /* GoalEditMypageView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

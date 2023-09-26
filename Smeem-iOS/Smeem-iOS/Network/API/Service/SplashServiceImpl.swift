@@ -8,8 +8,8 @@
 import Foundation
 
 protocol SplashService {
-    func relogin() async throws -> ReLoginResponse?
-    func logout() async throws -> String?
+    func relogin() async throws -> BaseResponse<ReLoginResponse>?
+    func logout() async throws -> BaseResponse<String>?
 }
 
 struct SplashServiceImpl: SplashService {
@@ -20,12 +20,12 @@ struct SplashServiceImpl: SplashService {
         self.requestable = requestable
     }
     
-    func relogin() async throws -> ReLoginResponse? {
+    func relogin() async throws -> BaseResponse<ReLoginResponse>? {
         let urlRequest = SplashEndPoint.reLogin.makeUrlRequest()
         return try await requestable.request(urlRequest)
     }
     
-    func logout() async throws -> String? {
+    func logout() async throws -> BaseResponse<String>? {
         let urlRequest = SplashEndPoint.logout.makeUrlRequest()
         return try await requestable.request(urlRequest)
     }

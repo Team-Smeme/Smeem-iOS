@@ -23,3 +23,6 @@ struct BaseArrayResponse< T: Decodable>: Decodable {
     let data: [T]?
 }
 
+/// status, message는 값이 있지만, data가 nil일 경우 사용합니다
+struct NilType: Decodable {}
+
