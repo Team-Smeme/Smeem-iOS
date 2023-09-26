@@ -103,14 +103,43 @@ final class SplashViewController: UIViewController {
     }
     
     private func presentUpdatePopup() {
-        let alert = UIAlertController(title: "업데이트 알림", message: "보다 나아진 스밈의 최신 버전을 준비했어요! 새로운 버전으로 업데이트 후 이용해주세요.", preferredStyle: UIAlertController.Style.alert)
+        let updateAlert = UIAlertController(title: "업데이트 알림", message: "보다 나아진 스밈의 최신 버전을 준비했어요! 새로운 버전으로 업데이트 후 이용해주세요.", preferredStyle: UIAlertController.Style.alert)
         
         let update = UIAlertAction(title: "업데이트", style: UIAlertAction.Style.default) { (_) in
             System().openAppStore()
+            
+            /// 0.5 delay 준 버전
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+
+                let restartAlert = UIAlertController(title: "업데이트 완료", message: "앱을 재실행합니다.", preferredStyle: UIAlertController.Style.alert)
+                let restart = UIAlertAction(title: "확인", style: UIAlertAction.Style.default) { (_) in
+
+                    UIApplication.shared.perform(#selector(NSXPCConnection.suspend))
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        exit(0)
+                    }
+                }
+
+                restartAlert.addAction(restart)
+                self.present(restartAlert, animated: true)
+            }
+            
+            /// 아닌 버전
+//            let restartAlert = UIAlertController(title: "업데이트 완료", message: "앱을 재실행합니다.", preferredStyle: UIAlertController.Style.alert)
+//            let restart = UIAlertAction(title: "확인", style: UIAlertAction.Style.default) { (_) in
+//
+//                UIApplication.shared.perform(#selector(NSXPCConnection.suspend))
+//                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+//                    exit(0)
+//                }
+//            }
+//
+//            restartAlert.addAction(restart)
+//            self.present(restartAlert, animated: true)
         }
         
-        alert.addAction(update)
-        self.present(alert, animated: false)
+        updateAlert.addAction(update)
+        self.present(updateAlert, animated: true)
     }
 }
 
