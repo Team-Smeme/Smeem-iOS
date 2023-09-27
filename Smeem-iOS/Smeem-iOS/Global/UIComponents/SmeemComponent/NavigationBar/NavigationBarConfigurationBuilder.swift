@@ -30,15 +30,7 @@ struct NavigationBarConfiguration {
 }
 
 class NavigationBarConfigurationBuilder {
-    private var configuration = NavigationBarConfiguration(
-        leftButtonTitle: nil,
-        rightButtonTitle: nil,
-        leftButtonImage: nil,
-        rightButtonImage: nil,
-        title: nil,
-        stepLabelTitle: nil,
-        layout: nil
-    )
+    private var configuration = NavigationBarConfiguration()
     
     func withLeftButtonTitle(_ title: String) -> Self {
         configuration.leftButtonTitle = title
