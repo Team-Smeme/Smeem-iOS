@@ -250,12 +250,12 @@ final class MyPageViewController: UIViewController {
     }
     
     @objc func moreButtonDidTap(_ sender: UIButton) {
-        let authManagetmentVC = AuthManagementViewController(myPageAuthManager: MyPageAuthManagerImpl(myPageAuthService: MyPageAuthServiceImpl(requestable: APIService())))
+        let authManagetmentVC = AuthManagementViewController(myPageAuthManager: MyPageAuthManagerImpl(myPageAuthService: MyPageAuthServiceImpl(requestable: RequestImpl())))
         self.navigationController?.pushViewController(authManagetmentVC, animated: true)
     }
     
     @objc func editButtonDidTap(_ sender: UIButton) {
-        let editVC = EditNicknameViewController(editNicknameManager: MyPageEditManagerImpl(myPageEditService: MyPageEditServiceImpl(requestable: APIService())), nicknameValidManager: NicknameValidManagerImpl(nicknameValidService: NicknameValidServiceImpl(requestable: APIService())))
+        let editVC = EditNicknameViewController(editNicknameManager: MyPageEditManagerImpl(myPageEditService: MyPageEditServiceImpl(requestable: RequestImpl())), nicknameValidManager: NicknameValidManagerImpl(nicknameValidService: NicknameValidServiceImpl(requestable: RequestImpl())))
         editVC.editNicknameDelegate = self
         editVC.nickName = userInfo.username
         self.navigationController?.pushViewController(editVC, animated: true)
@@ -267,7 +267,7 @@ final class MyPageViewController: UIViewController {
     }
     
     @objc func badgeImageDidTap() {
-        let badgeListVC = BadgeListViewController(myPageManager: MyPageManagerImpl(myPageService: MyPageServiceImpl(requestable: APIService())))
+        let badgeListVC = BadgeListViewController(myPageManager: MyPageManagerImpl(myPageService: MyPageServiceImpl(requestable: RequestImpl())))
         self.navigationController?.pushViewController(badgeListVC, animated: true)
     }
     
@@ -292,7 +292,7 @@ final class MyPageViewController: UIViewController {
     }
     
     @objc func alarmEditButtonDidTap() {
-        let alarmEditVC = EditAlarmViewController(editAlarmManager: MyPageEditManagerImpl(myPageEditService: MyPageEditServiceImpl(requestable: APIService())))
+        let alarmEditVC = EditAlarmViewController(editAlarmManager: MyPageEditManagerImpl(myPageEditService: MyPageEditServiceImpl(requestable: RequestImpl())))
         alarmEditVC.editAlarmDelegate = self
         alarmEditVC.dayIndexPathArray = indexPathArray
         alarmEditVC.trainigDayData = userInfo.trainingTime.day

@@ -37,7 +37,6 @@ struct NetworkRequest {
         }
         
         guard let url = urlComponents.url?.appendingPathComponent(self.path) else {
-            /// 여기서의 error 처리 고민...
             throw NetworkError.urlEncodingError
         }
         

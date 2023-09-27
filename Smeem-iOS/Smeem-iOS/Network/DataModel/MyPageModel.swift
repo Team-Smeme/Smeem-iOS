@@ -7,6 +7,8 @@
 
 import Foundation
 
+// MARK: - My Page
+
 struct MyPageResponse: Codable {
     let username, target, way, detail: String
     let targetLang: String
@@ -21,16 +23,7 @@ extension MyPageResponse {
                                       badge: Badge(id: 0, name: "", type: "", imageURL: ""))
 }
 
-struct Badge: Codable {
-    let id: Int
-    let name, type: String
-    let imageURL: String
-
-    enum CodingKeys: String, CodingKey {
-        case id, name, type
-        case imageURL = "imageUrl"
-    }
-}
+// MARK: - My Page Edit
 
 struct EditNicknameRequest: Codable {
     let username: String

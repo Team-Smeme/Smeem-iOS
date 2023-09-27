@@ -7,13 +7,11 @@
 
 import Foundation
 
-//typealias nilData = String?
-
 protocol Requestable {
     func request<T: Decodable>(_ request: NetworkRequest) async throws -> BaseResponse<T>?
 }
 
-final class APIService: Requestable {
+struct RequestImpl: Requestable {
     
     func request<T: Decodable>(_ request: NetworkRequest) async throws -> BaseResponse<T>? {
         let (data, _) = try await URLSession.shared.data(for: request.makeUrlRequest())

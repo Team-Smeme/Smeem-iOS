@@ -61,7 +61,6 @@ extension LoginEndPoint: BaseEndPoint {
     func makeUrlRequest() -> NetworkRequest {
         return NetworkRequest(path: path,
                               httpMethod: httpMethod,
-                              query: query,
                               body: requestBody,
                               headers: header)
     }

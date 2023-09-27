@@ -8,7 +8,7 @@
 import Foundation
 
 protocol NicknameValidService {
-    func nicknameValid(param: String) async throws -> BaseResponse<NicknameCheckResponse>?
+    func nicknameValid(param: String) async throws -> BaseResponse<NicknameValidResponse>?
 }
 
 struct NicknameValidServiceImpl: NicknameValidService {
@@ -19,7 +19,7 @@ struct NicknameValidServiceImpl: NicknameValidService {
         self.requestable = requestable
     }
     
-    func nicknameValid(param: String) async throws -> BaseResponse<NicknameCheckResponse>? {
+    func nicknameValid(param: String) async throws -> BaseResponse<NicknameValidResponse>? {
         let urlRequest = NicknameValidEndPoint.nicknameValid(param: param).makeUrlRequest()
         return try await requestable.request(urlRequest)
     }

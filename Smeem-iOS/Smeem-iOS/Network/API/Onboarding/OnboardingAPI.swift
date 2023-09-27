@@ -64,11 +64,11 @@ public class OnboardingAPI {
         }
     }
     
-    func ninknameCheckAPI(userName: String, accessToken: String, completion: @escaping (GeneralResponse<NicknameCheckResponse>) -> Void) {
+    func ninknameCheckAPI(userName: String, accessToken: String, completion: @escaping (GeneralResponse<NicknameValidResponse>) -> Void) {
         onboardingProvider.request(.checkNickname(param: userName, token: accessToken)) { response in
             switch response {
             case .success(let result):
-                guard let data = try? result.map(GeneralResponse<NicknameCheckResponse>.self) else {
+                guard let data = try? result.map(GeneralResponse<NicknameValidResponse>.self) else {
                     print("⭐️⭐️⭐️ 디코더 에러 ⭐️⭐️⭐️")
                     return
                 }
