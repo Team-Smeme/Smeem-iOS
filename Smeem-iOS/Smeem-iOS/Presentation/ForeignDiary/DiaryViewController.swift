@@ -11,15 +11,12 @@ import SnapKit
 
 protocol DiaryStrategy {
     func configureRandomSubjectButtonImage(_ button: UIButton)
-    func configurePlaceHolder(_ textView: UITextView)
     func configureToolTipView(_ imageView: UIImageView)
     func configureRandomSubjectButton(_ button: UIButton)
     func configureLanguageLabel(_ label: UILabel)
     func configureLeftNavigationButton(_ button: UIButton)
     func configureRightNavigationButton(_ button: UIButton)
     func configureStepLabel(_ label: UILabel)
-    
-    var textViewPlaceholder: String { get }
 }
 
 class DiaryViewController: UIViewController {
@@ -301,7 +298,6 @@ class DiaryViewController: UIViewController {
         }
         
         diaryStrategy?.configureRandomSubjectButton(randomSubjectButton)
-        diaryStrategy?.configurePlaceHolder(inputTextView)
         diaryStrategy?.configureRandomSubjectButton(randomSubjectButton)
         diaryStrategy?.configureLanguageLabel(languageLabel)
         diaryStrategy?.configureLeftNavigationButton(leftNavigationButton)
@@ -461,77 +457,6 @@ extension DiaryViewController {
         
         smeemToastView?.show(in: view, offset: CGFloat(offset), keyboardHeight: keyboardHeight)
         smeemToastView?.hide(after: 1)
-    }
-}
-
-// MARK: - UITextViewDelegate
-
-extension DiaryViewController: UITextViewDelegate {
-    func textViewDidChange(_ textView: UITextView) {
-        let isTextEmpty = textView.text.isEmpty || textView.text == diaryStrategy?.textViewPlaceholder
-        
-        if isTextEmpty {
-            textView.text = diaryStrategy?.textViewPlaceholder
-            textView.textColor = .gray400
-            textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
-        } else {
-            textView.textColor = .smeemBlack
-        }
-        
-        guard let strategy = diaryStrategy else {
-            rightNavigationButton.setTitleColor(.gray300, for: .normal)
-            return
-        }
-        
-        if let koreanStrategy = strategy as? StepOneKoreanDiaryStrategy {
-            if koreanStrategy.koreanValidation(with: textView.text, in: self) {
-                rightButtonFlag = true
-            } else {
-                rightButtonFlag = false
-            }
-        } else {
-            if strategy.englishValidation(with: textView.text, in: self) {
-                rightButtonFlag = true
-            } else {
-                rightButtonFlag = false
-            }
-        }
-        
-        rightNavigationButton.setTitleColor(rightButtonFlag ? .point : .gray300, for: .normal)
-    }
-    
-    func textViewDidChangeSelection(_ textView: UITextView) {
-        if textView.textColor == .gray400 {
-            textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
-        }
-    }
-    
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        let currentText = textView.text ?? ""
-        let updatedText = (currentText as NSString).replacingCharacters(in: range, with: text)
-        
-        if updatedText.isEmpty {
-            textView.text = diaryStrategy?.textViewPlaceholder
-            textView.textColor = .gray400
-            textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
-            return false
-        } else if textView.textColor == .gray400 && !text.isEmpty {
-            textView.text = nil
-            textView.textColor = .smeemBlack
-        }
-        return true
-    }
-}
-
-extension DiaryStrategy {
-    func englishValidation(with text: String, in viewController: DiaryViewController) -> Bool {
-        return viewController.inputTextView.text.getArrayAfterRegex(regex: "[a-zA-z]").count > 0
-    }
-}
-
-extension StepOneKoreanDiaryStrategy {
-    func koreanValidation(with text: String, in viewController: DiaryViewController) -> Bool {
-        return viewController.inputTextView.text.getArrayAfterRegex(regex: "[가-핳ㄱ-ㅎㅏ-ㅣ]").count > 0
     }
 }
 
