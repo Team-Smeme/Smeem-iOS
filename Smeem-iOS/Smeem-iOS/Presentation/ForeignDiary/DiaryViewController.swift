@@ -98,13 +98,9 @@ class DiaryViewController: UIViewController {
         return button
     }()
     
-    lazy var inputTextView: UITextView = {
-        let textView = UITextView()
-        textView.configureDiaryTextView(topInset: 20)
-        textView.configureTypingAttributes()
-        textView.textContentType = .init(rawValue: "ko-KR")
-        textView.delegate = self
-        textView.textColor = .gray400
+    lazy var inputTextView: SmeemTextView = {
+        let textView = SmeemTextView()
+        textView.setPlaceholder("일기를 작성해주세요 :)")
         return textView
     }()
     

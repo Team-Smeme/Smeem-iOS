@@ -17,6 +17,7 @@
 		3728B8D52A2CFF2C00EF4CF8 /* StepOneKoreanDiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3728B8D42A2CFF2C00EF4CF8 /* StepOneKoreanDiaryViewController.swift */; };
 		3728B8D72A2CFF3A00EF4CF8 /* StepTwoKoreanDiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3728B8D62A2CFF3A00EF4CF8 /* StepTwoKoreanDiaryViewController.swift */; };
 		373E38592A2F889500DF96F0 /* DiaryDetailRandomSubjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373E38582A2F889500DF96F0 /* DiaryDetailRandomSubjectView.swift */; };
+		374F828C2AC327A200C128B9 /* SmeemTextViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374F828B2AC327A200C128B9 /* SmeemTextViewManager.swift */; };
 		374FAF812A2CACCF00237A1A /* DiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374FAF802A2CACCF00237A1A /* DiaryViewController.swift */; };
 		3761116C2A278D0E0095EC5A /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3761116B2A278D0E0095EC5A /* String+.swift */; };
 		37A574C129FF6E9100312453 /* ColorLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574C029FF6E9100312453 /* ColorLiterals.swift */; };
@@ -34,6 +35,7 @@
 		37A574E02A00CDCD00312453 /* SeparationLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574DF2A00CDCD00312453 /* SeparationLine.swift */; };
 		37A574E62A02178D00312453 /* SmeemToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574E52A02178D00312453 /* SmeemToastView.swift */; };
 		37A574E82A02424F00312453 /* RandomSubjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574E72A02424F00312453 /* RandomSubjectView.swift */; };
+		37B360AA2AC2A4680006C8ED /* SmeemTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B360A92AC2A4680006C8ED /* SmeemTextView.swift */; };
 		37DCA6572A47574300FF8F90 /* RandomSubjectAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DCA6562A47574300FF8F90 /* RandomSubjectAPI.swift */; };
 		37DCA65A2A47598700FF8F90 /* RandomSubjectService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DCA6592A47598700FF8F90 /* RandomSubjectService.swift */; };
 		37DCA65D2A475B5100FF8F90 /* RandomSubjectResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DCA65C2A475B5100FF8F90 /* RandomSubjectResponse.swift */; };
@@ -141,6 +143,7 @@
 		3728B8D42A2CFF2C00EF4CF8 /* StepOneKoreanDiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepOneKoreanDiaryViewController.swift; sourceTree = "<group>"; };
 		3728B8D62A2CFF3A00EF4CF8 /* StepTwoKoreanDiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepTwoKoreanDiaryViewController.swift; sourceTree = "<group>"; };
 		373E38582A2F889500DF96F0 /* DiaryDetailRandomSubjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryDetailRandomSubjectView.swift; sourceTree = "<group>"; };
+		374F828B2AC327A200C128B9 /* SmeemTextViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmeemTextViewManager.swift; sourceTree = "<group>"; };
 		374FAF802A2CACCF00237A1A /* DiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryViewController.swift; sourceTree = "<group>"; };
 		3761116B2A278D0E0095EC5A /* String+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		37A574C029FF6E9100312453 /* ColorLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorLiterals.swift; sourceTree = "<group>"; };
@@ -158,6 +161,7 @@
 		37A574DF2A00CDCD00312453 /* SeparationLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeparationLine.swift; sourceTree = "<group>"; };
 		37A574E52A02178D00312453 /* SmeemToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmeemToastView.swift; sourceTree = "<group>"; };
 		37A574E72A02424F00312453 /* RandomSubjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomSubjectView.swift; sourceTree = "<group>"; };
+		37B360A92AC2A4680006C8ED /* SmeemTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmeemTextView.swift; sourceTree = "<group>"; };
 		37DCA6562A47574300FF8F90 /* RandomSubjectAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomSubjectAPI.swift; sourceTree = "<group>"; };
 		37DCA6592A47598700FF8F90 /* RandomSubjectService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomSubjectService.swift; sourceTree = "<group>"; };
 		37DCA65C2A475B5100FF8F90 /* RandomSubjectResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomSubjectResponse.swift; sourceTree = "<group>"; };
@@ -346,6 +350,7 @@
 				4A1EE9542A4DFB76007BFEF3 /* Onboarding */,
 				4A1EE9532A4DFB42007BFEF3 /* Diary */,
 				4A3F2E952A0ABB9C00F6AC60 /* Alarm */,
+				374F828B2AC327A200C128B9 /* SmeemTextViewManager.swift */,
 			);
 			path = UIComponents;
 			sourceTree = "<group>";
@@ -574,6 +579,7 @@
 			children = (
 				4A0EA4632A014710006CCE52 /* SmeemButton.swift */,
 				37A574E52A02178D00312453 /* SmeemToastView.swift */,
+				37B360A92AC2A4680006C8ED /* SmeemTextView.swift */,
 			);
 			path = SmeemComponent;
 			sourceTree = "<group>";
@@ -1069,6 +1075,7 @@
 				4AE35E9E2A7FE8CE00465FD5 /* UICollectionViewCell+.swift in Sources */,
 				37DCA67C2A48927400FF8F90 /* PapagoService.swift in Sources */,
 				4A3F2EA02A0C18B600F6AC60 /* DatePickerFooterView.swift in Sources */,
+				37B360AA2AC2A4680006C8ED /* SmeemTextView.swift in Sources */,
 				6FE1298C2A498338005536C4 /* HomeService.swift in Sources */,
 				4AD04B3D2A190E9A004B7A58 /* UITextView+.swift in Sources */,
 				6F31802F2A24D1DB00089870 /* CalendarCell.swift in Sources */,
@@ -1134,6 +1141,7 @@
 				4A9FAB462A4C3D1200C40D5A /* BadgeListModel.swift in Sources */,
 				6F294A3F2A26177E00856CC8 /* GoalCollectionViewCell.swift in Sources */,
 				37A574E62A02178D00312453 /* SmeemToastView.swift in Sources */,
+				374F828C2AC327A200C128B9 /* SmeemTextViewManager.swift in Sources */,
 				4A8FFA5229C9E1FD00FB76C0 /* SceneDelegate.swift in Sources */,
 				4ADA41722A546D0B001C0285 /* PushTestAPI.swift in Sources */,
 				4AF58CE52A48203B00305248 /* AuthAPI.swift in Sources */,
