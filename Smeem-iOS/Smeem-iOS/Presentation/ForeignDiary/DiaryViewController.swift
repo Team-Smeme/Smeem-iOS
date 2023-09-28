@@ -95,7 +95,7 @@ class DiaryViewController: UIViewController {
         return button
     }()
     
-    let inputTextView = SmeemTextView(placeholder: "일기를 작성해주세요 :)")
+    let inputTextView = SmeemTextView(type: .editable(SmeemTextViewManager.shared), placeholderText: "일기를 작성해주세요 :)")
     
     let bottomView: UIView = {
         let view = UIView()

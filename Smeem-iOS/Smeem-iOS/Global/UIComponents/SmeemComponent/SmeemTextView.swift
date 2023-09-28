@@ -7,46 +7,74 @@
 
 import UIKit
 
-class SmeemTextView: UITextView {
+protocol PlaceHolderTextView: AnyObject {
+    var placeholderText: String? { get set }
+    var placeholderColor: UIColor? { get set }
+    func updatePlaceholder()
+}
 
-    // MARK: - Properties
+enum SmeemTextViewType {
+    case display
+    case editable(SmeemTextViewManager)
+}
 
-    var textViewManager: SmeemTextViewManager?
+// MARK: - SmeemTextView
+
+class SmeemTextView: UITextView, PlaceHolderTextView {
     
-    var placeholderText: String = "" {
-        didSet {
-            updatePlaceholder()
-        }
-    }
-
-    var placeholderColor: UIColor = .gray300
-
+    // MARK: - Properties
+    
+    var placeholderText: String?
+    var placeholderColor: UIColor?
+    
     // MARK: - Life Cycle
-
+    
     override init(frame: CGRect, textContainer: NSTextContainer?) {
         super.init(frame: frame, textContainer: textContainer)
-        
-        commonInit()
     }
     
-    convenience init(placeholder: String?) {
+    convenience init(type: SmeemTextViewType,
+                     placeholderColor color: UIColor = .gray300,
+                     placeholderText placeholder: String?,
+                     textViewManager manager: SmeemTextViewManager? = nil) {
         self.init(frame: .zero, textContainer: nil)
+        
+        self.placeholderColor = color
         self.placeholderText = placeholder ?? ""
+
+        configureTextView(for: type)
+        commonInit()
         updatePlaceholder()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
+}
 
+// MARK: - Methods
+
+extension SmeemTextView {
+    
+    // MARK: - Private Methods
+    
     private func commonInit() {
-        delegate = self
         self.configureDiaryTextView(topInset: 20)
         self.configureTypingAttributes()
     }
-}
-
-extension SmeemTextView {
+    
+    private func configureTextView(for type: SmeemTextViewType) {
+        switch type {
+        case .display:
+            break
+        case .editable(let manager):
+            self.delegate = manager
+            manager.textView = self
+        }
+    }
+    
+    // MARK: - Custom Methods
+    
     func updatePlaceholder() {
         if text.isEmpty || text == placeholderText {
             text = placeholderText
@@ -55,39 +83,3 @@ extension SmeemTextView {
         }
     }
 }
-
-// MARK: - UITextViewDelegate
-
-extension SmeemTextView: UITextViewDelegate {
-
-    func textViewDidChange(_ textView: UITextView) {
-        if textView.text.isEmpty || textView.text == placeholderText {
-            updatePlaceholder()
-        } else if !textView.text.isEmpty && textView.textColor == placeholderColor {
-            textView.textColor = .smeemBlack
-        }
-    }
-
-    func textViewDidChangeSelection(_ textView: UITextView) {
-        if textView.textColor == placeholderColor {
-            textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
-        }
-    }
-
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        let currentText = textView.text ?? ""
-        let updatedText = (currentText as NSString).replacingCharacters(in: range, with: text)
-
-        if updatedText.isEmpty {
-            textView.text = placeholderText
-            textView.textColor = placeholderColor
-            textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
-            return false
-        } else if textView.textColor == placeholderColor && !text.isEmpty {
-            textView.text = nil
-            textView.textColor = .smeemBlack
-        }
-        return true
-    }
-}
-
