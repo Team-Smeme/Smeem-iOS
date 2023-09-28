@@ -15,11 +15,7 @@ class SmeemTextView: UITextView {
     
     var placeholderText: String = "" {
         didSet {
-            if text.isEmpty {
-                text = placeholderText
-                textColor = placeholderColor
-                selectedTextRange = textRange(from: beginningOfDocument, to: beginningOfDocument)
-            }
+            updatePlaceholder()
         }
     }
 
@@ -36,11 +32,11 @@ class SmeemTextView: UITextView {
     convenience init(placeholder: String?) {
         self.init(frame: .zero, textContainer: nil)
         self.placeholderText = placeholder ?? ""
+        updatePlaceholder()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        commonInit()
     }
 
     private func commonInit() {
@@ -51,10 +47,8 @@ class SmeemTextView: UITextView {
 }
 
 extension SmeemTextView {
-    func setPlaceholder(_ placeholderText: String) {
-        self.placeholderText = placeholderText
-        
-        if text.isEmpty {
+    func updatePlaceholder() {
+        if text.isEmpty || text == placeholderText {
             text = placeholderText
             textColor = placeholderColor
             selectedTextRange = textRange(from: beginningOfDocument, to: beginningOfDocument)
@@ -67,13 +61,9 @@ extension SmeemTextView {
 extension SmeemTextView: UITextViewDelegate {
 
     func textViewDidChange(_ textView: UITextView) {
-        let isTextEmpty = textView.text.isEmpty || textView.text == placeholderText
-
-        if isTextEmpty {
-            textView.text = placeholderText
-            textView.textColor = placeholderColor
-            textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
-        } else {
+        if textView.text.isEmpty || textView.text == placeholderText {
+            updatePlaceholder()
+        } else if !textView.text.isEmpty && textView.textColor == placeholderColor {
             textView.textColor = .smeemBlack
         }
     }

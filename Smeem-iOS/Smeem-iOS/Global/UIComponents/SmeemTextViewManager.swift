@@ -15,17 +15,17 @@ class SmeemTextViewManager {
         guard let strategy = diaryStrategy else { return false }
         
         if let koreanStrategy = strategy as? StepOneKoreanDiaryStrategy {
-            return koreanValidation(with: text)
+            return containsKoreanCharacters(with: text)
         } else {
-            return englishValidation(with: text)
+            return containsEnglishCharacters(with: text)
         }
     }
 
-    func englishValidation(with text: String) -> Bool {
+    func containsEnglishCharacters(with text: String) -> Bool {
         return text.getArrayAfterRegex(regex: "[a-zA-z]").count > 0
     }
 
-    func koreanValidation(with text: String) -> Bool {
+    func containsKoreanCharacters(with text: String) -> Bool {
         return text.getArrayAfterRegex(regex: "[가-핳ㄱ-ㅎㅏ-ㅣ]").count > 0
     }
     

@@ -95,11 +95,7 @@ class DiaryViewController: UIViewController {
         return button
     }()
     
-    lazy var inputTextView: SmeemTextView = {
-        let textView = SmeemTextView()
-        textView.setPlaceholder("일기를 작성해주세요 :)")
-        return textView
-    }()
+    let inputTextView = SmeemTextView(placeholder: "일기를 작성해주세요 :)")
     
     let bottomView: UIView = {
         let view = UIView()
@@ -114,12 +110,6 @@ class DiaryViewController: UIViewController {
         button.addTarget(self, action: #selector(randomTopicButtonDidTap), for: .touchUpInside)
         button.setImage(Constant.Image.btnRandomSubjectInactive, for: .normal)
         return button
-    }()
-    
-    private var tutorialImageView: UIImageView? = {
-        let imageView = UIImageView()
-        imageView.image = Constant.Image.tutorialDiaryStepOne
-        return imageView
     }()
     
     private lazy var dismissButton: UIButton? = {
@@ -257,7 +247,6 @@ class DiaryViewController: UIViewController {
     }
     
     @objc func dismissButtonDidTap() {
-        tutorialImageView?.removeFromSuperview()
         dismissButton?.removeFromSuperview()
     }
     
