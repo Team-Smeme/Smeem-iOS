@@ -21,21 +21,7 @@ final class DetailDiaryViewController: UIViewController {
     
     // MARK: - UI Property
     
-    private let naviView = UIView()
-    
-    private lazy var backButton: UIButton = {
-        let button = UIButton()
-        button.setImage(Constant.Image.icnBack, for: .normal)
-        button.addTarget(self, action: #selector(backButtonDidTap(_:)), for: .touchUpInside)
-        return button
-    }()
-    
-    private lazy var editButton: UIButton = {
-        let button = UIButton()
-        button.setImage(Constant.Image.icnMore, for: .normal)
-        button.addTarget(self, action: #selector(showActionSheet), for: .touchUpInside)
-        return button
-    }()
+    private var naviView: SmeemNavigationBar?
     
     let diaryScrollerView: DiaryScrollerView = {
         let scrollerView = DiaryScrollerView()
@@ -48,7 +34,8 @@ final class DetailDiaryViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+        naviView = createNavigationBar(type: .detail)
         setBackgroundColor()
         setLayout()
         swipeRecognizer()
@@ -57,14 +44,10 @@ final class DetailDiaryViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         detailDiaryWithAPI(diaryID: diaryId)
     }
-
+    
     // MARK: - @objc
     
     @objc func responseToSwipeGesture() {
-        self.navigationController?.popViewController(animated: true)
-    }
-    
-    @objc func backButtonDidTap(_ sender: UIButton) {
         self.navigationController?.popViewController(animated: true)
     }
     
@@ -87,7 +70,7 @@ final class DetailDiaryViewController: UIViewController {
         alert.addAction (cancelAction)
         self.present(alert, animated: true, completion: nil)
     }
-
+    
     @objc func showAlert() {
         let alert = UIAlertController(title: "일기를 삭제할까요?", message: "", preferredStyle: .alert)
         let delete = UIAlertAction(title: "확인", style: .destructive) { (action) in
@@ -128,8 +111,9 @@ final class DetailDiaryViewController: UIViewController {
     }
     
     private func setLayout() {
+        guard let naviView = naviView else { return }
+        
         view.addSubviews(naviView, diaryScrollerView)
-        naviView.addSubviews(backButton, editButton)
         
         naviView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(44)
@@ -137,22 +121,22 @@ final class DetailDiaryViewController: UIViewController {
             $0.height.equalTo(66)
         }
         
-        backButton.snp.makeConstraints {
-            $0.leading.equalToSuperview().inset(12 - 5)
-            $0.centerY.equalToSuperview()
-            $0.height.width.equalTo(40 + 10)
-        }
-        
-        editButton.snp.makeConstraints {
-            $0.trailing.equalToSuperview().inset(18 - 5)
-            $0.centerY.equalToSuperview()
-            $0.height.width.equalTo(40 + 10)
-        }
-        
         diaryScrollerView.snp.makeConstraints {
             $0.top.equalTo(naviView.snp.bottom)
             $0.leading.trailing.bottom.equalToSuperview()
         }
+    }
+}
+
+// MARK: - NavigationBarActionDelegate
+
+extension DetailDiaryViewController: NavigationBarActionDelegate {
+    func didTapLeftButton() {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    func didTapRightButton() {
+        showActionSheet()
     }
 }
 
