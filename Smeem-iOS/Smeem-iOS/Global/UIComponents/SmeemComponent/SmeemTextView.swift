@@ -21,12 +21,12 @@ enum SmeemTextViewType {
 
 class SmeemTextView: UITextView, PlaceholderDisplayable {
     
-    // MARK: - Properties
+    // MARK: Properties
     
     var placeholderText: String?
     var placeholderColor: UIColor?
     
-    // MARK: - Life Cycle
+    // MARK: Life Cycle
     
     override init(frame: CGRect, textContainer: NSTextContainer?) {
         super.init(frame: frame, textContainer: textContainer)
@@ -55,7 +55,7 @@ class SmeemTextView: UITextView, PlaceholderDisplayable {
 
 extension SmeemTextView {
     
-    // MARK: - Private Methods
+    // MARK: Private Methods
     
     private func commonInit() {
         self.configureDiaryTextView(topInset: 20)
@@ -72,7 +72,7 @@ extension SmeemTextView {
         }
     }
     
-    // MARK: - Custom Methods
+    // MARK: Custom Methods
     
     func updatePlaceholder() {
         if text.isEmpty {

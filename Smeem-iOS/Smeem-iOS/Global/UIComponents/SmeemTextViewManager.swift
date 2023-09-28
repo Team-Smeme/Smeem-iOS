@@ -11,7 +11,7 @@ import UIKit
 
 class SmeemTextViewManager: NSObject {
     
-    // MARK: - Properties
+    // MARK: Properties
     
     static let shared = SmeemTextViewManager()
     
@@ -19,7 +19,7 @@ class SmeemTextViewManager: NSObject {
     weak var diaryViewController: DiaryViewController?
     weak var textView: PlaceholderDisplayable?
     
-    // MARK: - Methods
+    // MARK: Methods
     
     func buttonColor(for isValid: Bool) -> UIColor {
         return isValid ? .point : .gray300
