@@ -7,10 +7,9 @@
 
 import UIKit
 
-protocol PlaceHolderTextView: AnyObject {
+protocol PlaceholderDisplayable: AnyObject {
     var placeholderText: String? { get set }
     var placeholderColor: UIColor? { get set }
-    func updatePlaceholder()
 }
 
 enum SmeemTextViewType {
@@ -20,7 +19,7 @@ enum SmeemTextViewType {
 
 // MARK: - SmeemTextView
 
-class SmeemTextView: UITextView, PlaceHolderTextView {
+class SmeemTextView: UITextView, PlaceholderDisplayable {
     
     // MARK: - Properties
     
@@ -76,7 +75,7 @@ extension SmeemTextView {
     // MARK: - Custom Methods
     
     func updatePlaceholder() {
-        if text.isEmpty || text == placeholderText {
+        if text.isEmpty {
             text = placeholderText
             textColor = placeholderColor
             selectedTextRange = textRange(from: beginningOfDocument, to: beginningOfDocument)

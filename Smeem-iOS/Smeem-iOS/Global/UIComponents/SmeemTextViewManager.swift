@@ -17,7 +17,7 @@ class SmeemTextViewManager: NSObject {
     
     var diaryStrategy: DiaryStrategy?
     weak var diaryViewController: DiaryViewController?
-    weak var textView: PlaceHolderTextView?
+    weak var textView: PlaceholderDisplayable?
     
     // MARK: - Methods
     
