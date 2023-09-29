@@ -11,6 +11,8 @@ final class EditAlarmViewController: UIViewController {
     
     // MARK: - Property
     
+    private let editAlarmManager: MyPageEditManager
+    
     weak var editAlarmDelegate: EditMypageDelegate?
     
     var trainigDayData: String?
@@ -27,7 +29,6 @@ final class EditAlarmViewController: UIViewController {
     
     private let naviView = UIView()
     private let datePickerFooterView = DatePickerFooterView()
-    private let loadingView = LoadingView()
     
     private lazy var backButton: UIButton = {
         let button = UIButton()
@@ -66,6 +67,16 @@ final class EditAlarmViewController: UIViewController {
     
     // MARK: - Life Cycle
     
+    init(editAlarmManager: MyPageEditManager) {
+        self.editAlarmManager = editAlarmManager
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -86,8 +97,7 @@ final class EditAlarmViewController: UIViewController {
     }
     
     @objc func completeButtonDidTap() {
-        self.showLodingView(loadingView: loadingView)
-        editAlarmTimePatchAPI(alarmTime: EditAlarmTime(trainingTime: TrainingTime(day: trainigDayData!,
+        editAlarmPatchAPI(alarmTime: EditAlarmTime(trainingTime: TrainingTime(day: trainigDayData!,
                                                                                   hour: trainingTimeData!.hour,
                                                                                   minute: trainingTimeData!.minute)))
     }
@@ -148,15 +158,20 @@ final class EditAlarmViewController: UIViewController {
     }
 }
 
-extension EditAlarmViewController {
-    private func editAlarmTimePatchAPI(alarmTime: EditAlarmTime) {
-        MyPageAPI.shared.editAlarmTimeAPI(param: alarmTime) { respons in
-            self.hideLodingView(loadingView: self.loadingView)
-            if respons.success == true {
+extension EditAlarmViewController: ViewControllerServiceable {
+    private func editAlarmPatchAPI(alarmTime: EditAlarmTime) {
+        showLoadingView()
+        
+        Task {
+            do {
+                try await editAlarmManager.editAlarmTime(model: alarmTime)
+                
+                hideLoadingView()
                 self.editAlarmDelegate?.editMyPageData()
                 self.navigationController?.popViewController(animated: true)
-            } else {
-                print("학습 목표 API 호출 실패")
+            } catch {
+                guard let error = error as? NetworkError else { return }
+                handlerError(error)
             }
         }
     }

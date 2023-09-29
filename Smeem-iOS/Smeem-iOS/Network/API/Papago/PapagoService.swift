@@ -43,6 +43,6 @@ extension PapagoService: TargetType {
     }
     
     var headers: [String : String]? {
-        return NetworkConstant.papagoHeader
+        return NetworkHeader.papagoHeader
     }
 }

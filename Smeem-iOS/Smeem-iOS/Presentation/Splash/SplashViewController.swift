@@ -11,6 +11,8 @@ final class SplashViewController: UIViewController {
     
     // MARK: - Property
     
+    private let splahManager: SplashManager
+    
     // MARK: - UI Property
     
     private let splashImageView: UIImageView = {
@@ -21,6 +23,16 @@ final class SplashViewController: UIViewController {
     }()
     
     // MARK: - Life Cycle
+
+    init(splahManager: SplashManager) {
+        self.splahManager = splahManager
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,25 +49,23 @@ final class SplashViewController: UIViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             // access 토큰을 가지고 있음
             if UserDefaultsManager.accessToken != "" {
-                AuthAPI.shared.reLoginAPI() { response in
-                    // 토큰 재발급 성공 (refreshToken)
-                    if response.success {
-                        if let accessToken = response.data?.accessToken {
-                            UserDefaultsManager.accessToken = accessToken
-                        }
-                        if let refresToken = response.data?.refreshToken {
-                            UserDefaultsManager.refreshToken = refresToken
-                        }
+                
+                Task {
+                    do {
+                        // 토큰 재발급 성공
+                        let response = try await self.splahManager.relogin()
+                        
+                        UserDefaultsManager.accessToken = response.accessToken
+                        UserDefaultsManager.accessToken = response.refreshToken
                         
                         self.changeRootViewController(HomeViewController())
-                    }
-                    // 토큰 만료(재로그인)
-                    else {
+                    } catch {
+                        // 토큰 재발급이 실패한 경우 (토큰 만료) - 로그아웃
                         self.presentSmeemStartVC()
                     }
                 }
             } else {
-                // 토큰을 가지고 있지 않음
+                // 토큰이 없을 경우
                 self.presentSmeemStartVC()
             }
         }
@@ -77,16 +87,6 @@ final class SplashViewController: UIViewController {
         
         splashImageView.snp.makeConstraints {
             $0.top.trailing.leading.bottom.equalToSuperview()
-        }
-    }
-}
-
-// MARK: - Network
-
-extension SplashViewController {
-    private func reloginAPI() {
-        AuthAPI.shared.reLoginAPI() { response in
-            guard let _ = response.data else { return }
         }
     }
 }
