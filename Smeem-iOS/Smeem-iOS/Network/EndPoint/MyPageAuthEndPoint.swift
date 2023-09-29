@@ -8,7 +8,7 @@
 import Foundation
 
 enum MyPageAuthEndPoint {
-    case resign
+    case deleteUserAccount
     case logout
 }
 
@@ -16,7 +16,7 @@ extension MyPageAuthEndPoint: BaseEndPoint {
     
     var path: String {
         switch self {
-        case .resign:
+        case .deleteUserAccount:
             return URLConstant.loginURL
         case .logout:
             return URLConstant.logoutURL
@@ -25,7 +25,7 @@ extension MyPageAuthEndPoint: BaseEndPoint {
     
     var httpMethod: HttpMethod {
         switch self {
-        case .resign:
+        case .deleteUserAccount:
             return .delete
         case .logout:
             return .post
