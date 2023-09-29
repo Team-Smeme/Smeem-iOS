@@ -125,7 +125,7 @@ final class EditNicknameViewController: UIViewController {
     }
     
     @objc func doneButtonDidTap() {
-        nicknameValidAPI(nickname: nicknameTextField.text ?? "")
+        validateNicknameAPI(nickname: nicknameTextField.text ?? "")
     }
     
     @objc func nicknameDidChange(_ notification: Notification) {
@@ -264,7 +264,7 @@ extension EditNicknameViewController: ViewControllerServiceable {
         }
     }
     
-    private func nicknameValidAPI(nickname: String) {
+    private func validateNicknameAPI(nickname: String) {
         showLoadingView()
         
         Task {

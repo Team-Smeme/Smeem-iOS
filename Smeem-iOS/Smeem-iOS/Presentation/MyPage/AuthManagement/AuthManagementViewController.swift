@@ -120,7 +120,7 @@ final class AuthManagementViewController: UIViewController {
             // 로그아웃 로직
         }
         let delete = UIAlertAction(title: "로그아웃", style: .destructive) { _ in
-            self.logout()
+            self.logoutAPI()
         }
         alert.addAction(cancel)
         alert.addAction(delete)
@@ -136,7 +136,7 @@ final class AuthManagementViewController: UIViewController {
             if UserDefaultsManager.hasKakaoToken! {
                 self.kakaoResignAPI()
             } else {
-                self.resign()
+                self.deleteUserAccountAPI()
             }
         }
         alert.addAction(cancel)
@@ -171,7 +171,7 @@ final class AuthManagementViewController: UIViewController {
             else {
                 print("unlink() success.")
                 // 스밈 회원 탈퇴 API 호출
-                self.resign()
+                self.deleteUserAccountAPI()
             }
         }
     }
@@ -230,12 +230,12 @@ final class AuthManagementViewController: UIViewController {
 }
 
 extension AuthManagementViewController: ViewControllerServiceable {
-    private func resign() {
+    private func deleteUserAccountAPI() {
         showLoadingView()
         
         Task {
             do {
-                try await myPageAuthManager.resign()
+                try await myPageAuthManager.deleteUserAccount()
                 
                 UserDefaultsManager.accessToken = ""
                 UserDefaultsManager.refreshToken = ""
@@ -253,7 +253,7 @@ extension AuthManagementViewController: ViewControllerServiceable {
         }
     }
     
-    private func logout() {
+    private func logoutAPI() {
         showLoadingView()
         
         Task {

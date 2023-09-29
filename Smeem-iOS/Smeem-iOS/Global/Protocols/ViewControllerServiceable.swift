@@ -53,7 +53,7 @@ extension ViewControllerServiceable {
         case .jsonEncodingError:
             showToast(toastType: .errorToast(errorType: .jsonEncodingError))
         case .clientError(message: _):
-            showToast(toastType: .errorToast(errorType: .clinetError))
+            showToast(toastType: .errorToast(errorType: .clientError))
         case .serverError:
             showToast(toastType: .errorToast(errorType: .serverError))
         case .unAuthorizedError:

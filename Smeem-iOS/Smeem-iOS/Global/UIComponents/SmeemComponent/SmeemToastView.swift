@@ -52,7 +52,7 @@ enum ErrorType: String {
     
     case jsonDecodingError = "json Decoding Error"
     
-    case clinetError = "clinet Error"
+    case clientError = "client Error"
     
     case serverError = "server Error"
     

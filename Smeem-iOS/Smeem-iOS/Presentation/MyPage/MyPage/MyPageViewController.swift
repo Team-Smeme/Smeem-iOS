@@ -240,7 +240,7 @@ final class MyPageViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        myPageGetAPI()
+        myPageAPI()
     }
     
     // MARK: - @objc
@@ -263,7 +263,7 @@ final class MyPageViewController: UIViewController {
     
     @objc func pushButtonDidTap(_ sender: UIButton) {
         hasAlarm = !hasAlarm
-        editPushPatchAPI(hasAlarm: hasAlarm)
+        editPushAPI(hasAlarm: hasAlarm)
     }
     
     @objc func badgeImageDidTap() {
@@ -534,7 +534,7 @@ extension MyPageViewController: EditMypageDelegate {
 // MARK: - Extension : Network
 
 extension MyPageViewController: ViewControllerServiceable {
-    private func myPageGetAPI() {
+    private func myPageAPI() {
         showLoadingView()
         Task {
             do {
@@ -548,7 +548,7 @@ extension MyPageViewController: ViewControllerServiceable {
         }
     }
     
-    private func editPushPatchAPI(hasAlarm: Bool) {
+    private func editPushAPI(hasAlarm: Bool) {
         showLoadingView()
         
         Task {

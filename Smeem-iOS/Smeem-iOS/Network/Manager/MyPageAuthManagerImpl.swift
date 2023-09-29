@@ -8,7 +8,7 @@
 import Foundation
 
 protocol MyPageAuthManager {
-    func resign() async throws
+    func deleteUserAccount() async throws
     func logout() async throws
 }
 
@@ -20,7 +20,7 @@ struct MyPageAuthManagerImpl: MyPageAuthManager {
         self.myPageAuthService = myPageAuthService
     }
     
-    func resign() async throws {
+    func deleteUserAccount() async throws {
         guard let _ = try await myPageAuthService.resign() else { return }
     }
     

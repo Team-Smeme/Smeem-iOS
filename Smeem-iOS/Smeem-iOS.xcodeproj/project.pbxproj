@@ -25,7 +25,7 @@
 		3797891C2AAE11D400C61EF4 /* NavigationBarConfigurationBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3797891B2AAE11D400C61EF4 /* NavigationBarConfigurationBuilder.swift */; };
 		37A271642AA6078C001FFC38 /* SmeemNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A271632AA6078C001FFC38 /* SmeemNavigationBar.swift */; };
 		37A574C129FF6E9100312453 /* ColorLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574C029FF6E9100312453 /* ColorLiterals.swift */; };
-		37A574C329FF6E9C00312453 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574C229FF6E9C00312453 /* Image.swift */; };
+		37A574C329FF6E9C00312453 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574C229FF6E9C00312453 /* Constant.swift */; };
 		37A574C529FF6EA800312453 /* FontLiterals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574C429FF6EA800312453 /* FontLiterals.swift */; };
 		37A574C829FF6F1C00312453 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574C729FF6F1C00312453 /* UIView+.swift */; };
 		37A574CA29FF980F00312453 /* UIStackView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574C929FF980F00312453 /* UIStackView+.swift */; };
@@ -175,7 +175,7 @@
 		3797891B2AAE11D400C61EF4 /* NavigationBarConfigurationBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarConfigurationBuilder.swift; sourceTree = "<group>"; };
 		37A271632AA6078C001FFC38 /* SmeemNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmeemNavigationBar.swift; sourceTree = "<group>"; };
 		37A574C029FF6E9100312453 /* ColorLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorLiterals.swift; sourceTree = "<group>"; };
-		37A574C229FF6E9C00312453 /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
+		37A574C229FF6E9C00312453 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		37A574C429FF6EA800312453 /* FontLiterals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontLiterals.swift; sourceTree = "<group>"; };
 		37A574C729FF6F1C00312453 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		37A574C929FF980F00312453 /* UIStackView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+.swift"; sourceTree = "<group>"; };
@@ -825,7 +825,7 @@
 		4AC4B82B2A2F9F5300E147AA /* Constants */ = {
 			isa = PBXGroup;
 			children = (
-				37A574C229FF6E9C00312453 /* Image.swift */,
+				37A574C229FF6E9C00312453 /* Constant.swift */,
 				4AC4B82C2A2F9FE200E147AA /* UserDefaultsManager.swift */,
 			);
 			path = Constants;
@@ -1138,7 +1138,7 @@
 				37A574CC29FF990E00312453 /* UIViewController+.swift in Sources */,
 				4A9E10E42A43468600295D07 /* BaseTargetType.swift in Sources */,
 				4AF9E3F62AC4156000104768 /* NicknameModel.swift in Sources */,
-				37A574C329FF6E9C00312453 /* Image.swift in Sources */,
+				37A574C329FF6E9C00312453 /* Constant.swift in Sources */,
 				4A0123552AAA087D00E09646 /* BaseResponse.swift in Sources */,
 				4AE35E9E2A7FE8CE00465FD5 /* UICollectionViewCell+.swift in Sources */,
 				37DCA67C2A48927400FF8F90 /* PapagoService.swift in Sources */,
