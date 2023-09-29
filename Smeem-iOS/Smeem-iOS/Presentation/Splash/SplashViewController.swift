@@ -42,8 +42,9 @@ final class SplashViewController: UIViewController {
                 do {
                     let appStoreVersion = try await System().latestVersion()!.split(separator: ".").map{$0}
                     let currentProjectVersion = System.appVersion!.split(separator: ".").map{$0}
-
-                    if appStoreVersion[0] < currentProjectVersion[0] {
+                    
+                    // 앱 스토어 버전이 더 높을 경우 업데이트 팝업 띄우기
+                    if currentProjectVersion[0] < appStoreVersion[0] {
                         self.presentUpdatePopup()
                     } else {
                         self.checkToken()
