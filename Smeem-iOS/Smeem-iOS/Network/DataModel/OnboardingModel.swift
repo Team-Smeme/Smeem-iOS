@@ -7,7 +7,7 @@
 
 import Foundation
 
-// MARK: - UserPlan
+// MARK: - UserPlan & trainingTime
 
 struct UserPlanRequest: Codable {
     let target: String
@@ -20,7 +20,7 @@ struct TrainingTime: Codable {
     let hour, minute: Int
 }
 
-// MARK: - Nickname
+// MARK: - Nickname & serviceAccept
 
 struct ServiceAcceptRequest: Codable {
     let username: String
@@ -30,15 +30,3 @@ struct ServiceAcceptRequest: Codable {
 struct ServiceAcceptResponse: Codable {
     let badges: [PopupBadge]
 }
-
-struct NicknameCheckResponse: Codable {
-    let isExist: Bool
-}
-
-//struct NicknameResponse: Codable {
-//    let success: Bool
-//    let message: String
-//    let data: ObjectID?
-//}
-//
-//struct ObjectID: Codable {}

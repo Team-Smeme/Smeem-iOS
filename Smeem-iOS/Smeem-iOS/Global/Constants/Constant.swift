@@ -12,6 +12,11 @@ struct Constant {
 }
 
 extension Constant {
+    struct Screen {
+        static let width = UIScreen.main.bounds.height
+        static let height = UIScreen.main.bounds.height
+    }
+    
     enum Image {
         
         static let icnBack = UIImage(named: "icnBack")

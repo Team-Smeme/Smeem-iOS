@@ -18,7 +18,10 @@ enum AuthType: String {
     case signup
 }
 
-final class BottomSheetViewController: UIViewController, LoginDelegate {
+final class LoginBottomSheetViewController: UIViewController, LoginDelegate {
+    
+    private let loginManager: LoginManager
+    private var loginData: LoginResponse = .init(accessToken: "", refreshToken: "", isRegistered: false, hasPlan: false)
     
     private var hasPlan = false
     private var isRegistered = false
@@ -26,27 +29,27 @@ final class BottomSheetViewController: UIViewController, LoginDelegate {
     
     private var kakaoAccessToken: String? {
         didSet {
-            guard let kakaoAccessToken = self.kakaoAccessToken else {
+            guard let _ = self.kakaoAccessToken else {
                 print("⭐️⭐️⭐️ 언래핑 실패했을 경우 ⭐️⭐️⭐️")
                 return
             }
             
             UserDefaultsManager.socialToken = self.kakaoAccessToken!
             UserDefaultsManager.hasKakaoToken = true
-            self.loginAPI(socialParam: "KAKAO")
+            self.login(socialParam: "KAKAO")
         }
     }
     
     private var appleAccessToken: String? {
         didSet {
-            guard let appleAccessToken = self.appleAccessToken else {
+            guard let _ = self.appleAccessToken else {
                 print("⭐️⭐️⭐️ 언래핑 실패했을 경우 ⭐️⭐️⭐️")
                 return
             }
             
             UserDefaultsManager.socialToken = self.appleAccessToken!
             UserDefaultsManager.hasKakaoToken = false
-            self.loginAPI(socialParam: "APPLE")
+            self.login(socialParam: "APPLE")
         }
     }
 
@@ -62,8 +65,6 @@ final class BottomSheetViewController: UIViewController, LoginDelegate {
     
     // MARK: - UI Property
     
-    private let loadingView = LoadingView()
-    
     private lazy var dimmedView: UIView = {
         let view = UIView()
         view.layer.backgroundColor = UIColor(red: 0.09, green: 0.09, blue: 0.086, alpha: 0.65).cgColor
@@ -78,6 +79,16 @@ final class BottomSheetViewController: UIViewController, LoginDelegate {
     }()
     
     // MARK: - Life Cycle
+    
+    init(loginManager: LoginManager) {
+        self.loginManager = loginManager
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -183,7 +194,7 @@ final class BottomSheetViewController: UIViewController, LoginDelegate {
 
 // MARK: - Apple Login
 
-extension BottomSheetViewController: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
+extension LoginBottomSheetViewController: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
         self.view.window!
     }
@@ -212,58 +223,64 @@ extension BottomSheetViewController: ASAuthorizationControllerDelegate, ASAuthor
 
 // MARK: - Network
 
-extension BottomSheetViewController {
-    private func loginAPI(socialParam: String) {
-        AuthAPI.shared.loginAPI(param: LoginRequest(social: socialParam,
-                                                    fcmToken: UserDefaultsManager.fcmToken)) { response in
-            self.showLodingView(loadingView: self.loadingView)
-            
-            guard let data = response.data else { return }
-            
-            UserDefaultsManager.clientAccessToken = data.accessToken
-            UserDefaultsManager.clientRefreshToken = data.refreshToken
-            
-            switch self.authType {
-            case .login:
-                // hasPlan이라고 가정
+extension LoginBottomSheetViewController: ViewControllerServiceable {
+    private func login(socialParam: String) {
+        Task {
+            do {
+                self.loginData = try await loginManager.login(model: LoginRequest(social: socialParam,
+                                                              fcmToken: UserDefaultsManager.fcmToken))
+                
+                self.showLoadingView()
+                
+                UserDefaultsManager.clientAccessToken = loginData.accessToken
+                UserDefaultsManager.clientRefreshToken = loginData.accessToken
+                
+                switch self.authType {
+                case .login:
+                    if loginData.hasPlan == false {
+                        self.presentOnboardingPlanVC()
+                    } else if loginData.hasPlan == true && loginData.isRegistered == false {
+                        self.presentOnboardingAcceptVC()
+                    } else {
+                        // 삭제했다가 로그인한 유저
+                        UserDefaultsManager.accessToken = loginData.accessToken
+                        UserDefaultsManager.refreshToken = loginData.refreshToken
+                        
+                        self.presentHomeVC()
+                    }
+                case .signup:
+                    if loginData.hasPlan == false || (loginData.hasPlan == true && loginData.isRegistered == false) {
+                        guard let userPlanRequest = self.userPlanRequest else { return }
+                        
+                        // loading
+                        Task {
+                            do {
+                                try await loginManager.userPlan(model: userPlanRequest, accessToken: loginData.accessToken)
+                                self.hideLoadingView()
+                                
+                                UserDefaultsManager.clientAccessToken = loginData.accessToken
 
-                // hasPlan으로 바뀔 예정
-                if data.hasPlan == false {
-                    self.presentOnboardingPlanVC()
-                } else if data.hasPlan == true && data.isRegistered == false {
-                    self.presentOnboardingAcceptVC()
-                } else {
-                    // 삭제했다가 로그인한 유저
-                    UserDefaultsManager.accessToken = data.accessToken
-                    UserDefaultsManager.refreshToken = data.refreshToken
-                    
-                    self.presentHomeVC()
+                                let userNicknameVC = UserNicknameViewController()
+                                self.navigationController?.pushViewController(userNicknameVC, animated: true)
+                                
+                            } catch {
+                                guard let error = error as? NetworkError else { return }
+                                // network error 실패
+                                handlerError(error)
+                            }
+                        }
+                    } else {
+                        // 계정이 있는 유저
+                        UserDefaultsManager.accessToken = loginData.accessToken
+                        UserDefaultsManager.refreshToken = loginData.refreshToken
+                        
+                        self.presentHomeVC()
+                    }
                 }
-            case .signup:
-                if data.hasPlan == false || (data.hasPlan == true && data.isRegistered == false) {
-                    guard let userPlanRequest = self.userPlanRequest else { return }
-                    self.userPlanPatchAPI(userPlan: userPlanRequest, accessToken: data.accessToken)
-                } else {
-                    // 계정이 있는 유저
-                    UserDefaultsManager.accessToken = data.accessToken
-                    UserDefaultsManager.refreshToken = data.refreshToken
-                    
-                    self.presentHomeVC()
-                }
-            }
-        }
-    }
-    
-    private func userPlanPatchAPI(userPlan: UserPlanRequest, accessToken: String) {
-        OnboardingAPI.shared.userPlanPathAPI(param: userPlan, accessToken: accessToken) { response in
-            self.hideLodingView(loadingView: self.loadingView)
-            if response.success == true {
-                UserDefaultsManager.clientAccessToken = accessToken
-
-                let userNicknameVC = UserNicknameViewController()
-                self.navigationController?.pushViewController(userNicknameVC, animated: true)
-            } else {
-                print("학습 목표 API 호출 실패")
+            } catch {
+                // login 실패했을 경우
+                guard let error = error as? NetworkError else { return }
+                self.handlerError(error)
             }
         }
     }

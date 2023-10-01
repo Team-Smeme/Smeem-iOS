@@ -9,6 +9,8 @@ import UIKit
 
 final class EditGoalViewController: UIViewController {
     
+    private let editGoalManager: MyPageEditManager
+    
     var tempTarget = String()
     var planName = String()
     var planWay = String()
@@ -19,7 +21,6 @@ final class EditGoalViewController: UIViewController {
     }
     
     private let navigationBarView = UIView()
-    private let loadingView = LoadingView()
     
     private lazy var backButton: UIButton = {
         let button = UIButton()
@@ -50,6 +51,16 @@ final class EditGoalViewController: UIViewController {
         return button
     }()
     
+    init(editGoalManager: MyPageEditManager) {
+        self.editGoalManager = editGoalManager
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -59,7 +70,6 @@ final class EditGoalViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.showLodingView(loadingView: loadingView)
         detailPlanListGetAPI(tempTarget: tempTarget)
     }
     
@@ -93,8 +103,7 @@ extension EditGoalViewController {
     }
     
     @objc func nextButtonDidTap() {
-        self.showLodingView(loadingView: loadingView)
-        patchGoalAPI(target: tempTarget)
+        editGoalPatchAPI(target: tempTarget)
     }
     
     @objc func responseToSwipeGesture() {
@@ -135,31 +144,41 @@ extension EditGoalViewController {
     }
 }
 
-extension EditGoalViewController {
-    func patchGoalAPI(target: String) {
-        MyPageAPI.shared.changeGoal(param: EditGoalRequest(target: target)) { response in
-            
-            guard let _ = response.data else { return }
-            self.hideLodingView(loadingView: self.loadingView)
-            
-            NotificationCenter.default.post(name: NSNotification.Name("goalData"), object: true)
-            
-            if let navigationController = self.navigationController {
-                let viewControllers = navigationController.viewControllers
-                if viewControllers.count >= 2 {
-                    let viewControllerToPopTo = viewControllers[viewControllers.count - 3] // 해당 인덱스에 있는 뷰 컨트롤러로 돌아가려면 -3로 설정합니다.
-                    navigationController.popToViewController(viewControllerToPopTo, animated: true)
+extension EditGoalViewController: ViewControllerServiceable {
+    private func editGoalPatchAPI(target: String) {
+        showLoadingView()
+        
+        Task {
+            do {
+                try await editGoalManager.editGoal(model: EditGoalRequest(target: target))
+                
+                hideLoadingView()
+                
+                NotificationCenter.default.post(name: NSNotification.Name("goalData"), object: true)
+                
+                if let navigationController = self.navigationController {
+                    let viewControllers = navigationController.viewControllers
+                    if viewControllers.count >= 2 {
+                        let viewControllerToPopTo = viewControllers[viewControllers.count - 3] // 해당 인덱스에 있는 뷰 컨트롤러로 돌아가려면 -3로 설정합니다.
+                        navigationController.popToViewController(viewControllerToPopTo, animated: true)
+                    }
                 }
+            } catch {
+                guard let error = error as? NetworkError else { return }
+                handlerError(error)
             }
         }
     }
+}
+
+extension EditGoalViewController {
     
     func detailPlanListGetAPI(tempTarget: String) {
-        self.showLodingView(loadingView: loadingView)
+        showLoadingView()
         OnboardingAPI.shared.detailPlanList(param: tempTarget) { response in
             guard let data = response.data else { return }
             
-            self.hideLodingView(loadingView: self.loadingView)
+            self.hideLoadingView()
             
             self.planName = data.name
             self.planWay = data.way
