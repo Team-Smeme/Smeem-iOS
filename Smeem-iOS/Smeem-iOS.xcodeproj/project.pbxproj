@@ -13,7 +13,6 @@
 		371E94132A87A8660098280F /* GoalCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371E94122A87A8660098280F /* GoalCollectionViewDataSource.swift */; };
 		371E94162A87B83D0098280F /* NextButtonDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371E94152A87B83D0098280F /* NextButtonDelegate.swift */; };
 		371E94192A87DA960098280F /* EditGoalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371E94182A87DA960098280F /* EditGoalViewController.swift */; };
-		3728B8D12A2CFE0B00EF4CF8 /* DiaryStrategies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3728B8D02A2CFE0B00EF4CF8 /* DiaryStrategies.swift */; };
 		3728B8D32A2CFED300EF4CF8 /* ForeignDiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3728B8D22A2CFED300EF4CF8 /* ForeignDiaryViewController.swift */; };
 		3728B8D52A2CFF2C00EF4CF8 /* StepOneKoreanDiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3728B8D42A2CFF2C00EF4CF8 /* StepOneKoreanDiaryViewController.swift */; };
 		3728B8D72A2CFF3A00EF4CF8 /* StepTwoKoreanDiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3728B8D62A2CFF3A00EF4CF8 /* StepTwoKoreanDiaryViewController.swift */; };
@@ -167,7 +166,6 @@
 		371E94122A87A8660098280F /* GoalCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalCollectionViewDataSource.swift; sourceTree = "<group>"; };
 		371E94152A87B83D0098280F /* NextButtonDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextButtonDelegate.swift; sourceTree = "<group>"; };
 		371E94182A87DA960098280F /* EditGoalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditGoalViewController.swift; sourceTree = "<group>"; };
-		3728B8D02A2CFE0B00EF4CF8 /* DiaryStrategies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryStrategies.swift; sourceTree = "<group>"; };
 		3728B8D22A2CFED300EF4CF8 /* ForeignDiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForeignDiaryViewController.swift; sourceTree = "<group>"; };
 		3728B8D42A2CFF2C00EF4CF8 /* StepOneKoreanDiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepOneKoreanDiaryViewController.swift; sourceTree = "<group>"; };
 		3728B8D62A2CFF3A00EF4CF8 /* StepTwoKoreanDiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepTwoKoreanDiaryViewController.swift; sourceTree = "<group>"; };
@@ -491,7 +489,6 @@
 		37CD0DB32A1DEE64001F03E7 /* ForeignDiary */ = {
 			isa = PBXGroup;
 			children = (
-				3728B8D02A2CFE0B00EF4CF8 /* DiaryStrategies.swift */,
 				374FAF802A2CACCF00237A1A /* DiaryViewController.swift */,
 				3728B8D22A2CFED300EF4CF8 /* ForeignDiaryViewController.swift */,
 				3728B8D42A2CFF2C00EF4CF8 /* StepOneKoreanDiaryViewController.swift */,
@@ -1239,7 +1236,6 @@
 				37DCA65A2A47598700FF8F90 /* RandomSubjectService.swift in Sources */,
 				4A01235F2AAA2C1500E09646 /* SmeemLoadingView.swift in Sources */,
 				4A0123592AAA0DEC00E09646 /* NetworkRequest.swift in Sources */,
-				3728B8D12A2CFE0B00EF4CF8 /* DiaryStrategies.swift in Sources */,
 				4AF1D2B02AC08090004C3AB7 /* Encodable+.swift in Sources */,
 				4AB6FEBA2AC02CAF0060E8CA /* SplashManagerImpl.swift in Sources */,
 				4AB8ED802AC2B00C00177106 /* MyPageEditEndPoint.swift in Sources */,

@@ -9,15 +9,9 @@ import UIKit
 
 import SnapKit
 
-protocol DiaryStrategy {
-    
-}
-
 class DiaryViewController: UIViewController {
     
     // MARK: - Property
-    
-    var diaryStrategy: DiaryStrategy?
     
     private weak var delegate: UITextViewDelegate?
     
@@ -63,31 +57,11 @@ class DiaryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        configureDiaryStrategy()
         setupUI()
         setDelegate()
 //        checkTutorial()
         
         self.keyboardHandler = KeyboardFollowingLayoutHandler(targetView: self.inputTextView, bottomView: self.bottomView)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        
-        if let currentChildViewController = children.first {
-            switch currentChildViewController {
-            case is DiaryViewController:
-                print("DiaryViewController")
-            case is ForeignDiaryViewController:
-                //                randomSubjectToolTip?.removeFromSuperview()
-                print("ForeignDiaryViewController")
-            case is StepOneKoreanDiaryViewController:
-                print("StepOneKoreanDiaryViewController")
-            case is StepTwoKoreanDiaryViewController:
-                print("StepTwoKoreanDiaryViewController")
-            default:
-                break
-            }
-        }
     }
     
     deinit {
@@ -150,16 +124,6 @@ class DiaryViewController: UIViewController {
     
     private func setDelegate() {
         randomSubjectView.delegate = self
-    }
-    
-    private func configureDiaryStrategy() {
-        if self is ForeignDiaryViewController {
-            diaryStrategy = ForeignDiaryStrategy()
-        } else if self is StepOneKoreanDiaryViewController {
-            diaryStrategy = StepOneKoreanDiaryStrategy()
-        } else if self is StepTwoKoreanDiaryViewController {
-            diaryStrategy = StepTwoKoreanDiaryStrategy()
-        }
     }
     
     private func setBackgroundColor() {

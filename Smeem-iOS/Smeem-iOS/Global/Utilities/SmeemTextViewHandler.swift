@@ -15,7 +15,6 @@ class SmeemTextViewHandler: NSObject {
     
     static let shared = SmeemTextViewHandler()
     
-    var diaryStrategy: DiaryStrategy?
     weak var diaryViewController: DiaryViewController?
     weak var textView: PlaceholderDisplayable?
     
@@ -29,15 +28,15 @@ class SmeemTextViewHandler: NSObject {
 // MARK: - Text Validation
 
 extension SmeemTextViewHandler {
-    func validateText(_ text: String) -> Bool {
-        guard let strategy = diaryStrategy else { return false }
-        
-        if let koreanStrategy = strategy as? StepOneKoreanDiaryStrategy {
-            return containsKoreanCharacters(with: text)
-        } else {
-            return containsEnglishCharacters(with: text)
-        }
-    }
+//    func validateText(_ text: String) -> Bool {
+//        guard let strategy = diaryStrategy else { return false }
+//
+//        if let koreanStrategy = strategy as? StepOneKoreanDiaryStrategy {
+//            return containsKoreanCharacters(with: text)
+//        } else {
+//            return containsEnglishCharacters(with: text)
+//        }
+//    }
     
     func containsEnglishCharacters(with text: String) -> Bool {
         return text.getArrayAfterRegex(regex: "[a-zA-z]").count > 0
