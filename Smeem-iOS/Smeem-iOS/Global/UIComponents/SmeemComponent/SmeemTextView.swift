@@ -38,11 +38,7 @@ class SmeemTextView: UITextView, PlaceholderDisplayable {
                      textViewManager manager: SmeemTextViewManager? = nil) {
         self.init(frame: .zero, textContainer: nil)
         
-        configureTextView(for: type)
-        
-        if case .editable(_) = type {
-            configurePlaceholder(color: color , text: placeholder ?? "")
-        }
+        configureTextView(for: type, color: color, text: placeholderText ?? "")
         
         commonInit()
         updatePlaceholder()
@@ -64,17 +60,15 @@ extension SmeemTextView {
         self.configureTypingAttributes()
     }
     
-    private func configurePlaceholder(color: UIColor?, text: String?) {
-       self.placeholderColor = color
-       self.placeholderText = text
-    }
-    
-    private func configureTextView(for type: SmeemTextViewType) {
+    private func configureTextView(for type: SmeemTextViewType, color: UIColor?, text: String?) {
         switch type {
         case .display:
             self.placeholderText = nil
             self.placeholderColor = nil
         case .editable(let manager):
+            self.placeholderColor = color
+            self.placeholderText = text
+            
             self.delegate = manager
             manager.textView = self
         }
