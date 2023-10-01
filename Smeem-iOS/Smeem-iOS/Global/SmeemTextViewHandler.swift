@@ -9,11 +9,11 @@ import UIKit
 
 // MARK: - SmeemTextViewManager
 
-class SmeemTextViewManager: NSObject {
+class SmeemTextViewHandler: NSObject {
     
     // MARK: Properties
     
-    static let shared = SmeemTextViewManager()
+    static let shared = SmeemTextViewHandler()
     
     var diaryStrategy: DiaryStrategy?
     weak var diaryViewController: DiaryViewController?
@@ -28,7 +28,7 @@ class SmeemTextViewManager: NSObject {
 
 // MARK: - Text Validation
 
-extension SmeemTextViewManager {
+extension SmeemTextViewHandler {
     func validateText(_ text: String) -> Bool {
         guard let strategy = diaryStrategy else { return false }
         
@@ -50,7 +50,7 @@ extension SmeemTextViewManager {
 
 // MARK: - UITextViewDelegate
 
-extension SmeemTextViewManager: UITextViewDelegate {
+extension SmeemTextViewHandler: UITextViewDelegate {
     
     func textViewDidChange(_ textView: UITextView) {
         guard let placeholderTextView = textView as? SmeemTextView  else { return }

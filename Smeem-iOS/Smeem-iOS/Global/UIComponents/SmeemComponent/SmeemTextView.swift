@@ -14,7 +14,7 @@ protocol PlaceholderDisplayable: AnyObject {
 
 enum SmeemTextViewType {
     case display
-    case editable(SmeemTextViewManager)
+    case editable(SmeemTextViewHandler)
 }
 
 // MARK: - SmeemTextView
@@ -35,7 +35,7 @@ class SmeemTextView: UITextView, PlaceholderDisplayable {
     convenience init(type: SmeemTextViewType,
                      placeholderColor color: UIColor = .gray300,
                      placeholderText placeholder: String?,
-                     textViewManager manager: SmeemTextViewManager? = nil) {
+                     textViewManager manager: SmeemTextViewHandler? = nil) {
         self.init(frame: .zero, textContainer: nil)
         
         configureTextView(for: type, color: color, text: placeholderText ?? "")

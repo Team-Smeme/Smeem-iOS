@@ -44,7 +44,7 @@ class DiaryViewController: UIViewController {
     
     let navigationView = SmeemNavigationBar()
     
-    let inputTextView = SmeemTextView(type: .editable(SmeemTextViewManager.shared), placeholderText: "일기를 작성해주세요 :)")
+    let inputTextView = SmeemTextView(type: .editable(SmeemTextViewHandler.shared), placeholderText: "일기를 작성해주세요 :)")
     
     let bottomView = DiaryBottomView(viewType: .withHint)
     
