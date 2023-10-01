@@ -9,8 +9,6 @@ import UIKit
 
 final class ForeignDiaryViewController: DiaryViewController {
     
-    // MARK: - Property
-    
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
