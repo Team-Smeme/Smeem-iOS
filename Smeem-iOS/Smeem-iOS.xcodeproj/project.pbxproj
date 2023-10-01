@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		371107DA2AC99099007A4AC2 /* KeyboardFollowingLayoutHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371107D92AC99099007A4AC2 /* KeyboardFollowingLayoutHandler.swift */; };
 		371E940C2A87A1E00098280F /* GoalOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371E940B2A87A1E00098280F /* GoalOnboardingView.swift */; };
 		371E940E2A87A2030098280F /* GoalEditMypageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371E940D2A87A2030098280F /* GoalEditMypageView.swift */; };
 		371E94132A87A8660098280F /* GoalCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371E94122A87A8660098280F /* GoalCollectionViewDataSource.swift */; };
@@ -160,6 +161,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		371107D92AC99099007A4AC2 /* KeyboardFollowingLayoutHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardFollowingLayoutHandler.swift; sourceTree = "<group>"; };
 		371E940B2A87A1E00098280F /* GoalOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalOnboardingView.swift; sourceTree = "<group>"; };
 		371E940D2A87A2030098280F /* GoalEditMypageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalEditMypageView.swift; sourceTree = "<group>"; };
 		371E94122A87A8660098280F /* GoalCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalCollectionViewDataSource.swift; sourceTree = "<group>"; };
@@ -328,6 +330,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		371107D82AC9905B007A4AC2 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				374F828B2AC327A200C128B9 /* SmeemTextViewHandler.swift */,
+				371107D92AC99099007A4AC2 /* KeyboardFollowingLayoutHandler.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
 		371E940F2A87A7B10098280F /* DataSource */ = {
 			isa = PBXGroup;
 			children = (
@@ -367,9 +378,9 @@
 		37A574B429FE203100312453 /* Global */ = {
 			isa = PBXGroup;
 			children = (
+				371107D82AC9905B007A4AC2 /* Utilities */,
 				37A574B629FE207C00312453 /* Extensions */,
 				37A574B729FE208A00312453 /* UIComponents */,
-				374F828B2AC327A200C128B9 /* SmeemTextViewHandler.swift */,
 				37A574B829FE209900312453 /* Literals */,
 				37A574B929FE209F00312453 /* Resources */,
 				4AC4B82B2A2F9F5300E147AA /* Constants */,
@@ -1140,6 +1151,7 @@
 				37A574C529FF6EA800312453 /* FontLiterals.swift in Sources */,
 				379789052AAC706800C61EF4 /* SmeemNavigationFactory.swift in Sources */,
 				37DCA65D2A475B5100FF8F90 /* RandomSubjectResponse.swift in Sources */,
+				371107DA2AC99099007A4AC2 /* KeyboardFollowingLayoutHandler.swift in Sources */,
 				4A9FAB452A4C3D1200C40D5A /* BadgeListViewController.swift in Sources */,
 				4AD923E92A0692C600FF5E27 /* LoginBottomSheetViewController.swift in Sources */,
 				6F294A462A2617D500856CC8 /* HowLearningView.swift in Sources */,

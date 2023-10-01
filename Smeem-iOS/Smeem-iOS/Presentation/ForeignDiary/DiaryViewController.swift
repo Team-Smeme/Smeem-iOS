@@ -39,6 +39,7 @@ class DiaryViewController: UIViewController {
     var keyboardHeight: CGFloat = 0.0
     var rightButtonFlag = false
     var isInitialInput = true
+    var keyboardHandler: KeyboardFollowingLayoutHandler?
     
     // MARK: - UI Property
     
@@ -67,10 +68,11 @@ class DiaryViewController: UIViewController {
         setupUI()
         setDelegate()
 //        checkTutorial()
+        
+        self.keyboardHandler = KeyboardFollowingLayoutHandler(targetView: self.inputTextView, bottomView: self.bottomView)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        keyboardRemoveObserver()
         
         if let currentChildViewController = children.first {
             switch currentChildViewController {
@@ -92,7 +94,7 @@ class DiaryViewController: UIViewController {
     deinit {
         randomSubjectView.removeFromSuperview()
         smeemToastView?.removeFromSuperview()
-        NotificationCenter.default.removeObserver(self)
+        keyboardHandler = nil
     }
     
     // MARK: - @objc
