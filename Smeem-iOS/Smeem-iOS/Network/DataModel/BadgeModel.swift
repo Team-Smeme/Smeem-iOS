@@ -1,14 +1,13 @@
 //
-//  BadgeListModel.swift
+//  BadgeModel.swift
 //  Smeem-iOS
 //
 //  Created by 황찬미 on 2023/06/28.
 //
 
 import Foundation
-import UIKit
 
-// MARK: - Dummy
+// MARK: - Badge Dummy
 
 struct DummyModel {
     func dummyBadgeData() -> [[(String, String)]] {
@@ -21,17 +20,43 @@ struct DummyModel {
     }
 }
 
-// MARK: BadgeListResponse
+// MARK: BadgeListResponse (myPage)
 
 struct BadgeListResponse: Codable {
-    let badges: [BadgesListData]
+    let badges: [BadgesListArray]
 }
 
-struct BadgesListData: Codable {
+struct BadgesListArray: Codable {
     let id: Int
     let name, type: String
     let imageURL: String
     
+    enum CodingKeys: String, CodingKey {
+        case id, name, type
+        case imageURL = "imageUrl"
+    }
+}
+
+extension BadgesListArray {
+    static let empty = [BadgesListArray(id: 0, name: "", type: "", imageURL: "")]
+}
+
+// MARK: Badges (onboarding, diary -> home)
+
+struct Badges: Codable {
+    let id: Int
+    let name: String
+    let type: String
+    let imageUrl: String
+}
+
+// MARK: Badge (myPage)
+
+struct Badge: Codable {
+    let id: Int
+    let name, type: String
+    let imageURL: String
+
     enum CodingKeys: String, CodingKey {
         case id, name, type
         case imageURL = "imageUrl"

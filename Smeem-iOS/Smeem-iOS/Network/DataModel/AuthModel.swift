@@ -7,6 +7,8 @@
 
 import Foundation
 
+// MARK: - Login
+
 struct LoginRequest: Codable {
     let social: String
     let fcmToken: String
@@ -19,12 +21,11 @@ struct LoginResponse: Codable {
     let hasPlan: Bool
 }
 
-struct Badges: Codable {
-    let id: Int
-    let name: String
-    let type: String
-    let imageUrl: String
+extension LoginResponse {
+    static let empty = LoginResponse(accessToken: "", refreshToken: "", isRegistered: false, hasPlan: false)
 }
+
+// MARK - ReLogin
 
 struct ReLoginResponse: Codable {
     let accessToken: String

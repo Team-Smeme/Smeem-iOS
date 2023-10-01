@@ -17,6 +17,9 @@ final class EditNicknameViewController: UIViewController {
     
     // MARK: - Property
     
+    private let editNicknameManager: MyPageEditManager
+    private let nicknameValidManager: NicknameValidManager
+    
     weak var editNicknameDelegate: EditMypageDelegate?
     
     var nickName = String()
@@ -87,6 +90,17 @@ final class EditNicknameViewController: UIViewController {
     
     // MARK: - Life Cycle
     
+    init(editNicknameManager: MyPageEditManager, nicknameValidManager: NicknameValidManager) {
+        self.editNicknameManager = editNicknameManager
+        self.nicknameValidManager = nicknameValidManager
+        
+        super.init(nibName: nil , bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -111,8 +125,7 @@ final class EditNicknameViewController: UIViewController {
     }
     
     @objc func doneButtonDidTap() {
-        self.showLodingView(loadingView: self.loadingView)
-        checkNinknameAPI(nickname: nicknameTextField.text ?? "")
+        validateNicknameAPI(nickname: nicknameTextField.text ?? "")
     }
     
     @objc func nicknameDidChange(_ notification: Notification) {
@@ -235,34 +248,46 @@ extension EditNicknameViewController: UITextFieldDelegate {
 
 // MARK: - Extension : Network
 
-extension EditNicknameViewController {
-    private func nicknamePatchAPI(nickname: String) {
-        MyPageAPI.shared.changeMyNickName(request: EditNicknameRequest(username: nickname)) { response in
-            guard let _ = response?.data else { return }
-            self.hideLodingView(loadingView: self.loadingView)
-            self.editNicknameDelegate?.editMyPageData()
-            self.navigationController?.popViewController(animated: true)
+extension EditNicknameViewController: ViewControllerServiceable {
+    private func editNicknameAPI(nickname: String) {
+        showLoadingView()
+        Task {
+            do {
+                try await editNicknameManager.editNickname(model: EditNicknameRequest(username: nickname))
+                hideLoadingView()
+                self.editNicknameDelegate?.editMyPageData()
+                self.navigationController?.popViewController(animated: true)
+            } catch {
+                guard let error = error as? NetworkError else { return }
+                handlerError(error)
+            }
         }
     }
     
-    private func checkNinknameAPI(nickname: String) {
-        MyPageAPI.shared.checkNinknameAPI(param: nickname) { response in
-            guard let data = response?.data else { return }
-            
-            self.hideLodingView(loadingView: self.loadingView)
-            self.isExistNinkname = data.isExist
-            
-            if self.isExistNinkname {
-                self.doubleCheckLabel.isHidden = false
-                self.doneButton.smeemButtonType = .notEnabled
-            } else {
-                self.doubleCheckLabel.isHidden = true
-                self.doneButton.smeemButtonType = .enabled
-            }
-            
-            if !self.isExistNinkname {
-                self.showLodingView(loadingView: self.loadingView)
-                self.nicknamePatchAPI(nickname: nickname)
+    private func validateNicknameAPI(nickname: String) {
+        showLoadingView()
+        
+        Task {
+            do {
+                let isExistNickname = try await nicknameValidManager.nicknameValid(param: nickname)
+                
+                hideLoadingView()
+                
+                if isExistNickname {
+                    self.doubleCheckLabel.isHidden = false
+                    self.doneButton.smeemButtonType = .notEnabled
+                } else {
+                    self.doubleCheckLabel.isHidden = true
+                    self.doneButton.smeemButtonType = .enabled
+                }
+                
+                if !isExistNickname {
+                    showLoadingView()
+                    editNicknameAPI(nickname: nickname)
+                }
+            } catch {
+                guard let error = error as? NetworkError else { return }
+                handlerError(error)
             }
         }
     }

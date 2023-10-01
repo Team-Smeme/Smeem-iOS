@@ -14,6 +14,8 @@ class BadgeListViewController: UIViewController {
     
     // MARK: - Property
     
+    private let myPageManager: MyPageManager
+    
     private var badgeHeaderData = [(name: String(), imageURL: String())]
     private var badgeListData = Array(repeating: Array(repeating: (name: String(), imageURL: String()), count: 0), count: 3)
     private var totalBadgeData = Array(repeating: Array(repeating: (name: String(), imageURL: String()), count: 4), count: 3)
@@ -22,7 +24,6 @@ class BadgeListViewController: UIViewController {
     // MARK: - UI Property
     
     private let headerContainerView = UIView()
-    private let loadingView = LoadingView()
     
     private lazy var cancelButton: UIButton = {
         let button = UIButton()
@@ -67,6 +68,16 @@ class BadgeListViewController: UIViewController {
 
     // MARK: - Life Cycle
     
+    init(myPageManager: MyPageManager) {
+        self.myPageManager = myPageManager
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -75,11 +86,11 @@ class BadgeListViewController: UIViewController {
         hiddenNavigationBar()
         setDelegate()
         setRegister()
-        badgeListGetAPI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.showLodingView(loadingView: loadingView)
+        
+        getBadgeList()
     }
 
     
@@ -250,29 +261,35 @@ extension BadgeListViewController: UITableViewDataSource {
 
 // MARK: - Network
 
-extension BadgeListViewController {
-    private func badgeListGetAPI() {
-        MyPageAPI.shared.badgeListAPI() { response in
-            guard let badges = response?.data?.badges else { return }
-            
-            self.hideLodingView(loadingView: self.loadingView)
-            
-            // 섹션에 따라 배열 데이터 담는 로직
-            for badge in badges {
-                if badge.type == "EVENT" {
-                    self.badgeHeaderData = [(badge.name, badge.imageURL)]
-                } else if badge.type == "COUNTING" {
-                    self.badgeListData[0].append((name: badge.name, imageURL: badge.imageURL))
-                } else if badge.type == "COMBO" {
-                    self.badgeListData[1].append((name: badge.name, imageURL: badge.imageURL))
-                } else {
-                    self.badgeListData[2].append((name: badge.name, imageURL: badge.imageURL))
+extension BadgeListViewController: ViewControllerServiceable {
+    private func getBadgeList() {
+        showLoadingView()
+        
+        Task {
+            do {
+                let badges = try await myPageManager.getBadgeList()
+                
+                for badge in badges {
+                    if badge.type == "EVENT" {
+                        self.badgeHeaderData = [(badge.name, badge.imageURL)]
+                    } else if badge.type == "COUNTING" {
+                        self.badgeListData[0].append((name: badge.name, imageURL: badge.imageURL))
+                    } else if badge.type == "COMBO" {
+                        self.badgeListData[1].append((name: badge.name, imageURL: badge.imageURL))
+                    } else {
+                        self.badgeListData[2].append((name: badge.name, imageURL: badge.imageURL))
+                    }
                 }
+                
+                self.setHeaderViewData()
+                self.setBadgeData()
+                self.badgeListTableView.reloadData()
+                
+                hideLoadingView()
+            } catch {
+                guard let error = error as? NetworkError else { return }
+                handlerError(error)
             }
-            
-            self.setHeaderViewData()
-            self.setBadgeData()
-            self.badgeListTableView.reloadData()
         }
     }
 }

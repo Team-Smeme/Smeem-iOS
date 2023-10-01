@@ -46,6 +46,18 @@ enum ErrorType: String {
     /// 데이터를 불러올 수 없어요 :(
     case loadDataError = "데이터를 불러올 수 없어요 :("
     
+    case urlEncodingError = "url Encoding Error"
+    
+    case jsonEncodingError = "json Encoding Error"
+    
+    case jsonDecodingError = "json Decoding Error"
+    
+    case clientError = "client Error"
+    
+    case serverError = "server Error"
+    
+    case unAuthorizedError = "unAuthorizedError"
+    
     var displayText: String {
         return self.rawValue
     }

@@ -128,7 +128,7 @@ extension UIViewController {
     }
     
     func presentOnboardingAcceptVC() {
-        let bottomSheetVC = BottomSheetViewController()
+        let bottomSheetVC = LoginBottomSheetViewController(loginManager: LoginManagerImpl(loginService: LoginServiceImpl(requestable: RequestImpl())))
         let onboardingAcceptVC = UserNicknameViewController()
         onboardingAcceptVC.userPlanRequest = bottomSheetVC.userPlanRequest
         let _ = UINavigationController(rootViewController: onboardingAcceptVC)

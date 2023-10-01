@@ -85,7 +85,7 @@ extension GoalViewController: NextButtonDelegate {
             howOnboardingVC.tempTarget = selectedGoalLabel
             self.navigationController?.pushViewController(howOnboardingVC, animated: true)
         case .myPage:
-            let howOnboardingVC = EditGoalViewController()
+            let howOnboardingVC = EditGoalViewController(editGoalManager: MyPageEditManagerImpl(myPageEditService: MyPageEditServiceImpl(requestable: RequestImpl())))
             howOnboardingVC.tempTarget = selectedGoalLabel
             self.navigationController?.pushViewController(howOnboardingVC, animated: true)
         }
