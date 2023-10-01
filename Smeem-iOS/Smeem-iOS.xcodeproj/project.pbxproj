@@ -18,6 +18,7 @@
 		3728B8D72A2CFF3A00EF4CF8 /* StepTwoKoreanDiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3728B8D62A2CFF3A00EF4CF8 /* StepTwoKoreanDiaryViewController.swift */; };
 		373E38592A2F889500DF96F0 /* DiaryDetailRandomSubjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373E38582A2F889500DF96F0 /* DiaryDetailRandomSubjectView.swift */; };
 		374F828C2AC327A200C128B9 /* SmeemTextViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374F828B2AC327A200C128B9 /* SmeemTextViewManager.swift */; };
+		374F828E2AC5DFFE00C128B9 /* DiaryBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374F828D2AC5DFFE00C128B9 /* DiaryBottomView.swift */; };
 		374FAF812A2CACCF00237A1A /* DiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374FAF802A2CACCF00237A1A /* DiaryViewController.swift */; };
 		3761116C2A278D0E0095EC5A /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3761116B2A278D0E0095EC5A /* String+.swift */; };
 		379789032AAC705B00C61EF4 /* NavigationBarActionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379789022AAC705B00C61EF4 /* NavigationBarActionDelegate.swift */; };
@@ -170,6 +171,7 @@
 		3728B8D62A2CFF3A00EF4CF8 /* StepTwoKoreanDiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepTwoKoreanDiaryViewController.swift; sourceTree = "<group>"; };
 		373E38582A2F889500DF96F0 /* DiaryDetailRandomSubjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryDetailRandomSubjectView.swift; sourceTree = "<group>"; };
 		374F828B2AC327A200C128B9 /* SmeemTextViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmeemTextViewManager.swift; sourceTree = "<group>"; };
+		374F828D2AC5DFFE00C128B9 /* DiaryBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryBottomView.swift; sourceTree = "<group>"; };
 		374FAF802A2CACCF00237A1A /* DiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryViewController.swift; sourceTree = "<group>"; };
 		3761116B2A278D0E0095EC5A /* String+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		379789022AAC705B00C61EF4 /* NavigationBarActionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarActionDelegate.swift; sourceTree = "<group>"; };
@@ -367,6 +369,7 @@
 			children = (
 				37A574B629FE207C00312453 /* Extensions */,
 				37A574B729FE208A00312453 /* UIComponents */,
+				374F828B2AC327A200C128B9 /* SmeemTextViewManager.swift */,
 				37A574B829FE209900312453 /* Literals */,
 				37A574B929FE209F00312453 /* Resources */,
 				4AC4B82B2A2F9F5300E147AA /* Constants */,
@@ -417,7 +420,6 @@
 				4A1EE9542A4DFB76007BFEF3 /* Onboarding */,
 				4A1EE9532A4DFB42007BFEF3 /* Diary */,
 				4A3F2E952A0ABB9C00F6AC60 /* Alarm */,
-				374F828B2AC327A200C128B9 /* SmeemTextViewManager.swift */,
 			);
 			path = UIComponents;
 			sourceTree = "<group>";
@@ -650,6 +652,7 @@
 				37A574E72A02424F00312453 /* RandomSubjectView.swift */,
 				373E38582A2F889500DF96F0 /* DiaryDetailRandomSubjectView.swift */,
 				37A574DF2A00CDCD00312453 /* SeparationLine.swift */,
+				374F828D2AC5DFFE00C128B9 /* DiaryBottomView.swift */,
 			);
 			path = Diary;
 			sourceTree = "<group>";
@@ -1155,6 +1158,7 @@
 				4A01235B2AAA178500E09646 /* HttpMethod.swift in Sources */,
 				6F31802F2A24D1DB00089870 /* CalendarCell.swift in Sources */,
 				6FE1298A2A4982DA005536C4 /* HomeAPI.swift in Sources */,
+				374F828E2AC5DFFE00C128B9 /* DiaryBottomView.swift in Sources */,
 				4A3F2E972A0ABBAA00F6AC60 /* AlarmCollectionViewCell.swift in Sources */,
 				379789032AAC705B00C61EF4 /* NavigationBarActionDelegate.swift in Sources */,
 				4AE35E9C2A7FDC4200465FD5 /* ServiceAcceptTotalCollectionViewCell.swift in Sources */,

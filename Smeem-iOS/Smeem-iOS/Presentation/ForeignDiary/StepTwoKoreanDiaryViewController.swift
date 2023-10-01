@@ -31,92 +31,82 @@ final class StepTwoKoreanDiaryViewController: DiaryViewController {
     
     private let thickLine = SeparationLine(height: .thick)
     
-    private lazy var hintButton: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .clear
-        button.addTarget(self, action: #selector(hintButtondidTap), for: .touchUpInside)
-        button.setImage(Constant.Image.btnTranslateInactive, for: .normal)
-        return button
-    }()
+//    private var tutorialImageView: UIImageView? = {
+//        let imageView = UIImageView()
+//        imageView.image = Constant.Image.tutorialDiaryStepTwo
+//        return imageView
+//    }()
     
-    private var tutorialImageView: UIImageView? = {
-        let imageView = UIImageView()
-        imageView.image = Constant.Image.tutorialDiaryStepTwo
-        return imageView
-    }()
-    
-    private lazy var dismissButton: UIButton? = {
-        let button = UIButton()
-        button.addTarget(self, action: #selector(dismissButtonDidTap), for: .touchUpInside)
-        return button
-    }()
+//    private lazy var dismissButton: UIButton? = {
+//        let button = UIButton()
+////        button.addTarget(self, action: #selector(dismissButtonDidTap), for: .touchUpInside)
+//        return button
+//    }()
     
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        handleRightNavitationButton()
+//        handleRightNavitationButton()
         setLayout()
         checkTutorial()
     }
     
     // MARK: - @objc
     
-    override func leftNavigationButtonDidTap() {
-        self.navigationController?.popViewController(animated: true)
-    }
+//    override func leftNavigationButtonDidTap() {
+//        self.navigationController?.popViewController(animated: true)
+//    }
     
-    override func rightNavigationButtonDidTap() {
-        if rightNavigationButton.titleLabel?.textColor == .point {
-            self.hideLodingView(loadingView: self.loadingView)
-            postDiaryAPI()
-        } else {
-            showToastIfNeeded(toastType: .defaultToast(bodyType: .regEx))
-        }
-    }
+//    override func rightNavigationButtonDidTap() {
+//        if rightNavigationButton.titleLabel?.textColor == .point {
+//            self.hideLodingView(loadingView: self.loadingView)
+//            postDiaryAPI()
+//        } else {
+//            showToastIfNeeded(toastType: .defaultToast(bodyType: .regEx))
+//        }
+//    }
     
-    @objc override func dismissButtonDidTap() {
-        tutorialImageView?.removeFromSuperview()
-        dismissButton?.removeFromSuperview()
-    }
+//    @objc override func dismissButtonDidTap() {
+//        tutorialImageView?.removeFromSuperview()
+//        dismissButton?.removeFromSuperview()
+//    }
     
-    @objc func hintButtondidTap() {
-        isHintShowed.toggle()
-        if isHintShowed {
-            postPapagoApi(diaryText: hintTextView.text)
-            hintButton.setImage(Constant.Image.btnTranslateActive, for: .normal)
-        } else {
-            hintTextView.text = hintText
-            hintButton.setImage(Constant.Image.btnTranslateInactive, for: .normal)
-        }
-        
-    }
+//    @objc func hintButtondidTap() {
+//        isHintShowed.toggle()
+//        if isHintShowed {
+//            postPapagoApi(diaryText: hintTextView.text)
+//            hintButton.setImage(Constant.Image.btnTranslateActive, for: .normal)
+//        } else {
+//            hintTextView.text = hintText
+//            hintButton.setImage(Constant.Image.btnTranslateInactive, for: .normal)
+//        }
+//    }
     
-    override func keyboardWillShow(notification: NSNotification) {
-        super.keyboardWillShow(notification: notification)
-        guard let userInfo = notification.userInfo,
-              let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect
-        else { return }
-        
-        keyboardHeight = keyboardFrame.height
-    }
+//    override func keyboardWillShow(notification: NSNotification) {
+//        super.keyboardWillShow(notification: notification)
+//        guard let userInfo = notification.userInfo,
+//              let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect
+//        else { return }
+//
+//        keyboardHeight = keyboardFrame.height
+//    }
     
-    override func keyboardWillHide(notification: NSNotification) {
-        super.keyboardWillHide(notification: notification)
-        keyboardHeight = 0.0
-    }
+//    override func keyboardWillHide(notification: NSNotification) {
+//        super.keyboardWillHide(notification: notification)
+//        keyboardHeight = 0.0
+//    }
     
     // MARK: - Custom Method
     
-    private func handleRightNavitationButton() {
-        rightNavigationButton.addTarget(self, action: #selector(rightNavigationButtonDidTap), for: .touchUpInside)
-    }
+//    private func handleRightNavitationButton() {
+//        rightNavigationButton.addTarget(self, action: #selector(rightNavigationButtonDidTap), for: .touchUpInside)
+//    }
     
     // MARK: - Layout
     
     private func setLayout() {
         view.addSubviews(hintTextView,thickLine)
-        bottomView.addSubview(hintButton)
         
         hintTextView.snp.makeConstraints {
             $0.top.equalTo(navigationView.snp.bottom)
@@ -133,13 +123,6 @@ final class StepTwoKoreanDiaryViewController: DiaryViewController {
             $0.top.equalTo(thickLine.snp.bottom)
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalTo(bottomView.snp.top)
-        }
-        
-        hintButton.snp.makeConstraints {
-            $0.centerY.equalTo(randomSubjectButton)
-            $0.leading.equalTo(leftNavigationButton).offset(-5)
-            $0.width.equalTo(convertByWidthRatio(92 + 10))
-            $0.height.equalTo(convertByHeightRatio(29 + 10))
         }
     }
     

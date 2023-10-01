@@ -31,17 +31,17 @@ final class StepOneKoreanDiaryViewController: DiaryViewController {
     
     // MARK: - @objc
     
-    override func leftNavigationButtonDidTap() {
-        handleLeftNavigationButton()
-    }
+//    override func leftNavigationButtonDidTap() {
+//        handleLeftNavigationButton()
+//    }
     
-    override func rightNavigationButtonDidTap() {
-        if rightNavigationButton.titleLabel?.textColor == .point {
-            handleRightNavigationButton()
-        } else {
-            showToastIfNeeded(toastType: .defaultToast(bodyType: .regEx))
-        }
-    }
+//    override func rightNavigationButtonDidTap() {
+//        if rightNavigationButton.titleLabel?.textColor == .point {
+//            handleRightNavigationButton()
+//        } else {
+//            showToastIfNeeded(toastType: .defaultToast(bodyType: .regEx))
+//        }
+//    }
     
     // MARK: - Custom Method
     
