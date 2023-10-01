@@ -57,7 +57,6 @@ class DiaryViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        keyboardAddObserver()
         showKeyboard(textView: inputTextView)
     }
     
@@ -127,48 +126,6 @@ class DiaryViewController: UIViewController {
     //            showToastIfNeeded(toastType: .defaultToast(bodyType: .regEx))
     //        }
     //    }
-    
-    //    @objc func keyboardWillShow(notification: NSNotification) {
-    //        guard let userInfo = notification.userInfo,
-    //              let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect
-    //        else { return }
-    //
-    //        let keyboardHeight = keyboardFrame.height
-    //        let insets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardHeight, right: 0)
-    //        inputTextView.contentInset = insets
-    //        inputTextView.scrollIndicatorInsets = insets
-    //        self.bottomView.transform = CGAffineTransform(translationX: 0, y: -keyboardHeight)
-    //
-    //        self.keyboardHeight = keyboardFrame.height
-    //        isKeyboardVisible = true
-    //
-    //        UIView.animate(withDuration: 0.3) {
-    //            self.bottomView.snp.updateConstraints {
-    //                $0.height.equalTo(53)
-    //            }
-    //            self.view.layoutIfNeeded()
-    //        }
-    //
-    //        updateAdditionalViewsForKeyboard(notification: notification, keyboardHeight: keyboardHeight)
-    //
-    //    }
-    //
-    //    @objc func keyboardWillHide(notification: NSNotification) {
-    //        inputTextView.contentInset = .zero
-    //        inputTextView.scrollIndicatorInsets = .zero
-    //        self.bottomView.transform = CGAffineTransform.identity
-    //
-    //        isKeyboardVisible = false
-    //
-    //        UIView.animate(withDuration: 0.3) {
-    //            self.bottomView.snp.updateConstraints {
-    //                $0.height.equalTo(87)
-    //            }
-    //            self.view.layoutIfNeeded()
-    //        }
-    //
-    //        updateAdditionalViewsForKeyboard(notification: notification, keyboardHeight: 0)
-    //    }
     //
     //    @objc func dismissButtonDidTap() {
     //        dismissButton?.removeFromSuperview()
@@ -213,39 +170,27 @@ class DiaryViewController: UIViewController {
         randomTopicEnabled.toggle()
     }
     
-    //    private func updateRandomTopicView() {
-    //        if randomTopicEnabled {
-    //            view.addSubview(randomSubjectView)
-    //            randomSubjectView.snp.makeConstraints {
-    //                $0.top.equalTo(navigationView.snp.bottom).offset(convertByHeightRatio(16))
-    //                $0.leading.equalToSuperview()
-    //            }
-    //            randomSubjectButton.setImage(Constant.Image.btnRandomSubjectActive, for: .normal)
-    //        } else {
-    //            randomSubjectView.removeFromSuperview()
-    //            randomSubjectButton.setImage(Constant.Image.btnRandomSubjectInactive, for: .normal)
-    //        }
-    //    }
-    //
-    //    private func updateInputTextViewConstraints() {
-    //        inputTextView.snp.remakeConstraints {
-    //            $0.top.equalTo(randomTopicEnabled ? randomSubjectView.snp.bottom : navigationView.snp.bottom)
-    //            $0.leading.trailing.equalToSuperview()
-    //            $0.bottom.equalTo(bottomView.snp.top)
-    //        }
-    //    }
-    
-    func updateAdditionalViewsForKeyboard(notification: NSNotification, keyboardHeight: CGFloat) {}
-    
-    private func keyboardAddObserver() {
-        //        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        //        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
-    
-    private func keyboardRemoveObserver() {
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
+//        private func updateRandomTopicView() {
+//            if randomTopicEnabled {
+//                view.addSubview(randomSubjectView)
+//                randomSubjectView.snp.makeConstraints {
+//                    $0.top.equalTo(navigationView.snp.bottom).offset(convertByHeightRatio(16))
+//                    $0.leading.equalToSuperview()
+//                }
+//                randomSubjectButton.setImage(Constant.Image.btnRandomSubjectActive, for: .normal)
+//            } else {
+//                randomSubjectView.removeFromSuperview()
+//                randomSubjectButton.setImage(Constant.Image.btnRandomSubjectInactive, for: .normal)
+//            }
+//        }
+//
+//        private func updateInputTextViewConstraints() {
+//            inputTextView.snp.remakeConstraints {
+//                $0.top.equalTo(randomTopicEnabled ? randomSubjectView.snp.bottom : navigationView.snp.bottom)
+//                $0.leading.trailing.equalToSuperview()
+//                $0.bottom.equalTo(bottomView.snp.top)
+//            }
+//        }
     
     //MARK: - Layout
     
