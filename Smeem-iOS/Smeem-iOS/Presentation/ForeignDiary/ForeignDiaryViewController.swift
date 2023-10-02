@@ -13,45 +13,25 @@ final class ForeignDiaryViewController: DiaryViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        handleRightNavitationButton()
+        //        handleRightNavitationButton()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-//        randomSubjectToolTip?.removeFromSuperview()
+        //        randomSubjectToolTip?.removeFromSuperview()
+    }
+}
+
+extension ForeignDiaryViewController: UINavigationControllerDelegate {
+    func didTapLeftButton() {
+        self.presentingViewController?.dismiss(animated: true)
     }
     
-    // MARK: - @objc
-    
-//    override func leftNavigationButtonDidTap() {
-//        self.presentingViewController?.dismiss(animated: true)
-//    }
-    
-//    override func rightNavigationButtonDidTap() {
-//        if rightNavigationButton.titleLabel?.textColor == .point {
+    func didTapRightButton() {
+//        if .navigationView.rightButton.titleLabel?.textColor == .point {
 //            showLodingView(loadingView: self.loadingView)
 //            postDiaryAPI()
 //        } else {
 //            showToastIfNeeded(toastType: .defaultToast(bodyType: .regEx))
 //        }
-//    }
-    
-    // MARK: - Private functions
-    
-//    private func handleRightNavitationButton() {
-//        rightNavigationButton.addTarget(self, action: #selector(rightNavigationButtonDidTap), for: .touchUpInside)
-//    }
-    
-//    override func keyboardWillShow(notification: NSNotification) {
-//        super.keyboardWillShow(notification: notification)
-//        guard let userInfo = notification.userInfo,
-//              let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect
-//        else { return }
-//        
-//        keyboardHeight = keyboardFrame.height
-//    }
-//    
-//    override func keyboardWillHide(notification: NSNotification) {
-//        super.keyboardWillHide(notification: notification)
-//        keyboardHeight = 0.0
-//    }
+    }
 }
