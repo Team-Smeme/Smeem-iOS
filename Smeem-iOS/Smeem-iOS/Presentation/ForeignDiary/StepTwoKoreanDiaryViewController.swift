@@ -42,34 +42,21 @@ final class StepTwoKoreanDiaryViewController: DiaryViewController {
     
     // MARK: - @objc
     
-    override func leftNavigationButtonDidTap() {
-        self.navigationController?.popViewController(animated: true)
-    }
-    
-    override func rightNavigationButtonDidTap() {
-        if rightNavigationButton.titleLabel?.textColor == .point {
-            self.hideLodingView(loadingView: self.loadingView)
-            postDiaryAPI()
-        } else {
-            showToastIfNeeded(toastType: .defaultToast(bodyType: .regEx))
-        }
-    }
-    
-    @objc override func dismissButtonDidTap() {
-        tutorialImageView?.removeFromSuperview()
-        dismissButton?.removeFromSuperview()
-    }
-    
-    @objc func hintButtondidTap() {
-        isHintShowed.toggle()
-        if isHintShowed {
-            postPapagoApi(diaryText: hintTextView.text)
-            hintButton.setImage(Constant.Image.btnTranslateActive, for: .normal)
-        } else {
-            hintTextView.text = hintText
-            hintButton.setImage(Constant.Image.btnTranslateInactive, for: .normal)
-        }
-    }
+//    @objc override func dismissButtonDidTap() {
+//        tutorialImageView?.removeFromSuperview()
+//        dismissButton?.removeFromSuperview()
+//    }
+//    
+//    @objc func hintButtondidTap() {
+//        isHintShowed.toggle()
+//        if isHintShowed {
+//            postPapagoApi(diaryText: hintTextView.text)
+//            hintButton.setImage(Constant.Image.btnTranslateActive, for: .normal)
+//        } else {
+//            hintTextView.text = hintText
+//            hintButton.setImage(Constant.Image.btnTranslateInactive, for: .normal)
+//        }
+//    }
     
     // MARK: - Custom Method
     
@@ -146,3 +133,21 @@ extension StepTwoKoreanDiaryViewController {
         }
     }
 }
+
+// MARK: - NavigationBarActionDelegate
+
+//extension StepTwoKoreanDiaryViewController: NavigationBarActionDelegate {
+//
+//    func didTapLeftButton() {
+//        self.navigationController?.popViewController(animated: true)
+//    }
+//
+//    func didTapRightButton() {
+//        if rightNavigationButton.titleLabel?.textColor == .point {
+//            self.hideLodingView(loadingView: self.loadingView)
+//            postDiaryAPI()
+//        } else {
+//            showToastIfNeeded(toastType: .defaultToast(bodyType: .regEx))
+//        }
+//    }
+//}

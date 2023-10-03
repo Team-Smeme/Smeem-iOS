@@ -31,32 +31,32 @@ final class StepOneKoreanDiaryViewController: DiaryViewController {
     
     // MARK: - Custom Method
     
-    private func handleLeftNavigationButton() {
-        self.presentingViewController?.dismiss(animated: true)
-    }
-    
-    private func handleRightNavigationButton() {
-        let stepTwoVC = StepTwoKoreanDiaryViewController()
-        delegate = stepTwoVC
-        
-        if let text = self.inputTextView.text {
-            delegate?.dataBind(topicID: topicID, inputText: text)
-        }
-        
-        self.navigationController?.pushViewController(stepTwoVC, animated: true)
-    }
+//    private func handleLeftNavigationButton() {
+//        self.presentingViewController?.dismiss(animated: true)
+//    }
+//    
+//    private func handleRightNavigationButton() {
+//        let stepTwoVC = StepTwoKoreanDiaryViewController()
+//        delegate = stepTwoVC
+//        
+//        if let text = inputTextView.text {
+//            delegate?.dataBind(topicID: topicID, inputText: text)
+//        }
+//        
+//        self.navigationController?.pushViewController(stepTwoVC, animated: true)
+//    }
 }
 
-extension StepOneKoreanDiaryViewController: NavigationBarActionDelegate {
-    func leftButtonDidTap() {
-        handleLeftNavigationButton()
-    }
-    
-    func rightButtonDidTap() {
-        if rightNavigationButton.titleLabel?.textColor == .point {
-            handleRightNavigationButton()
-        } else {
-            showToastIfNeeded(toastType: .defaultToast(bodyType: .regEx))
-        }
-    }
-}
+//extension StepOneKoreanDiaryViewController: NavigationBarActionDelegate {
+//    func leftButtonDidTap() {
+//        handleLeftNavigationButton()
+//    }
+//
+//    func rightButtonDidTap() {
+//        if rightNavigationButton.titleLabel?.textColor == .point {
+//            handleRightNavigationButton()
+//        } else {
+//            showToastIfNeeded(toastType: .defaultToast(bodyType: .regEx))
+//        }
+//    }
+//}
