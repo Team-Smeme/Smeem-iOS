@@ -20,7 +20,7 @@ enum AuthType: String {
 
 final class LoginBottomSheetViewController: UIViewController, LoginDelegate {
     
-    private let loginManager: LoginManager
+    private let loginManager: LoginManagerProtocol
     private var loginData: LoginResponse = .init(accessToken: "", refreshToken: "", isRegistered: false, hasPlan: false)
     
     private var hasPlan = false
@@ -80,7 +80,7 @@ final class LoginBottomSheetViewController: UIViewController, LoginDelegate {
     
     // MARK: - Life Cycle
     
-    init(loginManager: LoginManager) {
+    init(loginManager: LoginManagerProtocol) {
         self.loginManager = loginManager
         
         super.init(nibName: nil, bundle: nil)

@@ -7,14 +7,14 @@
 
 import Foundation
 
-protocol MyPageEditService {
+protocol MyPageEditServiceProtocol {
     func editNickname(model: EditNicknameRequest) async throws -> BaseResponse<NilType>?
     func editGoal(model: EditGoalRequest) async throws -> BaseResponse<NilType>?
     func editPush(model: EditPushRequest) async throws -> BaseResponse<NilType>?
     func editAlarmTime(model: EditAlarmTime) async throws -> BaseResponse<NilType>?
 }
 
-struct MyPageEditServiceImpl: MyPageEditService {
+struct MyPageEditService: MyPageEditServiceProtocol {
     private let requestable: Requestable
     
     init(requestable: Requestable) {

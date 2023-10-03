@@ -7,12 +7,12 @@
 
 import Foundation
 
-protocol MyPageAuthService {
+protocol MyPageAuthServiceProtocol {
     func resign() async throws -> BaseResponse<NilType>?
     func logout() async throws -> BaseResponse<NilType>?
 }
 
-struct MyPageAuthServiceImpl: MyPageAuthService {
+struct MyPageAuthService: MyPageAuthServiceProtocol {
 
     private let requestable: Requestable
     

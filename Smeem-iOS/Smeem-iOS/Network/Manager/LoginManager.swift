@@ -1,5 +1,5 @@
 //
-//  LoginManagerImpl.swift
+//  LoginManager.swift
 //  Smeem-iOS
 //
 //  Created by 황찬미 on 2023/09/24.
@@ -7,16 +7,16 @@
 
 import Foundation
 
-protocol LoginManager {
+protocol LoginManagerProtocol {
     func login(model: LoginRequest) async throws -> LoginResponse
     func userPlan(model: UserPlanRequest, accessToken: String) async throws
 }
 
-struct LoginManagerImpl: LoginManager {
+struct LoginManager: LoginManagerProtocol {
     
-    private let loginService: LoginService
+    private let loginService: LoginServiceProtocol
     
-    init(loginService: LoginService) {
+    init(loginService: LoginServiceProtocol) {
         self.loginService = loginService
     }
     

@@ -13,8 +13,8 @@ final class MyPageViewController: UIViewController {
     
     // MARK: - Property
     
-    private let mypageManager: MyPageManager
-    private let editPushManager: MyPageEditManager
+    private let mypageManager: MyPageManagerProtocol
+    private let editPushManager: MyPageEditManagerProtocol
     
     private var userInfo = MyPageResponse(username: "", target: "", way: "", detail: "", targetLang: "", hasPushAlarm: true, trainingTime: TrainingTime(day: "", hour: 0, minute: 0), badge: Badge(id: 0, name: "", type: "", imageURL: ""))
     var myPageSelectedIndexPath = ["MON": IndexPath(item: 0, section: 0), "TUE":IndexPath(item: 1, section: 0), "WED":IndexPath(item: 2, section: 0), "THU":IndexPath(item: 3, section: 0), "FRI":IndexPath(item: 4, section: 0), "SAT":IndexPath(item: 5, section: 0), "SUN":IndexPath(item: 6, section: 0)]
@@ -218,7 +218,7 @@ final class MyPageViewController: UIViewController {
     
     // MARK: - Life Cycle
     
-    init(myPageManager: MyPageManager, editPushManager: MyPageEditManager) {
+    init(myPageManager: MyPageManagerProtocol, editPushManager: MyPageEditManagerProtocol) {
         self.mypageManager = myPageManager
         self.editPushManager = editPushManager
         
@@ -250,12 +250,12 @@ final class MyPageViewController: UIViewController {
     }
     
     @objc func moreButtonDidTap(_ sender: UIButton) {
-        let authManagetmentVC = AuthManagementViewController(myPageAuthManager: MyPageAuthManagerImpl(myPageAuthService: MyPageAuthServiceImpl(requestable: RequestImpl())))
+        let authManagetmentVC = AuthManagementViewController(myPageAuthManager: MyPageAuthManager(myPageAuthService: MyPageAuthService(requestable: RequestImpl())))
         self.navigationController?.pushViewController(authManagetmentVC, animated: true)
     }
     
     @objc func editButtonDidTap(_ sender: UIButton) {
-        let editVC = EditNicknameViewController(editNicknameManager: MyPageEditManagerImpl(myPageEditService: MyPageEditServiceImpl(requestable: RequestImpl())), nicknameValidManager: NicknameValidManagerImpl(nicknameValidService: NicknameValidServiceImpl(requestable: RequestImpl())))
+        let editVC = EditNicknameViewController(editNicknameManager: MyPageEditManager(myPageEditService: MyPageEditService(requestable: RequestImpl())), nicknameValidManager: NicknameValidManager(nicknameValidService: NicknameValidService(requestable: RequestImpl())))
         editVC.editNicknameDelegate = self
         editVC.nickName = userInfo.username
         self.navigationController?.pushViewController(editVC, animated: true)
@@ -267,7 +267,7 @@ final class MyPageViewController: UIViewController {
     }
     
     @objc func badgeImageDidTap() {
-        let badgeListVC = BadgeListViewController(myPageManager: MyPageManagerImpl(myPageService: MyPageServiceImpl(requestable: RequestImpl())))
+        let badgeListVC = BadgeListViewController(myPageManager: MyPageManagerImpl(myPageService: MyPageService(requestable: RequestImpl())))
         self.navigationController?.pushViewController(badgeListVC, animated: true)
     }
     
@@ -292,7 +292,7 @@ final class MyPageViewController: UIViewController {
     }
     
     @objc func alarmEditButtonDidTap() {
-        let alarmEditVC = EditAlarmViewController(editAlarmManager: MyPageEditManagerImpl(myPageEditService: MyPageEditServiceImpl(requestable: RequestImpl())))
+        let alarmEditVC = EditAlarmViewController(editAlarmManager: MyPageEditManager(myPageEditService: MyPageEditService(requestable: RequestImpl())))
         alarmEditVC.editAlarmDelegate = self
         alarmEditVC.dayIndexPathArray = indexPathArray
         alarmEditVC.trainigDayData = userInfo.trainingTime.day

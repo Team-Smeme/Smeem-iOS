@@ -7,12 +7,12 @@
 
 import Foundation
 
-protocol LoginService {
+protocol LoginServiceProtocol {
     func login(model: LoginRequest) async throws -> BaseResponse<LoginResponse>?
     func userPlan(model: UserPlanRequest, accessToken: String) async throws -> BaseResponse<String>?
 }
 
-struct LoginServiceImpl: LoginService {
+struct LoginService: LoginServiceProtocol {
     
     private let requestable: Requestable
     

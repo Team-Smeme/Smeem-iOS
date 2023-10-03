@@ -221,7 +221,7 @@ final class HomeViewController: UIViewController {
     }
     
     @objc func myPageButtonDidTap(_ sender: UIButton) {
-        let myPageVC = MyPageViewController(myPageManager: MyPageManagerImpl(myPageService: MyPageServiceImpl(requestable: RequestImpl())), editPushManager: MyPageEditManagerImpl(myPageEditService: MyPageEditServiceImpl(requestable: RequestImpl())))
+        let myPageVC = MyPageViewController(myPageManager: MyPageManagerImpl(myPageService: MyPageService(requestable: RequestImpl())), editPushManager: MyPageEditManager(myPageEditService: MyPageEditService(requestable: RequestImpl())))
         self.navigationController?.pushViewController(myPageVC, animated: true)
     }
     

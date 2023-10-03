@@ -14,7 +14,7 @@ class BadgeListViewController: UIViewController {
     
     // MARK: - Property
     
-    private let myPageManager: MyPageManager
+    private let myPageManager: MyPageManagerProtocol
     
     private var badgeHeaderData = [(name: String(), imageURL: String())]
     private var badgeListData = Array(repeating: Array(repeating: (name: String(), imageURL: String()), count: 0), count: 3)
@@ -68,7 +68,7 @@ class BadgeListViewController: UIViewController {
 
     // MARK: - Life Cycle
     
-    init(myPageManager: MyPageManager) {
+    init(myPageManager: MyPageManagerProtocol) {
         self.myPageManager = myPageManager
         
         super.init(nibName: nil, bundle: nil)

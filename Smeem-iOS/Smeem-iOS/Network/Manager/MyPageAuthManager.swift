@@ -7,16 +7,16 @@
 
 import Foundation
 
-protocol MyPageAuthManager {
+protocol MyPageAuthManagerProtocol {
     func deleteUserAccount() async throws
     func logout() async throws
 }
 
-struct MyPageAuthManagerImpl: MyPageAuthManager {
+struct MyPageAuthManager: MyPageAuthManagerProtocol {
 
-    private let myPageAuthService: MyPageAuthService
+    private let myPageAuthService: MyPageAuthServiceProtocol
     
-    init(myPageAuthService: MyPageAuthService) {
+    init(myPageAuthService: MyPageAuthServiceProtocol) {
         self.myPageAuthService = myPageAuthService
     }
     

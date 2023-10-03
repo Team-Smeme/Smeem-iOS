@@ -9,7 +9,7 @@ import UIKit
 
 final class EditGoalViewController: UIViewController {
     
-    private let editGoalManager: MyPageEditManager
+    private let editGoalManager: MyPageEditManagerProtocol
     
     var tempTarget = String()
     var planName = String()
@@ -51,7 +51,7 @@ final class EditGoalViewController: UIViewController {
         return button
     }()
     
-    init(editGoalManager: MyPageEditManager) {
+    init(editGoalManager: MyPageEditManagerProtocol) {
         self.editGoalManager = editGoalManager
         
         super.init(nibName: nil, bundle: nil)

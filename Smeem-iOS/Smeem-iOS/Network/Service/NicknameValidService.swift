@@ -7,11 +7,11 @@
 
 import Foundation
 
-protocol NicknameValidService {
+protocol NicknameValidServiceProtocol {
     func nicknameValid(param: String) async throws -> BaseResponse<NicknameValidResponse>?
 }
 
-struct NicknameValidServiceImpl: NicknameValidService {
+struct NicknameValidService: NicknameValidServiceProtocol {
 
     private let requestable: Requestable
     

@@ -11,7 +11,7 @@ final class EditAlarmViewController: UIViewController {
     
     // MARK: - Property
     
-    private let editAlarmManager: MyPageEditManager
+    private let editAlarmManager: MyPageEditManagerProtocol
     
     weak var editAlarmDelegate: EditMypageDelegate?
     
@@ -67,7 +67,7 @@ final class EditAlarmViewController: UIViewController {
     
     // MARK: - Life Cycle
     
-    init(editAlarmManager: MyPageEditManager) {
+    init(editAlarmManager: MyPageEditManagerProtocol) {
         self.editAlarmManager = editAlarmManager
         
         super.init(nibName: nil, bundle: nil)

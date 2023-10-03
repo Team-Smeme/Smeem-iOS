@@ -7,16 +7,16 @@
 
 import Foundation
 
-protocol MyPageManager {
+protocol MyPageManagerProtocol {
     func getMypage() async throws -> MyPageResponse
     func getBadgeList() async throws -> [BadgesListArray]
 }
 
-struct MyPageManagerImpl: MyPageManager {
+struct MyPageManager: MyPageManagerProtocol {
 
-    private let myPageService: MyPageService
+    private let myPageService: MyPageServiceProtocol
     
-    init(myPageService: MyPageService) {
+    init(myPageService: MyPageServiceProtocol) {
         self.myPageService = myPageService
     }
     

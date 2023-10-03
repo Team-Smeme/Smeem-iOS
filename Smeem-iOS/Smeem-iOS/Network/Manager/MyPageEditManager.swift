@@ -7,18 +7,18 @@
 
 import Foundation
 
-protocol MyPageEditManager {
+protocol MyPageEditManagerProtocol {
     func editNickname(model: EditNicknameRequest) async throws
     func editGoal(model: EditGoalRequest) async throws
     func editPush(model: EditPushRequest) async throws
     func editAlarmTime(model: EditAlarmTime) async throws
 }
 
-struct MyPageEditManagerImpl: MyPageEditManager {
+struct MyPageEditManager: MyPageEditManagerProtocol {
 
-    private let myPageEditService: MyPageEditService
+    private let myPageEditService: MyPageEditServiceProtocol
     
-    init(myPageEditService: MyPageEditService) {
+    init(myPageEditService: MyPageEditServiceProtocol) {
         self.myPageEditService = myPageEditService
     }
     

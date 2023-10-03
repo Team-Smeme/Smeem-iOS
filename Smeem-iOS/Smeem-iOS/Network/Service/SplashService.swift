@@ -7,12 +7,12 @@
 
 import Foundation
 
-protocol SplashService {
+protocol SplashServiceProtocol {
     func relogin() async throws -> BaseResponse<ReLoginResponse>?
     func logout() async throws -> BaseResponse<String>?
 }
 
-struct SplashServiceImpl: SplashService {
+struct SplashService: SplashServiceProtocol {
     
     private let requestable: Requestable
     

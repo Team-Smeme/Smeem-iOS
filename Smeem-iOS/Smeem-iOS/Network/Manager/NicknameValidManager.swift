@@ -7,15 +7,15 @@
 
 import Foundation
 
-protocol NicknameValidManager {
+protocol NicknameValidManagerProtocol {
     func nicknameValid(param: String) async throws -> Bool
 }
 
-struct NicknameValidManagerImpl: NicknameValidManager {
+struct NicknameValidManager: NicknameValidManagerProtocol {
 
-    private let nicknameValidService: NicknameValidService
+    private let nicknameValidService: NicknameValidServiceProtocol
     
-    init(nicknameValidService: NicknameValidService) {
+    init(nicknameValidService: NicknameValidServiceProtocol) {
         self.nicknameValidService = nicknameValidService
     }
     

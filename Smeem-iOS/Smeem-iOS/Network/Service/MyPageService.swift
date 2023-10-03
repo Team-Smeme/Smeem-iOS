@@ -7,12 +7,12 @@
 
 import Foundation
 
-protocol MyPageService {
+protocol MyPageServiceProtocol {
     func getMyPage() async throws -> BaseResponse<MyPageResponse>?
     func getBadgeList() async throws -> BaseResponse<BadgeListResponse>?
 }
 
-struct MyPageServiceImpl: MyPageService {
+struct MyPageService: MyPageServiceProtocol {
 
     private let requestable: Requestable
     

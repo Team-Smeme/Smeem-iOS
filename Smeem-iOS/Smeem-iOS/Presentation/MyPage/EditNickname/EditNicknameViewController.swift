@@ -17,8 +17,8 @@ final class EditNicknameViewController: UIViewController {
     
     // MARK: - Property
     
-    private let editNicknameManager: MyPageEditManager
-    private let nicknameValidManager: NicknameValidManager
+    private let editNicknameManager: MyPageEditManagerProtocol
+    private let nicknameValidManager: NicknameValidManagerProtocol
     
     weak var editNicknameDelegate: EditMypageDelegate?
     
@@ -90,7 +90,7 @@ final class EditNicknameViewController: UIViewController {
     
     // MARK: - Life Cycle
     
-    init(editNicknameManager: MyPageEditManager, nicknameValidManager: NicknameValidManager) {
+    init(editNicknameManager: MyPageEditManagerProtocol, nicknameValidManager: NicknameValidManagerProtocol) {
         self.editNicknameManager = editNicknameManager
         self.nicknameValidManager = nicknameValidManager
         

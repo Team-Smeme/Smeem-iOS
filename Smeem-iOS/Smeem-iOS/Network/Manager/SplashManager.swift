@@ -1,5 +1,5 @@
 //
-//  SplashManagerImpl.swift
+//  SplashManager.swift
 //  Smeem-iOS
 //
 //  Created by 황찬미 on 2023/09/24.
@@ -7,12 +7,12 @@
 
 import Foundation
 
-protocol SplashManager {
+protocol SplashManagerProtocol {
     func relogin() async throws -> ReLoginResponse
     func logout() async throws
 }
 
-struct SplashManagerImpl: SplashManager {
+struct SplashManager: SplashManagerProtocol {
     
     private let splashService: SplashService
     

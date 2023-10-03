@@ -170,7 +170,7 @@ final class AlarmSettingViewController: UIViewController {
     }
     
     private func presentBottomSheet(target: String, hasAlarm: Bool) {
-        let signupBottomSheetVC = LoginBottomSheetViewController(loginManager: LoginManagerImpl(loginService: LoginServiceImpl(requestable: RequestImpl())))
+        let signupBottomSheetVC = LoginBottomSheetViewController(loginManager: LoginManager(loginService: LoginService(requestable: RequestImpl())))
         let navigationController = UINavigationController(rootViewController: signupBottomSheetVC)
         navigationController.modalPresentationStyle = .overFullScreen
         navigationController.isNavigationBarHidden = true
