@@ -25,7 +25,6 @@ class DiaryView: BaseView {
     
     private lazy var randomSubjectView = RandomSubjectView()
     private var smeemToastView: SmeemToastView?
-    private let loadingView = LoadingView()
     
     // MARK: Life Cycle
     
@@ -46,12 +45,9 @@ class DiaryView: BaseView {
     }
 }
 
-// MARK: - Extensions
+// MARK: - Extensions Layout
 
 extension DiaryView {
-    
-    // MARK: Layout
-    
     private func setLayout() {
         addSubviews(navigationView, inputTextView, bottomView)
         
@@ -69,6 +65,25 @@ extension DiaryView {
         bottomView.snp.makeConstraints { make in
             make.bottom.leading.trailing.equalToSuperview()
             make.height.equalTo(convertByHeightRatio(87))
+        }
+        
+        guard let layoutConfig = configuration.layoutConfig else  { return }
+        
+        layoutConfig.hintTextView.snp.makeConstraints { make in
+            make.top.equalTo(navigationView.snp.bottom)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(convertByHeightRatio(120))
+        }
+        
+        layoutConfig.thickLine.snp.makeConstraints { make in
+            make.top.equalTo(layoutConfig.hintTextView.snp.bottom)
+            make.centerX.equalToSuperview()
+        }
+        
+        inputTextView.snp.remakeConstraints { make in
+            make.top.equalTo(layoutConfig.thickLine.snp.bottom)
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalTo(bottomView.snp.top)
         }
     }
 }

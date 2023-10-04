@@ -39,6 +39,7 @@ class DiaryViewFactory {
             .setTextViewType(textViewType: .editable(SmeemTextViewHandler()))
             .setPlaceholderText(placeholderText: "일기를 작성해주세요 :)")
             .setBottomViewType(bottomViewType: .withHint)
+            .setLayoutConfig(layoutConfig: StepTwoKoreanLayoutConfig())
             .build()
         
         return DiaryView(configuration: config)

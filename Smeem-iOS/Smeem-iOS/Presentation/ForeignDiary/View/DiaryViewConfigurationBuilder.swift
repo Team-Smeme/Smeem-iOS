@@ -10,6 +10,7 @@ struct DiaryViewConfiguration {
     var textViewType: SmeemTextViewType
     var placeholderText: String
     var bottomViewType: DiaryBottomViewType
+    var layoutConfig: StepTwoKoreanLayoutConfig?
 }
 
 class DiaryViewConfigurationBuilder {
@@ -20,6 +21,7 @@ class DiaryViewConfigurationBuilder {
     private var textViewType: SmeemTextViewType = .display
     private var placeholderText: String = ""
     private var bottomViewType: DiaryBottomViewType = .standard
+    private var layoutConfig: StepTwoKoreanLayoutConfig?
     
     func setNavigationBar(navigationBarType: NavigationBarType) -> Self {
         self.navigationBarType = navigationBarType
@@ -41,12 +43,18 @@ class DiaryViewConfigurationBuilder {
         return self
     }
     
+    func setLayoutConfig(layoutConfig: StepTwoKoreanLayoutConfig) -> Self {
+        self.layoutConfig = layoutConfig
+        return self
+    }
+    
     func build() -> DiaryViewConfiguration {
         return DiaryViewConfiguration(
             navigationBarType: navigationBarType,
             textViewType: textViewType,
             placeholderText: placeholderText,
-            bottomViewType: bottomViewType
+            bottomViewType: bottomViewType,
+            layoutConfig: layoutConfig
         )
     }
 }
