@@ -13,7 +13,6 @@ final class ForeignDiaryViewController: DiaryViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //        handleRightNavitationButton()
     }
     
     override func viewWillDisappear(_ animated: Bool) {

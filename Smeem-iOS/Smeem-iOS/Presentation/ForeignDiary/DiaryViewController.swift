@@ -177,7 +177,6 @@ extension DiaryViewController {
             }
             
             DispatchQueue.main.async {
-                self.hideLodingView(loadingView: DiaryView.loadingView)
                 let homeVC = HomeViewController()
                 homeVC.toastMessageFlag = true
                 homeVC.badgePopupData = self.badgePopupContent
