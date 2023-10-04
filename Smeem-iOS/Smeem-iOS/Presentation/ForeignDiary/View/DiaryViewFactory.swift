@@ -17,7 +17,7 @@ class DiaryViewFactory {
             .setBottomViewType(bottomViewType: .standard)
             .build()
         
-        return DiaryView(configuration: config)
+        return createDiaryView(with: config)
     }
     
     func createStepOneKoreanDiaryView() -> DiaryView {
@@ -29,7 +29,7 @@ class DiaryViewFactory {
             .setBottomViewType(bottomViewType: .standard)
             .build()
 
-        return DiaryView(configuration: config)
+        return createDiaryView(with: config)
     }
     
     func createStepTwoKoreanDiaryView() -> DiaryView {
@@ -42,6 +42,18 @@ class DiaryViewFactory {
             .setLayoutConfig(layoutConfig: StepTwoKoreanLayoutConfig())
             .build()
         
-        return DiaryView(configuration: config)
+        return createDiaryView(with: config)
+    }
+}
+
+// MARK: - Helpers
+
+extension DiaryViewFactory {
+    private func createDiaryView(with configuration: DiaryViewConfiguration) -> DiaryView {
+        let navigationBar = NavigationBarFactory.create(type: configuration.navigationBarType)
+        let inputTextView = SmeemTextView(type: configuration.textViewType, placeholderText: configuration.placeholderText)
+        let bottomView = DiaryBottomView(viewType: configuration.bottomViewType)
+        
+        return DiaryView(configuration: configuration, navigationBar: navigationBar, inputTextView: inputTextView, bottomView: bottomView)
     }
 }

@@ -11,6 +11,8 @@ class DiaryViewController: BaseViewController {
     
     // MARK: - Properties
     
+    private var diaryView: DiaryView?
+    
     private weak var delegate: UITextViewDelegate?
     
     private var randomTopicEnabled: Bool = false {
@@ -36,42 +38,42 @@ class DiaryViewController: BaseViewController {
     // MARK: - Life Cycle
     
     override func loadView() {
-        view = DiaryView()
+        let diaryFactory = DiaryViewFactory()
+        diaryView = diaryFactory.createForeginDiaryView()
+        
+        view = diaryView
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        showKeyboard(textView: DiaryView.inputTextView)
+//        showKeyboard(textView: diaryView.inputTextView)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setDelegate()
-        
-        self.keyboardHandler = KeyboardFollowingLayoutHandler(targetView: DiaryView.inputTextView, bottomView: DiaryView.bottomView)
+//        setDelegate()
+//        setupKeyboardHandler()
     }
     
     deinit {
-        randomSubjectView.removeFromSuperview()
-        smeemToastView?.removeFromSuperview()
         keyboardHandler = nil
     }
     
     // MARK: - Custom Method
     
-    private func setData() {
-        randomSubjectView.setData(contentText: topicContent)
-    }
-    
-    private func setDelegate() {
-        randomSubjectView.delegate = self
-    }
-    
-//    private func setRandomTopicButtonToggle() {
-//        randomTopicEnabled.toggle()
+//    private func setData() {
+//        randomSubjectView.setData(contentText: topicContent)
 //    }
 //
+//    private func setDelegate() {
+//        randomSubjectView.delegate = self
+//    }
+    
+    private func setRandomTopicButtonToggle() {
+        randomTopicEnabled.toggle()
+    }
+
 //    private func updateRandomTopicView() {
 //        if randomTopicEnabled {
 //            view.addSubview(randomSubjectView)
@@ -99,27 +101,12 @@ class DiaryViewController: BaseViewController {
 
 extension DiaryViewController {
     
-    // MARK: - @objc
-    
-//    @objc func randomTopicButtonDidTap() {
-//        if !UserDefaultsManager.randomSubjectToolTip {
-//            UserDefaultsManager.randomSubjectToolTip = true
-//            randomSubjectToolTip?.isHidden = true
-//        }
-//
-//        setRandomTopicButtonToggle()
-//
-//        if !isTopicCalled {
-//            randomSubjectWithAPI()
-//            randomSubjectButton.setImage(Constant.Image.btnRandomSubjectActive, for: .normal)
-//            isTopicCalled = true
-//        } else {
-//            isTopicCalled = false
-//            topicID = nil
-//        }
-//        randomSubjectView.setData(contentText: topicContent)
+//    private func setupKeyboardHandler() {
+//        self.keyboardHandler = KeyboardFollowingLayoutHandler(targetView: diaryView.inputTextView, bottomView: DiaryView.bottomView)
 //    }
-//
+    
+    // MARK: - @objc
+
 //    @objc func dismissButtonDidTap() {
 //        dismissButton?.removeFromSuperview()
 //    }
@@ -161,31 +148,31 @@ extension DiaryViewController {
             guard let randomSubjectData = response?.data else { return }
             self.topicID = randomSubjectData.topicId
             self.topicContent = randomSubjectData.content
-            self.setData()
+//            self.setData()
         }
     }
     
-    func postDiaryAPI() {
-        PostDiaryAPI.shared.postDiary(param: PostDiaryRequest(content: DiaryView.inputTextView.text, topicId: topicID)) { response in
-            guard let postDiaryResponse = response?.data else { return }
-            self.diaryID = postDiaryResponse.diaryID
-            
-            if !postDiaryResponse.badges.isEmpty {
-                self.badgePopupContent = postDiaryResponse.badges
-            } else {
-                self.badgePopupContent = []
-            }
-            
-            DispatchQueue.main.async {
-                let homeVC = HomeViewController()
-                homeVC.toastMessageFlag = true
-                homeVC.badgePopupData = self.badgePopupContent
-                //                self.randomSubjectToolTip = nil
-                let rootVC = UINavigationController(rootViewController: homeVC)
-                self.changeRootViewControllerAndPresent(rootVC)
-            }
-        }
-    }
+//    func postDiaryAPI() {
+//        PostDiaryAPI.shared.postDiary(param: PostDiaryRequest(content: diaryView.inputTextView.text, topicId: topicID)) { response in
+//            guard let postDiaryResponse = response?.data else { return }
+//            self.diaryID = postDiaryResponse.diaryID
+//
+//            if !postDiaryResponse.badges.isEmpty {
+//                self.badgePopupContent = postDiaryResponse.badges
+//            } else {
+//                self.badgePopupContent = []
+//            }
+//
+//            DispatchQueue.main.async {
+//                let homeVC = HomeViewController()
+//                homeVC.toastMessageFlag = true
+//                homeVC.badgePopupData = self.badgePopupContent
+//                //                self.randomSubjectToolTip = nil
+//                let rootVC = UINavigationController(rootViewController: homeVC)
+//                self.changeRootViewControllerAndPresent(rootVC)
+//            }
+//        }
+//    }
 }
 
 //extension DiaryViewController: NavigationBarActionDelegate {

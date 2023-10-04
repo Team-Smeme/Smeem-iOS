@@ -43,9 +43,9 @@ final class StepTwoKoreanDiaryViewController: DiaryViewController {
     
     // MARK: - Custom Method
     
-    private func handleRightNavitationButton() {
-        rightNavigationButton.addTarget(self, action: #selector(rightNavigationButtonDidTap), for: .touchUpInside)
-    }
+//    private func handleRightNavitationButton() {
+//        rightNavigationButton.addTarget(self, action: #selector(rightNavigationButtonDidTap), for: .touchUpInside)
+//    }
 }
 
 // MARK: - DataBindProtocol
@@ -53,7 +53,7 @@ final class StepTwoKoreanDiaryViewController: DiaryViewController {
 extension StepTwoKoreanDiaryViewController: DataBindProtocol {
     func dataBind(topicID: Int?, inputText: String) {
         self.topicID = topicID
-        hintTextView.text = inputText
+//        hintTextView.text = inputText
         
         print(topicID, inputText, "🥳")
     }
@@ -65,9 +65,9 @@ extension StepTwoKoreanDiaryViewController {
     func postPapagoApi(diaryText: String) {
         PapagoAPI.shared.postDiary(param: diaryText) { response in
             guard let response = response else { return }
-            self.hintText = self.hintTextView.text
-            self.hintTextView.text.removeAll()
-            self.hintTextView.text = response.message.result.translatedText
+//            self.hintText = self.hintTextView.text
+//            self.hintTextView.text.removeAll()
+//            self.hintTextView.text = response.message.result.translatedText
         }
     }
 }

@@ -17,23 +17,33 @@ class DiaryView: BaseView {
     
     let configuration: DiaryViewConfiguration
     
+//    var isTopicVisible: Bool = false {
+//        if isTopicVisible {
+//            addRandomTopicView()
+//        } else {
+//            removeRandomTopicView()
+//        }
+//    }
+    
     // MARK: UI Properties
     
     private var navigationView: SmeemNavigationBar
     private let inputTextView: SmeemTextView
     private let bottomView: DiaryBottomView
     
-    private lazy var randomSubjectView = RandomSubjectView()
+    private var randomTopicView: RandomSubjectView?
     private var smeemToastView: SmeemToastView?
     
     // MARK: Life Cycle
     
-    init(configuration: DiaryViewConfiguration) {
+    init(configuration: DiaryViewConfiguration,
+         navigationBar: SmeemNavigationBar,
+         inputTextView: SmeemTextView,
+         bottomView: DiaryBottomView) {
         self.configuration = configuration
-        
-        self.navigationView = NavigationBarFactory.create(type: configuration.navigationBarType)
-        self.inputTextView = SmeemTextView(type: configuration.textViewType, placeholderText: configuration.placeholderText)
-        self.bottomView = DiaryBottomView(viewType: configuration.bottomViewType)
+        self.navigationView = navigationBar
+        self.inputTextView = inputTextView
+        self.bottomView = bottomView
         
         super.init(frame: .zero)
         
@@ -43,9 +53,14 @@ class DiaryView: BaseView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    deinit {
+        randomTopicView?.removeFromSuperview()
+        smeemToastView?.removeFromSuperview()
+    }
 }
 
-// MARK: - Extensions Layout
+// MARK: - Layout Helpers
 
 extension DiaryView {
     private func setLayout() {
@@ -53,7 +68,7 @@ extension DiaryView {
         
         navigationView.snp.makeConstraints { make in
             make.top.leading.trailing.equalTo(safeAreaLayoutGuide)
-            make.height.equalTo(convertByHeightRatio(66))
+            make.height.equalTo(convertByHeightRatio(Constant.Layout.navigationBarHeight))
         }
         
         inputTextView.snp.makeConstraints { make in
@@ -64,7 +79,7 @@ extension DiaryView {
         
         bottomView.snp.makeConstraints { make in
             make.bottom.leading.trailing.equalToSuperview()
-            make.height.equalTo(convertByHeightRatio(87))
+            make.height.equalTo(convertByHeightRatio(Constant.Layout.bottomViewHeight))
         }
         
         guard let layoutConfig = configuration.layoutConfig else  { return }
@@ -86,4 +101,23 @@ extension DiaryView {
             make.bottom.equalTo(bottomView.snp.top)
         }
     }
+}
+
+// MARK: - Helpers
+
+extension DiaryView {
+    func setInputText(_ text: String) {
+        self.inputTextView.text = text
+    }
+    
+//    func addRandomTopicView() {
+//        if randomTopicView == nil {
+//            randomTopicView = createRandomSubjectView()
+//            addSubview(randomTopicView)
+//        }
+//    }
+//
+//    func removeRandomTopicView() {
+//        randomTo
+//    }
 }

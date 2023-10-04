@@ -23,13 +23,13 @@ protocol RandomSubjectViewDelegate: AnyObject {
 
 final class RandomSubjectView: UIView {
     
-    // MARK: - Property
+    // MARK: - Properties
     
     weak var delegate: RandomSubjectViewDelegate?
     
     private var heightConstraint: Constraint?
     
-    // MARK: - UI Property
+    // MARK: - UI Properties
     
     private let questionLabel: UILabel = {
         let label = UILabel()
@@ -69,6 +69,49 @@ final class RandomSubjectView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+}
+
+extension RandomSubjectView {
+    
+    private func createRandomSubjectView() -> RandomSubjectView { .init() }
+    
+    // MARK: - Layout Helpers
+    
+    private func setRandomSubjectViewUI() {
+        backgroundColor = .gray100
+        
+        contentLabel.numberOfLines = 0
+        contentLabel.lineBreakMode = .byWordWrapping
+    }
+    
+    private func setRandomSubjectViewLayout() {
+        
+        snp.makeConstraints { make in
+            make.centerX.equalTo(self)
+            make.width.equalTo(convertByWidthRatio(375))
+        }
+        
+        snp.makeConstraints { make in
+                heightConstraint = make.height.equalTo(110).constraint
+            }
+        
+        addSubviews(questionLabel, contentLabel, refreshButton)
+        
+        questionLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(convertByHeightRatio(20))
+            make.leading.equalToSuperview().offset(convertByWidthRatio(18))
+        }
+        
+        contentLabel.snp.makeConstraints { make in
+            make.top.equalTo(questionLabel)
+            make.leading.equalTo(questionLabel)
+        }
+        
+        refreshButton.snp.makeConstraints { make in
+            make.bottom.equalToSuperview().offset(convertByHeightRatio(-20))
+            make.trailing.equalToSuperview().offset(convertByWidthRatio(-18))
+        }
+    }
     
     // MARK: - @objc
     
@@ -99,44 +142,6 @@ final class RandomSubjectView: UIView {
         if let heightConstraint = heightConstraint {
             let newHeight: CGFloat = contentLabelHeight <= 22 ? 88 : contentLabelHeight + 66
             heightConstraint.update(offset: newHeight)
-        }
-    }
-
-    // MARK: - Layout
-    
-    private func setRandomSubjectViewUI() {
-        backgroundColor = .gray100
-        
-        contentLabel.numberOfLines = 0
-        contentLabel.lineBreakMode = .byWordWrapping
-    }
-    
-    private func setRandomSubjectViewLayout() {
-        
-        snp.makeConstraints {
-            $0.centerX.equalTo(self)
-            $0.width.equalTo(convertByWidthRatio(375))
-        }
-        
-        snp.makeConstraints {
-                heightConstraint = $0.height.equalTo(110).constraint
-            }
-        
-        addSubviews(questionLabel, contentLabel, refreshButton)
-        
-        questionLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(convertByHeightRatio(20))
-            $0.leading.equalToSuperview().offset(convertByWidthRatio(18))
-        }
-        
-        contentLabel.snp.makeConstraints {
-            $0.top.equalTo(questionLabel)
-            $0.leading.equalTo(questionLabel)
-        }
-        
-        refreshButton.snp.makeConstraints {
-            $0.bottom.equalToSuperview().offset(convertByHeightRatio(-20))
-            $0.trailing.equalToSuperview().offset(convertByWidthRatio(-18))
         }
     }
 }

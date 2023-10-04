@@ -21,6 +21,7 @@ class SmeemNavigationBar: UIView {
     
     private let leftButton: UIButton = {
         let button = UIButton()
+        button.setTitleColor(.smeemBlack, for: .normal)
         return button
     }()
     
@@ -114,9 +115,9 @@ class SmeemNavigationBar: UIView {
         
         switch configuration.layout {
         case .diaryLayout:
-            setButtonLayouts(leftMargin: Constants.horizontalLeftButtonGap, rightMargin: Constants.horizontalRightButtonGap)
+            setButtonLayouts(leftMargin: Constants.horizontalDiaryTextButtonGap, rightMargin: Constants.horizontalDiaryTextButtonGap)
         case .detailLayout:
-            setButtonLayouts(leftMargin: Constants.horizontalArrowButtonGap, rightMargin: Constants.horizontalRightButtonGap)
+            setButtonLayouts(leftMargin: Constants.horizontalArrowButtonGap, rightMargin: Constants.horizontalDiaryTextButtonGap)
         case .editLayout, .commentLayout:
             setButtonLayouts(leftMargin: Constants.horizontalEditCommentButtonsGap, rightMargin: Constants.horizontalEditCommentButtonsGap)
         case .myPageLayout:
@@ -141,7 +142,7 @@ extension SmeemNavigationBar {
     
     private enum Constants {
         static let horizontalLeftButtonGap: CGFloat = 12
-        static let horizontalRightButtonGap: CGFloat = 18
+        static let horizontalDiaryTextButtonGap: CGFloat = 18
         static let horizontalEditCommentButtonsGap: CGFloat = 18
         static let horizontalArrowButtonGap: CGFloat = 20
         static let horizontalDotsIconButtonGap: CGFloat = 16

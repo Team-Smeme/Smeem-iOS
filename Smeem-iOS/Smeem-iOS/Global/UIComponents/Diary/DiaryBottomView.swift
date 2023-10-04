@@ -80,6 +80,9 @@ final class DiaryBottomView: UIView {
 // MARK: - Extensions
 
 extension DiaryBottomView {
+    
+    // MARK: - Layout Helpers
+    
     private func setUI() {
         self.backgroundColor = .gray100
     }
@@ -109,7 +112,29 @@ extension DiaryBottomView {
             }
         }
     }
+    
+    // MARK: - Action Helpers
+    
+//    @objc func randomTopicButtonDidTap() {
+//        if !UserDefaultsManager.randomSubjectToolTip {
+//            UserDefaultsManager.randomSubjectToolTip = true
+//            randomSubjectToolTip?.isHidden = true
+//        }
+//
+//        setRandomTopicButtonToggle()
+//
+//        if !isTopicCalled {
+//            randomSubjectWithAPI()
+//            randomSubjectButton.setImage(Constant.Image.btnRandomSubjectActive, for: .normal)
+//            isTopicCalled = true
+//        } else {
+//            isTopicCalled = false
+//            topicID = nil
+//        }
+//        randomSubjectView.setData(contentText: topicContent)
+//    }
 }
+
 
 //    private func checkTooltip() {
 //        let randomSubjectToolTipe = UserDefaultsManager.randomSubjectToolTip
