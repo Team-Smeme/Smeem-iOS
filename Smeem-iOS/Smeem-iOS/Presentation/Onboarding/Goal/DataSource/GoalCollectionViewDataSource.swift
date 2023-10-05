@@ -8,7 +8,7 @@
 import UIKit
 
 class GoalCollectionViewDataSource: NSObject {
-    var goalLabelList = [Plan]()
+    var goalLabelList = [GoalPlanResponse]()
     
     var selectedIndex: Int?
     
@@ -23,7 +23,7 @@ extension GoalCollectionViewDataSource: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: GoalCollectionViewCell.identifier, for: indexPath) as? GoalCollectionViewCell else { return UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PlanGoalCollectionViewCell.description(), for: indexPath) as? PlanGoalCollectionViewCell else { return UICollectionViewCell() }
         cell.setData(goalLabelList[indexPath.item].name)
         
         if indexPath.item == selectedIndex {

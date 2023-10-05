@@ -173,7 +173,7 @@ extension GoalOnboardingView {
     }
     
     private func setCellReigster() {
-        learningListCollectionView.register(GoalCollectionViewCell.self, forCellWithReuseIdentifier: GoalCollectionViewCell.identifier)
+        learningListCollectionView.register(PlanGoalCollectionViewCell.self, forCellWithReuseIdentifier: PlanGoalCollectionViewCell.description())
     }
     
     private func setBackgroundColor() {

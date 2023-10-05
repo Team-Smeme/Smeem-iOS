@@ -1,5 +1,5 @@
 //
-//  GoalCollectionViewCell.swift
+//  PlanGoalCollectionViewCell.swift
 //  Smeem-iOS
 //
 //  Created by 황찬미 on 2023/05/14.
@@ -9,13 +9,11 @@ import UIKit
 
 import SnapKit
 
-final class GoalCollectionViewCell: UICollectionViewCell {
+final class PlanGoalCollectionViewCell: UICollectionViewCell {
     
-    static let identifier = "OnboardingGoalCollectionViewCell"
+    // MARK: Properties
     
-    // MARK: - Property
-    
-    // MARK: - UI Property
+    // MARK: UI Properties
     
     private let checkButton: UIButton = {
         let button = UIButton()
@@ -31,7 +29,7 @@ final class GoalCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    // MARK: - Life Cycle
+    // MARK: Life Cycle
     
     override init(frame: CGRect) {
         super.init(frame: frame)

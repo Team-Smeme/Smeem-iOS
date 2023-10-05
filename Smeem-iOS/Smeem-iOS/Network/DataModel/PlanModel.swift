@@ -10,10 +10,10 @@ import Foundation
 // MARK: Plan List
 
 struct PlanListResponse: Codable {
-    let goals: [Plan]
+    let goals: [GoalPlanResponse]
 }
 
-struct Plan: Codable {
+struct GoalPlanResponse: Codable {
     let goalType, name: String
 }
 

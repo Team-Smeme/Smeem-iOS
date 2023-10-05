@@ -84,6 +84,9 @@
 		4A6630392A51E04600D19CC9 /* PatchDiaryRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6630382A51E04600D19CC9 /* PatchDiaryRequest.swift */; };
 		4A7BE75D2ABB4B9800070E83 /* BaseEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7BE75C2ABB4B9800070E83 /* BaseEndPoint.swift */; };
 		4A7BE7612ABB5BC800070E83 /* Requestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7BE7602ABB5BC800070E83 /* Requestable.swift */; };
+		4A81C28F2ACC683D0056E815 /* FirstOnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A81C28E2ACC683D0056E815 /* FirstOnboardingViewController.swift */; };
+		4A81C2932ACDA6610056E815 /* FirstOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A81C2922ACDA6610056E815 /* FirstOnboardingView.swift */; };
+		4A81C2972ACDAB2C0056E815 /* PlanGoalCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A81C2962ACDAB2C0056E815 /* PlanGoalCollectionView.swift */; };
 		4A8FFA5029C9E1FD00FB76C0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8FFA4F29C9E1FD00FB76C0 /* AppDelegate.swift */; };
 		4A8FFA5229C9E1FD00FB76C0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8FFA5129C9E1FD00FB76C0 /* SceneDelegate.swift */; };
 		4A8FFA5929C9E1FE00FB76C0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A8FFA5829C9E1FE00FB76C0 /* Assets.xcassets */; };
@@ -137,7 +140,7 @@
 		4AF9E3F62AC4156000104768 /* NicknameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF9E3F52AC4156000104768 /* NicknameModel.swift */; };
 		4AF9E3F92AC415C100104768 /* PlanModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF9E3F82AC415C100104768 /* PlanModel.swift */; };
 		6F294A3E2A26177B00856CC8 /* GoalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF507742A10CD4D007C62B1 /* GoalViewController.swift */; };
-		6F294A3F2A26177E00856CC8 /* GoalCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF507762A10CD96007C62B1 /* GoalCollectionViewCell.swift */; };
+		6F294A3F2A26177E00856CC8 /* PlanGoalCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF507762A10CD96007C62B1 /* PlanGoalCollectionViewCell.swift */; };
 		6F294A402A26178300856CC8 /* HowOnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEFD4C42A136EE100DAB2BD /* HowOnboardingViewController.swift */; };
 		6F294A412A26178600856CC8 /* AlarmSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEFD4C72A13908E00DAB2BD /* AlarmSettingViewController.swift */; };
 		6F294A422A26178C00856CC8 /* UserNickNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A13B7582A13D37000F4FB1E /* UserNickNameViewController.swift */; };
@@ -237,6 +240,9 @@
 		4A6630382A51E04600D19CC9 /* PatchDiaryRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatchDiaryRequest.swift; sourceTree = "<group>"; };
 		4A7BE75C2ABB4B9800070E83 /* BaseEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseEndPoint.swift; sourceTree = "<group>"; };
 		4A7BE7602ABB5BC800070E83 /* Requestable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Requestable.swift; sourceTree = "<group>"; };
+		4A81C28E2ACC683D0056E815 /* FirstOnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOnboardingViewController.swift; sourceTree = "<group>"; };
+		4A81C2922ACDA6610056E815 /* FirstOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOnboardingView.swift; sourceTree = "<group>"; };
+		4A81C2962ACDAB2C0056E815 /* PlanGoalCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanGoalCollectionView.swift; sourceTree = "<group>"; };
 		4A8275D22A1513120083A4AB /* ServiceAcceptViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAcceptViewController.swift; sourceTree = "<group>"; };
 		4A8275D42A1519550083A4AB /* ServiceAcceptCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAcceptCollectionViewCell.swift; sourceTree = "<group>"; };
 		4A8FFA4C29C9E1FD00FB76C0 /* Smeem-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Smeem-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -290,7 +296,7 @@
 		4AF1D2AD2AC06FA1004C3AB7 /* LoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginService.swift; sourceTree = "<group>"; };
 		4AF1D2AF2AC08090004C3AB7 /* Encodable+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+.swift"; sourceTree = "<group>"; };
 		4AF507742A10CD4D007C62B1 /* GoalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalViewController.swift; sourceTree = "<group>"; };
-		4AF507762A10CD96007C62B1 /* GoalCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalCollectionViewCell.swift; sourceTree = "<group>"; };
+		4AF507762A10CD96007C62B1 /* PlanGoalCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanGoalCollectionViewCell.swift; sourceTree = "<group>"; };
 		4AF58CE82A4820AA00305248 /* AuthModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthModel.swift; sourceTree = "<group>"; };
 		4AF9E3F52AC4156000104768 /* NicknameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameModel.swift; sourceTree = "<group>"; };
 		4AF9E3F82AC415C100104768 /* PlanModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanModel.swift; sourceTree = "<group>"; };
@@ -332,14 +338,6 @@
 				371E94122A87A8660098280F /* GoalCollectionViewDataSource.swift */,
 			);
 			path = DataSource;
-			sourceTree = "<group>";
-		};
-		371E94142A87A9A20098280F /* Cell */ = {
-			isa = PBXGroup;
-			children = (
-				4AF507762A10CD96007C62B1 /* GoalCollectionViewCell.swift */,
-			);
-			path = Cell;
 			sourceTree = "<group>";
 		};
 		371E94172A87DA6E0098280F /* EditGoal */ = {
@@ -413,8 +411,9 @@
 		37A574B729FE208A00312453 /* UIComponents */ = {
 			isa = PBXGroup;
 			children = (
+				4A81C2952ACDAB0A0056E815 /* HowLearning */,
+				4A81C2942ACDAAF80056E815 /* PlanGoal */,
 				4A1EE9552A4DFB86007BFEF3 /* SmeemComponent */,
-				4A1EE9542A4DFB76007BFEF3 /* Onboarding */,
 				4A1EE9532A4DFB42007BFEF3 /* Diary */,
 				4A3F2E952A0ABB9C00F6AC60 /* Alarm */,
 				374F828B2AC327A200C128B9 /* SmeemTextViewManager.swift */,
@@ -654,14 +653,6 @@
 			path = Diary;
 			sourceTree = "<group>";
 		};
-		4A1EE9542A4DFB76007BFEF3 /* Onboarding */ = {
-			isa = PBXGroup;
-			children = (
-				4AEFD4C92A1392DF00DAB2BD /* HowLearningView.swift */,
-			);
-			path = Onboarding;
-			sourceTree = "<group>";
-		};
 		4A1EE9552A4DFB86007BFEF3 /* SmeemComponent */ = {
 			isa = PBXGroup;
 			children = (
@@ -707,6 +698,23 @@
 				4A6630382A51E04600D19CC9 /* PatchDiaryRequest.swift */,
 			);
 			path = PatchDiary;
+			sourceTree = "<group>";
+		};
+		4A81C2942ACDAAF80056E815 /* PlanGoal */ = {
+			isa = PBXGroup;
+			children = (
+				4A81C2962ACDAB2C0056E815 /* PlanGoalCollectionView.swift */,
+				4AF507762A10CD96007C62B1 /* PlanGoalCollectionViewCell.swift */,
+			);
+			path = PlanGoal;
+			sourceTree = "<group>";
+		};
+		4A81C2952ACDAB0A0056E815 /* HowLearning */ = {
+			isa = PBXGroup;
+			children = (
+				4AEFD4C92A1392DF00DAB2BD /* HowLearningView.swift */,
+			);
+			path = HowLearning;
 			sourceTree = "<group>";
 		};
 		4A8275D12A15129B0083A4AB /* Service */ = {
@@ -762,7 +770,6 @@
 		4A974AFF2A4F3B7D00418DD9 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				371E94142A87A9A20098280F /* Cell */,
 				371E940B2A87A1E00098280F /* GoalOnboardingView.swift */,
 				371E940D2A87A2030098280F /* GoalEditMypageView.swift */,
 			);
@@ -959,6 +966,8 @@
 				4AEFD4C62A13907D00DAB2BD /* Alarm */,
 				4A13B7572A13D35800F4FB1E /* Nickname */,
 				4A8275D12A15129B0083A4AB /* Service */,
+				4A81C28E2ACC683D0056E815 /* FirstOnboardingViewController.swift */,
+				4A81C2922ACDA6610056E815 /* FirstOnboardingView.swift */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
@@ -1112,6 +1121,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A81C28F2ACC683D0056E815 /* FirstOnboardingViewController.swift in Sources */,
 				4AF1D2AC2AC06F81004C3AB7 /* LoginManager.swift in Sources */,
 				371E94162A87B83D0098280F /* NextButtonDelegate.swift in Sources */,
 				4AF1D2AE2AC06FA1004C3AB7 /* LoginService.swift in Sources */,
@@ -1127,6 +1137,7 @@
 				4AF58CE92A4820AA00305248 /* AuthModel.swift in Sources */,
 				3761116C2A278D0E0095EC5A /* String+.swift in Sources */,
 				4AEB82952A4CB4F200C1114B /* BadgePopupViewController.swift in Sources */,
+				4A81C2932ACDA6610056E815 /* FirstOnboardingView.swift in Sources */,
 				4AB8ED822AC2DFFD00177106 /* MyPageEditService.swift in Sources */,
 				4A3774842A42E6EA00357DD1 /* SharedConstant.swift in Sources */,
 				4AB6FEBE2AC03C9E0060E8CA /* SplashEndPoint.swift in Sources */,
@@ -1226,12 +1237,13 @@
 				3728B8D12A2CFE0B00EF4CF8 /* DiaryStrategies.swift in Sources */,
 				4AF1D2B02AC08090004C3AB7 /* Encodable+.swift in Sources */,
 				4AB6FEBA2AC02CAF0060E8CA /* SplashManager.swift in Sources */,
+				4A81C2972ACDAB2C0056E815 /* PlanGoalCollectionView.swift in Sources */,
 				4AB8ED802AC2B00C00177106 /* MyPageEditEndPoint.swift in Sources */,
 				371E94132A87A8660098280F /* GoalCollectionViewDataSource.swift in Sources */,
 				4A0EA28C2AC32BF800EB4098 /* NicknameValidManager.swift in Sources */,
 				6F294A442A26179900856CC8 /* ServiceAcceptCollectionViewCell.swift in Sources */,
 				4A9FAB462A4C3D1200C40D5A /* BadgeModel.swift in Sources */,
-				6F294A3F2A26177E00856CC8 /* GoalCollectionViewCell.swift in Sources */,
+				6F294A3F2A26177E00856CC8 /* PlanGoalCollectionViewCell.swift in Sources */,
 				37A574E62A02178D00312453 /* SmeemToastView.swift in Sources */,
 				374F828C2AC327A200C128B9 /* SmeemTextViewManager.swift in Sources */,
 				4A8FFA5229C9E1FD00FB76C0 /* SceneDelegate.swift in Sources */,
