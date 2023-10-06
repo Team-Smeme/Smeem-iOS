@@ -85,8 +85,9 @@
 		4A7BE75D2ABB4B9800070E83 /* BaseEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7BE75C2ABB4B9800070E83 /* BaseEndPoint.swift */; };
 		4A7BE7612ABB5BC800070E83 /* Requestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7BE7602ABB5BC800070E83 /* Requestable.swift */; };
 		4A81C28F2ACC683D0056E815 /* FirstOnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A81C28E2ACC683D0056E815 /* FirstOnboardingViewController.swift */; };
-		4A81C2932ACDA6610056E815 /* FirstOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A81C2922ACDA6610056E815 /* FirstOnboardingView.swift */; };
+		4A81C2932ACDA6610056E815 /* FirstOnboardingBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A81C2922ACDA6610056E815 /* FirstOnboardingBuilder.swift */; };
 		4A81C2972ACDAB2C0056E815 /* PlanGoalCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A81C2962ACDAB2C0056E815 /* PlanGoalCollectionView.swift */; };
+		4A81C2A32ACFEBD00056E815 /* FirstOnboardingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A81C2A22ACFEBD00056E815 /* FirstOnboardingCollectionViewCell.swift */; };
 		4A8FFA5029C9E1FD00FB76C0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8FFA4F29C9E1FD00FB76C0 /* AppDelegate.swift */; };
 		4A8FFA5229C9E1FD00FB76C0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8FFA5129C9E1FD00FB76C0 /* SceneDelegate.swift */; };
 		4A8FFA5929C9E1FE00FB76C0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A8FFA5829C9E1FE00FB76C0 /* Assets.xcassets */; };
@@ -119,6 +120,7 @@
 		4AB8ED822AC2DFFD00177106 /* MyPageEditService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB8ED812AC2DFFD00177106 /* MyPageEditService.swift */; };
 		4AB8ED842AC2E8DD00177106 /* MyPageEditManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB8ED832AC2E8DD00177106 /* MyPageEditManager.swift */; };
 		4ABE3FD12A811F8400D1D22E /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABE3FD02A811F8400D1D22E /* SplashViewController.swift */; };
+		4AC00EC82AD0090F009230DA /* FirstOnboardingFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC00EC72AD0090F009230DA /* FirstOnboardingFactory.swift */; };
 		4AC047252A8FCAE100EBDC0E /* AuthManagementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC047242A8FCAE100EBDC0E /* AuthManagementViewController.swift */; };
 		4AC4B82D2A2F9FE200E147AA /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4B82C2A2F9FE200E147AA /* UserDefaultsManager.swift */; };
 		4AC9489829ED800800489C2B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4AC9489729ED800800489C2B /* GoogleService-Info.plist */; };
@@ -241,8 +243,9 @@
 		4A7BE75C2ABB4B9800070E83 /* BaseEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseEndPoint.swift; sourceTree = "<group>"; };
 		4A7BE7602ABB5BC800070E83 /* Requestable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Requestable.swift; sourceTree = "<group>"; };
 		4A81C28E2ACC683D0056E815 /* FirstOnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOnboardingViewController.swift; sourceTree = "<group>"; };
-		4A81C2922ACDA6610056E815 /* FirstOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOnboardingView.swift; sourceTree = "<group>"; };
+		4A81C2922ACDA6610056E815 /* FirstOnboardingBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOnboardingBuilder.swift; sourceTree = "<group>"; };
 		4A81C2962ACDAB2C0056E815 /* PlanGoalCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanGoalCollectionView.swift; sourceTree = "<group>"; };
+		4A81C2A22ACFEBD00056E815 /* FirstOnboardingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOnboardingCollectionViewCell.swift; sourceTree = "<group>"; };
 		4A8275D22A1513120083A4AB /* ServiceAcceptViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAcceptViewController.swift; sourceTree = "<group>"; };
 		4A8275D42A1519550083A4AB /* ServiceAcceptCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAcceptCollectionViewCell.swift; sourceTree = "<group>"; };
 		4A8FFA4C29C9E1FD00FB76C0 /* Smeem-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Smeem-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -273,6 +276,7 @@
 		4AB9F5272AA9F78C00EBEE35 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		4AB9F5292AAA035300EBEE35 /* BaseResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseResponse.swift; sourceTree = "<group>"; };
 		4ABE3FD02A811F8400D1D22E /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+		4AC00EC72AD0090F009230DA /* FirstOnboardingFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOnboardingFactory.swift; sourceTree = "<group>"; };
 		4AC047242A8FCAE100EBDC0E /* AuthManagementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManagementViewController.swift; sourceTree = "<group>"; };
 		4AC4B82C2A2F9FE200E147AA /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		4AC9489729ED800800489C2B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -717,6 +721,13 @@
 			path = HowLearning;
 			sourceTree = "<group>";
 		};
+		4A81C29E2ACF11620056E815 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "New Group";
+			sourceTree = "<group>";
+		};
 		4A8275D12A15129B0083A4AB /* Service */ = {
 			isa = PBXGroup;
 			children = (
@@ -961,13 +972,16 @@
 		4AF5076F2A10CBA2007C62B1 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
+				4A81C29E2ACF11620056E815 /* New Group */,
 				4AEFD4C22A136E5F00DAB2BD /* Goal */,
 				4AEFD4C32A136E6F00DAB2BD /* How */,
 				4AEFD4C62A13907D00DAB2BD /* Alarm */,
 				4A13B7572A13D35800F4FB1E /* Nickname */,
 				4A8275D12A15129B0083A4AB /* Service */,
 				4A81C28E2ACC683D0056E815 /* FirstOnboardingViewController.swift */,
-				4A81C2922ACDA6610056E815 /* FirstOnboardingView.swift */,
+				4A81C2A22ACFEBD00056E815 /* FirstOnboardingCollectionViewCell.swift */,
+				4A81C2922ACDA6610056E815 /* FirstOnboardingBuilder.swift */,
+				4AC00EC72AD0090F009230DA /* FirstOnboardingFactory.swift */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
@@ -1137,13 +1151,14 @@
 				4AF58CE92A4820AA00305248 /* AuthModel.swift in Sources */,
 				3761116C2A278D0E0095EC5A /* String+.swift in Sources */,
 				4AEB82952A4CB4F200C1114B /* BadgePopupViewController.swift in Sources */,
-				4A81C2932ACDA6610056E815 /* FirstOnboardingView.swift in Sources */,
+				4A81C2932ACDA6610056E815 /* FirstOnboardingBuilder.swift in Sources */,
 				4AB8ED822AC2DFFD00177106 /* MyPageEditService.swift in Sources */,
 				4A3774842A42E6EA00357DD1 /* SharedConstant.swift in Sources */,
 				4AB6FEBE2AC03C9E0060E8CA /* SplashEndPoint.swift in Sources */,
 				6F294A402A26178300856CC8 /* HowOnboardingViewController.swift in Sources */,
 				6FBC856B2A4B1F9200A43F98 /* MyPageViewController.swift in Sources */,
 				6FBC85742A4B603A00A43F98 /* MyPageModel.swift in Sources */,
+				4AC00EC82AD0090F009230DA /* FirstOnboardingFactory.swift in Sources */,
 				6F294A482A27818200856CC8 /* HomeViewFloatingViewController.swift in Sources */,
 				37A574C529FF6EA800312453 /* FontLiterals.swift in Sources */,
 				379789052AAC706800C61EF4 /* SmeemNavigationFactory.swift in Sources */,
@@ -1224,6 +1239,7 @@
 				4AF1D2AA2AC06D41004C3AB7 /* LoginEndPoint.swift in Sources */,
 				6FE1298E2A4986CA005536C4 /* HomeDiaryResponse.swift in Sources */,
 				3728B8D52A2CFF2C00EF4CF8 /* StepOneKoreanDiaryViewController.swift in Sources */,
+				4A81C2A32ACFEBD00056E815 /* FirstOnboardingCollectionViewCell.swift in Sources */,
 				37DCA6692A480A8E00FF8F90 /* DetailDiaryAPI.swift in Sources */,
 				37A574C129FF6E9100312453 /* ColorLiterals.swift in Sources */,
 				37A574CA29FF980F00312453 /* UIStackView+.swift in Sources */,
