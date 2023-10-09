@@ -9,13 +9,12 @@ import UIKit
 
 // MARK: - SmeemTextViewManager
 
-class SmeemTextViewManager: NSObject {
+class SmeemTextViewHandler: NSObject {
     
     // MARK: Properties
     
-    static let shared = SmeemTextViewManager()
+    static let shared = SmeemTextViewHandler()
     
-    var diaryStrategy: DiaryStrategy?
     weak var diaryViewController: DiaryViewController?
     weak var textView: PlaceholderDisplayable?
     
@@ -28,16 +27,16 @@ class SmeemTextViewManager: NSObject {
 
 // MARK: - Text Validation
 
-extension SmeemTextViewManager {
-    func validateText(_ text: String) -> Bool {
-        guard let strategy = diaryStrategy else { return false }
-        
-        if let koreanStrategy = strategy as? StepOneKoreanDiaryStrategy {
-            return containsKoreanCharacters(with: text)
-        } else {
-            return containsEnglishCharacters(with: text)
-        }
-    }
+extension SmeemTextViewHandler {
+//    func validateText(_ text: String) -> Bool {
+//        guard let strategy = diaryStrategy else { return false }
+//
+//        if let koreanStrategy = strategy as? StepOneKoreanDiaryStrategy {
+//            return containsKoreanCharacters(with: text)
+//        } else {
+//            return containsEnglishCharacters(with: text)
+//        }
+//    }
     
     func containsEnglishCharacters(with text: String) -> Bool {
         return text.getArrayAfterRegex(regex: "[a-zA-z]").count > 0
@@ -50,7 +49,7 @@ extension SmeemTextViewManager {
 
 // MARK: - UITextViewDelegate
 
-extension SmeemTextViewManager: UITextViewDelegate {
+extension SmeemTextViewHandler: UITextViewDelegate {
     
     func textViewDidChange(_ textView: UITextView) {
         guard let placeholderTextView = textView as? SmeemTextView  else { return }

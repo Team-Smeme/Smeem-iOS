@@ -17,6 +17,12 @@ extension Constant {
         static let height = UIScreen.main.bounds.height
     }
     
+    // FIXME: Layout보다 잘 붙는 네이밍 있을까요???
+    enum Layout {
+        static let navigationBarHeight = CGFloat(66)
+        static let bottomViewHeight = CGFloat(87)
+    }
+    
     enum Image {
         
         static let icnBack = UIImage(named: "icnBack")

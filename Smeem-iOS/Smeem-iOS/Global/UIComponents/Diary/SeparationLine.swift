@@ -18,9 +18,11 @@ import UIKit
 
 import SnapKit
 
+// MARK: - SeparationLine
+
 final class SeparationLine: UIView {
     
-    // MARK: - UI Property
+    // MARK: UI Properties
     
     enum LineHeight: CGFloat {
         case thin = 1
@@ -33,7 +35,7 @@ final class SeparationLine: UIView {
     
     private let height: LineHeight
     
-    // MARK: - Life Cycle
+    // MARK: Life Cycle
     
     init(height: LineHeight = .thin) {
         self.height = height
@@ -45,9 +47,11 @@ final class SeparationLine: UIView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    // MARK: - Custom method
-    
+}
+
+// MARK: - Extension: Attributes
+
+extension SeparationLine {
     private func setColors() {
         switch height {
         case .thin:
@@ -58,9 +62,17 @@ final class SeparationLine: UIView {
     }
     
     private func setLayout() {
-        snp.makeConstraints {
-            $0.width.equalTo(UIScreen.main.bounds.width)
-            $0.height.equalTo(height.rawValue)
+        snp.makeConstraints { make in
+            make.width.equalTo(UIScreen.main.bounds.width)
+            make.height.equalTo(height.rawValue)
         }
+    }
+}
+
+// MARK: - Extension:
+
+extension SeparationLine {
+    static func createThickLine() -> UIView {
+        return SeparationLine(height: .thick)
     }
 }
