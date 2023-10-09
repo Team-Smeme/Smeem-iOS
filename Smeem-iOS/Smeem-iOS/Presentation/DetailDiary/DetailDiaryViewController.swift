@@ -21,7 +21,7 @@ final class DetailDiaryViewController: UIViewController {
     
     // MARK: - UI Property
     
-    private var naviView: SmeemNavigationBar?
+    private var naviView: SmeemNavigationBar = NavigationBarFactory.create(type: .detail)
     
     let diaryScrollerView: DiaryScrollerView = {
         let scrollerView = DiaryScrollerView()
@@ -34,8 +34,7 @@ final class DetailDiaryViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        naviView = createNavigationBar(type: .detail)
+        
         setBackgroundColor()
         setLayout()
         swipeRecognizer()
@@ -111,7 +110,6 @@ final class DetailDiaryViewController: UIViewController {
     }
     
     private func setLayout() {
-        guard let naviView = naviView else { return }
         
         view.addSubviews(naviView, diaryScrollerView)
         
