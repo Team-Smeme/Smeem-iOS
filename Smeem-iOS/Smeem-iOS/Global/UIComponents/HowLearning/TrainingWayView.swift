@@ -29,22 +29,9 @@ private let howLearningView: HowLearningView = {
 
 import UIKit
 
-final class HowLearningView: UIView {
-    
-    // MARK: - ButtonType
-    
-    enum ButtonType {
-        case logo
-        case edit
-    }
-    
+final class TrainingWayView: UIView {
+
     // MARK: - Property
-    
-    var buttontype: ButtonType = .logo {
-        didSet {
-            showButtonType()
-        }
-    }
     
     // MARK: - UI Property
     
@@ -151,14 +138,14 @@ final class HowLearningView: UIView {
 
     // MARK: - Custom Method
     
-    private func showButtonType() {
-        switch buttontype {
-        case .logo:
-            editButton.isHidden = false
-        case .edit:
-            editButton.isHidden = false
-        }
-    }
+//    private func showButtonType() {
+//        switch buttontype {
+//        case .logo:
+//            editButton.isHidden = false
+//        case .edit:
+//            editButton.isHidden = false
+//        }
+//    }
     
     func setData(planName: String, planWayOne: String, planWayTwo: String, detailPlanOne: String, detailPlanTwo: String) {
         selectedMyGoalLabel.text = planName
@@ -166,6 +153,14 @@ final class HowLearningView: UIView {
         secondSelectedLearningHowLabel.text = planWayTwo
         firstDetailLabel.text = detailPlanOne
         secondDetailLabel.text = detailPlanTwo
+    }
+    
+    func setRefactorData(model: TrainingWayClientModel) {
+        selectedMyGoalLabel.text = model.trainingTitle
+        firstSelectedLearningHowLabel.text = model.trainingWays[0]
+        secondSelectedLearningHowLabel.text = model.trainingWays[1]
+        firstDetailLabel.text = model.detailTrainingWay[0]
+        secondDetailLabel.text = model.detailTrainingWay[1]
     }
     
     // MARK: - Layout
@@ -177,8 +172,9 @@ final class HowLearningView: UIView {
     }
     
     private func setLayout() {
-        let howLearningViewWidth = 327
-        let howLearningViewHeight = 370
+        let leadingTrailingInset: CGFloat = 24
+        let howLearningViewWidth = Constant.Screen.width - (leadingTrailingInset*2)
+        let howLearningViewHeight = convertByHeightRatio(370)
         let pointBackgroundViewHeight = 129
         
         addSubviews(pointBackgroudView, learningHowLabel, firstSelectedLearningHowLabel, secondSelectedLearningHowLabel,
