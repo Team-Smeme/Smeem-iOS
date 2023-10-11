@@ -46,21 +46,23 @@ final class EditAlarmViewController: UIViewController {
     }()
     
     private lazy var alarmCollectionView: AlarmCollectionView = {
-        let collectionView = AlarmCollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        let collectionView = AlarmCollectionView()
         
         collectionView.trainingDayClosure = { traingData in
+            print(traingData)
             self.trainigDayData = traingData.day
-            self.completeButton.smeemButtonType = traingData.type
+            self.completeButton.changeButtonType(buttonType: traingData.type)
+//            self.completeButton.smeemButtonType = traingData.type
         }
         collectionView.trainingTimeClosure = { data in
+            print(data)
             self.trainingTimeData = data
         }
         return collectionView
     }()
     
     private lazy var completeButton: SmeemButton = {
-        let button = SmeemButton()
-        button.setTitle("완료", for: .normal)
+        let button = SmeemButton(buttonType: .notEnabled, text: "완료")
         button.addTarget(self, action: #selector(completeButtonDidTap), for: .touchUpInside)
         return button
     }()

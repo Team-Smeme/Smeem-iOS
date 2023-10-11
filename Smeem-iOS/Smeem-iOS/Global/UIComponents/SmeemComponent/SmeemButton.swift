@@ -13,29 +13,24 @@ enum SmeemButtonType {
 }
 
 final class SmeemButton: UIButton {
-    
-    var smeemButtonType: SmeemButtonType = .notEnabled {
-        didSet {
-            setButtonStyle()
-        }
-    }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setButtonStyle()
+    init(buttonType: SmeemButtonType, text: String) {
+        super.init(frame: .zero)
+        
+        self.setTitle(text, for: .normal)
+        self.setTitleColor(.white, for: .normal)
+        self.titleLabel?.font = .s1
+        self.layer.cornerRadius = 6
+        self.titleLabel?.textAlignment = .center
+        
+        changeButtonType(buttonType: buttonType)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setButtonStyle() {
-        self.setTitleColor(.white, for: .normal)
-        self.titleLabel?.font = .s1
-        self.layer.cornerRadius = 6
-        self.titleLabel?.textAlignment = .center
-        
-        switch smeemButtonType {
+    func changeButtonType(buttonType: SmeemButtonType) {
+        switch buttonType {
         case .notEnabled:
             self.backgroundColor = .pointInactive
             self.isEnabled = false

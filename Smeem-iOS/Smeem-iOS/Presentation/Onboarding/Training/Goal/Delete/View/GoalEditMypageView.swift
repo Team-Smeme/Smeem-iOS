@@ -47,9 +47,7 @@ final class GoalEditMypageView: UIView {
     }()
     
     private lazy var nextButton: SmeemButton = {
-        let button = SmeemButton()
-        button.smeemButtonType = .notEnabled
-        button.setTitle("다음", for: .normal)
+        let button = SmeemButton(buttonType: .notEnabled, text: "다음")
         button.addTarget(self, action: #selector(nextButtonDidTap), for: .touchUpInside)
         return button
     }()
@@ -121,13 +119,14 @@ extension GoalEditMypageView {
     // MARK: - Custom Method
     
     func enableNextButton() {
-        nextButton.smeemButtonType = .enabled
+        nextButton.changeButtonType(buttonType: .enabled)
+//        nextButton.smeemButtonType = .enabled
     }
     
     func disableNextButton() {
         // TODO: 이거 disabled로 고치는건 어떨까요?!?
-        
-        nextButton.smeemButtonType = .notEnabled
+        nextButton.changeButtonType(buttonType: .notEnabled)
+//        nextButton.smeemButtonType = .notEnabled
     }
     
     func setCollectionViewDataSource(dataSource: UICollectionViewDataSource) {
@@ -140,7 +139,7 @@ extension GoalEditMypageView {
     }
     
     private func setCellReigster() {
-        learningListCollectionView.register(GoalCollectionViewCell.self, forCellWithReuseIdentifier: GoalCollectionViewCell.identifier)
+        learningListCollectionView.register(TrainingGoalCollectionViewCell.self, forCellWithReuseIdentifier: TrainingGoalCollectionViewCell.description())
     }
     
     func setData(selectedGoalIndex: Int) {

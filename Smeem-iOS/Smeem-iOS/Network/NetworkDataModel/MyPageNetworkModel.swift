@@ -1,5 +1,5 @@
 //
-//  MyPageInfoResponse.swift
+//  MyPageNetworkModel.swift
 //  Smeem-iOS
 //
 //  Created by 임주민 on 2023/06/28.

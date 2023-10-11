@@ -9,9 +9,7 @@ import UIKit
 
 import SnapKit
 
-final class PlanGoalCollectionViewCell: UICollectionViewCell {
-    
-    // MARK: Properties
+final class TrainingGoalCollectionViewCell: UICollectionViewCell {
     
     // MARK: UI Properties
     
@@ -36,14 +34,13 @@ final class PlanGoalCollectionViewCell: UICollectionViewCell {
         
         setUI()
         setLayout()
-        layer.borderColor = UIColor.gray100.cgColor
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Custom Method
+    // MARK: Custom Method
     
     func setData(_ text: String) {
         goalLabel.text = text
@@ -63,11 +60,12 @@ final class PlanGoalCollectionViewCell: UICollectionViewCell {
         checkButton.setImage(Constant.Image.icnCheckInactive, for: .normal)
     }
     
-    // MARK: - Layout
+    // MARK: Layout
     
     private func setUI() {
         makeRoundCorner(cornerRadius: 6)
         layer.borderWidth = 1.5
+        layer.borderColor = UIColor.gray100.cgColor
     }
     
     private func setLayout() {

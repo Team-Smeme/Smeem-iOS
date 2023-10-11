@@ -11,14 +11,14 @@ struct NetworkRequest {
     let path: String
     let httpMethod: HttpMethod
     let query: [String: String]?
-    let body: Data?
+    let requestBody: Data?
     let headers: [String: String]
     
-    init(path: String, httpMethod: HttpMethod, query: [String: String]? = nil, body: Data? = nil, headers: [String : String]) {
+    init(path: String, httpMethod: HttpMethod, query: [String: String]? = nil, requestBody: Data? = nil, headers: [String : String]) {
         self.path = path
         self.httpMethod = httpMethod
         self.query = query
-        self.body = body
+        self.requestBody = requestBody
         self.headers = headers
     }
     
@@ -43,7 +43,7 @@ struct NetworkRequest {
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = httpMethod.rawValue
         urlRequest.allHTTPHeaderFields = headers
-        urlRequest.httpBody = body
+        urlRequest.httpBody = requestBody
         
         return urlRequest
     }

@@ -1,5 +1,5 @@
 //
-//  NicknameModel.swift
+//  NicknameNetworkModel.swift
 //  Smeem-iOS
 //
 //  Created by 황찬미 on 2023/09/27.

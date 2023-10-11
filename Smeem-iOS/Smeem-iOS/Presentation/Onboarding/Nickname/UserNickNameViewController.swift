@@ -11,7 +11,7 @@ final class UserNicknameViewController: UIViewController {
     
     // MARK: - Property
     
-    var userPlanRequest: UserPlanRequest?
+    var userPlanRequest: UserTrainingInfoRequest?
     var isExistNinkname = Bool()
     var badgeListData: [PopupBadge]?
     
@@ -61,9 +61,7 @@ final class UserNicknameViewController: UIViewController {
     }()
     
     private lazy var nextButton: SmeemButton = {
-        let button = SmeemButton()
-        button.smeemButtonType = .notEnabled
-        button.setTitle("다음", for: .normal)
+        let button = SmeemButton(buttonType: .notEnabled, text: "다음")
         button.addTarget(self, action: #selector(nextButtonDidTap), for: .touchUpInside)
         return button
     }()
@@ -105,11 +103,11 @@ final class UserNicknameViewController: UIViewController {
         if let textField = notification.object as? UITextField {
             if let text = textField.text {
                 if text.first == " " {
-                    nextButton.smeemButtonType = .notEnabled
+                    nextButton.changeButtonType(buttonType: .notEnabled)
                 } else if text.filter({ $0 == " " }).count == text.count {
-                    nextButton.smeemButtonType = .notEnabled
+                    nextButton.changeButtonType(buttonType: .notEnabled)
                 } else {
-                    nextButton.smeemButtonType = .enabled
+                    nextButton.changeButtonType(buttonType: .enabled)
                 }
             }
         }
@@ -217,10 +215,10 @@ extension UserNicknameViewController {
             
             if self.isExistNinkname {
                 self.doubleCheckLabel.isHidden = false
-                self.nextButton.smeemButtonType = .notEnabled
+                self.nextButton.changeButtonType(buttonType: .notEnabled)
             } else {
                 self.doubleCheckLabel.isHidden = true
-                self.nextButton.smeemButtonType = .enabled
+                self.nextButton.changeButtonType(buttonType: .enabled)
             }
             
             if !self.isExistNinkname {

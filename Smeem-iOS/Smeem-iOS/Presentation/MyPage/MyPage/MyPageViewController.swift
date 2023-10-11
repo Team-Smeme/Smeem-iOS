@@ -88,9 +88,8 @@ final class MyPageViewController: UIViewController {
         return editButton
     }()
     
-    private let howLearningView: HowLearningView = {
-        let view = HowLearningView()
-        view.buttontype = .logo
+    private let howLearningView: TrainingWayView = {
+        let view = TrainingWayView()
         return view
     }()
     
@@ -203,7 +202,7 @@ final class MyPageViewController: UIViewController {
     }()
     
     private lazy var alarmCollectionView: AlarmCollectionView = {
-        let collectionView = AlarmCollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        let collectionView = AlarmCollectionView()
         collectionView.isUserInteractionEnabled = false
         return collectionView
     }()
@@ -267,7 +266,7 @@ final class MyPageViewController: UIViewController {
     }
     
     @objc func badgeImageDidTap() {
-        let badgeListVC = BadgeListViewController(myPageManager: MyPageManagerImpl(myPageService: MyPageService(requestable: RequestImpl())))
+        let badgeListVC = BadgeListViewController(myPageManager: MyPageManager(myPageService: MyPageService(requestable: RequestImpl())))
         self.navigationController?.pushViewController(badgeListVC, animated: true)
     }
     

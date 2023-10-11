@@ -20,7 +20,7 @@ extension MyPageEditEndPoint: BaseEndPoint {
         case .editNickName:
             return URLConstant.userURL
         case .editGoal, .editAlarmTime:
-            return URLConstant.userPlanURL
+            return URLConstant.userTrainingInfo
         case .editPush:
             return URLConstant.pushURL
         }
@@ -55,7 +55,7 @@ extension MyPageEditEndPoint: BaseEndPoint {
     func makeUrlRequest() -> NetworkRequest {
         return NetworkRequest(path: path,
                               httpMethod: httpMethod,
-                              body: requestBody,
+                              requestBody: requestBody,
                               headers: header)
     }
     

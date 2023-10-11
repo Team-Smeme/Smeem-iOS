@@ -81,9 +81,10 @@ extension GoalViewController: NextButtonDelegate {
     func nextButtonDidTap() {
         switch viewtype {
         case .onboarding:
-            let howOnboardingVC = HowOnboardingViewController()
-            howOnboardingVC.tempTarget = selectedGoalLabel
-            self.navigationController?.pushViewController(howOnboardingVC, animated: true)
+            print("임시 코드")
+//            let howOnboardingVC = HowOnboardingViewController()
+//            howOnboardingVC.tempTarget = selectedGoalLabel
+//            self.navigationController?.pushViewController(howOnboardingVC, animated: true)
         case .myPage:
             let howOnboardingVC = EditGoalViewController(editGoalManager: MyPageEditManager(myPageEditService: MyPageEditService(requestable: RequestImpl())))
             howOnboardingVC.tempTarget = selectedGoalLabel
@@ -131,7 +132,7 @@ extension GoalViewController {
 
 extension GoalViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let cell = collectionView.cellForItem(at: indexPath) as? GoalCollectionViewCell else { return }
+        guard let cell = collectionView.cellForItem(at: indexPath) as? TrainingGoalCollectionViewCell else { return }
         cell.selctedCell()
         
         selectedGoalLabel = datasource.goalLabelList[indexPath.item].goalType
@@ -145,7 +146,7 @@ extension GoalViewController: UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        guard let cell = collectionView.cellForItem(at: indexPath) as? GoalCollectionViewCell else { return }
+        guard let cell = collectionView.cellForItem(at: indexPath) as? TrainingGoalCollectionViewCell else { return }
         cell.desecltedCell()
     }
 }

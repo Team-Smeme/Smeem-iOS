@@ -58,7 +58,7 @@ extension SplashEndPoint: BaseEndPoint {
         return NetworkRequest(path: path,
                               httpMethod: httpMethod,
                               query: query,
-                              body: requestBody,
+                              requestBody: requestBody,
                               headers: header)
     }
 }

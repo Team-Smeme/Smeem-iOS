@@ -37,16 +37,13 @@ final class EditGoalViewController: UIViewController {
         return label
     }()
     
-    private let howLearningView: HowLearningView = {
-        let view = HowLearningView()
-        view.buttontype = .logo
+    private let howLearningView: TrainingWayView = {
+        let view = TrainingWayView()
         return view
     }()
     
     private lazy var nextButton: SmeemButton = {
-        let button = SmeemButton()
-        button.smeemButtonType = .enabled
-        button.setTitle("완료", for: .normal)
+        let button = SmeemButton(buttonType: .enabled, text: "완료")
         button.addTarget(self, action: #selector(nextButtonDidTap), for: .touchUpInside)
         return button
     }()

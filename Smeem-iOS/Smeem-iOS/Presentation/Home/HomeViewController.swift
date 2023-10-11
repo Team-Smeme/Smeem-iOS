@@ -169,9 +169,7 @@ final class HomeViewController: UIViewController {
     }()
     
     private lazy var addDiaryButton: SmeemButton = {
-        let addDiaryButton = SmeemButton()
-        addDiaryButton.smeemButtonType = .enabled
-        addDiaryButton.setTitle("일기 작성하기", for: .normal)
+        let addDiaryButton = SmeemButton(buttonType: .enabled, text: "일기 작성하기")
         addDiaryButton.addTarget(self, action: #selector(self.addDiaryButtonDidTap(_:)), for: .touchUpInside)
         return addDiaryButton
     }()
@@ -221,7 +219,7 @@ final class HomeViewController: UIViewController {
     }
     
     @objc func myPageButtonDidTap(_ sender: UIButton) {
-        let myPageVC = MyPageViewController(myPageManager: MyPageManagerImpl(myPageService: MyPageService(requestable: RequestImpl())), editPushManager: MyPageEditManager(myPageEditService: MyPageEditService(requestable: RequestImpl())))
+        let myPageVC = MyPageViewController(myPageManager: MyPageManager(myPageService: MyPageService(requestable: RequestImpl())), editPushManager: MyPageEditManager(myPageEditService: MyPageEditService(requestable: RequestImpl())))
         self.navigationController?.pushViewController(myPageVC, animated: true)
     }
     

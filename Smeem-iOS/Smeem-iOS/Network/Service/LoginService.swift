@@ -9,7 +9,7 @@ import Foundation
 
 protocol LoginServiceProtocol {
     func login(model: LoginRequest) async throws -> BaseResponse<LoginResponse>?
-    func userPlan(model: UserPlanRequest, accessToken: String) async throws -> BaseResponse<String>?
+    func userPlan(model: UserTrainingInfoRequest, accessToken: String) async throws -> BaseResponse<String>?
 }
 
 struct LoginService: LoginServiceProtocol {
@@ -25,7 +25,7 @@ struct LoginService: LoginServiceProtocol {
         return try await requestable.request(urlRequest)
     }
     
-    func userPlan(model: UserPlanRequest, accessToken: String) async throws -> BaseResponse<String>? {
+    func userPlan(model: UserTrainingInfoRequest, accessToken: String) async throws -> BaseResponse<String>? {
         let urlRequest = LoginEndPoint.userPlan(model: model, accessToken: accessToken).makeUrlRequest()
         return try await requestable.request(urlRequest)
     }

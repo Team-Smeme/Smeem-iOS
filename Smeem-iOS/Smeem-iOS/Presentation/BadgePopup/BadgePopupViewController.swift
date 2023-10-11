@@ -52,21 +52,19 @@ final class BadgePopupViewController: UIViewController {
     }()
     
     private lazy var cancleButton: SmeemButton = {
-        let button = SmeemButton()
-        button.smeemButtonType = .enabled
+        let button = SmeemButton(buttonType: .enabled, text: "닫기")
+//        button.smeemButtonType = .enabled
         button.backgroundColor = .gray100
         button.titleLabel?.font = .c2
         button.setTitleColor(.gray600, for: .normal)
-        button.setTitle("닫기", for: .normal)
         button.addTarget(self, action: #selector(cancelButtonDidTap), for: .touchUpInside)
         return button
     }()
     
     private lazy var presentBadgeListButton: SmeemButton = {
-        let button = SmeemButton()
-        button.smeemButtonType = .enabled
+        let button = SmeemButton(buttonType: .enabled, text: "배지 모두보기")
+//        button.smeemButtonType = .enabled
         button.titleLabel?.font = .c2
-        button.setTitle("배지 모두보기", for: .normal)
         button.addTarget(self, action: #selector(badgeButtonDidTap), for: .touchUpInside)
         return button
     }()

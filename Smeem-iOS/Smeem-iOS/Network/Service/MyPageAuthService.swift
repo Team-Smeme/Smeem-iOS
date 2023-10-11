@@ -21,12 +21,12 @@ struct MyPageAuthService: MyPageAuthServiceProtocol {
     }
     
     func resign() async throws -> BaseResponse<NilType>? {
-        let urlRequest = MyPageEndPoint.getMyPage.makeUrlRequest()
+        let urlRequest = MyPageAuthEndPoint.deleteUserAccount.makeUrlRequest()
         return try await requestable.request(urlRequest)
     }
     
     func logout() async throws -> BaseResponse<NilType>? {
-        let urlRequest = MyPageEndPoint.getMyPage.makeUrlRequest()
+        let urlRequest = MyPageAuthEndPoint.logout.makeUrlRequest()
         return try await requestable.request(urlRequest)
     }
 }

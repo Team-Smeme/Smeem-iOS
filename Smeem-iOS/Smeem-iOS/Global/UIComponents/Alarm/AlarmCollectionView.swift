@@ -44,8 +44,8 @@ final class AlarmCollectionView: UICollectionView {
     
     // MARK: - Life Cycle
     
-    override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
-        super.init(frame: frame, collectionViewLayout: layout)
+    init() {
+        super.init(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         
         setBackgroundColor()
         setProperty()

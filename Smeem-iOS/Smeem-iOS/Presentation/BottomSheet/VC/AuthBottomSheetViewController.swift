@@ -18,9 +18,10 @@ enum AuthType: String {
     case signup
 }
 
-final class LoginBottomSheetViewController: UIViewController, LoginDelegate {
+final class AuthBottomSheetViewController: UIViewController, LoginDelegate {
     
     private let loginManager: LoginManagerProtocol
+    var authProtocol: AuthDataSendProtocol?
     private var loginData: LoginResponse = .init(accessToken: "", refreshToken: "", isRegistered: false, hasPlan: false)
     
     private var hasPlan = false
@@ -55,11 +56,10 @@ final class LoginBottomSheetViewController: UIViewController, LoginDelegate {
 
     // MARK: - Property
     
-    var defaultLoginHeight: CGFloat = 282
-    var defaultSignUpHeight: CGFloat = 394
+    var defaultHeight: CGFloat = 282
     
     var popupBadgeData: [PopupBadge]?
-    var userPlanRequest: UserPlanRequest?
+    var userPlanRequest: UserTrainingInfoRequest?
     
     var authType: AuthType = .login
     
@@ -178,23 +178,16 @@ final class LoginBottomSheetViewController: UIViewController, LoginDelegate {
             $0.top.leading.trailing.bottom.equalToSuperview()
         }
         
-        if bottomSheetView.viewType == .login {
-            bottomSheetView.snp.makeConstraints {
-                $0.height.equalTo(defaultLoginHeight)
-                $0.leading.trailing.bottom.equalToSuperview()
-            }
-        } else {
-            bottomSheetView.snp.makeConstraints {
-                $0.height.equalTo(defaultSignUpHeight)
-                $0.leading.trailing.bottom.equalToSuperview()
-            }
+        bottomSheetView.snp.makeConstraints {
+            $0.height.equalTo(defaultHeight)
+            $0.leading.trailing.bottom.equalToSuperview()
         }
     }
 }
 
 // MARK: - Apple Login
 
-extension LoginBottomSheetViewController: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
+extension AuthBottomSheetViewController: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
         self.view.window!
     }
@@ -223,7 +216,7 @@ extension LoginBottomSheetViewController: ASAuthorizationControllerDelegate, ASA
 
 // MARK: - Network
 
-extension LoginBottomSheetViewController: ViewControllerServiceable {
+extension AuthBottomSheetViewController: ViewControllerServiceable {
     private func login(socialParam: String) {
         Task {
             do {
@@ -250,37 +243,19 @@ extension LoginBottomSheetViewController: ViewControllerServiceable {
                     }
                 case .signup:
                     if loginData.hasPlan == false || (loginData.hasPlan == true && loginData.isRegistered == false) {
-                        guard let userPlanRequest = self.userPlanRequest else { return }
-                        
-                        // loading
-                        Task {
-                            do {
-                                try await loginManager.userPlan(model: userPlanRequest, accessToken: loginData.accessToken)
-                                self.hideLoadingView()
-                                
-                                UserDefaultsManager.clientAccessToken = loginData.accessToken
-
-                                let userNicknameVC = UserNicknameViewController()
-                                self.navigationController?.pushViewController(userNicknameVC, animated: true)
-                                
-                            } catch {
-                                guard let error = error as? NetworkError else { return }
-                                // network error 실패
-                                handlerError(error)
-                            }
-                        }
+                        //                        guard let userPlanRequest = self.userPlanRequest else { return }
+                        UserDefaultsManager.clientAccessToken = loginData.accessToken
+                        self.hideLoadingView()
+                        self.dismiss(animated: false, completion: {
+                            self.authProtocol?.sendTrainingAlarm()
+                        })
                     } else {
-                        // 계정이 있는 유저
                         UserDefaultsManager.accessToken = loginData.accessToken
                         UserDefaultsManager.refreshToken = loginData.refreshToken
-                        
+                            
                         self.presentHomeVC()
                     }
                 }
-            } catch {
-                // login 실패했을 경우
-                guard let error = error as? NetworkError else { return }
-                self.handlerError(error)
             }
         }
     }

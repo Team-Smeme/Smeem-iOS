@@ -9,7 +9,7 @@ import Foundation
 
 protocol LoginManagerProtocol {
     func login(model: LoginRequest) async throws -> LoginResponse
-    func userPlan(model: UserPlanRequest, accessToken: String) async throws
+    func userPlan(model: UserTrainingInfoRequest, accessToken: String) async throws
 }
 
 struct LoginManager: LoginManagerProtocol {
@@ -25,7 +25,7 @@ struct LoginManager: LoginManagerProtocol {
         return response
     }
     
-    func userPlan(model: UserPlanRequest, accessToken: String) async throws {
+    func userPlan(model: UserTrainingInfoRequest, accessToken: String) async throws {
         guard let _ = try await loginService.userPlan(model: model, accessToken: accessToken) else { return }
     }
 }

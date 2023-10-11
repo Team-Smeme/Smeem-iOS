@@ -78,8 +78,7 @@ final class EditNicknameViewController: UIViewController {
     }()
     
     private lazy var doneButton: SmeemButton = {
-        let button = SmeemButton()
-        button.setTitle("완료", for: .normal)
+        let button = SmeemButton(buttonType: .enabled, text: "완료")
         button.isEnabled = true
         button.backgroundColor = .point
         button.addTarget(self, action: #selector(doneButtonDidTap), for: .touchUpInside)
@@ -132,11 +131,11 @@ final class EditNicknameViewController: UIViewController {
         if let textField = notification.object as? UITextField {
             if let text = textField.text {
                 if text.first == " " {
-                    doneButton.smeemButtonType = .notEnabled
+                    doneButton.changeButtonType(buttonType: .notEnabled)
                 } else if text.filter({ $0 == " " }).count == text.count {
-                    doneButton.smeemButtonType = .notEnabled
+                    doneButton.changeButtonType(buttonType: .notEnabled)
                 } else {
-                    doneButton.smeemButtonType = .enabled
+                    doneButton.changeButtonType(buttonType: .enabled)
                 }
             }
         }
@@ -275,10 +274,10 @@ extension EditNicknameViewController: ViewControllerServiceable {
                 
                 if isExistNickname {
                     self.doubleCheckLabel.isHidden = false
-                    self.doneButton.smeemButtonType = .notEnabled
+                    self.doneButton.changeButtonType(buttonType: .notEnabled)
                 } else {
                     self.doubleCheckLabel.isHidden = true
-                    self.doneButton.smeemButtonType = .enabled
+                    self.doneButton.changeButtonType(buttonType: .enabled)
                 }
                 
                 if !isExistNickname {
