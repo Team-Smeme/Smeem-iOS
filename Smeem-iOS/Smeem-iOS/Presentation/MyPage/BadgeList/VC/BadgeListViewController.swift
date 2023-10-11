@@ -10,7 +10,7 @@ import UIKit
 import Kingfisher
 import SnapKit
 
-class BadgeListViewController: UIViewController {
+final class BadgeListViewController: BaseViewController {
     
     // MARK: - Property
     
@@ -81,9 +81,7 @@ class BadgeListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setBackgroundColor()
         setLayout()
-        hiddenNavigationBar()
         setDelegate()
         setRegister()
     }
@@ -170,10 +168,6 @@ class BadgeListViewController: UIViewController {
 
     
     // MARK: - Layout
-    
-    private func setBackgroundColor() {
-        view.backgroundColor = .smeemWhite
-    }
     
     private func setLayout() {
         view.addSubviews(headerContainerView, badgeListTableView)

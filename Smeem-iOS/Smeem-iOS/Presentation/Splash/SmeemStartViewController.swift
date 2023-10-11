@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-final class SmeemStartViewController: UIViewController {
+final class SmeemStartViewController: BaseViewController {
     
     // MARK: - Property
     
@@ -61,10 +61,7 @@ final class SmeemStartViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        setBackgroundColor()
         setLayout()
-        hiddenNavigationBar()
     }
     
     // MARK: - @objc
@@ -92,10 +89,6 @@ final class SmeemStartViewController: UIViewController {
     }
     
     // MARK: - Custom Method
-    
-    private func setBackgroundColor() {
-        view.backgroundColor = .white
-    }
     
     private func setLayout() {
         view.addSubviews(SmeemLogoIcon, SmeemNameLabel, SmeemDescriptionLabel,

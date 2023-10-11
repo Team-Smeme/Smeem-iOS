@@ -10,7 +10,7 @@ import UIKit
 import FSCalendar
 import SnapKit
 
-final class HomeViewController: UIViewController {
+final class HomeViewController: BaseViewController {
     
     // MARK: - Property
     
@@ -190,7 +190,6 @@ final class HomeViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         homeDiaryWithAPI(start: Date().startOfMonth().addingDate(addValue: -7), end: Date().endOfMonth().addingDate(addValue: 7))
-        hiddenNavigationBar()
         checkPopupView()
     }
     
@@ -294,10 +293,6 @@ final class HomeViewController: UIViewController {
     }
     
     // MARK: - Layout
-    
-    private func setBackgroundColor() {
-        view.backgroundColor = .white
-    }
     
     private func setLayout() {
         hiddenNavigationBar()

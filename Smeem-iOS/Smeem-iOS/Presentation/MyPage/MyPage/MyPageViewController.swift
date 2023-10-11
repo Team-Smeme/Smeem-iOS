@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-final class MyPageViewController: UIViewController {
+final class MyPageViewController: BaseViewController {
     
     // MARK: - Property
     
@@ -232,7 +232,6 @@ final class MyPageViewController: UIViewController {
         super.viewDidLoad()
     
         setLayout()
-        swipeRecognizer()
         setupHowLearningViewTapGestureRecognizer()
     }
     
@@ -268,10 +267,6 @@ final class MyPageViewController: UIViewController {
     @objc func badgeImageDidTap() {
         let badgeListVC = BadgeListViewController(myPageManager: MyPageManager(myPageService: MyPageService(requestable: RequestImpl())))
         self.navigationController?.pushViewController(badgeListVC, animated: true)
-    }
-    
-    @objc func responseToSwipeGesture() {
-        self.navigationController?.popViewController(animated: true)
     }
     
     @objc func howLearningViewTapped() {
@@ -346,12 +341,6 @@ final class MyPageViewController: UIViewController {
         alarmCollectionView.myPageTime = (userInfo.trainingTime.hour, userInfo.trainingTime.minute)
     }
     
-    private func swipeRecognizer() {
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(responseToSwipeGesture))
-        swipeRight.direction = UISwipeGestureRecognizer.Direction.right
-        self.view.addGestureRecognizer(swipeRight)
-    }
-    
     private func setupHowLearningViewTapGestureRecognizer() {
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(howLearningViewTapped))
         howLearningView.addGestureRecognizer(tapRecognizer)
@@ -367,14 +356,7 @@ final class MyPageViewController: UIViewController {
     
     // MARK: - Layout
     
-    private func setBackgroundColor() {
-        view.backgroundColor = .white
-    }
-    
     private func setLayout() {
-        setBackgroundColor()
-        hiddenNavigationBar()
-        
         view.addSubviews(headerContainerView, scrollView)
         headerContainerView.addSubviews(backButton, titleLabel, moreButton)
         scrollView.addSubview(contentView)

@@ -18,7 +18,7 @@ final class GoalViewController: UIViewController {
     
     private var viewtype: GoalViewType
     
-    private let goalOnboardingView = GoalOnboardingView()
+    private let goalOnboardingView = GoalEditMypageView()
     private let goalEditMypageView = GoalEditMypageView()
     
     private let datasource = GoalCollectionViewDataSource()
@@ -54,8 +54,7 @@ final class GoalViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        hiddenNavigationBar()
+
         planListGetAPI()
         setCollectionViewOnDataSourceUpdate()
         
@@ -105,7 +104,7 @@ extension GoalViewController {
         switch viewtype {
         case .onboarding:
             view = goalOnboardingView
-            goalOnboardingView.delegate = self
+//            goalOnboardingView.delegate = self
             goalOnboardingView.setCollectionViewDataSource(dataSource: datasource)
             goalOnboardingView.setCollectionViewDelgate(delegate: self)
         case .myPage:

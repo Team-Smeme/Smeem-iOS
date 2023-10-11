@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-final class EditDiaryViewController: UIViewController {
+final class EditDiaryViewController: BaseViewController {
     
     // MARK: - Property
 
@@ -63,11 +63,9 @@ final class EditDiaryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setBackrgroundColor()
         setLayout()
         setRandomSubjectLayout()
         showKeyboard(textView: diaryTextView)
-        hiddenNavigationBar()
         keyboardAddObserver()
     }
     

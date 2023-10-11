@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class UserNicknameViewController: UIViewController {
+final class UserNicknameViewController: BaseViewController {
     
     // MARK: - Property
     
@@ -79,13 +79,11 @@ final class UserNicknameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setBackgroundColor()
         setLayout()
         setTextFieldDelegate()
         showKeyboard(textView: nicknameTextField)
         addTextFieldNotification()
         setImage()
-        hiddenNavigationBar()
     }
     
     deinit {
@@ -133,10 +131,6 @@ final class UserNicknameViewController: UIViewController {
     }
 
     // MARK: - Layout
-    
-    private func setBackgroundColor() {
-        view.backgroundColor = .smeemWhite
-    }
 
     private func setLayout() {
         view.addSubviews(titleNicknameLabel, detailNicknameLabel, nicknameTextField, nicknameLimitLabel,
@@ -228,11 +222,4 @@ extension UserNicknameViewController {
             }
         }
     }
-    
-//    private func userPlanPatchAPI(userPlan: UserPlanRequest) {
-//        OnboardingAPI.shared.userPlanPathch(param: userPlan) { response in
-//            print(response.message)
-//            print(response.success)
-//        }
-//    }
 }

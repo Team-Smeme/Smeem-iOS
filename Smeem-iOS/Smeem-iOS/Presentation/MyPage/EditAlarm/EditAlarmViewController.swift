@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class EditAlarmViewController: UIViewController {
+final class EditAlarmViewController: BaseViewController {
     
     // MARK: - Property
     
@@ -52,7 +52,6 @@ final class EditAlarmViewController: UIViewController {
             print(traingData)
             self.trainigDayData = traingData.day
             self.completeButton.changeButtonType(buttonType: traingData.type)
-//            self.completeButton.smeemButtonType = traingData.type
         }
         collectionView.trainingTimeClosure = { data in
             print(data)
@@ -81,11 +80,8 @@ final class EditAlarmViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        setBackgroundColor()
+
         setLayout()
-        hiddenNavigationBar()
-        swipeRecognizer()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -104,26 +100,12 @@ final class EditAlarmViewController: UIViewController {
                                                                                   minute: trainingTimeData!.minute)))
     }
     
-    @objc func responseToSwipeGesture() {
-        self.navigationController?.popViewController(animated: true)
-    }
-    
-    private func swipeRecognizer() {
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(responseToSwipeGesture))
-        swipeRight.direction = UISwipeGestureRecognizer.Direction.right
-        self.view.addGestureRecognizer(swipeRight)
-    }
-    
     // MARK: - Custom Method
     
     private func setData() {
         alarmCollectionView.selectedIndexPath = dayIndexPathArray
         alarmCollectionView.myPageTime = (trainingTimeData!.0, trainingTimeData!.1)
         alarmCollectionView.selectedDayArray = Set(trainigDayData!.components(separatedBy: ","))
-    }
-    
-    private func setBackgroundColor() {
-        view.backgroundColor = .white
     }
     
     private func setLayout() {
