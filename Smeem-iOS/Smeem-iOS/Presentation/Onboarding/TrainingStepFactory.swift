@@ -7,9 +7,8 @@
 
 import UIKit
 
-final class FirstOnboardingFactory {
-    // 리턴값으로 FirstOnboardingCollectionViewCell를 반환하려고 했는데 그러면 머 각종 초기화값 넣어 줘야 함
-    func createPlanGoalCell() -> FirstOnboardingConfiguration {
+final class TrainingStepFactory {
+    func createTrainingPlansStepView() -> FirstOnboardingConfiguration {
         let builder = FirstOnboardingBuilder()
         let config = builder
             .setStepText(stepText: "1")
@@ -20,7 +19,7 @@ final class FirstOnboardingFactory {
         return config.builder()
     }
     
-    func createHowTrainingCell() -> FirstOnboardingConfiguration {
+    func createTrainingWayStepView() -> FirstOnboardingConfiguration {
         let builder = FirstOnboardingBuilder()
         let config = builder
             .setStepText(stepText: "2")
@@ -31,7 +30,7 @@ final class FirstOnboardingFactory {
         return config.builder()
     }
     
-    func createTrainingAlarmCell() -> FirstOnboardingConfiguration {
+    func createTrainingAlarmStepView() -> FirstOnboardingConfiguration {
         let builder = FirstOnboardingBuilder()
         let config = builder
             .setStepText(stepText: "3")
