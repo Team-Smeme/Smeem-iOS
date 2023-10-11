@@ -17,16 +17,16 @@ struct RequestImpl: Requestable {
         let (data, _) = try await URLSession.shared.data(for: request.makeUrlRequest())
         let decoder = JSONDecoder()
         
-        let decodeData = try? decoder.decode(BaseResponse<T>.self, from: data)
-        
         guard let decodeData = try? decoder.decode(BaseResponse<T>.self, from: data) else {
             throw NetworkError.jsonDecodingError
         }
         
+        print(decodeData.message)
+        
         if decodeData.success == true {
             return decodeData
         } else {
-            throw NetworkError.clientError(message: "decode까지 성공했는데 API 결과가 false인 경우")
+            throw NetworkError.clientError(message: decodeData.message)
         }
     }
 }
