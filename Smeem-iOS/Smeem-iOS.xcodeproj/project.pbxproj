@@ -125,7 +125,6 @@
 		4AB8ED842AC2E8DD00177106 /* MyPageEditManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB8ED832AC2E8DD00177106 /* MyPageEditManager.swift */; };
 		4ABE3FD12A811F8400D1D22E /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABE3FD02A811F8400D1D22E /* SplashViewController.swift */; };
 		4AC00EC82AD0090F009230DA /* TrainingStepFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC00EC72AD0090F009230DA /* TrainingStepFactory.swift */; };
-		4AC00ECA2AD166A5009230DA /* FirstOnboardingEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC00EC92AD166A5009230DA /* FirstOnboardingEnum.swift */; };
 		4AC00ECC2AD1C143009230DA /* UICollectionView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC00ECB2AD1C143009230DA /* UICollectionView+.swift */; };
 		4AC00ED52AD2E62F009230DA /* TrainingGoalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC00ED42AD2E62F009230DA /* TrainingGoalViewController.swift */; };
 		4AC00ED72AD2E6E0009230DA /* TrainingStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC00ED62AD2E6E0009230DA /* TrainingStepView.swift */; };
@@ -299,7 +298,6 @@
 		4AB9F5292AAA035300EBEE35 /* BaseResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseResponse.swift; sourceTree = "<group>"; };
 		4ABE3FD02A811F8400D1D22E /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		4AC00EC72AD0090F009230DA /* TrainingStepFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingStepFactory.swift; sourceTree = "<group>"; };
-		4AC00EC92AD166A5009230DA /* FirstOnboardingEnum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstOnboardingEnum.swift; sourceTree = "<group>"; };
 		4AC00ECB2AD1C143009230DA /* UICollectionView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+.swift"; sourceTree = "<group>"; };
 		4AC00ED42AD2E62F009230DA /* TrainingGoalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingGoalViewController.swift; sourceTree = "<group>"; };
 		4AC00ED62AD2E6E0009230DA /* TrainingStepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingStepView.swift; sourceTree = "<group>"; };
@@ -641,10 +639,9 @@
 		37EB69E42A4B3B6B00075E4E /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				4A01235C2AAA2BFA00E09646 /* ViewControllerServiceable.swift */,
-				37EB69E52A4B3BC400075E4E /* DataBindProtocol.swift */,
+				4AC00F002AD6DC8C009230DA /* Network */,
+				4AC00EFE2AD6DC44009230DA /* DataSend */,
 				371E94152A87B83D0098280F /* NextButtonDelegate.swift */,
-				4A7BE7602ABB5BC800070E83 /* Requestable.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -902,7 +899,7 @@
 				4AEFD4C32A136E6F00DAB2BD /* Way */,
 				4AEFD4C62A13907D00DAB2BD /* Alarm */,
 				4AC00EFA2AD6D82B009230DA /* View */,
-				4AC00EFB2AD6D848009230DA /* Protocol */,
+				4AC00EFC2AD6DC16009230DA /* Factory */,
 			);
 			path = Training;
 			sourceTree = "<group>";
@@ -925,12 +922,32 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		4AC00EFB2AD6D848009230DA /* Protocol */ = {
+		4AC00EFC2AD6DC16009230DA /* Factory */ = {
 			isa = PBXGroup;
 			children = (
+				4AC00EC72AD0090F009230DA /* TrainingStepFactory.swift */,
+				4A81C2922ACDA6610056E815 /* FirstOnboardingBuilder.swift */,
+			);
+			path = Factory;
+			sourceTree = "<group>";
+		};
+		4AC00EFE2AD6DC44009230DA /* DataSend */ = {
+			isa = PBXGroup;
+			children = (
+				37EB69E52A4B3BC400075E4E /* DataBindProtocol.swift */,
+				4AC00EF62AD59C73009230DA /* AuthDataSendProtocol.swift */,
 				4AC00EF42AD57202009230DA /* TrainingAlarmDataSendProtocol.swift */,
 			);
-			path = Protocol;
+			path = DataSend;
+			sourceTree = "<group>";
+		};
+		4AC00F002AD6DC8C009230DA /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				4A01235C2AAA2BFA00E09646 /* ViewControllerServiceable.swift */,
+				4A7BE7602ABB5BC800070E83 /* Requestable.swift */,
+			);
+			path = Network;
 			sourceTree = "<group>";
 		};
 		4AC047232A8FCA9700EBDC0E /* AuthManagement */ = {
@@ -1072,9 +1089,6 @@
 				4AC00EF82AD6D7D3009230DA /* Training */,
 				4A13B7572A13D35800F4FB1E /* Nickname */,
 				4A8275D12A15129B0083A4AB /* Service */,
-				4A81C2922ACDA6610056E815 /* FirstOnboardingBuilder.swift */,
-				4AC00EC72AD0090F009230DA /* TrainingStepFactory.swift */,
-				4AC00EC92AD166A5009230DA /* FirstOnboardingEnum.swift */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
@@ -1083,7 +1097,6 @@
 			isa = PBXGroup;
 			children = (
 				4A0E8D5729F8362E00E0FC23 /* AuthViewController.swift */,
-				4AC00EF62AD59C73009230DA /* AuthDataSendProtocol.swift */,
 				4AD923E82A0692C600FF5E27 /* AuthBottomSheetViewController.swift */,
 				4AD923EA2A0692EA00FF5E27 /* BottomSheetView.swift */,
 			);
@@ -1337,7 +1350,6 @@
 				3728B8D72A2CFF3A00EF4CF8 /* StepTwoKoreanDiaryViewController.swift in Sources */,
 				37DCA66E2A484D3100FF8F90 /* PostDiaryResponse.swift in Sources */,
 				4A0EA28A2AC32A6C00EB4098 /* NicknameValidService.swift in Sources */,
-				4AC00ECA2AD166A5009230DA /* FirstOnboardingEnum.swift in Sources */,
 				4A0EA4552A014027006CCE52 /* GeneralResponse.swift in Sources */,
 				4A7BE7612ABB5BC800070E83 /* Requestable.swift in Sources */,
 				4AC00EF72AD59C73009230DA /* AuthDataSendProtocol.swift in Sources */,
