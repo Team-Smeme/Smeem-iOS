@@ -98,9 +98,6 @@ final class TrainingAlarmViewController: BaseViewController {
         let navigationVC = UINavigationController(rootViewController: signupBottomSheetVC)
         navigationVC.modalPresentationStyle = .overFullScreen
         
-        /// 로그인하지 않은 유저일 경우, 회원가입 바텀시트 띄우기
-        /// 앞에서 로그인하고 온 유저라는 것을 어떻게 아는가?
-        /// TODO: 공부
         if UserDefaultsManager.clientAccessToken == "" {
             signupBottomSheetVC.bottomSheetView.viewType = .signUp
             signupBottomSheetVC.authType = .signup
