@@ -19,7 +19,7 @@ final class TrainingWayViewController: BaseViewController {
     
     // MARK: UI Properties
     
-    private let trainingWayStepView = TrainingStepView(configuration: TrainingStepFactory().createTrainingWayStepView())
+    private let trainingWayStepView = TrainingStepView(configuration: TrainingStepFactory.makeTrainingWayStepView())
     private let trainingWayView = TrainingWayView()
     private lazy var nextButton = SmeemButton(buttonType: .enabled, text: "다음")
     

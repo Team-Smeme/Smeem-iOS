@@ -7,37 +7,32 @@
 
 import UIKit
 
-final class TrainingStepFactory {
-    func createTrainingPlansStepView() -> FirstOnboardingConfiguration {
-        let builder = FirstOnboardingBuilder()
-        let config = builder
-            .setStepText(stepText: "1")
-            .setTitleLearningText(titleLearningText: "트레이닝 목표 설정")
-            .setDetailLearningText(detailLearningText: "마이페이지에서 언제든지 수정할 수 있어요!")
-            .setNextButtonText(nextButtonText: "다음")
-        
-        return config.builder()
+struct FirstOnboardingConfiguration {
+    let stepText: String
+    let titleLearningText: String
+    let detailLearningText: String
+    let nextButtonTitleText: String
+}
+
+struct TrainingStepFactory {
+    static func makeTrainingPlansStepView() -> FirstOnboardingConfiguration {
+        FirstOnboardingConfiguration(stepText: "1",
+                                     titleLearningText: "트레이닝 목표 설정",
+                                     detailLearningText: "마이페이지에서 언제든지 수정할 수 있어요",
+                                     nextButtonTitleText: "다음")
     }
     
-    func createTrainingWayStepView() -> FirstOnboardingConfiguration {
-        let builder = FirstOnboardingBuilder()
-        let config = builder
-            .setStepText(stepText: "2")
-            .setTitleLearningText(titleLearningText: "추천 트레이닝 방법")
-            .setDetailLearningText(detailLearningText: "스밈과 함께한다면 분명 목표를 이룰 거예요!")
-            .setNextButtonText(nextButtonText: "다음")
-        
-        return config.builder()
+    static func makeTrainingWayStepView() -> FirstOnboardingConfiguration {
+        FirstOnboardingConfiguration(stepText: "2",
+                                     titleLearningText: "추천 트레이닝 방법",
+                                     detailLearningText: "스밈과 함께한다면 분명 목표를 이룰 거예요",
+                                     nextButtonTitleText: "다음")
     }
     
-    func createTrainingAlarmStepView() -> FirstOnboardingConfiguration {
-        let builder = FirstOnboardingBuilder()
-        let config = builder
-            .setStepText(stepText: "3")
-            .setTitleLearningText(titleLearningText: "트레이닝 시간 설정")
-            .setDetailLearningText(detailLearningText: "당신의 목표를 이룰 수 있도록 알림을 드릴게요!")
-            .setNextButtonText(nextButtonText: "완료")
-        
-        return config.builder()
+    static func makeTrainingAlarmStepView() -> FirstOnboardingConfiguration {
+        FirstOnboardingConfiguration(stepText: "3",
+                                     titleLearningText: "트레이닝 시간 설정",
+                                     detailLearningText: "당신의 목표를 이룰 수 있도록 알림을 드릴게요!",
+                                     nextButtonTitleText: "완료")
     }
 }

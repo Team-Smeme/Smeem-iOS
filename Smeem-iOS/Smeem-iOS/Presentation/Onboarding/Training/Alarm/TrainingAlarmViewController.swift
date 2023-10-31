@@ -25,7 +25,7 @@ final class TrainingAlarmViewController: BaseViewController {
     
     // MARK: UI Properties
     
-    private let trainingAlarmStepView = TrainingStepView(configuration: TrainingStepFactory().createTrainingAlarmStepView())
+    private let trainingAlarmStepView = TrainingStepView(configuration: TrainingStepFactory.makeTrainingAlarmStepView())
     private let trainingAlarmCollectionView = AlarmCollectionView()
     private lazy var laterButton = SmeemTextButton(title: "나중에 설정하기", textColor: .gray600, font: .b4)
     private lazy var completeButton = SmeemButton(buttonType: .enabled, text: "완료")

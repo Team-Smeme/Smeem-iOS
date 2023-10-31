@@ -20,7 +20,7 @@ final class TrainingGoalViewController: BaseViewController {
     
     // MARK: UI Properties
     
-    private let trainingStepView = TrainingStepView(configuration: TrainingStepFactory().createTrainingPlansStepView())
+    private let trainingStepView = TrainingStepView(configuration: TrainingStepFactory.makeTrainingPlansStepView())
     private lazy var planGoalCollectionView = TrainingGoalsCollectionView(planGoalType: .onboarding)
     private lazy var nextButton = SmeemButton(buttonType: .notEnabled, text: "다음")
     
