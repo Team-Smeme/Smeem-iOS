@@ -48,6 +48,7 @@
 		37A574E62A02178D00312453 /* SmeemToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574E52A02178D00312453 /* SmeemToastView.swift */; };
 		37A574E82A02424F00312453 /* RandomSubjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574E72A02424F00312453 /* RandomSubjectView.swift */; };
 		37B360AA2AC2A4680006C8ED /* SmeemTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B360A92AC2A4680006C8ED /* SmeemTextView.swift */; };
+		37C3E1A32AE8196500FE1C8A /* LeftButtonActionStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37C3E1A22AE8196500FE1C8A /* LeftButtonActionStrategy.swift */; };
 		37DCA6572A47574300FF8F90 /* RandomSubjectAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DCA6562A47574300FF8F90 /* RandomSubjectAPI.swift */; };
 		37DCA65A2A47598700FF8F90 /* RandomSubjectService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DCA6592A47598700FF8F90 /* RandomSubjectService.swift */; };
 		37DCA65D2A475B5100FF8F90 /* RandomSubjectResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DCA65C2A475B5100FF8F90 /* RandomSubjectResponse.swift */; };
@@ -207,6 +208,7 @@
 		37A574E52A02178D00312453 /* SmeemToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmeemToastView.swift; sourceTree = "<group>"; };
 		37A574E72A02424F00312453 /* RandomSubjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomSubjectView.swift; sourceTree = "<group>"; };
 		37B360A92AC2A4680006C8ED /* SmeemTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmeemTextView.swift; sourceTree = "<group>"; };
+		37C3E1A22AE8196500FE1C8A /* LeftButtonActionStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftButtonActionStrategy.swift; sourceTree = "<group>"; };
 		37DCA6562A47574300FF8F90 /* RandomSubjectAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomSubjectAPI.swift; sourceTree = "<group>"; };
 		37DCA6592A47598700FF8F90 /* RandomSubjectService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomSubjectService.swift; sourceTree = "<group>"; };
 		37DCA65C2A475B5100FF8F90 /* RandomSubjectResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomSubjectResponse.swift; sourceTree = "<group>"; };
@@ -519,9 +521,18 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
+		37C3E1A02AE8192600FE1C8A /* Strategies */ = {
+			isa = PBXGroup;
+			children = (
+				37C3E1A22AE8196500FE1C8A /* LeftButtonActionStrategy.swift */,
+			);
+			path = Strategies;
+			sourceTree = "<group>";
+		};
 		37CD0DB32A1DEE64001F03E7 /* ForeignDiary */ = {
 			isa = PBXGroup;
 			children = (
+				37C3E1A02AE8192600FE1C8A /* Strategies */,
 				371107E12ACABD89007A4AC2 /* View */,
 				374FAF802A2CACCF00237A1A /* DiaryViewController.swift */,
 				3728B8D22A2CFED300EF4CF8 /* ForeignDiaryViewController.swift */,
@@ -1293,6 +1304,7 @@
 				37A574E82A02424F00312453 /* RandomSubjectView.swift in Sources */,
 				4A0EA4642A014710006CCE52 /* SmeemButton.swift in Sources */,
 				371107DD2ACAB571007A4AC2 /* BaseView.swift in Sources */,
+				37C3E1A32AE8196500FE1C8A /* LeftButtonActionStrategy.swift in Sources */,
 				37EB69E62A4B3BC400075E4E /* DataBindProtocol.swift in Sources */,
 				371E940E2A87A2030098280F /* GoalEditMypageView.swift in Sources */,
 			);

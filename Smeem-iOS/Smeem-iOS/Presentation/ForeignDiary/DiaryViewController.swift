@@ -38,8 +38,6 @@ class DiaryViewController: BaseViewController {
     // MARK: - Life Cycle
     
     override func loadView() {
-        let diaryFactory = DiaryViewFactory()
-        diaryView = diaryFactory.createForeginDiaryView()
         
         view = diaryView
     }
@@ -52,6 +50,12 @@ class DiaryViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let diaryFactory = DiaryViewFactory()
+        diaryView = diaryFactory.createForeginDiaryView()
+        
+        diaryView?.leftButtonActionStategy = DismissLeftButtonActionStrategy(viewContoller: self)
+        
+        diaryView?.setNavigationBarDelegate(self)
 //        setDelegate()
 //        setupKeyboardHandler()
     }
@@ -132,6 +136,16 @@ extension DiaryViewController {
 //    }
 }
 
+extension DiaryViewController: NavigationBarActionDelegate {
+    func didTapLeftButton() {
+        diaryView?.leftButtonActionStategy?.performLeftButtonAction()
+    }
+    
+    func didTapRightButton() {
+        print("rightButtonTapped")
+    }
+}
+
 //MARK: - RandomSubjectViewDelegate
 
 extension DiaryViewController: RandomSubjectViewDelegate {
@@ -186,6 +200,7 @@ extension DiaryViewController {
 //        }
 //    }
 //}
+
 
 // MARK: - Tutorial
 

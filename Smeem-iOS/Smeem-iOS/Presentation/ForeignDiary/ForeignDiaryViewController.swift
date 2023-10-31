@@ -20,17 +20,17 @@ final class ForeignDiaryViewController: DiaryViewController {
     }
 }
 
-extension ForeignDiaryViewController: UINavigationControllerDelegate {
-    func didTapLeftButton() {
-        self.presentingViewController?.dismiss(animated: true)
-    }
-    
-    func didTapRightButton() {
-//        if .navigationView.rightButton.titleLabel?.textColor == .point {
-//            showLodingView(loadingView: self.loadingView)
-//            postDiaryAPI()
-//        } else {
-//            showToastIfNeeded(toastType: .defaultToast(bodyType: .regEx))
-//        }
-    }
-}
+//extension ForeignDiaryViewController: UINavigationControllerDelegate {
+//    func didTapLeftButton() {
+//        self.presentingViewController?.dismiss(animated: true)
+//    }
+//    
+//    func didTapRightButton() {
+////        if .navigationView.rightButton.titleLabel?.textColor == .point {
+////            showLodingView(loadingView: self.loadingView)
+////            postDiaryAPI()
+////        } else {
+////            showToastIfNeeded(toastType: .defaultToast(bodyType: .regEx))
+////        }
+//    }
+//}

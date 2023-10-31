@@ -17,6 +17,8 @@ class DiaryView: BaseView {
     
     let configuration: DiaryViewConfiguration
     
+    var leftButtonActionStategy: LeftButtonActionStrategy?
+    
 //    var isTopicVisible: Bool = false {
 //        if isTopicVisible {
 //            addRandomTopicView()
@@ -106,6 +108,15 @@ extension DiaryView {
 // MARK: - Helpers
 
 extension DiaryView {
+    
+    func setNavigationBarDelegate(_ delegate: NavigationBarActionDelegate?) {
+        self.navigationView.actionDelegate = delegate
+    }
+    
+//    @objc func leftButtonDidTap() {
+//        leftButtonActionStategy?.performLeftButtonAction()
+//    }
+    
     func setInputText(_ text: String) {
         self.inputTextView.text = text
     }

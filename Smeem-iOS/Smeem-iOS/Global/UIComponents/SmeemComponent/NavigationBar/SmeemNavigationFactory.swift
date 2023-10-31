@@ -50,7 +50,7 @@ class NavigationBarFactory {
                 .withLayout(type.layout)
                 .build()
             navigationBar.applyConfiguraton(configuration)
-            navigationBar.actionDelegate = DetailDiaryViewController()
+//            navigationBar.actionDelegate = DetailDiaryViewController()
             return navigationBar
         case .edit:
             let configuration = configurationBuilder

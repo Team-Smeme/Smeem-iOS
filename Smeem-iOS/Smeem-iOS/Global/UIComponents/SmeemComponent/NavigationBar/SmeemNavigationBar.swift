@@ -15,7 +15,7 @@ class SmeemNavigationBar: UIView {
     
     // MARK: - Properties
     
-    var actionDelegate: NavigationBarActionDelegate?
+    weak var actionDelegate: NavigationBarActionDelegate?
     
     // MARK: - UI Properties
     
@@ -130,7 +130,7 @@ class SmeemNavigationBar: UIView {
     @objc func leftButtonTapped() {
         actionDelegate?.didTapLeftButton()
     }
-    
+
     @objc func rightButtonTapped() {
         actionDelegate?.didTapRightButton()
     }
