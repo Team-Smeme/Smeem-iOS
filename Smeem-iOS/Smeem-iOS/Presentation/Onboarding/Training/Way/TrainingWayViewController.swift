@@ -46,7 +46,7 @@ final class TrainingWayViewController: BaseViewController {
     
     override func setButtonAction() {
         nextButton.addAction {
-            let trainingAlarmVC = TrainingAlarmViewController(trainingManager: TrainingManager(trainingService: TrainingService(requestable: RequestImpl())))
+            let trainingAlarmVC = TrainingAlarmViewController(trainingManager: TrainingManager(trainingService: TrainingService(requestable: APIServie())))
             trainingAlarmVC.targetString = self.targetString
             self.navigationController?.pushViewController(trainingAlarmVC, animated: true)
         }

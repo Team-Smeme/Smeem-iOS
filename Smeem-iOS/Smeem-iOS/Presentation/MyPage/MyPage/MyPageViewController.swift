@@ -248,12 +248,12 @@ final class MyPageViewController: BaseViewController {
     }
     
     @objc func moreButtonDidTap(_ sender: UIButton) {
-        let authManagetmentVC = AuthManagementViewController(myPageAuthManager: MyPageAuthManager(myPageAuthService: MyPageAuthService(requestable: RequestImpl())))
+        let authManagetmentVC = AuthManagementViewController(myPageAuthManager: MyPageAuthManager(myPageAuthService: MyPageAuthService(requestable: APIServie())))
         self.navigationController?.pushViewController(authManagetmentVC, animated: true)
     }
     
     @objc func editButtonDidTap(_ sender: UIButton) {
-        let editVC = EditNicknameViewController(editNicknameManager: MyPageEditManager(myPageEditService: MyPageEditService(requestable: RequestImpl())), nicknameValidManager: NicknameValidManager(nicknameValidService: NicknameValidService(requestable: RequestImpl())))
+        let editVC = EditNicknameViewController(editNicknameManager: MyPageEditManager(myPageEditService: MyPageEditService(requestable: APIServie())), nicknameValidManager: NicknameValidManager(nicknameValidService: NicknameValidService(requestable: APIServie())))
         editVC.editNicknameDelegate = self
         editVC.nickName = userInfo.username
         self.navigationController?.pushViewController(editVC, animated: true)
@@ -265,7 +265,7 @@ final class MyPageViewController: BaseViewController {
     }
     
     @objc func badgeImageDidTap() {
-        let badgeListVC = BadgeListViewController(myPageManager: MyPageManager(myPageService: MyPageService(requestable: RequestImpl())))
+        let badgeListVC = BadgeListViewController(myPageManager: MyPageManager(myPageService: MyPageService(requestable: APIServie())))
         self.navigationController?.pushViewController(badgeListVC, animated: true)
     }
     
@@ -286,7 +286,7 @@ final class MyPageViewController: BaseViewController {
     }
     
     @objc func alarmEditButtonDidTap() {
-        let alarmEditVC = EditAlarmViewController(editAlarmManager: MyPageEditManager(myPageEditService: MyPageEditService(requestable: RequestImpl())))
+        let alarmEditVC = EditAlarmViewController(editAlarmManager: MyPageEditManager(myPageEditService: MyPageEditService(requestable: APIServie())))
         alarmEditVC.editAlarmDelegate = self
         alarmEditVC.dayIndexPathArray = indexPathArray
         alarmEditVC.trainigDayData = userInfo.trainingTime.day

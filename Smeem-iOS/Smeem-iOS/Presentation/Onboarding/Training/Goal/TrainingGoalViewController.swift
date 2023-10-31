@@ -48,7 +48,7 @@ final class TrainingGoalViewController: BaseViewController {
     
     override func setButtonAction() {
         nextButton.addAction {
-            let trainingWayVC = TrainingWayViewController(trainingManager: TrainingManager(trainingService: TrainingService(requestable: RequestImpl())))
+            let trainingWayVC = TrainingWayViewController(trainingManager: TrainingManager(trainingService: TrainingService(requestable: APIServie())))
             trainingWayVC.targetString = self.targetString
             self.navigationController?.pushViewController(trainingWayVC, animated: true)
         }

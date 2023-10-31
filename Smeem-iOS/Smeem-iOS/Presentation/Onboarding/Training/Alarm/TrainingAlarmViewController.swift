@@ -93,7 +93,7 @@ final class TrainingAlarmViewController: BaseViewController {
     }
     
     private func presentBottomSheet() {
-        let signupBottomSheetVC = AuthBottomSheetViewController(loginManager: LoginManager(loginService: LoginService(requestable: RequestImpl())))
+        let signupBottomSheetVC = AuthBottomSheetViewController(loginManager: LoginManager(loginService: LoginService(requestable: APIServie())))
         signupBottomSheetVC.authProtocol = self
         let navigationVC = UINavigationController(rootViewController: signupBottomSheetVC)
         navigationVC.modalPresentationStyle = .overFullScreen

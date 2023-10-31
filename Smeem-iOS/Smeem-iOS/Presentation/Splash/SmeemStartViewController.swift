@@ -67,7 +67,7 @@ final class SmeemStartViewController: BaseViewController {
     // MARK: - @objc
     
     @objc func loginButtonDidTap() {
-        let loginBottomSheetVC = AuthBottomSheetViewController(loginManager: LoginManager(loginService: LoginService(requestable: RequestImpl())))
+        let loginBottomSheetVC = AuthBottomSheetViewController(loginManager: LoginManager(loginService: LoginService(requestable: APIServie())))
         UserDefaultsManager.clientAuthType = AuthType.login.rawValue
         loginBottomSheetVC.authType = .login
         loginBottomSheetVC.bottomSheetView.viewType = .login
@@ -84,7 +84,7 @@ final class SmeemStartViewController: BaseViewController {
     
     @objc func startButtonDidTap() {
         UserDefaultsManager.clientAuthType = AuthType.signup.rawValue
-        let trainingGoalsVC = TrainingGoalViewController(trainingManager: TrainingManager(trainingService: TrainingService(requestable: RequestImpl())))
+        let trainingGoalsVC = TrainingGoalViewController(trainingManager: TrainingManager(trainingService: TrainingService(requestable: APIServie())))
         self.navigationController?.pushViewController(trainingGoalsVC, animated: true)
     }
     
