@@ -55,7 +55,7 @@ final class TrainingGoalsCollectionView: BaseCollectionView {
     }
     
     private func registerCell() {
-        self.registerCell(cell: TrainingGoalCollectionViewCell.self)
+        self.registerCell(cellType: TrainingGoalCollectionViewCell.self)
     }
     
     private func setDelegate() {
@@ -72,7 +72,7 @@ extension TrainingGoalsCollectionView: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = dequeueReusableCell(cell: TrainingGoalCollectionViewCell.self, indexPath: indexPath)
+        let cell = dequeueReusableCell(cellType: TrainingGoalCollectionViewCell.self, indexPath: indexPath)
         cell.setData(planGoalArray[indexPath.item].name)
         return cell
     }
