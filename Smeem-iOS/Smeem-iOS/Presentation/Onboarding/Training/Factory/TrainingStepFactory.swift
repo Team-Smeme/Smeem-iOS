@@ -7,11 +7,7 @@
 
 import UIKit
 
-protocol TrainingStepProtocol {
-    func makeStepView(type: TrainingStep) -> TrainingStepConfiguration
-}
-
-struct TrainingStepFactory: TrainingStepProtocol {
+struct TrainingStepFactory {
     func makeStepView(type: TrainingStep) -> TrainingStepConfiguration {
         switch type {
         case .goals:
