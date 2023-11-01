@@ -95,6 +95,7 @@
 		4A8FFA5229C9E1FD00FB76C0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8FFA5129C9E1FD00FB76C0 /* SceneDelegate.swift */; };
 		4A8FFA5929C9E1FE00FB76C0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A8FFA5829C9E1FE00FB76C0 /* Assets.xcassets */; };
 		4A8FFA5C29C9E1FE00FB76C0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A8FFA5A29C9E1FE00FB76C0 /* LaunchScreen.storyboard */; };
+		4A9A925F2AF28A5B003773C5 /* TrainingStepConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9A925E2AF28A5B003773C5 /* TrainingStepConfiguration.swift */; };
 		4A9E10E42A43468600295D07 /* BaseTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9E10E32A43468600295D07 /* BaseTargetType.swift */; };
 		4A9FAB452A4C3D1200C40D5A /* BadgeListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9FAB3E2A4C3D1200C40D5A /* BadgeListViewController.swift */; };
 		4A9FAB462A4C3D1200C40D5A /* BadgeNetworkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9FAB402A4C3D1200C40D5A /* BadgeNetworkModel.swift */; };
@@ -273,6 +274,7 @@
 		4A8FFA5829C9E1FE00FB76C0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4A8FFA5B29C9E1FE00FB76C0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4A8FFA5D29C9E1FE00FB76C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4A9A925E2AF28A5B003773C5 /* TrainingStepConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingStepConfiguration.swift; sourceTree = "<group>"; };
 		4A9E10E32A43468600295D07 /* BaseTargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTargetType.swift; sourceTree = "<group>"; };
 		4A9FAB3E2A4C3D1200C40D5A /* BadgeListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeListViewController.swift; sourceTree = "<group>"; };
 		4A9FAB402A4C3D1200C40D5A /* BadgeNetworkModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeNetworkModel.swift; sourceTree = "<group>"; };
@@ -924,6 +926,7 @@
 			isa = PBXGroup;
 			children = (
 				4AC00EC72AD0090F009230DA /* TrainingStepFactory.swift */,
+				4A9A925E2AF28A5B003773C5 /* TrainingStepConfiguration.swift */,
 			);
 			path = Factory;
 			sourceTree = "<group>";
@@ -1289,6 +1292,7 @@
 				4AD04B3D2A190E9A004B7A58 /* UITextView+.swift in Sources */,
 				4AC00EE22AD3FF7F009230DA /* TrainingService.swift in Sources */,
 				4A01235B2AAA178500E09646 /* HttpMethod.swift in Sources */,
+				4A9A925F2AF28A5B003773C5 /* TrainingStepConfiguration.swift in Sources */,
 				6F31802F2A24D1DB00089870 /* CalendarCell.swift in Sources */,
 				6FE1298A2A4982DA005536C4 /* HomeAPI.swift in Sources */,
 				374F828E2AC5DFFE00C128B9 /* DiaryBottomView.swift in Sources */,

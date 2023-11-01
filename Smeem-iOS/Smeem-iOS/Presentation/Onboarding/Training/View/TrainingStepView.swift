@@ -62,7 +62,7 @@ final class TrainingStepView: UIView {
     
     // MARK: Life Cycle
     
-    init(configuration: FirstOnboardingConfiguration) {
+    init(configuration: TrainingStepConfiguration) {
         super.init(frame: .zero)
         
         setComponentText(configuration: configuration)
@@ -73,7 +73,7 @@ final class TrainingStepView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setComponentText(configuration: FirstOnboardingConfiguration) {
+    private func setComponentText(configuration: TrainingStepConfiguration) {
         nowStepOneLabel.text = configuration.stepText
         titleTrainingLabel.text = configuration.titleLearningText
         detailTrainingLabel.text = configuration.detailLearningText
