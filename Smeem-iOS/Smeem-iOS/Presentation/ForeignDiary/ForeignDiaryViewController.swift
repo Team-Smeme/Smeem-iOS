@@ -17,11 +17,11 @@ final class ForeignDiaryViewController: DiaryViewController {
     }
     
     override func didTapLeftButton() {
-        print("didTapLeftButton")
+        self.presentingViewController?.dismiss(animated: true)
     }
     
     override func didTapRightButton() {
-        <#code#>
+        print("didTapRightButton")
     }
 }
 

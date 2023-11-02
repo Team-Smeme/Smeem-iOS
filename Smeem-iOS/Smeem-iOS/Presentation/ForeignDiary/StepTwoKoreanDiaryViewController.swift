@@ -22,6 +22,9 @@ final class StepTwoKoreanDiaryViewController: DiaryViewController {
         super.viewDidLoad()
 //        handleRightNavitationButton()
     }
+}
+
+extension StepTwoKoreanDiaryViewController {
     
     // MARK: - @objc
     
@@ -46,6 +49,12 @@ final class StepTwoKoreanDiaryViewController: DiaryViewController {
 //    private func handleRightNavitationButton() {
 //        rightNavigationButton.addTarget(self, action: #selector(rightNavigationButtonDidTap), for: .touchUpInside)
 //    }
+    
+    static func createWithStepTwoKoreanDiaryView() -> StepTwoKoreanDiaryViewController {
+        let diaryViewFactory = DiaryViewFactory()
+        let stepTwoKoreanDiaryView = diaryViewFactory.createStepTwoKoreanDiaryView()
+        return StepTwoKoreanDiaryViewController(rootView: stepTwoKoreanDiaryView)
+    }
 }
 
 // MARK: - DataBindProtocol

@@ -32,15 +32,20 @@ final class StepOneKoreanDiaryViewController: DiaryViewController {
 //    }()
     
     override func didTapLeftButton() {
-        <#code#>
+        self.presentingViewController?.dismiss(animated: true)
     }
     
     override func didTapRightButton() {
-        <#code#>
+        print("didTapRightButton")
     }
 }
 
 extension StepOneKoreanDiaryViewController {
+    static func createWithStepOneKoreanDiaryView() -> StepOneKoreanDiaryViewController {
+        let diaryViewFactory = DiaryViewFactory()
+        let stepOneKoreanDiaryView = diaryViewFactory.createStepOneKoreanDiaryView()
+        return StepOneKoreanDiaryViewController(rootView: stepOneKoreanDiaryView)
+    }
     
 //    private func handleRightNavigationButton() {
 //        let stepTwoVC = StepTwoKoreanDiaryViewController()
@@ -54,16 +59,16 @@ extension StepOneKoreanDiaryViewController {
 //    }
 }
 
-extension StepOneKoreanDiaryViewController: NavigationBarActionDelegate {
-    func didTapLeftButton() {
-        self.presentingViewController?.dismiss(animated: true)
-    }
-    
-    func didTapRightButton() {
+//extension StepOneKoreanDiaryViewController: NavigationBarActionDelegate {
+//    func didTapLeftButton() {
+//        self.presentingViewController?.dismiss(animated: true)
+//    }
+//
+//    func didTapRightButton() {
 //        if rightNavigationButton.titleLabel?.textColor == .point {
 //            handleRightNavigationButton()
 //        } else {
 //            showToastIfNeeded(toastType: .defaultToast(bodyType: .regEx))
 //        }
-    }
-}
+//    }
+//}

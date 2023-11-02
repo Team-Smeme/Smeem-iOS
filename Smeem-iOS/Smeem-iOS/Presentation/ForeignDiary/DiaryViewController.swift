@@ -7,39 +7,32 @@
 
 import UIKit
 
-class DiaryViewController: BaseViewController {
+class DiaryViewController: BaseViewController, NavigationBarActionDelegate {
     
     // MARK: - Properties
     
-    private var diaryView: DiaryView?
-    
+    private var rootView: DiaryView?
+    private var viewModel: DiaryViewModel?
+
+    private var delegateSetupStrategy: DelegateSetupStrategy = DefaultDelegateSeupStrategy()
     private weak var delegate: UITextViewDelegate?
-    
-    private var randomTopicEnabled: Bool = false {
-        didSet {
-            //            updateRandomTopicView()
-            //            updateInputTextViewConstraints()
-            view.layoutIfNeeded()
-        }
-    }
-    
-    var topicID: Int? = nil
-    var topicContent = String()
-    var diaryID: Int?
-    var badgePopupContent = [PopupBadge]()
-    
-    var isTopicCalled: Bool = false
-    var isKeyboardVisible: Bool = false
-    var keyboardHeight: CGFloat = 0.0
-    var rightButtonFlag = false
-    var isInitialInput = true
-    var keyboardHandler: KeyboardFollowingLayoutHandler?
     
     // MARK: - Life Cycle
     
+    init(rootView: DiaryView) {
+        self.rootView = rootView
+        super.init(nibName: nil, bundle: nil)
+        
+        setNagivationBarDelegate()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func loadView() {
         
-        view = diaryView
+        view = rootView
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -50,60 +43,36 @@ class DiaryViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let diaryFactory = DiaryViewFactory()
-        diaryView = diaryFactory.createForeginDiaryView()
+        delegateSetupStrategy.setupDelegate(for: self)
         
-        diaryView?.leftButtonActionStategy = DismissLeftButtonActionStrategy(viewContoller: self)
-        
-        diaryView?.setNavigationBarDelegate(self)
+//        diaryView?.leftButtonActionStategy = DismissLeftButtonActionStrategy(viewContoller: self)
 //        setDelegate()
 //        setupKeyboardHandler()
     }
     
     deinit {
-        keyboardHandler = nil
+//        keyboardInfo?.keyboardHandler = nil
     }
     
-    // MARK: - Custom Method
-    
-//    private func setData() {
-//        randomSubjectView.setData(contentText: topicContent)
-//    }
-//
-//    private func setDelegate() {
-//        randomSubjectView.delegate = self
-//    }
-    
-    private func setRandomTopicButtonToggle() {
-        randomTopicEnabled.toggle()
-    }
-
-//    private func updateRandomTopicView() {
-//        if randomTopicEnabled {
-//            view.addSubview(randomSubjectView)
-//            randomSubjectView.snp.makeConstraints {
-//                $0.top.equalTo(navigationView.snp.bottom).offset(convertByHeightRatio(16))
-//                $0.leading.equalToSuperview()
-//            }
-//            randomSubjectButton.setImage(Constant.Image.btnRandomSubjectActive, for: .normal)
-//        } else {
-//            randomSubjectView.removeFromSuperview()
-//            randomSubjectButton.setImage(Constant.Image.btnRandomSubjectInactive, for: .normal)
-//        }
-//    }
-//
-//    private func updateInputTextViewConstraints() {
-//        inputTextView.snp.remakeConstraints {
-//            $0.top.equalTo(randomTopicEnabled ? randomSubjectView.snp.bottom : navigationView.snp.bottom)
-//            $0.leading.trailing.equalToSuperview()
-//            $0.bottom.equalTo(bottomView.snp.top)
-//        }
-//    }
+    func didTapLeftButton() { }
+    func didTapRightButton() { }
 }
 
 // MARK: - Extensions
 
 extension DiaryViewController {
+    
+    func setRootView() {
+        view = rootView
+    }
+    
+    func setNagivationBarDelegate() {
+        rootView?.setNavigationBarDelegate(self)
+    }
+    
+    func setDelegateSetupStrategy(_ strategy: DelegateSetupStrategy) {
+        delegateSetupStrategy = strategy
+    }
     
 //    private func setupKeyboardHandler() {
 //        self.keyboardHandler = KeyboardFollowingLayoutHandler(targetView: diaryView.inputTextView, bottomView: DiaryView.bottomView)
@@ -134,37 +103,61 @@ extension DiaryViewController {
 //        smeemToastView?.show(in: view, offset: CGFloat(offset), keyboardHeight: keyboardHeight)
 //        smeemToastView?.hide(after: 1)
 //    }
-}
-
-extension DiaryViewController: NavigationBarActionDelegate {
-    func didTapLeftButton() {
-        diaryView?.leftButtonActionStategy?.performLeftButtonAction()
-    }
     
-    func didTapRightButton() {
-        print("rightButtonTapped")
-    }
+//    private func setData() {
+//        randomSubjectView.setData(contentText: topicContent)
+//    }
+//
+//    private func setDelegate() {
+//        randomSubjectView.delegate = self
+//    }
+    
+//    private func setRandomTopicButtonToggle() {
+//        randomTopicEnabled.toggle()
+//    }
+
+//    private func updateRandomTopicView() {
+//        if randomTopicEnabled {
+//            view.addSubview(randomSubjectView)
+//            randomSubjectView.snp.makeConstraints {
+//                $0.top.equalTo(navigationView.snp.bottom).offset(convertByHeightRatio(16))
+//                $0.leading.equalToSuperview()
+//            }
+//            randomSubjectButton.setImage(Constant.Image.btnRandomSubjectActive, for: .normal)
+//        } else {
+//            randomSubjectView.removeFromSuperview()
+//            randomSubjectButton.setImage(Constant.Image.btnRandomSubjectInactive, for: .normal)
+//        }
+//    }
+//
+//    private func updateInputTextViewConstraints() {
+//        inputTextView.snp.remakeConstraints {
+//            $0.top.equalTo(randomTopicEnabled ? randomSubjectView.snp.bottom : navigationView.snp.bottom)
+//            $0.leading.trailing.equalToSuperview()
+//            $0.bottom.equalTo(bottomView.snp.top)
+//        }
+//    }
 }
 
 //MARK: - RandomSubjectViewDelegate
 
 extension DiaryViewController: RandomSubjectViewDelegate {
     func refreshButtonTapped(completion: @escaping (String?) -> Void) {
-        randomSubjectWithAPI()
+//        randomSubjectWithAPI()
     }
 }
 
 // MARK: - Network
 
 extension DiaryViewController {
-    func randomSubjectWithAPI() {
-        RandomSubjectAPI.shared.getRandomSubject { response in
-            guard let randomSubjectData = response?.data else { return }
-            self.topicID = randomSubjectData.topicId
-            self.topicContent = randomSubjectData.content
+//    func randomSubjectWithAPI() {
+//        RandomSubjectAPI.shared.getRandomSubject { response in
+//            guard let randomSubjectData = response?.data else { return }
+//            self.topicID = randomSubjectData.topicId
+//            self.topicContent = randomSubjectData.content
 //            self.setData()
-        }
-    }
+//        }
+//    }
     
 //    func postDiaryAPI() {
 //        PostDiaryAPI.shared.postDiary(param: PostDiaryRequest(content: diaryView.inputTextView.text, topicId: topicID)) { response in
@@ -188,18 +181,6 @@ extension DiaryViewController {
 //        }
 //    }
 }
-
-//extension DiaryViewController: NavigationBarActionDelegate {
-//    func didTapLeftButton() {
-//        self.navigationController?.popViewController(animated: true)
-//    }
-//
-//    func didTapRightButton() {
-//        if !rightNavigationButton.isEnabled {
-//            showToastIfNeeded(toastType: .defaultToast(bodyType: .regEx))
-//        }
-//    }
-//}
 
 
 // MARK: - Tutorial

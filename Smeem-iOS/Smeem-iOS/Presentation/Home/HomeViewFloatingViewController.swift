@@ -190,14 +190,14 @@ final class HomeViewFloatingViewController: UIViewController {
     }
     
     @objc func foreignDiaryButtonDidTap(_ gesture: UITapGestureRecognizer) {
-        let nextVC = ForeignDiaryViewController()
+        let nextVC = ForeignDiaryViewController.createWithForeignDiaryiew()
         nextVC.modalTransitionStyle = .coverVertical
         nextVC.modalPresentationStyle = .fullScreen
         present(nextVC, animated: true)
     }
     
     @objc func koreanDiaryButtonDidTap(_ gesture: UITapGestureRecognizer) {
-        let nextVC = StepOneKoreanDiaryViewController()
+        let nextVC = StepOneKoreanDiaryViewController.createWithStepOneKoreanDiaryView()
         let navigationController = UINavigationController(rootViewController: nextVC)
         navigationController.modalTransitionStyle = .coverVertical
         navigationController.modalPresentationStyle = .fullScreen
