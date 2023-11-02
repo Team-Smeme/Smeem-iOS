@@ -17,8 +17,6 @@ class DiaryView: BaseView {
     
     let configuration: DiaryViewConfiguration
     
-    var leftButtonActionStategy: LeftButtonActionStrategy?
-    
 //    var isTopicVisible: Bool = false {
 //        if isTopicVisible {
 //            addRandomTopicView()

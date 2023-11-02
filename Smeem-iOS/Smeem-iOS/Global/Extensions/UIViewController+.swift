@@ -160,9 +160,6 @@ extension UIViewController {
     
     func createNavigationBar(type: NavigationBarType) -> SmeemNavigationBar {
         let navigationBar = NavigationBarFactory.create(type: type)
-        if let actionDelegate = self as? NavigationBarActionDelegate {
-            navigationBar.actionDelegate = actionDelegate
-        }
         return navigationBar
     }
 }

@@ -13,24 +13,37 @@ final class ForeignDiaryViewController: DiaryViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        //        randomSubjectToolTip?.removeFromSuperview()
+    override func didTapLeftButton() {
+        print("didTapLeftButton")
+    }
+    
+    override func didTapRightButton() {
+        <#code#>
     }
 }
 
-//extension ForeignDiaryViewController: UINavigationControllerDelegate {
+extension ForeignDiaryViewController {
+    static func createWithForeignDiaryiew() -> ForeignDiaryViewController {
+        let diaryViewFactory = DiaryViewFactory()
+        let foreignDiaryView = diaryViewFactory.createForeginDiaryView()
+        return ForeignDiaryViewController(rootView: foreignDiaryView)
+    }
+}
+
+//extension ForeignDiaryViewController: NavigationBarActionDelegate {
 //    func didTapLeftButton() {
 //        self.presentingViewController?.dismiss(animated: true)
 //    }
-//    
+//
 //    func didTapRightButton() {
 ////        if .navigationView.rightButton.titleLabel?.textColor == .point {
 ////            showLodingView(loadingView: self.loadingView)
 ////            postDiaryAPI()
 ////        } else {
-////            showToastIfNeeded(toastType: .defaultToast(bodyType: .regEx))
+//////            showToastIfNeeded(toastType: .defaultToast(bodyType: .regEx))
 ////        }
 //    }
 //}

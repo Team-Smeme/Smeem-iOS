@@ -29,7 +29,7 @@ final class StepTwoKoreanDiaryViewController: DiaryViewController {
 //        tutorialImageView?.removeFromSuperview()
 //        dismissButton?.removeFromSuperview()
 //    }
-//    
+//
 //    @objc func hintButtondidTap() {
 //        isHintShowed.toggle()
 //        if isHintShowed {
@@ -52,7 +52,7 @@ final class StepTwoKoreanDiaryViewController: DiaryViewController {
 
 extension StepTwoKoreanDiaryViewController: DataBindProtocol {
     func dataBind(topicID: Int?, inputText: String) {
-        self.topicID = topicID
+//        self.topicID = topicID
 //        hintTextView.text = inputText
         
         print(topicID, inputText, "🥳")
