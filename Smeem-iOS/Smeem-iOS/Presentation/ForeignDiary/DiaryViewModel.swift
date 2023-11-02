@@ -10,7 +10,6 @@ import Foundation
 struct KeyboardInfo {
     var isKeyboardVisible: Bool = false
     var keyboardHeight: CGFloat = 0.0
-    var keyboardHandler: KeyboardFollowingLayoutHandler?
 }
 
 class DiaryViewModel {

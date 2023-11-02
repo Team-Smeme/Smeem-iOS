@@ -28,8 +28,8 @@ class DiaryView: BaseView {
     // MARK: UI Properties
     
     private var navigationView: SmeemNavigationBar
-    private let inputTextView: SmeemTextView
-    private let bottomView: DiaryBottomView
+    private (set) var inputTextView: SmeemTextView
+    private (set) var bottomView: DiaryBottomView
     
     private var randomTopicView: RandomSubjectView?
     private var smeemToastView: SmeemToastView?

@@ -13,6 +13,8 @@ class DiaryViewController: BaseViewController, NavigationBarActionDelegate {
     
     private var rootView: DiaryView?
     private var viewModel: DiaryViewModel?
+    
+    private var keyboardHandler: KeyboardFollowingLayoutHandler?
 
     private var delegateSetupStrategy: DelegateSetupStrategy = DefaultDelegateSeupStrategy()
     private weak var delegate: UITextViewDelegate?
@@ -44,6 +46,7 @@ class DiaryViewController: BaseViewController, NavigationBarActionDelegate {
         super.viewDidLoad()
         
         delegateSetupStrategy.setupDelegate(for: self)
+        setupKeyboardHandler()
         
 //        diaryView?.leftButtonActionStategy = DismissLeftButtonActionStrategy(viewContoller: self)
 //        setDelegate()
@@ -51,7 +54,7 @@ class DiaryViewController: BaseViewController, NavigationBarActionDelegate {
     }
     
     deinit {
-//        keyboardInfo?.keyboardHandler = nil
+        keyboardHandler = nil
     }
     
     func didTapLeftButton() { }
@@ -74,9 +77,10 @@ extension DiaryViewController {
         delegateSetupStrategy = strategy
     }
     
-//    private func setupKeyboardHandler() {
-//        self.keyboardHandler = KeyboardFollowingLayoutHandler(targetView: diaryView.inputTextView, bottomView: DiaryView.bottomView)
-//    }
+    private func setupKeyboardHandler() {
+        guard let rootView = rootView else { return }
+        keyboardHandler = KeyboardFollowingLayoutHandler(targetView: rootView.inputTextView, bottomView: rootView.bottomView)
+    }
     
     // MARK: - @objc
 
