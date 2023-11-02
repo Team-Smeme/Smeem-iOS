@@ -52,7 +52,7 @@ class SmeemNavigationBar: UIView {
         super.init(frame: .zero)
         
         setLayout()
-        addButtonsTarget()
+        addButtonTargets()
     }
     
     required init?(coder: NSCoder) {
@@ -171,7 +171,7 @@ extension SmeemNavigationBar {
         }
     }
     
-    private func addButtonsTarget() {
+    private func addButtonTargets() {
         leftButton.addTarget(self, action: #selector(leftButtonTapped), for: .touchUpInside)
         rightButton.addTarget(self, action: #selector(rightButtonTapped), for: .touchUpInside)
     }

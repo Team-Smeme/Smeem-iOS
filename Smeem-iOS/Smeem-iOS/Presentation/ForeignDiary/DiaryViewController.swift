@@ -35,6 +35,7 @@ class DiaryViewController: BaseViewController, NavigationBarActionDelegate {
     override func loadView() {
         
         view = rootView
+        rootView?.bottomView.actionDelegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -48,9 +49,13 @@ class DiaryViewController: BaseViewController, NavigationBarActionDelegate {
         delegateSetupStrategy.setupDelegate(for: self)
         setupKeyboardHandler()
         
+        viewModel?.onupdateRandomTopic = { [weak self] isEnabled in
+//            self?.rootView?.updateRandomTopicView(isEnabled: isEnabled)
+//            self?.rootView?.updateInputTextViewConstraints(isEnabled: isEnabled)
+        }
+        
 //        diaryView?.leftButtonActionStategy = DismissLeftButtonActionStrategy(viewContoller: self)
 //        setDelegate()
-//        setupKeyboardHandler()
     }
     
     deinit {
@@ -71,6 +76,10 @@ extension DiaryViewController {
     
     func setNagivationBarDelegate() {
         rootView?.setNavigationBarDelegate(self)
+    }
+    
+    func setBottomViewDelegate() {
+        
     }
     
     func setDelegateSetupStrategy(_ strategy: DelegateSetupStrategy) {
@@ -119,35 +128,47 @@ extension DiaryViewController {
 //    private func setRandomTopicButtonToggle() {
 //        randomTopicEnabled.toggle()
 //    }
-
-//    private func updateRandomTopicView() {
-//        if randomTopicEnabled {
-//            view.addSubview(randomSubjectView)
-//            randomSubjectView.snp.makeConstraints {
-//                $0.top.equalTo(navigationView.snp.bottom).offset(convertByHeightRatio(16))
-//                $0.leading.equalToSuperview()
-//            }
-//            randomSubjectButton.setImage(Constant.Image.btnRandomSubjectActive, for: .normal)
-//        } else {
-//            randomSubjectView.removeFromSuperview()
-//            randomSubjectButton.setImage(Constant.Image.btnRandomSubjectInactive, for: .normal)
-//        }
-//    }
-//
-//    private func updateInputTextViewConstraints() {
-//        inputTextView.snp.remakeConstraints {
-//            $0.top.equalTo(randomTopicEnabled ? randomSubjectView.snp.bottom : navigationView.snp.bottom)
-//            $0.leading.trailing.equalToSuperview()
-//            $0.bottom.equalTo(bottomView.snp.top)
-//        }
-//    }
 }
 
-//MARK: - RandomSubjectViewDelegate
+// MARK: - RandomSubjectViewDelegate
 
 extension DiaryViewController: RandomSubjectViewDelegate {
     func refreshButtonTapped(completion: @escaping (String?) -> Void) {
 //        randomSubjectWithAPI()
+    }
+}
+
+// MARK: - BottomViewActionDelegate
+
+extension DiaryViewController: BottomViewActionDelegate {
+    func didTapRandomTopicButton() {
+//        if !UserDefaultsManager.randomSubjectToolTip {
+//            UserDefaultsManager.randomSubjectToolTip = true
+//            randomSubjectToolTip?.isHidden = true
+//        }
+//
+//        setRandomTopicButtonToggle()
+//
+//        if !isTopicCalled {
+//            randomSubjectWithAPI()
+//            randomSubjectButton.setImage(Constant.Image.btnRandomSubjectActive, for: .normal)
+//            isTopicCalled = true
+//        } else {
+//            isTopicCalled = false
+//            topicID = nil
+//        }
+//        randomSubjectView.setData(contentText: topicContent)
+    }
+    
+    func didTapHintButton() {
+        //        isHintShowed.toggle()
+        //        if isHintShowed {
+        //            postPapagoApi(diaryText: hintTextView.text)
+        //            hintButton.setImage(Constant.Image.btnTranslateActive, for: .normal)
+        //        } else {
+        //            hintTextView.text = hintText
+        //            hintButton.setImage(Constant.Image.btnTranslateInactive, for: .normal)
+        //        }
     }
 }
 

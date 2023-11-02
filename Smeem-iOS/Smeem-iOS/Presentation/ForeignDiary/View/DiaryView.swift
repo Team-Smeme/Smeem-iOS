@@ -111,10 +111,6 @@ extension DiaryView {
         self.navigationView.actionDelegate = delegate
     }
     
-//    @objc func leftButtonDidTap() {
-//        leftButtonActionStategy?.performLeftButtonAction()
-//    }
-    
     func setInputText(_ text: String) {
         self.inputTextView.text = text
     }
@@ -127,6 +123,27 @@ extension DiaryView {
 //    }
 //
 //    func removeRandomTopicView() {
-//        randomTo
 //    }
+    
+    func updateRandomTopicView() {
+//        if randomTopicEnabled {
+//            addSubview(randomTopicView)
+//            randomTopicView.snp.makeConstraints {
+//                $0.top.equalTo(navigationView.snp.bottom).offset(convertByHeightRatio(16))
+//                $0.leading.equalToSuperview()
+//            }
+//            randomSubjectButton.setImage(Constant.Image.btnRandomSubjectActive, for: .normal)
+//        } else {
+//            randomSubjectView.removeFromSuperview()
+//            randomSubjectButton.setImage(Constant.Image.btnRandomSubjectInactive, for: .normal)
+//        }
+//    }
+//
+//    func updateInputTextViewConstraints() {
+//        inputTextView.snp.remakeConstraints {
+//            $0.top.equalTo(randomTopicEnabled ? randomSubjectView.snp.bottom : navigationView.snp.bottom)
+//            $0.leading.trailing.equalToSuperview()
+//            $0.bottom.equalTo(bottomView.snp.top)
+//        }
+    }
 }

@@ -13,6 +13,16 @@ struct KeyboardInfo {
 }
 
 class DiaryViewModel {
+    
+    var randomTopicEnabled: Bool = false {
+        didSet {
+//            updateRandomTopicView()
+//            updateInputTextViewConstraints()
+//            view.layoutIfNeeded()
+            onupdateRandomTopic?(randomTopicEnabled)
+        }
+    }
+    
     var topicID: Int? = nil
     var topicContent: String?
     var diaryID: Int?
@@ -22,11 +32,9 @@ class DiaryViewModel {
     var isInitialInput = true
     var keyboardInfo: KeyboardInfo?
     
-    private var randomTopicEnabled: Bool = false {
-        didSet {
-//            updateRandomTopicView()
-//            updateInputTextViewConstraints()
-//            view.layoutIfNeeded()
-        }
+    var onupdateRandomTopic: ((Bool) -> Void)?
+    
+    func toggleRandomTopic() {
+        randomTopicEnabled = !randomTopicEnabled
     }
 }

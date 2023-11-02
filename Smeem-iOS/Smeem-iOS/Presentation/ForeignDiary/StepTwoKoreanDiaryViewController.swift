@@ -26,24 +26,6 @@ final class StepTwoKoreanDiaryViewController: DiaryViewController {
 
 extension StepTwoKoreanDiaryViewController {
     
-    // MARK: - @objc
-    
-//    @objc override func dismissButtonDidTap() {
-//        tutorialImageView?.removeFromSuperview()
-//        dismissButton?.removeFromSuperview()
-//    }
-//
-//    @objc func hintButtondidTap() {
-//        isHintShowed.toggle()
-//        if isHintShowed {
-//            postPapagoApi(diaryText: hintTextView.text)
-//            hintButton.setImage(Constant.Image.btnTranslateActive, for: .normal)
-//        } else {
-//            hintTextView.text = hintText
-//            hintButton.setImage(Constant.Image.btnTranslateInactive, for: .normal)
-//        }
-//    }
-    
     // MARK: - Custom Method
     
 //    private func handleRightNavitationButton() {

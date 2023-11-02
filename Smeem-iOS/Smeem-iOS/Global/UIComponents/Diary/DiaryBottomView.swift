@@ -9,6 +9,11 @@ import UIKit
 
 import SnapKit
 
+protocol BottomViewActionDelegate: AnyObject {
+    func didTapRandomTopicButton()
+    func didTapHintButton()
+}
+
 enum DiaryBottomViewType {
     case standard
     case withHint
@@ -22,6 +27,8 @@ final class DiaryBottomView: UIView {
     
     let viewType: DiaryBottomViewType
     
+    weak var actionDelegate: BottomViewActionDelegate?
+    
     // MARK: UI Properties
     
     let bottomView: UIView = {
@@ -32,9 +39,8 @@ final class DiaryBottomView: UIView {
     
     let thinLine = SeparationLine(height: .thin)
     
-    lazy var randomSubjectButton: UIButton = {
+    lazy var randomTopicButton: UIButton = {
         let button = UIButton()
-        //        button.addTarget(self, action: #selector(randomTopicButtonDidTap), for: .touchUpInside)
         button.setImage(Constant.Image.btnRandomSubjectInactive, for: .normal)
         return button
     }()
@@ -45,19 +51,17 @@ final class DiaryBottomView: UIView {
         return button
     }()
     
-    lazy var randomSubjectToolTip: UIImageView? = {
-        let image = UIImageView()
-        image.image = Constant.Image.icnToolTip
-        //        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(randomSubjectToolTipDidTap))
-        //        image.addGestureRecognizer(tapGesture)
-        image.isUserInteractionEnabled = true
-        return image
-    }()
+    //    lazy var randomSubjectToolTip: UIImageView? = {
+    //        let image = UIImageView()
+    //        image.image = Constant.Image.icnToolTip
+    //        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(randomSubjectToolTipDidTap))
+    //        image.addGestureRecognizer(tapGesture)
+    //        image.isUserInteractionEnabled = true
+    //        return image
+    //    }()
     
     private lazy var hintButton: UIButton = {
         let button = UIButton()
-        //        button.backgroundColor = .clear
-        //        button.addTarget(self, action: #selector(hintButtondidTap), for: .touchUpInside)
         button.setImage(Constant.Image.btnTranslateInactive, for: .normal)
         return button
     }()
@@ -68,8 +72,9 @@ final class DiaryBottomView: UIView {
         self.viewType = viewType
         super.init(frame: frame)
         
-        setUI()
-        setLayout()
+        setupUI()
+        setupLayout()
+        addButtonTargets()
     }
     
     required init?(coder: NSCoder) {
@@ -81,60 +86,54 @@ final class DiaryBottomView: UIView {
 
 extension DiaryBottomView {
     
+    // MARK: - Settings
+    private func addButtonTargets() {
+        randomTopicButton.addTarget(self, action: #selector(randomTopicButtonTapped), for: .touchUpInside)
+        hintButton.addTarget(self, action: #selector(hintButtonTapped), for: .touchUpInside)
+    }
+    
     // MARK: - Layout Helpers
     
-    private func setUI() {
+    private func setupUI() {
         self.backgroundColor = .gray100
     }
     
-    private func setLayout() {
-        addSubviews(thinLine, randomSubjectButton)
+    private func setupLayout() {
+        addSubviews(thinLine, randomTopicButton)
         
-        thinLine.snp.makeConstraints {
-            $0.bottom.equalTo(self.snp.top)
-            $0.centerX.equalToSuperview()
+        thinLine.snp.makeConstraints { make in
+            make.bottom.equalTo(self.snp.top)
+            make.centerX.equalToSuperview()
         }
         
-        randomSubjectButton.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(convertByHeightRatio(17 - 5))
-            $0.trailing.equalToSuperview().offset(convertByWidthRatio(-18 + 5))
-            $0.width.equalTo(convertByWidthRatio(78 + 10))
-            $0.height.equalTo(convertByHeightRatio(19 + 10))
+        randomTopicButton.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(convertByHeightRatio(17 - 5))
+            make.trailing.equalToSuperview().offset(convertByWidthRatio(-18 + 5))
+            make.width.equalTo(convertByWidthRatio(78 + 10))
+            make.height.equalTo(convertByHeightRatio(19 + 10))
         }
         
         if viewType == .withHint {
             addSubview(hintButton)
-            hintButton.snp.makeConstraints {
-                $0.centerY.equalTo(randomSubjectButton)
-                $0.leading.equalToSuperview().offset(18 - 10)
-                $0.width.equalTo(convertByWidthRatio(92 + 10))
-                $0.height.equalTo(convertByHeightRatio(29 + 10))
+            hintButton.snp.makeConstraints { make in
+                make.centerY.equalTo(randomTopicButton)
+                make.leading.equalToSuperview().offset(18 - 10)
+                make.width.equalTo(convertByWidthRatio(92 + 10))
+                make.height.equalTo(convertByHeightRatio(29 + 10))
             }
         }
     }
     
     // MARK: - Action Helpers
     
-//    @objc func randomTopicButtonDidTap() {
-//        if !UserDefaultsManager.randomSubjectToolTip {
-//            UserDefaultsManager.randomSubjectToolTip = true
-//            randomSubjectToolTip?.isHidden = true
-//        }
-//
-//        setRandomTopicButtonToggle()
-//
-//        if !isTopicCalled {
-//            randomSubjectWithAPI()
-//            randomSubjectButton.setImage(Constant.Image.btnRandomSubjectActive, for: .normal)
-//            isTopicCalled = true
-//        } else {
-//            isTopicCalled = false
-//            topicID = nil
-//        }
-//        randomSubjectView.setData(contentText: topicContent)
-//    }
+    @objc func randomTopicButtonTapped() {
+        actionDelegate?.didTapRandomTopicButton()
+    }
+    
+    @objc func hintButtonTapped() {
+        actionDelegate?.didTapHintButton()
+    }
 }
-
 
 //    private func checkTooltip() {
 //        let randomSubjectToolTipe = UserDefaultsManager.randomSubjectToolTip
