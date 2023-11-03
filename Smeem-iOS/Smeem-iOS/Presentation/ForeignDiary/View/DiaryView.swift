@@ -15,15 +15,9 @@ class DiaryView: BaseView {
     
     // MARK: Properties
     
-    let configuration: DiaryViewConfiguration
+    var randomTopicEnabled: Bool = false
     
-//    var isTopicVisible: Bool = false {
-//        if isTopicVisible {
-//            addRandomTopicView()
-//        } else {
-//            removeRandomTopicView()
-//        }
-//    }
+    let configuration: DiaryViewConfiguration
     
     // MARK: UI Properties
     
@@ -31,7 +25,7 @@ class DiaryView: BaseView {
     private (set) var inputTextView: SmeemTextView
     private (set) var bottomView: DiaryBottomView
     
-    private var randomTopicView: RandomSubjectView?
+    var randomTopicView: RandomSubjectView?
     private var smeemToastView: SmeemToastView?
     
     // MARK: Life Cycle
@@ -39,11 +33,13 @@ class DiaryView: BaseView {
     init(configuration: DiaryViewConfiguration,
          navigationBar: SmeemNavigationBar,
          inputTextView: SmeemTextView,
-         bottomView: DiaryBottomView) {
+         bottomView: DiaryBottomView,
+         randomTopicView: RandomSubjectView) {
         self.configuration = configuration
         self.navigationView = navigationBar
         self.inputTextView = inputTextView
         self.bottomView = bottomView
+        self.randomTopicView = randomTopicView
         
         super.init(frame: .zero)
         
@@ -115,35 +111,25 @@ extension DiaryView {
         self.inputTextView.text = text
     }
     
-//    func addRandomTopicView() {
-//        if randomTopicView == nil {
-//            randomTopicView = createRandomSubjectView()
-//            addSubview(randomTopicView)
-//        }
-//    }
-//
-//    func removeRandomTopicView() {
-//    }
-    
     func updateRandomTopicView() {
-//        if randomTopicEnabled {
-//            addSubview(randomTopicView)
-//            randomTopicView.snp.makeConstraints {
-//                $0.top.equalTo(navigationView.snp.bottom).offset(convertByHeightRatio(16))
-//                $0.leading.equalToSuperview()
-//            }
-//            randomSubjectButton.setImage(Constant.Image.btnRandomSubjectActive, for: .normal)
-//        } else {
-//            randomSubjectView.removeFromSuperview()
-//            randomSubjectButton.setImage(Constant.Image.btnRandomSubjectInactive, for: .normal)
-//        }
-//    }
-//
-//    func updateInputTextViewConstraints() {
-//        inputTextView.snp.remakeConstraints {
-//            $0.top.equalTo(randomTopicEnabled ? randomSubjectView.snp.bottom : navigationView.snp.bottom)
-//            $0.leading.trailing.equalToSuperview()
-//            $0.bottom.equalTo(bottomView.snp.top)
-//        }
+        if randomTopicEnabled {
+            guard let randomTopicView = randomTopicView else { return }
+
+            addSubview(randomTopicView)
+            randomTopicView.snp.makeConstraints { make in
+                make.top.equalTo(navigationView.snp.bottom).offset(convertByHeightRatio(16))
+                make.leading.equalToSuperview()
+            }
+        } else {
+            randomTopicView?.removeFromSuperview()
+        }
+    }
+
+    func updateInputTextViewConstraints() {
+        inputTextView.snp.remakeConstraints { make in
+            make.top.equalTo((randomTopicEnabled && randomTopicView != nil) ? randomTopicView!.snp.bottom : navigationView.snp.bottom)
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalTo(bottomView.snp.top)
+        }
     }
 }

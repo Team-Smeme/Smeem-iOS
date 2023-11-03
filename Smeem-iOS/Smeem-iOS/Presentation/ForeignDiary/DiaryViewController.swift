@@ -17,12 +17,13 @@ class DiaryViewController: BaseViewController, NavigationBarActionDelegate {
     private var keyboardHandler: KeyboardFollowingLayoutHandler?
 
     private var delegateSetupStrategy: DelegateSetupStrategy = DefaultDelegateSeupStrategy()
-    private weak var delegate: UITextViewDelegate?
+//    private weak var delegate: UITextViewDelegate?
     
     // MARK: - Life Cycle
     
     init(rootView: DiaryView) {
         self.rootView = rootView
+        self.viewModel = DiaryViewModel()
         super.init(nibName: nil, bundle: nil)
         
         setNagivationBarDelegate()
@@ -35,7 +36,6 @@ class DiaryViewController: BaseViewController, NavigationBarActionDelegate {
     override func loadView() {
         
         view = rootView
-        rootView?.bottomView.actionDelegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -47,13 +47,9 @@ class DiaryViewController: BaseViewController, NavigationBarActionDelegate {
         super.viewDidLoad()
         
         delegateSetupStrategy.setupDelegate(for: self)
+        setBottomViewDelegate()
         setupKeyboardHandler()
-        
-        viewModel?.onupdateRandomTopic = { [weak self] isEnabled in
-//            self?.rootView?.updateRandomTopicView(isEnabled: isEnabled)
-//            self?.rootView?.updateInputTextViewConstraints(isEnabled: isEnabled)
-        }
-        
+        setupUpdateRandomTopic()
 //        diaryView?.leftButtonActionStategy = DismissLeftButtonActionStrategy(viewContoller: self)
 //        setDelegate()
     }
@@ -79,16 +75,28 @@ extension DiaryViewController {
     }
     
     func setBottomViewDelegate() {
-        
+        rootView?.bottomView.actionDelegate = self
     }
     
     func setDelegateSetupStrategy(_ strategy: DelegateSetupStrategy) {
         delegateSetupStrategy = strategy
     }
     
+    private func setupUpdateRandomTopic() {
+        viewModel?.onUpdateRandomTopic = { [ weak self] isEnabled in
+            self?.updateViewWithRandomTopicEnabled(isEnabled)
+        }
+    }
+    
     private func setupKeyboardHandler() {
         guard let rootView = rootView else { return }
         keyboardHandler = KeyboardFollowingLayoutHandler(targetView: rootView.inputTextView, bottomView: rootView.bottomView)
+    }
+    
+    private func updateViewWithRandomTopicEnabled(_ isEnabled: Bool) {
+        rootView?.randomTopicEnabled = isEnabled
+        rootView?.updateRandomTopicView()
+        rootView?.updateInputTextViewConstraints()
     }
     
     // MARK: - @objc
@@ -117,16 +125,26 @@ extension DiaryViewController {
 //        smeemToastView?.hide(after: 1)
 //    }
     
-//    private func setData() {
-//        randomSubjectView.setData(contentText: topicContent)
-//    }
+    private func setData() {
+//        rootView?.randomTopicView?.setData(contentText: viewModel?.topicContent)
+    }
+    
+    private func handleRandomTopicButtonTap() {
+        guard let isEnabled = viewModel?.randomTopicEnabled else { return }
+        if isEnabled {
+            randomSubjectWithAPI()
+            updateViewWithRandomTopicEnabled(isEnabled)
+            rootView?.bottomView.randomTopicButton.setImage(Constant.Image.btnRandomSubjectActive, for: .normal)
+        } else {
+            rootView?.bottomView.randomTopicButton.setImage(Constant.Image.btnRandomSubjectInactive, for: .normal)
+            viewModel?.isTopicCalled = false
+            viewModel?.topicID = nil
+        }
+        rootView?.randomTopicView?.setData(contentText: viewModel?.topicContent ?? "")
+    }
 //
 //    private func setDelegate() {
 //        randomSubjectView.delegate = self
-//    }
-    
-//    private func setRandomTopicButtonToggle() {
-//        randomTopicEnabled.toggle()
 //    }
 }
 
@@ -146,18 +164,9 @@ extension DiaryViewController: BottomViewActionDelegate {
 //            UserDefaultsManager.randomSubjectToolTip = true
 //            randomSubjectToolTip?.isHidden = true
 //        }
-//
-//        setRandomTopicButtonToggle()
-//
-//        if !isTopicCalled {
-//            randomSubjectWithAPI()
-//            randomSubjectButton.setImage(Constant.Image.btnRandomSubjectActive, for: .normal)
-//            isTopicCalled = true
-//        } else {
-//            isTopicCalled = false
-//            topicID = nil
-//        }
-//        randomSubjectView.setData(contentText: topicContent)
+        
+        viewModel?.toggleRandomTopic()
+        handleRandomTopicButtonTap()
     }
     
     func didTapHintButton() {
@@ -175,14 +184,14 @@ extension DiaryViewController: BottomViewActionDelegate {
 // MARK: - Network
 
 extension DiaryViewController {
-//    func randomSubjectWithAPI() {
-//        RandomSubjectAPI.shared.getRandomSubject { response in
-//            guard let randomSubjectData = response?.data else { return }
-//            self.topicID = randomSubjectData.topicId
-//            self.topicContent = randomSubjectData.content
-//            self.setData()
-//        }
-//    }
+    func randomSubjectWithAPI() {
+        RandomSubjectAPI.shared.getRandomSubject { [weak self] response in
+            guard let randomSubjectData = response?.data else { return }
+            self?.viewModel?.topicID = randomSubjectData.topicId
+            self?.viewModel?.topicContent = randomSubjectData.content
+            self?.rootView?.randomTopicView?.setData(contentText: self?.viewModel?.topicContent ?? "")
+        }
+    }
     
 //    func postDiaryAPI() {
 //        PostDiaryAPI.shared.postDiary(param: PostDiaryRequest(content: diaryView.inputTextView.text, topicId: topicID)) { response in

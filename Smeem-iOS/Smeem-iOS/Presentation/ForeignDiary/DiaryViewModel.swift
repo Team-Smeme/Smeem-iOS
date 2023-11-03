@@ -16,12 +16,11 @@ class DiaryViewModel {
     
     var randomTopicEnabled: Bool = false {
         didSet {
-//            updateRandomTopicView()
-//            updateInputTextViewConstraints()
-//            view.layoutIfNeeded()
-            onupdateRandomTopic?(randomTopicEnabled)
+            onUpdateRandomTopic?(randomTopicEnabled)
         }
     }
+    
+    var onUpdateRandomTopic: ((Bool) -> Void)?
     
     var topicID: Int? = nil
     var topicContent: String?
@@ -31,9 +30,9 @@ class DiaryViewModel {
     var rightButtonFlag = false
     var isInitialInput = true
     var keyboardInfo: KeyboardInfo?
-    
-    var onupdateRandomTopic: ((Bool) -> Void)?
-    
+}
+
+extension DiaryViewModel {
     func toggleRandomTopic() {
         randomTopicEnabled = !randomTopicEnabled
     }
