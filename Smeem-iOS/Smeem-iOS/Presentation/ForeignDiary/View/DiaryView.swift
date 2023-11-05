@@ -83,6 +83,8 @@ extension DiaryView {
         
         guard let layoutConfig = configuration.layoutConfig else  { return }
         
+        addSubviews(layoutConfig.hintTextView, layoutConfig.thickLine)
+        
         layoutConfig.hintTextView.snp.makeConstraints { make in
             make.top.equalTo(navigationView.snp.bottom)
             make.leading.trailing.equalToSuperview()

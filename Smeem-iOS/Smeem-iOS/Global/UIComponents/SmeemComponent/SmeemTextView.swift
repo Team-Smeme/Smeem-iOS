@@ -39,7 +39,7 @@ final class SmeemTextView: UITextView {
                      textViewManager manager: SmeemTextViewHandler? = nil) {
         self.init(frame: .zero, textContainer: nil)
         
-        configureTextView(for: type, color: color, text: placeholderText ?? "")
+        configureTextView(for: type, color: color, text: placeholder ?? "")
         commonInit()
         updatePlaceholder()
     }

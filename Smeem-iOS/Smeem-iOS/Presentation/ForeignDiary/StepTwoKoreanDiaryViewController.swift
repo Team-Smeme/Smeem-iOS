@@ -20,7 +20,15 @@ final class StepTwoKoreanDiaryViewController: DiaryViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        handleRightNavitationButton()
+        //        handleRightNavitationButton()
+    }
+    
+    override func didTapLeftButton() {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    override func didTapRightButton() {
+        print("didTapRightButton")
     }
 }
 
@@ -28,9 +36,9 @@ extension StepTwoKoreanDiaryViewController {
     
     // MARK: - Custom Method
     
-//    private func handleRightNavitationButton() {
-//        rightNavigationButton.addTarget(self, action: #selector(rightNavigationButtonDidTap), for: .touchUpInside)
-//    }
+    //    private func handleRightNavitationButton() {
+    //        rightNavigationButton.addTarget(self, action: #selector(rightNavigationButtonDidTap), for: .touchUpInside)
+    //    }
     
     static func createWithStepTwoKoreanDiaryView() -> StepTwoKoreanDiaryViewController {
         let diaryViewFactory = DiaryViewFactory()
@@ -43,8 +51,8 @@ extension StepTwoKoreanDiaryViewController {
 
 extension StepTwoKoreanDiaryViewController: DataBindProtocol {
     func dataBind(topicID: Int?, inputText: String) {
-//        self.topicID = topicID
-//        hintTextView.text = inputText
+        //        self.topicID = topicID
+        //        hintTextView.text = inputText
         
         print(topicID, inputText, "🥳")
     }
@@ -56,9 +64,9 @@ extension StepTwoKoreanDiaryViewController {
     func postPapagoApi(diaryText: String) {
         PapagoAPI.shared.postDiary(param: diaryText) { response in
             guard let response = response else { return }
-//            self.hintText = self.hintTextView.text
-//            self.hintTextView.text.removeAll()
-//            self.hintTextView.text = response.message.result.translatedText
+            //            self.hintText = self.hintTextView.text
+            //            self.hintTextView.text.removeAll()
+            //            self.hintTextView.text = response.message.result.translatedText
         }
     }
 }
@@ -66,10 +74,6 @@ extension StepTwoKoreanDiaryViewController {
 // MARK: - NavigationBarActionDelegate
 
 //extension StepTwoKoreanDiaryViewController: NavigationBarActionDelegate {
-//
-//    func didTapLeftButton() {
-//        self.navigationController?.popViewController(animated: true)
-//    }
 //
 //    func didTapRightButton() {
 //        if rightNavigationButton.titleLabel?.textColor == .point {

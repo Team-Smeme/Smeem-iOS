@@ -36,7 +36,9 @@ final class StepOneKoreanDiaryViewController: DiaryViewController {
     }
     
     override func didTapRightButton() {
-        print("didTapRightButton")
+        let nextVC = StepTwoKoreanDiaryViewController.createWithStepTwoKoreanDiaryView()
+        
+        self.navigationController?.pushViewController(nextVC, animated: true)
     }
 }
 
