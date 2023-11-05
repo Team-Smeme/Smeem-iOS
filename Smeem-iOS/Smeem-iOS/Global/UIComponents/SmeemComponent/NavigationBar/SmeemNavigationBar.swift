@@ -130,7 +130,7 @@ class SmeemNavigationBar: UIView {
     @objc func leftButtonTapped() {
         actionDelegate?.didTapLeftButton()
     }
-
+    
     @objc func rightButtonTapped() {
         actionDelegate?.didTapRightButton()
     }
@@ -177,7 +177,9 @@ extension SmeemNavigationBar {
     }
     
     func updateRightButton(isValid: Bool) {
-        self.rightButton.isEnabled = true
-        self.rightButton.tintColor = isValid ? .point : .gray300
+        DispatchQueue.main.async {
+            self.rightButton.isEnabled = isValid
+            self.rightButton.setTitleColor(isValid ? .point : .gray300, for: .normal)
+        }
     }
 }

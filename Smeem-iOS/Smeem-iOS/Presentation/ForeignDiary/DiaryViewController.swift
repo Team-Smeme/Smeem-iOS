@@ -45,6 +45,7 @@ class DiaryViewController: BaseViewController, NavigationBarActionDelegate {
         super.viewDidLoad()
         
         setupDelegate()
+        setupTextValidation()
         setupKeyboardHandler()
         setupUpdateRandomTopic()
         //        diaryView?.leftButtonActionStategy = DismissLeftButtonActionStrategy(viewContoller: self)

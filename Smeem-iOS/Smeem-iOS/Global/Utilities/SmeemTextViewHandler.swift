@@ -50,10 +50,8 @@ extension SmeemTextViewHandler: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
         guard let placeholderTextView = textView as? SmeemTextView  else { return }
         
-        if textView.text.isEmpty || textView.text == placeholderTextView.placeholderText {
+        if textView.text.isEmpty {
             placeholderTextView.updatePlaceholder()
-        } else if !textView.text.isEmpty && textView.textColor == placeholderTextView.placeholderColor {
-            textView.textColor = .smeemBlack
         }
         
         if let viewType = viewType {
@@ -69,6 +67,7 @@ extension SmeemTextViewHandler: UITextViewDelegate {
         }
     }
     
+    // Text가 완전히 지워지는 시점 감지
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         guard let placeholderTextView = self.textView else { return true }
         
@@ -79,6 +78,7 @@ extension SmeemTextViewHandler: UITextViewDelegate {
             textView.text = placeholderTextView.placeholderText
             textView.textColor = placeholderTextView.placeholderColor
             textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
+            textViewDidChange(textView)
             return false
         } else if textView.textColor == placeholderTextView.placeholderColor && !text.isEmpty {
             textView.text = nil
