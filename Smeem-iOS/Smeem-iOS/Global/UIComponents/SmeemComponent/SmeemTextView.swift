@@ -19,10 +19,11 @@ enum SmeemTextViewType {
 
 // MARK: - SmeemTextView
 
-class SmeemTextView: UITextView, PlaceholderDisplayable {
+final class SmeemTextView: UITextView {
     
     // MARK: Properties
     
+    var handler: SmeemTextViewHandler?
     var placeholderText: String?
     var placeholderColor: UIColor?
     
@@ -39,7 +40,6 @@ class SmeemTextView: UITextView, PlaceholderDisplayable {
         self.init(frame: .zero, textContainer: nil)
         
         configureTextView(for: type, color: color, text: placeholderText ?? "")
-        
         commonInit()
         updatePlaceholder()
     }
@@ -49,12 +49,9 @@ class SmeemTextView: UITextView, PlaceholderDisplayable {
     }
 }
 
-// MARK: - Methods
+// MARK: - Extensions
 
 extension SmeemTextView {
-    
-    // MARK: Private Methods
-    
     private func commonInit() {
         self.configureDiaryTextView(topInset: 20)
         self.configureTypingAttributes()
@@ -71,16 +68,20 @@ extension SmeemTextView {
             
             self.delegate = manager
             manager.textView = self
+            self.handler = manager
         }
     }
+}
 
-    // MARK: Custom Methods
-    
+// MARK: - PlaceholderDisplayable
+
+extension SmeemTextView: PlaceholderDisplayable {
     func updatePlaceholder() {
         if text.isEmpty {
             text = placeholderText
             textColor = placeholderColor
-            selectedTextRange = textRange(from: beginningOfDocument, to: beginningOfDocument)
+            selectedTextRange = textRange(from: beginningOfDocument,
+                                          to: beginningOfDocument)
         }
     }
 }

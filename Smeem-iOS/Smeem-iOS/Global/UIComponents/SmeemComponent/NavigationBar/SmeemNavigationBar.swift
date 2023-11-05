@@ -175,4 +175,9 @@ extension SmeemNavigationBar {
         leftButton.addTarget(self, action: #selector(leftButtonTapped), for: .touchUpInside)
         rightButton.addTarget(self, action: #selector(rightButtonTapped), for: .touchUpInside)
     }
+    
+    func updateRightButton(isValid: Bool) {
+        self.rightButton.isEnabled = true
+        self.rightButton.tintColor = isValid ? .point : .gray300
+    }
 }

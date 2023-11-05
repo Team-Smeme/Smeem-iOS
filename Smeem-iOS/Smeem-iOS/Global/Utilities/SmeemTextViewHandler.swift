@@ -7,9 +7,13 @@
 
 import UIKit
 
+protocol SmeemTextViewHandlerDelegate: AnyObject {
+    func textViewDidChange(text: String, viewType: DiaryViewType)
+}
+
 // MARK: - SmeemTextViewManager
 
-class SmeemTextViewHandler: NSObject {
+final class SmeemTextViewHandler: NSObject {
     
     // MARK: Properties
     
@@ -17,6 +21,9 @@ class SmeemTextViewHandler: NSObject {
     
     weak var diaryViewController: DiaryViewController?
     weak var textView: PlaceholderDisplayable?
+    weak var delegate: SmeemTextViewHandlerDelegate?
+    
+    var viewType: DiaryViewType?
     
     // MARK: Methods
     
@@ -28,16 +35,6 @@ class SmeemTextViewHandler: NSObject {
 // MARK: - Text Validation
 
 extension SmeemTextViewHandler {
-//    func validateText(_ text: String) -> Bool {
-//        guard let strategy = diaryStrategy else { return false }
-//
-//        if let koreanStrategy = strategy as? StepOneKoreanDiaryStrategy {
-//            return containsKoreanCharacters(with: text)
-//        } else {
-//            return containsEnglishCharacters(with: text)
-//        }
-//    }
-    
     func containsEnglishCharacters(with text: String) -> Bool {
         return text.getArrayAfterRegex(regex: "[a-zA-z]").count > 0
     }
@@ -50,7 +47,6 @@ extension SmeemTextViewHandler {
 // MARK: - UITextViewDelegate
 
 extension SmeemTextViewHandler: UITextViewDelegate {
-    
     func textViewDidChange(_ textView: UITextView) {
         guard let placeholderTextView = textView as? SmeemTextView  else { return }
         
@@ -58,6 +54,10 @@ extension SmeemTextViewHandler: UITextViewDelegate {
             placeholderTextView.updatePlaceholder()
         } else if !textView.text.isEmpty && textView.textColor == placeholderTextView.placeholderColor {
             textView.textColor = .smeemBlack
+        }
+        
+        if let viewType = viewType {
+            delegate?.textViewDidChange(text: textView.text, viewType: viewType)
         }
     }
     
@@ -87,4 +87,3 @@ extension SmeemTextViewHandler: UITextViewDelegate {
         return true
     }
 }
-

@@ -7,6 +7,13 @@
 
 import Foundation
 
+enum DiaryViewType {
+    case foregin
+    case stepOneKorean
+    case stepTwoKorean
+    case edit
+}
+
 class DiaryViewFactory {
     func createForeginDiaryView() -> DiaryView {
         let builder = DiaryViewConfigurationBuilder()
@@ -17,7 +24,7 @@ class DiaryViewFactory {
             .setBottomViewType(bottomViewType: .standard)
             .build()
         
-        return createDiaryView(with: config)
+        return createDiaryView(with: config, viewType: .foregin)
     }
     
     func createStepOneKoreanDiaryView() -> DiaryView {
@@ -29,7 +36,7 @@ class DiaryViewFactory {
             .setBottomViewType(bottomViewType: .standard)
             .build()
 
-        return createDiaryView(with: config)
+        return createDiaryView(with: config, viewType: .stepOneKorean)
     }
     
     func createStepTwoKoreanDiaryView() -> DiaryView {
@@ -42,7 +49,7 @@ class DiaryViewFactory {
             .setLayoutConfig(layoutConfig: StepTwoKoreanLayoutConfig())
             .build()
         
-        return createDiaryView(with: config)
+        return createDiaryView(with: config, viewType: .stepTwoKorean)
     }
     
     func createEditDiaryView() -> DiaryView {
@@ -52,18 +59,22 @@ class DiaryViewFactory {
             .setTextViewType(textViewType: .editable(SmeemTextViewHandler.shared))
             .build()
         
-        return createDiaryView(with: config)
+        return createDiaryView(with: config, viewType: .edit)
     }
 }
 
 // MARK: - Helpers
 
 extension DiaryViewFactory {
-    private func createDiaryView(with configuration: DiaryViewConfiguration) -> DiaryView {
+    private func createDiaryView(with configuration: DiaryViewConfiguration, viewType: DiaryViewType) -> DiaryView {
         let navigationBar = NavigationBarFactory.create(type: configuration.navigationBarType)
+        let handler = SmeemTextViewHandler.shared
+        handler.viewType = viewType
+        
         let inputTextView = SmeemTextView(type: configuration.textViewType, placeholderText: configuration.placeholderText)
         let bottomView = DiaryBottomView(viewType: configuration.bottomViewType)
+        let randomTopicView = RandomTopicView()
         
-        return DiaryView(configuration: configuration, navigationBar: navigationBar, inputTextView: inputTextView, bottomView: bottomView)
+        return DiaryView(configuration: configuration, viewType: viewType, navigationBar: navigationBar, inputTextView: inputTextView, bottomView: bottomView, randomTopicView: randomTopicView)
     }
 }

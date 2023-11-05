@@ -12,6 +12,8 @@ struct KeyboardInfo {
     var keyboardHeight: CGFloat = 0.0
 }
 
+// MARK: - DiaryViewModel
+
 class DiaryViewModel {
     
     var randomTopicEnabled: Bool = false {
@@ -20,7 +22,14 @@ class DiaryViewModel {
         }
     }
     
+    var isTextValid: Bool = false {
+        didSet {
+            onUpdateTextValidation?(isTextValid)
+        }
+    }
+    
     var onUpdateRandomTopic: ((Bool) -> Void)?
+    var onUpdateTextValidation: ((Bool) -> Void)?
     
     var topicID: Int? = nil
     var topicContent: String?
@@ -32,8 +41,14 @@ class DiaryViewModel {
     var keyboardInfo: KeyboardInfo?
 }
 
+// MARK: - Extensions
+
 extension DiaryViewModel {
     func toggleRandomTopic() {
         randomTopicEnabled = !randomTopicEnabled
+    }
+    
+    func updateTextValidation(_ isValid: Bool) {
+        isTextValid = isValid
     }
 }

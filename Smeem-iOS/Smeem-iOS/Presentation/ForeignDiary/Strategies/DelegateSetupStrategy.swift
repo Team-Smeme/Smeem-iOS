@@ -11,7 +11,7 @@ protocol DelegateSetupStrategy {
     func setupDelegate(for viewController: DiaryViewController)
 }
 
-class DefaultDelegateSeupStrategy: DelegateSetupStrategy {
+class DefaultDelegateSetupStrategy: DelegateSetupStrategy {
     func setupDelegate(for viewController: DiaryViewController) {
         viewController.setNagivationBarDelegate()
     }

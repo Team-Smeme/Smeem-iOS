@@ -17,25 +17,28 @@ class DiaryView: BaseView {
     
     var randomTopicEnabled: Bool = false
     
-    let configuration: DiaryViewConfiguration
+    private let configuration: DiaryViewConfiguration
+    private let viewType: DiaryViewType
     
     // MARK: UI Properties
     
-    private var navigationView: SmeemNavigationBar
+    private (set)var navigationView: SmeemNavigationBar
     private (set) var inputTextView: SmeemTextView
     private (set) var bottomView: DiaryBottomView
     
-    var randomTopicView: RandomSubjectView?
+    var randomTopicView: RandomTopicView?
     private var smeemToastView: SmeemToastView?
     
     // MARK: Life Cycle
     
     init(configuration: DiaryViewConfiguration,
+         viewType: DiaryViewType,
          navigationBar: SmeemNavigationBar,
          inputTextView: SmeemTextView,
          bottomView: DiaryBottomView,
-         randomTopicView: RandomSubjectView) {
+         randomTopicView: RandomTopicView) {
         self.configuration = configuration
+        self.viewType = viewType
         self.navigationView = navigationBar
         self.inputTextView = inputTextView
         self.bottomView = bottomView
@@ -97,6 +100,10 @@ extension DiaryView {
             make.bottom.equalTo(bottomView.snp.top)
         }
     }
+    
+    func setTextViewHandlerDelegate(_ viewController: DiaryViewController) {
+        inputTextView.handler?.delegate = viewController
+    }
 }
 
 // MARK: - Helpers
@@ -111,6 +118,8 @@ extension DiaryView {
         self.inputTextView.text = text
     }
     
+    // MARK: RandomTopicView
+    
     func updateRandomTopicView() {
         if randomTopicEnabled {
             guard let randomTopicView = randomTopicView else { return }
@@ -124,10 +133,12 @@ extension DiaryView {
             randomTopicView?.removeFromSuperview()
         }
     }
-
+    
     func updateInputTextViewConstraints() {
         inputTextView.snp.remakeConstraints { make in
-            make.top.equalTo((randomTopicEnabled && randomTopicView != nil) ? randomTopicView!.snp.bottom : navigationView.snp.bottom)
+            guard let randomTopicView = randomTopicView else { return }
+            
+            make.top.equalTo(randomTopicEnabled ? randomTopicView.snp.bottom : navigationView.snp.bottom)
             make.leading.trailing.equalToSuperview()
             make.bottom.equalTo(bottomView.snp.top)
         }

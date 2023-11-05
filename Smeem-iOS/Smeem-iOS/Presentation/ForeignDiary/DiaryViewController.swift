@@ -15,9 +15,7 @@ class DiaryViewController: BaseViewController, NavigationBarActionDelegate {
     private var viewModel: DiaryViewModel?
     
     private var keyboardHandler: KeyboardFollowingLayoutHandler?
-
-    private var delegateSetupStrategy: DelegateSetupStrategy = DefaultDelegateSeupStrategy()
-//    private weak var delegate: UITextViewDelegate?
+    private var delegateSetupStrategy: DelegateSetupStrategy = DefaultDelegateSetupStrategy()
     
     // MARK: - Life Cycle
     
@@ -40,18 +38,16 @@ class DiaryViewController: BaseViewController, NavigationBarActionDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        showKeyboard(textView: diaryView.inputTextView)
+        //        showKeyboard(textView: diaryView.inputTextView)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        delegateSetupStrategy.setupDelegate(for: self)
-        setBottomViewDelegate()
+        setupDelegate()
         setupKeyboardHandler()
         setupUpdateRandomTopic()
-//        diaryView?.leftButtonActionStategy = DismissLeftButtonActionStrategy(viewContoller: self)
-//        setDelegate()
+        //        diaryView?.leftButtonActionStategy = DismissLeftButtonActionStrategy(viewContoller: self)
     }
     
     deinit {
@@ -66,25 +62,50 @@ class DiaryViewController: BaseViewController, NavigationBarActionDelegate {
 
 extension DiaryViewController {
     
-    func setRootView() {
+    // MARK: - Settings
+    
+    private func setRootView() {
         view = rootView
+    }
+    
+    private func setupDelegate() {
+        delegateSetupStrategy.setupDelegate(for: self)
+        setTextViewDelegate()
+        setBottomViewDelegate()
+        setRandomTopicRefreshDelegate()
     }
     
     func setNagivationBarDelegate() {
         rootView?.setNavigationBarDelegate(self)
     }
     
-    func setBottomViewDelegate() {
+    func setTextViewDelegate() {
+        rootView?.setTextViewHandlerDelegate(self)
+    }
+    
+    private func setBottomViewDelegate() {
         rootView?.bottomView.actionDelegate = self
     }
     
-    func setDelegateSetupStrategy(_ strategy: DelegateSetupStrategy) {
+    private func setDelegateSetupStrategy(_ strategy: DelegateSetupStrategy) {
         delegateSetupStrategy = strategy
+    }
+    
+    private func setRandomTopicRefreshDelegate() {
+        rootView?.randomTopicView?.randomTopicRefreshDelegate = self
     }
     
     private func setupUpdateRandomTopic() {
         viewModel?.onUpdateRandomTopic = { [ weak self] isEnabled in
             self?.updateViewWithRandomTopicEnabled(isEnabled)
+        }
+    }
+    
+    // MARK: Setups
+    
+    private func setupTextValidation() {
+        viewModel?.onUpdateTextValidation = { [ weak self] isValid in
+            self?.rootView?.navigationView.updateRightButton(isValid: isValid)
         }
     }
     
@@ -100,34 +121,17 @@ extension DiaryViewController {
     }
     
     // MARK: - @objc
-
-//    @objc func dismissButtonDidTap() {
-//        dismissButton?.removeFromSuperview()
-//    }
-//
-//    @objc func randomSubjectToolTipDidTap() {
-//        self.randomSubjectToolTip?.isHidden = true
-//        UserDefaultsManager.randomSubjectToolTip = true
-//    }
+    
+    //    @objc func dismissButtonDidTap() {
+    //        dismissButton?.removeFromSuperview()
+    //    }
+    //
+    //    @objc func randomSubjectToolTipDidTap() {
+    //        self.randomSubjectToolTip?.isHidden = true
+    //        UserDefaultsManager.randomSubjectToolTip = true
+    //    }
     
     // MARK: - Custom Methods
-    
-//    func showToastIfNeeded(toastType: ToastViewType) {
-//        smeemToastView?.removeFromSuperview()
-//        smeemToastView = SmeemToastView(type: toastType)
-//
-//        let onKeyboardOffset = convertByHeightRatio(73)
-//        let offKeyboardOffset = convertByHeightRatio(107)
-//
-//        let offset = isKeyboardVisible ? onKeyboardOffset : offKeyboardOffset
-//
-//        smeemToastView?.show(in: view, offset: CGFloat(offset), keyboardHeight: keyboardHeight)
-//        smeemToastView?.hide(after: 1)
-//    }
-    
-    private func setData() {
-//        rootView?.randomTopicView?.setData(contentText: viewModel?.topicContent)
-    }
     
     private func handleRandomTopicButtonTap() {
         guard let isEnabled = viewModel?.randomTopicEnabled else { return }
@@ -142,17 +146,27 @@ extension DiaryViewController {
         }
         rootView?.randomTopicView?.setData(contentText: viewModel?.topicContent ?? "")
     }
-//
-//    private func setDelegate() {
-//        randomSubjectView.delegate = self
-//    }
 }
 
 // MARK: - RandomSubjectViewDelegate
 
-extension DiaryViewController: RandomSubjectViewDelegate {
+extension DiaryViewController: randomTopicRefreshDelegate {
     func refreshButtonTapped(completion: @escaping (String?) -> Void) {
-//        randomSubjectWithAPI()
+        randomSubjectWithAPI()
+    }
+}
+
+extension DiaryViewController: SmeemTextViewHandlerDelegate {
+    func textViewDidChange(text: String, viewType: DiaryViewType) {
+        var isValid: Bool
+        
+        switch viewType {
+        case .foregin, .stepTwoKorean, .edit:
+            isValid = SmeemTextViewHandler.shared.containsEnglishCharacters(with: text)
+        case .stepOneKorean:
+            isValid = SmeemTextViewHandler.shared.containsKoreanCharacters(with: text)
+        }
+        viewModel?.updateTextValidation(isValid)
     }
 }
 
@@ -160,10 +174,10 @@ extension DiaryViewController: RandomSubjectViewDelegate {
 
 extension DiaryViewController: BottomViewActionDelegate {
     func didTapRandomTopicButton() {
-//        if !UserDefaultsManager.randomSubjectToolTip {
-//            UserDefaultsManager.randomSubjectToolTip = true
-//            randomSubjectToolTip?.isHidden = true
-//        }
+        //        if !UserDefaultsManager.randomSubjectToolTip {
+        //            UserDefaultsManager.randomSubjectToolTip = true
+        //            randomSubjectToolTip?.isHidden = true
+        //        }
         
         viewModel?.toggleRandomTopic()
         handleRandomTopicButtonTap()
@@ -193,28 +207,44 @@ extension DiaryViewController {
         }
     }
     
-//    func postDiaryAPI() {
-//        PostDiaryAPI.shared.postDiary(param: PostDiaryRequest(content: diaryView.inputTextView.text, topicId: topicID)) { response in
-//            guard let postDiaryResponse = response?.data else { return }
-//            self.diaryID = postDiaryResponse.diaryID
-//
-//            if !postDiaryResponse.badges.isEmpty {
-//                self.badgePopupContent = postDiaryResponse.badges
-//            } else {
-//                self.badgePopupContent = []
-//            }
-//
-//            DispatchQueue.main.async {
-//                let homeVC = HomeViewController()
-//                homeVC.toastMessageFlag = true
-//                homeVC.badgePopupData = self.badgePopupContent
-//                //                self.randomSubjectToolTip = nil
-//                let rootVC = UINavigationController(rootViewController: homeVC)
-//                self.changeRootViewControllerAndPresent(rootVC)
-//            }
-//        }
-//    }
+    //    func postDiaryAPI() {
+    //        PostDiaryAPI.shared.postDiary(param: PostDiaryRequest(content: diaryView.inputTextView.text, topicId: topicID)) { response in
+    //            guard let postDiaryResponse = response?.data else { return }
+    //            self.diaryID = postDiaryResponse.diaryID
+    //
+    //            if !postDiaryResponse.badges.isEmpty {
+    //                self.badgePopupContent = postDiaryResponse.badges
+    //            } else {
+    //                self.badgePopupContent = []
+    //            }
+    //
+    //            DispatchQueue.main.async {
+    //                let homeVC = HomeViewController()
+    //                homeVC.toastMessageFlag = true
+    //                homeVC.badgePopupData = self.badgePopupContent
+    //                //                self.randomSubjectToolTip = nil
+    //                let rootVC = UINavigationController(rootViewController: homeVC)
+    //                self.changeRootViewControllerAndPresent(rootVC)
+    //            }
+    //        }
+    //    }
 }
+
+
+// MARK: - ToastView
+
+//    func showToastIfNeeded(toastType: ToastViewType) {
+//        smeemToastView?.removeFromSuperview()
+//        smeemToastView = SmeemToastView(type: toastType)
+//
+//        let onKeyboardOffset = convertByHeightRatio(73)
+//        let offKeyboardOffset = convertByHeightRatio(107)
+//
+//        let offset = isKeyboardVisible ? onKeyboardOffset : offKeyboardOffset
+//
+//        smeemToastView?.show(in: view, offset: CGFloat(offset), keyboardHeight: keyboardHeight)
+//        smeemToastView?.hide(after: 1)
+//    }
 
 
 // MARK: - Tutorial
