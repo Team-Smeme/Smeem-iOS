@@ -11,8 +11,8 @@ class DiaryViewController: BaseViewController, NavigationBarActionDelegate {
     
     // MARK: - Properties
     
-    private var rootView: DiaryView?
-    private var viewModel: DiaryViewModel?
+    private (set) var rootView: DiaryView?
+    private (set) var viewModel: DiaryViewModel?
     
     private var keyboardHandler: KeyboardFollowingLayoutHandler?
     private var delegateSetupStrategy: DelegateSetupStrategy = DefaultDelegateSetupStrategy()
@@ -62,6 +62,16 @@ class DiaryViewController: BaseViewController, NavigationBarActionDelegate {
 // MARK: - Extensions
 
 extension DiaryViewController {
+    
+    // MARK: - Get Methods
+    
+    func getTopicID() -> Int {
+        return self.viewModel?.topicID ?? -1
+    }
+    
+    func getInputText() -> String {
+        return self.rootView?.inputTextView.text ?? ""
+    }
     
     // MARK: - Settings
     

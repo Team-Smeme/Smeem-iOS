@@ -17,12 +17,12 @@ class DiaryView: BaseView {
     
     var randomTopicEnabled: Bool = false
     
-    private let configuration: DiaryViewConfiguration
+    private (set) var configuration: DiaryViewConfiguration
     private let viewType: DiaryViewType
     
     // MARK: UI Properties
     
-    private (set)var navigationView: SmeemNavigationBar
+    private (set) var navigationView: SmeemNavigationBar
     private (set) var inputTextView: SmeemTextView
     private (set) var bottomView: DiaryBottomView
     
@@ -146,3 +146,22 @@ extension DiaryView {
         }
     }
 }
+
+
+
+
+// MARK: - Tutorial Components
+
+//    private let tipLabel: UILabel = {
+//        let label = UILabel()
+//        label.text = "TIP"
+//        label.font = .c3
+//        label.textColor = .point
+//        return label
+//    }()
+//
+//    private lazy var cancelTipButton: UIButton = {
+//        let button = UIButton()
+//        button.setImage(Constant.Image.icnCancelGrey, for: .normal)
+//        return button
+//    }()

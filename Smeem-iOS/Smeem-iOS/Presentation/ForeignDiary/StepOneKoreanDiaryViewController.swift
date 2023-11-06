@@ -15,30 +15,14 @@ final class StepOneKoreanDiaryViewController: DiaryViewController {
     
     weak var delegate: DataBindProtocol?
     
-    // MARK: - UI Properties
-    
-//    private let tipLabel: UILabel = {
-//        let label = UILabel()
-//        label.text = "TIP"
-//        label.font = .c3
-//        label.textColor = .point
-//        return label
-//    }()
-//
-//    private lazy var cancelTipButton: UIButton = {
-//        let button = UIButton()
-//        button.setImage(Constant.Image.icnCancelGrey, for: .normal)
-//        return button
-//    }()
+    // MARK: - Navigations
     
     override func didTapLeftButton() {
         self.presentingViewController?.dismiss(animated: true)
     }
     
     override func didTapRightButton() {
-        let nextVC = StepTwoKoreanDiaryViewController.createWithStepTwoKoreanDiaryView()
-        
-        self.navigationController?.pushViewController(nextVC, animated: true)
+        handleRightNavigationButton()
     }
 }
 
@@ -49,23 +33,17 @@ extension StepOneKoreanDiaryViewController {
         return StepOneKoreanDiaryViewController(rootView: stepOneKoreanDiaryView)
     }
     
-//    private func handleRightNavigationButton() {
-//        let stepTwoVC = StepTwoKoreanDiaryViewController()
-//        delegate = stepTwoVC
-//
-//        if let text = inputTextView.text {
-//            delegate?.dataBind(topicID: topicID, inputText: text)
-//        }
-//
-//        self.navigationController?.pushViewController(stepTwoVC, animated: true)
-//    }
+    private func handleRightNavigationButton() {
+        let nextVC = StepTwoKoreanDiaryViewController.createWithStepTwoKoreanDiaryView()
+        delegate = nextVC
+        
+        delegate?.dataBind(topicID: getTopicID(), inputText: getInputText())
+        
+        self.navigationController?.pushViewController(nextVC, animated: true)
+    }
 }
 
 //extension StepOneKoreanDiaryViewController: NavigationBarActionDelegate {
-//    func didTapLeftButton() {
-//        self.presentingViewController?.dismiss(animated: true)
-//    }
-//
 //    func didTapRightButton() {
 //        if rightNavigationButton.titleLabel?.textColor == .point {
 //            handleRightNavigationButton()

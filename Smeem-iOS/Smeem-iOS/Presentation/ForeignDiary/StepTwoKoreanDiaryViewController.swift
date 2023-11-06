@@ -23,6 +23,8 @@ final class StepTwoKoreanDiaryViewController: DiaryViewController {
         //        handleRightNavitationButton()
     }
     
+    // MARK: - Navigation
+    
     override func didTapLeftButton() {
         self.navigationController?.popViewController(animated: true)
     }
@@ -51,10 +53,8 @@ extension StepTwoKoreanDiaryViewController {
 
 extension StepTwoKoreanDiaryViewController: DataBindProtocol {
     func dataBind(topicID: Int?, inputText: String) {
-        //        self.topicID = topicID
-        //        hintTextView.text = inputText
-        
-        print(topicID, inputText, "🥳")
+        viewModel?.topicID = topicID
+        rootView?.configuration.layoutConfig?.hintTextView.text = inputText
     }
 }
 
