@@ -7,8 +7,6 @@
 
 import UIKit
 
-import SnapKit
-
 final class StepOneKoreanDiaryViewController: DiaryViewController {
     
     // MARK: - Properties
@@ -22,9 +20,16 @@ final class StepOneKoreanDiaryViewController: DiaryViewController {
     }
     
     override func didTapRightButton() {
-        handleRightNavigationButton()
+        if rootView?.navigationView.rightButton.titleLabel?.textColor == .point {
+//            showLodingView(loadingView: rootView.loadingView)
+            handleRightNavigationButton()
+        } else {
+            //            showToastIfNeeded(toastType: .defaultToast(bodyType: .regEx))
+        }
     }
 }
+
+// MARK: - Extensions
 
 extension StepOneKoreanDiaryViewController {
     static func createWithStepOneKoreanDiaryView() -> StepOneKoreanDiaryViewController {
@@ -33,6 +38,7 @@ extension StepOneKoreanDiaryViewController {
         return StepOneKoreanDiaryViewController(rootView: stepOneKoreanDiaryView)
     }
     
+    // MARK: Action Helpers
     private func handleRightNavigationButton() {
         let nextVC = StepTwoKoreanDiaryViewController.createWithStepTwoKoreanDiaryView()
         delegate = nextVC
@@ -42,13 +48,3 @@ extension StepOneKoreanDiaryViewController {
         self.navigationController?.pushViewController(nextVC, animated: true)
     }
 }
-
-//extension StepOneKoreanDiaryViewController: NavigationBarActionDelegate {
-//    func didTapRightButton() {
-//        if rightNavigationButton.titleLabel?.textColor == .point {
-//            handleRightNavigationButton()
-//        } else {
-//            showToastIfNeeded(toastType: .defaultToast(bodyType: .regEx))
-//        }
-//    }
-//}

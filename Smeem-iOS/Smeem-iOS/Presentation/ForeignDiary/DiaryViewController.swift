@@ -65,8 +65,8 @@ extension DiaryViewController {
     
     // MARK: - Get Methods
     
-    func getTopicID() -> Int {
-        return self.viewModel?.topicID ?? -1
+    func getTopicID() -> String {
+        return self.viewModel?.topicID ?? "null"
     }
     
     func getInputText() -> String {
@@ -177,7 +177,6 @@ extension DiaryViewController: RandomTopicActionDelegate {
     func didTapRandomTopicButton() {
         
         // TODO: - Tutorial
-        
         //        if !UserDefaultsManager.randomSubjectToolTip {
         //            UserDefaultsManager.randomSubjectToolTip = true
         //            randomSubjectToolTip?.isHidden = true

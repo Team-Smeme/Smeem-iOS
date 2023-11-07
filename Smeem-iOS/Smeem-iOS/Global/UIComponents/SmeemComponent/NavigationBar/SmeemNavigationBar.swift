@@ -25,7 +25,7 @@ class SmeemNavigationBar: UIView {
         return button
     }()
     
-    private let rightButton: UIButton = {
+    private (set) var rightButton: UIButton = {
         let button = UIButton()
         button.titleLabel?.font = .b1
         button.setTitleColor(.gray300, for: .normal)

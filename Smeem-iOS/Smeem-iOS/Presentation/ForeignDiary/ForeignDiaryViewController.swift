@@ -9,19 +9,17 @@ import UIKit
 
 final class ForeignDiaryViewController: DiaryViewController {
     
-    // MARK: - Life Cycle
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-    }
-    
     override func didTapLeftButton() {
         self.presentingViewController?.dismiss(animated: true)
     }
     
     override func didTapRightButton() {
-        print("didTapRightButton")
+        if rootView?.navigationView.rightButton.titleLabel?.textColor == .point {
+//            showLodingView(loadingView: rootView.loadingView)
+            postDiaryAPI()
+        } else {
+            //            showToastIfNeeded(toastType: .defaultToast(bodyType: .regEx))
+        }
     }
 }
 
@@ -32,18 +30,3 @@ extension ForeignDiaryViewController {
         return ForeignDiaryViewController(rootView: foreignDiaryView)
     }
 }
-
-//extension ForeignDiaryViewController: NavigationBarActionDelegate {
-//    func didTapLeftButton() {
-//        self.presentingViewController?.dismiss(animated: true)
-//    }
-//
-//    func didTapRightButton() {
-////        if .navigationView.rightButton.titleLabel?.textColor == .point {
-////            showLodingView(loadingView: self.loadingView)
-////            postDiaryAPI()
-////        } else {
-//////            showToastIfNeeded(toastType: .defaultToast(bodyType: .regEx))
-////        }
-//    }
-//}

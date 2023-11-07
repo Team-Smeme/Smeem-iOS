@@ -7,8 +7,6 @@
 
 import UIKit
 
-import SnapKit
-
 final class StepTwoKoreanDiaryViewController: DiaryViewController {
     
     // MARK: - Life Cycle
@@ -25,7 +23,12 @@ final class StepTwoKoreanDiaryViewController: DiaryViewController {
     }
     
     override func didTapRightButton() {
-        print("didTapRightButton")
+        if rootView?.navigationView.rightButton.titleLabel?.textColor == .point {
+//            showLodingView(loadingView: rootView.loadingView)
+            postDiaryAPI()
+        } else {
+            //            showToastIfNeeded(toastType: .defaultToast(bodyType: .regEx))
+        }
     }
 }
 
@@ -42,7 +45,6 @@ extension StepTwoKoreanDiaryViewController {
         rootView?.setHintButtonDelegate(self)
     }
     
-    // MARK: Action Helpers
     func handleHintButton() {
         guard let isHintShowed = viewModel?.isHintShowed else { return }
         
@@ -59,7 +61,7 @@ extension StepTwoKoreanDiaryViewController {
 // MARK: - DataBindProtocol
 
 extension StepTwoKoreanDiaryViewController: DataBindProtocol {
-    func dataBind(topicID: Int?, inputText: String) {
+    func dataBind(topicID: String?, inputText: String) {
         viewModel?.topicID = topicID
         rootView?.configuration.layoutConfig?.hintTextView.text = inputText
     }
@@ -79,8 +81,6 @@ extension StepTwoKoreanDiaryViewController: HintActionDelegate {
 extension StepTwoKoreanDiaryViewController {
     func postPapagoApi(diaryText: String) {
         PapagoAPI.shared.postDiary(param: diaryText) { response in
-            print(">>>")
-            print(response)
             guard let response = response else { return }
             self.viewModel?.hintText = diaryText
             self.rootView?.configuration.layoutConfig?.hintTextView.text.removeAll()
@@ -89,19 +89,7 @@ extension StepTwoKoreanDiaryViewController {
     }
 }
 
-// MARK: - NavigationBarActionDelegate
 
-//extension StepTwoKoreanDiaryViewController: NavigationBarActionDelegate {
-//
-//    func didTapRightButton() {
-//        if rightNavigationButton.titleLabel?.textColor == .point {
-//            self.hideLodingView(loadingView: self.loadingView)
-//            postDiaryAPI()
-//        } else {
-//            showToastIfNeeded(toastType: .defaultToast(bodyType: .regEx))
-//        }
-//    }
-//}
 
 
 // MARK: - Tutorial

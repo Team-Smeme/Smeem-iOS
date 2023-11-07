@@ -32,7 +32,7 @@ class DiaryViewModel {
     var onUpdateTextValidation: ((Bool) -> Void)?
     var onUpdateHintButton: ((Bool) -> Void)?
     
-    var topicID: Int? = nil
+    var topicID: String? = nil
     var topicContent: String?
     var diaryID: Int?
     var badgePopupContent: [PopupBadge]?
