@@ -22,20 +22,18 @@ final class TrainingAlarmViewController: BaseViewController {
     // MARK: Network Manager
     
     private let trainingManager: TrainingManager
-    private let trainingStepFactory: TrainingStepFactory
     
     // MARK: UI Properties
     
-    private lazy var trainingAlarmStepView = TrainingStepView(configuration: trainingStepFactory.makeStepView(type: .alarm))
+    private lazy var trainingAlarmStepView = TrainingStepView(type: .alarm)
     private let trainingAlarmCollectionView = AlarmCollectionView()
     private lazy var laterButton = SmeemTextButton(title: "나중에 설정하기", textColor: .gray600, font: .b4)
     private lazy var completeButton = SmeemButton(buttonType: .enabled, text: "완료")
     
     // MARK: Life Cycle
     
-    init(trainingManager: TrainingManager, trainingStepFactory: TrainingStepFactory) {
+    init(trainingManager: TrainingManager) {
         self.trainingManager = trainingManager
-        self.trainingStepFactory = trainingStepFactory
         
         super.init(nibName: nil, bundle: nil)
     }

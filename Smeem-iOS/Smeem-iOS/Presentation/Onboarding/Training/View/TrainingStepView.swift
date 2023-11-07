@@ -7,6 +7,12 @@
 
 import UIKit
 
+enum TrainingStep {
+    case goal
+    case way
+    case alarm
+}
+
 final class TrainingStepView: UIView {
     
     // MARK: Properties
@@ -62,10 +68,10 @@ final class TrainingStepView: UIView {
     
     // MARK: Life Cycle
     
-    init(configuration: TrainingStepConfiguration) {
+    init(type: TrainingStep) {
         super.init(frame: .zero)
         
-        setComponentText(configuration: configuration)
+        setComponentText(type: type)
         setLayout()
     }
     
@@ -73,10 +79,21 @@ final class TrainingStepView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setComponentText(configuration: TrainingStepConfiguration) {
-        nowStepOneLabel.text = configuration.stepText
-        titleTrainingLabel.text = configuration.titleLearningText
-        detailTrainingLabel.text = configuration.detailLearningText
+    private func setComponentText(type: TrainingStep) {
+        switch type {
+        case .goal:
+            nowStepOneLabel.text = "1"
+            titleTrainingLabel.text = "트레이닝 목표 설정"
+            detailTrainingLabel.text = "마이페이지에서 언제든지 수정할 수 있어요"
+        case .way:
+            nowStepOneLabel.text = "2"
+            titleTrainingLabel.text = "추천 트레이닝 방법"
+            detailTrainingLabel.text = "스밈과 함께한다면 분명 목표를 이룰 거예요"
+        case .alarm:
+            nowStepOneLabel.text = "3"
+            titleTrainingLabel.text = "트레이닝 시간 설정"
+            detailTrainingLabel.text = "당신의 목표를 이룰 수 있도록 알림을 드릴게요!"
+        }
     }
 }
 

@@ -84,7 +84,7 @@ final class SmeemStartViewController: BaseViewController {
     
     @objc func startButtonDidTap() {
         UserDefaultsManager.clientAuthType = AuthType.signup.rawValue
-        let trainingGoalsVC = TrainingGoalViewController(trainingManager: TrainingManager(trainingService: TrainingService(requestable: APIServie())), trainingStepFactory: TrainingStepFactory())
+        let trainingGoalsVC = TrainingGoalViewController(trainingManager: TrainingManager(trainingService: TrainingService(requestable: APIServie())))
         self.navigationController?.pushViewController(trainingGoalsVC, animated: true)
     }
     

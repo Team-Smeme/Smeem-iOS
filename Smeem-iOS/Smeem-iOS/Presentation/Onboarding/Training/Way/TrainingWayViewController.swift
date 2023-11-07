@@ -16,20 +16,17 @@ final class TrainingWayViewController: BaseViewController {
     // MARK: Network Manager
     
     private let trainingManager: TrainingManager
-    private let trainingStepFactory: TrainingStepFactory
     
     // MARK: UI Properties
     
-    private lazy var trainingWayStepView = TrainingStepView(configuration: trainingStepFactory.makeStepView(type: .way))
+    private lazy var trainingWayStepView = TrainingStepView(type: .way)
     private let trainingWayView = TrainingWayView()
     private lazy var nextButton = SmeemButton(buttonType: .enabled, text: "다음")
     
     // MARK: Life Cycle
     
-    init(trainingManager: TrainingManager,
-         trainingStepFactory: TrainingStepFactory) {
+    init(trainingManager: TrainingManager) {
         self.trainingManager = trainingManager
-        self.trainingStepFactory = trainingStepFactory
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -49,7 +46,7 @@ final class TrainingWayViewController: BaseViewController {
     
     override func setButtonAction() {
         nextButton.addAction {
-            let trainingAlarmVC = TrainingAlarmViewController(trainingManager: TrainingManager(trainingService: TrainingService(requestable: APIServie())), trainingStepFactory: TrainingStepFactory())
+            let trainingAlarmVC = TrainingAlarmViewController(trainingManager: TrainingManager(trainingService: TrainingService(requestable: APIServie())))
             trainingAlarmVC.targetString = self.targetString
             self.navigationController?.pushViewController(trainingAlarmVC, animated: true)
         }
