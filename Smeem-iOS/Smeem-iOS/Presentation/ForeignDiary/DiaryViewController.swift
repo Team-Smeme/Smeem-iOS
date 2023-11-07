@@ -95,7 +95,7 @@ extension DiaryViewController {
     }
     
     private func setBottomViewDelegate() {
-        rootView?.bottomView.actionDelegate = self
+        rootView?.bottomView.randomTopicDelegate = self
     }
     
     private func setDelegateSetupStrategy(_ strategy: DelegateSetupStrategy) {
@@ -131,27 +131,17 @@ extension DiaryViewController {
         rootView?.updateInputTextViewConstraints()
     }
     
-    // MARK: - @objc
-    
-    //    @objc func dismissButtonDidTap() {
-    //        dismissButton?.removeFromSuperview()
-    //    }
-    //
-    //    @objc func randomSubjectToolTipDidTap() {
-    //        self.randomSubjectToolTip?.isHidden = true
-    //        UserDefaultsManager.randomSubjectToolTip = true
-    //    }
-    
     // MARK: - Custom Methods
     
     private func handleRandomTopicButtonTap() {
         guard let isEnabled = viewModel?.randomTopicEnabled else { return }
+        
+        rootView?.bottomView.updateRandomTopicButtonImage(isEnabled)
+        
         if isEnabled {
             randomSubjectWithAPI()
             updateViewWithRandomTopicEnabled(isEnabled)
-            rootView?.bottomView.randomTopicButton.setImage(Constant.Image.btnRandomSubjectActive, for: .normal)
         } else {
-            rootView?.bottomView.randomTopicButton.setImage(Constant.Image.btnRandomSubjectInactive, for: .normal)
             viewModel?.isTopicCalled = false
             viewModel?.topicID = nil
         }
@@ -183,8 +173,11 @@ extension DiaryViewController: SmeemTextViewHandlerDelegate {
 
 // MARK: - BottomViewActionDelegate
 
-extension DiaryViewController: BottomViewActionDelegate {
+extension DiaryViewController: RandomTopicActionDelegate {
     func didTapRandomTopicButton() {
+        
+        // TODO: - Tutorial
+        
         //        if !UserDefaultsManager.randomSubjectToolTip {
         //            UserDefaultsManager.randomSubjectToolTip = true
         //            randomSubjectToolTip?.isHidden = true
@@ -192,17 +185,6 @@ extension DiaryViewController: BottomViewActionDelegate {
         
         viewModel?.toggleRandomTopic()
         handleRandomTopicButtonTap()
-    }
-    
-    func didTapHintButton() {
-        //        isHintShowed.toggle()
-        //        if isHintShowed {
-        //            postPapagoApi(diaryText: hintTextView.text)
-        //            hintButton.setImage(Constant.Image.btnTranslateActive, for: .normal)
-        //        } else {
-        //            hintTextView.text = hintText
-        //            hintButton.setImage(Constant.Image.btnTranslateInactive, for: .normal)
-        //        }
     }
 }
 
@@ -218,27 +200,27 @@ extension DiaryViewController {
         }
     }
     
-    //    func postDiaryAPI() {
-    //        PostDiaryAPI.shared.postDiary(param: PostDiaryRequest(content: diaryView.inputTextView.text, topicId: topicID)) { response in
-    //            guard let postDiaryResponse = response?.data else { return }
-    //            self.diaryID = postDiaryResponse.diaryID
-    //
-    //            if !postDiaryResponse.badges.isEmpty {
-    //                self.badgePopupContent = postDiaryResponse.badges
-    //            } else {
-    //                self.badgePopupContent = []
-    //            }
-    //
-    //            DispatchQueue.main.async {
-    //                let homeVC = HomeViewController()
-    //                homeVC.toastMessageFlag = true
-    //                homeVC.badgePopupData = self.badgePopupContent
-    //                //                self.randomSubjectToolTip = nil
-    //                let rootVC = UINavigationController(rootViewController: homeVC)
-    //                self.changeRootViewControllerAndPresent(rootVC)
-    //            }
-    //        }
-    //    }
+    func postDiaryAPI() {
+        PostDiaryAPI.shared.postDiary(param: PostDiaryRequest(content: getInputText(), topicId: getTopicID())) { response in
+            guard let postDiaryResponse = response?.data else { return }
+            self.viewModel?.diaryID = postDiaryResponse.diaryID
+            
+            if !postDiaryResponse.badges.isEmpty {
+                self.viewModel?.badgePopupContent = postDiaryResponse.badges
+            } else {
+                self.viewModel?.badgePopupContent = []
+            }
+            
+            DispatchQueue.main.async {
+                let homeVC = HomeViewController()
+                homeVC.toastMessageFlag = true
+                homeVC.badgePopupData = self.viewModel?.badgePopupContent ?? []
+                //                self.randomSubjectToolTip = nil
+                let rootVC = UINavigationController(rootViewController: homeVC)
+                self.changeRootViewControllerAndPresent(rootVC)
+            }
+        }
+    }
 }
 
 
@@ -259,6 +241,15 @@ extension DiaryViewController {
 
 
 // MARK: - Tutorial
+
+//    @objc func dismissButtonDidTap() {
+//        dismissButton?.removeFromSuperview()
+//    }
+//
+//    @objc func randomSubjectToolTipDidTap() {
+//        self.randomSubjectToolTip?.isHidden = true
+//        UserDefaultsManager.randomSubjectToolTip = true
+//    }
 
 //extension DiaryViewController {
 //    private func checkTutorial() {

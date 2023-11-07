@@ -11,16 +11,11 @@ import SnapKit
 
 final class StepTwoKoreanDiaryViewController: DiaryViewController {
     
-    // MARK: - Properties
-    
-    var isHintShowed: Bool = false
-    var hintText: String?
-    
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //        handleRightNavitationButton()
+        setHintButtonDelegate()
     }
     
     // MARK: - Navigation
@@ -34,18 +29,30 @@ final class StepTwoKoreanDiaryViewController: DiaryViewController {
     }
 }
 
+// MARK: - Extensions
+
 extension StepTwoKoreanDiaryViewController {
-    
-    // MARK: - Custom Method
-    
-    //    private func handleRightNavitationButton() {
-    //        rightNavigationButton.addTarget(self, action: #selector(rightNavigationButtonDidTap), for: .touchUpInside)
-    //    }
-    
     static func createWithStepTwoKoreanDiaryView() -> StepTwoKoreanDiaryViewController {
         let diaryViewFactory = DiaryViewFactory()
         let stepTwoKoreanDiaryView = diaryViewFactory.createStepTwoKoreanDiaryView()
         return StepTwoKoreanDiaryViewController(rootView: stepTwoKoreanDiaryView)
+    }
+    
+    func setHintButtonDelegate() {
+        rootView?.setHintButtonDelegate(self)
+    }
+    
+    // MARK: Action Helpers
+    func handleHintButton() {
+        guard let isHintShowed = viewModel?.isHintShowed else { return }
+        
+        rootView?.bottomView.updateHintButtonImage(isHintShowed)
+        
+        if isHintShowed {
+            postPapagoApi(diaryText: rootView?.configuration.layoutConfig?.getHintViewText() ?? "")
+        } else {
+            rootView?.configuration.layoutConfig?.hintTextView.text = viewModel?.hintText
+        }
     }
 }
 
@@ -58,15 +65,26 @@ extension StepTwoKoreanDiaryViewController: DataBindProtocol {
     }
 }
 
+// MARK: - HintActionDelegate
+
+extension StepTwoKoreanDiaryViewController: HintActionDelegate {
+    func didTapHintButton() {
+        viewModel?.toggleIsHintShowed()
+        handleHintButton()
+    }
+}
+
 // MARK: - Network
 
 extension StepTwoKoreanDiaryViewController {
     func postPapagoApi(diaryText: String) {
         PapagoAPI.shared.postDiary(param: diaryText) { response in
+            print(">>>")
+            print(response)
             guard let response = response else { return }
-            //            self.hintText = self.hintTextView.text
-            //            self.hintTextView.text.removeAll()
-            //            self.hintTextView.text = response.message.result.translatedText
+            self.viewModel?.hintText = diaryText
+            self.rootView?.configuration.layoutConfig?.hintTextView.text.removeAll()
+            self.rootView?.configuration.layoutConfig?.hintTextView.text = response.message.result.translatedText
         }
     }
 }

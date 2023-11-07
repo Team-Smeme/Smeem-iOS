@@ -14,14 +14,12 @@ import SnapKit
 class DiaryView: BaseView {
     
     // MARK: Properties
-    
     var randomTopicEnabled: Bool = false
     
     private (set) var configuration: DiaryViewConfiguration
     private let viewType: DiaryViewType
     
     // MARK: UI Properties
-    
     private (set) var navigationView: SmeemNavigationBar
     private (set) var inputTextView: SmeemTextView
     private (set) var bottomView: DiaryBottomView
@@ -30,7 +28,6 @@ class DiaryView: BaseView {
     private var smeemToastView: SmeemToastView?
     
     // MARK: Life Cycle
-    
     init(configuration: DiaryViewConfiguration,
          viewType: DiaryViewType,
          navigationBar: SmeemNavigationBar,
@@ -102,18 +99,23 @@ extension DiaryView {
             make.bottom.equalTo(bottomView.snp.top)
         }
     }
-    
-    func setTextViewHandlerDelegate(_ viewController: DiaryViewController) {
-        inputTextView.handler?.delegate = viewController
-    }
 }
 
 // MARK: - Helpers
 
 extension DiaryView {
     
+    // MARK: Settings
     func setNavigationBarDelegate(_ delegate: NavigationBarActionDelegate?) {
         self.navigationView.actionDelegate = delegate
+    }
+    
+    func setTextViewHandlerDelegate(_ viewController: DiaryViewController) {
+        inputTextView.handler?.delegate = viewController
+    }
+    
+    func setHintButtonDelegate(_ viewController: StepTwoKoreanDiaryViewController) {
+        bottomView.hintDelegate = viewController
     }
     
     func setInputText(_ text: String) {

@@ -30,6 +30,7 @@ class DiaryViewModel {
     
     var onUpdateRandomTopic: ((Bool) -> Void)?
     var onUpdateTextValidation: ((Bool) -> Void)?
+    var onUpdateHintButton: ((Bool) -> Void)?
     
     var topicID: Int? = nil
     var topicContent: String?
@@ -39,6 +40,16 @@ class DiaryViewModel {
     var rightButtonFlag = false
     var isInitialInput = true
     var keyboardInfo: KeyboardInfo?
+    
+    // MARK: StepTwoKoreanDiaryVC
+    
+    var isHintShowed: Bool = false {
+        didSet {
+            onUpdateHintButton?(isHintShowed)
+        }
+    }
+    
+    var hintText: String?
 }
 
 // MARK: - Extensions
@@ -50,5 +61,9 @@ extension DiaryViewModel {
     
     func updateTextValidation(_ isValid: Bool) {
         isTextValid = isValid
+    }
+    
+    func toggleIsHintShowed() {
+        isHintShowed = !isHintShowed
     }
 }

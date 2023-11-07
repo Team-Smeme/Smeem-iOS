@@ -28,4 +28,8 @@ extension StepTwoKoreanLayoutConfig {
         textView.configureAttributedText()
         return textView
     }
+    
+    func getHintViewText() -> String {
+        return hintTextView.text ?? ""
+    }
 }

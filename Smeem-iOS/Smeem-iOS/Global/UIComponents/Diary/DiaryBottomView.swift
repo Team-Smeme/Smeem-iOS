@@ -9,8 +9,11 @@ import UIKit
 
 import SnapKit
 
-protocol BottomViewActionDelegate: AnyObject {
+protocol RandomTopicActionDelegate: AnyObject {
     func didTapRandomTopicButton()
+}
+
+protocol HintActionDelegate: AnyObject {
     func didTapHintButton()
 }
 
@@ -27,7 +30,8 @@ final class DiaryBottomView: UIView {
     
     let viewType: DiaryBottomViewType
     
-    weak var actionDelegate: BottomViewActionDelegate?
+    weak var randomTopicDelegate: RandomTopicActionDelegate?
+    weak var hintDelegate: HintActionDelegate?
     
     // MARK: UI Properties
     
@@ -60,7 +64,7 @@ final class DiaryBottomView: UIView {
     //        return image
     //    }()
     
-    private lazy var hintButton: UIButton = {
+    lazy var hintButton: UIButton = {
         let button = UIButton()
         button.setImage(Constant.Image.btnTranslateInactive, for: .normal)
         return button
@@ -127,11 +131,19 @@ extension DiaryBottomView {
     // MARK: - Action Helpers
     
     @objc func randomTopicButtonTapped() {
-        actionDelegate?.didTapRandomTopicButton()
+        randomTopicDelegate?.didTapRandomTopicButton()
     }
     
     @objc func hintButtonTapped() {
-        actionDelegate?.didTapHintButton()
+        hintDelegate?.didTapHintButton()
+    }
+    
+    func updateRandomTopicButtonImage(_ isEnabled: Bool) {
+        randomTopicButton.setImage(isEnabled ? Constant.Image.btnRandomSubjectActive : Constant.Image.btnRandomSubjectEnabled, for: .normal)
+    }
+    
+    func updateHintButtonImage(_ isHintShowed: Bool) {
+        hintButton.setImage(isHintShowed ? Constant.Image.btnTranslateActive : Constant.Image.btnTranslateInactive, for: .normal)
     }
 }
 
