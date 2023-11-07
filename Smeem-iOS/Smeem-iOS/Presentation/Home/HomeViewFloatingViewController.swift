@@ -50,9 +50,7 @@ final class HomeViewFloatingViewController: UIViewController {
     }()
     
     private lazy var floatingButton: SmeemButton = {
-        let floatingButton = SmeemButton()
-        floatingButton.smeemButtonType = .enabled
-        floatingButton.setTitle("취소", for: .normal)
+        let floatingButton = SmeemButton(buttonType: .enabled, text: "취소")
         floatingButton.addTarget(self, action: #selector(self.floatingButtonDidTap(_:)), for: .touchUpInside)
         return floatingButton
     }()

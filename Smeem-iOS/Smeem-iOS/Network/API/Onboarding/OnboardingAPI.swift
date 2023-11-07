@@ -13,11 +13,11 @@ public class OnboardingAPI {
     static let shared = OnboardingAPI()
     private let onboardingProvider = MoyaProvider<OnboardingService>(plugins: [MoyaLoggingPlugin()])
     
-    func planList(completion: @escaping (GeneralResponse<PlanListResponse>) -> Void) {
+    func planList(completion: @escaping (GeneralResponse<TrainingGoalsArrayResponse>) -> Void) {
         onboardingProvider.request(.planList) { response in
             switch response {
             case .success(let result):
-                guard let data = try? result.map(GeneralResponse<PlanListResponse>.self) else { return }
+                guard let data = try? result.map(GeneralResponse<TrainingGoalsArrayResponse>.self) else { return }
                 completion(data)
             case .failure(let err):
                 print(err)
@@ -25,11 +25,11 @@ public class OnboardingAPI {
         }
     }
     
-    func detailPlanList(param: String, completion: @escaping (GeneralResponse<DetailPlanListResponse>) -> Void) {
+    func detailPlanList(param: String, completion: @escaping (GeneralResponse<TrainingHowResponse>) -> Void) {
         onboardingProvider.request(.detailPlanList(param: param)) { response in
             switch response {
             case .success(let result):
-                guard let data = try? result.map(GeneralResponse<DetailPlanListResponse>.self) else { return }
+                guard let data = try? result.map(GeneralResponse<TrainingHowResponse>.self) else { return }
                 completion(data)
             case .failure(let err):
                 print(err)
@@ -37,7 +37,7 @@ public class OnboardingAPI {
         }
     }
     
-    func userPlanPathAPI(param: UserPlanRequest, accessToken: String, completion: @escaping (GeneralResponse<VoidType>) -> Void) {
+    func userPlanPathAPI(param: UserTrainingInfoRequest, accessToken: String, completion: @escaping (GeneralResponse<VoidType>) -> Void) {
         onboardingProvider.request(.onboardingUserPlan(param: param, token: accessToken)) { response in
             switch response {
             case .success(let result):

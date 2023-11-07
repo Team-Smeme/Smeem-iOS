@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-final class DetailDiaryViewController: UIViewController {
+final class DetailDiaryViewController: BaseViewController {
     
     // MARK: - Property
     
@@ -35,9 +35,7 @@ final class DetailDiaryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setBackgroundColor()
         setLayout()
-        swipeRecognizer()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -45,10 +43,6 @@ final class DetailDiaryViewController: UIViewController {
     }
     
     // MARK: - @objc
-    
-    @objc func responseToSwipeGesture() {
-        self.navigationController?.popViewController(animated: true)
-    }
     
     @objc func showActionSheet() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
@@ -88,12 +82,6 @@ final class DetailDiaryViewController: UIViewController {
         diaryScrollerView.configureDiaryScrollerView(topic: isRandomTopic, contentText: diaryContent, date: dateCreated, nickname: userName)
     }
     
-    private func swipeRecognizer() {
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(responseToSwipeGesture))
-        swipeRight.direction = UISwipeGestureRecognizer.Direction.right
-        self.view.addGestureRecognizer(swipeRight)
-    }
-    
     private func setScrollerViewType() {
         if isRandomTopic == "" {
             diaryScrollerView.viewType = .detailDiary
@@ -103,11 +91,6 @@ final class DetailDiaryViewController: UIViewController {
     }
     
     // MARK: - Layout
-    
-    private func setBackgroundColor() {
-        view.backgroundColor = .white
-        hiddenNavigationBar()
-    }
     
     private func setLayout() {
         

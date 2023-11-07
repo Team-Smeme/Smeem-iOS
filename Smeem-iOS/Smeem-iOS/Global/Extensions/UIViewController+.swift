@@ -71,11 +71,6 @@ extension UIViewController {
         return (convert / 812) * getDeviceHeight()
     }
     
-    /// 상단 네비바 hidden
-    func hiddenNavigationBar() {
-        self.navigationController?.isNavigationBarHidden = true
-    }
-    
     /// 부분 글자 스타일 변경 함수
     func changePartialStringStyle(mainString: String,
                                   pointString: String,
@@ -128,7 +123,7 @@ extension UIViewController {
     }
     
     func presentOnboardingAcceptVC() {
-        let bottomSheetVC = LoginBottomSheetViewController(loginManager: LoginManagerImpl(loginService: LoginServiceImpl(requestable: RequestImpl())))
+        let bottomSheetVC = AuthBottomSheetViewController(loginManager: LoginManager(loginService: LoginService(requestable: APIServie())))
         let onboardingAcceptVC = UserNicknameViewController()
         onboardingAcceptVC.userPlanRequest = bottomSheetVC.userPlanRequest
         let _ = UINavigationController(rootViewController: onboardingAcceptVC)

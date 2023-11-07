@@ -9,12 +9,12 @@ import UIKit
 
 import SnapKit
 
-final class MyPageViewController: UIViewController {
+final class MyPageViewController: BaseViewController {
     
     // MARK: - Property
     
-    private let mypageManager: MyPageManager
-    private let editPushManager: MyPageEditManager
+    private let mypageManager: MyPageManagerProtocol
+    private let editPushManager: MyPageEditManagerProtocol
     
     private var userInfo = MyPageResponse(username: "", target: "", way: "", detail: "", targetLang: "", hasPushAlarm: true, trainingTime: TrainingTime(day: "", hour: 0, minute: 0), badge: Badge(id: 0, name: "", type: "", imageURL: ""))
     var myPageSelectedIndexPath = ["MON": IndexPath(item: 0, section: 0), "TUE":IndexPath(item: 1, section: 0), "WED":IndexPath(item: 2, section: 0), "THU":IndexPath(item: 3, section: 0), "FRI":IndexPath(item: 4, section: 0), "SAT":IndexPath(item: 5, section: 0), "SUN":IndexPath(item: 6, section: 0)]
@@ -88,9 +88,8 @@ final class MyPageViewController: UIViewController {
         return editButton
     }()
     
-    private let howLearningView: HowLearningView = {
-        let view = HowLearningView()
-        view.buttontype = .logo
+    private let howLearningView: TrainingWayView = {
+        let view = TrainingWayView()
         return view
     }()
     
@@ -203,7 +202,7 @@ final class MyPageViewController: UIViewController {
     }()
     
     private lazy var alarmCollectionView: AlarmCollectionView = {
-        let collectionView = AlarmCollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        let collectionView = AlarmCollectionView()
         collectionView.isUserInteractionEnabled = false
         return collectionView
     }()
@@ -218,7 +217,7 @@ final class MyPageViewController: UIViewController {
     
     // MARK: - Life Cycle
     
-    init(myPageManager: MyPageManager, editPushManager: MyPageEditManager) {
+    init(myPageManager: MyPageManagerProtocol, editPushManager: MyPageEditManagerProtocol) {
         self.mypageManager = myPageManager
         self.editPushManager = editPushManager
         
@@ -233,7 +232,6 @@ final class MyPageViewController: UIViewController {
         super.viewDidLoad()
     
         setLayout()
-        swipeRecognizer()
         setupHowLearningViewTapGestureRecognizer()
     }
     
@@ -250,12 +248,12 @@ final class MyPageViewController: UIViewController {
     }
     
     @objc func moreButtonDidTap(_ sender: UIButton) {
-        let authManagetmentVC = AuthManagementViewController(myPageAuthManager: MyPageAuthManagerImpl(myPageAuthService: MyPageAuthServiceImpl(requestable: RequestImpl())))
+        let authManagetmentVC = AuthManagementViewController(myPageAuthManager: MyPageAuthManager(myPageAuthService: MyPageAuthService(requestable: APIServie())))
         self.navigationController?.pushViewController(authManagetmentVC, animated: true)
     }
     
     @objc func editButtonDidTap(_ sender: UIButton) {
-        let editVC = EditNicknameViewController(editNicknameManager: MyPageEditManagerImpl(myPageEditService: MyPageEditServiceImpl(requestable: RequestImpl())), nicknameValidManager: NicknameValidManagerImpl(nicknameValidService: NicknameValidServiceImpl(requestable: RequestImpl())))
+        let editVC = EditNicknameViewController(editNicknameManager: MyPageEditManager(myPageEditService: MyPageEditService(requestable: APIServie())), nicknameValidManager: NicknameValidManager(nicknameValidService: NicknameValidService(requestable: APIServie())))
         editVC.editNicknameDelegate = self
         editVC.nickName = userInfo.username
         self.navigationController?.pushViewController(editVC, animated: true)
@@ -267,12 +265,8 @@ final class MyPageViewController: UIViewController {
     }
     
     @objc func badgeImageDidTap() {
-        let badgeListVC = BadgeListViewController(myPageManager: MyPageManagerImpl(myPageService: MyPageServiceImpl(requestable: RequestImpl())))
+        let badgeListVC = BadgeListViewController(myPageManager: MyPageManager(myPageService: MyPageService(requestable: APIServie())))
         self.navigationController?.pushViewController(badgeListVC, animated: true)
-    }
-    
-    @objc func responseToSwipeGesture() {
-        self.navigationController?.popViewController(animated: true)
     }
     
     @objc func howLearningViewTapped() {
@@ -292,7 +286,7 @@ final class MyPageViewController: UIViewController {
     }
     
     @objc func alarmEditButtonDidTap() {
-        let alarmEditVC = EditAlarmViewController(editAlarmManager: MyPageEditManagerImpl(myPageEditService: MyPageEditServiceImpl(requestable: RequestImpl())))
+        let alarmEditVC = EditAlarmViewController(editAlarmManager: MyPageEditManager(myPageEditService: MyPageEditService(requestable: APIServie())))
         alarmEditVC.editAlarmDelegate = self
         alarmEditVC.dayIndexPathArray = indexPathArray
         alarmEditVC.trainigDayData = userInfo.trainingTime.day
@@ -347,12 +341,6 @@ final class MyPageViewController: UIViewController {
         alarmCollectionView.myPageTime = (userInfo.trainingTime.hour, userInfo.trainingTime.minute)
     }
     
-    private func swipeRecognizer() {
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(responseToSwipeGesture))
-        swipeRight.direction = UISwipeGestureRecognizer.Direction.right
-        self.view.addGestureRecognizer(swipeRight)
-    }
-    
     private func setupHowLearningViewTapGestureRecognizer() {
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(howLearningViewTapped))
         howLearningView.addGestureRecognizer(tapRecognizer)
@@ -368,14 +356,7 @@ final class MyPageViewController: UIViewController {
     
     // MARK: - Layout
     
-    private func setBackgroundColor() {
-        view.backgroundColor = .white
-    }
-    
     private func setLayout() {
-        setBackgroundColor()
-        hiddenNavigationBar()
-        
         view.addSubviews(headerContainerView, scrollView)
         headerContainerView.addSubviews(backButton, titleLabel, moreButton)
         scrollView.addSubview(contentView)

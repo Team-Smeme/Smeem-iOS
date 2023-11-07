@@ -9,7 +9,7 @@ import Foundation
 
 enum LoginEndPoint {
     case login(model: LoginRequest)
-    case userPlan(model: UserPlanRequest, accessToken: String)
+    case userPlan(model: UserTrainingInfoRequest, accessToken: String)
 }
 
 extension LoginEndPoint: BaseEndPoint {
@@ -18,7 +18,7 @@ extension LoginEndPoint: BaseEndPoint {
         case .login:
             return URLConstant.loginURL
         case .userPlan:
-            return URLConstant.userPlanURL
+            return URLConstant.userTrainingInfo
         }
     }
     
@@ -61,7 +61,7 @@ extension LoginEndPoint: BaseEndPoint {
     func makeUrlRequest() -> NetworkRequest {
         return NetworkRequest(path: path,
                               httpMethod: httpMethod,
-                              body: requestBody,
+                              requestBody: requestBody,
                               headers: header)
     }
 }

@@ -11,7 +11,7 @@ final class SplashViewController: UIViewController {
     
     // MARK: - Property
     
-    private let splahManager: SplashManager
+    private let splahManager: SplashManagerProtocol
     
     // MARK: - UI Property
     
@@ -24,7 +24,7 @@ final class SplashViewController: UIViewController {
     
     // MARK: - Life Cycle
 
-    init(splahManager: SplashManager) {
+    init(splahManager: SplashManagerProtocol) {
         self.splahManager = splahManager
         
         super.init(nibName: nil, bundle: nil)

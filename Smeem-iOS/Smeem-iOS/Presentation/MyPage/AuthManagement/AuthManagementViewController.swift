@@ -245,7 +245,7 @@ extension AuthManagementViewController: ViewControllerServiceable {
                 
                 hideLoadingView()
                 
-                self.changeRootViewController(SplashViewController(splahManager: SplashManagerImpl(splashService: SplashServiceImpl(requestable: RequestImpl()))))
+                self.changeRootViewController(SplashViewController(splahManager: SplashManager(splashService: SplashService(requestable: APIServie()))))
             } catch {
                 guard let error = error as? NetworkError else { return }
                 handlerError(error)
@@ -268,7 +268,7 @@ extension AuthManagementViewController: ViewControllerServiceable {
                 
                 hideLoadingView()
                 
-                self.changeRootViewController(SplashViewController(splahManager: SplashManagerImpl(splashService: SplashServiceImpl(requestable: RequestImpl()))))
+                self.changeRootViewController(SplashViewController(splahManager: SplashManager(splashService: SplashService(requestable: APIServie()))))
             } catch {
                 guard let error = error as? NetworkError else { return }
                 handlerError(error)
