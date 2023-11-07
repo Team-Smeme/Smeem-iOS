@@ -9,23 +9,14 @@ import UIKit
 
 final class StepOneKoreanDiaryViewController: DiaryViewController {
     
-    // MARK: - Properties
-    
+    // MARK: Properties
     weak var delegate: DataBindProtocol?
     
-    // MARK: - Navigations
-    
-    override func didTapLeftButton() {
-        self.presentingViewController?.dismiss(animated: true)
-    }
-    
-    override func didTapRightButton() {
-        if rootView?.navigationView.rightButton.titleLabel?.textColor == .point {
-//            showLodingView(loadingView: rootView.loadingView)
-            handleRightNavigationButton()
-        } else {
-            //            showToastIfNeeded(toastType: .defaultToast(bodyType: .regEx))
-        }
+    // MARK: Life Cycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        setNavigationBarButtonActionStrategy(StepOneKoreanDiaryNavigationAction(viewController: self))
     }
 }
 
@@ -39,7 +30,7 @@ extension StepOneKoreanDiaryViewController {
     }
     
     // MARK: Action Helpers
-    private func handleRightNavigationButton() {
+    func handleRightNavigationButton() {
         let nextVC = StepTwoKoreanDiaryViewController.createWithStepTwoKoreanDiaryView()
         delegate = nextVC
         

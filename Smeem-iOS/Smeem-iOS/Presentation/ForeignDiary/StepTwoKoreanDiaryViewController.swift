@@ -9,26 +9,12 @@ import UIKit
 
 final class StepTwoKoreanDiaryViewController: DiaryViewController {
     
-    // MARK: - Life Cycle
-    
+    // MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setNavigationBarButtonActionStrategy(StepTwoKoreanDiaryNavigationAction(viewController: self))
         setHintButtonDelegate()
-    }
-    
-    // MARK: - Navigation
-    
-    override func didTapLeftButton() {
-        self.navigationController?.popViewController(animated: true)
-    }
-    
-    override func didTapRightButton() {
-        if rootView?.navigationView.rightButton.titleLabel?.textColor == .point {
-//            showLodingView(loadingView: rootView.loadingView)
-            postDiaryAPI()
-        } else {
-            //            showToastIfNeeded(toastType: .defaultToast(bodyType: .regEx))
-        }
     }
 }
 

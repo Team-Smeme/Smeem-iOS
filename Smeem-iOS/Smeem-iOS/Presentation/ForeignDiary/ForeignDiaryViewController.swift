@@ -8,18 +8,10 @@
 import UIKit
 
 final class ForeignDiaryViewController: DiaryViewController {
-    
-    override func didTapLeftButton() {
-        self.presentingViewController?.dismiss(animated: true)
-    }
-    
-    override func didTapRightButton() {
-        if rootView?.navigationView.rightButton.titleLabel?.textColor == .point {
-//            showLodingView(loadingView: rootView.loadingView)
-            postDiaryAPI()
-        } else {
-            //            showToastIfNeeded(toastType: .defaultToast(bodyType: .regEx))
-        }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        setNavigationBarButtonActionStrategy(ForeignDiaryNavigationAction(viewController: self))
     }
 }
 

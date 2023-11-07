@@ -17,7 +17,7 @@ import UIKit
 
 import SnapKit
 
-protocol randomTopicRefreshDelegate: AnyObject {
+protocol RandomTopicRefreshDelegate: AnyObject {
     func refreshButtonTapped(completion: @escaping (String?) -> Void)
 }
 
@@ -27,7 +27,7 @@ final class RandomTopicView: UIView {
     
     // MARK: - Properties
     
-    weak var randomTopicRefreshDelegate: randomTopicRefreshDelegate?
+    weak var randomTopicRefreshDelegate: RandomTopicRefreshDelegate?
     
     private var heightConstraint: Constraint?
     

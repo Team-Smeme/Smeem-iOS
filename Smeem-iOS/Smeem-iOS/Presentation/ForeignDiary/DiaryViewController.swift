@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DiaryViewController: BaseViewController, NavigationBarActionDelegate {
+class DiaryViewController: BaseViewController {
     
     // MARK: - Properties
     
@@ -15,7 +15,8 @@ class DiaryViewController: BaseViewController, NavigationBarActionDelegate {
     private (set) var viewModel: DiaryViewModel?
     
     private var keyboardHandler: KeyboardFollowingLayoutHandler?
-    private var delegateSetupStrategy: DelegateSetupStrategy = DefaultDelegateSetupStrategy()
+    private var navigationBarButtonActionStrategy: any NavigationActionStrategy = DefaultNavigationActionStrategy()
+    private var delegateSetupStrategy = DefaultDelegateSetupStrategy()
     
     // MARK: - Life Cycle
     
@@ -38,7 +39,7 @@ class DiaryViewController: BaseViewController, NavigationBarActionDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //        showKeyboard(textView: diaryView.inputTextView)
+        showKeyboard(textView: rootView?.inputTextView)
     }
     
     override func viewDidLoad() {
@@ -48,15 +49,11 @@ class DiaryViewController: BaseViewController, NavigationBarActionDelegate {
         setupTextValidation()
         setupKeyboardHandler()
         setupUpdateRandomTopic()
-        //        diaryView?.leftButtonActionStategy = DismissLeftButtonActionStrategy(viewContoller: self)
     }
     
     deinit {
         keyboardHandler = nil
     }
-    
-    func didTapLeftButton() { }
-    func didTapRightButton() { }
 }
 
 // MARK: - Extensions
@@ -99,7 +96,11 @@ extension DiaryViewController {
     }
     
     private func setDelegateSetupStrategy(_ strategy: DelegateSetupStrategy) {
-        delegateSetupStrategy = strategy
+        delegateSetupStrategy = strategy as! DefaultDelegateSetupStrategy
+    }
+    
+    func setNavigationBarButtonActionStrategy(_ strategy: any NavigationActionStrategy) {
+        navigationBarButtonActionStrategy = strategy
     }
     
     private func setRandomTopicRefreshDelegate() {
@@ -151,11 +152,25 @@ extension DiaryViewController {
 
 // MARK: - RandomSubjectViewDelegate
 
-extension DiaryViewController: randomTopicRefreshDelegate {
+extension DiaryViewController: RandomTopicRefreshDelegate {
     func refreshButtonTapped(completion: @escaping (String?) -> Void) {
         randomSubjectWithAPI()
     }
 }
+
+// MARK: - NavigationBarActionDelegate
+
+extension DiaryViewController: NavigationBarActionDelegate {
+    func didTapLeftButton() {
+        navigationBarButtonActionStrategy.performLeftButtonAction()
+    }
+    
+    func didTapRightButton() {
+        navigationBarButtonActionStrategy.performRightButtonAction()
+    }
+}
+
+// MARK: - SmeemTextViewHandlerDelegate
 
 extension DiaryViewController: SmeemTextViewHandlerDelegate {
     func textViewDidChange(text: String, viewType: DiaryViewType) {
@@ -175,7 +190,6 @@ extension DiaryViewController: SmeemTextViewHandlerDelegate {
 
 extension DiaryViewController: RandomTopicActionDelegate {
     func didTapRandomTopicButton() {
-        
         // TODO: - Tutorial
         //        if !UserDefaultsManager.randomSubjectToolTip {
         //            UserDefaultsManager.randomSubjectToolTip = true
