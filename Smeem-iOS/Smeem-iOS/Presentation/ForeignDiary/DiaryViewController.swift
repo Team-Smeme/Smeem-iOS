@@ -45,7 +45,7 @@ class DiaryViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupDelegate()
+        setupDelegates()
         setupTextValidation()
         setupKeyboardHandler()
         setupUpdateRandomTopic()
@@ -76,18 +76,18 @@ extension DiaryViewController {
         view = rootView
     }
     
-    private func setupDelegate() {
-        delegateSetupStrategy.setupDelegate(for: self)
+    private func setupDelegates() {
+//        delegateSetupStrategy.setupDelegate(for: self)
         setTextViewDelegate()
         setBottomViewDelegate()
         setRandomTopicRefreshDelegate()
     }
     
-    func setNagivationBarDelegate() {
+    private func setNagivationBarDelegate() {
         rootView?.setNavigationBarDelegate(self)
     }
     
-    func setTextViewDelegate() {
+    private func setTextViewDelegate() {
         rootView?.setTextViewHandlerDelegate(self)
     }
     
@@ -113,8 +113,8 @@ extension DiaryViewController {
         }
     }
     
-    // MARK: Setups
-    
+    // MARK: - Setups
+
     private func setupTextValidation() {
         viewModel?.onUpdateTextValidation = { [ weak self] isValid in
             self?.rootView?.navigationView.updateRightButton(isValid: isValid)
@@ -140,7 +140,7 @@ extension DiaryViewController {
         rootView?.bottomView.updateRandomTopicButtonImage(isEnabled)
         
         if isEnabled {
-            randomSubjectWithAPI()
+            viewModel?.randomSubjectWithAPI()
             updateViewWithRandomTopicEnabled(isEnabled)
         } else {
             viewModel?.isTopicCalled = false
@@ -154,7 +154,7 @@ extension DiaryViewController {
 
 extension DiaryViewController: RandomTopicRefreshDelegate {
     func refreshButtonTapped(completion: @escaping (String?) -> Void) {
-        randomSubjectWithAPI()
+        viewModel?.randomSubjectWithAPI()
     }
 }
 
@@ -198,41 +198,6 @@ extension DiaryViewController: RandomTopicActionDelegate {
         
         viewModel?.toggleRandomTopic()
         handleRandomTopicButtonTap()
-    }
-}
-
-// MARK: - Network
-
-extension DiaryViewController {
-    func randomSubjectWithAPI() {
-        RandomSubjectAPI.shared.getRandomSubject { [weak self] response in
-            guard let randomSubjectData = response?.data else { return }
-            self?.viewModel?.topicID = randomSubjectData.topicId
-            self?.viewModel?.topicContent = randomSubjectData.content
-            self?.rootView?.randomTopicView?.setData(contentText: self?.viewModel?.topicContent ?? "")
-        }
-    }
-    
-    func postDiaryAPI() {
-        PostDiaryAPI.shared.postDiary(param: PostDiaryRequest(content: getInputText(), topicId: getTopicID())) { response in
-            guard let postDiaryResponse = response?.data else { return }
-            self.viewModel?.diaryID = postDiaryResponse.diaryID
-            
-            if !postDiaryResponse.badges.isEmpty {
-                self.viewModel?.badgePopupContent = postDiaryResponse.badges
-            } else {
-                self.viewModel?.badgePopupContent = []
-            }
-            
-            DispatchQueue.main.async {
-                let homeVC = HomeViewController()
-                homeVC.toastMessageFlag = true
-                homeVC.badgePopupData = self.viewModel?.badgePopupContent ?? []
-                //                self.randomSubjectToolTip = nil
-                let rootVC = UINavigationController(rootViewController: homeVC)
-                self.changeRootViewControllerAndPresent(rootVC)
-            }
-        }
     }
 }
 

@@ -5,7 +5,7 @@
 //  Created by Joon Baek on 2023/11/02.
 //
 
-import Foundation
+import UIKit
 
 struct KeyboardInfo {
     var isKeyboardVisible: Bool = false
@@ -31,6 +31,7 @@ class DiaryViewModel {
     var onUpdateRandomTopic: ((Bool) -> Void)?
     var onUpdateTextValidation: ((Bool) -> Void)?
     var onUpdateHintButton: ((Bool) -> Void)?
+    var onUpdateTopicContent: ((String) -> Void)?
     
     var topicID: String? = nil
     var topicContent: String?
@@ -65,5 +66,43 @@ extension DiaryViewModel {
     
     func toggleIsHintShowed() {
         isHintShowed = !isHintShowed
+    }
+}
+
+// MARK: - Network
+
+extension DiaryViewModel {
+    func randomSubjectWithAPI() {
+        RandomSubjectAPI.shared.getRandomSubject { [weak self] response in
+            guard let strongSelf = self,
+                  let randomSubjectData = response?.data,
+                  let topicContent = strongSelf.topicContent else { return }
+            
+            strongSelf.topicID = randomSubjectData.topicId
+            strongSelf.topicContent = randomSubjectData.content
+            strongSelf.onUpdateTopicContent?(topicContent)
+        }
+    }
+    
+    func postDiaryAPI() {
+        PostDiaryAPI.shared.postDiary(param: PostDiaryRequest(content: getInputText(), topicId: getTopicID())) { response in
+            guard let postDiaryResponse = response?.data else { return }
+            self.diaryID = postDiaryResponse.diaryID
+            
+            if !postDiaryResponse.badges.isEmpty {
+                self.badgePopupContent = postDiaryResponse.badges
+            } else {
+                self.badgePopupContent = []
+            }
+            
+            DispatchQueue.main.async {
+                let homeVC = HomeViewController()
+                homeVC.toastMessageFlag = true
+                homeVC.badgePopupData = self.badgePopupContent ?? []
+                //                self.randomSubjectToolTip = nil
+                let rootVC = UINavigationController(rootViewController: homeVC)
+                changeRootViewControllerAndPresent(rootVC)
+            }
+        }
     }
 }
