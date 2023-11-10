@@ -42,8 +42,12 @@ class ForeignDiaryNavigationAction: NavigationActionStrategy {
     
     func performRightButtonAction() {
         if viewController?.rootView?.navigationView.rightButton.titleLabel?.textColor == .point {
-//            showLodingView(loadingView: rootView.loadingView)
-            viewController?.postDiaryAPI()
+//            viewController?.showLodingView(loadingView: rootView.loadingView)
+            viewController?.viewModel?.inputText = viewController?.rootView?.inputTextView.text ?? ""
+            viewController?.rootView?.inputTextView.resignFirstResponder()
+            viewController?.viewModel?.postDiaryAPI { postDiaryResponse in
+                self.viewController?.handlePostDiaryResponse(postDiaryResponse)
+            }
         } else {
 //            showToastIfNeeded(toastType: .defaultToast(bodyType: .regEx))
         }
@@ -66,6 +70,7 @@ class StepOneKoreanDiaryNavigationAction: NavigationActionStrategy {
     func performRightButtonAction() {
         if viewController?.rootView?.navigationView.rightButton.titleLabel?.textColor == .point {
 //            showLodingView(loadingView: rootView.loadingView)
+            viewController?.rootView?.inputTextView.resignFirstResponder()
             viewController?.handleRightNavigationButton()
         } else {
             //            showToastIfNeeded(toastType: .defaultToast(bodyType: .regEx))
@@ -89,7 +94,10 @@ class StepTwoKoreanDiaryNavigationAction: NavigationActionStrategy {
     func performRightButtonAction() {
         if viewController?.rootView?.navigationView.rightButton.titleLabel?.textColor == .point {
 //            showLodingView(loadingView: rootView.loadingView)
-            viewController?.postDiaryAPI()
+            viewController?.rootView?.inputTextView.resignFirstResponder()
+            viewController?.viewModel?.postDiaryAPI { postDiaryResponse in
+                self.viewController?.handlePostDiaryResponse(postDiaryResponse)
+            }
         } else {
             //            showToastIfNeeded(toastType: .defaultToast(bodyType: .regEx))
         }

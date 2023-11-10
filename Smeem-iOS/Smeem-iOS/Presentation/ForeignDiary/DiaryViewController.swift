@@ -60,16 +60,6 @@ class DiaryViewController: BaseViewController {
 
 extension DiaryViewController {
     
-    // MARK: - Get Methods
-    
-    func getTopicID() -> String {
-        return self.viewModel?.topicID ?? "null"
-    }
-    
-    func getInputText() -> String {
-        return self.rootView?.inputTextView.text ?? ""
-    }
-    
     // MARK: - Settings
     
     private func setRootView() {
@@ -83,7 +73,7 @@ extension DiaryViewController {
         setRandomTopicRefreshDelegate()
     }
     
-    private func setNagivationBarDelegate() {
+    func setNagivationBarDelegate() {
         rootView?.setNavigationBarDelegate(self)
     }
     
@@ -148,13 +138,18 @@ extension DiaryViewController {
         }
         rootView?.randomTopicView?.setData(contentText: viewModel?.topicContent ?? "")
     }
-}
-
-// MARK: - RandomSubjectViewDelegate
-
-extension DiaryViewController: RandomTopicRefreshDelegate {
-    func refreshButtonTapped(completion: @escaping (String?) -> Void) {
-        viewModel?.randomSubjectWithAPI()
+    
+    // MARK: - Network
+    
+    func handlePostDiaryResponse(_ response: PostDiaryResponse?) {
+        DispatchQueue.main.async {
+            let homeVC = HomeViewController()
+            homeVC.toastMessageFlag = true
+            homeVC.badgePopupData = response?.badges ?? []
+            
+            let rootVC = UINavigationController(rootViewController: homeVC)
+            homeVC.changeRootViewControllerAndPresent(rootVC)
+        }
     }
 }
 
@@ -167,6 +162,14 @@ extension DiaryViewController: NavigationBarActionDelegate {
     
     func didTapRightButton() {
         navigationBarButtonActionStrategy.performRightButtonAction()
+    }
+}
+
+// MARK: - RandomSubjectViewDelegate
+
+extension DiaryViewController: RandomTopicRefreshDelegate {
+    func refreshButtonTapped(completion: @escaping (String?) -> Void) {
+        viewModel?.randomSubjectWithAPI()
     }
 }
 
@@ -183,6 +186,14 @@ extension DiaryViewController: SmeemTextViewHandlerDelegate {
             isValid = SmeemTextViewHandler.shared.containsKoreanCharacters(with: text)
         }
         viewModel?.updateTextValidation(isValid)
+    }
+    
+    func onUpdateInputText(_ text: String) {
+        viewModel?.onUpdateInputText?(text)
+    }
+    
+    func onUpdateTopicID(_ id: String) {
+        viewModel?.onUpdateTopicID?(id)
     }
 }
 

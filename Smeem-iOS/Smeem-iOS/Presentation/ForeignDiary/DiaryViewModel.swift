@@ -28,21 +28,11 @@ class DiaryViewModel {
         }
     }
     
-    var onUpdateRandomTopic: ((Bool) -> Void)?
-    var onUpdateTextValidation: ((Bool) -> Void)?
-    var onUpdateHintButton: ((Bool) -> Void)?
-    var onUpdateTopicContent: ((String) -> Void)?
-    
-    var topicID: String? = nil
-    var topicContent: String?
-    var diaryID: Int?
-    var badgePopupContent: [PopupBadge]?
-    var isTopicCalled: Bool = false
-    var rightButtonFlag = false
-    var isInitialInput = true
-    var keyboardInfo: KeyboardInfo?
-    
-    // MARK: StepTwoKoreanDiaryVC
+    var inputText: String = "" {
+        didSet {
+            onUpdateInputText?(inputText)
+        }
+    }
     
     var isHintShowed: Bool = false {
         didSet {
@@ -50,22 +40,43 @@ class DiaryViewModel {
         }
     }
     
+    var onUpdateRandomTopic: ((Bool) -> Void)?
+    var onUpdateTextValidation: ((Bool) -> Void)?
+    var onUpdateHintButton: ((Bool) -> Void)?
+    var onUpdateTopicContent: ((String) -> Void)?
+    var onUpdateInputText: ((String) -> Void)?
+    var onUpdateTopicID: ((String) -> Void)?
+    
+    var topicID: String? = nil
+    var topicContent: String?
+    var diaryID: Int?
+    var badgePopupContent: [PopupBadge]?
+    var isTopicCalled: Bool = false
     var hintText: String?
+    var keyboardInfo: KeyboardInfo?
 }
 
 // MARK: - Extensions
 
 extension DiaryViewModel {
-    func toggleRandomTopic() {
-        randomTopicEnabled = !randomTopicEnabled
-    }
-    
     func updateTextValidation(_ isValid: Bool) {
         isTextValid = isValid
     }
     
+    func toggleRandomTopic() {
+        randomTopicEnabled = !randomTopicEnabled
+    }
+    
     func toggleIsHintShowed() {
         isHintShowed = !isHintShowed
+    }
+    
+    func getTopicID() -> String {
+        return topicID ?? "null"
+    }
+    
+    func getInputText() -> String {
+        return inputText
     }
 }
 
@@ -84,25 +95,16 @@ extension DiaryViewModel {
         }
     }
     
-    func postDiaryAPI() {
+    func postDiaryAPI(completion: @escaping(PostDiaryResponse?) -> Void) {
         PostDiaryAPI.shared.postDiary(param: PostDiaryRequest(content: getInputText(), topicId: getTopicID())) { response in
-            guard let postDiaryResponse = response?.data else { return }
+            guard let postDiaryResponse = response?.data else {
+                completion(nil)
+                return
+            }
+            
             self.diaryID = postDiaryResponse.diaryID
-            
-            if !postDiaryResponse.badges.isEmpty {
-                self.badgePopupContent = postDiaryResponse.badges
-            } else {
-                self.badgePopupContent = []
-            }
-            
-            DispatchQueue.main.async {
-                let homeVC = HomeViewController()
-                homeVC.toastMessageFlag = true
-                homeVC.badgePopupData = self.badgePopupContent ?? []
-                //                self.randomSubjectToolTip = nil
-                let rootVC = UINavigationController(rootViewController: homeVC)
-                changeRootViewControllerAndPresent(rootVC)
-            }
+            self.badgePopupContent = postDiaryResponse.badges
+            completion(postDiaryResponse)
         }
     }
 }

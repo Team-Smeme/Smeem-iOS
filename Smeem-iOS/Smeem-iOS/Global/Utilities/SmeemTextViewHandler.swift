@@ -9,6 +9,7 @@ import UIKit
 
 protocol SmeemTextViewHandlerDelegate: AnyObject {
     func textViewDidChange(text: String, viewType: DiaryViewType)
+    func onUpdateInputText(_ text: String)
 }
 
 // MARK: - SmeemTextViewManager
@@ -57,6 +58,8 @@ extension SmeemTextViewHandler: UITextViewDelegate {
         if let viewType = viewType {
             delegate?.textViewDidChange(text: textView.text, viewType: viewType)
         }
+        
+        delegate?.onUpdateInputText(textView.text ?? "")
     }
     
     func textViewDidChangeSelection(_ textView: UITextView) {

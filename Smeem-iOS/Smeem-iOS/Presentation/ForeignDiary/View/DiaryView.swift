@@ -21,10 +21,10 @@ class DiaryView: BaseView {
     
     // MARK: UI Properties
     private (set) var navigationView: SmeemNavigationBar
+    var randomTopicView: RandomTopicView?
     private (set) var inputTextView: SmeemTextView
     private (set) var bottomView: DiaryBottomView
     
-    var randomTopicView: RandomTopicView?
     private var smeemToastView: SmeemToastView?
     
     // MARK: Life Cycle
