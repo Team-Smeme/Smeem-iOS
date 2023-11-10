@@ -75,6 +75,6 @@ extension DiaryViewFactory {
         let bottomView = DiaryBottomView(viewType: configuration.bottomViewType)
         let randomTopicView = RandomTopicView()
         
-        return DiaryView(configuration: configuration, viewType: viewType, navigationBar: navigationBar, inputTextView: inputTextView, bottomView: bottomView, randomTopicView: randomTopicView)
+        return DiaryView(viewType: viewType, configuration: configuration, navigationBar: navigationBar, inputTextView: inputTextView, bottomView: bottomView, randomTopicView: randomTopicView)
     }
 }

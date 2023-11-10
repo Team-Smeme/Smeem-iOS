@@ -14,28 +14,29 @@ import SnapKit
 class DiaryView: BaseView {
     
     // MARK: Properties
-    var randomTopicEnabled: Bool = false
-    
-    private (set) var configuration: DiaryViewConfiguration
     private let viewType: DiaryViewType
+    
+//    private var isRandomTopicActive: Bool = false
+    private (set) var configuration: DiaryViewConfiguration
     
     // MARK: UI Properties
     private (set) var navigationView: SmeemNavigationBar
-    var randomTopicView: RandomTopicView?
+    private (set) var randomTopicView: RandomTopicView?
     private (set) var inputTextView: SmeemTextView
     private (set) var bottomView: DiaryBottomView
     
     private var smeemToastView: SmeemToastView?
     
-    // MARK: Life Cycle
-    init(configuration: DiaryViewConfiguration,
-         viewType: DiaryViewType,
+    // MARK: - Life Cycle
+    init(viewType: DiaryViewType,
+         configuration: DiaryViewConfiguration,
          navigationBar: SmeemNavigationBar,
          inputTextView: SmeemTextView,
          bottomView: DiaryBottomView,
          randomTopicView: RandomTopicView) {
-        self.configuration = configuration
+        
         self.viewType = viewType
+        self.configuration = configuration
         self.navigationView = navigationBar
         self.inputTextView = inputTextView
         self.bottomView = bottomView
@@ -124,8 +125,8 @@ extension DiaryView {
     
     // MARK: RandomTopicView
     
-    func updateRandomTopicView() {
-        if randomTopicEnabled {
+    func updateRandomTopicView(isRandomTopicActive: Bool) {
+        if isRandomTopicActive {
             guard let randomTopicView = randomTopicView else { return }
 
             addSubview(randomTopicView)
@@ -138,11 +139,11 @@ extension DiaryView {
         }
     }
     
-    func updateInputTextViewConstraints() {
+    func updateInputTextViewConstraints(isRandomTopicActive: Bool) {
         inputTextView.snp.remakeConstraints { make in
             guard let randomTopicView = randomTopicView else { return }
             
-            make.top.equalTo(randomTopicEnabled ? randomTopicView.snp.bottom : navigationView.snp.bottom)
+            make.top.equalTo(isRandomTopicActive ? randomTopicView.snp.bottom : navigationView.snp.bottom)
             make.leading.trailing.equalToSuperview()
             make.bottom.equalTo(bottomView.snp.top)
         }

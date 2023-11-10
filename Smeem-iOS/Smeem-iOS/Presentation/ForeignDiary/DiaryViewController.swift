@@ -67,7 +67,7 @@ extension DiaryViewController {
     }
     
     private func setupDelegates() {
-//        delegateSetupStrategy.setupDelegate(for: self)
+        //        delegateSetupStrategy.setupDelegate(for: self)
         setTextViewDelegate()
         setBottomViewDelegate()
         setRandomTopicRefreshDelegate()
@@ -97,14 +97,8 @@ extension DiaryViewController {
         rootView?.randomTopicView?.randomTopicRefreshDelegate = self
     }
     
-    private func setupUpdateRandomTopic() {
-        viewModel?.onUpdateRandomTopic = { [ weak self] isEnabled in
-            self?.updateViewWithRandomTopicEnabled(isEnabled)
-        }
-    }
-    
     // MARK: - Setups
-
+    
     private func setupTextValidation() {
         viewModel?.onUpdateTextValidation = { [ weak self] isValid in
             self?.rootView?.navigationView.updateRightButton(isValid: isValid)
@@ -116,10 +110,10 @@ extension DiaryViewController {
         keyboardHandler = KeyboardFollowingLayoutHandler(targetView: rootView.inputTextView, bottomView: rootView.bottomView)
     }
     
-    private func updateViewWithRandomTopicEnabled(_ isEnabled: Bool) {
-        rootView?.randomTopicEnabled = isEnabled
-        rootView?.updateRandomTopicView()
-        rootView?.updateInputTextViewConstraints()
+    private func setupUpdateRandomTopic() {
+        viewModel?.onUpdateRandomTopic = { [ weak self] isEnabled in
+            self?.updateViewWithRandomTopicEnabled(isEnabled)
+        }
     }
     
     // MARK: - Custom Methods
@@ -137,6 +131,11 @@ extension DiaryViewController {
             viewModel?.topicID = nil
         }
         rootView?.randomTopicView?.setData(contentText: viewModel?.topicContent ?? "")
+    }
+    
+    private func updateViewWithRandomTopicEnabled(_ isEnabled: Bool) {
+        rootView?.updateRandomTopicView(isRandomTopicActive: isEnabled)
+        rootView?.updateInputTextViewConstraints(isRandomTopicActive: isEnabled)
     }
     
     // MARK: - Network

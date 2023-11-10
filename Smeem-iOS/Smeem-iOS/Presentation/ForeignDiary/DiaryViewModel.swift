@@ -40,12 +40,11 @@ class DiaryViewModel {
         }
     }
     
-    var onUpdateRandomTopic: ((Bool) -> Void)?
-    var onUpdateTextValidation: ((Bool) -> Void)?
-    var onUpdateHintButton: ((Bool) -> Void)?
-    var onUpdateTopicContent: ((String) -> Void)?
-    var onUpdateInputText: ((String) -> Void)?
-    var onUpdateTopicID: ((String) -> Void)?
+//    var isRandomTopicActive: Bool = false {
+//        didSet {
+//            onRandomTopicActiveChanged?(isRandomTopicActive)
+//        }
+//    }
     
     var topicID: String? = nil
     var topicContent: String?
@@ -54,6 +53,14 @@ class DiaryViewModel {
     var isTopicCalled: Bool = false
     var hintText: String?
     var keyboardInfo: KeyboardInfo?
+    
+    var onUpdateRandomTopic: ((Bool) -> Void)?
+//    var onRandomTopicActiveChanged: ((Bool) -> Void)?
+    var onUpdateTextValidation: ((Bool) -> Void)?
+    var onUpdateHintButton: ((Bool) -> Void)?
+    var onUpdateTopicContent: ((String) -> Void)?
+    var onUpdateInputText: ((String) -> Void)?
+    var onUpdateTopicID: ((String) -> Void)?
 }
 
 // MARK: - Extensions
