@@ -118,7 +118,7 @@ extension UIViewController {
     }
     
     func presentOnboardingPlanVC() {
-        let onboardingGoalVC = GoalViewController(viewtype: .onboarding)
+        let onboardingGoalVC = TrainingGoalViewController(trainingManager: TrainingManager(trainingService: TrainingService(requestable: APIServie())))
         self.navigationController?.pushViewController(onboardingGoalVC, animated: true)
     }
     
