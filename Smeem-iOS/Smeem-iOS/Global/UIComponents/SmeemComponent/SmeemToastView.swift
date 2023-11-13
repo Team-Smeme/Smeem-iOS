@@ -39,18 +39,6 @@ enum ToastViewType: Error {
     }
 }
 
-enum NetworkError: Error {
-    case networkError
-    case systemError
-    case loadDataError
-    case urlEncodingError
-    case jsonDecodingError
-    case unAuthorizedError
-    case unknownError(message: String)
-    case jsonEncodingError
-    case typeCastingError
-}
-
 enum SmeemToast: String {
     case error = "임쉬에러"
     case regEx = "외국어를 포함해 작성해 주세요 :("

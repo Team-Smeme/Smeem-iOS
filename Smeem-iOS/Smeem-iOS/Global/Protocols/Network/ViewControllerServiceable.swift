@@ -13,7 +13,7 @@ protocol ViewControllerServiceable where Self: UIViewController {
     /// - Parameter error : 네트워크 통신 중 throw 된 에러 전달
     func showLoadingView()
     func hideLoadingView()
-    func handlerError(version: String, _ error: Error)
+    func handlerError(version: String, _ error: NetworkError)
 }
 
 extension ViewControllerServiceable {

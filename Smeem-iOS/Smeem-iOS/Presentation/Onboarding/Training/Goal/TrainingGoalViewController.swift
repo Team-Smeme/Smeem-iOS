@@ -66,6 +66,7 @@ extension TrainingGoalViewController: ViewControllerServiceable {
                 planGoalCollectionView.planGoalArray = goalsArray
 //                hideLoadingView()
             } catch {
+                guard let error = error as? NetworkError else { return }
                 handlerError(error)
             }
         }
