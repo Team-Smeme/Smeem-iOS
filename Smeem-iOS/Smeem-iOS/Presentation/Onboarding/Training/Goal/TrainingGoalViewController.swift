@@ -64,12 +64,12 @@ extension TrainingGoalViewController: ViewControllerServiceable {
             do {
                 goalsArray = try await trainingManager.getTrainingGoal()
                 planGoalCollectionView.planGoalArray = goalsArray
-                hideLoadingView()
+//                hideLoadingView()
             } catch {
-                guard let error = error as? NetworkError else { return }
                 handlerError(error)
             }
         }
+        hideLoadingView()
     }
 }
 

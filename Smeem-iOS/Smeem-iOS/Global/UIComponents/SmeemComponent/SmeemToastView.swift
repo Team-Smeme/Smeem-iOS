@@ -22,64 +22,41 @@ import UIKit
 
 import SnapKit
 
-enum ToastViewType {
-    case defaultToast(bodyType: BodyType)
-    case errorToast(errorType: ErrorType)
+enum ToastViewType: Error {
+    case smeemToast(bodyType: SmeemToast)
+    case smeemErrorToast(text: String)
+    case networkErrorToast(message: String, body: String = "재접속하거나 나중에 다시 시도해 주세요")
     
-    var displayText: (head: String?, body: String) {
+    var displayText: (head: String?, body: String?) {
         switch self {
-        case .defaultToast(bodyType: let bodyType):
+        case .smeemToast(bodyType: let bodyType):
             return (nil, bodyType.displayText)
-        case .errorToast(errorType: let errorType):
-            return (errorType.displayText, BodyType.error.displayText)
+        case .smeemErrorToast(let text):
+            return (nil, text)
+        case .networkErrorToast(let message, let bodyText):
+            return (message, bodyText)
         }
     }
 }
 
-enum ErrorType: String {
-    /// 인터넷 연결을 확인해 주세요 :(
-    case networkError = "인터넷 연결을 확인해 주세요 :("
-    
-    /// 죄송합니다, 시스템 오류가 발생했어요 :(
-    case systemError = "죄송합니다, 시스템 오류가 발생했어요 :("
-    
-    /// 데이터를 불러올 수 없어요 :(
-    case loadDataError = "데이터를 불러올 수 없어요 :("
-    
-    case urlEncodingError = "url Encoding Error"
-    
-    case jsonEncodingError = "json Encoding Error"
-    
-    case jsonDecodingError = "json Decoding Error"
-    
-    case clientError = "client Error"
-    
-    case serverError = "server Error"
-    
-    case unAuthorizedError = "unAuthorizedError"
-    
-    var displayText: String {
-        return self.rawValue
-    }
+enum NetworkError: Error {
+    case networkError
+    case systemError
+    case loadDataError
+    case urlEncodingError
+    case jsonDecodingError
+    case unAuthorizedError
+    case unknownError(message: String)
+    case jsonEncodingError
+    case typeCastingError
 }
 
-enum BodyType: String {
-    /// 재접속하거나 나중에 다시 시도해 주세요.
-    case error = "재접속하거나 나중에 다시 시도해 주세요."
-    
-    ///  외국어를 포함해 작성해 주세요 :(
+enum SmeemToast: String {
+    case error = "임쉬에러"
     case regEx = "외국어를 포함해 작성해 주세요 :("
-    
-    /// 작성 완료
     case completed = "작성 완료"
-    
-    /// 변경 완료
     case changed = "변경 완료"
-    
-    /// 첨삭 완료
     case edited = "첨삭 완료"
-    
-    /// 로그인에 실패했어요. 다시 시도해 주세요.
     case serverError = "로그인에 실패했어요. 다시 시도해 주세요."
     
     var displayText: String {
@@ -99,7 +76,7 @@ final class SmeemToastView: UIView {
     private let cautionImage: UIImageView = {
         let imageView = UIImageView()
         //TODO: 추후 추가할게요!
-        imageView.backgroundColor = .white
+        imageView.image = Constant.Image.icnToastError
         return imageView
     }()
     
@@ -108,7 +85,6 @@ final class SmeemToastView: UIView {
         label.font = .c1
         label.textColor = .smeemWhite
         //TODO: 미리 속성지정 없이도 lineHeight 적용되게 하기
-        label.text = "추후 수정하겠습니다.."
         label.setTextWithLineHeight(lineHeight: 21)
         return label
     }()
@@ -117,7 +93,6 @@ final class SmeemToastView: UIView {
         let label = UILabel()
         label.textColor = .smeemWhite
         //TODO: 미리 속성지정 없이도 lineHeight 적용되게 하기
-        label.text = "추후 수정하겠습니다.."
         label.setTextWithLineHeight(lineHeight: 14)
         return label
     }()
@@ -127,10 +102,12 @@ final class SmeemToastView: UIView {
     public init(type: ToastViewType) {
         self.type = type
         switch type {
-        case .defaultToast(bodyType: let bodyType):
+        case .smeemToast(bodyType: let bodyType):
             self.bodyText = bodyType.rawValue
-        case .errorToast:
-            self.bodyText = BodyType.error.rawValue
+        case .smeemErrorToast(let text):
+            self.bodyText = text
+        case .networkErrorToast:
+            self.bodyText = SmeemToast.error.rawValue
         }
         super.init(frame: .zero)
         alpha = 0
@@ -144,16 +121,16 @@ final class SmeemToastView: UIView {
     
     // MARK: - Custom Method
     
-        public func show(duration: TimeInterval = 0.7) {
-            UIView.animate(withDuration: 0.3, animations: {
-                self.alpha = 1
-            })
-            UIView.animate(withDuration: 0.3, delay: duration, animations: {
-                self.alpha = 0
-            }) { _ in
-                self.removeFromSuperview()
-            }
+    public func show(duration: TimeInterval = 0.7) {
+        UIView.animate(withDuration: 0.3, animations: {
+            self.alpha = 1
+        })
+        UIView.animate(withDuration: 0.3, delay: duration, animations: {
+            self.alpha = 0
+        }) { _ in
+            self.removeFromSuperview()
         }
+    }
     
     // MARK: - Layout
     
@@ -163,19 +140,19 @@ final class SmeemToastView: UIView {
         bodyLabel.text = bodyText
         func lineHeight(for type: ToastViewType) -> CGFloat {
             switch type {
-            case .defaultToast:
+            case .smeemToast, .smeemErrorToast:
                 return 22
-            case .errorToast:
+            case .networkErrorToast:
                 return 14
             }
         }
         
         switch self.type {
-        case .defaultToast:
+        case .smeemToast, .smeemErrorToast:
             backgroundColor = .toastBackground
             bodyLabel.font = .c2
             
-        case .errorToast:
+        case .networkErrorToast:
             backgroundColor = .smeemBlack
             bodyLabel.font = .c4
         }
@@ -194,12 +171,12 @@ final class SmeemToastView: UIView {
         addSubviews(cautionImage, headLabel, bodyLabel)
         
         switch type {
-        case .defaultToast:
+        case .smeemToast, .smeemErrorToast:
             bodyLabel.snp.makeConstraints {
                 $0.centerY.equalToSuperview()
                 $0.leading.equalToSuperview().offset(convertByWidthRatio(16))
             }
-        case .errorToast:
+        case .networkErrorToast:
             cautionImage.snp.makeConstraints {
                 $0.centerY.equalToSuperview()
                 $0.leading.equalTo(convertByWidthRatio(19))
@@ -221,7 +198,7 @@ final class SmeemToastView: UIView {
             $0.centerX.equalTo(self)
             $0.width.equalTo(convertByWidthRatio(339))
             
-            if case .defaultToast = type {
+            if case .smeemToast = type {
                 $0.height.equalTo(convertByHeightRatio(50))
             } else {
                 $0.height.equalTo(convertByHeightRatio(70))

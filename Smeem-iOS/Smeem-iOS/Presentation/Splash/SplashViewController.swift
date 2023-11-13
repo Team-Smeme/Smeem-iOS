@@ -56,7 +56,7 @@ final class SplashViewController: UIViewController {
                         let response = try await self.splahManager.relogin()
                         
                         UserDefaultsManager.accessToken = response.accessToken
-                        UserDefaultsManager.accessToken = response.refreshToken
+                        UserDefaultsManager.refreshToken = response.refreshToken
                         
                         self.changeRootViewController(HomeViewController())
                     } catch {

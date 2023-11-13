@@ -279,7 +279,7 @@ final class HomeViewController: BaseViewController {
     }
     
     private func loadToastMessage() {
-        showToast(toastType: .defaultToast(bodyType: .completed))
+        showToast(toastType: .smeemToast(bodyType: .completed))
     }
     
     private func pushShowPage() {

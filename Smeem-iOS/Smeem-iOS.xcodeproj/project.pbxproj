@@ -63,7 +63,6 @@
 		37DCA67C2A48927400FF8F90 /* PapagoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DCA67B2A48927400FF8F90 /* PapagoService.swift */; };
 		37EB69E62A4B3BC400075E4E /* DataBindProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EB69E52A4B3BC400075E4E /* DataBindProtocol.swift */; };
 		4A0123552AAA087D00E09646 /* BaseResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0123542AAA087D00E09646 /* BaseResponse.swift */; };
-		4A0123572AAA088C00E09646 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0123562AAA088C00E09646 /* NetworkError.swift */; };
 		4A0123592AAA0DEC00E09646 /* NetworkRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0123582AAA0DEC00E09646 /* NetworkRequest.swift */; };
 		4A01235B2AAA178500E09646 /* HttpMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A01235A2AAA178500E09646 /* HttpMethod.swift */; };
 		4A01235D2AAA2BFA00E09646 /* ViewControllerServiceable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A01235C2AAA2BFA00E09646 /* ViewControllerServiceable.swift */; };
@@ -234,7 +233,6 @@
 		37DCA67B2A48927400FF8F90 /* PapagoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PapagoService.swift; sourceTree = "<group>"; };
 		37EB69E52A4B3BC400075E4E /* DataBindProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataBindProtocol.swift; sourceTree = "<group>"; };
 		4A0123542AAA087D00E09646 /* BaseResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseResponse.swift; sourceTree = "<group>"; };
-		4A0123562AAA088C00E09646 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		4A0123582AAA0DEC00E09646 /* NetworkRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRequest.swift; sourceTree = "<group>"; };
 		4A01235A2AAA178500E09646 /* HttpMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpMethod.swift; sourceTree = "<group>"; };
 		4A01235C2AAA2BFA00E09646 /* ViewControllerServiceable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerServiceable.swift; sourceTree = "<group>"; };
@@ -661,7 +659,6 @@
 				4A3774832A42E6EA00357DD1 /* ConfigConstant.swift */,
 				4A9E10E32A43468600295D07 /* BaseTargetType.swift */,
 				4A0123542AAA087D00E09646 /* BaseResponse.swift */,
-				4A0123562AAA088C00E09646 /* NetworkError.swift */,
 				4A0123582AAA0DEC00E09646 /* NetworkRequest.swift */,
 				4A01235A2AAA178500E09646 /* HttpMethod.swift */,
 				4A7BE75C2ABB4B9800070E83 /* BaseEndPoint.swift */,
@@ -1236,7 +1233,6 @@
 				4AF1D2AE2AC06FA1004C3AB7 /* LoginService.swift in Sources */,
 				4AC00EF02AD52F4C009230DA /* TrainingAlarmViewController.swift in Sources */,
 				4A3774822A42DF4500357DD1 /* NetworkHeader.swift in Sources */,
-				4A0123572AAA088C00E09646 /* NetworkError.swift in Sources */,
 				37DCA6742A484D5900FF8F90 /* PostDiaryAPI.swift in Sources */,
 				4A9FAB472A4C3D1200C40D5A /* BadgeListTableViewCell.swift in Sources */,
 				373E38592A2F889500DF96F0 /* DiaryDetailRandomSubjectView.swift in Sources */,
