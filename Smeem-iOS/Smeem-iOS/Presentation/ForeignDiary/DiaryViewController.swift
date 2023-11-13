@@ -16,7 +16,7 @@ class DiaryViewController: BaseViewController {
     
     private var keyboardHandler: KeyboardFollowingLayoutHandler?
     private var navigationBarButtonActionStrategy: any NavigationActionStrategy = DefaultNavigationActionStrategy()
-    private var delegateSetupStrategy = DefaultDelegateSetupStrategy()
+    private var delegateSetupStrategy: DefaultDelegateSetupStrategy?
     
     // MARK: - Life Cycle
     
@@ -86,7 +86,7 @@ extension DiaryViewController {
     }
     
     private func setDelegateSetupStrategy(_ strategy: DelegateSetupStrategy) {
-        delegateSetupStrategy = strategy as! DefaultDelegateSetupStrategy
+        delegateSetupStrategy = strategy as? DefaultDelegateSetupStrategy ?? nil
     }
     
     func setNavigationBarButtonActionStrategy(_ strategy: any NavigationActionStrategy) {
@@ -113,6 +113,10 @@ extension DiaryViewController {
     private func setupUpdateRandomTopic() {
         viewModel?.onUpdateRandomTopic = { [ weak self] isEnabled in
             self?.updateViewWithRandomTopicEnabled(isEnabled)
+        }
+        
+        viewModel?.onUpdateTopicContent = { [ weak self] content in
+            self?.rootView?.randomTopicView?.setData(contentText: content)
         }
     }
     

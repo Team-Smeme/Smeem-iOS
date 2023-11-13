@@ -127,9 +127,6 @@ extension RandomTopicView {
     
     // MARK: - Custom Method
     
-    // TODO: 필요 없을지도?
-    private func createRandomTopicView() -> RandomTopicView { .init() }
-    
     func setData(contentText: String) {
         contentLabel.text = "     " + contentText
         contentLabel.setTextWithLineHeight(lineHeight: 22)

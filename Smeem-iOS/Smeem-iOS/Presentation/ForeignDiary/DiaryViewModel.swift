@@ -19,6 +19,10 @@ class DiaryViewModel {
     var randomTopicEnabled: Bool = false {
         didSet {
             onUpdateRandomTopic?(randomTopicEnabled)
+            
+            if randomTopicEnabled {
+                onUpdateTopicContent?(topicContent ?? "")
+            }
         }
     }
     
@@ -40,13 +44,7 @@ class DiaryViewModel {
         }
     }
     
-//    var isRandomTopicActive: Bool = false {
-//        didSet {
-//            onRandomTopicActiveChanged?(isRandomTopicActive)
-//        }
-//    }
-    
-    var topicID: String? = nil
+    var topicID: Int? = nil
     var topicContent: String?
     var diaryID: Int?
     var badgePopupContent: [PopupBadge]?
@@ -55,7 +53,6 @@ class DiaryViewModel {
     var keyboardInfo: KeyboardInfo?
     
     var onUpdateRandomTopic: ((Bool) -> Void)?
-//    var onRandomTopicActiveChanged: ((Bool) -> Void)?
     var onUpdateTextValidation: ((Bool) -> Void)?
     var onUpdateHintButton: ((Bool) -> Void)?
     var onUpdateTopicContent: ((String) -> Void)?
@@ -93,12 +90,11 @@ extension DiaryViewModel {
     func randomSubjectWithAPI() {
         RandomSubjectAPI.shared.getRandomSubject { [weak self] response in
             guard let strongSelf = self,
-                  let randomSubjectData = response?.data,
-                  let topicContent = strongSelf.topicContent else { return }
+                  let randomSubjectData = response?.data else { return }
             
             strongSelf.topicID = randomSubjectData.topicId
             strongSelf.topicContent = randomSubjectData.content
-            strongSelf.onUpdateTopicContent?(topicContent)
+            strongSelf.onUpdateTopicContent?(randomSubjectData.content)
         }
     }
     
