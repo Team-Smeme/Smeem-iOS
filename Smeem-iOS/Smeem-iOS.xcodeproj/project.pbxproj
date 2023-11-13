@@ -50,6 +50,7 @@
 		37A574E62A02178D00312453 /* SmeemToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574E52A02178D00312453 /* SmeemToastView.swift */; };
 		37A574E82A02424F00312453 /* RandomTopicView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574E72A02424F00312453 /* RandomTopicView.swift */; };
 		37ADCBFE2AFA870800E474AA /* NavigationBarButtonActionStrategy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ADCBFD2AFA870800E474AA /* NavigationBarButtonActionStrategy.swift */; };
+		37ADCC022B0289AD00E474AA /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ADCC012B0289AD00E474AA /* Observable.swift */; };
 		37B360AA2AC2A4680006C8ED /* SmeemTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B360A92AC2A4680006C8ED /* SmeemTextView.swift */; };
 		37DCA6572A47574300FF8F90 /* RandomSubjectAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DCA6562A47574300FF8F90 /* RandomSubjectAPI.swift */; };
 		37DCA65A2A47598700FF8F90 /* RandomSubjectService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DCA6592A47598700FF8F90 /* RandomSubjectService.swift */; };
@@ -212,6 +213,7 @@
 		37A574E52A02178D00312453 /* SmeemToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmeemToastView.swift; sourceTree = "<group>"; };
 		37A574E72A02424F00312453 /* RandomTopicView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomTopicView.swift; sourceTree = "<group>"; };
 		37ADCBFD2AFA870800E474AA /* NavigationBarButtonActionStrategy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarButtonActionStrategy.swift; sourceTree = "<group>"; };
+		37ADCC012B0289AD00E474AA /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		37B360A92AC2A4680006C8ED /* SmeemTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmeemTextView.swift; sourceTree = "<group>"; };
 		37DCA6562A47574300FF8F90 /* RandomSubjectAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomSubjectAPI.swift; sourceTree = "<group>"; };
 		37DCA6592A47598700FF8F90 /* RandomSubjectService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomSubjectService.swift; sourceTree = "<group>"; };
@@ -351,6 +353,7 @@
 			children = (
 				374F828B2AC327A200C128B9 /* SmeemTextViewHandler.swift */,
 				371107D92AC99099007A4AC2 /* KeyboardFollowingLayoutHandler.swift */,
+				37ADCC012B0289AD00E474AA /* Observable.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -1306,6 +1309,7 @@
 				37A574E62A02178D00312453 /* SmeemToastView.swift in Sources */,
 				374F828C2AC327A200C128B9 /* SmeemTextViewHandler.swift in Sources */,
 				4A8FFA5229C9E1FD00FB76C0 /* SceneDelegate.swift in Sources */,
+				37ADCC022B0289AD00E474AA /* Observable.swift in Sources */,
 				3797891C2AAE11D400C61EF4 /* NavigationBarConfigurationBuilder.swift in Sources */,
 				4A3373F82A461ABC00EFE6C4 /* OnboardingAPI.swift in Sources */,
 				4AA626652AC1B6B000F31AAE /* MyPageEndPoint.swift in Sources */,
