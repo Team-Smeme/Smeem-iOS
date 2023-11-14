@@ -351,7 +351,7 @@ final class MyPageViewController: BaseViewController {
     }
     
     private func loadToastMessage() {
-        showToast(toastType: .defaultToast(bodyType: .changed))
+        showToast(toastType: .smeemToast(bodyType: .changed))
     }
     
     // MARK: - Layout

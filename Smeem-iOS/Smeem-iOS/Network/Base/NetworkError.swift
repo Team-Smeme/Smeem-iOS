@@ -2,37 +2,19 @@
 //  NetworkError.swift
 //  Smeem-iOS
 //
-//  Created by 황찬미 on 2023/09/07.
+//  Created by 황찬미 on 2023/11/14.
 //
 
 import Foundation
 
-enum NetworkError: Error, CustomStringConvertible {
+enum NetworkError: Error {
+    case networkError
+    case systemError
+    case loadDataError
     case urlEncodingError
     case jsonDecodingError
     case unAuthorizedError
-    case clientError(message: String)
-    case serverError
+    case unknownError(message: String)
     case jsonEncodingError
-    
-    var description: String {
-        switch self {
-        case .urlEncodingError:
-            return "URL Encoding Error"
-        case .jsonDecodingError:
-            return "Json Decoding Error"
-        case .unAuthorizedError:
-            return "Token Error"
-        case .clientError(let message):
-            return "Clinet Error \(message)"
-        case .serverError:
-            return "Server Error"
-        case .jsonEncodingError:
-            return "Json Encoding Error"
-        }
-    }
+    case typeCastingError
 }
-
-/// 임의 주석 처리
-// case fetchImageError
-// case badCastingError

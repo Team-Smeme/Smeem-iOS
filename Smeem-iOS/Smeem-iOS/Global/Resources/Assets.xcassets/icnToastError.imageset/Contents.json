@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "tutorial_weekly.png",
+      "filename" : "icon-exclamation-circle-mono.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "tutorial_weekly@2x.png",
+      "filename" : "icon-exclamation-circle-mono@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "tutorial_weekly@3x.png",
+      "filename" : "icon-exclamation-circle-mono@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

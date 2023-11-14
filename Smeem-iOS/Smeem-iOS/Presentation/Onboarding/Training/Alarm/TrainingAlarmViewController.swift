@@ -118,22 +118,21 @@ final class TrainingAlarmViewController: BaseViewController {
 
 extension TrainingAlarmViewController: ViewControllerServiceable {
     private func userTrainingInfoPatchAPI() {
-        showLoadingView()
         Task {
             do {
+                showLoadingView()
                 try await trainingManager.pathUserTraingInfo(model: UserTrainingInfoRequest(target: self.targetString,
                                                                                             trainingTime: TrainingTime(day: trainingDayString,
                                                                                                                        hour: trainingHour,
                                                                                                                        minute: trainingMinute),
                                                                                             hasAlarm: hasAlarm))
-                hideLoadingView()
-                
                 let userNicknameVC = UserNicknameViewController()
                 self.navigationController?.pushViewController(userNicknameVC, animated: true)
             } catch {
                 guard let error = error as? NetworkError else { return }
                 handlerError(error)
             }
+            hideLoadingView()
         }
     }
 }

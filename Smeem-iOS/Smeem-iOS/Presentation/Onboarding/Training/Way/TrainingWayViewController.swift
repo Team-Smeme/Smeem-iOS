@@ -58,15 +58,15 @@ final class TrainingWayViewController: BaseViewController {
 extension TrainingWayViewController: ViewControllerServiceable {
     private func trainingHowGetAPI(query: String) {
         Task {
-            showLoadingView()
             do {
+                showLoadingView()
                 let clientModel = try await trainingManager.getTrainingHow(query: query)
                 self.trainingWayView.setRefactorData(model: clientModel)
-                hideLoadingView()
             } catch {
                 guard let error = error as? NetworkError else { return }
                 handlerError(error)
             }
+            hideLoadingView()
         }
     }
 }
