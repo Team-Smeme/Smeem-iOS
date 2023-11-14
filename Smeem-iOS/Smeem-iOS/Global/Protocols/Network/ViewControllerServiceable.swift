@@ -13,7 +13,7 @@ protocol ViewControllerServiceable where Self: UIViewController {
     /// - Parameter error : 네트워크 통신 중 throw 된 에러 전달
     func showLoadingView()
     func hideLoadingView()
-    func handlerError(_ error: NetworkError)
+    func handlerError(version: String, _ error: NetworkError)
 }
 
 extension ViewControllerServiceable {
@@ -44,20 +44,36 @@ extension ViewControllerServiceable {
         return view.subviews.compactMap { $0 as? SmeemLoadingView }.first
     }
     
-    func handlerError(_ error: NetworkError) {
-        switch error {
-        case .urlEncodingError:
-            showToast(toastType: .errorToast(errorType: .urlEncodingError))
-        case .jsonDecodingError:
-            showToast(toastType: .errorToast(errorType: .jsonDecodingError))
-        case .jsonEncodingError:
-            showToast(toastType: .errorToast(errorType: .jsonEncodingError))
-        case .clientError(message: _):
-            showToast(toastType: .errorToast(errorType: .clientError))
-        case .serverError:
-            showToast(toastType: .errorToast(errorType: .serverError))
-        case .unAuthorizedError:
-            showToast(toastType: .errorToast(errorType: .unAuthorizedError))
+    func handlerError(version: String = ConfigConstant.version, _ error: NetworkError) {
+        if version == "Release" {
+            
+            switch error {
+            case .systemError:
+                showToast(toastType: .networkErrorToast(message: "죄송합니다, 시스템 오류가 발생했어요 :("))
+            case .loadDataError:
+                showToast(toastType: .networkErrorToast(message: "데이터를 불러올 수 없어요 :("))
+            default: break
+            }
+        } else {
+            switch error {
+            case .systemError:
+                showToast(toastType: .smeemErrorToast(text: "client error"))
+            case .loadDataError:
+                showToast(toastType: .smeemErrorToast(text: "server error"))
+            case .jsonDecodingError:
+                showToast(toastType: .smeemErrorToast(text: "json decoding error"))
+            case .jsonEncodingError:
+                showToast(toastType: .smeemErrorToast(text: "json encoding error"))
+            case .typeCastingError:
+                showToast(toastType: .smeemErrorToast(text: "type casting error"))
+            case .unAuthorizedError:
+                showToast(toastType: .smeemErrorToast(text: "토큰 만료"))
+            case .unknownError(let message):
+                showToast(toastType: .smeemErrorToast(text: "알 수 없는 에러 : \(message)"))
+            case .urlEncodingError:
+                showToast(toastType: .smeemErrorToast(text: "url encoding error"))
+            default: break
+            }
         }
     }
 }

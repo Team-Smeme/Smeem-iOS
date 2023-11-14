@@ -220,10 +220,9 @@ extension AuthBottomSheetViewController: ViewControllerServiceable {
     private func login(socialParam: String) {
         Task {
             do {
+                showLoadingView()
                 self.loginData = try await loginManager.login(model: LoginRequest(social: socialParam,
                                                               fcmToken: UserDefaultsManager.fcmToken))
-                
-                self.showLoadingView()
                 
                 UserDefaultsManager.clientAccessToken = loginData.accessToken
                 UserDefaultsManager.clientRefreshToken = loginData.accessToken
@@ -256,7 +255,11 @@ extension AuthBottomSheetViewController: ViewControllerServiceable {
                         self.presentHomeVC()
                     }
                 }
+            } catch {
+                guard let error = error as? NetworkError else { return }
+                handlerError(error)
             }
+            hideLoadingView()
         }
     }
 }

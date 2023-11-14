@@ -59,16 +59,16 @@ final class TrainingGoalViewController: BaseViewController {
 
 extension TrainingGoalViewController: ViewControllerServiceable {
     private func trainingGoalsGetAPI() {
-        showLoadingView()
         Task {
             do {
+                showLoadingView()
                 goalsArray = try await trainingManager.getTrainingGoal()
                 planGoalCollectionView.planGoalArray = goalsArray
-                hideLoadingView()
             } catch {
                 guard let error = error as? NetworkError else { return }
                 handlerError(error)
             }
+            hideLoadingView()
         }
     }
 }
@@ -108,7 +108,7 @@ extension TrainingGoalViewController {
         }
         
         nextButton.snp.makeConstraints {
-            $0.top.equalTo(planGoalCollectionView.snp.bottom).offset(80).priority(.low)
+            $0.top.equalTo(planGoalCollectionView.snp.bottom).offset(70)
             $0.leading.trailing.equalTo(view.safeAreaLayoutGuide).inset(18)
             $0.bottom.equalTo(view.safeAreaLayoutGuide).inset(16)
             $0.height.equalTo(convertByHeightRatio(60))

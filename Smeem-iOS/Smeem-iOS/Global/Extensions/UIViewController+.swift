@@ -118,7 +118,7 @@ extension UIViewController {
     }
     
     func presentOnboardingPlanVC() {
-        let onboardingGoalVC = GoalViewController(viewtype: .onboarding)
+        let onboardingGoalVC = TrainingGoalViewController(trainingManager: TrainingManager(trainingService: TrainingService(requestable: APIServie())))
         self.navigationController?.pushViewController(onboardingGoalVC, animated: true)
     }
     
@@ -147,11 +147,6 @@ extension UIViewController {
         toastView.show(in: self.view, offset: offKeyboardOffset, keyboardHeight: keyboardHeight)
         toastView.hide(after: delay)
     }
-    //    func showToast(message: String, duration: TimeInterval = 3, yOffset: CGFloat = 30, keyboardHeight: CGFloat = 0) {
-    //        let toastView = SmeemToastView(type: .defaultToast(bodyType: .custom(message: message)))
-    //        toastView.show(in: view, offset: yOffset, keyboardHeight: keyboardHeight)
-    //        toastView.hide(after: duration)
-    //    }
     
     func createNavigationBar(type: NavigationBarType) -> SmeemNavigationBar {
         let navigationBar = NavigationBarFactory.create(type: type)

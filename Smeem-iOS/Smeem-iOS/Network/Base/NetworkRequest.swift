@@ -24,7 +24,7 @@ struct NetworkRequest {
     
     /// url request를 return 해 주는 메서드
     func makeUrlRequest() throws -> URLRequest {
-        guard var urlComponents = URLComponents(string: SharedConstant.baseURL) else {
+        guard var urlComponents = URLComponents(string: ConfigConstant.serverURL) else {
             throw NetworkError.urlEncodingError
         }
         
