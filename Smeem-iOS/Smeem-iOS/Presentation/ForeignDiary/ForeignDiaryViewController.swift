@@ -19,6 +19,7 @@ extension ForeignDiaryViewController {
     static func createWithForeignDiaryiew() -> ForeignDiaryViewController {
         let diaryViewFactory = DiaryViewFactory()
         let foreignDiaryView = diaryViewFactory.createForeginDiaryView()
-        return ForeignDiaryViewController(rootView: foreignDiaryView)
+        let viewModel = DiaryViewModel()
+        return ForeignDiaryViewController(rootView: foreignDiaryView, viewModel: viewModel)
     }
 }

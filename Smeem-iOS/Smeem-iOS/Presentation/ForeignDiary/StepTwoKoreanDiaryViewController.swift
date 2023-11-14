@@ -24,7 +24,8 @@ extension StepTwoKoreanDiaryViewController {
     static func createWithStepTwoKoreanDiaryView() -> StepTwoKoreanDiaryViewController {
         let diaryViewFactory = DiaryViewFactory()
         let stepTwoKoreanDiaryView = diaryViewFactory.createStepTwoKoreanDiaryView()
-        return StepTwoKoreanDiaryViewController(rootView: stepTwoKoreanDiaryView)
+        let viewModel = DiaryViewModel()
+        return StepTwoKoreanDiaryViewController(rootView: stepTwoKoreanDiaryView, viewModel: viewModel)
     }
     
     func setHintButtonDelegate() {

@@ -20,9 +20,9 @@ class DiaryViewController: BaseViewController {
     
     // MARK: - Life Cycle
     
-    init(rootView: DiaryView) {
+    init(rootView: DiaryView, viewModel: DiaryViewModel) {
         self.rootView = rootView
-        self.viewModel = DiaryViewModel()
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         
         setNagivationBarDelegate()

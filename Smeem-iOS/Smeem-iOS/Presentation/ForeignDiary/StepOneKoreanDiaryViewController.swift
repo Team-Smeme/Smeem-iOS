@@ -26,7 +26,8 @@ extension StepOneKoreanDiaryViewController {
     static func createWithStepOneKoreanDiaryView() -> StepOneKoreanDiaryViewController {
         let diaryViewFactory = DiaryViewFactory()
         let stepOneKoreanDiaryView = diaryViewFactory.createStepOneKoreanDiaryView()
-        return StepOneKoreanDiaryViewController(rootView: stepOneKoreanDiaryView)
+        let viewModel = DiaryViewModel()
+        return StepOneKoreanDiaryViewController(rootView: stepOneKoreanDiaryView, viewModel: viewModel)
     }
     
     // MARK: Action Helpers
