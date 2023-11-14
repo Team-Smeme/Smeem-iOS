@@ -43,7 +43,7 @@ class ForeignDiaryNavigationAction: NavigationActionStrategy {
     func performRightButtonAction() {
         if viewController?.rootView?.navigationView.rightButton.titleLabel?.textColor == .point {
 //            viewController?.showLodingView(loadingView: rootView.loadingView)
-            viewController?.viewModel?.inputText = viewController?.rootView?.inputTextView.text ?? ""
+            viewController?.viewModel?.inputText.value = viewController?.rootView?.inputTextView.text ?? ""
             viewController?.rootView?.inputTextView.resignFirstResponder()
             viewController?.viewModel?.postDiaryAPI { postDiaryResponse in
                 self.viewController?.handlePostDiaryResponse(postDiaryResponse)

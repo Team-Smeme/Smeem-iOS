@@ -12,6 +12,6 @@ struct RandomSubjectResponse: Codable {
 }
 
 struct RandomSubjectData: Codable {
-    let topicId: String
+    let topicId: Int
     let content: String
 }

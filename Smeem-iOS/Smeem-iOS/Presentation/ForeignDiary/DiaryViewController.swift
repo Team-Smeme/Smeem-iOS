@@ -100,14 +100,9 @@ extension DiaryViewController {
     // MARK: - Setups
     
     private func setupTextValidation() {
-        viewModel?.onUpdateTextValidation = { [ weak self] isValid in
+        viewModel?.isTextValid.subscribe(listener: { [ weak self] isValid in
             self?.rootView?.navigationView.updateRightButton(isValid: isValid)
-        }
-    }
-    
-    private func setupKeyboardHandler() {
-        guard let rootView = rootView else { return }
-        keyboardHandler = KeyboardFollowingLayoutHandler(targetView: rootView.inputTextView, bottomView: rootView.bottomView)
+        })
     }
     
     private func setupUpdateRandomTopic() {
@@ -120,10 +115,15 @@ extension DiaryViewController {
         }
     }
     
+    private func setupKeyboardHandler() {
+        guard let rootView = rootView else { return }
+        keyboardHandler = KeyboardFollowingLayoutHandler(targetView: rootView.inputTextView, bottomView: rootView.bottomView)
+    }
+    
     // MARK: - Custom Methods
     
     private func handleRandomTopicButtonTap() {
-        guard let isEnabled = viewModel?.randomTopicEnabled else { return }
+        guard let isEnabled = viewModel?.isRandomTopicActive.value else { return }
         
         rootView?.bottomView.updateRandomTopicButtonImage(isEnabled)
         
@@ -137,9 +137,11 @@ extension DiaryViewController {
         rootView?.randomTopicView?.setData(contentText: viewModel?.topicContent ?? "")
     }
     
-    private func updateViewWithRandomTopicEnabled(_ isEnabled: Bool) {
-        rootView?.updateRandomTopicView(isRandomTopicActive: isEnabled)
-        rootView?.updateInputTextViewConstraints(isRandomTopicActive: isEnabled)
+    private func updateViewWithRandomTopicEnabled(_ isActive: Bool) {
+        viewModel?.isRandomTopicActive.subscribe(listener: { [weak self] isActive in
+            self?.rootView?.updateRandomTopicView(isRandomTopicActive: isActive)
+            self?.rootView?.updateInputTextViewConstraints(isRandomTopicActive: isActive)
+        })
     }
     
     // MARK: - Network

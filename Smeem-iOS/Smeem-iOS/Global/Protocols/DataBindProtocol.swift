@@ -8,5 +8,5 @@
 import Foundation
 
 protocol DataBindProtocol: AnyObject {
-    func dataBind(topicID: String?, inputText: String)
+    func dataBind(topicID: Int?, inputText: String)
 }

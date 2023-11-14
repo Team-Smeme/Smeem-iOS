@@ -32,7 +32,7 @@ extension StepTwoKoreanDiaryViewController {
     }
     
     func handleHintButton() {
-        guard let isHintShowed = viewModel?.isHintShowed else { return }
+        guard let isHintShowed = viewModel?.isHintShowed.value else { return }
         
         rootView?.bottomView.updateHintButtonImage(isHintShowed)
         
@@ -47,7 +47,7 @@ extension StepTwoKoreanDiaryViewController {
 // MARK: - DataBindProtocol
 
 extension StepTwoKoreanDiaryViewController: DataBindProtocol {
-    func dataBind(topicID: String?, inputText: String) {
+    func dataBind(topicID: Int?, inputText: String) {
         viewModel?.topicID = topicID
         rootView?.configuration.layoutConfig?.hintTextView.text = inputText
     }

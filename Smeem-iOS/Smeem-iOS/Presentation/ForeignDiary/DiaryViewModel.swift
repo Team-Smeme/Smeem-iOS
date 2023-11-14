@@ -16,33 +16,10 @@ struct KeyboardInfo {
 
 class DiaryViewModel {
     
-    var randomTopicEnabled: Bool = false {
-        didSet {
-            onUpdateRandomTopic?(randomTopicEnabled)
-            
-            if randomTopicEnabled {
-                onUpdateTopicContent?(topicContent ?? "")
-            }
-        }
-    }
-    
-    var isTextValid: Bool = false {
-        didSet {
-            onUpdateTextValidation?(isTextValid)
-        }
-    }
-    
-    var inputText: String = "" {
-        didSet {
-            onUpdateInputText?(inputText)
-        }
-    }
-    
-    var isHintShowed: Bool = false {
-        didSet {
-            onUpdateHintButton?(isHintShowed)
-        }
-    }
+    var isRandomTopicActive: Observable<Bool> = Observable(false)
+    var isTextValid: Observable<Bool> = Observable(false)
+    var inputText: Observable<String> = Observable("")
+    var isHintShowed: Observable<Bool> = Observable(false)
     
     var topicID: Int? = nil
     var topicContent: String?
@@ -64,23 +41,23 @@ class DiaryViewModel {
 
 extension DiaryViewModel {
     func updateTextValidation(_ isValid: Bool) {
-        isTextValid = isValid
+        isTextValid.value = isValid
     }
     
     func toggleRandomTopic() {
-        randomTopicEnabled = !randomTopicEnabled
+        isRandomTopicActive.value = !isRandomTopicActive.value
     }
     
     func toggleIsHintShowed() {
-        isHintShowed = !isHintShowed
+        isHintShowed.value = !isHintShowed.value
     }
     
-    func getTopicID() -> String {
-        return topicID ?? "null"
+    func getTopicID() -> Int {
+        return topicID ?? 0
     }
     
     func getInputText() -> String {
-        return inputText
+        return inputText.value
     }
 }
 
@@ -100,6 +77,7 @@ extension DiaryViewModel {
     
     func postDiaryAPI(completion: @escaping(PostDiaryResponse?) -> Void) {
         PostDiaryAPI.shared.postDiary(param: PostDiaryRequest(content: getInputText(), topicId: getTopicID())) { response in
+            
             guard let postDiaryResponse = response?.data else {
                 completion(nil)
                 return

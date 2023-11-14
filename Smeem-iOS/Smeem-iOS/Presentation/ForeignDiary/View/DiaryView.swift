@@ -16,18 +16,18 @@ class DiaryView: BaseView {
     // MARK: Properties
     private let viewType: DiaryViewType
     
-//    private var isRandomTopicActive: Bool = false
     private (set) var configuration: DiaryViewConfiguration
     
     // MARK: UI Properties
     private (set) var navigationView: SmeemNavigationBar
-    private (set) var randomTopicView: RandomTopicView?
     private (set) var inputTextView: SmeemTextView
     private (set) var bottomView: DiaryBottomView
     
+    private (set) var randomTopicView: RandomTopicView?
     private var smeemToastView: SmeemToastView?
     
     // MARK: - Life Cycle
+    
     init(viewType: DiaryViewType,
          configuration: DiaryViewConfiguration,
          navigationBar: SmeemNavigationBar,
@@ -106,7 +106,8 @@ extension DiaryView {
 
 extension DiaryView {
     
-    // MARK: Settings
+    // MARK: - Settings
+    
     func setNavigationBarDelegate(_ delegate: NavigationBarActionDelegate?) {
         self.navigationView.actionDelegate = delegate
     }
@@ -123,7 +124,7 @@ extension DiaryView {
         self.inputTextView.text = text
     }
     
-    // MARK: RandomTopicView
+    // MARK: - RandomTopicView
     
     func updateRandomTopicView(isRandomTopicActive: Bool) {
         if isRandomTopicActive {
@@ -134,8 +135,6 @@ extension DiaryView {
                 make.top.equalTo(navigationView.snp.bottom).offset(convertByHeightRatio(16))
                 make.leading.equalToSuperview()
             }
-        } else {
-            randomTopicView?.removeFromSuperview()
         }
     }
     

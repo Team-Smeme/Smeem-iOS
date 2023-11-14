@@ -7,5 +7,5 @@
 
 struct PostDiaryRequest: Codable {
     let content: String
-    let topicId: String?
+    let topicId: Int?
 }
