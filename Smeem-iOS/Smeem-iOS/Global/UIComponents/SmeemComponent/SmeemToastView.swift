@@ -63,7 +63,6 @@ final class SmeemToastView: UIView {
     
     private let cautionImage: UIImageView = {
         let imageView = UIImageView()
-        //TODO: 추후 추가할게요!
         imageView.image = Constant.Image.icnToastError
         return imageView
     }()
@@ -72,16 +71,12 @@ final class SmeemToastView: UIView {
         let label = UILabel()
         label.font = .c1
         label.textColor = .smeemWhite
-        //TODO: 미리 속성지정 없이도 lineHeight 적용되게 하기
-        label.setTextWithLineHeight(lineHeight: 21)
         return label
     }()
     
     private let bodyLabel: UILabel = {
         let label = UILabel()
         label.textColor = .smeemWhite
-        //TODO: 미리 속성지정 없이도 lineHeight 적용되게 하기
-        label.setTextWithLineHeight(lineHeight: 14)
         return label
     }()
     
@@ -101,6 +96,7 @@ final class SmeemToastView: UIView {
         alpha = 0
         setToastViewUI()
         setToastViewLayout()
+        setLineHeight()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -118,6 +114,11 @@ final class SmeemToastView: UIView {
         }) { _ in
             self.removeFromSuperview()
         }
+    }
+    
+    private func setLineHeight() {
+        headLabel.setTextWithLineHeight(lineHeight: 21)
+        bodyLabel.setTextWithLineHeight(lineHeight: 14)
     }
     
     // MARK: - Layout
