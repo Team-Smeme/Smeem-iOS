@@ -40,7 +40,6 @@ enum ToastViewType: Error {
 }
 
 enum SmeemToast: String {
-    case error = "임쉬에러"
     case regEx = "외국어를 포함해 작성해 주세요 :("
     case completed = "작성 완료"
     case changed = "변경 완료"
@@ -89,8 +88,8 @@ final class SmeemToastView: UIView {
             self.bodyText = bodyType.rawValue
         case .smeemErrorToast(let text):
             self.bodyText = text
-        case .networkErrorToast:
-            self.bodyText = SmeemToast.error.rawValue
+        case .networkErrorToast(_, let text):
+            self.bodyText = text
         }
         super.init(frame: .zero)
         alpha = 0
