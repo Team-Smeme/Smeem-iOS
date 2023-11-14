@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-final class SmeemStartViewController: UIViewController {
+final class SmeemStartViewController: BaseViewController {
     
     // MARK: - Property
     
@@ -52,9 +52,7 @@ final class SmeemStartViewController: UIViewController {
     }()
     
     private lazy var startButton: SmeemButton = {
-        let button = SmeemButton()
-        button.smeemButtonType = .enabled
-        button.setTitle("시작하기", for: .normal)
+        let button = SmeemButton(buttonType: .enabled, text: "시작하기")
         button.addTarget(self, action: #selector(startButtonDidTap), for: .touchUpInside)
         return button
     }()
@@ -63,16 +61,13 @@ final class SmeemStartViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        setBackgroundColor()
         setLayout()
-        hiddenNavigationBar()
     }
     
     // MARK: - @objc
     
     @objc func loginButtonDidTap() {
-        let loginBottomSheetVC = LoginBottomSheetViewController(loginManager: LoginManagerImpl(loginService: LoginServiceImpl(requestable: RequestImpl())))
+        let loginBottomSheetVC = AuthBottomSheetViewController(loginManager: LoginManager(loginService: LoginService(requestable: APIServie())))
         UserDefaultsManager.clientAuthType = AuthType.login.rawValue
         loginBottomSheetVC.authType = .login
         loginBottomSheetVC.bottomSheetView.viewType = .login
@@ -82,22 +77,18 @@ final class SmeemStartViewController: UIViewController {
         present(navigationController, animated: false) {
             loginBottomSheetVC.bottomSheetView.frame.origin.y = self.view.frame.height
             UIView.animate(withDuration: 0.3) {
-                loginBottomSheetVC.bottomSheetView.frame.origin.y = self.view.frame.height-loginBottomSheetVC.defaultLoginHeight
+                loginBottomSheetVC.bottomSheetView.frame.origin.y = self.view.frame.height-loginBottomSheetVC.defaultHeight
             }
         }
     }
     
     @objc func startButtonDidTap() {
         UserDefaultsManager.clientAuthType = AuthType.signup.rawValue
-        let onboardingVC = GoalViewController(viewtype: .onboarding)
-        self.navigationController?.pushViewController(onboardingVC, animated: true)
+        let trainingGoalsVC = TrainingGoalViewController(trainingManager: TrainingManager(trainingService: TrainingService(requestable: APIServie())))
+        self.navigationController?.pushViewController(trainingGoalsVC, animated: true)
     }
     
     // MARK: - Custom Method
-    
-    private func setBackgroundColor() {
-        view.backgroundColor = .white
-    }
     
     private func setLayout() {
         view.addSubviews(SmeemLogoIcon, SmeemNameLabel, SmeemDescriptionLabel,

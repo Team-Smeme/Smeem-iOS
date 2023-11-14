@@ -13,12 +13,12 @@ protocol EditMypageDelegate: AnyObject {
     func editMyPageData()
 }
 
-final class EditNicknameViewController: UIViewController {
+final class EditNicknameViewController: BaseViewController {
     
     // MARK: - Property
     
-    private let editNicknameManager: MyPageEditManager
-    private let nicknameValidManager: NicknameValidManager
+    private let editNicknameManager: MyPageEditManagerProtocol
+    private let nicknameValidManager: NicknameValidManagerProtocol
     
     weak var editNicknameDelegate: EditMypageDelegate?
     
@@ -78,8 +78,7 @@ final class EditNicknameViewController: UIViewController {
     }()
     
     private lazy var doneButton: SmeemButton = {
-        let button = SmeemButton()
-        button.setTitle("완료", for: .normal)
+        let button = SmeemButton(buttonType: .enabled, text: "완료")
         button.isEnabled = true
         button.backgroundColor = .point
         button.addTarget(self, action: #selector(doneButtonDidTap), for: .touchUpInside)
@@ -90,7 +89,7 @@ final class EditNicknameViewController: UIViewController {
     
     // MARK: - Life Cycle
     
-    init(editNicknameManager: MyPageEditManager, nicknameValidManager: NicknameValidManager) {
+    init(editNicknameManager: MyPageEditManagerProtocol, nicknameValidManager: NicknameValidManagerProtocol) {
         self.editNicknameManager = editNicknameManager
         self.nicknameValidManager = nicknameValidManager
         
@@ -105,13 +104,10 @@ final class EditNicknameViewController: UIViewController {
         super.viewDidLoad()
         
         setData()
-        setBackgroundColor()
         setLayout()
-        hiddenNavigationBar()
         setTextFieldDelegate()
         showKeyboard(textView: nicknameTextField)
         addTextFieldNotification()
-        swipeRecognizer()
     }
     
     deinit {
@@ -132,24 +128,14 @@ final class EditNicknameViewController: UIViewController {
         if let textField = notification.object as? UITextField {
             if let text = textField.text {
                 if text.first == " " {
-                    doneButton.smeemButtonType = .notEnabled
+                    doneButton.changeButtonType(buttonType: .notEnabled)
                 } else if text.filter({ $0 == " " }).count == text.count {
-                    doneButton.smeemButtonType = .notEnabled
+                    doneButton.changeButtonType(buttonType: .notEnabled)
                 } else {
-                    doneButton.smeemButtonType = .enabled
+                    doneButton.changeButtonType(buttonType: .enabled)
                 }
             }
         }
-    }
-    
-    @objc func responseToSwipeGesture() {
-        self.navigationController?.popViewController(animated: true)
-    }
-    
-    private func swipeRecognizer() {
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(responseToSwipeGesture))
-        swipeRight.direction = UISwipeGestureRecognizer.Direction.right
-        self.view.addGestureRecognizer(swipeRight)
     }
 
     // MARK: - Custom Method
@@ -176,10 +162,6 @@ final class EditNicknameViewController: UIViewController {
     }
 
     // MARK: - Layout
- 
-    private func setBackgroundColor() {
-        view.backgroundColor = .smeemWhite
-    }
     
     private func setLayout() {
         view.addSubviews(headerContainerView,
@@ -275,10 +257,10 @@ extension EditNicknameViewController: ViewControllerServiceable {
                 
                 if isExistNickname {
                     self.doubleCheckLabel.isHidden = false
-                    self.doneButton.smeemButtonType = .notEnabled
+                    self.doneButton.changeButtonType(buttonType: .notEnabled)
                 } else {
                     self.doubleCheckLabel.isHidden = true
-                    self.doneButton.smeemButtonType = .enabled
+                    self.doneButton.changeButtonType(buttonType: .enabled)
                 }
                 
                 if !isExistNickname {

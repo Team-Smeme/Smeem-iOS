@@ -10,11 +10,11 @@ import UIKit
 import Kingfisher
 import SnapKit
 
-class BadgeListViewController: UIViewController {
+final class BadgeListViewController: BaseViewController {
     
     // MARK: - Property
     
-    private let myPageManager: MyPageManager
+    private let myPageManager: MyPageManagerProtocol
     
     private var badgeHeaderData = [(name: String(), imageURL: String())]
     private var badgeListData = Array(repeating: Array(repeating: (name: String(), imageURL: String()), count: 0), count: 3)
@@ -68,7 +68,7 @@ class BadgeListViewController: UIViewController {
 
     // MARK: - Life Cycle
     
-    init(myPageManager: MyPageManager) {
+    init(myPageManager: MyPageManagerProtocol) {
         self.myPageManager = myPageManager
         
         super.init(nibName: nil, bundle: nil)
@@ -81,9 +81,7 @@ class BadgeListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setBackgroundColor()
         setLayout()
-        hiddenNavigationBar()
         setDelegate()
         setRegister()
     }
@@ -170,10 +168,6 @@ class BadgeListViewController: UIViewController {
 
     
     // MARK: - Layout
-    
-    private func setBackgroundColor() {
-        view.backgroundColor = .smeemWhite
-    }
     
     private func setLayout() {
         view.addSubviews(headerContainerView, badgeListTableView)

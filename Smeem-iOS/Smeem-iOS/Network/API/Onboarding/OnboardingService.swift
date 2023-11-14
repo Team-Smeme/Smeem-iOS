@@ -11,7 +11,7 @@ import Moya
 enum OnboardingService {
     case planList
     case detailPlanList(param: String)
-    case onboardingUserPlan(param: UserPlanRequest, token: String)
+    case onboardingUserPlan(param: UserTrainingInfoRequest, token: String)
     case serviceAccept(param: ServiceAcceptRequest, token: String)
     case checkNickname(param: String, token: String)
 }
@@ -20,11 +20,11 @@ extension OnboardingService: BaseTargetType {
     var path: String {
         switch self {
         case .planList:
-            return URLConstant.planListURL
+            return URLConstant.trainingGoalsURL
         case .detailPlanList(let type):
-            return URLConstant.planListURL+"/\(type)"
+            return URLConstant.trainingGoalsURL+"/\(type)"
         case .onboardingUserPlan:
-            return URLConstant.userPlanURL
+            return URLConstant.userTrainingInfo
         case .serviceAccept:
             return URLConstant.userURL
         case .checkNickname:
