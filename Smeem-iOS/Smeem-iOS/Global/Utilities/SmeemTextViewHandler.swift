@@ -73,10 +73,11 @@ extension SmeemTextViewHandler: UITextViewDelegate {
     // Text가 완전히 지워지는 시점 감지
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         guard let placeholderTextView = self.textView else { return true }
-        
+
         let currentText = textView.text ?? ""
         let updatedText = (currentText as NSString).replacingCharacters(in: range, with: text)
-        
+
+        // 텍스트가 완전히 지워졌을 때 placeholderText를 보여주는 로직
         if updatedText.isEmpty {
             textView.text = placeholderTextView.placeholderText
             textView.textColor = placeholderTextView.placeholderColor

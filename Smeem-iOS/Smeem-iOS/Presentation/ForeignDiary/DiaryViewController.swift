@@ -16,7 +16,6 @@ class DiaryViewController: BaseViewController {
     
     private var keyboardHandler: KeyboardFollowingLayoutHandler?
     private var navigationBarButtonActionStrategy: any NavigationActionStrategy = DefaultNavigationActionStrategy()
-    private var delegateSetupStrategy: DefaultDelegateSetupStrategy?
     
     // MARK: - Life Cycle
     
@@ -67,7 +66,6 @@ extension DiaryViewController {
     }
     
     private func setupDelegates() {
-        //        delegateSetupStrategy.setupDelegate(for: self)
         setTextViewDelegate()
         setBottomViewDelegate()
         setRandomTopicRefreshDelegate()
@@ -83,10 +81,6 @@ extension DiaryViewController {
     
     private func setBottomViewDelegate() {
         rootView?.bottomView.randomTopicDelegate = self
-    }
-    
-    private func setDelegateSetupStrategy(_ strategy: DelegateSetupStrategy) {
-        delegateSetupStrategy = strategy as? DefaultDelegateSetupStrategy ?? nil
     }
     
     func setNavigationBarButtonActionStrategy(_ strategy: any NavigationActionStrategy) {
@@ -182,14 +176,22 @@ extension DiaryViewController: RandomTopicRefreshDelegate {
 
 extension DiaryViewController: SmeemTextViewHandlerDelegate {
     func textViewDidChange(text: String, viewType: DiaryViewType) {
+        guard let textView = SmeemTextViewHandler.shared.textView as? SmeemTextView else { return }
+        let placeholderText = textView.placeholderTextForViewType(for: viewType)
+        
         var isValid: Bool
         
-        switch viewType {
-        case .foregin, .stepTwoKorean, .edit:
-            isValid = SmeemTextViewHandler.shared.containsEnglishCharacters(with: text)
-        case .stepOneKorean:
-            isValid = SmeemTextViewHandler.shared.containsKoreanCharacters(with: text)
+        if text == placeholderText {
+            isValid = false
+        } else {
+            switch viewType {
+            case .foregin, .stepTwoKorean, .edit:
+                isValid = SmeemTextViewHandler.shared.containsEnglishCharacters(with: text)
+            case .stepOneKorean:
+                isValid = SmeemTextViewHandler.shared.containsKoreanCharacters(with: text)
+            }
         }
+        
         viewModel?.updateTextValidation(isValid)
     }
     

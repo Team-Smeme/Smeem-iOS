@@ -135,6 +135,8 @@ extension DiaryView {
                 make.top.equalTo(navigationView.snp.bottom).offset(convertByHeightRatio(16))
                 make.leading.equalToSuperview()
             }
+        } else {
+            randomTopicView?.removeFromSuperview()
         }
     }
     
