@@ -35,7 +35,9 @@ extension StepOneKoreanDiaryViewController {
         let nextVC = StepTwoKoreanDiaryViewController.createWithStepTwoKoreanDiaryView()
         delegate = nextVC
         
-        delegate?.dataBind(topicID: viewModel?.getTopicID(), inputText: viewModel?.getInputText() ?? "")
+        let inputText = viewModel?.inputText.value
+        
+        delegate?.dataBind(topicID: viewModel?.getTopicID(), inputText: inputText ?? "")
         
         self.navigationController?.pushViewController(nextVC, animated: true)
     }

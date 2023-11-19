@@ -20,6 +20,8 @@ class DiaryViewModel {
     var isTextValid: Observable<Bool> = Observable(false)
     var inputText: Observable<String> = Observable("")
     var isHintShowed: Observable<Bool> = Observable(false)
+    var onUpdateRandomTopic: Observable<Bool> = Observable(false)
+    var onUpdateTopicContent: Observable<String> = Observable("")
     
     var topicID: Int? = nil
     var topicContent: String?
@@ -29,10 +31,8 @@ class DiaryViewModel {
     var hintText: String?
     var keyboardInfo: KeyboardInfo?
     
-    var onUpdateRandomTopic: ((Bool) -> Void)?
     var onUpdateTextValidation: ((Bool) -> Void)?
     var onUpdateHintButton: ((Bool) -> Void)?
-    var onUpdateTopicContent: ((String) -> Void)?
     var onUpdateInputText: ((String) -> Void)?
     var onUpdateTopicID: ((String) -> Void)?
 }
@@ -71,12 +71,15 @@ extension DiaryViewModel {
             
             strongSelf.topicID = randomSubjectData.topicId
             strongSelf.topicContent = randomSubjectData.content
-            strongSelf.onUpdateTopicContent?(randomSubjectData.content)
+            strongSelf.onUpdateTopicContent.value = randomSubjectData.content
         }
     }
     
     func postDiaryAPI(completion: @escaping(PostDiaryResponse?) -> Void) {
-        PostDiaryAPI.shared.postDiary(param: PostDiaryRequest(content: getInputText(), topicId: getTopicID())) { response in
+        
+        let inputText = inputText.value
+        
+        PostDiaryAPI.shared.postDiary(param: PostDiaryRequest(content: inputText, topicId: getTopicID())) { response in
             
             guard let postDiaryResponse = response?.data else {
                 completion(nil)

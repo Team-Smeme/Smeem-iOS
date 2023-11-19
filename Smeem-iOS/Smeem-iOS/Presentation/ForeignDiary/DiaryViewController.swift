@@ -45,13 +45,16 @@ class DiaryViewController: BaseViewController {
         super.viewDidLoad()
         
         setupDelegates()
-        setupTextValidation()
+        setupSubscriptions()
         setupKeyboardHandler()
-        setupUpdateRandomTopic()
     }
     
     deinit {
+        viewModel?.isTextValid.listener = nil
+        viewModel?.onUpdateRandomTopic.listener = nil
+        
         keyboardHandler = nil
+        
     }
 }
 
@@ -69,6 +72,11 @@ extension DiaryViewController {
         setTextViewDelegate()
         setBottomViewDelegate()
         setRandomTopicRefreshDelegate()
+    }
+    
+    private func setupSubscriptions() {
+        setupTextValidationSubscription()
+        setupUpdateRandomTopicSubscription()
     }
     
     func setNagivationBarDelegate() {
@@ -93,20 +101,20 @@ extension DiaryViewController {
     
     // MARK: - Setups
     
-    private func setupTextValidation() {
-        viewModel?.isTextValid.subscribe(listener: { [ weak self] isValid in
+    private func setupTextValidationSubscription() {
+        viewModel?.isTextValid.subscribe(listener: { [weak self] isValid in
             self?.rootView?.navigationView.updateRightButton(isValid: isValid)
         })
     }
     
-    private func setupUpdateRandomTopic() {
-        viewModel?.onUpdateRandomTopic = { [ weak self] isEnabled in
+    private func setupUpdateRandomTopicSubscription() {
+        viewModel?.onUpdateRandomTopic.subscribe(listener: { [weak self] isEnabled in
             self?.updateViewWithRandomTopicEnabled(isEnabled)
-        }
+        })
         
-        viewModel?.onUpdateTopicContent = { [ weak self] content in
+        viewModel?.onUpdateTopicContent.subscribe(listener: { [weak self] content in
             self?.rootView?.randomTopicView?.setData(contentText: content)
-        }
+        })
     }
     
     private func setupKeyboardHandler() {
@@ -137,6 +145,10 @@ extension DiaryViewController {
             self?.rootView?.updateInputTextViewConstraints(isRandomTopicActive: isActive)
         })
     }
+    
+//    private func updateTextView(with text: String) {
+//        viewModel?.inputText.value = text
+//    }
     
     // MARK: - Network
     
@@ -193,6 +205,7 @@ extension DiaryViewController: SmeemTextViewHandlerDelegate {
         }
         
         viewModel?.updateTextValidation(isValid)
+        viewModel?.inputText.value = text
     }
     
     func onUpdateInputText(_ text: String) {
