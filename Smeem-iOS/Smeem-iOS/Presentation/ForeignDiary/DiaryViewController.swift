@@ -36,8 +36,9 @@ class DiaryViewController: BaseViewController {
         view = rootView
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
         showKeyboard(textView: rootView?.inputTextView)
     }
     
@@ -54,7 +55,6 @@ class DiaryViewController: BaseViewController {
         viewModel?.onUpdateRandomTopic.listener = nil
         
         keyboardHandler = nil
-        
     }
 }
 
@@ -145,10 +145,6 @@ extension DiaryViewController {
             self?.rootView?.updateInputTextViewConstraints(isRandomTopicActive: isActive)
         })
     }
-    
-//    private func updateTextView(with text: String) {
-//        viewModel?.inputText.value = text
-//    }
     
     // MARK: - Network
     

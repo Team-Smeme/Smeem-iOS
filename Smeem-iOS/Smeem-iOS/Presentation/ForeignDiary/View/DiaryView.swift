@@ -47,6 +47,10 @@ class DiaryView: BaseView {
         setLayout()
     }
     
+    override func layoutSubviews() {
+        updateInputTextViewConstraintsByLayoutConfig()
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -62,7 +66,7 @@ class DiaryView: BaseView {
 extension DiaryView {
     private func setLayout() {
         addSubviews(navigationView, inputTextView, bottomView)
-        
+
         navigationView.snp.makeConstraints { make in
             make.top.leading.trailing.equalTo(safeAreaLayoutGuide)
             make.height.equalTo(convertByHeightRatio(Constant.Layout.navigationBarHeight))
@@ -93,35 +97,18 @@ extension DiaryView {
             make.top.equalTo(layoutConfig.hintTextView.snp.bottom)
             make.centerX.equalToSuperview()
         }
-        
+    }
+    
+    func updateInputTextViewConstraintsByLayoutConfig() {
         inputTextView.snp.remakeConstraints { make in
-            make.top.equalTo(layoutConfig.thickLine.snp.bottom)
+            if let layoutConfig = configuration.layoutConfig {
+                make.top.equalTo(layoutConfig.thickLine.snp.bottom)
+            } else {
+                make.top.equalTo(navigationView.snp.bottom)
+            }
             make.leading.trailing.equalToSuperview()
             make.bottom.equalTo(bottomView.snp.top)
         }
-    }
-}
-
-// MARK: - Helpers
-
-extension DiaryView {
-    
-    // MARK: - Settings
-    
-    func setNavigationBarDelegate(_ delegate: NavigationBarActionDelegate?) {
-        self.navigationView.actionDelegate = delegate
-    }
-    
-    func setTextViewHandlerDelegate(_ viewController: DiaryViewController) {
-        inputTextView.handler?.delegate = viewController
-    }
-    
-    func setHintButtonDelegate(_ viewController: StepTwoKoreanDiaryViewController) {
-        bottomView.hintDelegate = viewController
-    }
-    
-    func setInputText(_ text: String) {
-        self.inputTextView.text = text
     }
     
     // MARK: - RandomTopicView
@@ -148,6 +135,29 @@ extension DiaryView {
             make.leading.trailing.equalToSuperview()
             make.bottom.equalTo(bottomView.snp.top)
         }
+    }
+}
+
+// MARK: - Helpers
+
+extension DiaryView {
+    
+    // MARK: - Settings
+    
+    func setNavigationBarDelegate(_ delegate: NavigationBarActionDelegate?) {
+        self.navigationView.actionDelegate = delegate
+    }
+    
+    func setTextViewHandlerDelegate(_ viewController: DiaryViewController) {
+        inputTextView.handler?.delegate = viewController
+    }
+    
+    func setHintButtonDelegate(_ viewController: StepTwoKoreanDiaryViewController) {
+        bottomView.hintDelegate = viewController
+    }
+    
+    func setInputText(_ text: String) {
+        self.inputTextView.text = text
     }
 }
 

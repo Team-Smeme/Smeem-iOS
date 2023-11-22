@@ -18,6 +18,12 @@ final class StepOneKoreanDiaryViewController: DiaryViewController {
         
         setNavigationBarButtonActionStrategy(StepOneKoreanDiaryNavigationAction(viewController: self))
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        hideKeyboard()
+    }
 }
 
 // MARK: - Extensions
