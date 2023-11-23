@@ -16,12 +16,12 @@ struct KeyboardInfo {
 
 class DiaryViewModel {
     
-    var isRandomTopicActive: Observable<Bool> = Observable(false)
-    var isTextValid: Observable<Bool> = Observable(false)
-    var inputText: Observable<String> = Observable("")
-    var isHintShowed: Observable<Bool> = Observable(false)
-    var onUpdateRandomTopic: Observable<Bool> = Observable(false)
-    var onUpdateTopicContent: Observable<String> = Observable("")
+    private (set) var isRandomTopicActive: Observable<Bool> = Observable(false)
+    private (set) var isTextValid: Observable<Bool> = Observable(false)
+    private (set) var inputText: Observable<String> = Observable("")
+    private (set) var isHintShowed: Observable<Bool> = Observable(false)
+    private (set) var onUpdateRandomTopic: Observable<Bool> = Observable(false)
+    private (set) var onUpdateTopicContent: Observable<String> = Observable("")
     
     var topicID: Int? = nil
     var topicContent: String?
@@ -58,6 +58,24 @@ extension DiaryViewModel {
     
     func getInputText() -> String {
         return inputText.value
+    }
+    
+    func isTextValid(text: String, viewType: DiaryViewType) -> Bool {
+        guard let textView = SmeemTextViewHandler.shared.textView as? SmeemTextView else { return false
+        }
+        
+        let placeholderText = textView.placeholderTextForViewType(for: viewType)
+        
+        if text == placeholderText {
+            return false
+        } else {
+            switch viewType {
+            case .foregin, .stepTwoKorean, .edit:
+                return SmeemTextViewHandler.shared.containsEnglishCharacters(with: text)
+            case .stepOneKorean:
+                return SmeemTextViewHandler.shared.containsKoreanCharacters(with: text)
+            }
+        }
     }
 }
 

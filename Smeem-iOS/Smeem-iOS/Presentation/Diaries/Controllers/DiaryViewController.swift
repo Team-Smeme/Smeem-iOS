@@ -50,9 +50,7 @@ class DiaryViewController: BaseViewController {
     }
     
     deinit {
-        viewModel?.isTextValid.listener = nil
-        viewModel?.onUpdateRandomTopic.listener = nil
-        
+        removeListeners()
         keyboardHandler = nil
     }
 }
@@ -78,7 +76,11 @@ extension DiaryViewController {
         setupUpdateRandomTopicSubscription()
     }
     
-    func setNagivationBarDelegate() {
+    func setNavigationBarButtonActionStrategy(_ strategy: any NavigationActionStrategy) {
+        navigationBarButtonActionStrategy = strategy
+    }
+    
+    private func setNagivationBarDelegate() {
         rootView?.setNavigationBarDelegate(self)
     }
     
@@ -90,12 +92,13 @@ extension DiaryViewController {
         rootView?.bottomView.randomTopicDelegate = self
     }
     
-    func setNavigationBarButtonActionStrategy(_ strategy: any NavigationActionStrategy) {
-        navigationBarButtonActionStrategy = strategy
-    }
-    
     private func setRandomTopicRefreshDelegate() {
         rootView?.randomTopicView?.randomTopicRefreshDelegate = self
+    }
+    
+    private func removeListeners() {
+        viewModel?.isTextValid.listener = nil
+        viewModel?.onUpdateRandomTopic.listener = nil
     }
     
     // MARK: - Setups
@@ -170,23 +173,8 @@ extension DiaryViewController: RandomTopicRefreshDelegate {
 
 extension DiaryViewController: SmeemTextViewHandlerDelegate {
     func textViewDidChange(text: String, viewType: DiaryViewType) {
-        guard let textView = SmeemTextViewHandler.shared.textView as? SmeemTextView else { return }
-        let placeholderText = textView.placeholderTextForViewType(for: viewType)
-        
-        var isValid: Bool
-        
-        if text == placeholderText {
-            isValid = false
-        } else {
-            switch viewType {
-            case .foregin, .stepTwoKorean, .edit:
-                isValid = SmeemTextViewHandler.shared.containsEnglishCharacters(with: text)
-            case .stepOneKorean:
-                isValid = SmeemTextViewHandler.shared.containsKoreanCharacters(with: text)
-            }
-        }
-        
-        viewModel?.updateTextValidation(isValid)
+        let isValid = viewModel?.isTextValid(text: text, viewType: viewType)
+        viewModel?.updateTextValidation(isValid ?? false)
         viewModel?.inputText.value = text
     }
     
