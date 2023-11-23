@@ -9,12 +9,11 @@ import UIKit
 
 class DiaryViewController: BaseViewController {
     
-    // MARK: - Properties
-    
+    // MARK: Properties
     private (set) var rootView: DiaryView?
     private (set) var viewModel: DiaryViewModel?
     
-    private var keyboardHandler: KeyboardFollowingLayoutHandler?
+    private var keyboardHandler: KeyboardLayoutAndScrollingHandler?
     private var navigationBarButtonActionStrategy: any NavigationActionStrategy = DefaultNavigationActionStrategy()
     
     // MARK: - Life Cycle
@@ -119,7 +118,7 @@ extension DiaryViewController {
     
     private func setupKeyboardHandler() {
         guard let rootView = rootView else { return }
-        keyboardHandler = KeyboardFollowingLayoutHandler(targetView: rootView.inputTextView, bottomView: rootView.bottomView)
+        keyboardHandler = KeyboardLayoutAndScrollingHandler(targetView: rootView.inputTextView, bottomView: rootView.bottomView)
     }
     
     // MARK: - Custom Methods
@@ -144,19 +143,6 @@ extension DiaryViewController {
             self?.rootView?.updateRandomTopicView(isRandomTopicActive: isActive)
             self?.rootView?.updateInputTextViewConstraints(isRandomTopicActive: isActive)
         })
-    }
-    
-    // MARK: - Network
-    
-    func handlePostDiaryResponse(_ response: PostDiaryResponse?) {
-        DispatchQueue.main.async {
-            let homeVC = HomeViewController()
-            homeVC.toastMessageFlag = true
-            homeVC.badgePopupData = response?.badges ?? []
-            
-            let rootVC = UINavigationController(rootViewController: homeVC)
-            homeVC.changeRootViewControllerAndPresent(rootVC)
-        }
     }
 }
 
@@ -225,6 +211,21 @@ extension DiaryViewController: RandomTopicActionDelegate {
         
         viewModel?.toggleRandomTopic()
         handleRandomTopicButtonTap()
+    }
+}
+
+// MARK: - Network
+
+extension DiaryViewController {
+    func handlePostDiaryResponse(_ response: PostDiaryResponse?) {
+        DispatchQueue.main.async {
+            let homeVC = HomeViewController()
+            homeVC.toastMessageFlag = true
+            homeVC.badgePopupData = response?.badges ?? []
+            
+            let rootVC = UINavigationController(rootViewController: homeVC)
+            homeVC.changeRootViewControllerAndPresent(rootVC)
+        }
     }
 }
 

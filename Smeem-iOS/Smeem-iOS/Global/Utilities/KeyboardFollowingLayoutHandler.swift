@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-class KeyboardFollowingLayoutHandler {
+class KeyboardLayoutAndScrollingHandler {
     private weak var bottomView: DiaryBottomView?
     private weak var targetTextView: SmeemTextView?
     
