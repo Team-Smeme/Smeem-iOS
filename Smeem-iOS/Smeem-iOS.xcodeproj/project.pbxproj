@@ -392,7 +392,7 @@
 			path = Base;
 			sourceTree = "<group>";
 		};
-		371107E12ACABD89007A4AC2 /* View */ = {
+		371107E12ACABD89007A4AC2 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				371107E22ACABDB3007A4AC2 /* DiaryView.swift */,
@@ -400,7 +400,7 @@
 				371107E62ACBED3C007A4AC2 /* DiaryViewConfigurationBuilder.swift */,
 				371107E82ACC7E3A007A4AC2 /* DiaryLayoutConfigurations.swift */,
 			);
-			path = View;
+			path = Views;
 			sourceTree = "<group>";
 		};
 		371E940F2A87A7B10098280F /* DataSource */ = {
@@ -450,7 +450,7 @@
 			children = (
 				4ADA41752A556185001C0285 /* LodingView */,
 				37DCA65E2A48030A00FF8F90 /* DetailDiary */,
-				37CD0DB32A1DEE64001F03E7 /* ForeignDiary */,
+				37CD0DB32A1DEE64001F03E7 /* Diaries */,
 				4AD923E52A0650A000FF5E27 /* Splash */,
 				4AF5076F2A10CBA2007C62B1 /* Onboarding */,
 				4AE4B5172A06BF4A00D45F87 /* BottomSheet */,
@@ -549,6 +549,26 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
+		37B1E7CA2B0EE2CA007BDEA6 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				37035CF82AF2ADD2008EE521 /* DiaryViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		37B1E7CB2B0EE2DE007BDEA6 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				374FAF802A2CACCF00237A1A /* DiaryViewController.swift */,
+				3728B8D22A2CFED300EF4CF8 /* ForeignDiaryViewController.swift */,
+				3728B8D42A2CFF2C00EF4CF8 /* StepOneKoreanDiaryViewController.swift */,
+				3728B8D62A2CFF3A00EF4CF8 /* StepTwoKoreanDiaryViewController.swift */,
+				4A6630352A51B0AD00D19CC9 /* EditDiaryViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
 		37C3E1A02AE8192600FE1C8A /* Strategies */ = {
 			isa = PBXGroup;
 			children = (
@@ -557,19 +577,15 @@
 			path = Strategies;
 			sourceTree = "<group>";
 		};
-		37CD0DB32A1DEE64001F03E7 /* ForeignDiary */ = {
+		37CD0DB32A1DEE64001F03E7 /* Diaries */ = {
 			isa = PBXGroup;
 			children = (
+				371107E12ACABD89007A4AC2 /* Views */,
+				37B1E7CB2B0EE2DE007BDEA6 /* Controllers */,
+				37B1E7CA2B0EE2CA007BDEA6 /* ViewModels */,
 				37C3E1A02AE8192600FE1C8A /* Strategies */,
-				371107E12ACABD89007A4AC2 /* View */,
-				374FAF802A2CACCF00237A1A /* DiaryViewController.swift */,
-				3728B8D22A2CFED300EF4CF8 /* ForeignDiaryViewController.swift */,
-				3728B8D42A2CFF2C00EF4CF8 /* StepOneKoreanDiaryViewController.swift */,
-				3728B8D62A2CFF3A00EF4CF8 /* StepTwoKoreanDiaryViewController.swift */,
-				4A6630352A51B0AD00D19CC9 /* EditDiaryViewController.swift */,
-				37035CF82AF2ADD2008EE521 /* DiaryViewModel.swift */,
 			);
-			path = ForeignDiary;
+			path = Diaries;
 			sourceTree = "<group>";
 		};
 		37DCA6532A4755FA00FF8F90 /* RandomSubject */ = {

@@ -7,6 +7,8 @@
 
 import UIKit
 
+// MARK: - ForeignDiaryViewController
+
 final class ForeignDiaryViewController: DiaryViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -14,6 +16,8 @@ final class ForeignDiaryViewController: DiaryViewController {
         setNavigationBarButtonActionStrategy(ForeignDiaryNavigationAction(viewController: self))
     }
 }
+
+// MARK: - Extensions
 
 extension ForeignDiaryViewController {
     static func createWithForeignDiaryiew() -> ForeignDiaryViewController {

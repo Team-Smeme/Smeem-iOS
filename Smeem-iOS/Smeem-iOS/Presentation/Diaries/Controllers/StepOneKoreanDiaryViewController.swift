@@ -7,12 +7,15 @@
 
 import UIKit
 
+// MARK: - StepOneKoreanDiaryViewController
+
 final class StepOneKoreanDiaryViewController: DiaryViewController {
     
     // MARK: Properties
     weak var delegate: DataBindProtocol?
     
-    // MARK: Life Cycle
+    // MARK: - Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

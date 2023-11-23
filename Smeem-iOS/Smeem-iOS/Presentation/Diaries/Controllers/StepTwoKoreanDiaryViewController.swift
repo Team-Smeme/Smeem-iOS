@@ -7,9 +7,11 @@
 
 import UIKit
 
+// MARK: - StepTwoKoreanDiaryViewController
+
 final class StepTwoKoreanDiaryViewController: DiaryViewController {
     
-    // MARK: Life Cycle
+    // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
