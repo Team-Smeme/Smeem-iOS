@@ -19,7 +19,7 @@ final class StepOneKoreanDiaryViewController: DiaryViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setNavigationBarButtonActionStrategy(StepOneKoreanDiaryNavigationAction(viewController: self))
+        setNagivationBarDelegate()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -39,8 +39,12 @@ extension StepOneKoreanDiaryViewController {
         return StepOneKoreanDiaryViewController(rootView: stepOneKoreanDiaryView, viewModel: viewModel)
     }
     
+    private func setNagivationBarDelegate() {
+        rootView?.setNavigationBarDelegate(self)
+    }
+    
     // MARK: Action Helpers
-    func handleRightNavigationButton() {
+    private func handleRightNavigationButton() {
         let nextVC = StepTwoKoreanDiaryViewController.createWithStepTwoKoreanDiaryView()
         delegate = nextVC
         
@@ -49,5 +53,23 @@ extension StepOneKoreanDiaryViewController {
         delegate?.dataBind(topicID: viewModel?.getTopicID(), inputText: inputText ?? "")
         
         self.navigationController?.pushViewController(nextVC, animated: true)
+    }
+}
+
+// MARK: - NavigationBarActionDelegate
+
+extension StepOneKoreanDiaryViewController: NavigationBarActionDelegate {
+    func didTapLeftButton() {
+        presentingViewController?.dismiss(animated: true)
+    }
+    
+    func didTapRightButton() {
+        if rootView?.navigationView.rightButton.titleLabel?.textColor == .point {
+//            showLodingView(loadingView: rootView.loadingView)
+            rootView?.inputTextView.resignFirstResponder()
+            handleRightNavigationButton()
+        } else {
+            //            showToastIfNeeded(toastType: .defaultToast(bodyType: .regEx))
+        }
     }
 }

@@ -15,7 +15,7 @@ final class StepTwoKoreanDiaryViewController: DiaryViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setNavigationBarButtonActionStrategy(StepTwoKoreanDiaryNavigationAction(viewController: self))
+        setNagivationBarDelegate()
         setHintButtonDelegate()
     }
 }
@@ -30,11 +30,15 @@ extension StepTwoKoreanDiaryViewController {
         return StepTwoKoreanDiaryViewController(rootView: stepTwoKoreanDiaryView, viewModel: viewModel)
     }
     
-    func setHintButtonDelegate() {
+    private func setNagivationBarDelegate() {
+        rootView?.setNavigationBarDelegate(self)
+    }
+    
+    private func setHintButtonDelegate() {
         rootView?.setHintButtonDelegate(self)
     }
     
-    func handleHintButton() {
+    private func handleHintButton() {
         guard let isHintShowed = viewModel?.isHintShowed.value else { return }
         
         rootView?.bottomView.updateHintButtonImage(isHintShowed)
@@ -43,6 +47,26 @@ extension StepTwoKoreanDiaryViewController {
             postPapagoApi(diaryText: rootView?.configuration.layoutConfig?.getHintViewText() ?? "")
         } else {
             rootView?.configuration.layoutConfig?.hintTextView.text = viewModel?.hintText
+        }
+    }
+}
+
+// MARK: - NavigationBarActionDelegate
+
+extension StepTwoKoreanDiaryViewController: NavigationBarActionDelegate {
+    func didTapLeftButton() {
+        navigationController?.popViewController(animated: true)
+    }
+    
+    func didTapRightButton() {
+        if rootView?.navigationView.rightButton.titleLabel?.textColor == .point {
+//            showLodingView(loadingView: rootView.loadingView)
+            rootView?.inputTextView.resignFirstResponder()
+            viewModel?.postDiaryAPI { postDiaryResponse in
+                self.handlePostDiaryResponse(postDiaryResponse)
+            }
+        } else {
+            //            showToastIfNeeded(toastType: .defaultToast(bodyType: .regEx))
         }
     }
 }

@@ -14,7 +14,6 @@ class DiaryViewController: BaseViewController {
     private (set) var viewModel: DiaryViewModel?
     
     private var keyboardHandler: KeyboardLayoutAndScrollingHandler?
-    private var navigationBarButtonActionStrategy: any NavigationActionStrategy = DefaultNavigationActionStrategy()
     
     // MARK: - Life Cycle
     
@@ -23,7 +22,6 @@ class DiaryViewController: BaseViewController {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         
-        setNagivationBarDelegate()
     }
     
     required init?(coder: NSCoder) {
@@ -74,14 +72,6 @@ extension DiaryViewController {
     private func setupSubscriptions() {
         setupTextValidationSubscription()
         setupUpdateRandomTopicSubscription()
-    }
-    
-    func setNavigationBarButtonActionStrategy(_ strategy: any NavigationActionStrategy) {
-        navigationBarButtonActionStrategy = strategy
-    }
-    
-    private func setNagivationBarDelegate() {
-        rootView?.setNavigationBarDelegate(self)
     }
     
     private func setTextViewDelegate() {
@@ -146,18 +136,6 @@ extension DiaryViewController {
             self?.rootView?.updateRandomTopicView(isRandomTopicActive: isActive)
             self?.rootView?.updateInputTextViewConstraints(isRandomTopicActive: isActive)
         })
-    }
-}
-
-// MARK: - NavigationBarActionDelegate
-
-extension DiaryViewController: NavigationBarActionDelegate {
-    func didTapLeftButton() {
-        navigationBarButtonActionStrategy.performLeftButtonAction()
-    }
-    
-    func didTapRightButton() {
-        navigationBarButtonActionStrategy.performRightButtonAction()
     }
 }
 
