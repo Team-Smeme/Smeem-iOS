@@ -22,6 +22,9 @@ class DiaryViewController: BaseViewController {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         
+        setupSubscriptions()
+        setupDelegates()
+        setupKeyboardHandler()
     }
     
     required init?(coder: NSCoder) {
@@ -37,14 +40,6 @@ class DiaryViewController: BaseViewController {
         super.viewDidAppear(animated)
         
         showKeyboard(textView: rootView?.inputTextView)
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        setupDelegates()
-        setupSubscriptions()
-        setupKeyboardHandler()
     }
     
     deinit {
@@ -83,7 +78,7 @@ extension DiaryViewController {
     }
     
     private func setRandomTopicRefreshDelegate() {
-        rootView?.randomTopicView?.randomTopicRefreshDelegate = self
+        rootView?.randomTopicView.randomTopicRefreshDelegate = self
     }
     
     private func removeListeners() {
@@ -105,7 +100,7 @@ extension DiaryViewController {
         })
         
         viewModel?.onUpdateTopicContent.subscribe(listener: { [weak self] content in
-            self?.rootView?.randomTopicView?.setData(contentText: content)
+            self?.rootView?.randomTopicView.setData(contentText: content)
         })
     }
     
@@ -128,7 +123,7 @@ extension DiaryViewController {
             viewModel?.isTopicCalled = false
             viewModel?.topicID = nil
         }
-        rootView?.randomTopicView?.setData(contentText: viewModel?.topicContent ?? "")
+        rootView?.randomTopicView.setData(contentText: viewModel?.topicContent ?? "")
     }
     
     private func updateViewWithRandomTopicEnabled(_ isActive: Bool) {
@@ -139,7 +134,7 @@ extension DiaryViewController {
     }
 }
 
-// MARK: - RandomSubjectViewDelegate
+// MARK: - RandomTopicRefreshDelegate
 
 extension DiaryViewController: RandomTopicRefreshDelegate {
     func refreshButtonTapped(completion: @escaping (String?) -> Void) {

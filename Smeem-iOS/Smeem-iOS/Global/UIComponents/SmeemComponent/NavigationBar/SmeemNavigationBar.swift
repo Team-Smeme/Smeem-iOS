@@ -115,13 +115,13 @@ class SmeemNavigationBar: UIView {
         
         switch configuration.layout {
         case .diaryLayout:
-            setButtonLayouts(leftMargin: Constants.horizontalDiaryTextButtonGap, rightMargin: Constants.horizontalDiaryTextButtonGap)
+            setButtonLayouts(leftMargin: Constants.horizontalDiaryTextButtonGap.rawValue, rightMargin: Constants.horizontalDiaryTextButtonGap.rawValue)
         case .detailLayout:
-            setButtonLayouts(leftMargin: Constants.horizontalArrowButtonGap, rightMargin: Constants.horizontalDiaryTextButtonGap)
+            setButtonLayouts(leftMargin: Constants.horizontalArrowButtonGap.rawValue, rightMargin: Constants.horizontalDiaryTextButtonGap.rawValue)
         case .editLayout, .commentLayout:
-            setButtonLayouts(leftMargin: Constants.horizontalEditCommentButtonsGap, rightMargin: Constants.horizontalEditCommentButtonsGap)
+            setButtonLayouts(leftMargin: Constants.horizontalEditCommentButtonsGap.rawValue, rightMargin: Constants.horizontalEditCommentButtonsGap.rawValue)
         case .myPageLayout:
-            setButtonLayouts(leftMargin: Constants.horizontalArrowButtonGap, rightMargin: Constants.horizontalDotsIconButtonGap)
+            setButtonLayouts(leftMargin: Constants.horizontalArrowButtonGap.rawValue, rightMargin: Constants.horizontalDotsIconButtonGap.rawValue)
         default:
             break
         }
@@ -140,14 +140,14 @@ class SmeemNavigationBar: UIView {
 
 extension SmeemNavigationBar {
     
-    private enum Constants {
-        static let horizontalLeftButtonGap: CGFloat = 12
-        static let horizontalDiaryTextButtonGap: CGFloat = 18
-        static let horizontalEditCommentButtonsGap: CGFloat = 18
-        static let horizontalArrowButtonGap: CGFloat = 20
-        static let horizontalDotsIconButtonGap: CGFloat = 16
-        static let horizontalMypageButtonGap: CGFloat = 26
-        static let verticalSteplabelGap: CGFloat = 3
+    // TODO: 다 cgFoat
+    enum Constants: CGFloat {
+        case horizontalLeftButtonGap = 12
+        case horizontalDiaryTextButtonGap, horizontalEditCommentButtonsGap = 18
+        case horizontalArrowButtonGap = 20
+        case horizontalDotsIconButtonGap = 16
+        case horizontalMypageButtonGap = 26
+        case verticalSteplabelGap = 3
     }
     
     private func setLayout() {
@@ -163,7 +163,7 @@ extension SmeemNavigationBar {
         
         stepLabel.snp.makeConstraints { make in
             make.centerX.equalTo(titleLabel)
-            make.top.equalTo(titleLabel.snp.bottom).offset(Constants.verticalSteplabelGap)
+            make.top.equalTo(titleLabel.snp.bottom).offset(Constants.verticalSteplabelGap.rawValue)
         }
         
         rightButton.snp.makeConstraints { make in

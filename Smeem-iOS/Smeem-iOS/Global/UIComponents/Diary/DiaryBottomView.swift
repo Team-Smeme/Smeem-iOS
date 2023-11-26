@@ -43,11 +43,7 @@ final class DiaryBottomView: UIView {
     
     let thinLine = SeparationLine(height: .thin)
     
-    lazy var randomTopicButton: UIButton = {
-        let button = UIButton()
-        button.setImage(Constant.Image.btnRandomSubjectInactive, for: .normal)
-        return button
-    }()
+    lazy var randomTopicButton = UIButton()
     
     private lazy var dismissButton: UIButton? = {
         let button = UIButton()
@@ -99,7 +95,22 @@ extension DiaryBottomView {
     // MARK: - Layout Helpers
     
     private func setupUI() {
+        setBackgroundColor()
+        setRandomTopicImage()
+    }
+    
+    // 재사용 가능할지도..?
+    private func setBackgroundColor() {
         self.backgroundColor = .gray100
+    }
+    
+    private func setRandomTopicImage() {
+        switch viewType {
+        case .standard:
+            randomTopicButton.setImage(Constant.Image.btnRandomSubjectInactive, for: .normal)
+        case .withHint:
+            randomTopicButton.setImage(Constant.Image.btnRandomSubjectEnabled, for: .normal)
+        }
     }
     
     private func setupLayout() {
@@ -139,7 +150,7 @@ extension DiaryBottomView {
     }
     
     func updateRandomTopicButtonImage(_ isEnabled: Bool) {
-        randomTopicButton.setImage(isEnabled ? Constant.Image.btnRandomSubjectActive : Constant.Image.btnRandomSubjectEnabled, for: .normal)
+        randomTopicButton.setImage(isEnabled ? Constant.Image.btnRandomSubjectActive : Constant.Image.btnRandomSubjectInactive, for: .normal)
     }
     
     func updateHintButtonImage(_ isHintShowed: Bool) {
