@@ -78,7 +78,7 @@ extension DiaryViewController {
     }
     
     private func setRandomTopicRefreshDelegate() {
-        rootView?.randomTopicView.randomTopicRefreshDelegate = self
+        rootView?.randomTopicView?.randomTopicRefreshDelegate = self
     }
     
     private func removeListeners() {
@@ -96,11 +96,11 @@ extension DiaryViewController {
     
     private func setupUpdateRandomTopicSubscription() {
         viewModel?.onUpdateRandomTopic.subscribe(listener: { [weak self] isEnabled in
-            self?.updateViewWithRandomTopicEnabled(isEnabled)
+            self?.updateViewWithRandomTopicActive()
         })
         
         viewModel?.onUpdateTopicContent.subscribe(listener: { [weak self] content in
-            self?.rootView?.randomTopicView.setData(contentText: content)
+            self?.rootView?.randomTopicView?.setData(contentText: content)
         })
     }
     
@@ -112,21 +112,21 @@ extension DiaryViewController {
     // MARK: - Custom Methods
     
     private func handleRandomTopicButtonTap() {
-        guard let isEnabled = viewModel?.isRandomTopicActive.value else { return }
+        guard let isActive = viewModel?.isRandomTopicActive.value else { return }
         
-        rootView?.bottomView.updateRandomTopicButtonImage(isEnabled)
+        rootView?.bottomView.updateRandomTopicButtonImage(isActive)
         
-        if isEnabled {
+        if isActive {
             viewModel?.randomSubjectWithAPI()
-            updateViewWithRandomTopicEnabled(isEnabled)
+            updateViewWithRandomTopicActive()
         } else {
             viewModel?.isTopicCalled = false
             viewModel?.topicID = nil
         }
-        rootView?.randomTopicView.setData(contentText: viewModel?.topicContent ?? "")
+        rootView?.randomTopicView?.setData(contentText: viewModel?.topicContent ?? "")
     }
     
-    private func updateViewWithRandomTopicEnabled(_ isActive: Bool) {
+    private func updateViewWithRandomTopicActive() {
         viewModel?.isRandomTopicActive.subscribe(listener: { [weak self] isActive in
             self?.rootView?.updateRandomTopicView(isRandomTopicActive: isActive)
             self?.rootView?.updateInputTextViewConstraints(isRandomTopicActive: isActive)

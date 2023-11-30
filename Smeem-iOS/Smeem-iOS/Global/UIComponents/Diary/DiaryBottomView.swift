@@ -74,6 +74,7 @@ final class DiaryBottomView: UIView {
         
         setupUI()
         setupLayout()
+        setRandomTopicDisabled()
         addButtonTargets()
     }
     
@@ -110,6 +111,12 @@ extension DiaryBottomView {
             randomTopicButton.setImage(Constant.Image.btnRandomSubjectInactive, for: .normal)
         case .withHint:
             randomTopicButton.setImage(Constant.Image.btnRandomSubjectEnabled, for: .normal)
+        }
+    }
+    
+    private func setRandomTopicDisabled() {
+        if viewType == .withHint {
+            randomTopicButton.isEnabled = false
         }
     }
     

@@ -48,7 +48,7 @@ class DiaryView: BaseView {
     }
     
     override func layoutSubviews() {
-        updateInputTextViewConstraintsByLayoutConfig()
+        updateInputTextViewConstraintsForStepTwoView()
     }
     
     required init?(coder: NSCoder) {
@@ -64,7 +64,7 @@ class DiaryView: BaseView {
 // MARK: - Layout Helpers
 
 extension DiaryView {
-    private func setLayout() {
+    func setLayout() {
         addSubviews(navigationView, inputTextView, bottomView)
 
         navigationView.snp.makeConstraints { make in
@@ -99,15 +99,17 @@ extension DiaryView {
         }
     }
     
-    func updateInputTextViewConstraintsByLayoutConfig() {
-        inputTextView.snp.remakeConstraints { make in
-            if let layoutConfig = configuration.layoutConfig {
-                make.top.equalTo(layoutConfig.thickLine.snp.bottom)
-            } else {
-                make.top.equalTo(navigationView.snp.bottom)
+    func updateInputTextViewConstraintsForStepTwoView() {
+        if viewType == .stepTwoKorean {
+            inputTextView.snp.remakeConstraints { make in
+                if let layoutConfig = configuration.layoutConfig {
+                    make.top.equalTo(layoutConfig.thickLine.snp.bottom)
+                } else {
+                    make.top.equalTo(navigationView.snp.bottom)
+                }
+                make.leading.trailing.equalToSuperview()
+                make.bottom.equalTo(bottomView.snp.top)
             }
-            make.leading.trailing.equalToSuperview()
-            make.bottom.equalTo(bottomView.snp.top)
         }
     }
     
@@ -129,9 +131,7 @@ extension DiaryView {
     
     func updateInputTextViewConstraints(isRandomTopicActive: Bool) {
         inputTextView.snp.remakeConstraints { make in
-            guard let randomTopicView = randomTopicView else { return }
-            
-            make.top.equalTo(isRandomTopicActive ? randomTopicView.snp.bottom : navigationView.snp.bottom)
+            make.top.equalTo(isRandomTopicActive ? randomTopicView?.snp.bottom ?? 0 : navigationView.snp.bottom)
             make.leading.trailing.equalToSuperview()
             make.bottom.equalTo(bottomView.snp.top)
         }
