@@ -17,15 +17,17 @@ import UIKit
 
 import SnapKit
 
-protocol RandomSubjectViewDelegate: AnyObject {
+protocol RandomTopicRefreshDelegate: AnyObject {
     func refreshButtonTapped(completion: @escaping (String?) -> Void)
 }
 
-final class RandomSubjectView: UIView {
+// MARK: - RandomTopicView
+
+final class RandomTopicView: UIView {
     
     // MARK: - Properties
     
-    weak var delegate: RandomSubjectViewDelegate?
+    weak var randomTopicRefreshDelegate: RandomTopicRefreshDelegate?
     
     private var heightConstraint: Constraint?
     
@@ -71,9 +73,9 @@ final class RandomSubjectView: UIView {
     }
 }
 
-extension RandomSubjectView {
-    
-    private func createRandomSubjectView() -> RandomSubjectView { .init() }
+// MARK: - Extensions
+
+extension RandomTopicView {
     
     // MARK: - Layout Helpers
     
@@ -116,7 +118,7 @@ extension RandomSubjectView {
     // MARK: - @objc
     
     @objc func refreshButtonDidTap() {
-        delegate?.refreshButtonTapped { [weak self] newContentText in
+        randomTopicRefreshDelegate?.refreshButtonTapped { [weak self] newContentText in
             DispatchQueue.main.async {
                 self?.setData(contentText: newContentText ?? "")
             }
@@ -124,7 +126,7 @@ extension RandomSubjectView {
     }
     
     // MARK: - Custom Method
-
+    
     func setData(contentText: String) {
         contentLabel.text = "     " + contentText
         contentLabel.setTextWithLineHeight(lineHeight: 22)

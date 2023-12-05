@@ -36,6 +36,8 @@ final class DetailDiaryViewController: BaseViewController {
         super.viewDidLoad()
         
         setLayout()
+        swipeRecognizer()
+        setDelegate()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -93,7 +95,6 @@ final class DetailDiaryViewController: BaseViewController {
     // MARK: - Layout
     
     private func setLayout() {
-        
         view.addSubviews(naviView, diaryScrollerView)
         
         naviView.snp.makeConstraints {
@@ -106,6 +107,10 @@ final class DetailDiaryViewController: BaseViewController {
             $0.top.equalTo(naviView.snp.bottom)
             $0.leading.trailing.bottom.equalToSuperview()
         }
+    }
+    
+    private func setDelegate() {
+        naviView.actionDelegate = self
     }
 }
 

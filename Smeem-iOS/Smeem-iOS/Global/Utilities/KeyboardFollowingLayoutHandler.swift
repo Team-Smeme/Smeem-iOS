@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-class KeyboardFollowingLayoutHandler {
+class KeyboardLayoutAndScrollingHandler {
     private weak var bottomView: DiaryBottomView?
     private weak var targetTextView: SmeemTextView?
     
@@ -46,6 +46,8 @@ class KeyboardFollowingLayoutHandler {
                 make.height.equalTo(53)
             }
         }
+        
+        adjustLayoutForKeyboard(notification: notification, keyboardVisible: true)
     }
     
     @objc func keyboardWillHide(notification:NSNotification) {
@@ -56,6 +58,28 @@ class KeyboardFollowingLayoutHandler {
             self?.bottomView?.transform = CGAffineTransform.identity
             self?.bottomView?.snp.updateConstraints { make in
                 make.height.equalTo(87)
+            }
+        }
+        
+        adjustLayoutForKeyboard(notification: notification, keyboardVisible: false)
+    }
+    
+    private func adjustLayoutForKeyboard(notification: NSNotification, keyboardVisible: Bool) {
+        guard let userInfo = notification.userInfo,
+              let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect
+        else { return }
+        
+        let keyboardHeight = keyboardFrame.height
+        let insets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardVisible ? keyboardHeight : 0, right: 0)
+        
+        targetTextView?.contentInset = insets
+        targetTextView?.scrollIndicatorInsets = insets
+        
+        if keyboardVisible {
+            // 텍스트 뷰를 자동 스크롤하여 커서가 보이도록 처리
+            if let cursorPosition = targetTextView?.selectedTextRange?.end {
+                let caretPositionRect = targetTextView?.caretRect(for: cursorPosition)
+                targetTextView?.scrollRectToVisible(caretPositionRect ?? .zero, animated: true)
             }
         }
     }

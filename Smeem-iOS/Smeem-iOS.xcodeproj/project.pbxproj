@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		37035CF92AF2ADD2008EE521 /* DiaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37035CF82AF2ADD2008EE521 /* DiaryViewModel.swift */; };
 		371107DA2AC99099007A4AC2 /* KeyboardFollowingLayoutHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371107D92AC99099007A4AC2 /* KeyboardFollowingLayoutHandler.swift */; };
 		371107DD2ACAB571007A4AC2 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371107DC2ACAB571007A4AC2 /* BaseView.swift */; };
 		371107DF2ACAB709007A4AC2 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371107DE2ACAB709007A4AC2 /* BaseViewController.swift */; };
@@ -45,7 +46,8 @@
 		37A574DC29FF9FFF00312453 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 37A574D829FF9FFF00312453 /* Pretendard-Bold.otf */; };
 		37A574E02A00CDCD00312453 /* SeparationLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574DF2A00CDCD00312453 /* SeparationLine.swift */; };
 		37A574E62A02178D00312453 /* SmeemToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574E52A02178D00312453 /* SmeemToastView.swift */; };
-		37A574E82A02424F00312453 /* RandomSubjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574E72A02424F00312453 /* RandomSubjectView.swift */; };
+		37A574E82A02424F00312453 /* RandomTopicView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574E72A02424F00312453 /* RandomTopicView.swift */; };
+		37ADCC022B0289AD00E474AA /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ADCC012B0289AD00E474AA /* Observable.swift */; };
 		37B360AA2AC2A4680006C8ED /* SmeemTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B360A92AC2A4680006C8ED /* SmeemTextView.swift */; };
 		37DCA6572A47574300FF8F90 /* RandomSubjectAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DCA6562A47574300FF8F90 /* RandomSubjectAPI.swift */; };
 		37DCA65A2A47598700FF8F90 /* RandomSubjectService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DCA6592A47598700FF8F90 /* RandomSubjectService.swift */; };
@@ -178,6 +180,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		37035CF82AF2ADD2008EE521 /* DiaryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryViewModel.swift; sourceTree = "<group>"; };
 		371107D92AC99099007A4AC2 /* KeyboardFollowingLayoutHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardFollowingLayoutHandler.swift; sourceTree = "<group>"; };
 		371107DC2ACAB571007A4AC2 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		371107DE2ACAB709007A4AC2 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
@@ -216,7 +219,8 @@
 		37A574D829FF9FFF00312453 /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
 		37A574DF2A00CDCD00312453 /* SeparationLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeparationLine.swift; sourceTree = "<group>"; };
 		37A574E52A02178D00312453 /* SmeemToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmeemToastView.swift; sourceTree = "<group>"; };
-		37A574E72A02424F00312453 /* RandomSubjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomSubjectView.swift; sourceTree = "<group>"; };
+		37A574E72A02424F00312453 /* RandomTopicView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomTopicView.swift; sourceTree = "<group>"; };
+		37ADCC012B0289AD00E474AA /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		37B360A92AC2A4680006C8ED /* SmeemTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmeemTextView.swift; sourceTree = "<group>"; };
 		37DCA6562A47574300FF8F90 /* RandomSubjectAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomSubjectAPI.swift; sourceTree = "<group>"; };
 		37DCA6592A47598700FF8F90 /* RandomSubjectService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomSubjectService.swift; sourceTree = "<group>"; };
@@ -371,6 +375,7 @@
 			children = (
 				374F828B2AC327A200C128B9 /* SmeemTextViewHandler.swift */,
 				371107D92AC99099007A4AC2 /* KeyboardFollowingLayoutHandler.swift */,
+				37ADCC012B0289AD00E474AA /* Observable.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -385,7 +390,7 @@
 			path = Base;
 			sourceTree = "<group>";
 		};
-		371107E12ACABD89007A4AC2 /* View */ = {
+		371107E12ACABD89007A4AC2 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				371107E22ACABDB3007A4AC2 /* DiaryView.swift */,
@@ -393,7 +398,7 @@
 				371107E62ACBED3C007A4AC2 /* DiaryViewConfigurationBuilder.swift */,
 				371107E82ACC7E3A007A4AC2 /* DiaryLayoutConfigurations.swift */,
 			);
-			path = View;
+			path = Views;
 			sourceTree = "<group>";
 		};
 		371E940F2A87A7B10098280F /* DataSource */ = {
@@ -443,7 +448,7 @@
 			children = (
 				4ADA41752A556185001C0285 /* LodingView */,
 				37DCA65E2A48030A00FF8F90 /* DetailDiary */,
-				37CD0DB32A1DEE64001F03E7 /* ForeignDiary */,
+				37CD0DB32A1DEE64001F03E7 /* Diaries */,
 				4AD923E52A0650A000FF5E27 /* Splash */,
 				4AF5076F2A10CBA2007C62B1 /* Onboarding */,
 				4AE4B5172A06BF4A00D45F87 /* BottomSheet */,
@@ -542,17 +547,34 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
-		37CD0DB32A1DEE64001F03E7 /* ForeignDiary */ = {
+		37B1E7CA2B0EE2CA007BDEA6 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				371107E12ACABD89007A4AC2 /* View */,
+				37035CF82AF2ADD2008EE521 /* DiaryViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		37B1E7CB2B0EE2DE007BDEA6 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
 				374FAF802A2CACCF00237A1A /* DiaryViewController.swift */,
 				3728B8D22A2CFED300EF4CF8 /* ForeignDiaryViewController.swift */,
 				3728B8D42A2CFF2C00EF4CF8 /* StepOneKoreanDiaryViewController.swift */,
 				3728B8D62A2CFF3A00EF4CF8 /* StepTwoKoreanDiaryViewController.swift */,
 				4A6630352A51B0AD00D19CC9 /* EditDiaryViewController.swift */,
 			);
-			path = ForeignDiary;
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		37CD0DB32A1DEE64001F03E7 /* Diaries */ = {
+			isa = PBXGroup;
+			children = (
+				371107E12ACABD89007A4AC2 /* Views */,
+				37B1E7CB2B0EE2DE007BDEA6 /* Controllers */,
+				37B1E7CA2B0EE2CA007BDEA6 /* ViewModels */,
+			);
+			path = Diaries;
 			sourceTree = "<group>";
 		};
 		37DCA6532A4755FA00FF8F90 /* RandomSubject */ = {
@@ -713,7 +735,7 @@
 			isa = PBXGroup;
 			children = (
 				4AD04B3A2A1905BB004B7A58 /* DiaryScrollerView.swift */,
-				37A574E72A02424F00312453 /* RandomSubjectView.swift */,
+				37A574E72A02424F00312453 /* RandomTopicView.swift */,
 				373E38582A2F889500DF96F0 /* DiaryDetailRandomSubjectView.swift */,
 				37A574DF2A00CDCD00312453 /* SeparationLine.swift */,
 				374F828D2AC5DFFE00C128B9 /* DiaryBottomView.swift */,
@@ -1299,6 +1321,7 @@
 				37DCA6602A48033400FF8F90 /* DetailDiaryViewController.swift in Sources */,
 				4A0EA4572A01403E006CCE52 /* MoyaLoggingPlugin.swift in Sources */,
 				4A0E8D5829F8362E00E0FC23 /* AuthViewController.swift in Sources */,
+				37035CF92AF2ADD2008EE521 /* DiaryViewModel.swift in Sources */,
 				6F294A452A2617B000856CC8 /* UITextField+.swift in Sources */,
 				37A574C829FF6F1C00312453 /* UIView+.swift in Sources */,
 				37A574D029FF9AEE00312453 /* UILabel+.swift in Sources */,
@@ -1369,11 +1392,12 @@
 				37A574E62A02178D00312453 /* SmeemToastView.swift in Sources */,
 				374F828C2AC327A200C128B9 /* SmeemTextViewHandler.swift in Sources */,
 				4A8FFA5229C9E1FD00FB76C0 /* SceneDelegate.swift in Sources */,
+				37ADCC022B0289AD00E474AA /* Observable.swift in Sources */,
 				3797891C2AAE11D400C61EF4 /* NavigationBarConfigurationBuilder.swift in Sources */,
 				4A3373F82A461ABC00EFE6C4 /* OnboardingAPI.swift in Sources */,
 				4AA626652AC1B6B000F31AAE /* MyPageEndPoint.swift in Sources */,
 				4AB6FEBC2AC02D250060E8CA /* SplashService.swift in Sources */,
-				37A574E82A02424F00312453 /* RandomSubjectView.swift in Sources */,
+				37A574E82A02424F00312453 /* RandomTopicView.swift in Sources */,
 				4AC00EE42AD401BB009230DA /* TrainingManager.swift in Sources */,
 				4A0EA4642A014710006CCE52 /* SmeemButton.swift in Sources */,
 				371107DD2ACAB571007A4AC2 /* BaseView.swift in Sources */,

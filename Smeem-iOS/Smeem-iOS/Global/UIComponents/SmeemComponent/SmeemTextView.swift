@@ -19,10 +19,11 @@ enum SmeemTextViewType {
 
 // MARK: - SmeemTextView
 
-class SmeemTextView: UITextView, PlaceholderDisplayable {
+final class SmeemTextView: UITextView {
     
     // MARK: Properties
     
+    var handler: SmeemTextViewHandler?
     var placeholderText: String?
     var placeholderColor: UIColor?
     
@@ -38,8 +39,7 @@ class SmeemTextView: UITextView, PlaceholderDisplayable {
                      textViewManager manager: SmeemTextViewHandler? = nil) {
         self.init(frame: .zero, textContainer: nil)
         
-        configureTextView(for: type, color: color, text: placeholderText ?? "")
-        
+        configureTextView(for: type, color: color, text: placeholder ?? "")
         commonInit()
         updatePlaceholder()
     }
@@ -49,12 +49,9 @@ class SmeemTextView: UITextView, PlaceholderDisplayable {
     }
 }
 
-// MARK: - Methods
+// MARK: - Extensions
 
 extension SmeemTextView {
-    
-    // MARK: Private Methods
-    
     private func commonInit() {
         self.configureDiaryTextView(topInset: 20)
         self.configureTypingAttributes()
@@ -71,16 +68,29 @@ extension SmeemTextView {
             
             self.delegate = manager
             manager.textView = self
+            self.handler = manager
         }
     }
-
-    // MARK: Custom Methods
     
+    func placeholderTextForViewType(for viewType: DiaryViewType) -> String {
+        switch viewType {
+        case .foregin, .stepTwoKorean, .edit:
+            return "일기를 작성해주세요"
+        case .stepOneKorean:
+            return "완벽한 문장으로 한국어 일기를 작성하면, 더욱 정확한 힌트를 받을 수 있어요."
+        }
+    }
+}
+
+// MARK: - PlaceholderDisplayable
+
+extension SmeemTextView: PlaceholderDisplayable {
     func updatePlaceholder() {
         if text.isEmpty {
             text = placeholderText
             textColor = placeholderColor
-            selectedTextRange = textRange(from: beginningOfDocument, to: beginningOfDocument)
+            selectedTextRange = textRange(from: beginningOfDocument,
+                                          to: beginningOfDocument)
         }
     }
 }
