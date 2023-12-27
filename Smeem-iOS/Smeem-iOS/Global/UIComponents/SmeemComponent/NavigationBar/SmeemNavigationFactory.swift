@@ -28,7 +28,7 @@ class NavigationBarFactory {
                 .withLeftButtonTitle("취소")
                 .withTitle("한국어")
                 .withStepLabelTitle("STEP 1")
-                .withRightButtonTitle("완료")
+                .withRightButtonTitle("다음")
                 .withLayout(type.layout)
                 .build()
             navigationBar.applyConfiguraton(configuration)
