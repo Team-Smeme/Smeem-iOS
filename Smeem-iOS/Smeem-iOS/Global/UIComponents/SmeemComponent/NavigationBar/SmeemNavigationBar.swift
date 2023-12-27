@@ -21,6 +21,7 @@ class SmeemNavigationBar: UIView {
     
     private let leftButton: UIButton = {
         let button = UIButton()
+        button.titleLabel?.font = .b4
         button.setTitleColor(.smeemBlack, for: .normal)
         return button
     }()
@@ -61,24 +62,28 @@ class SmeemNavigationBar: UIView {
     
     // MARK: - Methods
     
-    func setLeftButtonTitle(_ title: String) {
+    func setLeftButtonTitle(with title: String) {
         leftButton.setTitle(title, for: .normal)
     }
     
-    func setRightButtonTitle(_ title: String) {
+    func setRightButtonTitle(with title: String) {
         rightButton.setTitle(title, for: .normal)
     }
     
-    func setLeftButtonImage(_ image: UIImage) {
+    func setLeftButtonImage(with image: UIImage) {
         leftButton.setImage(image, for: .normal)
     }
     
-    func setRightButtonImage(_ image: UIImage) {
+    func setRightButtonImage(with image: UIImage) {
         rightButton.setImage(image, for: .normal)
     }
     
-    func setTitle(_ title: String) {
+    func setNavigationBarTitle(with title: String) {
         titleLabel.text = title
+    }
+    
+    func setStepLabelTitle(with title: String) {
+        stepLabel.text = title
     }
     
     func setLeftButtonAction(target: Any?, action: Selector, for event: UIControl.Event) {
@@ -107,11 +112,12 @@ class SmeemNavigationBar: UIView {
     }
     
     func applyConfiguraton(_ configuration: NavigationBarConfiguration) {
-        setLeftButtonTitle(configuration.leftButtonTitle ?? "")
-        setRightButtonTitle(configuration.rightButtonTitle ?? "")
-        setLeftButtonImage(configuration.leftButtonImage ?? UIImage())
-        setRightButtonImage(configuration.rightButtonImage ?? UIImage())
-        setTitle(configuration.title ?? "")
+        setLeftButtonTitle(with: configuration.leftButtonTitle ?? "")
+        setRightButtonTitle(with: configuration.rightButtonTitle ?? "")
+        setLeftButtonImage(with: configuration.leftButtonImage ?? UIImage())
+        setRightButtonImage(with: configuration.rightButtonImage ?? UIImage())
+        setNavigationBarTitle(with: configuration.title ?? "")
+        setStepLabelTitle(with: configuration.stepLabelTitle ?? "")
         
         switch configuration.layout {
         case .diaryLayout:
