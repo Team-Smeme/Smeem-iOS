@@ -145,7 +145,7 @@ extension DiaryView {
     // MARK: - Settings
     
     func setNavigationBarDelegate(_ delegate: NavigationBarActionDelegate?) {
-        self.navigationView.actionDelegate = delegate
+        navigationView.actionDelegate = delegate
     }
     
     func setTextViewHandlerDelegate(_ viewController: DiaryViewController) {
@@ -157,7 +157,7 @@ extension DiaryView {
     }
     
     func setInputText(_ text: String) {
-        self.inputTextView.text = text
+        inputTextView.text = text
     }
 }
 

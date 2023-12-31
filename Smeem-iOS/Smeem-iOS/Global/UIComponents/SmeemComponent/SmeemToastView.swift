@@ -7,7 +7,7 @@
 
 /**
  1. 사용할 VC에서 SmeemToastView 생성 후 파라메터 안에 타입에 맞는 속성 선언
- let regExToastView = SmeemToastView(type: .defaultToast(bodyType: .regEx))
+ let regExToastView = SmeemToastView(type: .smeemToast(bodyType: .regEx))
  let regExToastView = SmeemToastView(type: .errorToast(errorType: .networkError))
  
  2. func showToast(message: String) {

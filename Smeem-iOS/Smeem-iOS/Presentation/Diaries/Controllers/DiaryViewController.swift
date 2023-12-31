@@ -191,22 +191,6 @@ extension DiaryViewController {
 }
 
 
-// MARK: - ToastView
-
-//    func showToastIfNeeded(toastType: ToastViewType) {
-//        smeemToastView?.removeFromSuperview()
-//        smeemToastView = SmeemToastView(type: toastType)
-//
-//        let onKeyboardOffset = convertByHeightRatio(73)
-//        let offKeyboardOffset = convertByHeightRatio(107)
-//
-//        let offset = isKeyboardVisible ? onKeyboardOffset : offKeyboardOffset
-//
-//        smeemToastView?.show(in: view, offset: CGFloat(offset), keyboardHeight: keyboardHeight)
-//        smeemToastView?.hide(after: 1)
-//    }
-
-
 // MARK: - Tutorial
 
 //    @objc func dismissButtonDidTap() {

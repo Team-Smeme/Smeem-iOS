@@ -26,47 +26,36 @@ enum DiaryBottomViewType {
 
 final class DiaryBottomView: UIView {
     
-    // MARK: Properties
+    // MARK:  - Properties
     
-    let viewType: DiaryBottomViewType
+    private let viewType: DiaryBottomViewType
     
     weak var randomTopicDelegate: RandomTopicActionDelegate?
     weak var hintDelegate: HintActionDelegate?
     
-    // MARK: UI Properties
+    // MARK: - UI Properties
     
-    let bottomView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .gray100
-        return view
+    private let thinLine = SeparationLine(height: .thin)
+    
+    private lazy var randomTopicButton = UIButton()
+    
+    private lazy var randomSubjectToolTip: UIImageView? = {
+        let image = UIImageView()
+        image.image = Constant.Image.icnToolTip
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(randomSubjectToolTipDidTap))
+        image.addGestureRecognizer(tapGesture)
+        image.isUserInteractionEnabled = true
+        return image
     }()
     
-    let thinLine = SeparationLine(height: .thin)
-    
-    lazy var randomTopicButton = UIButton()
-    
-    private lazy var dismissButton: UIButton? = {
-        let button = UIButton()
-        //        button.addTarget(self, action: #selector(dismissButtonDidTap), for: .touchUpInside)
-        return button
-    }()
-    
-    //    lazy var randomSubjectToolTip: UIImageView? = {
-    //        let image = UIImageView()
-    //        image.image = Constant.Image.icnToolTip
-    //        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(randomSubjectToolTipDidTap))
-    //        image.addGestureRecognizer(tapGesture)
-    //        image.isUserInteractionEnabled = true
-    //        return image
-    //    }()
-    
-    lazy var hintButton: UIButton = {
+    private lazy var hintButton: UIButton = {
         let button = UIButton()
         button.setImage(Constant.Image.btnTranslateInactive, for: .normal)
         return button
     }()
     
-    // MARK: Life Cycle
+    // MARK: - Life Cycle
     
     init(frame: CGRect = .zero, viewType: DiaryBottomViewType) {
         self.viewType = viewType
@@ -88,6 +77,7 @@ final class DiaryBottomView: UIView {
 extension DiaryBottomView {
     
     // MARK: - Settings
+    
     private func addButtonTargets() {
         randomTopicButton.addTarget(self, action: #selector(randomTopicButtonTapped), for: .touchUpInside)
         hintButton.addTarget(self, action: #selector(hintButtonTapped), for: .touchUpInside)
