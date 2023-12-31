@@ -178,7 +178,7 @@ extension SmeemNavigationBar {
     
     func updateRightButton(isValid: Bool) {
         DispatchQueue.main.async {
-            self.rightButton.isEnabled = isValid
+//            self.rightButton.isEnabled = isValid
             self.rightButton.setTitleColor(isValid ? .point : .gray300, for: .normal)
         }
     }

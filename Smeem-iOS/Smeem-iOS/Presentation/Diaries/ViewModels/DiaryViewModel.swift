@@ -22,6 +22,8 @@ class DiaryViewModel {
     private (set) var isHintShowed: Observable<Bool> = Observable(false)
     private (set) var onUpdateRandomTopic: Observable<Bool> = Observable(false)
     private (set) var onUpdateTopicContent: Observable<String> = Observable("")
+    private (set) var keyboardInfo: Observable<KeyboardInfo?> = Observable(nil)
+    private (set) var toastType: Observable<ToastViewType?> = Observable(nil)
     
     var topicID: Int? = nil
     var topicContent: String?
@@ -29,7 +31,6 @@ class DiaryViewModel {
     var badgePopupContent: [PopupBadge]?
     var isTopicCalled: Bool = false
     var hintText: String?
-    var keyboardInfo: KeyboardInfo?
     
     var onUpdateTextValidation: ((Bool) -> Void)?
     var onUpdateHintButton: ((Bool) -> Void)?
@@ -60,8 +61,23 @@ extension DiaryViewModel {
         return inputText.value
     }
     
+    func updateKeyboardInfo(info: KeyboardInfo) {
+        keyboardInfo.value = info
+    }
+    
+    func setToastViewType(_ type: ToastViewType) {
+        toastType.value = type
+    }
+}
+
+// MARK: - Action Helpers
+
+extension DiaryViewModel {
+    
+    // MARK: TextValidation
     func isTextValid(text: String, viewType: DiaryViewType) -> Bool {
-        guard let textView = SmeemTextViewHandler.shared.textView as? SmeemTextView else { return false
+        guard let textView = SmeemTextViewHandler.shared.textView as? SmeemTextView else {
+            return false
         }
         
         let placeholderText = textView.placeholderTextForViewType(for: viewType)
@@ -76,6 +92,10 @@ extension DiaryViewModel {
                 return SmeemTextViewHandler.shared.containsKoreanCharacters(with: text)
             }
         }
+    }
+    
+    func showRegExToast() {
+        setToastViewType(.smeemToast(bodyType: .regEx))
     }
 }
 

@@ -67,6 +67,7 @@ extension DiaryViewController {
     private func setupSubscriptions() {
         setupTextValidationSubscription()
         setupUpdateRandomTopicSubscription()
+        setupShouldShowToastSubscription()
     }
     
     private func setTextViewDelegate() {
@@ -101,6 +102,14 @@ extension DiaryViewController {
         
         viewModel?.onUpdateTopicContent.subscribe(listener: { [weak self] content in
             self?.rootView?.randomTopicView?.setData(contentText: content)
+        })
+    }
+    
+    private func setupShouldShowToastSubscription() {
+        viewModel?.toastType.subscribe(listener: { [weak self] toastType in
+            if let toastType {
+                self?.rootView?.showToast(with: toastType)
+            }
         })
     }
     

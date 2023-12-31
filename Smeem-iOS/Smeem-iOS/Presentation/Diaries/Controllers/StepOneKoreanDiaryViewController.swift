@@ -69,7 +69,7 @@ extension StepOneKoreanDiaryViewController: NavigationBarActionDelegate {
             rootView?.inputTextView.resignFirstResponder()
             handleRightNavigationButton()
         } else {
-            //            showToastIfNeeded(toastType: .defaultToast(bodyType: .regEx))
+            viewModel?.showRegExToast()
         }
     }
 }
