@@ -53,8 +53,8 @@ extension DiaryViewModel {
         isHintShowed.value = !isHintShowed.value
     }
     
-    func getTopicID() -> Int {
-        return topicID ?? 0
+    func getTopicID() -> Int? {
+        return topicID ?? nil
     }
     
     func getInputText() -> String {
