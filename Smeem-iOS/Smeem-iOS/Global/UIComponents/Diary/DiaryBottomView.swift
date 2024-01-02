@@ -43,8 +43,8 @@ final class DiaryBottomView: UIView {
         let image = UIImageView()
         image.image = Constant.Image.icnToolTip
         
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(randomSubjectToolTipDidTap))
-        image.addGestureRecognizer(tapGesture)
+//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(randomSubjectToolTipDidTap))
+//        image.addGestureRecognizer(tapGesture)
         image.isUserInteractionEnabled = true
         return image
     }()

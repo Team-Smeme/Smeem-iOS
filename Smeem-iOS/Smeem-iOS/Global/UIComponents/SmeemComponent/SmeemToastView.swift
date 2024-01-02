@@ -201,7 +201,8 @@ extension SmeemToastView {
         
         snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.bottom.equalTo(view.snp.bottom).offset(-offset - keyboardHeight)
+//            $0.bottom.equalTo(view.snp.bottom).offset(-offset - keyboardHeight)
+            $0.bottom.equalTo(view.keyboardLayoutGuide).offset(-73)
         }
         
         if animated {
