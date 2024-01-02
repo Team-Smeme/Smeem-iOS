@@ -137,23 +137,9 @@ extension DiaryView {
         }
     }
     
-//    func updateToastView(toastType: ToastViewType, keyboardInfo: KeyboardInfo?) {
-//
-//        smeemToastView?.removeFromSuperview()
-//        smeemToastView = SmeemToastView(type: toastType)
-//
-//        let onKeyboardOffset = convertByHeightRatio(73)
-//        let offKeyboardOffset = convertByHeightRatio(107)
-//
-//        let offset = viewModel?.keyboardInfo?.isKeyboardVisible ?? false ? onKeyboardOffset : offKeyboardOffset
-//
-//        smeemToastView?.show(in: view, offset: CGFloat(offset), keyboardHeight: viewModel?.keyboardInfo?.keyboardHeight ?? 0)
-//        smeemToastView?.hide(after: 1)
-//    }
-    
     func showToast(with toastType: ToastViewType) {
         let smeemToastView = SmeemToastView(type: toastType)
-        smeemToastView.show(in: self, offset: 30, keyboardHeight: 0)
+        smeemToastView.show(in: self, hasKeyboard: true)
         smeemToastView.hide(after: 3)
     }
 }

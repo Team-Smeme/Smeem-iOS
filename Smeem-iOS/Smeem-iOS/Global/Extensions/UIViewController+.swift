@@ -144,7 +144,7 @@ extension UIViewController {
     func showToast(toastType: ToastViewType, keyboardHeight: CGFloat = 0, delay: TimeInterval = 1) {
         let toastView = SmeemToastView(type: toastType)
         let offKeyboardOffset = convertByHeightRatio(54)
-        toastView.show(in: self.view, offset: offKeyboardOffset, keyboardHeight: keyboardHeight)
+        toastView.show(in: self.view, hasKeyboard: false)
         toastView.hide(after: delay)
     }
     

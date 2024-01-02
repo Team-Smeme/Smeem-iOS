@@ -48,7 +48,7 @@ extension ForeignDiaryViewController: NavigationBarActionDelegate {
                 self.handlePostDiaryResponse(postDiaryResponse)
             }
         } else {
-//            showToastIfNeeded(toastType: .defaultToast(bodyType: .regEx))
+            viewModel?.showRegExToast()
         }
     }
 }
