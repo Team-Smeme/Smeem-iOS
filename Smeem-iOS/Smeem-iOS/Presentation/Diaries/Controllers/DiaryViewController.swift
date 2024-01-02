@@ -59,27 +59,15 @@ extension DiaryViewController {
     }
     
     private func setupDelegates() {
-        setTextViewDelegate()
-        setBottomViewDelegate()
-        setRandomTopicRefreshDelegate()
+        rootView?.setTextViewHandlerDelegate(self)
+        rootView?.bottomView.randomTopicDelegate = self
+        rootView?.randomTopicView?.randomTopicRefreshDelegate = self
     }
     
     private func setupSubscriptions() {
-        setupTextValidationSubscription()
-        setupUpdateRandomTopicSubscription()
-        setupShouldShowToastSubscription()
-    }
-    
-    private func setTextViewDelegate() {
-        rootView?.setTextViewHandlerDelegate(self)
-    }
-    
-    private func setBottomViewDelegate() {
-        rootView?.bottomView.randomTopicDelegate = self
-    }
-    
-    private func setRandomTopicRefreshDelegate() {
-        rootView?.randomTopicView?.randomTopicRefreshDelegate = self
+        bindTextValidationStatus()
+        bindRandomTopicUpdates()
+        bindToastVisibility()
     }
     
     private func removeListeners() {
@@ -89,24 +77,24 @@ extension DiaryViewController {
     
     // MARK: - Setups
     
-    private func setupTextValidationSubscription() {
-        viewModel?.isTextValid.subscribe(listener: { [weak self] isValid in
+    private func bindTextValidationStatus() {
+        viewModel?.isTextValid.bind(listener: { [weak self] isValid in
             self?.rootView?.navigationView.updateRightButton(isValid: isValid)
         })
     }
     
-    private func setupUpdateRandomTopicSubscription() {
-        viewModel?.onUpdateRandomTopic.subscribe(listener: { [weak self] isEnabled in
+    private func bindRandomTopicUpdates() {
+        viewModel?.onUpdateRandomTopic.bind(listener: { [weak self] isEnabled in
             self?.updateViewWithRandomTopicActive()
         })
         
-        viewModel?.onUpdateTopicContent.subscribe(listener: { [weak self] content in
+        viewModel?.onUpdateTopicContent.bind(listener: { [weak self] content in
             self?.rootView?.randomTopicView?.setData(contentText: content)
         })
     }
     
-    private func setupShouldShowToastSubscription() {
-        viewModel?.toastType.subscribe(listener: { [weak self] toastType in
+    private func bindToastVisibility() {
+        viewModel?.toastType.bind(listener: { [weak self] toastType in
             if let toastType {
                 self?.rootView?.showToast(with: toastType)
             }
@@ -121,7 +109,9 @@ extension DiaryViewController {
     // MARK: - Custom Methods
     
     private func handleRandomTopicButtonTap() {
-        guard let isActive = viewModel?.isRandomTopicActive.value else { return }
+        guard let isActive = viewModel?.isRandomTopicActive.value else {
+            return
+        }
         
         rootView?.bottomView.updateRandomTopicButtonImage(isActive)
         
@@ -136,7 +126,7 @@ extension DiaryViewController {
     }
     
     private func updateViewWithRandomTopicActive() {
-        viewModel?.isRandomTopicActive.subscribe(listener: { [weak self] isActive in
+        viewModel?.isRandomTopicActive.bind(listener: { [weak self] isActive in
             self?.rootView?.updateRandomTopicView(isRandomTopicActive: isActive)
             self?.rootView?.updateInputTextViewConstraints(isRandomTopicActive: isActive)
         })

@@ -24,7 +24,7 @@ class Observable<T> {
     }
     
     //5. 구독을 통해 파라미터로 넘어온 '특정 행동'을 수행하고,  나중에 didSet 에서도 실행할 수 있도록 클로저 변수에 담기
-    func subscribe(listener: @escaping (T) -> Void) {
+    func bind(listener: @escaping (T) -> Void) {
         listener(value)
         self.listener = listener
     }
