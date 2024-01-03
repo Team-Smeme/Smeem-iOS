@@ -104,12 +104,11 @@ extension DiaryViewModel {
 extension DiaryViewModel {
     func randomSubjectWithAPI() {
         RandomSubjectAPI.shared.getRandomSubject { [weak self] response in
-            guard let strongSelf = self,
-                  let randomSubjectData = response?.data else { return }
+            guard let randomSubjectData = response?.data else { return }
             
-            strongSelf.topicID = randomSubjectData.topicId
-            strongSelf.topicContent = randomSubjectData.content
-            strongSelf.onUpdateTopicContent.value = randomSubjectData.content
+            self?.topicID = randomSubjectData.topicId
+            self?.topicContent = randomSubjectData.content
+            self?.onUpdateTopicContent.value = randomSubjectData.content
         }
     }
     
