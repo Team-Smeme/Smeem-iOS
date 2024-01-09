@@ -102,11 +102,7 @@ extension DiaryView {
     func updateInputTextViewConstraintsForStepTwoView() {
         if viewType == .stepTwoKorean {
             inputTextView.snp.remakeConstraints { make in
-                if let layoutConfig = configuration.layoutConfig {
-                    make.top.equalTo(layoutConfig.thickLine.snp.bottom)
-                } else {
-                    make.top.equalTo(navigationView.snp.bottom)
-                }
+                make.top.equalTo(configuration.layoutConfig?.thickLine.snp.bottom ?? navigationView.snp.bottom)
                 make.leading.trailing.equalToSuperview()
                 make.bottom.equalTo(bottomView.snp.top)
             }

@@ -81,7 +81,7 @@ final class SmeemToastView: UIView {
     
     // MARK: - Life Cycle
     
-    public init(type: ToastViewType) {
+    init(type: ToastViewType) {
         self.type = type
         switch type {
         case .smeemToast(bodyType: let bodyType):
@@ -126,6 +126,7 @@ final class SmeemToastView: UIView {
         let (headText, bodyText) = type.displayText
         headLabel.text = headText
         bodyLabel.text = bodyText
+        
         func lineHeight(for type: ToastViewType) -> CGFloat {
             switch type {
             case .smeemToast, .smeemErrorToast:
@@ -154,42 +155,41 @@ final class SmeemToastView: UIView {
         layer.cornerRadius = 6
     }
     
-    
     private func setToastViewLayout() {
         addSubviews(cautionImage, headLabel, bodyLabel)
         
         switch type {
         case .smeemToast, .smeemErrorToast:
-            bodyLabel.snp.makeConstraints {
-                $0.centerY.equalToSuperview()
-                $0.leading.equalToSuperview().offset(convertByWidthRatio(16))
+            bodyLabel.snp.makeConstraints { make in
+                make.centerY.equalToSuperview()
+                make.leading.equalToSuperview().offset(convertByWidthRatio(16))
             }
         case .networkErrorToast:
-            cautionImage.snp.makeConstraints {
-                $0.centerY.equalToSuperview()
-                $0.leading.equalTo(convertByWidthRatio(19))
-                $0.width.height.equalTo(22)
+            cautionImage.snp.makeConstraints { make in
+                make.centerY.equalToSuperview()
+                make.leading.equalTo(convertByWidthRatio(19))
+                make.width.height.equalTo(22)
             }
             
-            headLabel.snp.makeConstraints {
-                $0.top.equalToSuperview().offset(14)
-                $0.leading.equalTo(cautionImage.snp.trailing).offset(14)
+            headLabel.snp.makeConstraints { make in
+                make.top.equalToSuperview().offset(14)
+                make.leading.equalTo(cautionImage.snp.trailing).offset(14)
             }
             
-            bodyLabel.snp.makeConstraints {
-                $0.top.equalTo(headLabel.snp.bottom).offset(3)
-                $0.leading.equalTo(headLabel)
+            bodyLabel.snp.makeConstraints { make in
+                make.top.equalTo(headLabel.snp.bottom).offset(3)
+                make.leading.equalTo(headLabel)
             }
         }
         
-        snp.makeConstraints {
-            $0.centerX.equalTo(self)
-            $0.width.equalTo(convertByWidthRatio(339))
+        snp.makeConstraints { make in
+            make.centerX.equalTo(self)
+            make.width.equalTo(convertByWidthRatio(339))
             
             if case .smeemToast = type {
-                $0.height.equalTo(convertByHeightRatio(50))
+                make.height.equalTo(convertByHeightRatio(50))
             } else {
-                $0.height.equalTo(convertByHeightRatio(70))
+                make.height.equalTo(convertByHeightRatio(70))
             }
         }
     }
@@ -199,13 +199,12 @@ extension SmeemToastView {
     func show(in view: UIView, animated: Bool = true, hasKeyboard: Bool) {
         view.addSubview(self)
         
-        snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            
+        snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
             if hasKeyboard {
-                $0.bottom.equalTo(view.keyboardLayoutGuide.snp.top).offset(-73)
+                make.bottom.equalTo(view.keyboardLayoutGuide.snp.top).offset(-73)
             } else {
-                $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-20)
+                make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-20)
             }
         }
         
@@ -221,16 +220,14 @@ extension SmeemToastView {
     
     func hide(after delay: TimeInterval, animated: Bool = true) {
         DispatchQueue.main.asyncAfter(deadline: .now() + delay) { [weak self] in
-            guard let self = self else { return }
-            
             if animated {
                 UIView.animate(withDuration: 0.6, animations: {
-                    self.alpha = 0
+                    self?.alpha = 0
                 }, completion: { _ in
-                    self.removeFromSuperview()
+                    self?.removeFromSuperview()
                 })
             } else {
-                self.removeFromSuperview()
+                self?.removeFromSuperview()
             }
         }
     }
