@@ -11,8 +11,6 @@ import SnapKit
 
 final class HomeViewFloatingViewController: UIViewController {
     
-    // MARK: - Property
-    
     // MARK: - UI Property
     
     private let buttonStackView: UIStackView = {
@@ -101,33 +99,7 @@ final class HomeViewFloatingViewController: UIViewController {
         
         setBackgroundColor()
         setLayout()
-//        checkTutorial()
     }
-    
-    // MARK: - Custom Method
-    
-    private func checkTutorial() {
-//        let tutorialDiaryStepTwo = UserDefaultsManager.tutorialWeeklyTwoMode
-//
-//        if !tutorialDiaryStepTwo {
-//            UserDefaultsManager.tutorialWeeklyTwoMode = true
-//
-//            view.addSubviews(tutorialImageView ?? UIImageView(), dismissButton ?? UIButton())
-//
-//            tutorialImageView?.snp.makeConstraints {
-//                $0.top.leading.trailing.bottom.equalToSuperview()
-//            }
-//            dismissButton?.snp.makeConstraints {
-//                $0.top.equalToSuperview().inset(convertByHeightRatio(503))
-//                $0.trailing.equalToSuperview().inset(convertByHeightRatio(10))
-//                $0.width.height.equalTo(convertByHeightRatio(45))
-//            }
-//        } else {
-//            tutorialImageView = nil
-//            dismissButton = nil
-//        }
-    }
-    
     
     // MARK: - Layout
     
