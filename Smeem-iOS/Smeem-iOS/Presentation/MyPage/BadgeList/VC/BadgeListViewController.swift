@@ -10,9 +10,11 @@ import UIKit
 import Kingfisher
 import SnapKit
 
-class BadgeListViewController: UIViewController {
+final class BadgeListViewController: BaseViewController {
     
     // MARK: - Property
+    
+    private let myPageManager: MyPageManagerProtocol
     
     private var badgeHeaderData = [(name: String(), imageURL: String())]
     private var badgeListData = Array(repeating: Array(repeating: (name: String(), imageURL: String()), count: 0), count: 2)
@@ -22,7 +24,6 @@ class BadgeListViewController: UIViewController {
     // MARK: - UI Property
     
     private let headerContainerView = UIView()
-    private let loadingView = LoadingView()
     
     private lazy var cancelButton: UIButton = {
         let button = UIButton()
@@ -67,19 +68,27 @@ class BadgeListViewController: UIViewController {
 
     // MARK: - Life Cycle
     
+    init(myPageManager: MyPageManagerProtocol) {
+        self.myPageManager = myPageManager
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setBackgroundColor()
         setLayout()
-        hiddenNavigationBar()
         setDelegate()
         setRegister()
-        badgeListGetAPI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.showLodingView(loadingView: loadingView)
+        
+        getBadgeList()
     }
 
     
@@ -159,10 +168,6 @@ class BadgeListViewController: UIViewController {
 
     
     // MARK: - Layout
-    
-    private func setBackgroundColor() {
-        view.backgroundColor = .smeemWhite
-    }
     
     private func setLayout() {
         view.addSubviews(headerContainerView, badgeListTableView)
@@ -269,11 +274,16 @@ extension BadgeListViewController {
                 } else {
 //                    self.badgeListData[2].append((name: badge.name, imageURL: badge.imageURL))
                 }
+                
+                self.setHeaderViewData()
+                self.setBadgeData()
+                self.badgeListTableView.reloadData()
+                
+                hideLoadingView()
+            } catch {
+                guard let error = error as? NetworkError else { return }
+                handlerError(error)
             }
-            
-            self.setHeaderViewData()
-            self.setBadgeData()
-            self.badgeListTableView.reloadData()
         }
     }
 }

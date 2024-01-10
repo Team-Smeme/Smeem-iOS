@@ -84,9 +84,7 @@ final class ServiceAcceptViewController: UIViewController {
     }()
     
     private lazy var nextButton: SmeemButton = {
-        let button = SmeemButton()
-        button.smeemButtonType = .notEnabled
-        button.setTitle("다음", for: .normal)
+        let button = SmeemButton(buttonType: .notEnabled, text: "다음")
         button.addTarget(self, action: #selector(nextButtonDidTap), for: .touchUpInside)
         return button
     }()
@@ -116,7 +114,7 @@ final class ServiceAcceptViewController: UIViewController {
             for i in 0..<3 {
                 acceptCheckArray.insert(i)
             }
-            nextButton.smeemButtonType = .enabled
+            nextButton.changeButtonType(buttonType: .enabled)
             goalLabel.font = .b1
             goalLabel.textColor = .point
             totalAcceptView.layer.borderColor = UIColor.point.cgColor
@@ -129,7 +127,8 @@ final class ServiceAcceptViewController: UIViewController {
             
         } else {
             acceptCheckArray.removeAll()
-            nextButton.smeemButtonType = .notEnabled
+            nextButton.changeButtonType(buttonType: .notEnabled)
+//            nextButton.smeemButtonType = .notEnabled
             goalLabel.font = .b3
             goalLabel.textColor = .gray600
             totalAcceptView.layer.borderColor = UIColor.gray100.cgColor
@@ -165,16 +164,16 @@ final class ServiceAcceptViewController: UIViewController {
     
     private func checkAccptButtonType() {
         if acceptCheckArray.contains(0) && acceptCheckArray.contains(1) {
-            nextButton.smeemButtonType = .enabled
+            nextButton.changeButtonType(buttonType: .enabled)
         } else {
-            nextButton.smeemButtonType = .notEnabled
+            nextButton.changeButtonType(buttonType: .notEnabled)
         }
     }
     
     private func totalViewClicked() {
         if acceptCheckArray.count == 3 {
             selectedTotal.toggle()
-            nextButton.smeemButtonType = .enabled
+            nextButton.changeButtonType(buttonType: .enabled)
             goalLabel.font = .b1
             goalLabel.textColor = .point
             totalAcceptView.layer.borderColor = UIColor.point.cgColor
@@ -182,14 +181,14 @@ final class ServiceAcceptViewController: UIViewController {
             checkButton.setImage(Constant.Image.icnCheckActive, for: .normal)
         } else if acceptCheckArray.count == 0 {
             selectedTotal.toggle()
-            nextButton.smeemButtonType = .notEnabled
+            nextButton.changeButtonType(buttonType: .notEnabled)
             goalLabel.font = .b3
             goalLabel.textColor = .gray600
             totalAcceptView.layer.borderColor = UIColor.gray100.cgColor
             totalAcceptView.layer.borderWidth = 1.5
             checkButton.setImage(Constant.Image.icnCheckInactive, for: .normal)
         } else if acceptCheckArray.count < 3 {
-            nextButton.smeemButtonType = .notEnabled
+            nextButton.changeButtonType(buttonType: .notEnabled)
             goalLabel.font = .b3
             goalLabel.textColor = .gray600
             totalAcceptView.layer.borderColor = UIColor.gray100.cgColor

@@ -11,6 +11,8 @@ final class SplashViewController: UIViewController {
     
     // MARK: - Property
     
+    private let splahManager: SplashManagerProtocol
+    
     // MARK: - UI Property
     
     private let splashImageView: UIImageView = {
@@ -21,6 +23,16 @@ final class SplashViewController: UIViewController {
     }()
     
     // MARK: - Life Cycle
+
+    init(splahManager: SplashManagerProtocol) {
+        self.splahManager = splahManager
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -124,15 +136,5 @@ final class SplashViewController: UIViewController {
         
         updateAlert.addAction(update)
         self.present(updateAlert, animated: true)
-    }
-}
-
-// MARK: - Network
-
-extension SplashViewController {
-    private func reloginAPI() {
-        AuthAPI.shared.reLoginAPI() { response in
-            guard let _ = response.data else { return }
-        }
     }
 }

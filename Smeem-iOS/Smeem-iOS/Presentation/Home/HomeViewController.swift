@@ -10,7 +10,7 @@ import UIKit
 import FSCalendar
 import SnapKit
 
-final class HomeViewController: UIViewController {
+final class HomeViewController: BaseViewController {
     
     // MARK: - Property
     
@@ -169,9 +169,7 @@ final class HomeViewController: UIViewController {
     }()
     
     private lazy var addDiaryButton: SmeemButton = {
-        let addDiaryButton = SmeemButton()
-        addDiaryButton.smeemButtonType = .enabled
-        addDiaryButton.setTitle("일기 작성하기", for: .normal)
+        let addDiaryButton = SmeemButton(buttonType: .enabled, text: "일기 작성하기")
         addDiaryButton.addTarget(self, action: #selector(self.addDiaryButtonDidTap(_:)), for: .touchUpInside)
         return addDiaryButton
     }()
@@ -192,7 +190,6 @@ final class HomeViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         homeDiaryWithAPI(start: Date().startOfMonth().addingDate(addValue: -7), end: Date().endOfMonth().addingDate(addValue: 7))
-        hiddenNavigationBar()
         checkPopupView()
     }
     
@@ -221,7 +218,7 @@ final class HomeViewController: UIViewController {
     }
     
     @objc func myPageButtonDidTap(_ sender: UIButton) {
-        let myPageVC = MyPageViewController()
+        let myPageVC = MyPageViewController(myPageManager: MyPageManager(myPageService: MyPageService(requestable: APIServie())), editPushManager: MyPageEditManager(myPageEditService: MyPageEditService(requestable: APIServie())))
         self.navigationController?.pushViewController(myPageVC, animated: true)
     }
     
@@ -282,7 +279,7 @@ final class HomeViewController: UIViewController {
     }
     
     private func loadToastMessage() {
-        showToast(toastType: .defaultToast(bodyType: .completed))
+        showToast(toastType: .smeemToast(bodyType: .completed))
     }
     
     private func pushShowPage() {
@@ -296,10 +293,6 @@ final class HomeViewController: UIViewController {
     }
     
     // MARK: - Layout
-    
-    private func setBackgroundColor() {
-        view.backgroundColor = .white
-    }
     
     private func setLayout() {
         hiddenNavigationBar()

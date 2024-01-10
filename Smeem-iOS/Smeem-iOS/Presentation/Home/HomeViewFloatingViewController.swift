@@ -11,8 +11,6 @@ import SnapKit
 
 final class HomeViewFloatingViewController: UIViewController {
     
-    // MARK: - Property
-    
     // MARK: - UI Property
     
     private let buttonStackView: UIStackView = {
@@ -50,9 +48,7 @@ final class HomeViewFloatingViewController: UIViewController {
     }()
     
     private lazy var floatingButton: SmeemButton = {
-        let floatingButton = SmeemButton()
-        floatingButton.smeemButtonType = .enabled
-        floatingButton.setTitle("취소", for: .normal)
+        let floatingButton = SmeemButton(buttonType: .enabled, text: "취소")
         floatingButton.addTarget(self, action: #selector(self.floatingButtonDidTap(_:)), for: .touchUpInside)
         return floatingButton
     }()
@@ -103,33 +99,7 @@ final class HomeViewFloatingViewController: UIViewController {
         
         setBackgroundColor()
         setLayout()
-//        checkTutorial()
     }
-    
-    // MARK: - Custom Method
-    
-    private func checkTutorial() {
-//        let tutorialDiaryStepTwo = UserDefaultsManager.tutorialWeeklyTwoMode
-//
-//        if !tutorialDiaryStepTwo {
-//            UserDefaultsManager.tutorialWeeklyTwoMode = true
-//
-//            view.addSubviews(tutorialImageView ?? UIImageView(), dismissButton ?? UIButton())
-//
-//            tutorialImageView?.snp.makeConstraints {
-//                $0.top.leading.trailing.bottom.equalToSuperview()
-//            }
-//            dismissButton?.snp.makeConstraints {
-//                $0.top.equalToSuperview().inset(convertByHeightRatio(503))
-//                $0.trailing.equalToSuperview().inset(convertByHeightRatio(10))
-//                $0.width.height.equalTo(convertByHeightRatio(45))
-//            }
-//        } else {
-//            tutorialImageView = nil
-//            dismissButton = nil
-//        }
-    }
-    
     
     // MARK: - Layout
     
@@ -190,14 +160,14 @@ final class HomeViewFloatingViewController: UIViewController {
     }
     
     @objc func foreignDiaryButtonDidTap(_ gesture: UITapGestureRecognizer) {
-        let nextVC = ForeignDiaryViewController()
+        let nextVC = ForeignDiaryViewController.createWithForeignDiaryiew()
         nextVC.modalTransitionStyle = .coverVertical
         nextVC.modalPresentationStyle = .fullScreen
         present(nextVC, animated: true)
     }
     
     @objc func koreanDiaryButtonDidTap(_ gesture: UITapGestureRecognizer) {
-        let nextVC = StepOneKoreanDiaryViewController()
+        let nextVC = StepOneKoreanDiaryViewController.createWithStepOneKoreanDiaryView()
         let navigationController = UINavigationController(rootViewController: nextVC)
         navigationController.modalTransitionStyle = .coverVertical
         navigationController.modalPresentationStyle = .fullScreen
