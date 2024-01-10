@@ -66,6 +66,12 @@
 		37EB69E62A4B3BC400075E4E /* DataBindProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EB69E52A4B3BC400075E4E /* DataBindProtocol.swift */; };
 		4A004D4F2B4ED760003C8936 /* PlanListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A004D4E2B4ED760003C8936 /* PlanListResponse.swift */; };
 		4A004D512B4ED783003C8936 /* DetailPlanListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A004D502B4ED783003C8936 /* DetailPlanListResponse.swift */; };
+		4A004D542B4EE26E003C8936 /* AuthAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A004D532B4EE26E003C8936 /* AuthAPI.swift */; };
+		4A004D562B4EE277003C8936 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A004D552B4EE277003C8936 /* AuthService.swift */; };
+		4A004D592B4EE28D003C8936 /* PushTestAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A004D582B4EE28D003C8936 /* PushTestAPI.swift */; };
+		4A004D5B2B4EE29A003C8936 /* PushTestService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A004D5A2B4EE29A003C8936 /* PushTestService.swift */; };
+		4A004D5E2B4EE2B4003C8936 /* MyPageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A004D5D2B4EE2B4003C8936 /* MyPageService.swift */; };
+		4A004D602B4EE2BD003C8936 /* MyPageAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A004D5F2B4EE2BD003C8936 /* MyPageAPI.swift */; };
 		4A0123552AAA087D00E09646 /* BaseResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0123542AAA087D00E09646 /* BaseResponse.swift */; };
 		4A01235F2AAA2C1500E09646 /* SmeemLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A01235E2AAA2C1500E09646 /* SmeemLoadingView.swift */; };
 		4A0E8D5829F8362E00E0FC23 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0E8D5729F8362E00E0FC23 /* AuthViewController.swift */; };
@@ -117,12 +123,6 @@
 		4AC00EF52AD57202009230DA /* TrainingAlarmDataSendProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC00EF42AD57202009230DA /* TrainingAlarmDataSendProtocol.swift */; };
 		4AC00EF72AD59C73009230DA /* AuthDataSendProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC00EF62AD59C73009230DA /* AuthDataSendProtocol.swift */; };
 		4AC047252A8FCAE100EBDC0E /* AuthManagementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC047242A8FCAE100EBDC0E /* AuthManagementViewController.swift */; };
-		4AC1D6752B4ECEFE00D39A98 /* MyPageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC1D6732B4ECEFE00D39A98 /* MyPageService.swift */; };
-		4AC1D6762B4ECEFE00D39A98 /* MyPageAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC1D6742B4ECEFE00D39A98 /* MyPageAPI.swift */; };
-		4AC1D67A2B4ECF1D00D39A98 /* PushTestAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC1D6782B4ECF1D00D39A98 /* PushTestAPI.swift */; };
-		4AC1D67B2B4ECF1D00D39A98 /* PushTestService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC1D6792B4ECF1D00D39A98 /* PushTestService.swift */; };
-		4AC1D67F2B4ECF2800D39A98 /* AuthAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC1D67D2B4ECF2800D39A98 /* AuthAPI.swift */; };
-		4AC1D6802B4ECF2800D39A98 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC1D67E2B4ECF2800D39A98 /* AuthService.swift */; };
 		4AC1D6832B4ED38200D39A98 /* OnboardingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC1D6822B4ED38200D39A98 /* OnboardingModel.swift */; };
 		4AC4B82D2A2F9FE200E147AA /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4B82C2A2F9FE200E147AA /* UserDefaultsManager.swift */; };
 		4AC9489829ED800800489C2B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4AC9489729ED800800489C2B /* GoogleService-Info.plist */; };
@@ -217,6 +217,12 @@
 		37EB69E52A4B3BC400075E4E /* DataBindProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataBindProtocol.swift; sourceTree = "<group>"; };
 		4A004D4E2B4ED760003C8936 /* PlanListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanListResponse.swift; sourceTree = "<group>"; };
 		4A004D502B4ED783003C8936 /* DetailPlanListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPlanListResponse.swift; sourceTree = "<group>"; };
+		4A004D532B4EE26E003C8936 /* AuthAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthAPI.swift; sourceTree = "<group>"; };
+		4A004D552B4EE277003C8936 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		4A004D582B4EE28D003C8936 /* PushTestAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushTestAPI.swift; sourceTree = "<group>"; };
+		4A004D5A2B4EE29A003C8936 /* PushTestService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushTestService.swift; sourceTree = "<group>"; };
+		4A004D5D2B4EE2B4003C8936 /* MyPageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageService.swift; sourceTree = "<group>"; };
+		4A004D5F2B4EE2BD003C8936 /* MyPageAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageAPI.swift; sourceTree = "<group>"; };
 		4A0123542AAA087D00E09646 /* BaseResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseResponse.swift; sourceTree = "<group>"; };
 		4A01235E2AAA2C1500E09646 /* SmeemLoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmeemLoadingView.swift; sourceTree = "<group>"; };
 		4A0E8D5729F8362E00E0FC23 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
@@ -269,12 +275,6 @@
 		4AC00EF42AD57202009230DA /* TrainingAlarmDataSendProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingAlarmDataSendProtocol.swift; sourceTree = "<group>"; };
 		4AC00EF62AD59C73009230DA /* AuthDataSendProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthDataSendProtocol.swift; sourceTree = "<group>"; };
 		4AC047242A8FCAE100EBDC0E /* AuthManagementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManagementViewController.swift; sourceTree = "<group>"; };
-		4AC1D6732B4ECEFE00D39A98 /* MyPageService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPageService.swift; sourceTree = "<group>"; };
-		4AC1D6742B4ECEFE00D39A98 /* MyPageAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPageAPI.swift; sourceTree = "<group>"; };
-		4AC1D6782B4ECF1D00D39A98 /* PushTestAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushTestAPI.swift; sourceTree = "<group>"; };
-		4AC1D6792B4ECF1D00D39A98 /* PushTestService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushTestService.swift; sourceTree = "<group>"; };
-		4AC1D67D2B4ECF2800D39A98 /* AuthAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthAPI.swift; sourceTree = "<group>"; };
-		4AC1D67E2B4ECF2800D39A98 /* AuthService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		4AC1D6822B4ED38200D39A98 /* OnboardingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingModel.swift; sourceTree = "<group>"; };
 		4AC4B82C2A2F9FE200E147AA /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		4AC9489729ED800800489C2B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -615,6 +615,33 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
+		4A004D522B4EE262003C8936 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				4A004D532B4EE26E003C8936 /* AuthAPI.swift */,
+				4A004D552B4EE277003C8936 /* AuthService.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		4A004D572B4EE283003C8936 /* Push */ = {
+			isa = PBXGroup;
+			children = (
+				4A004D582B4EE28D003C8936 /* PushTestAPI.swift */,
+				4A004D5A2B4EE29A003C8936 /* PushTestService.swift */,
+			);
+			path = Push;
+			sourceTree = "<group>";
+		};
+		4A004D5C2B4EE2AC003C8936 /* MyPage */ = {
+			isa = PBXGroup;
+			children = (
+				4A004D5D2B4EE2B4003C8936 /* MyPageService.swift */,
+				4A004D5F2B4EE2BD003C8936 /* MyPageAPI.swift */,
+			);
+			path = MyPage;
+			sourceTree = "<group>";
+		};
 		4A01234F2AAA046200E09646 /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
@@ -641,9 +668,9 @@
 		4A0EA45A2A014111006CCE52 /* API */ = {
 			isa = PBXGroup;
 			children = (
-				4AC1D67C2B4ECF2800D39A98 /* Auth */,
-				4AC1D6772B4ECF1D00D39A98 /* Push */,
-				4AC1D6722B4ECEFE00D39A98 /* MyPage */,
+				4A004D5C2B4EE2AC003C8936 /* MyPage */,
+				4A004D572B4EE283003C8936 /* Push */,
+				4A004D522B4EE262003C8936 /* Auth */,
 				6FBC856C2A4B5F8500A43F98 /* Home */,
 				4A3373F62A461AAC00EFE6C4 /* Onboarding */,
 				37DCA6752A488CBA00FF8F90 /* Papago */,
@@ -894,36 +921,6 @@
 				4AC047242A8FCAE100EBDC0E /* AuthManagementViewController.swift */,
 			);
 			path = AuthManagement;
-			sourceTree = "<group>";
-		};
-		4AC1D6722B4ECEFE00D39A98 /* MyPage */ = {
-			isa = PBXGroup;
-			children = (
-				4AC1D6732B4ECEFE00D39A98 /* MyPageService.swift */,
-				4AC1D6742B4ECEFE00D39A98 /* MyPageAPI.swift */,
-			);
-			name = MyPage;
-			path = "../../../../../../Smeem-iOS 복사본/Smeem-iOS/Network/API/MyPage";
-			sourceTree = "<group>";
-		};
-		4AC1D6772B4ECF1D00D39A98 /* Push */ = {
-			isa = PBXGroup;
-			children = (
-				4AC1D6782B4ECF1D00D39A98 /* PushTestAPI.swift */,
-				4AC1D6792B4ECF1D00D39A98 /* PushTestService.swift */,
-			);
-			name = Push;
-			path = "../../../../../../Smeem-iOS 복사본/Smeem-iOS/Network/API/Push";
-			sourceTree = "<group>";
-		};
-		4AC1D67C2B4ECF2800D39A98 /* Auth */ = {
-			isa = PBXGroup;
-			children = (
-				4AC1D67D2B4ECF2800D39A98 /* AuthAPI.swift */,
-				4AC1D67E2B4ECF2800D39A98 /* AuthService.swift */,
-			);
-			name = Auth;
-			path = "../../../../../../Smeem-iOS 복사본/Smeem-iOS/Network/API/Auth";
 			sourceTree = "<group>";
 		};
 		4AC1D6812B4ED37700D39A98 /* New Group */ = {
@@ -1185,6 +1182,7 @@
 				4AC00EE62AD432F2009230DA /* BaseCollectionView.swift in Sources */,
 				4AC00EF02AD52F4C009230DA /* AlarmSettingViewController.swift in Sources */,
 				4A3774822A42DF4500357DD1 /* NetworkHeader.swift in Sources */,
+				4A004D562B4EE277003C8936 /* AuthService.swift in Sources */,
 				37DCA6742A484D5900FF8F90 /* PostDiaryAPI.swift in Sources */,
 				4A9FAB472A4C3D1200C40D5A /* BadgeListTableViewCell.swift in Sources */,
 				373E38592A2F889500DF96F0 /* DiaryDetailRandomSubjectView.swift in Sources */,
@@ -1200,8 +1198,8 @@
 				6FBC856B2A4B1F9200A43F98 /* MyPageViewController.swift in Sources */,
 				6FBC85742A4B603A00A43F98 /* MyPageNetworkModel.swift in Sources */,
 				6F294A482A27818200856CC8 /* HomeViewFloatingViewController.swift in Sources */,
-				4AC1D67A2B4ECF1D00D39A98 /* PushTestAPI.swift in Sources */,
 				37A574C529FF6EA800312453 /* FontLiterals.swift in Sources */,
+				4A004D5B2B4EE29A003C8936 /* PushTestService.swift in Sources */,
 				379789052AAC706800C61EF4 /* SmeemNavigationFactory.swift in Sources */,
 				4AC00EF32AD56C4C009230DA /* SmeemTextButton.swift in Sources */,
 				37DCA65D2A475B5100FF8F90 /* RandomSubjectResponse.swift in Sources */,
@@ -1215,16 +1213,14 @@
 				4A0123552AAA087D00E09646 /* BaseResponse.swift in Sources */,
 				4AC1D6832B4ED38200D39A98 /* OnboardingModel.swift in Sources */,
 				4AC00EEB2AD4527A009230DA /* HowOnboardingViewController.swift in Sources */,
+				4A004D602B4EE2BD003C8936 /* MyPageAPI.swift in Sources */,
 				4AE35E9E2A7FE8CE00465FD5 /* UICollectionViewCell+.swift in Sources */,
 				37DCA67C2A48927400FF8F90 /* PapagoService.swift in Sources */,
 				4A10A3A82AB8AA5800C145E9 /* System.swift in Sources */,
 				4A3F2EA02A0C18B600F6AC60 /* DatePickerFooterView.swift in Sources */,
 				37B360AA2AC2A4680006C8ED /* SmeemTextView.swift in Sources */,
-				4AC1D67F2B4ECF2800D39A98 /* AuthAPI.swift in Sources */,
-				4AC1D6802B4ECF2800D39A98 /* AuthService.swift in Sources */,
 				6FE1298C2A498338005536C4 /* HomeService.swift in Sources */,
 				4AD04B3D2A190E9A004B7A58 /* UITextView+.swift in Sources */,
-				4AC1D67B2B4ECF1D00D39A98 /* PushTestService.swift in Sources */,
 				6F31802F2A24D1DB00089870 /* CalendarCell.swift in Sources */,
 				6FE1298A2A4982DA005536C4 /* HomeAPI.swift in Sources */,
 				374F828E2AC5DFFE00C128B9 /* DiaryBottomView.swift in Sources */,
@@ -1247,6 +1243,7 @@
 				4A0EA4572A01403E006CCE52 /* MoyaLoggingPlugin.swift in Sources */,
 				4A0E8D5829F8362E00E0FC23 /* AuthViewController.swift in Sources */,
 				37035CF92AF2ADD2008EE521 /* DiaryViewModel.swift in Sources */,
+				4A004D5E2B4EE2B4003C8936 /* MyPageService.swift in Sources */,
 				6F294A452A2617B000856CC8 /* UITextField+.swift in Sources */,
 				37A574C829FF6F1C00312453 /* UIView+.swift in Sources */,
 				37A574D029FF9AEE00312453 /* UILabel+.swift in Sources */,
@@ -1258,6 +1255,7 @@
 				4A0EA4592A014103006CCE52 /* URLConstant.swift in Sources */,
 				4ADA41772A556209001C0285 /* LoadingView.swift in Sources */,
 				4ADCA2D62A9272E9002904EB /* EditAlarmViewController.swift in Sources */,
+				4A004D592B4EE28D003C8936 /* PushTestAPI.swift in Sources */,
 				6F294A432A26179700856CC8 /* ServiceAcceptViewController.swift in Sources */,
 				4AC00EF52AD57202009230DA /* TrainingAlarmDataSendProtocol.swift in Sources */,
 				4AD04B402A1921AE004B7A58 /* CorrectionViewController.swift in Sources */,
@@ -1275,7 +1273,6 @@
 				4A0EA4552A014027006CCE52 /* GeneralResponse.swift in Sources */,
 				4AC00EF72AD59C73009230DA /* AuthDataSendProtocol.swift in Sources */,
 				4A9FAB482A4C3D1200C40D5A /* BadgeHeaderView.swift in Sources */,
-				4AC1D6762B4ECEFE00D39A98 /* MyPageAPI.swift in Sources */,
 				4AC00EE92AD448EA009230DA /* TrainingDataSendProtocol.swift in Sources */,
 				4AC00ECC2AD1C143009230DA /* UICollectionView+.swift in Sources */,
 				4A8FFA5029C9E1FD00FB76C0 /* AppDelegate.swift in Sources */,
@@ -1291,9 +1288,9 @@
 				37DCA6782A488CEB00FF8F90 /* PapagoResponse.swift in Sources */,
 				37DCA65A2A47598700FF8F90 /* RandomSubjectService.swift in Sources */,
 				4A01235F2AAA2C1500E09646 /* SmeemLoadingView.swift in Sources */,
+				4A004D542B4EE26E003C8936 /* AuthAPI.swift in Sources */,
 				4A81C2972ACDAB2C0056E815 /* TrainingGoalsCollectionView.swift in Sources */,
 				371107E52ACBEA69007A4AC2 /* DiaryViewFactory.swift in Sources */,
-				4AC1D6752B4ECEFE00D39A98 /* MyPageService.swift in Sources */,
 				371E94132A87A8660098280F /* GoalCollectionViewDataSource.swift in Sources */,
 				6F294A442A26179900856CC8 /* ServiceAcceptCollectionViewCell.swift in Sources */,
 				4A9FAB462A4C3D1200C40D5A /* BadgeNetworkModel.swift in Sources */,
