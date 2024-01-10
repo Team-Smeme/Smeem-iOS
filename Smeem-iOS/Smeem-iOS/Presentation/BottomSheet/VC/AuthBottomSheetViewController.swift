@@ -18,11 +18,7 @@ enum AuthType: String {
     case signup
 }
 
-final class AuthBottomSheetViewController: UIViewController, LoginDelegate {
-    
-    private let loginManager: LoginManagerProtocol
-    var authProtocol: AuthDataSendProtocol?
-    private var loginData: LoginResponse = .init(accessToken: "", refreshToken: "", isRegistered: false, hasPlan: false)
+final class BottomSheetViewController: UIViewController, LoginDelegate {
     
     private var hasPlan = false
     private var isRegistered = false
@@ -30,40 +26,43 @@ final class AuthBottomSheetViewController: UIViewController, LoginDelegate {
     
     private var kakaoAccessToken: String? {
         didSet {
-            guard let _ = self.kakaoAccessToken else {
+            guard let kakaoAccessToken = self.kakaoAccessToken else {
                 print("⭐️⭐️⭐️ 언래핑 실패했을 경우 ⭐️⭐️⭐️")
                 return
             }
             
             UserDefaultsManager.socialToken = self.kakaoAccessToken!
             UserDefaultsManager.hasKakaoToken = true
-            self.login(socialParam: "KAKAO")
+            self.loginAPI(socialParam: "KAKAO")
         }
     }
     
     private var appleAccessToken: String? {
         didSet {
-            guard let _ = self.appleAccessToken else {
+            guard let appleAccessToken = self.appleAccessToken else {
                 print("⭐️⭐️⭐️ 언래핑 실패했을 경우 ⭐️⭐️⭐️")
                 return
             }
             
             UserDefaultsManager.socialToken = self.appleAccessToken!
             UserDefaultsManager.hasKakaoToken = false
-            self.login(socialParam: "APPLE")
+            self.loginAPI(socialParam: "APPLE")
         }
     }
 
     // MARK: - Property
     
-    var defaultHeight: CGFloat = 282
+    var defaultLoginHeight: CGFloat = 282
+    var defaultSignUpHeight: CGFloat = 394
     
     var popupBadgeData: [PopupBadge]?
-    var userPlanRequest: UserTrainingInfoRequest?
+    var userPlanRequest: UserPlanRequest?
     
     var authType: AuthType = .login
     
     // MARK: - UI Property
+    
+    private let loadingView = LoadingView()
     
     private lazy var dimmedView: UIView = {
         let view = UIView()
@@ -79,16 +78,6 @@ final class AuthBottomSheetViewController: UIViewController, LoginDelegate {
     }()
     
     // MARK: - Life Cycle
-    
-    init(loginManager: LoginManagerProtocol) {
-        self.loginManager = loginManager
-        
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -178,16 +167,23 @@ final class AuthBottomSheetViewController: UIViewController, LoginDelegate {
             $0.top.leading.trailing.bottom.equalToSuperview()
         }
         
-        bottomSheetView.snp.makeConstraints {
-            $0.height.equalTo(defaultHeight)
-            $0.leading.trailing.bottom.equalToSuperview()
+        if bottomSheetView.viewType == .login {
+            bottomSheetView.snp.makeConstraints {
+                $0.height.equalTo(defaultLoginHeight)
+                $0.leading.trailing.bottom.equalToSuperview()
+            }
+        } else {
+            bottomSheetView.snp.makeConstraints {
+                $0.height.equalTo(defaultSignUpHeight)
+                $0.leading.trailing.bottom.equalToSuperview()
+            }
         }
     }
 }
 
 // MARK: - Apple Login
 
-extension AuthBottomSheetViewController: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
+extension BottomSheetViewController: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
         self.view.window!
     }
@@ -216,50 +212,59 @@ extension AuthBottomSheetViewController: ASAuthorizationControllerDelegate, ASAu
 
 // MARK: - Network
 
-extension AuthBottomSheetViewController: ViewControllerServiceable {
-    private func login(socialParam: String) {
-        Task {
-            do {
-                showLoadingView()
-                self.loginData = try await loginManager.login(model: LoginRequest(social: socialParam,
-                                                              fcmToken: UserDefaultsManager.fcmToken))
-                
-                UserDefaultsManager.clientAccessToken = loginData.accessToken
-                UserDefaultsManager.clientRefreshToken = loginData.accessToken
-                
-                switch self.authType {
-                case .login:
-                    if loginData.hasPlan == false {
-                        self.presentOnboardingPlanVC()
-                    } else if loginData.hasPlan == true && loginData.isRegistered == false {
-                        self.presentOnboardingAcceptVC()
-                    } else {
-                        // 삭제했다가 로그인한 유저
-                        UserDefaultsManager.accessToken = loginData.accessToken
-                        UserDefaultsManager.refreshToken = loginData.refreshToken
-                        
-                        self.presentHomeVC()
-                    }
-                case .signup:
-                    if loginData.hasPlan == false || (loginData.hasPlan == true && loginData.isRegistered == false) {
-                        //                        guard let userPlanRequest = self.userPlanRequest else { return }
-                        UserDefaultsManager.clientAccessToken = loginData.accessToken
-                        self.hideLoadingView()
-                        self.dismiss(animated: false, completion: {
-                            self.authProtocol?.sendTrainingAlarm()
-                        })
-                    } else {
-                        UserDefaultsManager.accessToken = loginData.accessToken
-                        UserDefaultsManager.refreshToken = loginData.refreshToken
-                            
-                        self.presentHomeVC()
-                    }
+extension BottomSheetViewController {
+    private func loginAPI(socialParam: String) {
+        AuthAPI.shared.loginAPI(param: LoginRequest(social: socialParam,
+                                                    fcmToken: UserDefaultsManager.fcmToken)) { response in
+            self.showLodingView(loadingView: self.loadingView)
+            
+            guard let data = response.data else { return }
+            
+            UserDefaultsManager.clientAccessToken = data.accessToken
+            UserDefaultsManager.clientRefreshToken = data.refreshToken
+            
+            switch self.authType {
+            case .login:
+                // hasPlan이라고 가정
+
+                // hasPlan으로 바뀔 예정
+                if data.hasPlan == false {
+                    self.presentOnboardingPlanVC()
+                } else if data.hasPlan == true && data.isRegistered == false {
+                    self.presentOnboardingAcceptVC()
+                } else {
+                    // 삭제했다가 로그인한 유저
+                    UserDefaultsManager.accessToken = data.accessToken
+                    UserDefaultsManager.refreshToken = data.refreshToken
+                    
+                    self.presentHomeVC()
                 }
-            } catch {
-                guard let error = error as? NetworkError else { return }
-                handlerError(error)
+            case .signup:
+                if data.hasPlan == false || (data.hasPlan == true && data.isRegistered == false) {
+                    guard let userPlanRequest = self.userPlanRequest else { return }
+                    self.userPlanPatchAPI(userPlan: userPlanRequest, accessToken: data.accessToken)
+                } else {
+                    // 계정이 있는 유저
+                    UserDefaultsManager.accessToken = data.accessToken
+                    UserDefaultsManager.refreshToken = data.refreshToken
+                    
+                    self.presentHomeVC()
+                }
             }
-            hideLoadingView()
+        }
+    }
+    
+    private func userPlanPatchAPI(userPlan: UserPlanRequest, accessToken: String) {
+        OnboardingAPI.shared.userPlanPathAPI(param: userPlan, accessToken: accessToken) { response in
+            self.hideLodingView(loadingView: self.loadingView)
+            if response.success == true {
+                UserDefaultsManager.clientAccessToken = accessToken
+
+                let userNicknameVC = UserNicknameViewController()
+                self.navigationController?.pushViewController(userNicknameVC, animated: true)
+            } else {
+                print("학습 목표 API 호출 실패")
+            }
         }
     }
 }

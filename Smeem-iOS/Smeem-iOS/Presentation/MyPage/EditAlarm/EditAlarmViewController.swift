@@ -7,11 +7,9 @@
 
 import UIKit
 
-final class EditAlarmViewController: BaseViewController {
+final class EditAlarmViewController: UIViewController {
     
     // MARK: - Property
-    
-    private let editAlarmManager: MyPageEditManagerProtocol
     
     weak var editAlarmDelegate: EditMypageDelegate?
     
@@ -29,6 +27,7 @@ final class EditAlarmViewController: BaseViewController {
     
     private let naviView = UIView()
     private let datePickerFooterView = DatePickerFooterView()
+    private let loadingView = LoadingView()
     
     private lazy var backButton: UIButton = {
         let button = UIButton()
@@ -49,12 +48,10 @@ final class EditAlarmViewController: BaseViewController {
         let collectionView = AlarmCollectionView()
         
         collectionView.trainingDayClosure = { traingData in
-            print(traingData)
             self.trainigDayData = traingData.day
             self.completeButton.changeButtonType(buttonType: traingData.type)
         }
         collectionView.trainingTimeClosure = { data in
-            print(data)
             self.trainingTimeData = data
         }
         return collectionView
@@ -68,20 +65,12 @@ final class EditAlarmViewController: BaseViewController {
     
     // MARK: - Life Cycle
     
-    init(editAlarmManager: MyPageEditManagerProtocol) {
-        self.editAlarmManager = editAlarmManager
-        
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        setBackgroundColor()
         setLayout()
+        swipeRecognizer()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -95,9 +84,20 @@ final class EditAlarmViewController: BaseViewController {
     }
     
     @objc func completeButtonDidTap() {
-        editAlarmPatchAPI(alarmTime: EditAlarmTime(trainingTime: TrainingTime(day: trainigDayData!,
+        self.showLodingView(loadingView: loadingView)
+        editAlarmTimePatchAPI(alarmTime: EditAlarmTime(trainingTime: TrainingTime(day: trainigDayData!,
                                                                                   hour: trainingTimeData!.hour,
                                                                                   minute: trainingTimeData!.minute)))
+    }
+    
+    @objc func responseToSwipeGesture() {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    private func swipeRecognizer() {
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(responseToSwipeGesture))
+        swipeRight.direction = UISwipeGestureRecognizer.Direction.right
+        self.view.addGestureRecognizer(swipeRight)
     }
     
     // MARK: - Custom Method
@@ -106,6 +106,10 @@ final class EditAlarmViewController: BaseViewController {
         alarmCollectionView.selectedIndexPath = dayIndexPathArray
         alarmCollectionView.myPageTime = (trainingTimeData!.0, trainingTimeData!.1)
         alarmCollectionView.selectedDayArray = Set(trainigDayData!.components(separatedBy: ","))
+    }
+    
+    private func setBackgroundColor() {
+        view.backgroundColor = .white
     }
     
     private func setLayout() {
@@ -143,20 +147,15 @@ final class EditAlarmViewController: BaseViewController {
     }
 }
 
-extension EditAlarmViewController: ViewControllerServiceable {
-    private func editAlarmPatchAPI(alarmTime: EditAlarmTime) {
-        showLoadingView()
-        
-        Task {
-            do {
-                try await editAlarmManager.editAlarmTime(model: alarmTime)
-                
-                hideLoadingView()
+extension EditAlarmViewController {
+    private func editAlarmTimePatchAPI(alarmTime: EditAlarmTime) {
+        MyPageAPI.shared.editAlarmTimeAPI(param: alarmTime) { respons in
+            self.hideLodingView(loadingView: self.loadingView)
+            if respons.success == true {
                 self.editAlarmDelegate?.editMyPageData()
                 self.navigationController?.popViewController(animated: true)
-            } catch {
-                guard let error = error as? NetworkError else { return }
-                handlerError(error)
+            } else {
+                print("학습 목표 API 호출 실패")
             }
         }
     }

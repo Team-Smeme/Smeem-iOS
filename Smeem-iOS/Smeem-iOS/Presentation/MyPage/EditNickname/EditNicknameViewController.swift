@@ -13,12 +13,9 @@ protocol EditMypageDelegate: AnyObject {
     func editMyPageData()
 }
 
-final class EditNicknameViewController: BaseViewController {
+final class EditNicknameViewController: UIViewController {
     
     // MARK: - Property
-    
-    private let editNicknameManager: MyPageEditManagerProtocol
-    private let nicknameValidManager: NicknameValidManagerProtocol
     
     weak var editNicknameDelegate: EditMypageDelegate?
     
@@ -79,7 +76,6 @@ final class EditNicknameViewController: BaseViewController {
     
     private lazy var doneButton: SmeemButton = {
         let button = SmeemButton(buttonType: .enabled, text: "완료")
-        button.isEnabled = true
         button.backgroundColor = .point
         button.addTarget(self, action: #selector(doneButtonDidTap), for: .touchUpInside)
         return button
@@ -89,25 +85,17 @@ final class EditNicknameViewController: BaseViewController {
     
     // MARK: - Life Cycle
     
-    init(editNicknameManager: MyPageEditManagerProtocol, nicknameValidManager: NicknameValidManagerProtocol) {
-        self.editNicknameManager = editNicknameManager
-        self.nicknameValidManager = nicknameValidManager
-        
-        super.init(nibName: nil , bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setData()
+        setBackgroundColor()
         setLayout()
+//        hiddenNavigationBar()
         setTextFieldDelegate()
         showKeyboard(textView: nicknameTextField)
         addTextFieldNotification()
+        swipeRecognizer()
     }
     
     deinit {
@@ -121,7 +109,8 @@ final class EditNicknameViewController: BaseViewController {
     }
     
     @objc func doneButtonDidTap() {
-        validateNicknameAPI(nickname: nicknameTextField.text ?? "")
+        self.showLodingView(loadingView: self.loadingView)
+        checkNinknameAPI(nickname: nicknameTextField.text ?? "")
     }
     
     @objc func nicknameDidChange(_ notification: Notification) {
@@ -136,6 +125,16 @@ final class EditNicknameViewController: BaseViewController {
                 }
             }
         }
+    }
+    
+    @objc func responseToSwipeGesture() {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    private func swipeRecognizer() {
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(responseToSwipeGesture))
+        swipeRight.direction = UISwipeGestureRecognizer.Direction.right
+        self.view.addGestureRecognizer(swipeRight)
     }
 
     // MARK: - Custom Method
@@ -162,6 +161,10 @@ final class EditNicknameViewController: BaseViewController {
     }
 
     // MARK: - Layout
+ 
+    private func setBackgroundColor() {
+        view.backgroundColor = .smeemWhite
+    }
     
     private func setLayout() {
         view.addSubviews(headerContainerView,
@@ -230,46 +233,34 @@ extension EditNicknameViewController: UITextFieldDelegate {
 
 // MARK: - Extension : Network
 
-extension EditNicknameViewController: ViewControllerServiceable {
-    private func editNicknameAPI(nickname: String) {
-        showLoadingView()
-        Task {
-            do {
-                try await editNicknameManager.editNickname(model: EditNicknameRequest(username: nickname))
-                hideLoadingView()
-                self.editNicknameDelegate?.editMyPageData()
-                self.navigationController?.popViewController(animated: true)
-            } catch {
-                guard let error = error as? NetworkError else { return }
-                handlerError(error)
-            }
+extension EditNicknameViewController {
+    private func nicknamePatchAPI(nickname: String) {
+        MyPageAPI.shared.changeMyNickName(request: EditNicknameRequest(username: nickname)) { response in
+            guard let _ = response?.data else { return }
+            self.hideLodingView(loadingView: self.loadingView)
+            self.editNicknameDelegate?.editMyPageData()
+            self.navigationController?.popViewController(animated: true)
         }
     }
     
-    private func validateNicknameAPI(nickname: String) {
-        showLoadingView()
-        
-        Task {
-            do {
-                let isExistNickname = try await nicknameValidManager.nicknameValid(param: nickname)
-                
-                hideLoadingView()
-                
-                if isExistNickname {
-                    self.doubleCheckLabel.isHidden = false
-                    self.doneButton.changeButtonType(buttonType: .notEnabled)
-                } else {
-                    self.doubleCheckLabel.isHidden = true
-                    self.doneButton.changeButtonType(buttonType: .enabled)
-                }
-                
-                if !isExistNickname {
-                    showLoadingView()
-                    editNicknameAPI(nickname: nickname)
-                }
-            } catch {
-                guard let error = error as? NetworkError else { return }
-                handlerError(error)
+    private func checkNinknameAPI(nickname: String) {
+        MyPageAPI.shared.checkNinknameAPI(param: nickname) { response in
+            guard let data = response?.data else { return }
+            
+            self.hideLodingView(loadingView: self.loadingView)
+            self.isExistNinkname = data.isExist
+            
+            if self.isExistNinkname {
+                self.doubleCheckLabel.isHidden = false
+                self.doneButton.changeButtonType(buttonType: .notEnabled)
+            } else {
+                self.doubleCheckLabel.isHidden = true
+                self.doneButton.changeButtonType(buttonType: .enabled)
+            }
+            
+            if !self.isExistNinkname {
+                self.showLodingView(loadingView: self.loadingView)
+                self.nicknamePatchAPI(nickname: nickname)
             }
         }
     }

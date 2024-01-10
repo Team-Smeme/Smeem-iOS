@@ -96,7 +96,7 @@ final class BadgePopupViewController: UIViewController {
     }
     
     @objc func badgeButtonDidTap() {
-        let badgeListVC = BadgeListViewController(myPageManager: MyPageManager(myPageService: MyPageService(requestable: APIServie())))
+        let badgeListVC = BadgeListViewController()
         badgeListVC.modalTransitionStyle = .crossDissolve
         badgeListVC.modalPresentationStyle = .fullScreen
         self.present(badgeListVC, animated: true)

@@ -11,7 +11,7 @@ import Moya
 enum OnboardingService {
     case planList
     case detailPlanList(param: String)
-    case onboardingUserPlan(param: UserTrainingInfoRequest, token: String)
+    case onboardingUserPlan(param: UserPlanRequest, token: String)
     case serviceAccept(param: ServiceAcceptRequest, token: String)
     case checkNickname(param: String, token: String)
 }

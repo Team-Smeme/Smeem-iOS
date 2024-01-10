@@ -11,7 +11,7 @@ final class UserNicknameViewController: BaseViewController {
     
     // MARK: - Property
     
-    var userPlanRequest: UserTrainingInfoRequest?
+    var userPlanRequest: UserPlanRequest?
     var isExistNinkname = Bool()
     var badgeListData: [PopupBadge]?
     

@@ -14,8 +14,6 @@ final class AuthManagementViewController: UIViewController {
     
     // MARK: - Property
     
-    private let myPageAuthManager: MyPageAuthManager
-    
     // MARK: - UI Property
     
     private lazy var backButton: UIButton = {
@@ -90,16 +88,6 @@ final class AuthManagementViewController: UIViewController {
     
     // MARK: - Life Cycle
     
-    init(myPageAuthManager: MyPageAuthManager) {
-        self.myPageAuthManager = myPageAuthManager
-        
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -136,7 +124,7 @@ final class AuthManagementViewController: UIViewController {
             if UserDefaultsManager.hasKakaoToken! {
                 self.kakaoResignAPI()
             } else {
-                self.deleteUserAccountAPI()
+                self.resignAPI()
             }
         }
         alert.addAction(cancel)
@@ -171,7 +159,7 @@ final class AuthManagementViewController: UIViewController {
             else {
                 print("unlink() success.")
                 // 스밈 회원 탈퇴 API 호출
-                self.deleteUserAccountAPI()
+                self.resignAPI()
             }
         }
     }
@@ -235,50 +223,32 @@ final class AuthManagementViewController: UIViewController {
     }
 }
 
-extension AuthManagementViewController: ViewControllerServiceable {
-    private func deleteUserAccountAPI() {
-        showLoadingView()
-        
-        Task {
-            do {
-                try await myPageAuthManager.deleteUserAccount()
-                
-                UserDefaultsManager.accessToken = ""
-                UserDefaultsManager.refreshToken = ""
-                UserDefaultsManager.clientAccessToken = ""
-                UserDefaultsManager.clientRefreshToken = ""
-                UserDefaultsManager.hasKakaoToken = nil
-                
-                hideLoadingView()
-                
-                self.changeRootViewController(SplashViewController(splahManager: SplashManager(splashService: SplashService(requestable: APIServie()))))
-            } catch {
-                guard let error = error as? NetworkError else { return }
-                handlerError(error)
-            }
+extension AuthManagementViewController {
+    private func resignAPI() {
+        AuthAPI.shared.resignAPI() { response in
+            guard let _ = response.data else { return }
+            
+            UserDefaultsManager.accessToken = ""
+            UserDefaultsManager.refreshToken = ""
+            UserDefaultsManager.clientAccessToken = ""
+            UserDefaultsManager.clientRefreshToken = ""
+            UserDefaultsManager.hasKakaoToken = nil
+            
+            self.changeRootViewController(SplashViewController())
         }
     }
     
     private func logoutAPI() {
-        showLoadingView()
-        
-        Task {
-            do {
-                try await myPageAuthManager.logout()
-                
-                UserDefaultsManager.accessToken = ""
-                UserDefaultsManager.refreshToken = ""
-                UserDefaultsManager.clientAccessToken = ""
-                UserDefaultsManager.clientRefreshToken = ""
-                UserDefaultsManager.hasKakaoToken = nil
-                
-                hideLoadingView()
-                
-                self.changeRootViewController(SplashViewController(splahManager: SplashManager(splashService: SplashService(requestable: APIServie()))))
-            } catch {
-                guard let error = error as? NetworkError else { return }
-                handlerError(error)
-            }
+        AuthAPI.shared.logoutAPI() { response in
+            guard let _ = response.data else { return }
+            
+            UserDefaultsManager.accessToken = ""
+            UserDefaultsManager.clientAccessToken = ""
+            UserDefaultsManager.clientRefreshToken = ""
+            UserDefaultsManager.refreshToken = ""
+            UserDefaultsManager.hasKakaoToken = nil
+            
+            self.changeRootViewController(SplashViewController())
         }
     }
 }

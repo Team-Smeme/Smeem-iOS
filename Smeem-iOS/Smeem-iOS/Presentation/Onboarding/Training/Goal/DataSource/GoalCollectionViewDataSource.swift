@@ -8,7 +8,7 @@
 import UIKit
 
 class GoalCollectionViewDataSource: NSObject {
-    var goalLabelList = [TrainingGoals]()
+    var goalLabelList = [Plan]()
     
     var selectedIndex: Int?
     

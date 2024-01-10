@@ -9,12 +9,9 @@ import UIKit
 
 import SnapKit
 
-final class MyPageViewController: BaseViewController {
+final class MyPageViewController: UIViewController {
     
     // MARK: - Property
-    
-    private let mypageManager: MyPageManagerProtocol
-    private let editPushManager: MyPageEditManagerProtocol
     
     private var userInfo = MyPageResponse(username: "", target: "", way: "", detail: "", targetLang: "", hasPushAlarm: true, trainingTime: TrainingTime(day: "", hour: 0, minute: 0), badge: Badge(id: 0, name: "", type: "", imageURL: ""))
     var myPageSelectedIndexPath = ["MON": IndexPath(item: 0, section: 0), "TUE":IndexPath(item: 1, section: 0), "WED":IndexPath(item: 2, section: 0), "THU":IndexPath(item: 3, section: 0), "FRI":IndexPath(item: 4, section: 0), "SAT":IndexPath(item: 5, section: 0), "SUN":IndexPath(item: 6, section: 0)]
@@ -44,6 +41,7 @@ final class MyPageViewController: BaseViewController {
     
     private let headerContainerView = UIView()
     private let contentView = UIView()
+    private let loadingView = LoadingView()
     
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -217,28 +215,19 @@ final class MyPageViewController: BaseViewController {
     
     // MARK: - Life Cycle
     
-    init(myPageManager: MyPageManagerProtocol, editPushManager: MyPageEditManagerProtocol) {
-        self.mypageManager = myPageManager
-        self.editPushManager = editPushManager
-        
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
     
         setLayout()
+        swipeRecognizer()
         setupHowLearningViewTapGestureRecognizer()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        myPageAPI()
+        self.showLodingView(loadingView: loadingView)
+        myPageInfoAPI()
     }
     
     // MARK: - @objc
@@ -248,12 +237,12 @@ final class MyPageViewController: BaseViewController {
     }
     
     @objc func moreButtonDidTap(_ sender: UIButton) {
-        let authManagetmentVC = AuthManagementViewController(myPageAuthManager: MyPageAuthManager(myPageAuthService: MyPageAuthService(requestable: APIServie())))
+        let authManagetmentVC = AuthManagementViewController()
         self.navigationController?.pushViewController(authManagetmentVC, animated: true)
     }
     
     @objc func editButtonDidTap(_ sender: UIButton) {
-        let editVC = EditNicknameViewController(editNicknameManager: MyPageEditManager(myPageEditService: MyPageEditService(requestable: APIServie())), nicknameValidManager: NicknameValidManager(nicknameValidService: NicknameValidService(requestable: APIServie())))
+        let editVC = EditNicknameViewController()
         editVC.editNicknameDelegate = self
         editVC.nickName = userInfo.username
         self.navigationController?.pushViewController(editVC, animated: true)
@@ -261,12 +250,16 @@ final class MyPageViewController: BaseViewController {
     
     @objc func pushButtonDidTap(_ sender: UIButton) {
         hasAlarm = !hasAlarm
-        editPushAPI(hasAlarm: hasAlarm)
+        editPushPatchAPI(pushData: EditPushRequest(hasAlarm: hasAlarm))
     }
     
     @objc func badgeImageDidTap() {
-        let badgeListVC = BadgeListViewController(myPageManager: MyPageManager(myPageService: MyPageService(requestable: APIServie())))
+        let badgeListVC = BadgeListViewController()
         self.navigationController?.pushViewController(badgeListVC, animated: true)
+    }
+    
+    @objc func responseToSwipeGesture() {
+        self.navigationController?.popViewController(animated: true)
     }
     
     @objc func howLearningViewTapped() {
@@ -286,7 +279,7 @@ final class MyPageViewController: BaseViewController {
     }
     
     @objc func alarmEditButtonDidTap() {
-        let alarmEditVC = EditAlarmViewController(editAlarmManager: MyPageEditManager(myPageEditService: MyPageEditService(requestable: APIServie())))
+        let alarmEditVC = EditAlarmViewController()
         alarmEditVC.editAlarmDelegate = self
         alarmEditVC.dayIndexPathArray = indexPathArray
         alarmEditVC.trainigDayData = userInfo.trainingTime.day
@@ -341,6 +334,12 @@ final class MyPageViewController: BaseViewController {
         alarmCollectionView.myPageTime = (userInfo.trainingTime.hour, userInfo.trainingTime.minute)
     }
     
+    private func swipeRecognizer() {
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(responseToSwipeGesture))
+        swipeRight.direction = UISwipeGestureRecognizer.Direction.right
+        self.view.addGestureRecognizer(swipeRight)
+    }
+    
     private func setupHowLearningViewTapGestureRecognizer() {
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(howLearningViewTapped))
         howLearningView.addGestureRecognizer(tapRecognizer)
@@ -351,12 +350,19 @@ final class MyPageViewController: BaseViewController {
     }
     
     private func loadToastMessage() {
-        showToast(toastType: .smeemToast(bodyType: .changed))
+//        showToast(toastType: .defaultToast(bodyType: .changed))
     }
     
     // MARK: - Layout
     
+    private func setBackgroundColor() {
+        view.backgroundColor = .white
+    }
+    
     private func setLayout() {
+        setBackgroundColor()
+//        hiddenNavigationBar()
+        
         view.addSubviews(headerContainerView, scrollView)
         headerContainerView.addSubviews(backButton, titleLabel, moreButton)
         scrollView.addSubview(contentView)
@@ -514,43 +520,33 @@ extension MyPageViewController: EditMypageDelegate {
 
 // MARK: - Extension : Network
 
-extension MyPageViewController: ViewControllerServiceable {
-    private func myPageAPI() {
-        showLoadingView()
-        Task {
-            do {
-                self.userInfo = try await mypageManager.getMypage()
-                self.setData()
-                hideLoadingView()
-            } catch {
-                guard let error = error as? NetworkError else { return }
-                handlerError(error)
-            }
+extension MyPageViewController {
+    private func myPageInfoAPI() {
+        MyPageAPI.shared.myPageInfo() { response in
+            guard let myPageInfo = response?.data else { return }
+            
+            self.userInfo = myPageInfo
+            self.setData()
+            self.hideLodingView(loadingView: self.loadingView)
         }
     }
     
-    private func editPushAPI(hasAlarm: Bool) {
-        showLoadingView()
-        
-        Task {
-            do {
-                try await editPushManager.editPush(model: EditPushRequest(hasAlarm: hasAlarm))
-                
-                self.alarmCollectionView.hasAlarm = hasAlarm
+    private func editPushPatchAPI(pushData: EditPushRequest) {
+        MyPageAPI.shared.editPushAPI(param: pushData) { response in
+            // 성공했으면
+            if response.success == true {
+                print("lkfjsadkfdsakfhsadkjf✅✅✅✅✅✅✅✅✅✅, ", self.indexPathArray)
+                // 그에 맞춰서 색깔 변화
+                self.alarmCollectionView.hasAlarm = pushData.hasAlarm
                 self.alarmCollectionView.selectedIndexPath = self.indexPathArray
                 
-                if hasAlarm {
-                    self.alarmPushToggleButton.isOn = true
-                    self.alarmPushToggleButton.onTintColor = .point
-                } else {
+                if !pushData.hasAlarm {
                     self.alarmPushToggleButton.isOn = false
                     self.alarmPushToggleButton.tintColor = .lightGray
+                } else {
+                    self.alarmPushToggleButton.isOn = true
+                    self.alarmPushToggleButton.onTintColor = .point
                 }
-                
-                hideLoadingView()
-            } catch {
-                guard let error = error as? NetworkError else { return }
-                handlerError(error)
             }
         }
     }

@@ -67,7 +67,7 @@ final class SmeemStartViewController: BaseViewController {
     // MARK: - @objc
     
     @objc func loginButtonDidTap() {
-        let loginBottomSheetVC = AuthBottomSheetViewController(loginManager: LoginManager(loginService: LoginService(requestable: APIServie())))
+        let loginBottomSheetVC = BottomSheetViewController()
         UserDefaultsManager.clientAuthType = AuthType.login.rawValue
         loginBottomSheetVC.authType = .login
         loginBottomSheetVC.bottomSheetView.viewType = .login
@@ -77,14 +77,14 @@ final class SmeemStartViewController: BaseViewController {
         present(navigationController, animated: false) {
             loginBottomSheetVC.bottomSheetView.frame.origin.y = self.view.frame.height
             UIView.animate(withDuration: 0.3) {
-                loginBottomSheetVC.bottomSheetView.frame.origin.y = self.view.frame.height-loginBottomSheetVC.defaultHeight
+                loginBottomSheetVC.bottomSheetView.frame.origin.y = self.view.frame.height-loginBottomSheetVC.defaultLoginHeight
             }
         }
     }
     
     @objc func startButtonDidTap() {
         UserDefaultsManager.clientAuthType = AuthType.signup.rawValue
-        let trainingGoalsVC = TrainingGoalViewController(trainingManager: TrainingManager(trainingService: TrainingService(requestable: APIServie())))
+        let trainingGoalsVC = GoalViewController(viewtype: .onboarding)
         self.navigationController?.pushViewController(trainingGoalsVC, animated: true)
     }
     

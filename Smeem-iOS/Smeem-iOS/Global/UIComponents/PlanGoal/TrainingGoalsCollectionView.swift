@@ -19,7 +19,7 @@ final class TrainingGoalsCollectionView: BaseCollectionView {
     var trainingDelegate: TrainingDataSendDelegate?
 
     private var selectedTarget = ""
-    var planGoalArray = [TrainingGoals]() {
+    var planGoalArray = [Plan]() {
         didSet {
             self.reloadData()
         }

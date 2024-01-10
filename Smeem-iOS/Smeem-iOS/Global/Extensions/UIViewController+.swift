@@ -118,12 +118,12 @@ extension UIViewController {
     }
     
     func presentOnboardingPlanVC() {
-        let onboardingGoalVC = TrainingGoalViewController(trainingManager: TrainingManager(trainingService: TrainingService(requestable: APIServie())))
+        let onboardingGoalVC = GoalViewController(viewtype: .onboarding)
         self.navigationController?.pushViewController(onboardingGoalVC, animated: true)
     }
     
     func presentOnboardingAcceptVC() {
-        let bottomSheetVC = AuthBottomSheetViewController(loginManager: LoginManager(loginService: LoginService(requestable: APIServie())))
+        let bottomSheetVC = BottomSheetViewController()
         let onboardingAcceptVC = UserNicknameViewController()
         onboardingAcceptVC.userPlanRequest = bottomSheetVC.userPlanRequest
         let _ = UINavigationController(rootViewController: onboardingAcceptVC)

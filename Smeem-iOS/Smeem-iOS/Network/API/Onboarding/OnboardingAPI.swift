@@ -12,12 +12,13 @@ public class OnboardingAPI {
     
     static let shared = OnboardingAPI()
     private let onboardingProvider = MoyaProvider<OnboardingService>(plugins: [MoyaLoggingPlugin()])
+//    private var nicknameResponse: NicknameResponse?
     
-    func planList(completion: @escaping (GeneralResponse<TrainingGoalsArrayResponse>) -> Void) {
+    func planList(completion: @escaping (GeneralResponse<PlanListResponse>) -> Void) {
         onboardingProvider.request(.planList) { response in
             switch response {
             case .success(let result):
-                guard let data = try? result.map(GeneralResponse<TrainingGoalsArrayResponse>.self) else { return }
+                guard let data = try? result.map(GeneralResponse<PlanListResponse>.self) else { return }
                 completion(data)
             case .failure(let err):
                 print(err)
@@ -25,11 +26,11 @@ public class OnboardingAPI {
         }
     }
     
-    func detailPlanList(param: String, completion: @escaping (GeneralResponse<TrainingHowResponse>) -> Void) {
+    func detailPlanList(param: String, completion: @escaping (GeneralResponse<DetailPlanListResponse>) -> Void) {
         onboardingProvider.request(.detailPlanList(param: param)) { response in
             switch response {
             case .success(let result):
-                guard let data = try? result.map(GeneralResponse<TrainingHowResponse>.self) else { return }
+                guard let data = try? result.map(GeneralResponse<DetailPlanListResponse>.self) else { return }
                 completion(data)
             case .failure(let err):
                 print(err)
@@ -37,7 +38,7 @@ public class OnboardingAPI {
         }
     }
     
-    func userPlanPathAPI(param: UserTrainingInfoRequest, accessToken: String, completion: @escaping (GeneralResponse<VoidType>) -> Void) {
+    func userPlanPathAPI(param: UserPlanRequest, accessToken: String, completion: @escaping (GeneralResponse<VoidType>) -> Void) {
         onboardingProvider.request(.onboardingUserPlan(param: param, token: accessToken)) { response in
             switch response {
             case .success(let result):
@@ -64,11 +65,11 @@ public class OnboardingAPI {
         }
     }
     
-    func ninknameCheckAPI(userName: String, accessToken: String, completion: @escaping (GeneralResponse<NicknameValidResponse>) -> Void) {
+    func ninknameCheckAPI(userName: String, accessToken: String, completion: @escaping (GeneralResponse<NicknameCheckResponse>) -> Void) {
         onboardingProvider.request(.checkNickname(param: userName, token: accessToken)) { response in
             switch response {
             case .success(let result):
-                guard let data = try? result.map(GeneralResponse<NicknameValidResponse>.self) else {
+                guard let data = try? result.map(GeneralResponse<NicknameCheckResponse>.self) else {
                     print("⭐️⭐️⭐️ 디코더 에러 ⭐️⭐️⭐️")
                     return
                 }

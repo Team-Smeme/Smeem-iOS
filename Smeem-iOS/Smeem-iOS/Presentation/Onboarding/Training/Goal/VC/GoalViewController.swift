@@ -92,11 +92,11 @@ extension GoalViewController: NextButtonDelegate {
         switch viewtype {
         case .onboarding:
             print("임시 코드")
-//            let howOnboardingVC = HowOnboardingViewController()
-//            howOnboardingVC.tempTarget = selectedGoalLabel
-//            self.navigationController?.pushViewController(howOnboardingVC, animated: true)
+            let howOnboardingVC = HowOnboardingViewController()
+            howOnboardingVC.tempTarget = selectedGoalLabel
+            self.navigationController?.pushViewController(howOnboardingVC, animated: true)
         case .myPage:
-            let howOnboardingVC = EditGoalViewController(editGoalManager: MyPageEditManager(myPageEditService: MyPageEditService(requestable: APIServie())))
+            let howOnboardingVC = HowOnboardingViewController()
             howOnboardingVC.tempTarget = selectedGoalLabel
             self.navigationController?.pushViewController(howOnboardingVC, animated: true)
         }
@@ -115,7 +115,7 @@ extension GoalViewController {
         switch viewtype {
         case .onboarding:
             view = goalOnboardingView
-//            goalOnboardingView.delegate = self
+            goalOnboardingView.nextButtonDelegate = self
             goalOnboardingView.setCollectionViewDataSource(dataSource: datasource)
             goalOnboardingView.setCollectionViewDelgate(delegate: self)
         case .myPage:
