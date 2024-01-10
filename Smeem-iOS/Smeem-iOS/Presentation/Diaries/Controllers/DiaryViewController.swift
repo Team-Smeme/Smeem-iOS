@@ -62,6 +62,7 @@ extension DiaryViewController {
         rootView?.setTextViewHandlerDelegate(self)
         rootView?.bottomView.randomTopicDelegate = self
         rootView?.randomTopicView?.randomTopicRefreshDelegate = self
+        rootView?.toolTipDelegate = self
     }
     
     private func setupSubscriptions() {
@@ -163,14 +164,22 @@ extension DiaryViewController: SmeemTextViewHandlerDelegate {
 
 extension DiaryViewController: RandomTopicActionDelegate {
     func didTapRandomTopicButton() {
-        // TODO: - Tutorial
-        //        if !UserDefaultsManager.randomSubjectToolTip {
-        //            UserDefaultsManager.randomSubjectToolTip = true
-        //            randomSubjectToolTip?.isHidden = true
-        //        }
+        if !UserDefaultsManager.randomSubjectToolTip {
+            UserDefaultsManager.randomSubjectToolTip = true
+            rootView?.removeToolTip()
+        }
         
         viewModel?.toggleRandomTopic()
         handleRandomTopicButtonTap()
+    }
+}
+
+// MARK: - ToolTipDelegate
+
+extension DiaryViewController: ToolTipDelegate {
+    func didTapToolTipButton() {
+        rootView?.removeToolTip()
+        UserDefaultsManager.randomSubjectToolTip = true
     }
 }
 
@@ -188,41 +197,3 @@ extension DiaryViewController {
         }
     }
 }
-
-
-// MARK: - Tutorial
-
-//    @objc func dismissButtonDidTap() {
-//        dismissButton?.removeFromSuperview()
-//    }
-//
-//    @objc func randomSubjectToolTipDidTap() {
-//        self.randomSubjectToolTip?.isHidden = true
-//        UserDefaultsManager.randomSubjectToolTip = true
-//    }
-
-//extension DiaryViewController {
-//    private func checkTutorial() {
-//        if self is StepOneKoreanDiaryViewController {
-//            let tutorialDiaryStepOne = UserDefaultsManager.tutorialDiaryStepOne
-//
-//            if !tutorialDiaryStepOne {
-//                UserDefaultsManager.tutorialDiaryStepOne = true
-//
-//                view.addSubviews(tutorialImageView ?? UIImageView(), dismissButton ?? UIButton())
-//
-//                tutorialImageView?.snp.makeConstraints {
-//                    $0.top.leading.trailing.bottom.equalToSuperview()
-//                }
-//                dismissButton?.snp.makeConstraints {
-//                    $0.top.equalToSuperview().inset(convertByHeightRatio(204))
-//                    $0.trailing.equalToSuperview().inset(convertByHeightRatio(10))
-//                    $0.width.height.equalTo(convertByHeightRatio(45))
-//                }
-//            } else {
-//                tutorialImageView = nil
-//                dismissButton = nil
-//            }
-//        }
-//    }
-//}

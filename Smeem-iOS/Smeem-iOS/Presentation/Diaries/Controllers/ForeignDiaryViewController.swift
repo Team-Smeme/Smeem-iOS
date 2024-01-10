@@ -15,6 +15,12 @@ final class ForeignDiaryViewController: DiaryViewController {
         
         setNagivationBarDelegate()
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        hideKeyboard()
+    }
 }
 
 // MARK: - Extensions
@@ -36,6 +42,7 @@ extension ForeignDiaryViewController {
 
 extension ForeignDiaryViewController: NavigationBarActionDelegate {
     func didTapLeftButton() {
+        rootView?.removeToolTip()
         presentingViewController?.dismiss(animated: true)
     }
     

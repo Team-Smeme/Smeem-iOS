@@ -9,6 +9,10 @@ import UIKit
 
 import SnapKit
 
+protocol ToolTipDelegate: AnyObject {
+    func didTapToolTipButton()
+}
+
 // MARK: - DiaryView
 
 class DiaryView: BaseView {
@@ -18,6 +22,8 @@ class DiaryView: BaseView {
     
     private (set) var configuration: DiaryViewConfiguration
     
+    weak var toolTipDelegate: ToolTipDelegate?
+    
     // MARK: UI Properties
     private (set) var navigationView: SmeemNavigationBar
     private (set) var inputTextView: SmeemTextView
@@ -25,6 +31,16 @@ class DiaryView: BaseView {
     
     private (set) var randomTopicView: RandomTopicView?
     private (set) var smeemToastView: SmeemToastView?
+    
+    private lazy var toolTip: UIImageView? = {
+        let image = UIImageView()
+        image.image = Constant.Image.icnToolTip
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(toolTipButtonTapped))
+        image.addGestureRecognizer(tapGesture)
+        image.isUserInteractionEnabled = true
+        return image
+    }()
     
     // MARK: - Life Cycle
     
@@ -45,6 +61,7 @@ class DiaryView: BaseView {
         super.init(frame: .zero)
         
         setLayout()
+        checkTooltip()
     }
     
     override func layoutSubviews() {
@@ -58,6 +75,7 @@ class DiaryView: BaseView {
     deinit {
         randomTopicView?.removeFromSuperview()
         smeemToastView?.removeFromSuperview()
+        toolTip?.removeFromSuperview()
     }
 }
 
@@ -134,9 +152,40 @@ extension DiaryView {
     }
     
     func showToast(with toastType: ToastViewType) {
-        let smeemToastView = SmeemToastView(type: toastType)
-        smeemToastView.show(in: self, hasKeyboard: true)
-        smeemToastView.hide(after: 3)
+        if smeemToastView == nil {
+            smeemToastView = SmeemToastView(type: toastType)
+        }
+        
+        smeemToastView?.show(in: self, hasKeyboard: true)
+        smeemToastView?.hide(after: 3)
+    }
+    
+    // MARK: - Tutorial
+    
+    private func checkTooltip() {
+        var randomTopicToolTip = UserDefaultsManager.randomSubjectToolTip
+
+        if !randomTopicToolTip {
+
+            addSubview(toolTip ?? UIImageView())
+
+            toolTip?.snp.makeConstraints { make in
+                make.width.equalTo(convertByWidthRatio(180))
+                make.height.equalTo(convertByHeightRatio(48))
+                make.bottom.equalTo(keyboardLayoutGuide.snp.top).offset(constraintByNotch(-37, -42))
+                make.trailing.equalToSuperview().inset(convertByHeightRatio(18))
+            }
+        } else {
+            toolTip = nil
+        }
+    }
+    
+    func removeToolTip() {
+        toolTip = nil
+    }
+    
+    @objc func toolTipButtonTapped() {
+        toolTipDelegate?.didTapToolTipButton()
     }
 }
 

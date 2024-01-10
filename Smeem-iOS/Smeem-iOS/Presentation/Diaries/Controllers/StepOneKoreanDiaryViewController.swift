@@ -60,6 +60,7 @@ extension StepOneKoreanDiaryViewController {
 
 extension StepOneKoreanDiaryViewController: NavigationBarActionDelegate {
     func didTapLeftButton() {
+        rootView?.removeToolTip()
         presentingViewController?.dismiss(animated: true)
     }
     
