@@ -163,10 +163,9 @@ extension DiaryView {
     // MARK: - Tutorial
     
     private func checkTooltip() {
-        var randomTopicToolTip = UserDefaultsManager.randomSubjectToolTip
+        let randomTopicToolTip = UserDefaultsManager.randomSubjectToolTip
 
         if !randomTopicToolTip {
-
             addSubview(toolTip ?? UIImageView())
 
             toolTip?.snp.makeConstraints { make in
@@ -181,7 +180,7 @@ extension DiaryView {
     }
     
     func removeToolTip() {
-        toolTip = nil
+        toolTip?.removeFromSuperview()
     }
     
     @objc func toolTipButtonTapped() {
