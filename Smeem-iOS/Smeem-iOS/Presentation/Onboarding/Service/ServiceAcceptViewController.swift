@@ -299,8 +299,12 @@ extension ServiceAcceptViewController: UICollectionViewDataSource {
                 if let url = URL(string: "https://smeem.notion.site/7132b91df0eb4838b435b53ad7cbb588?pvs=4") {
                     UIApplication.shared.open(url, options: [:])
                 }
-            } else {
+            } else if indexPath.item == 1 {
                 if let url = URL(string: "https://smeem.notion.site/334e225bb69b45c28f31fe363ca9f25e?pvs=4") {
+                    UIApplication.shared.open(url, options: [:])
+                }
+            } else {
+                if let url = URL(string: "https://smeem.notion.site/793bae40ccd14654828b68ee41ac51b6") {
                     UIApplication.shared.open(url, options: [:])
                 }
             }
@@ -349,12 +353,12 @@ extension ServiceAcceptViewController: UICollectionViewDataSource {
 extension ServiceAcceptViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = collectionView.frame.width
-        let height = convertByHeightRatio(20)
+        let height = convertByHeightRatio(45)
         return CGSize(width: width, height: height)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        let sectionLineSpacing: CGFloat = 32
+        let sectionLineSpacing: CGFloat = 5
         return sectionLineSpacing
     }
 }

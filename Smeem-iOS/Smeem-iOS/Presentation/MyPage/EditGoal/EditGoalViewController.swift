@@ -122,6 +122,7 @@ extension EditGoalViewController {
         backButton.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(10)
             $0.centerY.equalToSuperview()
+            $0.width.height.equalTo(55)
         }
         
         titleLabel.snp.makeConstraints {

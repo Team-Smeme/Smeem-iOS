@@ -187,7 +187,7 @@ final class AuthManagementViewController: UIViewController {
         backButton.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(11)
             $0.leading.equalToSuperview().inset(10)
-            $0.height.width.equalTo(45)
+            $0.height.width.equalTo(55)
         }
         
         infomationTitleLabel.snp.makeConstraints {
@@ -196,12 +196,14 @@ final class AuthManagementViewController: UIViewController {
         }
         
         infomationButton.snp.makeConstraints {
-            $0.top.equalTo(infomationTitleLabel.snp.bottom).offset(22)
+            $0.top.equalTo(infomationTitleLabel.snp.bottom).offset(12)
             $0.leading.equalToSuperview().inset(26)
+            $0.height.equalTo(40)
+            $0.width.equalTo(70)
         }
         
         grayLineOne.snp.makeConstraints {
-            $0.top.equalTo(infomationButton.snp.bottom).offset(36)
+            $0.top.equalTo(infomationButton.snp.bottom).offset(21)
             $0.leading.trailing.equalToSuperview().inset(26)
             $0.height.equalTo(1)
         }
@@ -212,17 +214,21 @@ final class AuthManagementViewController: UIViewController {
         }
         
         logoutButton.snp.makeConstraints {
-            $0.top.equalTo(authManagementTitlaLabel.snp.bottom).offset(22)
+            $0.top.equalTo(authManagementTitlaLabel.snp.bottom).offset(12)
             $0.leading.equalToSuperview().inset(26)
+            $0.height.equalTo(40)
+            $0.width.equalTo(66)
         }
         
         resignButton.snp.makeConstraints {
-            $0.top.equalTo(logoutButton.snp.bottom).offset(30)
+            $0.top.equalTo(logoutButton.snp.bottom).offset(10)
             $0.leading.equalToSuperview().inset(26)
+            $0.height.equalTo(40)
+            $0.width.equalTo(70)
         }
         
         grayLineTwo.snp.makeConstraints {
-            $0.top.equalTo(resignButton.snp.bottom).offset(36)
+            $0.top.equalTo(resignButton.snp.bottom).offset(21)
             $0.leading.trailing.equalToSuperview().inset(26)
             $0.height.equalTo(1)
         }

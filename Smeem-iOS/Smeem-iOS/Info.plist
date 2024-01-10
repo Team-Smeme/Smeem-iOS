@@ -31,6 +31,10 @@
 	</array>
 	<key>NATIVE_APP_KEY</key>
 	<string>$(NATIVE_APP_KEY)</string>
+	<key>X_NAVER_CLIENT_ID</key>
+	<string>$(X_NAVER_CLIENT_ID)</string>
+	<key>X_NAVER_CLIENT_SECRET</key>
+	<string>$(X_NAVER_CLIENT_SECRET)</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>

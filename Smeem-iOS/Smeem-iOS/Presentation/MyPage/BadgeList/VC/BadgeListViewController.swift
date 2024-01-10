@@ -17,8 +17,8 @@ final class BadgeListViewController: BaseViewController {
     private let myPageManager: MyPageManagerProtocol
     
     private var badgeHeaderData = [(name: String(), imageURL: String())]
-    private var badgeListData = Array(repeating: Array(repeating: (name: String(), imageURL: String()), count: 0), count: 3)
-    private var totalBadgeData = Array(repeating: Array(repeating: (name: String(), imageURL: String()), count: 4), count: 3)
+    private var badgeListData = Array(repeating: Array(repeating: (name: String(), imageURL: String()), count: 0), count: 2)
+    private var totalBadgeData = Array(repeating: Array(repeating: (name: String(), imageURL: String()), count: 4), count: 2)
     private var dummayBadgeData = DummyModel().dummyBadgeData()
 
     // MARK: - UI Property
@@ -150,20 +150,20 @@ final class BadgeListViewController: BaseViewController {
             }
         }
 
-        if !badgeListData[2].isEmpty {
-            var globalIndex = 0
-            for (index, (name, image)) in badgeListData[2].enumerated() {
-                globalIndex = index
-                totalBadgeData[2][index] = (name, image)
-            }
-            for i in globalIndex+1..<4 {
-                totalBadgeData[2][i] = dummayBadgeData[2][i]
-            }
-        } else {
-            for i in 0..<4 {
-                totalBadgeData[2][i] = dummayBadgeData[2][i]
-            }
-        }
+//        if !badgeListData[2].isEmpty {
+//            var globalIndex = 0
+//            for (index, (name, image)) in badgeListData[2].enumerated() {
+//                globalIndex = index
+//                totalBadgeData[2][index] = (name, image)
+//            }
+//            for i in globalIndex+1..<4 {
+//                totalBadgeData[2][i] = dummayBadgeData[2][i]
+//            }
+//        } else {
+//            for i in 0..<4 {
+//                totalBadgeData[2][i] = dummayBadgeData[2][i]
+//            }
+//        }
     }
 
     
@@ -181,7 +181,7 @@ final class BadgeListViewController: BaseViewController {
         cancelButton.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.leading.equalToSuperview().offset(convertByHeightRatio(10))
-            $0.height.equalTo(convertByHeightRatio(45))
+            $0.width.height.equalTo(55)
         }
         
         badgeListTableView.snp.makeConstraints {
@@ -224,8 +224,9 @@ extension BadgeListViewController: UITableViewDelegate {
             headerView.labelType = .diaryCount
         case 1:
             headerView.labelType = .dailyDiary
-        case 2:
-            headerView.labelType = .otherBadge
+            /// ToDo: 없어도 되는지 확인
+//        case 2:
+//            headerView.labelType = .otherBadge
         default:
             break
         }
@@ -235,7 +236,7 @@ extension BadgeListViewController: UITableViewDelegate {
 
 extension BadgeListViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return 2
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -255,24 +256,23 @@ extension BadgeListViewController: UITableViewDataSource {
 
 // MARK: - Network
 
-extension BadgeListViewController: ViewControllerServiceable {
-    private func getBadgeList() {
-        showLoadingView()
-        
-        Task {
-            do {
-                let badges = try await myPageManager.getBadgeList()
-                
-                for badge in badges {
-                    if badge.type == "EVENT" {
-                        self.badgeHeaderData = [(badge.name, badge.imageURL)]
-                    } else if badge.type == "COUNTING" {
-                        self.badgeListData[0].append((name: badge.name, imageURL: badge.imageURL))
-                    } else if badge.type == "COMBO" {
-                        self.badgeListData[1].append((name: badge.name, imageURL: badge.imageURL))
-                    } else {
-                        self.badgeListData[2].append((name: badge.name, imageURL: badge.imageURL))
-                    }
+extension BadgeListViewController {
+    private func badgeListGetAPI() {
+        MyPageAPI.shared.badgeListAPI() { response in
+            guard let badges = response?.data?.badges else { return }
+            
+            self.hideLodingView(loadingView: self.loadingView)
+            
+            // 섹션에 따라 배열 데이터 담는 로직
+            for badge in badges {
+                if badge.type == "EVENT" {
+                    self.badgeHeaderData = [(badge.name, badge.imageURL)]
+                } else if badge.type == "COUNTING" {
+                    self.badgeListData[0].append((name: badge.name, imageURL: badge.imageURL))
+                } else if badge.type == "COMBO" {
+                    self.badgeListData[1].append((name: badge.name, imageURL: badge.imageURL))
+                } else {
+//                    self.badgeListData[2].append((name: badge.name, imageURL: badge.imageURL))
                 }
                 
                 self.setHeaderViewData()

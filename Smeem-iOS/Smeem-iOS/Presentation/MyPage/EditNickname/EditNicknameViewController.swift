@@ -179,7 +179,7 @@ final class EditNicknameViewController: BaseViewController {
         backButton.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.leading.equalToSuperview().offset(10)
-            $0.width.height.equalTo(45)
+            $0.width.height.equalTo(55)
         }
         
         titleLabel.snp.makeConstraints{

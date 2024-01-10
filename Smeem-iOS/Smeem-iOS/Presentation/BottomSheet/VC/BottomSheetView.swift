@@ -117,7 +117,7 @@ final class BottomSheetView: UIView {
         cancelButton.snp.makeConstraints {
             $0.top.equalToSuperview().inset(10)
             $0.trailing.equalToSuperview().inset(10)
-            $0.width.height.equalTo(40)
+            $0.width.height.equalTo(55)
         }
         
         bottomSheetLabel.snp.makeConstraints {

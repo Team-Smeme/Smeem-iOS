@@ -110,7 +110,7 @@ final class SmeemStartViewController: BaseViewController {
         }
         
         loginButton.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(78)
+            $0.leading.trailing.equalToSuperview().inset(60)
             $0.bottom.equalTo(startButton.snp.top).offset(-10)
             $0.height.equalTo(43)
         }
