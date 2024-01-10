@@ -211,22 +211,3 @@ extension DiaryView {
         inputTextView.text = text
     }
 }
-
-
-
-
-// MARK: - Tutorial Components
-
-//    private let tipLabel: UILabel = {
-//        let label = UILabel()
-//        label.text = "TIP"
-//        label.font = .c3
-//        label.textColor = .point
-//        return label
-//    }()
-//
-//    private lazy var cancelTipButton: UIButton = {
-//        let button = UIButton()
-//        button.setImage(Constant.Image.icnCancelGrey, for: .normal)
-//        return button
-//    }()

@@ -39,16 +39,6 @@ final class DiaryBottomView: UIView {
     
     private lazy var randomTopicButton = UIButton()
     
-    private lazy var randomSubjectToolTip: UIImageView? = {
-        let image = UIImageView()
-        image.image = Constant.Image.icnToolTip
-        
-//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(randomSubjectToolTipDidTap))
-//        image.addGestureRecognizer(tapGesture)
-        image.isUserInteractionEnabled = true
-        return image
-    }()
-    
     private lazy var hintButton: UIButton = {
         let button = UIButton()
         button.setImage(Constant.Image.btnTranslateInactive, for: .normal)
@@ -154,21 +144,3 @@ extension DiaryBottomView {
         hintButton.setImage(isHintShowed ? Constant.Image.btnTranslateActive : Constant.Image.btnTranslateInactive, for: .normal)
     }
 }
-
-//    private func checkTooltip() {
-//        let randomSubjectToolTipe = UserDefaultsManager.randomSubjectToolTip
-//
-//        if !randomSubjectToolTipe {
-//
-//            view.addSubview(randomSubjectToolTip ?? UIImageView())
-//
-//            randomSubjectToolTip?.snp.makeConstraints {
-//                $0.width.equalTo(convertByWidthRatio(180))
-//                $0.height.equalTo(convertByHeightRatio(48))
-//                $0.bottom.equalTo(view.keyboardLayoutGuide.snp.top).offset(constraintByNotch(-37, -42))
-//                $0.trailing.equalToSuperview().inset(convertByHeightRatio(18))
-//            }
-//        } else {
-//            randomSubjectToolTip = nil
-//        }
-//    }

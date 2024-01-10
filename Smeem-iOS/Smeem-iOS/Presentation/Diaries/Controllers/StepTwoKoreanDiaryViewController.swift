@@ -101,32 +101,3 @@ extension StepTwoKoreanDiaryViewController {
         }
     }
 }
-
-
-
-
-// MARK: - Tutorial
-
-//extension StepTwoKoreanDiaryViewController {
-//    private func checkTutorial() {
-//        let tutorialDiaryStepTwo = UserDefaultsManager.tutorialDiaryStepTwo
-//
-//        if !tutorialDiaryStepTwo {
-//            UserDefaultsManager.tutorialDiaryStepTwo = true
-//
-//            view.addSubviews(tutorialImageView ?? UIImageView(), dismissButton ?? UIButton())
-//
-//            tutorialImageView?.snp.makeConstraints {
-//                $0.top.leading.trailing.bottom.equalToSuperview()
-//            }
-//            dismissButton?.snp.makeConstraints {
-//                $0.top.equalToSuperview().inset(convertByHeightRatio(371))
-//                $0.trailing.equalToSuperview().inset(convertByHeightRatio(10))
-//                $0.width.height.equalTo(convertByHeightRatio(45))
-//            }
-//        } else {
-//            tutorialImageView = nil
-//            dismissButton = nil
-//        }
-//    }
-//}
