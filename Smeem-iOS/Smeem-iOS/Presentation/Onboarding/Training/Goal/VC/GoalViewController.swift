@@ -39,6 +39,10 @@ final class GoalViewController: UIViewController {
         self.targetClosure = targetClosure
         self.selectedGoalLabel = selectedGoalLabel
         
+        if self.viewtype == .onboarding {
+            AmplitudeManager.shared.track(event: AmplitudeConstant.Onboarding.onboarding_goal_view.event)
+        }
+        
         super.init(nibName: nil, bundle: nil)
     }
     

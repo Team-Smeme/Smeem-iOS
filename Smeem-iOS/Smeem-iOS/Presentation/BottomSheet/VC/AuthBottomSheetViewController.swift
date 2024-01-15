@@ -241,6 +241,7 @@ extension BottomSheetViewController {
                 }
             case .signup:
                 if data.hasPlan == false || (data.hasPlan == true && data.isRegistered == false) {
+                    AmplitudeManager.shared.track(event: AmplitudeConstant.Onboarding.signup_success.event)
                     guard let userPlanRequest = self.userPlanRequest else { return }
                     self.userPlanPatchAPI(userPlan: userPlanRequest, accessToken: data.accessToken)
                 } else {

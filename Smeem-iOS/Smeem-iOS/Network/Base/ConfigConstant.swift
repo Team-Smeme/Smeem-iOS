@@ -45,4 +45,11 @@ enum ConfigConstant {
         }
         return papagoSecret
     }()
+    
+    static let amplitudeAppKey: String = {
+        guard let amplitudeAppKey = Bundle.main.object(forInfoDictionaryKey: "AMPLITUDE_APP_KEY") as? String else {
+            fatalError("papago password typecasting failed")
+        }
+        return amplitudeAppKey
+    }()
 }

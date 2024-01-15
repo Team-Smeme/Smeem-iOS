@@ -112,6 +112,8 @@ final class AlarmSettingViewController: UIViewController {
         setBackgroundColor()
         setLayout()
         swipeRecognizer()
+        
+        AmplitudeManager.shared.track(event: AmplitudeConstant.Onboarding.onboarding_alarm_view.event)
     }
     
     // MARK: - @objc
@@ -127,6 +129,7 @@ final class AlarmSettingViewController: UIViewController {
     
     @objc func laterButtonDidTap() {
         self.hasAlarm = false
+        AmplitudeManager.shared.track(event: AmplitudeConstant.Onboarding.onboarding_later_click.event)
         requestNotificationPermission()
     }
     

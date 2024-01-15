@@ -62,6 +62,8 @@ final class SmeemStartViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setLayout()
+
+        AmplitudeManager.shared.track(event: AmplitudeConstant.Onboarding.first_view.event)
     }
     
     // MARK: - @objc

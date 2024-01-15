@@ -221,6 +221,8 @@ final class MyPageViewController: UIViewController {
         setLayout()
         swipeRecognizer()
         setupHowLearningViewTapGestureRecognizer()
+        
+        AmplitudeManager.shared.track(event: AmplitudeConstant.myPage.mypage_view.event)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -327,8 +329,6 @@ final class MyPageViewController: UIViewController {
         for i in 0..<dayArray.count {
             indexPathArray.append(myPageSelectedIndexPath[String(dayArray[i])]!)
         }
-        
-        print("lkfjsadkfdsakfhsadkjf✅✅✅✅✅✅✅✅✅✅, ", self.indexPathArray)
         
         alarmCollectionView.selectedIndexPath = indexPathArray
         alarmCollectionView.myPageTime = (userInfo.trainingTime.hour, userInfo.trainingTime.minute)
@@ -535,8 +535,6 @@ extension MyPageViewController {
         MyPageAPI.shared.editPushAPI(param: pushData) { response in
             // 성공했으면
             if response.success == true {
-                print("lkfjsadkfdsakfhsadkjf✅✅✅✅✅✅✅✅✅✅, ", self.indexPathArray)
-                // 그에 맞춰서 색깔 변화
                 self.alarmCollectionView.hasAlarm = pushData.hasAlarm
                 self.alarmCollectionView.selectedIndexPath = self.indexPathArray
                 

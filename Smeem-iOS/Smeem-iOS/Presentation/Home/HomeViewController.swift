@@ -186,6 +186,8 @@ final class HomeViewController: BaseViewController {
         setLayout()
         setDelegate()
         setSwipe()
+        
+        AmplitudeManager.shared.track(event: AmplitudeConstant.home.home_view.event)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -197,6 +199,10 @@ final class HomeViewController: BaseViewController {
     
     @objc func swipeEvent(_ swipe: UISwipeGestureRecognizer) {
         if (swipe.location(in: self.view).y < border.frame.origin.y + 20) {
+            if swipe.direction == .down {
+                AmplitudeManager.shared.track(event: AmplitudeConstant.home.full_calendar_appear.event)
+            }
+            
             let topConstant: CGFloat = (swipe.direction == .up) ? 168 : 60
             let newScopeMode: FSCalendarScope = (swipe.direction == .up) ? .week : .month
             calendar.setScope(newScopeMode, animated: true)
