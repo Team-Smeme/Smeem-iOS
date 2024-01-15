@@ -6,10 +6,11 @@
 //
 
 import UIKit
+import StoreKit
 
 import SnapKit
 
-final class BadgePopupViewController: UIViewController {
+final class BadgePopupViewController: UIViewController, SKStoreProductViewControllerDelegate {
     
     // MARK: - Property
     
@@ -53,7 +54,6 @@ final class BadgePopupViewController: UIViewController {
     
     private lazy var cancleButton: SmeemButton = {
         let button = SmeemButton(buttonType: .enabled, text: "닫기")
-//        button.smeemButtonType = .enabled
         button.backgroundColor = .gray100
         button.titleLabel?.font = .c2
         button.setTitleColor(.gray600, for: .normal)
@@ -63,7 +63,6 @@ final class BadgePopupViewController: UIViewController {
     
     private lazy var presentBadgeListButton: SmeemButton = {
         let button = SmeemButton(buttonType: .enabled, text: "배지 모두보기")
-//        button.smeemButtonType = .enabled
         button.titleLabel?.font = .c2
         button.addTarget(self, action: #selector(badgeButtonDidTap), for: .touchUpInside)
         return button
@@ -76,17 +75,6 @@ final class BadgePopupViewController: UIViewController {
         
         setBackgroundColor()
         setLayout()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-//        appearPopupViewAnimate()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        
-//        disappearPopupViewAnimate()
     }
     
     // MARK: - @objc
@@ -104,21 +92,6 @@ final class BadgePopupViewController: UIViewController {
     
     // MARK: - Custom Method
     
-    private func appearPopupViewAnimate() {
-        UIView.animate(withDuration: 0.1, delay: 0.0, options: .curveEaseIn) { [weak self] in
-            self?.popupView.transform = .identity
-            self?.popupView.isHidden = false
-        }
-    }
-    
-    private func disappearPopupViewAnimate() {
-        UIView.animate(withDuration: 0.1, delay: 0.0, options: .curveEaseIn) { [weak self] in
-            self?.popupView.transform = .identity
-            self?.popupView.isHidden = true
-        }
-    }
-    
-    // 배지가 두 개일 가능성 구현 예정
     func setData(_ popupData: [PopupBadge]) {
         for popup in popupData {
             let url = URL(string: popup.imageURL)
@@ -129,6 +102,18 @@ final class BadgePopupViewController: UIViewController {
                                     \(popup.name)를 획득했어요!
                                     """
         }
+        
+        if popupData[0].name == "열 번째 일기" {
+            if let scene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {
+                DispatchQueue.main.async {
+                    SKStoreReviewController.requestReview(in: scene)
+                }
+            }
+        }
+    }
+    
+    func productViewControllerDidFinish(_ viewController: SKStoreProductViewController) {
+        viewController.dismiss(animated: true)
     }
     
     // MARK: - Layout
