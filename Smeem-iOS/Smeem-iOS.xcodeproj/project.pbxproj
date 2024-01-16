@@ -27,6 +27,9 @@
 		374F828E2AC5DFFE00C128B9 /* DiaryBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374F828D2AC5DFFE00C128B9 /* DiaryBottomView.swift */; };
 		374FAF812A2CACCF00237A1A /* DiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374FAF802A2CACCF00237A1A /* DiaryViewController.swift */; };
 		3761116C2A278D0E0095EC5A /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3761116B2A278D0E0095EC5A /* String+.swift */; };
+		378E461A2B5516E200D2A473 /* DeepLAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378E46192B5516E200D2A473 /* DeepLAPI.swift */; };
+		378E461C2B5516F200D2A473 /* DeepLService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378E461B2B5516F200D2A473 /* DeepLService.swift */; };
+		378E461F2B551A6F00D2A473 /* DeepLResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378E461E2B551A6F00D2A473 /* DeepLResponse.swift */; };
 		379789032AAC705B00C61EF4 /* NavigationBarActionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379789022AAC705B00C61EF4 /* NavigationBarActionDelegate.swift */; };
 		379789052AAC706800C61EF4 /* SmeemNavigationFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379789042AAC706800C61EF4 /* SmeemNavigationFactory.swift */; };
 		379789072AAC707700C61EF4 /* NavigationBarType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379789062AAC707700C61EF4 /* NavigationBarType.swift */; };
@@ -60,9 +63,6 @@
 		37DCA6702A484D3700FF8F90 /* PostDiaryRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DCA66F2A484D3700FF8F90 /* PostDiaryRequest.swift */; };
 		37DCA6722A484D5000FF8F90 /* PostDiaryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DCA6712A484D5000FF8F90 /* PostDiaryService.swift */; };
 		37DCA6742A484D5900FF8F90 /* PostDiaryAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DCA6732A484D5900FF8F90 /* PostDiaryAPI.swift */; };
-		37DCA6782A488CEB00FF8F90 /* PapagoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DCA6772A488CEB00FF8F90 /* PapagoResponse.swift */; };
-		37DCA67A2A4891BD00FF8F90 /* PapagoAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DCA6792A4891BD00FF8F90 /* PapagoAPI.swift */; };
-		37DCA67C2A48927400FF8F90 /* PapagoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DCA67B2A48927400FF8F90 /* PapagoService.swift */; };
 		37EB69E62A4B3BC400075E4E /* DataBindProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EB69E52A4B3BC400075E4E /* DataBindProtocol.swift */; };
 		4A004D4F2B4ED760003C8936 /* PlanListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A004D4E2B4ED760003C8936 /* PlanListResponse.swift */; };
 		4A004D512B4ED783003C8936 /* DetailPlanListResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A004D502B4ED783003C8936 /* DetailPlanListResponse.swift */; };
@@ -180,6 +180,9 @@
 		374F828D2AC5DFFE00C128B9 /* DiaryBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryBottomView.swift; sourceTree = "<group>"; };
 		374FAF802A2CACCF00237A1A /* DiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryViewController.swift; sourceTree = "<group>"; };
 		3761116B2A278D0E0095EC5A /* String+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
+		378E46192B5516E200D2A473 /* DeepLAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLAPI.swift; sourceTree = "<group>"; };
+		378E461B2B5516F200D2A473 /* DeepLService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLService.swift; sourceTree = "<group>"; };
+		378E461E2B551A6F00D2A473 /* DeepLResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLResponse.swift; sourceTree = "<group>"; };
 		379789022AAC705B00C61EF4 /* NavigationBarActionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarActionDelegate.swift; sourceTree = "<group>"; };
 		379789042AAC706800C61EF4 /* SmeemNavigationFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmeemNavigationFactory.swift; sourceTree = "<group>"; };
 		379789062AAC707700C61EF4 /* NavigationBarType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarType.swift; sourceTree = "<group>"; };
@@ -213,9 +216,6 @@
 		37DCA66F2A484D3700FF8F90 /* PostDiaryRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDiaryRequest.swift; sourceTree = "<group>"; };
 		37DCA6712A484D5000FF8F90 /* PostDiaryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDiaryService.swift; sourceTree = "<group>"; };
 		37DCA6732A484D5900FF8F90 /* PostDiaryAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDiaryAPI.swift; sourceTree = "<group>"; };
-		37DCA6772A488CEB00FF8F90 /* PapagoResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PapagoResponse.swift; sourceTree = "<group>"; };
-		37DCA6792A4891BD00FF8F90 /* PapagoAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PapagoAPI.swift; sourceTree = "<group>"; };
-		37DCA67B2A48927400FF8F90 /* PapagoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PapagoService.swift; sourceTree = "<group>"; };
 		37EB69E52A4B3BC400075E4E /* DataBindProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataBindProtocol.swift; sourceTree = "<group>"; };
 		4A004D4E2B4ED760003C8936 /* PlanListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanListResponse.swift; sourceTree = "<group>"; };
 		4A004D502B4ED783003C8936 /* DetailPlanListResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPlanListResponse.swift; sourceTree = "<group>"; };
@@ -375,6 +375,23 @@
 				371E94182A87DA960098280F /* EditGoalViewController.swift */,
 			);
 			path = EditGoal;
+			sourceTree = "<group>";
+		};
+		378E46182B5516A900D2A473 /* DeepL */ = {
+			isa = PBXGroup;
+			children = (
+				378E461B2B5516F200D2A473 /* DeepLService.swift */,
+				378E46192B5516E200D2A473 /* DeepLAPI.swift */,
+			);
+			path = DeepL;
+			sourceTree = "<group>";
+		};
+		378E461D2B551A5C00D2A473 /* DeepL */ = {
+			isa = PBXGroup;
+			children = (
+				378E461E2B551A6F00D2A473 /* DeepLResponse.swift */,
+			);
+			path = DeepL;
 			sourceTree = "<group>";
 		};
 		379789012AAB9B1900C61EF4 /* NavigationBar */ = {
@@ -593,23 +610,6 @@
 			path = PostDiary;
 			sourceTree = "<group>";
 		};
-		37DCA6752A488CBA00FF8F90 /* Papago */ = {
-			isa = PBXGroup;
-			children = (
-				37DCA6792A4891BD00FF8F90 /* PapagoAPI.swift */,
-				37DCA67B2A48927400FF8F90 /* PapagoService.swift */,
-			);
-			path = Papago;
-			sourceTree = "<group>";
-		};
-		37DCA6762A488CC800FF8F90 /* Papago */ = {
-			isa = PBXGroup;
-			children = (
-				37DCA6772A488CEB00FF8F90 /* PapagoResponse.swift */,
-			);
-			path = Papago;
-			sourceTree = "<group>";
-		};
 		37EB69E42A4B3B6B00075E4E /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
@@ -672,12 +672,12 @@
 		4A0EA45A2A014111006CCE52 /* API */ = {
 			isa = PBXGroup;
 			children = (
+				378E46182B5516A900D2A473 /* DeepL */,
 				4A004D5C2B4EE2AC003C8936 /* MyPage */,
 				4A004D572B4EE283003C8936 /* Push */,
 				4A004D522B4EE262003C8936 /* Auth */,
 				6FBC856C2A4B5F8500A43F98 /* Home */,
 				4A3373F62A461AAC00EFE6C4 /* Onboarding */,
-				37DCA6752A488CBA00FF8F90 /* Papago */,
 				37DCA66C2A484D1000FF8F90 /* PostDiary */,
 				37DCA6632A4804F800FF8F90 /* DetailDiary */,
 				37DCA6532A4755FA00FF8F90 /* RandomSubject */,
@@ -693,7 +693,7 @@
 				6FBC85732A4B603A00A43F98 /* MyPageNetworkModel.swift */,
 				4AF9E3EF2AC4143500104768 /* Home */,
 				4A6630372A51E03B00D19CC9 /* PatchDiary */,
-				37DCA6762A488CC800FF8F90 /* Papago */,
+				378E461D2B551A5C00D2A473 /* DeepL */,
 				37DCA66A2A484CF900FF8F90 /* PostDiary */,
 				37DCA6612A4804E800FF8F90 /* DetailDiary */,
 				37DCA65B2A475B5100FF8F90 /* RandomSubject */,
@@ -1198,6 +1198,7 @@
 				37A271642AA6078C001FFC38 /* SmeemNavigationBar.swift in Sources */,
 				4A6630392A51E04600D19CC9 /* PatchDiaryRequest.swift in Sources */,
 				4AF58CE92A4820AA00305248 /* AuthNetworkModel.swift in Sources */,
+				378E461F2B551A6F00D2A473 /* DeepLResponse.swift in Sources */,
 				3761116C2A278D0E0095EC5A /* String+.swift in Sources */,
 				4AEB82952A4CB4F200C1114B /* BadgePopupViewController.swift in Sources */,
 				4A08480E2B555FD0008327C7 /* AmplitudeConstant.swift in Sources */,
@@ -1223,7 +1224,6 @@
 				4AC00EEB2AD4527A009230DA /* HowOnboardingViewController.swift in Sources */,
 				4A004D602B4EE2BD003C8936 /* MyPageAPI.swift in Sources */,
 				4AE35E9E2A7FE8CE00465FD5 /* UICollectionViewCell+.swift in Sources */,
-				37DCA67C2A48927400FF8F90 /* PapagoService.swift in Sources */,
 				4A10A3A82AB8AA5800C145E9 /* System.swift in Sources */,
 				4A3F2EA02A0C18B600F6AC60 /* DatePickerFooterView.swift in Sources */,
 				37B360AA2AC2A4680006C8ED /* SmeemTextView.swift in Sources */,
@@ -1258,7 +1258,6 @@
 				37A574CE29FF9A2D00312453 /* UIScreen+.swift in Sources */,
 				37DCA6722A484D5000FF8F90 /* PostDiaryService.swift in Sources */,
 				379789072AAC707700C61EF4 /* NavigationBarType.swift in Sources */,
-				37DCA67A2A4891BD00FF8F90 /* PapagoAPI.swift in Sources */,
 				37DCA6702A484D3700FF8F90 /* PostDiaryRequest.swift in Sources */,
 				4A0EA4592A014103006CCE52 /* URLConstant.swift in Sources */,
 				4ADA41772A556209001C0285 /* LoadingView.swift in Sources */,
@@ -1293,7 +1292,6 @@
 				6F294A422A26178C00856CC8 /* UserNickNameViewController.swift in Sources */,
 				4AC047252A8FCAE100EBDC0E /* AuthManagementViewController.swift in Sources */,
 				374FAF812A2CACCF00237A1A /* DiaryViewController.swift in Sources */,
-				37DCA6782A488CEB00FF8F90 /* PapagoResponse.swift in Sources */,
 				37DCA65A2A47598700FF8F90 /* RandomSubjectService.swift in Sources */,
 				4A01235F2AAA2C1500E09646 /* SmeemLoadingView.swift in Sources */,
 				4A004D542B4EE26E003C8936 /* AuthAPI.swift in Sources */,
@@ -1302,6 +1300,7 @@
 				371E94132A87A8660098280F /* GoalCollectionViewDataSource.swift in Sources */,
 				6F294A442A26179900856CC8 /* ServiceAcceptCollectionViewCell.swift in Sources */,
 				4A9FAB462A4C3D1200C40D5A /* BadgeNetworkModel.swift in Sources */,
+				378E461C2B5516F200D2A473 /* DeepLService.swift in Sources */,
 				4A004D4F2B4ED760003C8936 /* PlanListResponse.swift in Sources */,
 				6F294A3F2A26177E00856CC8 /* TrainingGoalCollectionViewCell.swift in Sources */,
 				37A574E62A02178D00312453 /* SmeemToastView.swift in Sources */,
@@ -1313,6 +1312,7 @@
 				37A574E82A02424F00312453 /* RandomTopicView.swift in Sources */,
 				4A0EA4642A014710006CCE52 /* SmeemButton.swift in Sources */,
 				371107DD2ACAB571007A4AC2 /* BaseView.swift in Sources */,
+				378E461A2B5516E200D2A473 /* DeepLAPI.swift in Sources */,
 				37EB69E62A4B3BC400075E4E /* DataBindProtocol.swift in Sources */,
 				371E940E2A87A2030098280F /* GoalEditMypageView.swift in Sources */,
 			);
