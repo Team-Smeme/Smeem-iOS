@@ -7,8 +7,8 @@
 
 import UIKit
 
-final class EditGoalViewController: UIViewController {
-    
+final class EditGoalViewController: BaseViewController {
+
     var tempTarget = String()
     var planName = String()
     var planWay = String()
@@ -17,6 +17,8 @@ final class EditGoalViewController: UIViewController {
             configurePlanData()
         }
     }
+    
+    weak var delegate: EditMypageDelegate?
     
     private let navigationBarView = UIView()
     private let loadingView = LoadingView()
@@ -51,17 +53,11 @@ final class EditGoalViewController: UIViewController {
         super.viewDidLoad()
         
         setLayout()
-        setBackgroundColor()
-        swipeRecognizer()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         self.showLodingView(loadingView: loadingView)
         detailPlanListGetAPI(tempTarget: tempTarget)
-    }
-    
-    private func setBackgroundColor() {
-        view.backgroundColor = .white
     }
     
     private func configurePlanData() {
@@ -71,12 +67,6 @@ final class EditGoalViewController: UIViewController {
         let detailPlan = planDetailWay.split(separator: "\n").map{String($0)}
         
         howLearningView.setData(planName: planName, planWayOne: planWayOne, planWayTwo: planWayTwo, detailPlanOne: detailPlan[0], detailPlanTwo: detailPlan[1])
-    }
-    
-    private func swipeRecognizer() {
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(responseToSwipeGesture))
-        swipeRight.direction = UISwipeGestureRecognizer.Direction.right
-        self.view.addGestureRecognizer(swipeRight)
     }
 
 }
@@ -92,10 +82,6 @@ extension EditGoalViewController {
     @objc func nextButtonDidTap() {
         self.showLodingView(loadingView: loadingView)
         patchGoalAPI(target: tempTarget)
-    }
-    
-    @objc func responseToSwipeGesture() {
-        self.navigationController?.popViewController(animated: true)
     }
     
     // MARK: - Layout
@@ -137,6 +123,7 @@ extension EditGoalViewController {
     func patchGoalAPI(target: String) {
         MyPageAPI.shared.changeGoal(param: EditGoalRequest(target: target)) { response in
             
+            self.showLodingView(loadingView: self.loadingView)
             guard let _ = response.data else { return }
             self.hideLodingView(loadingView: self.loadingView)
             
@@ -153,17 +140,18 @@ extension EditGoalViewController {
     }
     
     func detailPlanListGetAPI(tempTarget: String) {
-        self.showLodingView(loadingView: loadingView)
         OnboardingAPI.shared.detailPlanList(param: tempTarget) { response in
-            guard let data = response.data else { return }
+            self.showLodingView(loadingView: self.loadingView)
             
-            self.hideLodingView(loadingView: self.loadingView)
+            guard let data = response.data else { return }
             
             self.planName = data.name
             self.planWay = data.way
             self.planDetailWay = data.detail
             
             self.configurePlanData()
+            
+            self.hideLodingView(loadingView: self.loadingView)
         }
     }
 }

@@ -8,7 +8,7 @@
 import AppTrackingTransparency
 import UIKit
 
-final class AlarmSettingViewController: UIViewController {
+final class AlarmSettingViewController: BaseViewController {
     
     // MARK: - Property
     
@@ -109,9 +109,7 @@ final class AlarmSettingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setBackgroundColor()
         setLayout()
-        swipeRecognizer()
         
         AmplitudeManager.shared.track(event: AmplitudeConstant.Onboarding.onboarding_alarm_view.event)
     }
@@ -121,10 +119,6 @@ final class AlarmSettingViewController: UIViewController {
     @objc func completeButtonDidTap(){
         self.hasAlarm = true
         requestNotificationPermission()
-    }
-    
-    @objc func responseToSwipeGesture() {
-        self.navigationController?.popViewController(animated: true)
     }
     
     @objc func laterButtonDidTap() {
@@ -147,12 +141,6 @@ final class AlarmSettingViewController: UIViewController {
     // 이탈했다가 로그인할 경우, hasPlan은 true이기 때문에, 닉네임 수정뷰로 이동시키고 가장 마지막 토큰을 가지고 api 요청
     
     // MARK: - Custom Method
-    
-    private func swipeRecognizer() {
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(responseToSwipeGesture))
-        swipeRight.direction = UISwipeGestureRecognizer.Direction.right
-        self.view.addGestureRecognizer(swipeRight)
-    }
     
    private func requestNotificationPermission() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge], completionHandler: { didAllow, error in
@@ -252,10 +240,6 @@ final class AlarmSettingViewController: UIViewController {
     }
     
     // MARK: - Layout
-    
-    private func setBackgroundColor() {
-        view.backgroundColor = .smeemWhite
-    }
     
     private func setLayout() {
         view.addSubviews(nowStepOneLabel, divisionLabel, totalStepLabel, timeSettingLabelStackView,

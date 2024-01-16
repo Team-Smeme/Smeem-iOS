@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class HowOnboardingViewController: UIViewController {
+final class HowOnboardingViewController: BaseViewController {
     
     // MARK: - Property
     
@@ -90,9 +90,7 @@ final class HowOnboardingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setBackgroundColor()
         setLayout()
-        swipeRecognizer()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -107,17 +105,7 @@ final class HowOnboardingViewController: UIViewController {
         self.navigationController?.pushViewController(alarmVC, animated: true)
     }
     
-    @objc func responseToSwipeGesture() {
-        self.navigationController?.popViewController(animated: true)
-    }
-    
     // MARK: - Custom Method
-    
-    private func swipeRecognizer() {
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(responseToSwipeGesture))
-        swipeRight.direction = UISwipeGestureRecognizer.Direction.right
-        self.view.addGestureRecognizer(swipeRight)
-    }
     
     private func configurePlanData() {
         let planNameList = planWay.components(separatedBy: " 이상 ")
@@ -129,10 +117,6 @@ final class HowOnboardingViewController: UIViewController {
     }
     
     // MARK: - Layout
-    
-    private func setBackgroundColor() {
-        view.backgroundColor = .white
-    }
     
     private func setLayout() {
         view.addSubviews(nowStepOneLabel, divisionLabel, totalStepLabel, learningLabelStackView, howLearningView, nextButton)

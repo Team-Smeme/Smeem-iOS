@@ -12,7 +12,7 @@ enum GoalViewType {
     case myPage
 }
 
-final class GoalViewController: UIViewController {
+final class GoalViewController: BaseViewController {
     
     // MARK: - Property
     
@@ -61,15 +61,10 @@ final class GoalViewController: UIViewController {
 
         planListGetAPI()
         setCollectionViewOnDataSourceUpdate()
-        swipeRecognizer()
         
         if let selectedGoalIndex = selectedGoalIndex {
             datasource.setSelectedIndex(selectedGoalIndex)
         }
-    }
-    
-    @objc func responseToSwipeGesture() {
-        self.navigationController?.popViewController(animated: true)
     }
     
     private func setButtonType() {
@@ -80,12 +75,6 @@ final class GoalViewController: UIViewController {
             goalOnboardingView.disableNextButton()
             goalEditMypageView.disableNextButton()
         }
-    }
-    
-    private func swipeRecognizer() {
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(responseToSwipeGesture))
-        swipeRight.direction = UISwipeGestureRecognizer.Direction.right
-        self.view.addGestureRecognizer(swipeRight)
     }
 }
 
@@ -100,7 +89,7 @@ extension GoalViewController: NextButtonDelegate {
             howOnboardingVC.tempTarget = selectedGoalLabel
             self.navigationController?.pushViewController(howOnboardingVC, animated: true)
         case .myPage:
-            let howOnboardingVC = HowOnboardingViewController()
+            let howOnboardingVC = EditGoalViewController()
             howOnboardingVC.tempTarget = selectedGoalLabel
             self.navigationController?.pushViewController(howOnboardingVC, animated: true)
         }

@@ -13,7 +13,7 @@ protocol EditMypageDelegate: AnyObject {
     func editMyPageData()
 }
 
-final class EditNicknameViewController: UIViewController {
+final class EditNicknameViewController: BaseViewController {
     
     // MARK: - Property
     
@@ -89,13 +89,10 @@ final class EditNicknameViewController: UIViewController {
         super.viewDidLoad()
         
         setData()
-        setBackgroundColor()
         setLayout()
-//        hiddenNavigationBar()
         setTextFieldDelegate()
         showKeyboard(textView: nicknameTextField)
         addTextFieldNotification()
-        swipeRecognizer()
     }
     
     deinit {
@@ -126,16 +123,6 @@ final class EditNicknameViewController: UIViewController {
             }
         }
     }
-    
-    @objc func responseToSwipeGesture() {
-        self.navigationController?.popViewController(animated: true)
-    }
-    
-    private func swipeRecognizer() {
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(responseToSwipeGesture))
-        swipeRight.direction = UISwipeGestureRecognizer.Direction.right
-        self.view.addGestureRecognizer(swipeRight)
-    }
 
     // MARK: - Custom Method
     
@@ -161,10 +148,6 @@ final class EditNicknameViewController: UIViewController {
     }
 
     // MARK: - Layout
- 
-    private func setBackgroundColor() {
-        view.backgroundColor = .smeemWhite
-    }
     
     private func setLayout() {
         view.addSubviews(headerContainerView,

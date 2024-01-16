@@ -8,7 +8,7 @@
 import Foundation
 import AmplitudeSwift
 
-enum AmplitudeManager {
+struct AmplitudeManager {
     static let shared = Amplitude(configuration: Configuration(apiKey: ConfigConstant.amplitudeAppKey))
 }
 
