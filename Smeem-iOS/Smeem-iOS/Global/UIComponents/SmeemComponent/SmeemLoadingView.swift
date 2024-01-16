@@ -8,15 +8,30 @@
 import UIKit
 
 final class SmeemLoadingView: UIActivityIndicatorView {
-    
-    init() {
-        super.init(frame: .zero)
-        self.style = .large
-        self.backgroundColor = .popupBackground
-        self.frame = .init(x: 0, y: 0, width: Constant.Screen.width, height: Constant.Screen.height)
+    static func showLoading() {
+        DispatchQueue.main.async {
+            let windowScenes = UIApplication.shared.connectedScenes.first as? UIWindowScene
+            guard let window = windowScenes?.windows.last else { return }
+            let loadingIndicatorView: UIActivityIndicatorView
+            
+            if let existedView = window.subviews.first(where: { $0 is UIActivityIndicatorView } ) as? UIActivityIndicatorView {
+                loadingIndicatorView = existedView
+            } else {
+                loadingIndicatorView = UIActivityIndicatorView(style: .medium)
+                loadingIndicatorView.frame = window.frame
+                loadingIndicatorView.backgroundColor = .popupBackground
+                window.addSubview(loadingIndicatorView)
+            }
+
+            loadingIndicatorView.startAnimating()
+        }
     }
     
-    required init(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    static func hideLoading() {
+        DispatchQueue.main.async {
+            let windowScenes = UIApplication.shared.connectedScenes.first as? UIWindowScene
+            guard let window = windowScenes?.windows.last else { return }
+            window.subviews.filter({ $0 is UIActivityIndicatorView }).forEach { $0.removeFromSuperview() }
+        }
     }
 }

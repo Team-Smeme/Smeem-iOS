@@ -56,7 +56,7 @@ final class SplashViewController: UIViewController {
     }
     
     @objc func startButtonDidTap() {
-        let onboardingVC = GoalViewController(viewtype: .onboarding)
+        let onboardingVC = TrainingGoalViewController(viewtype: .onboarding)
         self.navigationController?.pushViewController(onboardingVC, animated: true)
     }
     

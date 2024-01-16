@@ -7,16 +7,16 @@
 
 import UIKit
 
-enum GoalViewType {
+enum TrainingGoalType {
     case onboarding
     case myPage
 }
 
-final class GoalViewController: BaseViewController {
+final class TrainingGoalViewController: BaseViewController {
     
     // MARK: - Property
     
-    private var viewtype: GoalViewType
+    private var viewtype: TrainingGoalType
     
     private let goalOnboardingView = GoalEditMypageView()
     private let goalEditMypageView = GoalEditMypageView()
@@ -34,7 +34,7 @@ final class GoalViewController: BaseViewController {
     
     // MARK: - Life Cycle
     
-    init(viewtype: GoalViewType, targetClosure: ( (String) -> Void)? = nil, selectedGoalLabel: String = String()) {
+    init(viewtype: TrainingGoalType, targetClosure: ( (String) -> Void)? = nil, selectedGoalLabel: String = String()) {
         self.viewtype = viewtype
         self.targetClosure = targetClosure
         self.selectedGoalLabel = selectedGoalLabel
@@ -80,7 +80,7 @@ final class GoalViewController: BaseViewController {
 
 // MARK: - NextButtonDelegate
 
-extension GoalViewController: NextButtonDelegate {
+extension TrainingGoalViewController: NextButtonDelegate {
     func nextButtonDidTap() {
         switch viewtype {
         case .onboarding:
@@ -102,7 +102,7 @@ extension GoalViewController: NextButtonDelegate {
 
 // MARK: - Extensions
 
-extension GoalViewController {
+extension TrainingGoalViewController {
     
     private func configureViewType() {
         switch viewtype {
@@ -133,7 +133,7 @@ extension GoalViewController {
 
 // MARK: - UICollectionViewDelegate
 
-extension GoalViewController: UICollectionViewDelegate {
+extension TrainingGoalViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem(at: indexPath) as? TrainingGoalCollectionViewCell else { return }
         cell.selctedCell()
@@ -154,7 +154,7 @@ extension GoalViewController: UICollectionViewDelegate {
     }
 }
 
-extension GoalViewController: UICollectionViewDelegateFlowLayout {
+extension TrainingGoalViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = collectionView.frame.width
         let height = convertByHeightRatio(60)
@@ -169,8 +169,9 @@ extension GoalViewController: UICollectionViewDelegateFlowLayout {
 
 // MARK: - Network
 
-extension GoalViewController {
+extension TrainingGoalViewController {
     func planListGetAPI() {
+        SmeemLoadingView.showLoading()
         OnboardingAPI.shared.planList() { response in
             guard let data = response.data?.goals else { return }
             self.datasource.goalLabelList = data
@@ -178,6 +179,8 @@ extension GoalViewController {
             DispatchQueue.main.async {
                 self.goalOnboardingView.onDataSourceUpdated?()
             }
+            
+            SmeemLoadingView.hideLoading()
         }
     }
 }

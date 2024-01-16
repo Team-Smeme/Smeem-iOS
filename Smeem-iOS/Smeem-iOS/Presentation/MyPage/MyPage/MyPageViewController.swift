@@ -260,7 +260,7 @@ final class MyPageViewController: BaseViewController {
     }
     
     @objc func howLearningViewTapped() {
-        let goalVC = GoalViewController(viewtype: .myPage)
+        let goalVC = TrainingGoalViewController(viewtype: .myPage)
         
         if let selectedIndex = getIndexFromGoalText(goalText: userInfo.target) {
             goalVC.selectedGoalIndex = selectedIndex
