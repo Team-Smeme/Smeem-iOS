@@ -23,10 +23,6 @@ enum NetworkHeader {
     
     static let noTokenHeader = ["Content-Type": "application/json",
                                 "Authorization": ""]
-    
-    static let papagoHeader = ["Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-                               "X-Naver-Client-Id": ConfigConstant.papagoID,
-                               "X-Naver-Client-Secret": ConfigConstant.papagoSecret]
 }
 
 enum NetworkHeaderField: String {
