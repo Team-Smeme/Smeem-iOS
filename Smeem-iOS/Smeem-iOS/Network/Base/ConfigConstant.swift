@@ -31,18 +31,4 @@ enum ConfigConstant {
         }
         return serverURL
     }()
-    
-    static let papagoID: String = {
-        guard let papagoID = Bundle.main.object(forInfoDictionaryKey: "X_NAVER_CLIENT_ID") as? String else {
-            fatalError("papago id typecasting failed")
-        }
-        return papagoID
-    }()
-    
-    static let papagoSecret: String = {
-        guard let papagoSecret = Bundle.main.object(forInfoDictionaryKey: "X_NAVER_CLIENT_SECRET") as? String else {
-            fatalError("papago password typecasting failed")
-        }
-        return papagoSecret
-    }()
 }

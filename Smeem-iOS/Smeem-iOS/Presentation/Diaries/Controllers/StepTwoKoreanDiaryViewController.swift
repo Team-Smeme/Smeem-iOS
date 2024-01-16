@@ -44,7 +44,7 @@ extension StepTwoKoreanDiaryViewController {
         rootView?.bottomView.updateHintButtonImage(isHintShowed)
         
         if isHintShowed {
-            postPapagoApi(diaryText: rootView?.configuration.layoutConfig?.getHintViewText() ?? "")
+            postDeepLApi(diaryText: rootView?.configuration.layoutConfig?.getHintViewText() ?? "")
         } else {
             rootView?.configuration.layoutConfig?.hintTextView.text = viewModel?.hintText
         }
@@ -92,12 +92,11 @@ extension StepTwoKoreanDiaryViewController: HintActionDelegate {
 // MARK: - Network
 
 extension StepTwoKoreanDiaryViewController {
-    func postPapagoApi(diaryText: String) {
-        PapagoAPI.shared.postDiary(param: diaryText) { response in
-            guard let response = response else { return }
-            self.viewModel?.hintText = diaryText
-            self.rootView?.configuration.layoutConfig?.hintTextView.text.removeAll()
-            self.rootView?.configuration.layoutConfig?.hintTextView.text = response.message.result.translatedText
+    func postDeepLApi(diaryText: String) {
+        DeepLAPI.shared.postTargetText(text: diaryText) { [weak self] response in
+            self?.viewModel?.hintText = diaryText
+            self?.rootView?.configuration.layoutConfig?.hintTextView.text.removeAll()
+            self?.rootView?.configuration.layoutConfig?.hintTextView.text = response?.translations.first?.text
         }
     }
 }
