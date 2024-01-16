@@ -49,6 +49,11 @@ enum URLConstant {
     static let papagoBaseURL = "https://openapi.naver.com"
     static let papagoPathURL = "/v1/papago/n2mt"
     
+    // MARK: - DeepL
+    
+    static let deepLBaseURL = "https://api-free.deepl.com"
+    static let deepLPathURL = "/v2/translate"
+    
     // MARK: - Push
     
     static let pushTestURL = "/test/alarm"

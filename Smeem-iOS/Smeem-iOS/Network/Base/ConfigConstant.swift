@@ -45,4 +45,18 @@ enum ConfigConstant {
         }
         return papagoSecret
     }()
+    
+    static let deepLID: String = {
+        guard let deepLID = Bundle.main.object(forInfoDictionaryKey: "DEEPL_CLIENT_ID") as? String else {
+            fatalError("deepL id typecasting failed")
+        }
+        return deepLID
+    }()
+    
+    static let deepLSecret: String = {
+        guard let deepLSecret = Bundle.main.object(forInfoDictionaryKey: "DEEPL_CLLIENT_SECRET") as? String else {
+            fatalError("deepL password typecasting failed")
+        }
+        return deepLSecret
+    }()
 }
