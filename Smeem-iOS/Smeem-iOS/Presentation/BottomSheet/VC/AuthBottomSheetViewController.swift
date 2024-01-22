@@ -136,6 +136,8 @@ final class BottomSheetViewController: UIViewController, LoginDelegate {
             print("Login with KAKAO App Success !!")
             
             self.kakaoAccessToken = oAuthToken?.accessToken
+            guard let refreshToken = oAuthToken?.refreshToken else { return }
+            UserDefaultsManager.kakaoRefreushToken = refreshToken
         }
     }
     
@@ -149,6 +151,9 @@ final class BottomSheetViewController: UIViewController, LoginDelegate {
             print("Login with KAKAO App Success !!")
             
             self.kakaoAccessToken = oAuthToken?.accessToken
+            guard let refreshToken = oAuthToken?.refreshToken else { return }
+            UserDefaultsManager.kakaoRefreushToken = refreshToken
+            print("토큰이요", refreshToken)
         }
     }
 

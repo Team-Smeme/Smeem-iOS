@@ -172,6 +172,7 @@ extension TrainingGoalViewController: UICollectionViewDelegateFlowLayout {
 extension TrainingGoalViewController {
     func planListGetAPI() {
         SmeemLoadingView.showLoading()
+        
         OnboardingAPI.shared.planList() { response in
             guard let data = response.data?.goals else { return }
             self.datasource.goalLabelList = data

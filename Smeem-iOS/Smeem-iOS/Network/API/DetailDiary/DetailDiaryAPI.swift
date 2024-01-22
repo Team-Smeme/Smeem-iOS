@@ -17,12 +17,8 @@ final class DetailDiaryAPI {
         detailDiaryProvider.request(.detailDiary(diaryID: diaryID)) { response in
             switch response {
             case .success(let result):
-                do {
-                    self.detailDiaryData = try result.map(DetailDiaryResponse.self)
-                    complention(self.detailDiaryData)
-                } catch {
-                    print(error)
-                }
+                self.detailDiaryData = try? result.map(DetailDiaryResponse.self)
+                complention(self.detailDiaryData)
             case .failure(let err):
                 print(err)
             }

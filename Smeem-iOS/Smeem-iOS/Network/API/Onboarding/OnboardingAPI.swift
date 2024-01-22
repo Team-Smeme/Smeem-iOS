@@ -18,20 +18,10 @@ public class OnboardingAPI {
         onboardingProvider.request(.planList) { response in
             switch response {
             case .success(let result):
-                switch result.statusCode {
-                case 400..<500:
-                    SmeemLoadingView.hideLoading()
-                    return
-                case 500...:
-                    SmeemLoadingView.hideLoading()
-                    return
-                default: break
-                }
-
                 guard let data = try? result.map(GeneralResponse<PlanListResponse>.self) else { return }
                 completion(data)
-            case .failure(_):
-                SmeemLoadingView.hideLoading()
+            case .failure(let error):
+                print(error)
             }
         }
     }
