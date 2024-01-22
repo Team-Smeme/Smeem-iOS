@@ -17,7 +17,7 @@ struct DetailDirayData: Codable {
     let content: String
     let createdAt: String
     let username: String
-    let corrections: [CorrentionsData]
+//    let corrections: [CorrentionsData]
 }
 
 struct CorrentionsData: Codable {

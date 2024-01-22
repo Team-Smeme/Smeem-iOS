@@ -136,6 +136,8 @@ final class BottomSheetViewController: UIViewController, LoginDelegate {
             print("Login with KAKAO App Success !!")
             
             self.kakaoAccessToken = oAuthToken?.accessToken
+            guard let refreshToken = oAuthToken?.refreshToken else { return }
+            UserDefaultsManager.kakaoRefreushToken = refreshToken
         }
     }
     
@@ -149,6 +151,9 @@ final class BottomSheetViewController: UIViewController, LoginDelegate {
             print("Login with KAKAO App Success !!")
             
             self.kakaoAccessToken = oAuthToken?.accessToken
+            guard let refreshToken = oAuthToken?.refreshToken else { return }
+            UserDefaultsManager.kakaoRefreushToken = refreshToken
+            print("토큰이요", refreshToken)
         }
     }
 
@@ -241,6 +246,7 @@ extension BottomSheetViewController {
                 }
             case .signup:
                 if data.hasPlan == false || (data.hasPlan == true && data.isRegistered == false) {
+                    AmplitudeManager.shared.track(event: AmplitudeConstant.Onboarding.signup_success.event)
                     guard let userPlanRequest = self.userPlanRequest else { return }
                     self.userPlanPatchAPI(userPlan: userPlanRequest, accessToken: data.accessToken)
                 } else {

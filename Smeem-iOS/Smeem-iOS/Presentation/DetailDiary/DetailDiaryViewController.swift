@@ -38,6 +38,8 @@ final class DetailDiaryViewController: BaseViewController {
         setLayout()
         swipeRecognizer()
         setDelegate()
+        
+        AmplitudeManager.shared.track(event: AmplitudeConstant.diaryDetail.mydiary_click.event)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -49,6 +51,7 @@ final class DetailDiaryViewController: BaseViewController {
     @objc func showActionSheet() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let modifyAction = UIAlertAction (title: "수정", style: .default, handler: { (action) in
+            AmplitudeManager.shared.track(event: AmplitudeConstant.diaryDetail.mydiary_edit.event)
             let editVC = EditDiaryViewController()
             editVC.diaryID = self.diaryId
             editVC.randomContent = self.isRandomTopic

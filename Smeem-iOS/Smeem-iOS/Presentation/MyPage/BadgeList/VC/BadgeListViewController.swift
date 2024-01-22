@@ -72,7 +72,6 @@ class BadgeListViewController: UIViewController {
         
         setBackgroundColor()
         setLayout()
-//        hiddenNavigationBar()
         setDelegate()
         setRegister()
         badgeListGetAPI()

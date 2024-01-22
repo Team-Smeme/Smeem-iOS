@@ -74,6 +74,8 @@
 		4A004D602B4EE2BD003C8936 /* MyPageAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A004D5F2B4EE2BD003C8936 /* MyPageAPI.swift */; };
 		4A0123552AAA087D00E09646 /* BaseResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0123542AAA087D00E09646 /* BaseResponse.swift */; };
 		4A01235F2AAA2C1500E09646 /* SmeemLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A01235E2AAA2C1500E09646 /* SmeemLoadingView.swift */; };
+		4A08480C2B554513008327C7 /* AmplitudeSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4A08480B2B554513008327C7 /* AmplitudeSwift */; };
+		4A08480E2B555FD0008327C7 /* AmplitudeConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A08480D2B555FD0008327C7 /* AmplitudeConstant.swift */; };
 		4A0E8D5829F8362E00E0FC23 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0E8D5729F8362E00E0FC23 /* AuthViewController.swift */; };
 		4A0EA4552A014027006CCE52 /* GeneralResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EA4542A014027006CCE52 /* GeneralResponse.swift */; };
 		4A0EA4572A01403E006CCE52 /* MoyaLoggingPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EA4562A01403E006CCE52 /* MoyaLoggingPlugin.swift */; };
@@ -137,7 +139,7 @@
 		4AE35E9E2A7FE8CE00465FD5 /* UICollectionViewCell+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE35E9D2A7FE8CE00465FD5 /* UICollectionViewCell+.swift */; };
 		4AEB82952A4CB4F200C1114B /* BadgePopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEB82942A4CB4F100C1114B /* BadgePopupViewController.swift */; };
 		4AF58CE92A4820AA00305248 /* AuthNetworkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF58CE82A4820AA00305248 /* AuthNetworkModel.swift */; };
-		6F294A3E2A26177B00856CC8 /* GoalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF507742A10CD4D007C62B1 /* GoalViewController.swift */; };
+		6F294A3E2A26177B00856CC8 /* TrainingGoalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF507742A10CD4D007C62B1 /* TrainingGoalViewController.swift */; };
 		6F294A3F2A26177E00856CC8 /* TrainingGoalCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF507762A10CD96007C62B1 /* TrainingGoalCollectionViewCell.swift */; };
 		6F294A422A26178C00856CC8 /* UserNickNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A13B7582A13D37000F4FB1E /* UserNickNameViewController.swift */; };
 		6F294A432A26179700856CC8 /* ServiceAcceptViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8275D22A1513120083A4AB /* ServiceAcceptViewController.swift */; };
@@ -225,6 +227,7 @@
 		4A004D5F2B4EE2BD003C8936 /* MyPageAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageAPI.swift; sourceTree = "<group>"; };
 		4A0123542AAA087D00E09646 /* BaseResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseResponse.swift; sourceTree = "<group>"; };
 		4A01235E2AAA2C1500E09646 /* SmeemLoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmeemLoadingView.swift; sourceTree = "<group>"; };
+		4A08480D2B555FD0008327C7 /* AmplitudeConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmplitudeConstant.swift; sourceTree = "<group>"; };
 		4A0E8D5729F8362E00E0FC23 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 		4A0EA4542A014027006CCE52 /* GeneralResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralResponse.swift; sourceTree = "<group>"; };
 		4A0EA4562A01403E006CCE52 /* MoyaLoggingPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoyaLoggingPlugin.swift; sourceTree = "<group>"; };
@@ -291,7 +294,7 @@
 		4AE35E9D2A7FE8CE00465FD5 /* UICollectionViewCell+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewCell+.swift"; sourceTree = "<group>"; };
 		4AEB82942A4CB4F100C1114B /* BadgePopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgePopupViewController.swift; sourceTree = "<group>"; };
 		4AEFD4C92A1392DF00DAB2BD /* TrainingWayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingWayView.swift; sourceTree = "<group>"; };
-		4AF507742A10CD4D007C62B1 /* GoalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalViewController.swift; sourceTree = "<group>"; };
+		4AF507742A10CD4D007C62B1 /* TrainingGoalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingGoalViewController.swift; sourceTree = "<group>"; };
 		4AF507762A10CD96007C62B1 /* TrainingGoalCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingGoalCollectionViewCell.swift; sourceTree = "<group>"; };
 		4AF58CE82A4820AA00305248 /* AuthNetworkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthNetworkModel.swift; sourceTree = "<group>"; };
 		6F294A472A27818200856CC8 /* HomeViewFloatingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewFloatingViewController.swift; sourceTree = "<group>"; };
@@ -319,6 +322,7 @@
 				4AA942D92A276C7900A552A0 /* KakaoSDKUser in Frameworks */,
 				4AA942D02A276AFF00A552A0 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 				4AA942C52A2767D900A552A0 /* SnapKit in Frameworks */,
+				4A08480C2B554513008327C7 /* AmplitudeSwift in Frameworks */,
 				4AA942D52A276C7900A552A0 /* KakaoSDKAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -821,7 +825,7 @@
 		4A974AFE2A4F3B7700418DD9 /* VC */ = {
 			isa = PBXGroup;
 			children = (
-				4AF507742A10CD4D007C62B1 /* GoalViewController.swift */,
+				4AF507742A10CD4D007C62B1 /* TrainingGoalViewController.swift */,
 			);
 			path = VC;
 			sourceTree = "<group>";
@@ -888,7 +892,7 @@
 		4AC00EF82AD6D7D3009230DA /* Training */ = {
 			isa = PBXGroup;
 			children = (
-				4AC1D6812B4ED37700D39A98 /* New Group */,
+				4AC1D6812B4ED37700D39A98 /* Model */,
 				4AEFD4C22A136E5F00DAB2BD /* Goal */,
 				4AEFD4C32A136E6F00DAB2BD /* Way */,
 				4AEFD4C62A13907D00DAB2BD /* Alarm */,
@@ -923,14 +927,14 @@
 			path = AuthManagement;
 			sourceTree = "<group>";
 		};
-		4AC1D6812B4ED37700D39A98 /* New Group */ = {
+		4AC1D6812B4ED37700D39A98 /* Model */ = {
 			isa = PBXGroup;
 			children = (
 				4AC1D6822B4ED38200D39A98 /* OnboardingModel.swift */,
 				4A004D4E2B4ED760003C8936 /* PlanListResponse.swift */,
 				4A004D502B4ED783003C8936 /* DetailPlanListResponse.swift */,
 			);
-			path = "New Group";
+			path = Model;
 			sourceTree = "<group>";
 		};
 		4AC4B82B2A2F9F5300E147AA /* Constants */ = {
@@ -939,6 +943,7 @@
 				37A574C229FF6E9C00312453 /* Constant.swift */,
 				4AC4B82C2A2F9FE200E147AA /* UserDefaultsManager.swift */,
 				4A10A3A72AB8AA5800C145E9 /* System.swift */,
+				4A08480D2B555FD0008327C7 /* AmplitudeConstant.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -1104,6 +1109,7 @@
 				4AA942D62A276C7900A552A0 /* KakaoSDKCommon */,
 				4AA942D82A276C7900A552A0 /* KakaoSDKUser */,
 				A301B0A12A30720F006BE0BA /* Kingfisher */,
+				4A08480B2B554513008327C7 /* AmplitudeSwift */,
 			);
 			productName = "Smeem-iOS";
 			productReference = 4A8FFA4C29C9E1FD00FB76C0 /* Smeem-iOS.app */;
@@ -1143,6 +1149,7 @@
 				4AA942CE2A276AFF00A552A0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				4AA942D32A276C7900A552A0 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
 				A301B0A02A30720F006BE0BA /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				4A08480A2B554513008327C7 /* XCRemoteSwiftPackageReference "Amplitude-Swift" */,
 			);
 			productRefGroup = 4A8FFA4D29C9E1FD00FB76C0 /* Products */;
 			projectDirPath = "";
@@ -1186,7 +1193,7 @@
 				37DCA6742A484D5900FF8F90 /* PostDiaryAPI.swift in Sources */,
 				4A9FAB472A4C3D1200C40D5A /* BadgeListTableViewCell.swift in Sources */,
 				373E38592A2F889500DF96F0 /* DiaryDetailRandomSubjectView.swift in Sources */,
-				6F294A3E2A26177B00856CC8 /* GoalViewController.swift in Sources */,
+				6F294A3E2A26177B00856CC8 /* TrainingGoalViewController.swift in Sources */,
 				4AC00EDC2AD3E4F7009230DA /* UIControl+.swift in Sources */,
 				37A271642AA6078C001FFC38 /* SmeemNavigationBar.swift in Sources */,
 				4A6630392A51E04600D19CC9 /* PatchDiaryRequest.swift in Sources */,
@@ -1194,6 +1201,7 @@
 				378E461F2B551A6F00D2A473 /* DeepLResponse.swift in Sources */,
 				3761116C2A278D0E0095EC5A /* String+.swift in Sources */,
 				4AEB82952A4CB4F200C1114B /* BadgePopupViewController.swift in Sources */,
+				4A08480E2B555FD0008327C7 /* AmplitudeConstant.swift in Sources */,
 				4A3774842A42E6EA00357DD1 /* ConfigConstant.swift in Sources */,
 				371107DF2ACAB709007A4AC2 /* BaseViewController.swift in Sources */,
 				6FBC856B2A4B1F9200A43F98 /* MyPageViewController.swift in Sources */,
@@ -1450,9 +1458,9 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Smeem-iOS/Smeem-iOS.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 20230926;
+				CURRENT_PROJECT_VERSION = 20240116;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = J5UBGNBDYX;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1469,7 +1477,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.0;
+				MARKETING_VERSION = 2.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "Team.Smeem-iOS-Dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1493,12 +1501,12 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 20230926;
+				CURRENT_PROJECT_VERSION = 20240116;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = J5UBGNBDYX;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Smeem-iOS/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "smeem-dev";
+				INFOPLIST_KEY_CFBundleDisplayName = smeem;
 				INFOPLIST_KEY_NSUserTrackingUsageDescription = "사용자의 데이터는 개인화된 광고 제공 목적으로 사용됩니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -1510,7 +1518,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.0;
+				MARKETING_VERSION = 2.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "Team.Smeem-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1548,6 +1556,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		4A08480A2B554513008327C7 /* XCRemoteSwiftPackageReference "Amplitude-Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/amplitude/Amplitude-Swift";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 		4AA942C02A2767D000A552A0 /* XCRemoteSwiftPackageReference "FSCalendar" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/WenchaoD/FSCalendar.git";
@@ -1599,6 +1615,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		4A08480B2B554513008327C7 /* AmplitudeSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4A08480A2B554513008327C7 /* XCRemoteSwiftPackageReference "Amplitude-Swift" */;
+			productName = AmplitudeSwift;
+		};
 		4AA942C12A2767D000A552A0 /* FSCalendar */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 4AA942C02A2767D000A552A0 /* XCRemoteSwiftPackageReference "FSCalendar" */;

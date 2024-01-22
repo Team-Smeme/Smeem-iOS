@@ -20,8 +20,8 @@ public class OnboardingAPI {
             case .success(let result):
                 guard let data = try? result.map(GeneralResponse<PlanListResponse>.self) else { return }
                 completion(data)
-            case .failure(let err):
-                print(err)
+            case .failure(let error):
+                print(error)
             }
         }
     }
