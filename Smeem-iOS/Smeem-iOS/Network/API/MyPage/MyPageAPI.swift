@@ -56,11 +56,11 @@ public class MyPageAPI {
         }
     }
     
-    func changeGoal(param: EditGoalRequest, completion: @escaping (GeneralResponse<VoidType>) -> Void) {
+    func changeGoal(param: EditGoalRequest, completion: @escaping (GeneralResponse<NilType>) -> Void) {
         myPageProvider.request(.editGoal(param: param)) { response in
             switch response {
             case .success(let result):
-                guard let data = try? result.map(GeneralResponse<VoidType>.self) else { return }
+                guard let data = try? result.map(GeneralResponse<NilType>.self) else { return }
                 completion(data)
             case .failure(let err):
                 print(err)
@@ -80,11 +80,11 @@ public class MyPageAPI {
         }
     }
     
-    func userPlanPathAPI(param: UserPlanRequest, completion: @escaping (GeneralResponse<VoidType>) -> Void) {
+    func userPlanPathAPI(param: UserPlanRequest, completion: @escaping (GeneralResponse<NilType>) -> Void) {
         myPageProvider.request(.myPageUserPlan(param: param)) { response in
             switch response {
             case .success(let result):
-                guard let data = try? result.map(GeneralResponse<VoidType>.self) else { return }
+                guard let data = try? result.map(GeneralResponse<NilType>.self) else { return }
                 completion(data)
             case .failure(let err):
                 print(err)
@@ -92,11 +92,11 @@ public class MyPageAPI {
         }
     }
     
-    func editAlarmTimeAPI(param: EditAlarmTime, completion: @escaping (GeneralResponse<VoidType>) -> Void) {
+    func editAlarmTimeAPI(param: EditAlarmTime, completion: @escaping (GeneralResponse<NilType>) -> Void) {
         myPageProvider.request(.editAlarmTime(param: param)) { response in
             switch response {
             case .success(let result):
-                guard let data = try? result.map(GeneralResponse<VoidType>.self) else { return }
+                guard let data = try? result.map(GeneralResponse<NilType>.self) else { return }
                 completion(data)
             case .failure(let err):
                 print(err)
@@ -104,11 +104,11 @@ public class MyPageAPI {
         }
     }
     
-    func editPushAPI(param: EditPushRequest, completion: @escaping (GeneralResponse<VoidType>) -> Void) {
+    func editPushAPI(param: EditPushRequest, completion: @escaping (GeneralResponse<NilType>) -> Void) {
         myPageProvider.request(.editPush(param: param)) { response in
             switch response {
             case .success(let result):
-                guard let data = try? result.map(GeneralResponse<VoidType>.self) else { return }
+                guard let data = try? result.map(GeneralResponse<NilType>.self) else { return }
                 completion(data)
             case .failure(let err):
                 print(err)

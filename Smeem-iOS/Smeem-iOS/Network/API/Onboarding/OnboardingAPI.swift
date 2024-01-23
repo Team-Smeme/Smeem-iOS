@@ -38,11 +38,11 @@ public class OnboardingAPI {
         }
     }
     
-    func userPlanPathAPI(param: UserPlanRequest, accessToken: String, completion: @escaping (GeneralResponse<VoidType>) -> Void) {
+    func userPlanPathAPI(param: UserPlanRequest, accessToken: String, completion: @escaping (GeneralResponse<NilType>) -> Void) {
         onboardingProvider.request(.onboardingUserPlan(param: param, token: accessToken)) { response in
             switch response {
             case .success(let result):
-                guard let data = try? result.map(GeneralResponse<VoidType>.self) else { return }
+                guard let data = try? result.map(GeneralResponse<NilType>.self) else { return }
                 completion(data)
             case .failure(let err):
                 print(err)

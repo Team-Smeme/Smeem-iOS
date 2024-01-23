@@ -8,43 +8,17 @@
 import Foundation
 
 struct GeneralResponse<T: Decodable>: Decodable {
-    var success: Bool
-    var message: String?
-    var data: T?
-    
-    enum CodingKeys: String, CodingKey {
-        case message
-        case data
-        case success
-    }
-    
-    init(from decoder: Decoder) throws {
-        let values = try decoder.container(keyedBy: CodingKeys.self)
-        message = (try? values.decode(String.self, forKey: .message)) ?? ""
-        data = (try? values.decode(T.self, forKey: .data)) ?? nil
-        success = (try? values.decode(Bool.self, forKey: .success)) ?? false
-    }
+    let success: Bool
+    let message: String
+    let data: T?
 }
 
 struct GeneralArrayResponse<T: Decodable>: Decodable {
-    let message: String?
-    let success: Bool?
-    let data: [T]?
-    
-    enum CodingKeys: String, CodingKey {
-        case message
-        case data
-        case success
-    }
-    
-    init(from decoder: Decoder) throws {
-        let values = try decoder.container(keyedBy: CodingKeys.self)
-        message = (try? values.decode(String.self, forKey: .message)) ?? ""
-        data = (try? values.decode([T].self, forKey: .data)) ?? []
-        success = (try? values.decode(Bool.self, forKey: .success)) ?? false
-    }
+    let success: Bool
+    let message: String
+    let data: T?
 }
 
-/// status, message, success 이외에 정보를 사용하지 않는 경우에 VoidType를 설정해주면 됩니다!
-struct VoidType: Decodable {}
+/// status, message는 값이 있지만, data가 nil일 경우 사용합니다
+struct NilType: Decodable {}
 

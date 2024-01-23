@@ -240,15 +240,15 @@ extension AuthManagementViewController {
     
     private func logoutAPI() {
         AuthAPI.shared.logoutAPI() { response in
-            guard let _ = response.data else { return }
-            
-            UserDefaultsManager.accessToken = ""
-            UserDefaultsManager.clientAccessToken = ""
-            UserDefaultsManager.clientRefreshToken = ""
-            UserDefaultsManager.refreshToken = ""
-            UserDefaultsManager.hasKakaoToken = nil
-            
-            self.changeRootViewController(SplashViewController())
+            if response.success {
+                UserDefaultsManager.accessToken = ""
+                UserDefaultsManager.clientAccessToken = ""
+                UserDefaultsManager.clientRefreshToken = ""
+                UserDefaultsManager.refreshToken = ""
+                UserDefaultsManager.hasKakaoToken = nil
+                
+                self.changeRootViewController(SplashViewController())
+            }
         }
     }
 }

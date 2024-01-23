@@ -25,11 +25,11 @@ final class DetailDiaryAPI {
         }
     }
     
-    func deleteDiary(diaryID: Int, complention: @escaping (GeneralResponse<VoidType>?) -> Void) {
+    func deleteDiary(diaryID: Int, complention: @escaping (GeneralResponse<NilType>?) -> Void) {
         detailDiaryProvider.request(.deleteDiary(diaryID: diaryID)) { response in
             switch response {
             case .success(let result):
-                guard let data = try? result.map(GeneralResponse<VoidType>.self) else { return }
+                guard let data = try? result.map(GeneralResponse<NilType>.self) else { return }
                 complention(data)
             case .failure(let err):
                 print(err)

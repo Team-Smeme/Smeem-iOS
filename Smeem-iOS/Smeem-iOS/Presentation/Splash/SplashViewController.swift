@@ -85,7 +85,7 @@ final class SplashViewController: UIViewController {
                     if let refresToken = response.data?.refreshToken {
                         UserDefaultsManager.refreshToken = refresToken
                     }
-                    
+
                     self.changeRootViewController(HomeViewController())
                 }
                 // 토큰 만료(재로그인)

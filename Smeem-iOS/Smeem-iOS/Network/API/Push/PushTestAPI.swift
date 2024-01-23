@@ -11,11 +11,11 @@ final class PushTestAPI {
     static let shared = PushTestAPI()
     private let pushTestProvider = MoyaProvider<PushTestService>(plugins: [MoyaLoggingPlugin()])
     
-    func getPustTest(completion: @escaping (GeneralResponse<VoidType>?) -> Void) {
+    func getPustTest(completion: @escaping (GeneralResponse<NilType>?) -> Void) {
         pushTestProvider.request(.pushTest) { response in
             switch response {
             case .success(let result):
-                guard let data = try? result.map(GeneralResponse<VoidType>.self) else { return }
+                guard let data = try? result.map(GeneralResponse<NilType>.self) else { return }
                 completion(data)
             case .failure(let err):
                 print(err)

@@ -29,26 +29,42 @@ public class AuthAPI {
         }
     }
     
-    func reLoginAPI(completion: @escaping (GeneralResponse<ReLoginResponse>) -> Void) {
-        authProvider.request(.reLogin) { response in
-            switch response {
-            case .success(let result):
-                guard let data = try? result.map(GeneralResponse<ReLoginResponse>.self) else {
-                    print("⭐️⭐️⭐️ 디코더 에러 ⭐️⭐️⭐️")
+//    func reLoginAPI(completion: @escaping (Result<ReLoginResponse, Error>) -> ()) {
+//        authProvider.request(.reLogin) { result in
+//            switch result {
+//            case .success(let response):
+//                do {
+//                    guard let data = try response.map(GeneralResponse<ReLoginResponse>.self).data else { return }
+//                    completion(.success(data))
+//                } catch {
+//                    completion(.failure(error))
+//                }
+//            case .failure(let error):
+//                completion(.failure(error))
+//            }
+//        }
+//    }
+    
+    func reLoginAPI(completion: @escaping (GeneralResponse<ReLoginResponse>) -> ()) {
+        authProvider.request(.reLogin) { result in
+            switch result {
+            case .success(let response):
+                guard let data = try? response.map(GeneralResponse<ReLoginResponse>.self) else {
+                    print("에러")
                     return
                 }
                 completion(data)
-            case .failure(let err):
-                print(err)
+            case .failure(let error):
+                print(error)
             }
         }
     }
     
-    func logoutAPI(completion: @escaping (GeneralResponse<VoidType>) -> Void) {
+    func logoutAPI(completion: @escaping (GeneralResponse<NilType>) -> Void) {
         authProvider.request(.logout) { response in
             switch response {
             case .success(let result):
-                guard let data = try? result.map(GeneralResponse<VoidType>.self) else {
+                guard let data = try? result.map(GeneralResponse<NilType>.self) else {
                     print("⭐️⭐️⭐️ 디코더 에러 ⭐️⭐️⭐️")
                     return
                 }
@@ -59,11 +75,11 @@ public class AuthAPI {
         }
     }
     
-    func resignAPI(completion: @escaping (GeneralResponse<VoidType>) -> Void) {
+    func resignAPI(completion: @escaping (GeneralResponse<NilType>) -> Void) {
         authProvider.request(.resign) { response in
             switch response {
             case .success(let result):
-                guard let data = try? result.map(GeneralResponse<VoidType>.self) else {
+                guard let data = try? result.map(GeneralResponse<NilType>.self) else {
                     print("⭐️⭐️⭐️ 디코더 에러 ⭐️⭐️⭐️")
                     return
                 }
