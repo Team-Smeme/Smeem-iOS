@@ -87,7 +87,7 @@ final class MyPageViewController: BaseViewController {
     }()
     
     private let howLearningView: TrainingWayView = {
-        let view = TrainingWayView()
+        let view = TrainingWayView(type: .isShown)
         return view
     }()
     

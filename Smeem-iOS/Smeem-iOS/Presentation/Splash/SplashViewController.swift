@@ -76,25 +76,34 @@ final class SplashViewController: UIViewController {
     
     private func checkToken() {
         if UserDefaultsManager.accessToken != "" {
-            AuthAPI.shared.reLoginAPI() { response in
+            AuthAPI.shared.reLoginAPI() { result in
+                SmeemLoadingView.showLoading()
                 // 토큰 재발급 성공 (refreshToken)
-                if response.success {
-                    if let accessToken = response.data?.accessToken {
-                        UserDefaultsManager.accessToken = accessToken
+                switch result {
+                case .success(let response):
+                    
+                    if response.success {
+                        if let accessToken = response.data?.accessToken {
+                            UserDefaultsManager.accessToken = accessToken
+                        }
+                        if let refresToken = response.data?.accessToken {
+                            UserDefaultsManager.refreshToken = refresToken
+                        }
+                        
+                        self.changeRootViewController(HomeViewController())
+                    // 토큰 만료 ( 재로그인)
+                    } else if !response.success {
+                        self.presentSmeemStartVC()
                     }
-                    if let refresToken = response.data?.refreshToken {
-                        UserDefaultsManager.refreshToken = refresToken
-                    }
-
-                    self.changeRootViewController(HomeViewController())
+                    
+                case .failure(let error):
+                    self.showToast(toastType: .smeemErrorToast(message: error))
                 }
-                // 토큰 만료(재로그인)
-                else {
-                    self.presentSmeemStartVC()
-                }
+                
+                SmeemLoadingView.hideLoading()
             }
+        // 토큰 없는 경우 (처음 진입 유저)
         } else {
-            // 토큰을 가지고 있지 않음
             self.presentSmeemStartVC()
         }
     }

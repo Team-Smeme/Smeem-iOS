@@ -24,17 +24,14 @@ import SnapKit
 
 enum ToastViewType: Error {
     case smeemToast(bodyType: SmeemToast)
-    case smeemErrorToast(text: String)
-    case networkErrorToast(message: String, body: String = "재접속하거나 나중에 다시 시도해 주세요")
+    case smeemErrorToast(message: SmeemErrorMessage, body: String = "재접속하거나 나중에 다시 시도해 주세요")
     
     var displayText: (head: String?, body: String?) {
         switch self {
         case .smeemToast(bodyType: let bodyType):
             return (nil, bodyType.displayText)
-        case .smeemErrorToast(let text):
-            return (nil, text)
-        case .networkErrorToast(let message, let bodyText):
-            return (message, bodyText)
+        case .smeemErrorToast(let message, let bodyText):
+            return (message.displayText, bodyText)
         }
     }
 }
@@ -48,6 +45,23 @@ enum SmeemToast: String {
     
     var displayText: String {
         return self.rawValue
+    }
+}
+
+enum SmeemErrorMessage: Error {
+    case userError
+    case clientError
+    case serverError
+    
+    var displayText: String {
+        switch self {
+        case .userError:
+            return "인터넷 연결을 확인해 주세요 :("
+        case .clientError:
+            return "죄송합니다, 시스템 오류가 발생했어요 :("
+        case .serverError:
+            return "데이터를 불러올 수 없어요 :("
+        }
     }
 }
 
@@ -86,10 +100,8 @@ final class SmeemToastView: UIView {
         switch type {
         case .smeemToast(bodyType: let bodyType):
             self.bodyText = bodyType.rawValue
-        case .smeemErrorToast(let text):
-            self.bodyText = text
-        case .networkErrorToast(_, let text):
-            self.bodyText = text
+        case .smeemErrorToast(let body, _):
+            self.bodyText = body.displayText
         }
         super.init(frame: .zero)
         alpha = 0
@@ -129,19 +141,19 @@ final class SmeemToastView: UIView {
         
         func lineHeight(for type: ToastViewType) -> CGFloat {
             switch type {
-            case .smeemToast, .smeemErrorToast:
+            case .smeemToast:
                 return 22
-            case .networkErrorToast:
+            case .smeemErrorToast:
                 return 14
             }
         }
         
         switch self.type {
-        case .smeemToast, .smeemErrorToast:
+        case .smeemToast:
             backgroundColor = .toastBackground
             bodyLabel.font = .c2
             
-        case .networkErrorToast:
+        case .smeemErrorToast:
             backgroundColor = .smeemBlack
             bodyLabel.font = .c4
         }
@@ -159,12 +171,12 @@ final class SmeemToastView: UIView {
         addSubviews(cautionImage, headLabel, bodyLabel)
         
         switch type {
-        case .smeemToast, .smeemErrorToast:
+        case .smeemToast:
             bodyLabel.snp.makeConstraints { make in
                 make.centerY.equalToSuperview()
                 make.leading.equalToSuperview().offset(convertByWidthRatio(16))
             }
-        case .networkErrorToast:
+        case .smeemErrorToast:
             cautionImage.snp.makeConstraints { make in
                 make.centerY.equalToSuperview()
                 make.leading.equalTo(convertByWidthRatio(19))

@@ -29,33 +29,22 @@ public class AuthAPI {
         }
     }
     
-//    func reLoginAPI(completion: @escaping (Result<ReLoginResponse, Error>) -> ()) {
-//        authProvider.request(.reLogin) { result in
-//            switch result {
-//            case .success(let response):
-//                do {
-//                    guard let data = try response.map(GeneralResponse<ReLoginResponse>.self).data else { return }
-//                    completion(.success(data))
-//                } catch {
-//                    completion(.failure(error))
-//                }
-//            case .failure(let error):
-//                completion(.failure(error))
-//            }
-//        }
-//    }
-    
-    func reLoginAPI(completion: @escaping (GeneralResponse<ReLoginResponse>) -> ()) {
+    func reLoginAPI(completion: @escaping (Result<GeneralResponse<ReLoginResponse>, SmeemErrorMessage>) -> ()) {
         authProvider.request(.reLogin) { result in
             switch result {
             case .success(let response):
-                guard let data = try? response.map(GeneralResponse<ReLoginResponse>.self) else {
-                    print("에러")
-                    return
+                let statusCode = response.statusCode
+                
+                do {
+                    let data = try response.map(GeneralResponse<ReLoginResponse>.self)
+                    completion(.success(data))
+                } catch {
+                    let error = NetworkManager.statusCodeErrorHandling(statusCode: statusCode)
+                    completion(.failure(error))
                 }
-                completion(data)
-            case .failure(let error):
-                print(error)
+                
+            case .failure(_):
+                completion(.failure(.userError))
             }
         }
     }

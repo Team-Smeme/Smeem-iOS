@@ -39,7 +39,7 @@ final class EditGoalViewController: BaseViewController {
     }()
     
     private let howLearningView: TrainingWayView = {
-        let view = TrainingWayView()
+        let view = TrainingWayView(type: .none)
         return view
     }()
     
