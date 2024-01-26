@@ -140,18 +140,22 @@ extension EditGoalViewController {
     }
     
     func detailPlanListGetAPI(tempTarget: String) {
-        OnboardingAPI.shared.detailPlanList(param: tempTarget) { response in
-            self.showLodingView(loadingView: self.loadingView)
+        SmeemLoadingView.showLoading()
+        
+        OnboardingAPI.shared.detailPlanList(param: tempTarget) { result in
+            switch result {
+            case .success(let response):
+//                guard let response = response.data else { return }
+                self.planName = response.name
+                self.planWay = response.way
+                self.planDetailWay = response.detail
+                self.configurePlanData()
+                
+            case .failure(let error):
+                self.showToast(toastType: .smeemErrorToast(message: error))
+            }
             
-            guard let data = response.data else { return }
-            
-            self.planName = data.name
-            self.planWay = data.way
-            self.planDetailWay = data.detail
-            
-            self.configurePlanData()
-            
-            self.hideLodingView(loadingView: self.loadingView)
+            SmeemLoadingView.hideLoading()
         }
     }
 }

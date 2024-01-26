@@ -201,25 +201,31 @@ extension UserNicknameViewController: UITextFieldDelegate {
 
 extension UserNicknameViewController {
     private func checkNicknameGetAPI(nickname: String) {
-        OnboardingAPI.shared.ninknameCheckAPI(userName: nickname, accessToken: UserDefaultsManager.clientAccessToken) { response in
-            guard let data = response.data else { return }
-            
-            self.hideLodingView(loadingView: self.loadingView)
-            self.isExistNinkname = data.isExist
-            
-            if self.isExistNinkname {
-                self.doubleCheckLabel.isHidden = false
-                self.nextButton.changeButtonType(buttonType: .notEnabled)
-            } else {
-                self.doubleCheckLabel.isHidden = true
-                self.nextButton.changeButtonType(buttonType: .enabled)
+        SmeemLoadingView.showLoading()
+        
+        OnboardingAPI.shared.ninknameCheckAPI(userName: nickname, accessToken: UserDefaultsManager.clientAccessToken) { result in
+            switch result {
+            case .success(let response):
+                self.isExistNinkname = response.isExist
+                
+                if self.isExistNinkname {
+                    self.doubleCheckLabel.isHidden = false
+                    self.nextButton.changeButtonType(buttonType: .notEnabled)
+                } else {
+                    self.doubleCheckLabel.isHidden = true
+                    self.nextButton.changeButtonType(buttonType: .enabled)
+                }
+                
+                if !self.isExistNinkname {
+                    let serviceVC = ServiceAcceptViewController()
+                    serviceVC.nickNameData = self.nicknameTextField.text ?? ""
+                    self.navigationController?.pushViewController(serviceVC, animated: true)
+                }
+            case .failure(let error):
+                self.showToast(toastType: .smeemErrorToast(message: error))
             }
             
-            if !self.isExistNinkname {
-                let serviceVC = ServiceAcceptViewController()
-                serviceVC.nickNameData = self.nicknameTextField.text ?? ""
-                self.navigationController?.pushViewController(serviceVC, animated: true)
-            }
+            SmeemLoadingView.hideLoading()
         }
     }
 }

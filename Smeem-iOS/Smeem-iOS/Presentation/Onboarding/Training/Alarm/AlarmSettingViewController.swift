@@ -289,16 +289,19 @@ final class AlarmSettingViewController: BaseViewController {
 
 extension AlarmSettingViewController {
     private func userPlanPatchAPI(userPlan: UserPlanRequest, accessToken: String) {
-        OnboardingAPI.shared.userPlanPathAPI(param: userPlan, accessToken: accessToken) { response in
-            self.hideLodingView(loadingView: self.loadingView)
+        SmeemLoadingView.showLoading()
+        OnboardingAPI.shared.userPlanPathAPI(param: userPlan, accessToken: accessToken) { result in
             
-            if response.success == true {
+            switch result {
+            case .success(_):
                 let userNicknameVC = UserNicknameViewController()
                 self.navigationController?.pushViewController(userNicknameVC, animated: true)
-            } else {
-                print("학습 목표 API 호출 실패")
-//                self.showToast(toastType: .errorToast(errorType: .networkError))
+            case .failure(let error):
+                self.showToast(toastType: .smeemErrorToast(message: error))
             }
+            
+            SmeemLoadingView.hideLoading()
+
         }
     }
 }

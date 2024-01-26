@@ -12,70 +12,105 @@ public class OnboardingAPI {
     
     static let shared = OnboardingAPI()
     private let onboardingProvider = MoyaProvider<OnboardingService>(plugins: [MoyaLoggingPlugin()])
-//    private var nicknameResponse: NicknameResponse?
     
-    func planList(completion: @escaping (GeneralResponse<PlanListResponse>) -> Void) {
+    func planList(completion: @escaping (Result<PlanListResponse, SmeemError>) -> ()) {
         onboardingProvider.request(.planList) { response in
             switch response {
             case .success(let result):
-                guard let data = try? result.map(GeneralResponse<PlanListResponse>.self) else { return }
-                completion(data)
-            case .failure(let error):
-                print(error)
+                let statusCode = result.statusCode
+                
+                do {
+                    guard let data = try result.map(GeneralResponse<PlanListResponse>.self).data else {
+                        throw NetworkManager.statusCodeErrorHandling(statusCode: statusCode)
+                    }
+                    completion(.success(data))
+                    
+                } catch {
+                    completion(.failure(error as! SmeemError))
+                }
+                
+            case .failure(_):
+                completion(.failure(.userError))
             }
         }
     }
     
-    func detailPlanList(param: String, completion: @escaping (GeneralResponse<DetailPlanListResponse>) -> Void) {
+    func detailPlanList(param: String, completion: @escaping (Result<DetailPlanListResponse, SmeemError>) -> ()) {
         onboardingProvider.request(.detailPlanList(param: param)) { response in
             switch response {
             case .success(let result):
-                guard let data = try? result.map(GeneralResponse<DetailPlanListResponse>.self) else { return }
-                completion(data)
-            case .failure(let err):
-                print(err)
+                let statusCode = result.statusCode
+                do {
+                    guard let data = try result.map(GeneralResponse<DetailPlanListResponse>.self).data else {
+                        throw NetworkManager.statusCodeErrorHandling(statusCode: statusCode)
+                    }
+                    completion(.success(data))
+                } catch {
+                    completion(.failure(error as! SmeemError))
+                }
+                
+            case .failure(_):
+                completion(.failure(.userError))
             }
         }
     }
     
-    func userPlanPathAPI(param: UserPlanRequest, accessToken: String, completion: @escaping (GeneralResponse<NilType>) -> Void) {
+    func userPlanPathAPI(param: UserPlanRequest, accessToken: String, completion: @escaping (Result<NilType, SmeemError>) -> ()) {
         onboardingProvider.request(.onboardingUserPlan(param: param, token: accessToken)) { response in
             switch response {
             case .success(let result):
-                guard let data = try? result.map(GeneralResponse<NilType>.self) else { return }
-                completion(data)
-            case .failure(let err):
-                print(err)
+                let statusCode = result.statusCode
+                do {
+                    // TODO : response 형식에 따른 처리 고민 필요
+                    let data = try result.map(GeneralResponse<NilType>.self)
+                } catch {
+                    completion(.failure(error as! SmeemError))
+                }
+                
+            case .failure(_):
+                completion(.failure(.userError))
             }
         }
     }
     
-    func serviceAcceptedPatch(param: ServiceAcceptRequest, accessToken: String, completion: @escaping (GeneralResponse<ServiceAcceptResponse>) -> Void) {
+    func serviceAcceptedPatch(param: ServiceAcceptRequest, accessToken: String, completion: @escaping (Result<ServiceAcceptResponse, SmeemError>) -> ()) {
         onboardingProvider.request(.serviceAccept(param: param, token: accessToken)) { response in
             switch response {
             case .success(let result):
-                guard let data = try? result.map(GeneralResponse<ServiceAcceptResponse>.self) else {
-                    print("⭐️⭐️⭐️ 디코더 에러 ⭐️⭐️⭐️")
-                    return
+                let statusCode = result.statusCode
+                
+                do {
+                    guard let data = try result.map(GeneralResponse<ServiceAcceptResponse>.self).data else {
+                        throw NetworkManager.statusCodeErrorHandling(statusCode: statusCode)
+                    }
+                    completion(.success(data))
+                } catch {
+                    completion(.failure(error as! SmeemError))
                 }
-                completion(data)
-            case .failure(let err):
-                print(err)
+                
+            case .failure(_):
+                completion(.failure(.userError))
             }
         }
     }
     
-    func ninknameCheckAPI(userName: String, accessToken: String, completion: @escaping (GeneralResponse<NicknameCheckResponse>) -> Void) {
+    func ninknameCheckAPI(userName: String, accessToken: String, completion: @escaping (Result<NicknameCheckResponse, SmeemError>) -> Void) {
         onboardingProvider.request(.checkNickname(param: userName, token: accessToken)) { response in
             switch response {
             case .success(let result):
-                guard let data = try? result.map(GeneralResponse<NicknameCheckResponse>.self) else {
-                    print("⭐️⭐️⭐️ 디코더 에러 ⭐️⭐️⭐️")
-                    return
+                let statusCode = result.statusCode
+                
+                do {
+                    guard let data = try result.map(GeneralResponse<NicknameCheckResponse>.self).data else {
+                        throw NetworkManager.statusCodeErrorHandling(statusCode: statusCode)
+                    }
+                    completion(.success(data))
+                } catch {
+                    completion(.failure(error as! SmeemError))
                 }
-                completion(data)
-            case .failure(let err):
-                print(err)
+                
+            case .failure(_):
+                completion(.failure(.userError))
             }
         }
     }

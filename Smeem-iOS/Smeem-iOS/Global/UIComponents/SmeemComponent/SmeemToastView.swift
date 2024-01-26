@@ -24,7 +24,7 @@ import SnapKit
 
 enum ToastViewType: Error {
     case smeemToast(bodyType: SmeemToast)
-    case smeemErrorToast(message: SmeemErrorMessage, body: String = "재접속하거나 나중에 다시 시도해 주세요")
+    case smeemErrorToast(message: SmeemError, body: String = "재접속하거나 나중에 다시 시도해 주세요")
     
     var displayText: (head: String?, body: String?) {
         switch self {
@@ -48,7 +48,7 @@ enum SmeemToast: String {
     }
 }
 
-enum SmeemErrorMessage: Error {
+enum SmeemError: Error {
     case userError
     case clientError
     case serverError

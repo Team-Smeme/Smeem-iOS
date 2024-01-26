@@ -8,13 +8,14 @@
 import Foundation
 
 final class NetworkManager {
-    static func statusCodeErrorHandling(statusCode: Int) -> SmeemErrorMessage {
+    static func statusCodeErrorHandling(statusCode: Int) -> SmeemError {
         switch statusCode {
         case 400..<500:
             return .clientError
         case 500...:
             return .serverError
-        default: break
+        default:
+            break
         }
         return .userError
     }
