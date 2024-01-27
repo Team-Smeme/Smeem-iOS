@@ -10,7 +10,7 @@ import Moya
 
 final class MyPageAPI {
     static let shared = MyPageAPI()
-    let myPageProvider = MoyaProvider<MyPageService>(plugins: [MoyaLoggingPlugin()])
+    private let myPageProvider = MoyaProvider<MyPageService>(plugins: [MoyaLoggingPlugin()])
     
     func myPageInfo(completion: @escaping (Result<MyPageResponse, SmeemError>) -> ()) {
         myPageProvider.request(.myPageInfo) { result in

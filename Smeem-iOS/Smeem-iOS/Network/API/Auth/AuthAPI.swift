@@ -12,7 +12,6 @@ public class AuthAPI {
     
     static let shared = AuthAPI()
     private let authProvider = MoyaProvider<AuthService>(plugins: [MoyaLoggingPlugin()])
-    private var loginResponse: GeneralResponse<LoginResponse>?
     
     func loginAPI(param: LoginRequest, completion: @escaping (Result<LoginResponse, SmeemError>) -> ()) {
         authProvider.request(.login(param: param)) { result in

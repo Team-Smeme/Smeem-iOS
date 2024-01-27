@@ -507,17 +507,26 @@ extension HomeViewController: FSCalendarDelegateAppearance {
 extension HomeViewController {
     /// 이번 달+a (앞뒤로 일주일 여유분까지) 일기 불러오는 함수
     func homeDiaryWithAPI(start: String, end: String) {
-        HomeAPI.shared.homeDiaryList(startDate: start, endDate: end) { response in
+        SmeemLoadingView.showLoading()
+        
+        HomeAPI.shared.homeDiaryList(startDate: start, endDate: end) { result in
             
-            guard let homeDiariesData = response?.data?.diaries else { return }
-            homeDiariesData.forEach {
-                self.homeDiaryDict[String($0.createdAt.prefix(10))] = HomeDiaryCustom(diaryId: $0.diaryId, content: $0.content, createdTime: String($0.createdAt.suffix(5)))
+            switch result {
+            case .success(let response):
+                
+                response.diaries.forEach {
+                    self.homeDiaryDict[String($0.createdAt.prefix(10))] = HomeDiaryCustom(diaryId: $0.diaryId, content: $0.content, createdTime: String($0.createdAt.suffix(5)))
+                }
+                self.writtenDaysStringList = self.homeDiaryDict
+                    .map { $0.key }
+                self.setData()
+                self.configureBottomLayout(date: self.currentDate)
+                self.calendar.reloadData()
+            case .failure(let error):
+                self.showToast(toastType: .smeemErrorToast(message: error))
             }
-            self.writtenDaysStringList = self.homeDiaryDict
-                .map { $0.key }
-            self.setData()
-            self.configureBottomLayout(date: self.currentDate)
-            self.calendar.reloadData()
+            
+            SmeemLoadingView.hideLoading()
         }
     }
 }

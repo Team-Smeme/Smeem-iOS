@@ -131,24 +131,41 @@ extension DetailDiaryViewController: NavigationBarActionDelegate {
 extension DetailDiaryViewController {
     
     func detailDiaryWithAPI(diaryID: Int) {
-        DetailDiaryAPI.shared.getDetailDiary(diaryID: diaryId) { response in
-            guard let detailDiaryData = response?.data else { return }
+        SmeemLoadingView.showLoading()
+        
+        DetailDiaryAPI.shared.getDetailDiary(diaryID: diaryId) { result in
             
-            self.isRandomTopic = detailDiaryData.topic
-            self.diaryContent = detailDiaryData.content
-            self.dateCreated = detailDiaryData.createdAt
-            self.userName = detailDiaryData.username
-            self.setData()
-            self.setScrollerViewType()
+            switch result {
+            case .success(let response):
+                self.isRandomTopic = response.topic
+                self.diaryContent = response.content
+                self.dateCreated = response.createdAt
+                self.userName = response.username
+                self.setData()
+                self.setScrollerViewType()
+            case .failure(let error):
+                self.showToast(toastType: .smeemErrorToast(message: error))
+            }
+            
+            SmeemLoadingView.hideLoading()
         }
     }
     
     func deleteDiaryWithAPI(diaryID: Int) {
-        DetailDiaryAPI.shared.deleteDiary(diaryID: diaryId) { response in
+        SmeemLoadingView.showLoading()
+        
+        DetailDiaryAPI.shared.deleteDiary(diaryID: diaryId) { result in
             
-            let homeVC = HomeViewController()
-            let rootVC = UINavigationController(rootViewController: homeVC)
-            self.changeRootViewControllerAndPresent(rootVC)
+            switch result {
+            case .success(_):
+                let homeVC = HomeViewController()
+                let rootVC = UINavigationController(rootViewController: homeVC)
+                self.changeRootViewControllerAndPresent(rootVC)
+            case .failure(let error):
+                self.showToast(toastType: .smeemErrorToast(message: error))
+            }
+            
+            SmeemLoadingView.hideLoading()
         }
     }
 }

@@ -9,23 +9,26 @@ import Foundation
 
 import Moya
 
-public class HomeAPI {
+final class HomeAPI {
     static let shared = HomeAPI()
-    var homeProvider = MoyaProvider<HomeService>(plugins: [MoyaLoggingPlugin()])
-    private var homeDiaryListData: GeneralResponse<HomeDiaryResponse>?
+    private let homeProvider = MoyaProvider<HomeService>(plugins: [MoyaLoggingPlugin()])
     
-    func homeDiaryList(startDate: String, endDate: String, completion: @escaping (GeneralResponse<HomeDiaryResponse>?) -> Void) {
-        homeProvider.request(.HomeDiary(startDate: startDate, endDate: endDate)) { response in
-            switch response {
-            case .success(let result):
+    func homeDiaryList(startDate: String,
+                       endDate: String,
+                       completion: @escaping (Result<HomeDiaryResponse, SmeemError>) -> ()) {
+        homeProvider.request(.HomeDiary(startDate: startDate, endDate: endDate)) { result in
+            switch result {
+            case .success(let response):
+                let statusCode = response.statusCode
                 do {
-                    self.homeDiaryListData = try result.map(GeneralResponse<HomeDiaryResponse>.self)
-                    completion(self.homeDiaryListData)
+                    guard let data = try response.map(GeneralResponse<HomeDiaryResponse>.self).data else { return }
+                    completion(.success(data))
                 } catch {
-                    print(error)
+                    let error = NetworkManager.statusCodeErrorHandling(statusCode: statusCode)
+                    completion(.failure(error))
                 }
-            case .failure(let err):
-                print(err)
+            case .failure(_):
+                completion(.failure(.userError))
             }
         }
     }
