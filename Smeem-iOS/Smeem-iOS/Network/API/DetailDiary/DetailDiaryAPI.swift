@@ -12,14 +12,14 @@ final class DetailDiaryAPI {
     private let detailDiaryProvider = MoyaProvider<DetailDiaryService>(plugins:[MoyaLoggingPlugin()])
     
     func getDetailDiary(diaryID: Int,
-                        completion: @escaping (Result<DetailDirayData, SmeemError>) -> ()) {
+                        completion: @escaping (Result<DetailDiaryResponse, SmeemError>) -> ()) {
         detailDiaryProvider.request(.detailDiary(diaryID: diaryID)) { result in
             switch result {
             case .success(let response):
                 let statusCode = response.statusCode
                 
                 do {
-                    guard let data = try response.map(GeneralResponse<DetailDiaryResponse>.self).data?.data else { return }
+                    guard let data = try response.map(GeneralResponse<DetailDiaryResponse>.self).data else { return }
                     completion(.success(data))
                 } catch {
                     let error = NetworkManager.statusCodeErrorHandling(statusCode: statusCode)
