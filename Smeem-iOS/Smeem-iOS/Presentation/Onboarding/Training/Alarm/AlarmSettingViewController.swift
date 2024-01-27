@@ -24,8 +24,6 @@ final class AlarmSettingViewController: BaseViewController {
     
     // MARK: - UI Property
     
-    private let loadingView = LoadingView()
-    
     private let nowStepOneLabel: UILabel = {
         let label = UILabel()
         label.text = "3"
@@ -211,7 +209,6 @@ final class AlarmSettingViewController: BaseViewController {
             }
         } else {
         /// 로그인한 유저라면 닉네임 설정 뷰로 이동
-            self.showLodingView(loadingView: loadingView)
             self.userPlanPatchAPI(userPlan: userPlanRequest, accessToken: UserDefaultsManager.clientAccessToken)
         }
     }

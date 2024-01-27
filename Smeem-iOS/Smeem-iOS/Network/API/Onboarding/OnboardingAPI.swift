@@ -20,13 +20,12 @@ public class OnboardingAPI {
                 let statusCode = result.statusCode
                 
                 do {
-                    guard let data = try result.map(GeneralResponse<PlanListResponse>.self).data else {
-                        throw NetworkManager.statusCodeErrorHandling(statusCode: statusCode)
-                    }
+                    guard let data = try result.map(GeneralResponse<PlanListResponse>.self).data else { return }
                     completion(.success(data))
                     
                 } catch {
-                    completion(.failure(error as! SmeemError))
+                    let error = NetworkManager.statusCodeErrorHandling(statusCode: statusCode)
+                    completion(.failure(error))
                 }
                 
             case .failure(_):
@@ -41,12 +40,11 @@ public class OnboardingAPI {
             case .success(let result):
                 let statusCode = result.statusCode
                 do {
-                    guard let data = try result.map(GeneralResponse<DetailPlanListResponse>.self).data else {
-                        throw NetworkManager.statusCodeErrorHandling(statusCode: statusCode)
-                    }
+                    guard let data = try result.map(GeneralResponse<DetailPlanListResponse>.self).data else { return }
                     completion(.success(data))
                 } catch {
-                    completion(.failure(error as! SmeemError))
+                    let error = NetworkManager.statusCodeErrorHandling(statusCode: statusCode)
+                    completion(.failure(error))
                 }
                 
             case .failure(_):
@@ -64,7 +62,8 @@ public class OnboardingAPI {
                     // TODO : response 형식에 따른 처리 고민 필요
                     let data = try result.map(GeneralResponse<NilType>.self)
                 } catch {
-                    completion(.failure(error as! SmeemError))
+                    let error = NetworkManager.statusCodeErrorHandling(statusCode: statusCode)
+                    completion(.failure(error))
                 }
                 
             case .failure(_):
@@ -80,12 +79,11 @@ public class OnboardingAPI {
                 let statusCode = result.statusCode
                 
                 do {
-                    guard let data = try result.map(GeneralResponse<ServiceAcceptResponse>.self).data else {
-                        throw NetworkManager.statusCodeErrorHandling(statusCode: statusCode)
-                    }
+                    guard let data = try result.map(GeneralResponse<ServiceAcceptResponse>.self).data else { return }
                     completion(.success(data))
                 } catch {
-                    completion(.failure(error as! SmeemError))
+                    let error = NetworkManager.statusCodeErrorHandling(statusCode: statusCode)
+                    completion(.failure(error))
                 }
                 
             case .failure(_):
@@ -101,12 +99,11 @@ public class OnboardingAPI {
                 let statusCode = result.statusCode
                 
                 do {
-                    guard let data = try result.map(GeneralResponse<NicknameCheckResponse>.self).data else {
-                        throw NetworkManager.statusCodeErrorHandling(statusCode: statusCode)
-                    }
+                    guard let data = try result.map(GeneralResponse<NicknameCheckResponse>.self).data else { return }
                     completion(.success(data))
                 } catch {
-                    completion(.failure(error as! SmeemError))
+                    let error = NetworkManager.statusCodeErrorHandling(statusCode: statusCode)
+                    completion(.failure(error))
                 }
                 
             case .failure(_):

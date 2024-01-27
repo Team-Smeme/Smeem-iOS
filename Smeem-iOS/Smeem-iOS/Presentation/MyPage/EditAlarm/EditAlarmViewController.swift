@@ -27,7 +27,6 @@ final class EditAlarmViewController: BaseViewController {
     
     private let naviView = UIView()
     private let datePickerFooterView = DatePickerFooterView()
-    private let loadingView = LoadingView()
     
     private lazy var backButton: UIButton = {
         let button = UIButton()
@@ -82,7 +81,6 @@ final class EditAlarmViewController: BaseViewController {
     }
     
     @objc func completeButtonDidTap() {
-        self.showLodingView(loadingView: loadingView)
         editAlarmTimePatchAPI(alarmTime: EditAlarmTime(trainingTime: TrainingTime(day: trainigDayData!,
                                                                                   hour: trainingTimeData!.hour,
                                                                                   minute: trainingTimeData!.minute)))
@@ -133,14 +131,18 @@ final class EditAlarmViewController: BaseViewController {
 
 extension EditAlarmViewController {
     private func editAlarmTimePatchAPI(alarmTime: EditAlarmTime) {
-        MyPageAPI.shared.editAlarmTimeAPI(param: alarmTime) { respons in
-            self.hideLodingView(loadingView: self.loadingView)
-            if respons.success == true {
+        SmeemLoadingView.showLoading()
+        
+        MyPageAPI.shared.editAlarmTimeAPI(param: alarmTime) { response in
+            switch response {
+            case .success(_):
                 self.editAlarmDelegate?.editMyPageData()
                 self.navigationController?.popViewController(animated: true)
-            } else {
-                print("학습 목표 API 호출 실패")
+            case .failure(let error):
+                self.showToast(toastType: .smeemErrorToast(message: error))
             }
+            
+            SmeemLoadingView.hideLoading()
         }
     }
 }

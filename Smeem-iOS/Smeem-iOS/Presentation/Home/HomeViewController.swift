@@ -174,8 +174,6 @@ final class HomeViewController: BaseViewController {
         return addDiaryButton
     }()
     
-    private let loadingView = LoadingView()
-    
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -271,16 +269,13 @@ final class HomeViewController: BaseViewController {
     }
     
     private func checkPopupView() {
-        self.showLodingView(loadingView: loadingView)
         if !badgePopupData.isEmpty {
-            self.hideLodingView(loadingView: loadingView)
             let popupVC = BadgePopupViewController()
             popupVC.setData(self.badgePopupData)
             popupVC.modalTransitionStyle = .crossDissolve
             popupVC.modalPresentationStyle = .overCurrentContext
             self.present(popupVC, animated: true)
         }
-        self.hideLodingView(loadingView: loadingView)
         badgePopupData = []
     }
     

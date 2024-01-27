@@ -22,8 +22,6 @@ final class HowOnboardingViewController: BaseViewController {
     
     // MARK: - UI Property
     
-    private let loadingView = LoadingView()
-    
     private let nowStepOneLabel: UILabel = {
         let label = UILabel()
         label.text = "2"

@@ -62,8 +62,6 @@ final class BottomSheetViewController: UIViewController, LoginDelegate {
     
     // MARK: - UI Property
     
-    private let loadingView = LoadingView()
-    
     private lazy var dimmedView: UIView = {
         let view = UIView()
         view.layer.backgroundColor = UIColor(red: 0.09, green: 0.09, blue: 0.086, alpha: 0.65).cgColor

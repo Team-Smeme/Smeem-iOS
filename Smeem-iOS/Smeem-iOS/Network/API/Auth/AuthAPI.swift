@@ -21,12 +21,11 @@ public class AuthAPI {
                 let statusCode = response.statusCode
                 
                 do {
-                    guard let data = try response.map(GeneralResponse<LoginResponse>.self).data else {
-                        throw NetworkManager.statusCodeErrorHandling(statusCode: statusCode)
-                    }
+                    guard let data = try response.map(GeneralResponse<LoginResponse>.self).data else { return }
                     completion(.success(data))
                 } catch {
-                    completion(.failure(error as! SmeemError))
+                    let error = NetworkManager.statusCodeErrorHandling(statusCode: statusCode)
+                    completion(.failure(error))
                 }
                 
             case .failure(_):
@@ -42,13 +41,11 @@ public class AuthAPI {
                 let statusCode = response.statusCode
                 
                 do {
-                    guard let data = try response.map(GeneralResponse<ReLoginResponse>?.self) else {
-                        throw NetworkManager.statusCodeErrorHandling(statusCode: statusCode)
-                    }
-                    
+                    guard let data = try response.map(GeneralResponse<ReLoginResponse>?.self) else { return }
                     completion(.success(data))
                 } catch {
-                    completion(.failure(error as! SmeemError))
+                    let error = NetworkManager.statusCodeErrorHandling(statusCode: statusCode)
+                    completion(.failure(error))
                 }
                 
             case .failure(_):

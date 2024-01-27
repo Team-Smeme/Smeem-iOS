@@ -41,7 +41,6 @@ final class MyPageViewController: BaseViewController {
     
     private let headerContainerView = UIView()
     private let contentView = UIView()
-    private let loadingView = LoadingView()
     
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -227,7 +226,6 @@ final class MyPageViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.showLodingView(loadingView: loadingView)
         myPageInfoAPI()
     }
     
@@ -506,19 +504,29 @@ extension MyPageViewController: EditMypageDelegate {
 
 extension MyPageViewController {
     private func myPageInfoAPI() {
-        MyPageAPI.shared.myPageInfo() { response in
-            guard let myPageInfo = response?.data else { return }
+        SmeemLoadingView.showLoading()
+        
+        MyPageAPI.shared.myPageInfo() { result in
             
-            self.userInfo = myPageInfo
-            self.setData()
-            self.hideLodingView(loadingView: self.loadingView)
+            switch result {
+            case .success(let response):
+                self.userInfo = response
+                self.setData()
+            case .failure(let error):
+                self.showToast(toastType: .smeemErrorToast(message: error))
+            }
+            
+            SmeemLoadingView.hideLoading()
         }
     }
     
     private func editPushPatchAPI(pushData: EditPushRequest) {
-        MyPageAPI.shared.editPushAPI(param: pushData) { response in
-            // 성공했으면
-            if response.success == true {
+        SmeemLoadingView.showLoading()
+        
+        MyPageAPI.shared.editPushAPI(param: pushData) { result in
+            
+            switch result {
+            case .success(_):
                 self.alarmCollectionView.hasAlarm = pushData.hasAlarm
                 self.alarmCollectionView.selectedIndexPath = self.indexPathArray
                 
@@ -529,7 +537,11 @@ extension MyPageViewController {
                     self.alarmPushToggleButton.isOn = true
                     self.alarmPushToggleButton.onTintColor = .point
                 }
+            case .failure(let error):
+                self.showToast(toastType: .smeemErrorToast(message: error))
             }
+            
+            SmeemLoadingView.hideLoading()
         }
     }
 }

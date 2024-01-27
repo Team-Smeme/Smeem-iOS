@@ -28,8 +28,6 @@ final class DetailDiaryViewController: BaseViewController {
         return scrollerView
     }()
     
-    private let loadingView = LoadingView()
-    
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -72,7 +70,6 @@ final class DetailDiaryViewController: BaseViewController {
     @objc func showAlert() {
         let alert = UIAlertController(title: "일기를 삭제할까요?", message: "", preferredStyle: .alert)
         let delete = UIAlertAction(title: "확인", style: .destructive) { (action) in
-            self.showLodingView(loadingView: self.loadingView)
             self.deleteDiaryWithAPI(diaryID: self.diaryId)
         }
         let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
@@ -134,10 +131,8 @@ extension DetailDiaryViewController: NavigationBarActionDelegate {
 extension DetailDiaryViewController {
     
     func detailDiaryWithAPI(diaryID: Int) {
-        self.showLodingView(loadingView: self.loadingView)
         DetailDiaryAPI.shared.getDetailDiary(diaryID: diaryId) { response in
             guard let detailDiaryData = response?.data else { return }
-            self.hideLodingView(loadingView: self.loadingView)
             
             self.isRandomTopic = detailDiaryData.topic
             self.diaryContent = detailDiaryData.content
@@ -150,7 +145,6 @@ extension DetailDiaryViewController {
     
     func deleteDiaryWithAPI(diaryID: Int) {
         DetailDiaryAPI.shared.deleteDiary(diaryID: diaryId) { response in
-            self.hideLodingView(loadingView: self.loadingView)
             
             let homeVC = HomeViewController()
             let rootVC = UINavigationController(rootViewController: homeVC)

@@ -17,6 +17,6 @@ final class NetworkManager {
         default:
             break
         }
-        return .userError
+        return .clientError
     }
 }

@@ -103,20 +103,6 @@ extension UIViewController {
         })
     }
     
-    /// showLodingView
-    func showLodingView(loadingView: LoadingView) {
-        view.addSubview(loadingView)
-        loadingView.snp.makeConstraints {
-            $0.top.leading.trailing.bottom.equalToSuperview()
-        }
-        
-        loadingView.isLoading = true
-    }
-    
-    func hideLodingView(loadingView: LoadingView) {
-        loadingView.isLoading = false
-    }
-    
     func presentOnboardingPlanVC() {
         let onboardingGoalVC = TrainingGoalViewController(viewtype: .onboarding)
         self.navigationController?.pushViewController(onboardingGoalVC, animated: true)

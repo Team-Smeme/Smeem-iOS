@@ -29,8 +29,6 @@ final class ServiceAcceptViewController: UIViewController {
     
     // MARK: - UI Property
     
-    private let loadingView = LoadingView()
-    
     private let titleServiceLabel: UILabel = {
         let label = UILabel()
         label.text = "서비스 이용약관"
@@ -103,7 +101,6 @@ final class ServiceAcceptViewController: UIViewController {
     // MARK: - @objc
     
     @objc func nextButtonDidTap() {
-        showLodingView(loadingView: loadingView)
         nicknamePatchAPI()
     }
     

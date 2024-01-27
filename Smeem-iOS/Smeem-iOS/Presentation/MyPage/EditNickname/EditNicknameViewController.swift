@@ -81,8 +81,6 @@ final class EditNicknameViewController: BaseViewController {
         return button
     }()
     
-    private let loadingView = LoadingView()
-    
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -106,7 +104,6 @@ final class EditNicknameViewController: BaseViewController {
     }
     
     @objc func doneButtonDidTap() {
-        self.showLodingView(loadingView: self.loadingView)
         checkNinknameAPI(nickname: nicknameTextField.text ?? "")
     }
     
@@ -218,33 +215,44 @@ extension EditNicknameViewController: UITextFieldDelegate {
 
 extension EditNicknameViewController {
     private func nicknamePatchAPI(nickname: String) {
-        MyPageAPI.shared.changeMyNickName(request: EditNicknameRequest(username: nickname)) { response in
-            guard let _ = response?.data else { return }
-            self.hideLodingView(loadingView: self.loadingView)
-            self.editNicknameDelegate?.editMyPageData()
-            self.navigationController?.popViewController(animated: true)
+        SmeemLoadingView.showLoading()
+        
+        MyPageAPI.shared.changeMyNickName(request: EditNicknameRequest(username: nickname)) { result in
+            switch result {
+            case .success(_):
+                self.editNicknameDelegate?.editMyPageData()
+                self.navigationController?.popViewController(animated: true)
+            case .failure(let error):
+                self.showToast(toastType: .smeemErrorToast(message: error))
+            }
+            
+            SmeemLoadingView.hideLoading()
         }
     }
     
     private func checkNinknameAPI(nickname: String) {
+        SmeemLoadingView.showLoading()
+        
         MyPageAPI.shared.checkNinknameAPI(param: nickname) { response in
-            guard let data = response?.data else { return }
             
-            self.hideLodingView(loadingView: self.loadingView)
-            self.isExistNinkname = data.isExist
-            
-            if self.isExistNinkname {
-                self.doubleCheckLabel.isHidden = false
-                self.doneButton.changeButtonType(buttonType: .notEnabled)
-            } else {
-                self.doubleCheckLabel.isHidden = true
-                self.doneButton.changeButtonType(buttonType: .enabled)
+            switch response {
+            case .success(let response):
+                if response.isExist {
+                    self.doubleCheckLabel.isHidden = false
+                    self.doneButton.changeButtonType(buttonType: .notEnabled)
+                } else {
+                    self.doubleCheckLabel.isHidden = true
+                    self.doneButton.changeButtonType(buttonType: .enabled)
+                }
+                
+                if !response.isExist {
+                    self.nicknamePatchAPI(nickname: nickname)
+                }
+            case .failure(let error):
+                self.showToast(toastType: .smeemErrorToast(message: error))
             }
             
-            if !self.isExistNinkname {
-                self.showLodingView(loadingView: self.loadingView)
-                self.nicknamePatchAPI(nickname: nickname)
-            }
+            SmeemLoadingView.hideLoading()
         }
     }
 }

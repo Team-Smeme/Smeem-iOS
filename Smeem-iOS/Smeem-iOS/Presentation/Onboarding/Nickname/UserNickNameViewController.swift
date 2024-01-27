@@ -66,8 +66,6 @@ final class UserNicknameViewController: BaseViewController {
         return button
     }()
     
-    private let loadingView = LoadingView()
-    
     private let welcomeView = UIImageView()
     private let firstDiaryView = UIImageView()
     private let tenDiaryBadgeView = UIImageView()
@@ -93,7 +91,6 @@ final class UserNicknameViewController: BaseViewController {
     // MARK: - @objc
     
     @objc func nextButtonDidTap() {
-        self.showLodingView(loadingView: loadingView)
         checkNicknameGetAPI(nickname: nicknameTextField.text ?? "")
     }
     
