@@ -62,8 +62,6 @@ final class BottomSheetViewController: UIViewController, LoginDelegate {
     
     // MARK: - UI Property
     
-    private let loadingView = LoadingView()
-    
     private lazy var dimmedView: UIView = {
         let view = UIView()
         view.layer.backgroundColor = UIColor(red: 0.09, green: 0.09, blue: 0.086, alpha: 0.65).cgColor
@@ -153,7 +151,6 @@ final class BottomSheetViewController: UIViewController, LoginDelegate {
             self.kakaoAccessToken = oAuthToken?.accessToken
             guard let refreshToken = oAuthToken?.refreshToken else { return }
             UserDefaultsManager.kakaoRefreushToken = refreshToken
-            print("토큰이요", refreshToken)
         }
     }
 
@@ -219,58 +216,64 @@ extension BottomSheetViewController: ASAuthorizationControllerDelegate, ASAuthor
 
 extension BottomSheetViewController {
     private func loginAPI(socialParam: String) {
+        SmeemLoadingView.showLoading()
+        
         AuthAPI.shared.loginAPI(param: LoginRequest(social: socialParam,
                                                     fcmToken: UserDefaultsManager.fcmToken)) { response in
-            self.showLodingView(loadingView: self.loadingView)
             
-            guard let data = response.data else { return }
-            
-            UserDefaultsManager.clientAccessToken = data.accessToken
-            UserDefaultsManager.clientRefreshToken = data.refreshToken
-            
-            switch self.authType {
-            case .login:
-                // hasPlan이라고 가정
-
-                // hasPlan으로 바뀔 예정
-                if data.hasPlan == false {
-                    self.presentOnboardingPlanVC()
-                } else if data.hasPlan == true && data.isRegistered == false {
-                    self.presentOnboardingAcceptVC()
-                } else {
-                    // 삭제했다가 로그인한 유저
-                    UserDefaultsManager.accessToken = data.accessToken
-                    UserDefaultsManager.refreshToken = data.refreshToken
-                    
-                    self.presentHomeVC()
+            switch response {
+            case .success(let response):
+                UserDefaultsManager.clientAccessToken = response.accessToken
+                UserDefaultsManager.clientRefreshToken = response.refreshToken
+                
+                switch self.authType {
+                case .login:
+                    if response.hasPlan == false {
+                        self.presentOnboardingPlanVC()
+                    } else if response.hasPlan == true && response.isRegistered == false {
+                        self.presentOnboardingAcceptVC()
+                    } else {
+                        // 삭제했다가 로그인한 유저
+                        UserDefaultsManager.accessToken = response.accessToken
+                        UserDefaultsManager.refreshToken = response.refreshToken
+                        
+                        self.presentHomeVC()
+                    }
+                case .signup:
+                    if response.hasPlan == false || (response.hasPlan == true && response.isRegistered == false) {
+                        AmplitudeManager.shared.track(event: AmplitudeConstant.Onboarding.signup_success.event)
+                        guard let userPlanRequest = self.userPlanRequest else { return }
+                        self.userPlanPatchAPI(userPlan: userPlanRequest, accessToken: response.accessToken)
+                    } else {
+                        // 계정이 있는 유저
+                        UserDefaultsManager.accessToken = response.accessToken
+                        UserDefaultsManager.refreshToken = response.refreshToken
+                        
+                        self.presentHomeVC()
+                    }
                 }
-            case .signup:
-                if data.hasPlan == false || (data.hasPlan == true && data.isRegistered == false) {
-                    AmplitudeManager.shared.track(event: AmplitudeConstant.Onboarding.signup_success.event)
-                    guard let userPlanRequest = self.userPlanRequest else { return }
-                    self.userPlanPatchAPI(userPlan: userPlanRequest, accessToken: data.accessToken)
-                } else {
-                    // 계정이 있는 유저
-                    UserDefaultsManager.accessToken = data.accessToken
-                    UserDefaultsManager.refreshToken = data.refreshToken
-                    
-                    self.presentHomeVC()
-                }
+            case .failure(let error):
+                self.showToast(toastType: .smeemErrorToast(message: error))
             }
+            SmeemLoadingView.hideLoading()
         }
     }
     
     private func userPlanPatchAPI(userPlan: UserPlanRequest, accessToken: String) {
+        SmeemLoadingView.showLoading()
+        
         OnboardingAPI.shared.userPlanPathAPI(param: userPlan, accessToken: accessToken) { response in
-            self.hideLodingView(loadingView: self.loadingView)
-            if response.success == true {
+            switch response {
+            case .success(_):
                 UserDefaultsManager.clientAccessToken = accessToken
-
+                
                 let userNicknameVC = UserNicknameViewController()
                 self.navigationController?.pushViewController(userNicknameVC, animated: true)
-            } else {
-                print("학습 목표 API 호출 실패")
+            case .failure(let error):
+                self.showToast(toastType: .smeemErrorToast(message: error))
             }
+            
+            SmeemLoadingView.hideLoading()
         }
     }
 }

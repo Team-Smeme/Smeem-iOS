@@ -6,112 +6,170 @@
 //
 
 import Foundation
-
 import Moya
 
-public class MyPageAPI {
+final class MyPageAPI {
     static let shared = MyPageAPI()
-    var myPageProvider = MoyaProvider<MyPageService>(plugins: [MoyaLoggingPlugin()])
+    private let myPageProvider = MoyaProvider<MyPageService>(plugins: [MoyaLoggingPlugin()])
     
-    private var myPageInfo: GeneralResponse<MyPageResponse>?
-    private var badgeList: GeneralResponse<BadgeListResponse>?
-    
-    func myPageInfo(completion: @escaping (GeneralResponse<MyPageResponse>?) -> Void) {
-        myPageProvider.request(.myPageInfo) { response in
-            switch response {
-            case .success(let result):
+    func myPageInfo(completion: @escaping (Result<MyPageResponse, SmeemError>) -> ()) {
+        myPageProvider.request(.myPageInfo) { result in
+            switch result {
+            case .success(let response):
+                let statusCode = response.statusCode
+                
                 do {
-                    self.myPageInfo = try result.map(GeneralResponse<MyPageResponse>.self)
-                    completion(self.myPageInfo)
+                    guard let data = try response.map(GeneralResponse<MyPageResponse>.self).data else {
+                        throw NetworkManager.statusCodeErrorHandling(statusCode: statusCode)
+                    }
+                    
+                    completion(.success(data))
                 } catch {
-                    print(error)
+                    completion(.failure(error as! SmeemError))
                 }
-            case .failure(let err):
-                print(err)
+            case .failure(_):
+                completion(.failure(.userError))
             }
         }
     }
     
-    func changeMyNickName(request: EditNicknameRequest, completion: @escaping (GeneralResponse<ServiceAcceptResponse>?) -> Void) {
-        myPageProvider.request(.editNickname(param: request)) { response in
-            switch response {
-            case .success(let result):
-                guard let data = try? result.map(GeneralResponse<ServiceAcceptResponse>.self) else { return }
-                completion(data)
-            case .failure(let err):
-                print(err)
+    func changeMyNickName(request: EditNicknameRequest,
+                          completion: @escaping (Result<ServiceAcceptResponse, SmeemError>) -> ()) {
+        myPageProvider.request(.editNickname(param: request)) { result in
+            switch result {
+            case .success(let response):
+                let statusCode = response.statusCode
+                
+                do {
+                    guard let data = try response.map(GeneralResponse<ServiceAcceptResponse>.self).data else {
+                        throw NetworkManager.statusCodeErrorHandling(statusCode: statusCode)
+                    }
+                    completion(.success(data))
+                } catch {
+                    completion(.failure(error as! SmeemError))
+                }
+                
+            case .failure(_):
+                completion(.failure(.userError))
             }
         }
     }
     
-    func checkNinknameAPI(param: String, completion: @escaping (GeneralResponse<NicknameCheckResponse>?) -> Void) {
-        myPageProvider.request(.checkNinkname(param: param)) { response in
-            switch response {
-            case .success(let result):
-                guard let data = try? result.map(GeneralResponse<NicknameCheckResponse>.self) else { return }
-                completion(data)
-            case .failure(let err):
-                print(err)
+    func checkNinknameAPI(param: String,
+                          completion: @escaping (Result<NicknameCheckResponse, SmeemError>) -> ()) {
+        myPageProvider.request(.checkNinkname(param: param)) { result in
+            switch result {
+            case .success(let response):
+                let statusCode = response.statusCode
+                
+                do {
+                    guard let data = try? response.map(GeneralResponse<NicknameCheckResponse>.self).data else {
+                        throw NetworkManager.statusCodeErrorHandling(statusCode: statusCode)
+                    }
+                    completion(.success(data))
+                } catch {
+                    completion(.failure(error as! SmeemError))
+                }
+            case .failure(_):
+                completion(.failure(.userError))
             }
         }
     }
     
-    func changeGoal(param: EditGoalRequest, completion: @escaping (GeneralResponse<VoidType>) -> Void) {
-        myPageProvider.request(.editGoal(param: param)) { response in
-            switch response {
-            case .success(let result):
-                guard let data = try? result.map(GeneralResponse<VoidType>.self) else { return }
-                completion(data)
-            case .failure(let err):
-                print(err)
+    func changeGoal(param: EditGoalRequest,
+                    completion: @escaping (Result<GeneralResponse<NilType>, SmeemError>) -> ()) {
+        myPageProvider.request(.editGoal(param: param)) { result in
+            switch result {
+            case .success(let response):
+                let statusCode = response.statusCode
+                
+                do {
+                    guard let data = try response.map(GeneralResponse<NilType>?.self) else { return }
+                    completion(.success(data))
+                } catch {
+                    let error = NetworkManager.statusCodeErrorHandling(statusCode: statusCode)
+                    completion(.failure(error))
+                }
+            case .failure(_):
+                completion(.failure(.userError))
             }
         }
     }
     
-    func badgeListAPI(completion: @escaping (GeneralResponse<BadgeListResponse>?) -> Void) {
-        myPageProvider.request(.badgeList) { response in
-            switch response {
-            case .success(let result):
-                guard let badgeList = try? result.map(GeneralResponse<BadgeListResponse>.self) else { return }
-                completion(badgeList)
-            case .failure(let err):
-                print(err)
+    func badgeListAPI(completion: @escaping (Result<BadgeListResponse, SmeemError>) -> ()) {
+        myPageProvider.request(.badgeList) { result in
+            switch result {
+            case .success(let response):
+                let statusCode = response.statusCode
+                
+                do {
+                    guard let data = try response.map(GeneralResponse<BadgeListResponse>?.self)?.data else { return }
+                    completion(.success(data))
+                } catch {
+                    let error = NetworkManager.statusCodeErrorHandling(statusCode: statusCode)
+                    completion(.failure(error))
+                }
+            case .failure(_):
+                completion(.failure(.userError))
             }
         }
     }
     
-    func userPlanPathAPI(param: UserPlanRequest, completion: @escaping (GeneralResponse<VoidType>) -> Void) {
-        myPageProvider.request(.myPageUserPlan(param: param)) { response in
-            switch response {
-            case .success(let result):
-                guard let data = try? result.map(GeneralResponse<VoidType>.self) else { return }
-                completion(data)
-            case .failure(let err):
-                print(err)
+    func userPlanPathAPI(param: UserPlanRequest,
+                         completion: @escaping (Result<GeneralResponse<NilType>, SmeemError>) -> ()) {
+        myPageProvider.request(.myPageUserPlan(param: param)) { result in
+            switch result {
+            case .success(let response):
+                let statusCode = response.statusCode
+                
+                do {
+                    guard let data = try response.map(GeneralResponse<NilType>?.self) else { return }
+                    completion(.success(data))
+                } catch {
+                    let error = NetworkManager.statusCodeErrorHandling(statusCode: statusCode)
+                    completion(.failure(error))
+                }
+            case .failure(_):
+                completion(.failure(.serverError))
             }
         }
     }
     
-    func editAlarmTimeAPI(param: EditAlarmTime, completion: @escaping (GeneralResponse<VoidType>) -> Void) {
-        myPageProvider.request(.editAlarmTime(param: param)) { response in
-            switch response {
-            case .success(let result):
-                guard let data = try? result.map(GeneralResponse<VoidType>.self) else { return }
-                completion(data)
-            case .failure(let err):
-                print(err)
+    func editAlarmTimeAPI(param: EditAlarmTime,
+                          completion: @escaping (Result<GeneralResponse<NilType>, SmeemError>) -> ()) {
+        myPageProvider.request(.editAlarmTime(param: param)) { result in
+            switch result {
+            case .success(let response):
+                let statusCode = response.statusCode
+                do {
+                    guard let data = try response.map(GeneralResponse<NilType>?.self) else { return }
+                    completion(.success(data))
+                } catch {
+                    let error = NetworkManager.statusCodeErrorHandling(statusCode: statusCode)
+                    completion(.failure(error))
+                }
+            case .failure(_):
+                completion(.failure(.userError))
             }
         }
     }
     
-    func editPushAPI(param: EditPushRequest, completion: @escaping (GeneralResponse<VoidType>) -> Void) {
-        myPageProvider.request(.editPush(param: param)) { response in
-            switch response {
-            case .success(let result):
-                guard let data = try? result.map(GeneralResponse<VoidType>.self) else { return }
-                completion(data)
-            case .failure(let err):
-                print(err)
+    func editPushAPI(param: EditPushRequest,
+                     completion: @escaping (Result<GeneralResponse<NilType>, SmeemError>) -> ()) {
+        myPageProvider.request(.editPush(param: param)) { result in
+            switch result {
+            case .success(let response):
+                let statusCode = response.statusCode
+                
+                do {
+                    guard let data = try response.map(GeneralResponse<NilType>?.self) else { return }
+                    completion(.success(data))
+                } catch {
+                    let error = NetworkManager.statusCodeErrorHandling(statusCode: statusCode)
+                    completion(.failure(error))
+                }
+            case .failure(_):
+                completion(.failure(.userError))
             }
         }
     }

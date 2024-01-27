@@ -27,6 +27,11 @@ private let howLearningView: HowLearningView = {
  }
  */
 
+enum EditButtonType {
+    case none
+    case isShown
+}
+
 import UIKit
 
 final class TrainingWayView: UIView {
@@ -125,9 +130,10 @@ final class TrainingWayView: UIView {
     
     // MARK: - Life Cycle
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(type: EditButtonType) {
+        super.init(frame: .zero)
         
+        showButtonType(type: type)
         setUI()
         setLayout()
     }
@@ -138,14 +144,15 @@ final class TrainingWayView: UIView {
 
     // MARK: - Custom Method
     
-//    private func showButtonType() {
-//        switch buttontype {
-//        case .logo:
-//            editButton.isHidden = false
-//        case .edit:
-//            editButton.isHidden = false
-//        }
-//    }
+    private func showButtonType(type: EditButtonType) {
+        switch type {
+        case .none:
+            editButton.isHidden = true
+        case .isShown:
+            editButton.isHidden = false
+            editButton.isUserInteractionEnabled = false
+        }
+    }
     
     func setData(planName: String, planWayOne: String, planWayTwo: String, detailPlanOne: String, detailPlanTwo: String) {
         selectedMyGoalLabel.text = planName

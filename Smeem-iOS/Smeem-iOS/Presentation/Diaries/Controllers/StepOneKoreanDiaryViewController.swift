@@ -66,7 +66,6 @@ extension StepOneKoreanDiaryViewController: NavigationBarActionDelegate {
     
     func didTapRightButton() {
         if rootView?.navigationView.rightButton.titleLabel?.textColor == .point {
-//            showLodingView(loadingView: rootView.loadingView)
             rootView?.inputTextView.resignFirstResponder()
             handleRightNavigationButton()
         } else {

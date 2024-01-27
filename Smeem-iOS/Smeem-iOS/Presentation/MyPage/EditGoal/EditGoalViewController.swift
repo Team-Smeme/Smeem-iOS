@@ -21,7 +21,6 @@ final class EditGoalViewController: BaseViewController {
     weak var delegate: EditMypageDelegate?
     
     private let navigationBarView = UIView()
-    private let loadingView = LoadingView()
     
     private lazy var backButton: UIButton = {
         let button = UIButton()
@@ -39,7 +38,7 @@ final class EditGoalViewController: BaseViewController {
     }()
     
     private let howLearningView: TrainingWayView = {
-        let view = TrainingWayView()
+        let view = TrainingWayView(type: .none)
         return view
     }()
     
@@ -56,7 +55,6 @@ final class EditGoalViewController: BaseViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.showLodingView(loadingView: loadingView)
         detailPlanListGetAPI(tempTarget: tempTarget)
     }
     
@@ -80,7 +78,6 @@ extension EditGoalViewController {
     }
     
     @objc func nextButtonDidTap() {
-        self.showLodingView(loadingView: loadingView)
         patchGoalAPI(target: tempTarget)
     }
     
@@ -121,37 +118,45 @@ extension EditGoalViewController {
 
 extension EditGoalViewController {
     func patchGoalAPI(target: String) {
-        MyPageAPI.shared.changeGoal(param: EditGoalRequest(target: target)) { response in
+        SmeemLoadingView.showLoading()
+        
+        MyPageAPI.shared.changeGoal(param: EditGoalRequest(target: target)) { result in
             
-            self.showLodingView(loadingView: self.loadingView)
-            guard let _ = response.data else { return }
-            self.hideLodingView(loadingView: self.loadingView)
-            
-            NotificationCenter.default.post(name: NSNotification.Name("goalData"), object: true)
-            
-            if let navigationController = self.navigationController {
-                let viewControllers = navigationController.viewControllers
-                if viewControllers.count >= 2 {
-                    let viewControllerToPopTo = viewControllers[viewControllers.count - 3] // 해당 인덱스에 있는 뷰 컨트롤러로 돌아가려면 -3로 설정합니다.
-                    navigationController.popToViewController(viewControllerToPopTo, animated: true)
+            switch result {
+            case .success(_):
+                NotificationCenter.default.post(name: NSNotification.Name("goalData"), object: true)
+                
+                if let navigationController = self.navigationController {
+                    let viewControllers = navigationController.viewControllers
+                    if viewControllers.count >= 2 {
+                        let viewControllerToPopTo = viewControllers[viewControllers.count - 3] // 해당 인덱스에 있는 뷰 컨트롤러로 돌아가려면 -3로 설정합니다.
+                        navigationController.popToViewController(viewControllerToPopTo, animated: true)
+                    }
                 }
+            case .failure(let error):
+                self.showToast(toastType: .smeemErrorToast(message: error))
             }
+            
+            SmeemLoadingView.hideLoading()
         }
     }
     
     func detailPlanListGetAPI(tempTarget: String) {
-        OnboardingAPI.shared.detailPlanList(param: tempTarget) { response in
-            self.showLodingView(loadingView: self.loadingView)
+        SmeemLoadingView.showLoading()
+        
+        OnboardingAPI.shared.detailPlanList(param: tempTarget) { result in
+            switch result {
+            case .success(let response):
+                self.planName = response.name
+                self.planWay = response.way
+                self.planDetailWay = response.detail
+                self.configurePlanData()
+                
+            case .failure(let error):
+                self.showToast(toastType: .smeemErrorToast(message: error))
+            }
             
-            guard let data = response.data else { return }
-            
-            self.planName = data.name
-            self.planWay = data.way
-            self.planDetailWay = data.detail
-            
-            self.configurePlanData()
-            
-            self.hideLodingView(loadingView: self.loadingView)
+            SmeemLoadingView.hideLoading()
         }
     }
 }

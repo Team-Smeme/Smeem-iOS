@@ -22,8 +22,6 @@ final class HowOnboardingViewController: BaseViewController {
     
     // MARK: - UI Property
     
-    private let loadingView = LoadingView()
-    
     private let nowStepOneLabel: UILabel = {
         let label = UILabel()
         label.text = "2"
@@ -75,7 +73,7 @@ final class HowOnboardingViewController: BaseViewController {
     }()
     
     private let howLearningView: TrainingWayView = {
-        let view = TrainingWayView()
+        let view = TrainingWayView(type: .none)
         return view
     }()
     
@@ -159,17 +157,23 @@ final class HowOnboardingViewController: BaseViewController {
 
 extension HowOnboardingViewController {
     func detailPlanListGetAPI(tempTarget: String) {
-        self.showLodingView(loadingView: loadingView)
-        OnboardingAPI.shared.detailPlanList(param: tempTarget) { response in
-            guard let data = response.data else { return }
-
-            self.hideLodingView(loadingView: self.loadingView)
-
-            self.planName = data.name
-            self.planWay = data.way
-            self.planDetailWay = data.detail
-
-            self.configurePlanData()
+        SmeemLoadingView.showLoading()
+        
+        OnboardingAPI.shared.detailPlanList(param: tempTarget) { result in
+            
+            switch result {
+            case .success(let response):
+//                guard let response = response.data else { return }
+                self.planName = response.name
+                self.planWay = response.way
+                self.planDetailWay = response.detail
+                self.configurePlanData()
+                
+            case .failure(let error):
+                self.showToast(toastType: .smeemErrorToast(message: error))
+            }
+            
+            SmeemLoadingView.hideLoading()
         }
     }
 }

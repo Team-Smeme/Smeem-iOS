@@ -29,8 +29,6 @@ final class ServiceAcceptViewController: UIViewController {
     
     // MARK: - UI Property
     
-    private let loadingView = LoadingView()
-    
     private let titleServiceLabel: UILabel = {
         let label = UILabel()
         label.text = "서비스 이용약관"
@@ -103,7 +101,6 @@ final class ServiceAcceptViewController: UIViewController {
     // MARK: - @objc
     
     @objc func nextButtonDidTap() {
-        showLodingView(loadingView: loadingView)
         nicknamePatchAPI()
     }
     
@@ -251,20 +248,23 @@ final class ServiceAcceptViewController: UIViewController {
 
 extension ServiceAcceptViewController {
     private func nicknamePatchAPI() {
+        SmeemLoadingView.showLoading()
         OnboardingAPI.shared.serviceAcceptedPatch(param: ServiceAcceptRequest(username: nickNameData,
                                                                               termAccepted: true),
-                                                  accessToken: UserDefaultsManager.clientAccessToken) { response in
-            guard let data = response.data else { return }
+                                                  accessToken: UserDefaultsManager.clientAccessToken) { result in
+            switch result {
+            case .success(let response):
+                UserDefaultsManager.accessToken = UserDefaultsManager.clientAccessToken
+                UserDefaultsManager.refreshToken = UserDefaultsManager.clientRefreshToken
+                
+                let homeVC = HomeViewController()
+                homeVC.badgePopupData = response.badges
+                self.changeRootViewController(homeVC)
+            case .failure(let error):
+                self.showToast(toastType: .smeemErrorToast(message: error))
+            }
             
-            // 성공했을 때 UserDefaults에 저장
-            UserDefaultsManager.accessToken = UserDefaultsManager.clientAccessToken
-            UserDefaultsManager.refreshToken = UserDefaultsManager.clientRefreshToken
-            
-            let homeVC = HomeViewController()
-            homeVC.badgePopupData = data.badges
-            self.changeRootViewController(homeVC)
-            
-            self.hideLodingView(loadingView: self.loadingView)
+            SmeemLoadingView.hideLoading()
         }
     }
 }
