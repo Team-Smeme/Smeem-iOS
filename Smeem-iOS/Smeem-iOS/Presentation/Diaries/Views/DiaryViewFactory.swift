@@ -15,11 +15,14 @@ enum DiaryViewType {
 }
 
 class DiaryViewFactory {
+    let builder = DiaryViewConfigurationBuilder()
+    let textViewHandler = SmeemTextViewHandler()
+    
     func createForeginDiaryView() -> DiaryView {
-        let builder = DiaryViewConfigurationBuilder()
+        
         let config = builder
             .setNavigationBar(navigationBarType: .diaryEnglish)
-            .setTextViewType(textViewType: .editable(SmeemTextViewHandler.shared))
+            .setTextViewType(textViewType: .editable(textViewHandler))
             .setPlaceholderText(placeholderText: "일기를 작성해주세요 :)")
             .setBottomViewType(bottomViewType: .standard)
             .build()
@@ -28,10 +31,10 @@ class DiaryViewFactory {
     }
     
     func createStepOneKoreanDiaryView() -> DiaryView {
-        let builder = DiaryViewConfigurationBuilder()
+        
         let config = builder
             .setNavigationBar(navigationBarType: .diaryStepOne)
-            .setTextViewType(textViewType: .editable(SmeemTextViewHandler.shared))
+            .setTextViewType(textViewType: .editable(textViewHandler))
             .setPlaceholderText(placeholderText: "완벽한 문장으로 한국어 일기를 작성하면, 더욱 정확한 힌트를 받을 수 있어요.")
             .setBottomViewType(bottomViewType: .standard)
             .build()
@@ -40,10 +43,10 @@ class DiaryViewFactory {
     }
     
     func createStepTwoKoreanDiaryView() -> DiaryView {
-        let builder = DiaryViewConfigurationBuilder()
+        
         let config = builder
             .setNavigationBar(navigationBarType: .diaryStepTwo)
-            .setTextViewType(textViewType: .editable(SmeemTextViewHandler.shared))
+            .setTextViewType(textViewType: .editable(textViewHandler))
             .setPlaceholderText(placeholderText: "일기를 작성해주세요 :)")
             .setBottomViewType(bottomViewType: .withHint)
             .setLayoutConfig(layoutConfig: StepTwoKoreanLayoutConfig())
@@ -53,10 +56,10 @@ class DiaryViewFactory {
     }
     
     func createEditDiaryView() -> DiaryView {
-        let builder = DiaryViewConfigurationBuilder()
+        
         let config = builder
             .setNavigationBar(navigationBarType: .edit)
-            .setTextViewType(textViewType: .editable(SmeemTextViewHandler.shared))
+            .setTextViewType(textViewType: .editable(textViewHandler))
             .build()
         
         return createDiaryView(with: config, viewType: .edit)
@@ -68,7 +71,7 @@ class DiaryViewFactory {
 extension DiaryViewFactory {
     private func createDiaryView(with configuration: DiaryViewConfiguration, viewType: DiaryViewType) -> DiaryView {
         let navigationBar = NavigationBarFactory.create(type: configuration.navigationBarType)
-        let handler = SmeemTextViewHandler.shared
+        let handler = textViewHandler
         handler.viewType = viewType
         
         let inputTextView = SmeemTextView(type: configuration.textViewType, placeholderText: configuration.placeholderText)

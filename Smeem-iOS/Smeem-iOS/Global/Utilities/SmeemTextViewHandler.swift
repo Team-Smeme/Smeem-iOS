@@ -28,8 +28,6 @@ final class SmeemTextViewHandler: NSObject {
     
     // MARK: Properties
     
-    static let shared = SmeemTextViewHandler()
-    
     weak var placeholderDelegate: PlaceholderDelegate?
     weak var textViewHandlerDelegate: SmeemTextViewHandlerDelegate?
     
@@ -40,9 +38,20 @@ final class SmeemTextViewHandler: NSObject {
     }
 }
 
-// MARK: - Text Validation
+// MARK: - Extensions
 
 extension SmeemTextViewHandler {
+    func placeholderTextForViewType(for viewType: DiaryViewType) -> String {
+        switch viewType {
+        case .foregin, .stepTwoKorean, .edit:
+            return "일기를 작성해주세요"
+        case .stepOneKorean:
+            return "완전한 문장으로 한국어 일기를 작성하면, 더욱 정확한 힌트를 받을 수 있어요."
+        }
+    }
+    
+    // MARK: - Text Validation
+    
     func containsEnglishCharacters(with text: String) -> Bool {
         return text.getArrayAfterRegex(regex: "[a-zA-z]").count > 0
     }

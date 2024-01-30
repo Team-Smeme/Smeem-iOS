@@ -199,7 +199,7 @@ extension DiaryView {
     }
     
     func setTextViewHandlerDelegate(_ viewController: DiaryViewController) {
-        inputTextView.textViewHandler?.delegate = viewController
+        inputTextView.textViewHandler?.textViewHandlerDelegate = viewController
     }
     
     func setHintButtonDelegate(_ viewController: StepTwoKoreanDiaryViewController) {

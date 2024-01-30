@@ -76,20 +76,18 @@ extension DiaryViewModel {
     
     // MARK: TextValidation
     func isTextValid(text: String, viewType: DiaryViewType) -> Bool {
-        guard let textView = SmeemTextViewHandler.shared.placeholderDelegate as? SmeemTextView else {
-            return false
-        }
+        let smeemTextViewHandler = SmeemTextViewHandler()
         
-        let placeholderText = textView.placeholderTextForViewType(for: viewType)
+        let placeholderText = smeemTextViewHandler.placeholderTextForViewType(for: viewType)
         
         if text == placeholderText {
             return false
         } else {
             switch viewType {
             case .foregin, .stepTwoKorean, .edit:
-                return SmeemTextViewHandler.shared.containsEnglishCharacters(with: text)
+                return smeemTextViewHandler.containsEnglishCharacters(with: text)
             case .stepOneKorean:
-                return SmeemTextViewHandler.shared.containsKoreanCharacters(with: text)
+                return smeemTextViewHandler.containsKoreanCharacters(with: text)
             }
         }
     }
