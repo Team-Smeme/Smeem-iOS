@@ -22,7 +22,7 @@ final class BottomSheetViewController: UIViewController, LoginDelegate {
     
     private var hasPlan = false
     private var isRegistered = false
-    private var badges: [Badges] = []
+    private var badges: [Badge] = []
     
     private var kakaoAccessToken: String? {
         didSet {

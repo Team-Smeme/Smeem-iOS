@@ -13,7 +13,7 @@ final class MyPageViewController: BaseViewController {
     
     // MARK: - Property
     
-    private var userInfo = MyPageResponse(username: "", target: "", way: "", detail: "", targetLang: "", hasPushAlarm: true, trainingTime: TrainingTime(day: "", hour: 0, minute: 0), badge: Badge(id: 0, name: "", type: "", imageURL: ""))
+    private var userInfo = MyPageResponse(username: "", target: "", way: "", detail: "", targetLang: "", hasPushAlarm: true, trainingTime: TrainingTime(day: "", hour: 0, minute: 0), badge: Badge(id: 0, name: "", type: "", imageUrl: ""))
     var myPageSelectedIndexPath = ["MON": IndexPath(item: 0, section: 0), "TUE":IndexPath(item: 1, section: 0), "WED":IndexPath(item: 2, section: 0), "THU":IndexPath(item: 3, section: 0), "FRI":IndexPath(item: 4, section: 0), "SAT":IndexPath(item: 5, section: 0), "SUN":IndexPath(item: 6, section: 0)]
     var indexPathArray: [IndexPath] = []
     var hasAlarm = Bool()
@@ -297,7 +297,7 @@ final class MyPageViewController: BaseViewController {
         
         howLearningView.setData(planName: userInfo.target, planWayOne: planWayOne, planWayTwo: planWayTwo, detailPlanOne: detailPlan[0], detailPlanTwo: detailPlan[1])
         nickNameLabel.text = userInfo.username
-        let url = URL(string: userInfo.badge.imageURL)
+        let url = URL(string: userInfo.badge.imageUrl)
         badgeImage.kf.setImage(with: url)
         badgeNameLabel.text = (userInfo.badge.name)
         badgeSummaryLabel.text = "축하해요! \(userInfo.badge.name)를 획득했어요!"

@@ -22,27 +22,25 @@ struct DummyModel {
 
 // MARK: BadgeListResponse (myPage)
 
-struct BadgeListResponse: Codable {
-    let badges: [BadgesListArray]
+struct MyPageBadgeListReponse: Codable {
+    let badgeTypes: [MyPageBadgeArray]
 }
 
-struct BadgesListArray: Codable {
-    let name, type: String
-    let imageURL: String
-    
-    enum CodingKeys: String, CodingKey {
-        case name, type
-        case imageURL = "imageUrl"
-    }
+struct MyPageBadgeArray: Codable {
+    let badgeType: String
+    let badgeTypeName: String
+    let badges : [MyPageBadges]
 }
 
-extension BadgesListArray {
-    static let empty = [BadgesListArray(name: "", type: "", imageURL: "")]
+extension MyPageBadgeArray {
+    static let empty = [MyPageBadgeArray(badgeType: "",
+                                         badgeTypeName: "",
+                                         badges: [MyPageBadges(name: "", type: "", imageUrl: "")])]
 }
 
 // MARK: Badges (onboarding, diary -> home)
 
-struct Badges: Codable {
+struct Badge: Codable {
     let id: Int
     let name: String
     let type: String
@@ -51,13 +49,8 @@ struct Badges: Codable {
 
 // MARK: Badge (myPage)
 
-struct Badge: Codable {
-    let id: Int
-    let name, type: String
-    let imageURL: String
-
-    enum CodingKeys: String, CodingKey {
-        case id, name, type
-        case imageURL = "imageUrl"
-    }
+struct MyPageBadges: Codable {
+    let name: String
+    let type: String
+    let imageUrl: String
 }

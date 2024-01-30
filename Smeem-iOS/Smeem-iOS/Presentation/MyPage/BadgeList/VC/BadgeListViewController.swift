@@ -252,13 +252,19 @@ extension BadgeListViewController {
             switch result {
             case .success(let response):
                 
-                for badge in response.badges {
-                    if badge.type == "EVENT" {
-                        self.badgeHeaderData = [(badge.name, badge.imageURL)]
-                    } else if badge.type == "COUNTING" {
-                        self.badgeListData[0].append((name: badge.name, imageURL: badge.imageURL))
-                    } else if badge.type == "COMBO" {
-                        self.badgeListData[1].append((name: badge.name, imageURL: badge.imageURL))
+                for data in response {
+                    if data.badgeType == "EVENT" {
+                        data.badges.forEach { badge in
+                            self.badgeHeaderData = [(badge.name, badge.imageUrl)]
+                        }
+                    } else if data.badgeType == "COUNTING" {
+                        data.badges.forEach { badge in
+                            self.badgeListData[0].append((name: badge.name, imageURL: badge.imageUrl))
+                        }
+                    } else if data.badgeType == "COMBO" {
+                        data.badges.forEach { badge  in
+                            self.badgeListData[1].append((name: badge.name, imageURL: badge.imageUrl))
+                        }
                     } else {
     //                    self.badgeListData[2].append((name: badge.name, imageURL: badge.imageURL))
                     }
