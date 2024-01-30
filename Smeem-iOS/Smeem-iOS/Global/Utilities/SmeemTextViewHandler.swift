@@ -1,11 +1,16 @@
 //
-//  SmeemTextViewManager.swift
+//  SmeemTextViewHandler.swift
 //  Smeem-iOS
 //
 //  Created by Joon Baek on 2023/09/26.
 //
 
 import UIKit
+
+protocol PlaceholderDelegate: AnyObject {
+    var placeholderText: String? { get set }
+    var placeholderColor: UIColor? { get set }
+}
 
 protocol SmeemTextViewHandlerDelegate: AnyObject {
     func textViewDidChange(text: String, viewType: DiaryViewType)
@@ -25,16 +30,13 @@ final class SmeemTextViewHandler: NSObject {
     
     static let shared = SmeemTextViewHandler()
     
-    weak var diaryViewController: DiaryViewController?
-    weak var placeholderDelegate: PlaceholderDisplayable?
-    weak var delegate: SmeemTextViewHandlerDelegate?
+    weak var placeholderDelegate: PlaceholderDelegate?
+    weak var textViewHandlerDelegate: SmeemTextViewHandlerDelegate?
     
     var viewType: DiaryViewType?
     
-    // MARK: Methods
-    
-    func buttonColor(for isValid: Bool) -> UIColor {
-        return isValid ? .point : .gray300
+    deinit {
+        print("\(self) is being deinitialized")
     }
 }
 
@@ -61,10 +63,10 @@ extension SmeemTextViewHandler: UITextViewDelegate {
         }
         
         if let viewType = viewType {
-            delegate?.textViewDidChange(text: textView.text, viewType: viewType)
+            textViewHandlerDelegate?.textViewDidChange(text: textView.text, viewType: viewType)
         }
         
-        delegate?.onUpdateInputText(textView.text ?? "")
+        textViewHandlerDelegate?.onUpdateInputText(textView.text ?? "")
     }
     
     func textViewDidChangeSelection(_ textView: UITextView) {

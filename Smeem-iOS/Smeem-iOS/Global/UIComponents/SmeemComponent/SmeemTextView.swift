@@ -31,7 +31,7 @@ final class SmeemTextView: UITextView {
     convenience init(type: SmeemTextViewType,
                      placeholderColor color: UIColor = .gray300,
                      placeholderText placeholder: String?,
-                     textViewManager manager: SmeemTextViewHandler? = nil) {
+                     textViewManager handler: SmeemTextViewHandler? = nil) {
         self.init(frame: .zero, textContainer: nil)
         
         configureTextView(for: type, color: color, text: placeholder ?? "")
@@ -41,6 +41,10 @@ final class SmeemTextView: UITextView {
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+    }
+    
+    deinit {
+        print("\(self) is being deinitialized")
     }
 }
 
@@ -79,7 +83,7 @@ extension SmeemTextView {
 
 // MARK: - PlaceholderDisplayable
 
-extension SmeemTextView: PlaceholderDisplayable {
+extension SmeemTextView: PlaceholderDelegate {
     func updatePlaceholder() {
         if text.isEmpty {
             text = placeholderText

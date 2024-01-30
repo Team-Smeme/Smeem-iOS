@@ -29,3 +29,5 @@ class Observable<T> {
         self.listener = listener
     }
 }
+
+// TODO: 익스텐션에서 value, listner 핸들링
