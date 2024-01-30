@@ -12,6 +12,11 @@ protocol SmeemTextViewHandlerDelegate: AnyObject {
     func onUpdateInputText(_ text: String)
 }
 
+protocol PlaceholderDisplayable: AnyObject {
+    var placeholderText: String? { get set }
+    var placeholderColor: UIColor? { get set }
+}
+
 // MARK: - SmeemTextViewManager
 
 final class SmeemTextViewHandler: NSObject {
@@ -21,7 +26,7 @@ final class SmeemTextViewHandler: NSObject {
     static let shared = SmeemTextViewHandler()
     
     weak var diaryViewController: DiaryViewController?
-    weak var textView: PlaceholderDisplayable?
+    weak var placeholderDelegate: PlaceholderDisplayable?
     weak var delegate: SmeemTextViewHandlerDelegate?
     
     var viewType: DiaryViewType?
@@ -63,7 +68,7 @@ extension SmeemTextViewHandler: UITextViewDelegate {
     }
     
     func textViewDidChangeSelection(_ textView: UITextView) {
-        guard let placeholderColor = self.textView?.placeholderColor else { return }
+        guard let placeholderColor = self.placeholderDelegate?.placeholderColor else { return }
         
         if textView.textColor == placeholderColor {
             textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
@@ -72,7 +77,7 @@ extension SmeemTextViewHandler: UITextViewDelegate {
     
     // Text가 완전히 지워지는 시점 감지
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        guard let placeholderTextView = self.textView else { return true }
+        guard let placeholderTextView = self.placeholderDelegate else { return true }
 
         let currentText = textView.text ?? ""
         let updatedText = (currentText as NSString).replacingCharacters(in: range, with: text)

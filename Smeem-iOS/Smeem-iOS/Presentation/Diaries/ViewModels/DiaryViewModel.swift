@@ -76,7 +76,7 @@ extension DiaryViewModel {
     
     // MARK: TextValidation
     func isTextValid(text: String, viewType: DiaryViewType) -> Bool {
-        guard let textView = SmeemTextViewHandler.shared.textView as? SmeemTextView else {
+        guard let textView = SmeemTextViewHandler.shared.placeholderDelegate as? SmeemTextView else {
             return false
         }
         

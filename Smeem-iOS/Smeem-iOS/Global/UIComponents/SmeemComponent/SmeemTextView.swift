@@ -7,11 +7,6 @@
 
 import UIKit
 
-protocol PlaceholderDisplayable: AnyObject {
-    var placeholderText: String? { get set }
-    var placeholderColor: UIColor? { get set }
-}
-
 enum SmeemTextViewType {
     case display
     case editable(SmeemTextViewHandler)
@@ -23,7 +18,7 @@ final class SmeemTextView: UITextView {
     
     // MARK: Properties
     
-    var handler: SmeemTextViewHandler?
+    var textViewHandler: SmeemTextViewHandler?
     var placeholderText: String?
     var placeholderColor: UIColor?
     
@@ -67,8 +62,8 @@ extension SmeemTextView {
             self.placeholderText = text
             
             self.delegate = manager
-            manager.textView = self
-            self.handler = manager
+            self.textViewHandler = manager
+            manager.placeholderDelegate = self
         }
     }
     
