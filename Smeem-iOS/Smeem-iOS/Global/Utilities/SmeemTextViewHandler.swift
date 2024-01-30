@@ -32,10 +32,6 @@ final class SmeemTextViewHandler: NSObject {
     weak var textViewHandlerDelegate: SmeemTextViewHandlerDelegate?
     
     var viewType: DiaryViewType?
-    
-    deinit {
-        print("\(self) is being deinitialized")
-    }
 }
 
 // MARK: - Extensions

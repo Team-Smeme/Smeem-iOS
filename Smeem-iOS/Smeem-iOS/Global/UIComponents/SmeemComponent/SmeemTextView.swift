@@ -42,10 +42,6 @@ final class SmeemTextView: UITextView {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
-    
-    deinit {
-        print("\(self) is being deinitialized")
-    }
 }
 
 // MARK: - Extensions
