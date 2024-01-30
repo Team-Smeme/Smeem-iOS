@@ -9,7 +9,11 @@ import UIKit
 
 enum TrainingGoalsType {
     case onboarding
-    case myPage(target: String)
+    case myPage(targetIndex: Int)
+}
+
+protocol TrainingDataSendDelegate {
+    func sendTargetData(targetString: String, buttonType: SmeemButtonType)
 }
 
 final class TrainingGoalsCollectionView: BaseCollectionView {
@@ -19,6 +23,7 @@ final class TrainingGoalsCollectionView: BaseCollectionView {
     var trainingDelegate: TrainingDataSendDelegate?
 
     private var selectedTarget = ""
+    private var selectedIndex = 0
     var planGoalArray = [Plan]() {
         didSet {
             self.reloadData()
@@ -31,7 +36,6 @@ final class TrainingGoalsCollectionView: BaseCollectionView {
     
     init(planGoalType: TrainingGoalsType) {
         super.init(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-
         checkTargetString(planGoalType: planGoalType)
         registerCell()
         setDelegate()
@@ -44,14 +48,10 @@ final class TrainingGoalsCollectionView: BaseCollectionView {
     private func checkTargetString(planGoalType: TrainingGoalsType) {
         switch planGoalType {
         case .myPage(let target):
-            selectedTarget = target
+            selectedIndex = target
         default:
             break
         }
-    }
-    
-    private func setNextButtonState() {
-        trainingDelegate?.sendButtonState()
     }
     
     private func registerCell() {
@@ -74,6 +74,13 @@ extension TrainingGoalsCollectionView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = dequeueReusableCell(cellType: TrainingGoalCollectionViewCell.self, indexPath: indexPath)
         cell.setData(planGoalArray[indexPath.item].name)
+        
+        if selectedIndex != -1 && indexPath.item == selectedIndex {
+            print(selectedIndex)
+            cell.selctedCell()
+            collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .init())
+        }
+        
         return cell
     }
 }
@@ -87,9 +94,7 @@ extension TrainingGoalsCollectionView: UICollectionViewDelegate {
         cell.selctedCell()
         
         selectedTarget = planGoalArray[indexPath.item].goalType
-        
-        trainingDelegate?.sendTargetString(targetString: selectedTarget)
-        trainingDelegate?.sendButtonState()
+        trainingDelegate?.sendTargetData(targetString: selectedTarget, buttonType: .enabled)
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {

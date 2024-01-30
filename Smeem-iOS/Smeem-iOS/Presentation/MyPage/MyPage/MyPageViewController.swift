@@ -258,12 +258,14 @@ final class MyPageViewController: BaseViewController {
     }
     
     @objc func howLearningViewTapped() {
-        let goalVC = TrainingGoalViewController(viewtype: .myPage)
+        print("아직 모르겠어요 아님?", userInfo.target)
+        print("이건 뭐야,", goalTextToIndex[userInfo.target]!.0)
+        let goalVC = EditGoalViewController(targetIndex: goalTextToIndex[userInfo.target]!.0)
         
-        if let selectedIndex = getIndexFromGoalText(goalText: userInfo.target) {
-            goalVC.selectedGoalIndex = selectedIndex
-            goalVC.selectedGoalLabel = goalTextToIndex[userInfo.target]!.1
-        }
+//        if let selectedIndex = getIndexFromGoalText(goalText: userInfo.target) {
+//            goalVC.selectedGoalIndex = selectedIndex
+//            goalVC.selectedGoalLabel = goalTextToIndex[userInfo.target]!.1
+//        }
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(goalDataReceived),

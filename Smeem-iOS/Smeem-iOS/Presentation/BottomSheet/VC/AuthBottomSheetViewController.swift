@@ -229,7 +229,8 @@ extension BottomSheetViewController {
                 switch self.authType {
                 case .login:
                     if response.hasPlan == false {
-                        self.presentOnboardingPlanVC()
+                        let trainingGoalVC = TrainingGoalViewController()
+                        self.navigationController?.pushViewController(trainingGoalVC, animated: true)
                     } else if response.hasPlan == true && response.isRegistered == false {
                         self.presentOnboardingAcceptVC()
                     } else {

@@ -86,7 +86,7 @@ final class SmeemStartViewController: BaseViewController {
     
     @objc func startButtonDidTap() {
         UserDefaultsManager.clientAuthType = AuthType.signup.rawValue
-        let trainingGoalsVC = TrainingGoalViewController(viewtype: .onboarding)
+        let trainingGoalsVC = TrainingGoalViewController()
         self.navigationController?.pushViewController(trainingGoalsVC, animated: true)
     }
     

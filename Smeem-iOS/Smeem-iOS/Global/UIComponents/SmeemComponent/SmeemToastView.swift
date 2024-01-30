@@ -38,7 +38,7 @@ enum ToastViewType: Error {
 
 enum SmeemToast: String {
     case regEx = "외국어를 포함해 작성해 주세요 :("
-    case completed = "작성 완료"
+    case completed = "오늘의 일기 클리어!"
     case changed = "변경 완료"
     case edited = "첨삭 완료"
     case serverError = "로그인에 실패했어요. 다시 시도해 주세요."
