@@ -17,7 +17,7 @@ final class DeepLAPI {
     private var deepLResponse: DeepLResponse?
     
     func postTargetText(text: String, completion: @escaping ((DeepLResponse)?) -> Void) {
-        let deepLService = DeepLService(text: text, authToken: "abb31f81-ac26-be3d-f6ce-fde2befe206a:fx")
+        let deepLService = DeepLService(text: text, authToken: ConfigConstant.deepLToken)
         
         deepLProvider.request(deepLService) { result in
             switch result {

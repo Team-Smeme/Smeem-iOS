@@ -16,12 +16,20 @@ enum ConfigConstant {
         return version
     }()
     
-    // MARK: - kakao key
+    // MARK: - Kakao key
     static let nativeAppKey: String = {
         guard let nativeAppkey = Bundle.main.object(forInfoDictionaryKey: "NATIVE_APP_KEY") as? String else {
             fatalError("nativeAppkey typecasting failed")
         }
         return nativeAppkey
+    }()
+    
+    // MARK: - DeepL
+    static let deepLToken: String = {
+        guard let token = Bundle.main.object(forInfoDictionaryKey: "DEEPL_API_KEY") as? String else {
+            fatalError("deepLToken typecasting failed")
+        }
+        return token
     }()
     
     // MARK: - Base URL
@@ -32,7 +40,7 @@ enum ConfigConstant {
         return serverURL
     }()
     
-    // MARK: - Base URL
+    // MARK: - AmplitudeAppkey
     static let amplitudeAppKey: String = {
         guard let amplitudeAppKey = Bundle.main.object(forInfoDictionaryKey: "AMPLITUDE_APP_KEY") as? String else {
             fatalError("server url typecasting failed")
