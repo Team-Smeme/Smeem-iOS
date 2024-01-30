@@ -54,16 +54,6 @@ class DiaryViewFactory {
         
         return createDiaryView(with: config, viewType: .stepTwoKorean)
     }
-    
-    func createEditDiaryView() -> DiaryView {
-        
-        let config = builder
-            .setNavigationBar(navigationBarType: .edit)
-            .setTextViewType(textViewType: .editable(textViewHandler))
-            .build()
-        
-        return createDiaryView(with: config, viewType: .edit)
-    }
 }
 
 // MARK: - Helpers
@@ -74,7 +64,7 @@ extension DiaryViewFactory {
         let handler = textViewHandler
         handler.viewType = viewType
         
-        let inputTextView = SmeemTextView(type: configuration.textViewType, placeholderText: configuration.placeholderText)
+        let inputTextView = SmeemTextView(diaryType: handler.viewType!, type: configuration.textViewType, placeholderText: configuration.placeholderText)
         let bottomView = DiaryBottomView(viewType: configuration.bottomViewType)
         let randomTopicView = RandomTopicView()
         
