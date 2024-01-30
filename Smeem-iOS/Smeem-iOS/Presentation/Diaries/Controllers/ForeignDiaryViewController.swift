@@ -53,6 +53,7 @@ extension ForeignDiaryViewController: NavigationBarActionDelegate {
             viewModel?.postDiaryAPI { postDiaryResponse in
                 self.handlePostDiaryResponse(postDiaryResponse)
             }
+            AmplitudeManager.shared.track(event: AmplitudeConstant.diary.diary_complete.event)
         } else {
             viewModel?.showRegExToast()
         }

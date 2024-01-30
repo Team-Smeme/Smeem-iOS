@@ -68,6 +68,7 @@ extension StepOneKoreanDiaryViewController: NavigationBarActionDelegate {
         if rootView?.navigationView.rightButton.titleLabel?.textColor == .point {
             rootView?.inputTextView.resignFirstResponder()
             handleRightNavigationButton()
+            AmplitudeManager.shared.track(event: AmplitudeConstant.diary.first_step_complete.event)
         } else {
             viewModel?.showRegExToast()
         }

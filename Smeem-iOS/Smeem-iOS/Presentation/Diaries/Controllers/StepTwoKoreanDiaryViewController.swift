@@ -65,6 +65,7 @@ extension StepTwoKoreanDiaryViewController: NavigationBarActionDelegate {
             viewModel?.postDiaryAPI { postDiaryResponse in
                 self.handlePostDiaryResponse(postDiaryResponse)
             }
+            AmplitudeManager.shared.track(event: AmplitudeConstant.diary.sec_step_complete.event)
         } else {
             viewModel?.showRegExToast()
         }
@@ -86,6 +87,7 @@ extension StepTwoKoreanDiaryViewController: HintActionDelegate {
     func didTapHintButton() {
         viewModel?.toggleIsHintShowed()
         handleHintButton()
+        AmplitudeManager.shared.track(event: AmplitudeConstant.diary.hint_click.event)
     }
 }
 
