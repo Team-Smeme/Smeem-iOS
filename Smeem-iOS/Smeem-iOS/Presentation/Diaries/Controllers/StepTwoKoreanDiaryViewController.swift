@@ -61,7 +61,6 @@ extension StepTwoKoreanDiaryViewController: NavigationBarActionDelegate {
     
     func didTapRightButton() {
         if rootView?.navigationView.rightButton.titleLabel?.textColor == .point {
-//            showLodingView(loadingView: rootView.loadingView)
             rootView?.inputTextView.resignFirstResponder()
             viewModel?.postDiaryAPI { postDiaryResponse in
                 self.handlePostDiaryResponse(postDiaryResponse)

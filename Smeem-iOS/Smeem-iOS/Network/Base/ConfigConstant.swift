@@ -31,4 +31,12 @@ enum ConfigConstant {
         }
         return serverURL
     }()
+    
+    // MARK: - Base URL
+    static let amplitudeAppKey: String = {
+        guard let amplitudeAppKey = Bundle.main.object(forInfoDictionaryKey: "AMPLITUDE_APP_KEY") as? String else {
+            fatalError("server url typecasting failed")
+        }
+        return amplitudeAppKey
+    }()
 }

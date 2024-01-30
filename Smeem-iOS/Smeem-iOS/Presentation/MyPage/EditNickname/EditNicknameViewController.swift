@@ -13,7 +13,7 @@ protocol EditMypageDelegate: AnyObject {
     func editMyPageData()
 }
 
-final class EditNicknameViewController: UIViewController {
+final class EditNicknameViewController: BaseViewController {
     
     // MARK: - Property
     
@@ -81,21 +81,16 @@ final class EditNicknameViewController: UIViewController {
         return button
     }()
     
-    private let loadingView = LoadingView()
-    
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setData()
-        setBackgroundColor()
         setLayout()
-//        hiddenNavigationBar()
         setTextFieldDelegate()
         showKeyboard(textView: nicknameTextField)
         addTextFieldNotification()
-        swipeRecognizer()
     }
     
     deinit {
@@ -109,7 +104,6 @@ final class EditNicknameViewController: UIViewController {
     }
     
     @objc func doneButtonDidTap() {
-        self.showLodingView(loadingView: self.loadingView)
         checkNinknameAPI(nickname: nicknameTextField.text ?? "")
     }
     
@@ -125,16 +119,6 @@ final class EditNicknameViewController: UIViewController {
                 }
             }
         }
-    }
-    
-    @objc func responseToSwipeGesture() {
-        self.navigationController?.popViewController(animated: true)
-    }
-    
-    private func swipeRecognizer() {
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(responseToSwipeGesture))
-        swipeRight.direction = UISwipeGestureRecognizer.Direction.right
-        self.view.addGestureRecognizer(swipeRight)
     }
 
     // MARK: - Custom Method
@@ -161,10 +145,6 @@ final class EditNicknameViewController: UIViewController {
     }
 
     // MARK: - Layout
- 
-    private func setBackgroundColor() {
-        view.backgroundColor = .smeemWhite
-    }
     
     private func setLayout() {
         view.addSubviews(headerContainerView,
@@ -235,33 +215,44 @@ extension EditNicknameViewController: UITextFieldDelegate {
 
 extension EditNicknameViewController {
     private func nicknamePatchAPI(nickname: String) {
-        MyPageAPI.shared.changeMyNickName(request: EditNicknameRequest(username: nickname)) { response in
-            guard let _ = response?.data else { return }
-            self.hideLodingView(loadingView: self.loadingView)
-            self.editNicknameDelegate?.editMyPageData()
-            self.navigationController?.popViewController(animated: true)
+        SmeemLoadingView.showLoading()
+        
+        MyPageAPI.shared.changeMyNickName(request: EditNicknameRequest(username: nickname)) { result in
+            switch result {
+            case .success(_):
+                self.editNicknameDelegate?.editMyPageData()
+                self.navigationController?.popViewController(animated: true)
+            case .failure(let error):
+                self.showToast(toastType: .smeemErrorToast(message: error))
+            }
+            
+            SmeemLoadingView.hideLoading()
         }
     }
     
     private func checkNinknameAPI(nickname: String) {
+        SmeemLoadingView.showLoading()
+        
         MyPageAPI.shared.checkNinknameAPI(param: nickname) { response in
-            guard let data = response?.data else { return }
             
-            self.hideLodingView(loadingView: self.loadingView)
-            self.isExistNinkname = data.isExist
-            
-            if self.isExistNinkname {
-                self.doubleCheckLabel.isHidden = false
-                self.doneButton.changeButtonType(buttonType: .notEnabled)
-            } else {
-                self.doubleCheckLabel.isHidden = true
-                self.doneButton.changeButtonType(buttonType: .enabled)
+            switch response {
+            case .success(let response):
+                if response.isExist {
+                    self.doubleCheckLabel.isHidden = false
+                    self.doneButton.changeButtonType(buttonType: .notEnabled)
+                } else {
+                    self.doubleCheckLabel.isHidden = true
+                    self.doneButton.changeButtonType(buttonType: .enabled)
+                }
+                
+                if !response.isExist {
+                    self.nicknamePatchAPI(nickname: nickname)
+                }
+            case .failure(let error):
+                self.showToast(toastType: .smeemErrorToast(message: error))
             }
             
-            if !self.isExistNinkname {
-                self.showLodingView(loadingView: self.loadingView)
-                self.nicknamePatchAPI(nickname: nickname)
-            }
+            SmeemLoadingView.hideLoading()
         }
     }
 }

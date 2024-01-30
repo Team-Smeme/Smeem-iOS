@@ -7,16 +7,16 @@
 
 import UIKit
 
-enum GoalViewType {
+enum TrainingGoalType {
     case onboarding
     case myPage
 }
 
-final class GoalViewController: UIViewController {
+final class TrainingGoalViewController: BaseViewController {
     
     // MARK: - Property
     
-    private var viewtype: GoalViewType
+    private var viewtype: TrainingGoalType
     
     private let goalOnboardingView = GoalEditMypageView()
     private let goalEditMypageView = GoalEditMypageView()
@@ -34,10 +34,14 @@ final class GoalViewController: UIViewController {
     
     // MARK: - Life Cycle
     
-    init(viewtype: GoalViewType, targetClosure: ( (String) -> Void)? = nil, selectedGoalLabel: String = String()) {
+    init(viewtype: TrainingGoalType, targetClosure: ( (String) -> Void)? = nil, selectedGoalLabel: String = String()) {
         self.viewtype = viewtype
         self.targetClosure = targetClosure
         self.selectedGoalLabel = selectedGoalLabel
+        
+        if self.viewtype == .onboarding {
+            AmplitudeManager.shared.track(event: AmplitudeConstant.Onboarding.onboarding_goal_view.event)
+        }
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -57,15 +61,10 @@ final class GoalViewController: UIViewController {
 
         planListGetAPI()
         setCollectionViewOnDataSourceUpdate()
-        swipeRecognizer()
         
         if let selectedGoalIndex = selectedGoalIndex {
             datasource.setSelectedIndex(selectedGoalIndex)
         }
-    }
-    
-    @objc func responseToSwipeGesture() {
-        self.navigationController?.popViewController(animated: true)
     }
     
     private func setButtonType() {
@@ -77,17 +76,11 @@ final class GoalViewController: UIViewController {
             goalEditMypageView.disableNextButton()
         }
     }
-    
-    private func swipeRecognizer() {
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(responseToSwipeGesture))
-        swipeRight.direction = UISwipeGestureRecognizer.Direction.right
-        self.view.addGestureRecognizer(swipeRight)
-    }
 }
 
 // MARK: - NextButtonDelegate
 
-extension GoalViewController: NextButtonDelegate {
+extension TrainingGoalViewController: NextButtonDelegate {
     func nextButtonDidTap() {
         switch viewtype {
         case .onboarding:
@@ -96,7 +89,7 @@ extension GoalViewController: NextButtonDelegate {
             howOnboardingVC.tempTarget = selectedGoalLabel
             self.navigationController?.pushViewController(howOnboardingVC, animated: true)
         case .myPage:
-            let howOnboardingVC = HowOnboardingViewController()
+            let howOnboardingVC = EditGoalViewController()
             howOnboardingVC.tempTarget = selectedGoalLabel
             self.navigationController?.pushViewController(howOnboardingVC, animated: true)
         }
@@ -109,7 +102,7 @@ extension GoalViewController: NextButtonDelegate {
 
 // MARK: - Extensions
 
-extension GoalViewController {
+extension TrainingGoalViewController {
     
     private func configureViewType() {
         switch viewtype {
@@ -140,7 +133,7 @@ extension GoalViewController {
 
 // MARK: - UICollectionViewDelegate
 
-extension GoalViewController: UICollectionViewDelegate {
+extension TrainingGoalViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem(at: indexPath) as? TrainingGoalCollectionViewCell else { return }
         cell.selctedCell()
@@ -161,7 +154,7 @@ extension GoalViewController: UICollectionViewDelegate {
     }
 }
 
-extension GoalViewController: UICollectionViewDelegateFlowLayout {
+extension TrainingGoalViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = collectionView.frame.width
         let height = convertByHeightRatio(60)
@@ -176,15 +169,20 @@ extension GoalViewController: UICollectionViewDelegateFlowLayout {
 
 // MARK: - Network
 
-extension GoalViewController {
+extension TrainingGoalViewController {
     func planListGetAPI() {
+        SmeemLoadingView.showLoading()
         OnboardingAPI.shared.planList() { response in
-            guard let data = response.data?.goals else { return }
-            self.datasource.goalLabelList = data
             
-            DispatchQueue.main.async {
+            switch response {
+            case .success(let response):
+                self.datasource.goalLabelList = response.goals
                 self.goalOnboardingView.onDataSourceUpdated?()
+            case .failure(let error):
+                self.showToast(toastType: .smeemErrorToast(message: error))
             }
+            
+            SmeemLoadingView.hideLoading()
         }
     }
 }

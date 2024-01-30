@@ -8,7 +8,7 @@
 import AppTrackingTransparency
 import UIKit
 
-final class AlarmSettingViewController: UIViewController {
+final class AlarmSettingViewController: BaseViewController {
     
     // MARK: - Property
     
@@ -23,8 +23,6 @@ final class AlarmSettingViewController: UIViewController {
     var trainingClosure: ((TrainingTime) -> Void)?
     
     // MARK: - UI Property
-    
-    private let loadingView = LoadingView()
     
     private let nowStepOneLabel: UILabel = {
         let label = UILabel()
@@ -109,9 +107,9 @@ final class AlarmSettingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setBackgroundColor()
         setLayout()
-        swipeRecognizer()
+        
+        AmplitudeManager.shared.track(event: AmplitudeConstant.Onboarding.onboarding_alarm_view.event)
     }
     
     // MARK: - @objc
@@ -121,12 +119,9 @@ final class AlarmSettingViewController: UIViewController {
         requestNotificationPermission()
     }
     
-    @objc func responseToSwipeGesture() {
-        self.navigationController?.popViewController(animated: true)
-    }
-    
     @objc func laterButtonDidTap() {
         self.hasAlarm = false
+        AmplitudeManager.shared.track(event: AmplitudeConstant.Onboarding.onboarding_later_click.event)
         requestNotificationPermission()
     }
     
@@ -144,12 +139,6 @@ final class AlarmSettingViewController: UIViewController {
     // 이탈했다가 로그인할 경우, hasPlan은 true이기 때문에, 닉네임 수정뷰로 이동시키고 가장 마지막 토큰을 가지고 api 요청
     
     // MARK: - Custom Method
-    
-    private func swipeRecognizer() {
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(responseToSwipeGesture))
-        swipeRight.direction = UISwipeGestureRecognizer.Direction.right
-        self.view.addGestureRecognizer(swipeRight)
-    }
     
    private func requestNotificationPermission() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge], completionHandler: { didAllow, error in
@@ -220,7 +209,6 @@ final class AlarmSettingViewController: UIViewController {
             }
         } else {
         /// 로그인한 유저라면 닉네임 설정 뷰로 이동
-            self.showLodingView(loadingView: loadingView)
             self.userPlanPatchAPI(userPlan: userPlanRequest, accessToken: UserDefaultsManager.clientAccessToken)
         }
     }
@@ -249,10 +237,6 @@ final class AlarmSettingViewController: UIViewController {
     }
     
     // MARK: - Layout
-    
-    private func setBackgroundColor() {
-        view.backgroundColor = .smeemWhite
-    }
     
     private func setLayout() {
         view.addSubviews(nowStepOneLabel, divisionLabel, totalStepLabel, timeSettingLabelStackView,
@@ -302,16 +286,19 @@ final class AlarmSettingViewController: UIViewController {
 
 extension AlarmSettingViewController {
     private func userPlanPatchAPI(userPlan: UserPlanRequest, accessToken: String) {
-        OnboardingAPI.shared.userPlanPathAPI(param: userPlan, accessToken: accessToken) { response in
-            self.hideLodingView(loadingView: self.loadingView)
+        SmeemLoadingView.showLoading()
+        OnboardingAPI.shared.userPlanPathAPI(param: userPlan, accessToken: accessToken) { result in
             
-            if response.success == true {
+            switch result {
+            case .success(_):
                 let userNicknameVC = UserNicknameViewController()
                 self.navigationController?.pushViewController(userNicknameVC, animated: true)
-            } else {
-                print("학습 목표 API 호출 실패")
-//                self.showToast(toastType: .errorToast(errorType: .networkError))
+            case .failure(let error):
+                self.showToast(toastType: .smeemErrorToast(message: error))
             }
+            
+            SmeemLoadingView.hideLoading()
+
         }
     }
 }

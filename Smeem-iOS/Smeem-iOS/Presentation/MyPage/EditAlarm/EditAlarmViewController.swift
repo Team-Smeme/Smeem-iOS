@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class EditAlarmViewController: UIViewController {
+final class EditAlarmViewController: BaseViewController {
     
     // MARK: - Property
     
@@ -27,7 +27,6 @@ final class EditAlarmViewController: UIViewController {
     
     private let naviView = UIView()
     private let datePickerFooterView = DatePickerFooterView()
-    private let loadingView = LoadingView()
     
     private lazy var backButton: UIButton = {
         let button = UIButton()
@@ -68,9 +67,7 @@ final class EditAlarmViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setBackgroundColor()
         setLayout()
-        swipeRecognizer()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -84,20 +81,9 @@ final class EditAlarmViewController: UIViewController {
     }
     
     @objc func completeButtonDidTap() {
-        self.showLodingView(loadingView: loadingView)
         editAlarmTimePatchAPI(alarmTime: EditAlarmTime(trainingTime: TrainingTime(day: trainigDayData!,
                                                                                   hour: trainingTimeData!.hour,
                                                                                   minute: trainingTimeData!.minute)))
-    }
-    
-    @objc func responseToSwipeGesture() {
-        self.navigationController?.popViewController(animated: true)
-    }
-    
-    private func swipeRecognizer() {
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(responseToSwipeGesture))
-        swipeRight.direction = UISwipeGestureRecognizer.Direction.right
-        self.view.addGestureRecognizer(swipeRight)
     }
     
     // MARK: - Custom Method
@@ -106,10 +92,6 @@ final class EditAlarmViewController: UIViewController {
         alarmCollectionView.selectedIndexPath = dayIndexPathArray
         alarmCollectionView.myPageTime = (trainingTimeData!.0, trainingTimeData!.1)
         alarmCollectionView.selectedDayArray = Set(trainigDayData!.components(separatedBy: ","))
-    }
-    
-    private func setBackgroundColor() {
-        view.backgroundColor = .white
     }
     
     private func setLayout() {
@@ -149,14 +131,18 @@ final class EditAlarmViewController: UIViewController {
 
 extension EditAlarmViewController {
     private func editAlarmTimePatchAPI(alarmTime: EditAlarmTime) {
-        MyPageAPI.shared.editAlarmTimeAPI(param: alarmTime) { respons in
-            self.hideLodingView(loadingView: self.loadingView)
-            if respons.success == true {
+        SmeemLoadingView.showLoading()
+        
+        MyPageAPI.shared.editAlarmTimeAPI(param: alarmTime) { response in
+            switch response {
+            case .success(_):
                 self.editAlarmDelegate?.editMyPageData()
                 self.navigationController?.popViewController(animated: true)
-            } else {
-                print("학습 목표 API 호출 실패")
+            case .failure(let error):
+                self.showToast(toastType: .smeemErrorToast(message: error))
             }
+            
+            SmeemLoadingView.hideLoading()
         }
     }
 }

@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class HowOnboardingViewController: UIViewController {
+final class HowOnboardingViewController: BaseViewController {
     
     // MARK: - Property
     
@@ -21,8 +21,6 @@ final class HowOnboardingViewController: UIViewController {
     }
     
     // MARK: - UI Property
-    
-    private let loadingView = LoadingView()
     
     private let nowStepOneLabel: UILabel = {
         let label = UILabel()
@@ -75,7 +73,7 @@ final class HowOnboardingViewController: UIViewController {
     }()
     
     private let howLearningView: TrainingWayView = {
-        let view = TrainingWayView()
+        let view = TrainingWayView(type: .none)
         return view
     }()
     
@@ -90,9 +88,7 @@ final class HowOnboardingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setBackgroundColor()
         setLayout()
-        swipeRecognizer()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -107,17 +103,7 @@ final class HowOnboardingViewController: UIViewController {
         self.navigationController?.pushViewController(alarmVC, animated: true)
     }
     
-    @objc func responseToSwipeGesture() {
-        self.navigationController?.popViewController(animated: true)
-    }
-    
     // MARK: - Custom Method
-    
-    private func swipeRecognizer() {
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(responseToSwipeGesture))
-        swipeRight.direction = UISwipeGestureRecognizer.Direction.right
-        self.view.addGestureRecognizer(swipeRight)
-    }
     
     private func configurePlanData() {
         let planNameList = planWay.components(separatedBy: " 이상 ")
@@ -129,10 +115,6 @@ final class HowOnboardingViewController: UIViewController {
     }
     
     // MARK: - Layout
-    
-    private func setBackgroundColor() {
-        view.backgroundColor = .white
-    }
     
     private func setLayout() {
         view.addSubviews(nowStepOneLabel, divisionLabel, totalStepLabel, learningLabelStackView, howLearningView, nextButton)
@@ -175,17 +157,23 @@ final class HowOnboardingViewController: UIViewController {
 
 extension HowOnboardingViewController {
     func detailPlanListGetAPI(tempTarget: String) {
-        self.showLodingView(loadingView: loadingView)
-        OnboardingAPI.shared.detailPlanList(param: tempTarget) { response in
-            guard let data = response.data else { return }
-
-            self.hideLodingView(loadingView: self.loadingView)
-
-            self.planName = data.name
-            self.planWay = data.way
-            self.planDetailWay = data.detail
-
-            self.configurePlanData()
+        SmeemLoadingView.showLoading()
+        
+        OnboardingAPI.shared.detailPlanList(param: tempTarget) { result in
+            
+            switch result {
+            case .success(let response):
+//                guard let response = response.data else { return }
+                self.planName = response.name
+                self.planWay = response.way
+                self.planDetailWay = response.detail
+                self.configurePlanData()
+                
+            case .failure(let error):
+                self.showToast(toastType: .smeemErrorToast(message: error))
+            }
+            
+            SmeemLoadingView.hideLoading()
         }
     }
 }

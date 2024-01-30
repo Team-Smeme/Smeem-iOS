@@ -31,6 +31,8 @@
 	</dict>
 	<key>SERVER_URL</key>
 	<string>$(SERVER_URL)</string>
+	<key>AMPLITUDE_APP_KEY</key>
+	<string>$(AMPLITUDE_APP_KEY)</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Urbanist-SemiBold.otf</string>

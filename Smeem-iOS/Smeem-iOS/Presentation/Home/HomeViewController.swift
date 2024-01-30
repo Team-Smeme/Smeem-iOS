@@ -174,8 +174,6 @@ final class HomeViewController: BaseViewController {
         return addDiaryButton
     }()
     
-    private let loadingView = LoadingView()
-    
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -186,6 +184,8 @@ final class HomeViewController: BaseViewController {
         setLayout()
         setDelegate()
         setSwipe()
+        
+        AmplitudeManager.shared.track(event: AmplitudeConstant.home.home_view.event)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -197,6 +197,10 @@ final class HomeViewController: BaseViewController {
     
     @objc func swipeEvent(_ swipe: UISwipeGestureRecognizer) {
         if (swipe.location(in: self.view).y < border.frame.origin.y + 20) {
+            if swipe.direction == .down {
+                AmplitudeManager.shared.track(event: AmplitudeConstant.home.full_calendar_appear.event)
+            }
+            
             let topConstant: CGFloat = (swipe.direction == .up) ? 168 : 60
             let newScopeMode: FSCalendarScope = (swipe.direction == .up) ? .week : .month
             calendar.setScope(newScopeMode, animated: true)
@@ -265,16 +269,13 @@ final class HomeViewController: BaseViewController {
     }
     
     private func checkPopupView() {
-        self.showLodingView(loadingView: loadingView)
         if !badgePopupData.isEmpty {
-            self.hideLodingView(loadingView: loadingView)
             let popupVC = BadgePopupViewController()
             popupVC.setData(self.badgePopupData)
             popupVC.modalTransitionStyle = .crossDissolve
             popupVC.modalPresentationStyle = .overCurrentContext
             self.present(popupVC, animated: true)
         }
-        self.hideLodingView(loadingView: loadingView)
         badgePopupData = []
     }
     
@@ -506,17 +507,26 @@ extension HomeViewController: FSCalendarDelegateAppearance {
 extension HomeViewController {
     /// 이번 달+a (앞뒤로 일주일 여유분까지) 일기 불러오는 함수
     func homeDiaryWithAPI(start: String, end: String) {
-        HomeAPI.shared.homeDiaryList(startDate: start, endDate: end) { response in
+        SmeemLoadingView.showLoading()
+        
+        HomeAPI.shared.homeDiaryList(startDate: start, endDate: end) { result in
             
-            guard let homeDiariesData = response?.data?.diaries else { return }
-            homeDiariesData.forEach {
-                self.homeDiaryDict[String($0.createdAt.prefix(10))] = HomeDiaryCustom(diaryId: $0.diaryId, content: $0.content, createdTime: String($0.createdAt.suffix(5)))
+            switch result {
+            case .success(let response):
+                
+                response.diaries.forEach {
+                    self.homeDiaryDict[String($0.createdAt.prefix(10))] = HomeDiaryCustom(diaryId: $0.diaryId, content: $0.content, createdTime: String($0.createdAt.suffix(5)))
+                }
+                self.writtenDaysStringList = self.homeDiaryDict
+                    .map { $0.key }
+                self.setData()
+                self.configureBottomLayout(date: self.currentDate)
+                self.calendar.reloadData()
+            case .failure(let error):
+                self.showToast(toastType: .smeemErrorToast(message: error))
             }
-            self.writtenDaysStringList = self.homeDiaryDict
-                .map { $0.key }
-            self.setData()
-            self.configureBottomLayout(date: self.currentDate)
-            self.calendar.reloadData()
+            
+            SmeemLoadingView.hideLoading()
         }
     }
 }

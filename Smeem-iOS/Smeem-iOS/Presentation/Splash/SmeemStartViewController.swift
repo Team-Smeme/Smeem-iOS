@@ -62,6 +62,8 @@ final class SmeemStartViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setLayout()
+
+        AmplitudeManager.shared.track(event: AmplitudeConstant.Onboarding.first_view.event)
     }
     
     // MARK: - @objc
@@ -84,7 +86,7 @@ final class SmeemStartViewController: BaseViewController {
     
     @objc func startButtonDidTap() {
         UserDefaultsManager.clientAuthType = AuthType.signup.rawValue
-        let trainingGoalsVC = GoalViewController(viewtype: .onboarding)
+        let trainingGoalsVC = TrainingGoalViewController(viewtype: .onboarding)
         self.navigationController?.pushViewController(trainingGoalsVC, animated: true)
     }
     

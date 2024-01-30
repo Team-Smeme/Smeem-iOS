@@ -160,6 +160,7 @@ final class HomeViewFloatingViewController: UIViewController {
     }
     
     @objc func foreignDiaryButtonDidTap(_ gesture: UITapGestureRecognizer) {
+        AmplitudeManager.shared.track(event: AmplitudeConstant.diary.for_writing_click.event)
         let nextVC = ForeignDiaryViewController.createWithForeignDiaryiew()
         nextVC.modalTransitionStyle = .coverVertical
         nextVC.modalPresentationStyle = .fullScreen
@@ -167,6 +168,7 @@ final class HomeViewFloatingViewController: UIViewController {
     }
     
     @objc func koreanDiaryButtonDidTap(_ gesture: UITapGestureRecognizer) {
+        AmplitudeManager.shared.track(event: AmplitudeConstant.diary.kor_writing_click.event)
         let nextVC = StepOneKoreanDiaryViewController.createWithStepOneKoreanDiaryView()
         let navigationController = UINavigationController(rootViewController: nextVC)
         navigationController.modalTransitionStyle = .coverVertical

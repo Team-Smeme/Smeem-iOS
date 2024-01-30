@@ -48,7 +48,6 @@ extension ForeignDiaryViewController: NavigationBarActionDelegate {
     
     func didTapRightButton() {
         if rootView?.navigationView.rightButton.titleLabel?.textColor == .point {
-//            showLodingView(loadingView: rootView.loadingView)
             viewModel?.inputText.value = rootView?.inputTextView.text ?? ""
             rootView?.inputTextView.resignFirstResponder()
             viewModel?.postDiaryAPI { postDiaryResponse in

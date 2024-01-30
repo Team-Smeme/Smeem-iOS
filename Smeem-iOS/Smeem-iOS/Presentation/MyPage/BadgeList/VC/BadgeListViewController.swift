@@ -22,7 +22,6 @@ class BadgeListViewController: UIViewController {
     // MARK: - UI Property
     
     private let headerContainerView = UIView()
-    private let loadingView = LoadingView()
     
     private lazy var cancelButton: UIButton = {
         let button = UIButton()
@@ -72,14 +71,9 @@ class BadgeListViewController: UIViewController {
         
         setBackgroundColor()
         setLayout()
-//        hiddenNavigationBar()
         setDelegate()
         setRegister()
         badgeListGetAPI()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        self.showLodingView(loadingView: loadingView)
     }
 
     
@@ -253,27 +247,30 @@ extension BadgeListViewController: UITableViewDataSource {
 
 extension BadgeListViewController {
     private func badgeListGetAPI() {
-        MyPageAPI.shared.badgeListAPI() { response in
-            guard let badges = response?.data?.badges else { return }
+        MyPageAPI.shared.badgeListAPI() { result in
             
-            self.hideLodingView(loadingView: self.loadingView)
-            
-            // 섹션에 따라 배열 데이터 담는 로직
-            for badge in badges {
-                if badge.type == "EVENT" {
-                    self.badgeHeaderData = [(badge.name, badge.imageURL)]
-                } else if badge.type == "COUNTING" {
-                    self.badgeListData[0].append((name: badge.name, imageURL: badge.imageURL))
-                } else if badge.type == "COMBO" {
-                    self.badgeListData[1].append((name: badge.name, imageURL: badge.imageURL))
-                } else {
-//                    self.badgeListData[2].append((name: badge.name, imageURL: badge.imageURL))
+            switch result {
+            case .success(let response):
+                
+                for badge in response.badges {
+                    if badge.type == "EVENT" {
+                        self.badgeHeaderData = [(badge.name, badge.imageURL)]
+                    } else if badge.type == "COUNTING" {
+                        self.badgeListData[0].append((name: badge.name, imageURL: badge.imageURL))
+                    } else if badge.type == "COMBO" {
+                        self.badgeListData[1].append((name: badge.name, imageURL: badge.imageURL))
+                    } else {
+    //                    self.badgeListData[2].append((name: badge.name, imageURL: badge.imageURL))
+                    }
                 }
+                
+                self.setHeaderViewData()
+                self.setBadgeData()
+                self.badgeListTableView.reloadData()
+                
+            case .failure(let error):
+                self.showToast(toastType: .smeemErrorToast(message: error))
             }
-            
-            self.setHeaderViewData()
-            self.setBadgeData()
-            self.badgeListTableView.reloadData()
         }
     }
 }

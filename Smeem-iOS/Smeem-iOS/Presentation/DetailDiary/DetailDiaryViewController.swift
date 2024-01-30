@@ -28,8 +28,6 @@ final class DetailDiaryViewController: BaseViewController {
         return scrollerView
     }()
     
-    private let loadingView = LoadingView()
-    
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -38,6 +36,8 @@ final class DetailDiaryViewController: BaseViewController {
         setLayout()
         swipeRecognizer()
         setDelegate()
+        
+        AmplitudeManager.shared.track(event: AmplitudeConstant.diaryDetail.mydiary_click.event)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -49,6 +49,7 @@ final class DetailDiaryViewController: BaseViewController {
     @objc func showActionSheet() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let modifyAction = UIAlertAction (title: "수정", style: .default, handler: { (action) in
+            AmplitudeManager.shared.track(event: AmplitudeConstant.diaryDetail.mydiary_edit.event)
             let editVC = EditDiaryViewController()
             editVC.diaryID = self.diaryId
             editVC.randomContent = self.isRandomTopic
@@ -69,7 +70,6 @@ final class DetailDiaryViewController: BaseViewController {
     @objc func showAlert() {
         let alert = UIAlertController(title: "일기를 삭제할까요?", message: "", preferredStyle: .alert)
         let delete = UIAlertAction(title: "확인", style: .destructive) { (action) in
-            self.showLodingView(loadingView: self.loadingView)
             self.deleteDiaryWithAPI(diaryID: self.diaryId)
         }
         let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
@@ -131,27 +131,41 @@ extension DetailDiaryViewController: NavigationBarActionDelegate {
 extension DetailDiaryViewController {
     
     func detailDiaryWithAPI(diaryID: Int) {
-        self.showLodingView(loadingView: self.loadingView)
-        DetailDiaryAPI.shared.getDetailDiary(diaryID: diaryId) { response in
-            guard let detailDiaryData = response?.data else { return }
-            self.hideLodingView(loadingView: self.loadingView)
+        SmeemLoadingView.showLoading()
+        
+        DetailDiaryAPI.shared.getDetailDiary(diaryID: diaryId) { result in
             
-            self.isRandomTopic = detailDiaryData.topic
-            self.diaryContent = detailDiaryData.content
-            self.dateCreated = detailDiaryData.createdAt
-            self.userName = detailDiaryData.username
-            self.setData()
-            self.setScrollerViewType()
+            switch result {
+            case .success(let response):
+                self.isRandomTopic = response.topic
+                self.diaryContent = response.content
+                self.dateCreated = response.createdAt
+                self.userName = response.username
+                self.setData()
+                self.setScrollerViewType()
+            case .failure(let error):
+                self.showToast(toastType: .smeemErrorToast(message: error))
+            }
+            
+            SmeemLoadingView.hideLoading()
         }
     }
     
     func deleteDiaryWithAPI(diaryID: Int) {
-        DetailDiaryAPI.shared.deleteDiary(diaryID: diaryId) { response in
-            self.hideLodingView(loadingView: self.loadingView)
+        SmeemLoadingView.showLoading()
+        
+        DetailDiaryAPI.shared.deleteDiary(diaryID: diaryId) { result in
             
-            let homeVC = HomeViewController()
-            let rootVC = UINavigationController(rootViewController: homeVC)
-            self.changeRootViewControllerAndPresent(rootVC)
+            switch result {
+            case .success(_):
+                let homeVC = HomeViewController()
+                let rootVC = UINavigationController(rootViewController: homeVC)
+                self.changeRootViewControllerAndPresent(rootVC)
+            case .failure(let error):
+                self.showToast(toastType: .smeemErrorToast(message: error))
+            }
+            
+            SmeemLoadingView.hideLoading()
         }
     }
 }

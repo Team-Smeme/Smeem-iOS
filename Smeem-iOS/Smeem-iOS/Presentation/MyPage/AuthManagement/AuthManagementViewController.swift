@@ -225,30 +225,45 @@ final class AuthManagementViewController: UIViewController {
 
 extension AuthManagementViewController {
     private func resignAPI() {
-        AuthAPI.shared.resignAPI() { response in
-            guard let _ = response.data else { return }
+        SmeemLoadingView.showLoading()
+        
+        AuthAPI.shared.resignAPI() { result in
+            switch result {
+            case .success(_):
+                UserDefaultsManager.accessToken = ""
+                UserDefaultsManager.refreshToken = ""
+                UserDefaultsManager.clientAccessToken = ""
+                UserDefaultsManager.clientRefreshToken = ""
+                UserDefaultsManager.hasKakaoToken = nil
+                
+                self.changeRootViewController(SplashViewController())
+            case .failure(let error):
+                self.showToast(toastType: .smeemErrorToast(message: error))
+            }
             
-            UserDefaultsManager.accessToken = ""
-            UserDefaultsManager.refreshToken = ""
-            UserDefaultsManager.clientAccessToken = ""
-            UserDefaultsManager.clientRefreshToken = ""
-            UserDefaultsManager.hasKakaoToken = nil
-            
-            self.changeRootViewController(SplashViewController())
+            SmeemLoadingView.hideLoading()
         }
     }
     
     private func logoutAPI() {
-        AuthAPI.shared.logoutAPI() { response in
-            guard let _ = response.data else { return }
+        SmeemLoadingView.showLoading()
+        
+        AuthAPI.shared.logoutAPI() { result in
             
-            UserDefaultsManager.accessToken = ""
-            UserDefaultsManager.clientAccessToken = ""
-            UserDefaultsManager.clientRefreshToken = ""
-            UserDefaultsManager.refreshToken = ""
-            UserDefaultsManager.hasKakaoToken = nil
+            switch result {
+            case .success(_):
+                UserDefaultsManager.accessToken = ""
+                UserDefaultsManager.clientAccessToken = ""
+                UserDefaultsManager.clientRefreshToken = ""
+                UserDefaultsManager.refreshToken = ""
+                UserDefaultsManager.hasKakaoToken = nil
+                
+                self.changeRootViewController(SplashViewController())
+            case .failure(let error):
+                self.showToast(toastType: .smeemErrorToast(message: error))
+            }
             
-            self.changeRootViewController(SplashViewController())
+            SmeemLoadingView.hideLoading()
         }
     }
 }
