@@ -65,7 +65,10 @@ extension StepOneKoreanDiaryViewController: NavigationBarActionDelegate {
     }
     
     func didTapRightButton() {
-        if rootView?.navigationView.rightButton.titleLabel?.textColor == .point {
+        if viewModel?.isTextValid.value == true {
+            if viewModel?.isRandomTopicActive.value == false {
+                viewModel?.topicID = nil
+            }
             rootView?.inputTextView.resignFirstResponder()
             handleRightNavigationButton()
             AmplitudeManager.shared.track(event: AmplitudeConstant.diary.first_step_complete.event)

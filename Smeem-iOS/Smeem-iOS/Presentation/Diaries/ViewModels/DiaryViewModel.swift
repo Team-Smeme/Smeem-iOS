@@ -128,8 +128,8 @@ extension DiaryViewModel {
                 self.badgePopupContent = response.badges
                 completion(response)
                 
-            case .failure(_):
-                completion(nil)
+            case .failure(let error):
+                self.onError?(error)
             }
         }
     }

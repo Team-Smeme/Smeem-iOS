@@ -60,7 +60,11 @@ extension StepTwoKoreanDiaryViewController: NavigationBarActionDelegate {
     }
     
     func didTapRightButton() {
-        if rootView?.navigationView.rightButton.titleLabel?.textColor == .point {
+        if viewModel?.isTextValid.value == true {
+            // TODO: 다듬읍시다..
+            if viewModel?.isRandomTopicActive.value == false {
+                viewModel?.topicID = nil
+            }
             rootView?.inputTextView.resignFirstResponder()
             viewModel?.postDiaryAPI { postDiaryResponse in
                 self.handlePostDiaryResponse(postDiaryResponse)
