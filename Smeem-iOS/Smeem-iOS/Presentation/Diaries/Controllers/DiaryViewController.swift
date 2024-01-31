@@ -40,6 +40,7 @@ class DiaryViewController: BaseViewController {
         super.viewDidLoad()
         
         handleInitialRandomTopicApiCall()
+        handleError()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -208,6 +209,14 @@ extension DiaryViewController {
             
             let rootVC = UINavigationController(rootViewController: homeVC)
             homeVC.changeRootViewControllerAndPresent(rootVC)
+        }
+    }
+    
+    func handleError() {
+        viewModel?.onError = { [weak self] error in
+            guard let error = error as? SmeemError else { return }
+            
+            self?.rootView?.showToast(with: .smeemErrorToast(message: error))
         }
     }
 }

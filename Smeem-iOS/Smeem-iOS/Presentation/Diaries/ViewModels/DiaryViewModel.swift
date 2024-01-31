@@ -36,6 +36,7 @@ class DiaryViewModel {
     var onUpdateHintButton: ((Bool) -> Void)?
     var onUpdateInputText: ((String) -> Void)?
     var onUpdateTopicID: ((String) -> Void)?
+    var onError: ((Error) -> Void)?
 }
 
 // MARK: - Extensions
@@ -101,12 +102,17 @@ extension DiaryViewModel {
 
 extension DiaryViewModel {
     func callRandomTopicAPI() {
-        RandomTopicAPI.shared.getRandomSubject { [weak self] response in
-            guard let randomSubjectData = response?.data else { return }
+        RandomTopicAPI.shared.getRandomSubject { [weak self] result in
             
-            self?.topicID = randomSubjectData.topicId
-            self?.topicContent = randomSubjectData.content
-            self?.onUpdateTopicContent.value = randomSubjectData.content
+            switch result {
+            case .success(let response):
+                
+                self?.topicID = response.topicId
+                self?.topicContent = response.content
+                self?.onUpdateTopicContent.value = response.content
+            case .failure(let error):
+                self?.onError?(error)
+            }
         }
     }
     
@@ -114,16 +120,17 @@ extension DiaryViewModel {
         
         let inputText = inputText.value
         
-        PostDiaryAPI.shared.postDiary(param: PostDiaryRequest(content: inputText, topicId: getTopicID())) { response in
+        PostDiaryAPI.shared.postDiary(param: PostDiaryRequest(content: inputText, topicId: getTopicID())) { result in
             
-            guard let postDiaryResponse = response?.data else {
+            switch result {
+            case .success(let response):
+                self.diaryID = response.diaryID
+                self.badgePopupContent = response.badges
+                completion(response)
+                
+            case .failure(_):
                 completion(nil)
-                return
             }
-            
-            self.diaryID = postDiaryResponse.diaryID
-            self.badgePopupContent = postDiaryResponse.badges
-            completion(postDiaryResponse)
         }
     }
 }
