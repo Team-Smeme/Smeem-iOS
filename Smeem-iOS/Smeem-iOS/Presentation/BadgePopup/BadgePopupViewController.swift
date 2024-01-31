@@ -14,6 +14,8 @@ final class BadgePopupViewController: UIViewController, SKStoreProductViewContro
     
     // MARK: - Property
     
+    private var type = ""
+    
     // MARK: - UI Property
     
     private let popupView: UIView = {
@@ -80,10 +82,15 @@ final class BadgePopupViewController: UIViewController, SKStoreProductViewContro
     // MARK: - @objc
     
     @objc func cancelButtonDidTap() {
+        if type == "EVENT" {
+            AmplitudeManager.shared.track(event: AmplitudeConstant.badge.welcome_quit_click.event)
+        }
+        
         self.dismiss(animated: true)
     }
     
     @objc func badgeButtonDidTap() {
+        setBadgeMoreAmplitude(type: type)
         let badgeListVC = BadgeListViewController()
         badgeListVC.modalTransitionStyle = .crossDissolve
         badgeListVC.modalPresentationStyle = .fullScreen
@@ -94,13 +101,14 @@ final class BadgePopupViewController: UIViewController, SKStoreProductViewContro
     
     func setData(_ popupData: [PopupBadge]) {
         for popup in popupData {
-            let url = URL(string: popup.imageURL)
+            let url = URL(string: popup.imageUrl)
             badgeImage.kf.setImage(with: url)
             badgeTitleLabel.text = popup.name
             badgeDetailLabel.text = """
                                     축하해요!
                                     \(popup.name)를 획득했어요!
                                     """
+            type = popup.type
         }
         
         if popupData[0].name == "열 번째 일기" {
@@ -117,6 +125,14 @@ final class BadgePopupViewController: UIViewController, SKStoreProductViewContro
     }
     
     // MARK: - Layout
+    
+    private func setBadgeMoreAmplitude(type: String) {
+        if type == "EVENT" {
+            AmplitudeManager.shared.track(event: AmplitudeConstant.badge.welcome_more_click.event)
+        } else {
+            AmplitudeManager.shared.track(event: AmplitudeConstant.badge.badge_more_click(type).event)
+        }
+    }
     
     private func setBackgroundColor() {
         view.backgroundColor = .popupBackground
