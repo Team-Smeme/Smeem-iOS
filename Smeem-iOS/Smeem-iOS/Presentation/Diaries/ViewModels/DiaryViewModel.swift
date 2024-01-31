@@ -100,8 +100,8 @@ extension DiaryViewModel {
 // MARK: - Network
 
 extension DiaryViewModel {
-    func randomSubjectWithAPI() {
-        RandomSubjectAPI.shared.getRandomSubject { [weak self] response in
+    func callRandomTopicAPI() {
+        RandomTopicAPI.shared.getRandomSubject { [weak self] response in
             guard let randomSubjectData = response?.data else { return }
             
             self?.topicID = randomSubjectData.topicId

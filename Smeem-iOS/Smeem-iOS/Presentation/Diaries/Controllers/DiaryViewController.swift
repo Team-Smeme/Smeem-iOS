@@ -36,6 +36,12 @@ class DiaryViewController: BaseViewController {
         view = rootView
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        handleInitialRandomTopicApiCall()
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -85,12 +91,12 @@ extension DiaryViewController {
     }
     
     private func bindRandomTopicUpdates() {
-        viewModel?.onUpdateRandomTopic.bind(listener: { [weak self] isEnabled in
-            self?.updateViewWithRandomTopicActive()
-        })
-        
         viewModel?.onUpdateTopicContent.bind(listener: { [weak self] content in
             self?.rootView?.randomTopicView?.setData(contentText: content)
+        })
+        
+        viewModel?.onUpdateRandomTopic.bind(listener: { [weak self] isEnabled in
+            self?.updateViewWithRandomTopicActive()
         })
     }
     
@@ -117,13 +123,15 @@ extension DiaryViewController {
         rootView?.bottomView.updateRandomTopicButtonImage(isActive)
         
         if isActive {
-            viewModel?.randomSubjectWithAPI()
+            if viewModel?.topicContent?.isEmpty == nil {
+                viewModel?.callRandomTopicAPI()
+            }
             updateViewWithRandomTopicActive()
         } else {
             viewModel?.isTopicCalled = false
+            viewModel?.topicContent = nil
             viewModel?.topicID = nil
         }
-        rootView?.randomTopicView?.setData(contentText: viewModel?.topicContent ?? "")
     }
     
     private func updateViewWithRandomTopicActive() {
@@ -138,7 +146,7 @@ extension DiaryViewController {
 
 extension DiaryViewController: RandomTopicRefreshDelegate {
     func refreshButtonTapped(completion: @escaping (String?) -> Void) {
-        viewModel?.randomSubjectWithAPI()
+        viewModel?.callRandomTopicAPI()
     }
 }
 
@@ -186,6 +194,12 @@ extension DiaryViewController: ToolTipDelegate {
 // MARK: - Network
 
 extension DiaryViewController {
+    
+    func handleInitialRandomTopicApiCall() {
+        viewModel?.callRandomTopicAPI()
+        self.rootView?.randomTopicView?.setData(contentText: viewModel?.topicContent ?? "")
+    }
+    
     func handlePostDiaryResponse(_ response: PostDiaryResponse?) {
         DispatchQueue.main.async {
             let homeVC = HomeViewController()

@@ -5,7 +5,7 @@
 //  Created by Joon Baek on 2023/06/22.
 //
 
-struct RandomSubjectResponse: Codable {
+struct RandomTopicResponse: Codable {
     let success: Bool
     let message: String
     let data: RandomSubjectData
