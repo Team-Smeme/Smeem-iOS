@@ -15,15 +15,17 @@ enum TrainingGoalType {
 
 final class TrainingGoalViewController: BaseViewController, UICollectionViewDelegate {
     
-    // MARK: - Property
+    private let viewModel = TrainingGoalViewModel()
     
-    private var tempTarget = ""
+    // MARK: - Subject
     
-    private let viewDidLoadSubject = PassthroughSubject<Void, Error>()
-    private let cellTapped = PassthroughSubject<(String, SmeemButtonType), Error>()
-    private let nextButtonTapped = PassthroughSubject<String, Error>()
+    private let viewWillAppearSubject = PassthroughSubject<Void, Never>()
+    private let amplitudeSubject = PassthroughSubject<Void, Never>()
+    private let cellTapped = PassthroughSubject<(String, SmeemButtonType), Never>()
+    private let nextButtonTapped = PassthroughSubject<Void, Never>()
+    private var cancelbag = Set<AnyCancellable>()
     
-//    private let viewModel: TrainingGoalViewModel
+    // MARK: - UI Components
     
     private let nowStepOneLabel: UILabel = {
         let label = UILabel()
@@ -85,42 +87,76 @@ final class TrainingGoalViewController: BaseViewController, UICollectionViewDele
     
     // MARK: - Life Cycle
     
-//    init(viewModel: TrainingGoalViewModel) {
-//        self.viewModel = viewModel
-//    }
-//    
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setLayout()
-        viewDidLoadSubject.send(())
-        planListGetAPI()
         setDelegate()
-        AmplitudeManager.shared.track(event: AmplitudeConstant.Onboarding.onboarding_goal_view.event)
+        bind()
     }
     
-//    private func bind() {
-//        let output = viewModel.transform(input: TrainingGoalViewModel.Input(viewDidLoadSubject: viewDidLoadSubject,
-//                                                                           cellTapped: cellTapped,
-//                                                                           nextButtonTapped: nextButtonTapped))
-//
-//
-//    };
+    override func viewWillAppear(_ animated: Bool) {
+        viewWillAppearSubject.send(())
+        amplitudeSubject.send(())
+    }
+    
+    // MARK: Methods
+    
+    private func bind() {
+        let input = TrainingGoalViewModel.Input(viewDidLoadSubject: viewWillAppearSubject,
+                                                cellTapped: cellTapped,
+                                                nextButtonTapped: nextButtonTapped,
+                                                amplitudeSubject: amplitudeSubject)
+        let output = viewModel.transform(input: input)
+        
+        output.viewDidLoadResult
+            .sink { response in
+                self.trainingGoalCollectionView.planGoalArray = response
+                self.trainingGoalCollectionView.reloadData()
+            }
+            .store(in: &cancelbag)
+        
+        output.cellResult
+            .sink { type in
+                self.nextButton.changeButtonType(buttonType: type)
+            }
+            .store(in: &cancelbag)
+        
+        output.nextButtonResult
+            .sink { target in
+                let howOnboardingVC = HowOnboardingViewController()
+                howOnboardingVC.tempTarget = target
+                self.navigationController?.pushViewController(howOnboardingVC, animated: true)
+            }
+            .store(in: &cancelbag)
+        
+        output.errorResult
+            .sink { error in
+                self.showToast(toastType: .smeemErrorToast(message: error))
+            }
+            .store(in: &cancelbag)
+    }
     
     @objc func nextButtonDidTap() {
-        let howOnboardingVC = HowOnboardingViewController()
-        howOnboardingVC.tempTarget = tempTarget
-        self.navigationController?.pushViewController(howOnboardingVC, animated: true)
+        nextButtonTapped.send(())
     }
     
     private func setDelegate() {
         trainingGoalCollectionView.trainingDelegate = self
     }
-    
+}
+
+// MARK: - Delegate
+
+extension TrainingGoalViewController: TrainingDataSendDelegate {
+    func sendTargetData(targetString: String, buttonType: SmeemButtonType) {
+        self.cellTapped.send((targetString, buttonType))
+    }
+}
+
+// MARK: - Layout
+
+extension TrainingGoalViewController {
     private func setLayout() {
         view.addSubviews(nowStepOneLabel, divisionLabel, totalStepLabel, trainingLabelStackView, trainingGoalCollectionView, nextButton)
         trainingLabelStackView.addArrangedSubviews(titleLearningLabel, detailLearningLabel)
@@ -158,31 +194,3 @@ final class TrainingGoalViewController: BaseViewController, UICollectionViewDele
         }
     }
 }
-
-extension TrainingGoalViewController: TrainingDataSendDelegate {
-    func sendTargetData(targetString: String, buttonType: SmeemButtonType) {
-        self.nextButton.changeButtonType(buttonType: buttonType)
-        self.tempTarget = targetString
-    }
-}
-
-// MARK: - Network
-
-extension TrainingGoalViewController {
-    func planListGetAPI() {
-        SmeemLoadingView.showLoading()
-        OnboardingAPI.shared.planList() { response in
-            
-            switch response {
-            case .success(let response):
-                self.trainingGoalCollectionView.planGoalArray = response
-                self.trainingGoalCollectionView.reloadData()
-            case .failure(let error):
-                self.showToast(toastType: .smeemErrorToast(message: error))
-            }
-            
-            SmeemLoadingView.hideLoading()
-        }
-    }
-}
-
