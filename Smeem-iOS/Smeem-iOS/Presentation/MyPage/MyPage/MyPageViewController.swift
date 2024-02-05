@@ -258,9 +258,8 @@ final class MyPageViewController: BaseViewController {
     }
     
     @objc func howLearningViewTapped() {
-        print("아직 모르겠어요 아님?", userInfo.target)
-        print("이건 뭐야,", goalTextToIndex[userInfo.target]!.0)
-        let goalVC = EditGoalViewController(targetIndex: goalTextToIndex[userInfo.target]!.0)
+        let goalVC = EditGoalViewController(targetIndex: goalTextToIndex[userInfo.target]!.0,
+                                            tempTarget: goalTextToIndex[userInfo.target]!.1)
         
 //        if let selectedIndex = getIndexFromGoalText(goalText: userInfo.target) {
 //            goalVC.selectedGoalIndex = selectedIndex

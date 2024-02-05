@@ -37,9 +37,10 @@ final class EditGoalViewController: BaseViewController {
         return button
     }()
     
-    init(targetIndex: Int) {
+    init(targetIndex: Int, tempTarget: String) {
         super.init(nibName: nil, bundle: nil)
         self.targetIndex = targetIndex
+        self.tempTarget = tempTarget
     }
     
     required init?(coder: NSCoder) {

@@ -362,7 +362,6 @@
 		371E94172A87DA6E0098280F /* EditGoal */ = {
 			isa = PBXGroup;
 			children = (
-				371E94182A87DA960098280F /* EditHowGoalViewController.swift */,
 				4A454A872B691F850079D48D /* EditGoalViewController.swift */,
 			);
 			path = EditGoal;
@@ -752,6 +751,14 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		4A4FEAFE2B710B1A001BBDF3 /* EditWay */ = {
+			isa = PBXGroup;
+			children = (
+				371E94182A87DA960098280F /* EditHowGoalViewController.swift */,
+			);
+			path = EditWay;
+			sourceTree = "<group>";
+		};
 		4A6630372A51E03B00D19CC9 /* PatchDiary */ = {
 			isa = PBXGroup;
 			children = (
@@ -1067,6 +1074,7 @@
 				4A9FAB4A2A4C3D3D00C40D5A /* EditNickname */,
 				4ADCA2D42A9272D6002904EB /* EditAlarm */,
 				371E94172A87DA6E0098280F /* EditGoal */,
+				4A4FEAFE2B710B1A001BBDF3 /* EditWay */,
 				4A9FAB3C2A4C3D1200C40D5A /* BadgeList */,
 			);
 			path = MyPage;
