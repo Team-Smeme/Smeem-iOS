@@ -261,11 +261,6 @@ final class MyPageViewController: BaseViewController {
         let goalVC = EditGoalViewController(targetIndex: goalTextToIndex[userInfo.target]!.0,
                                             tempTarget: goalTextToIndex[userInfo.target]!.1)
         
-//        if let selectedIndex = getIndexFromGoalText(goalText: userInfo.target) {
-//            goalVC.selectedGoalIndex = selectedIndex
-//            goalVC.selectedGoalLabel = goalTextToIndex[userInfo.target]!.1
-//        }
-        
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(goalDataReceived),
                                                name: NSNotification.Name("goalData"),
