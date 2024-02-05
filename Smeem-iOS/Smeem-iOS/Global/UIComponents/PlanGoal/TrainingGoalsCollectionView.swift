@@ -24,11 +24,7 @@ final class TrainingGoalsCollectionView: BaseCollectionView {
 
     private var selectedTarget = ""
     private var selectedIndex = -1
-    var planGoalArray = [Plan]() {
-        didSet {
-            self.reloadData()
-        }
-    }
+    var planGoalArray = [Plan]()
     
     // MARK: UI Properties
     
@@ -76,9 +72,10 @@ extension TrainingGoalsCollectionView: UICollectionViewDataSource {
         cell.setData(planGoalArray[indexPath.item].name)
         
         if selectedIndex != -1 && indexPath.item == selectedIndex {
-            print(selectedIndex)
             cell.selctedCell()
             collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .init())
+        } else {
+            cell.desecltedCell()
         }
         
         return cell
@@ -88,11 +85,11 @@ extension TrainingGoalsCollectionView: UICollectionViewDataSource {
 // MARK: - Extension : UICollectionViewDelegate
 
 extension TrainingGoalsCollectionView: UICollectionViewDelegate {
-    // MARK: - TODO : cellForItem 없이 해 보기
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem(at: indexPath) as? TrainingGoalCollectionViewCell else { return }
         cell.selctedCell()
         
+        selectedIndex = indexPath.item
         selectedTarget = planGoalArray[indexPath.item].goalType
         trainingDelegate?.sendTargetData(targetString: selectedTarget, buttonType: .enabled)
     }

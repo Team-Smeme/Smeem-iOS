@@ -13,7 +13,7 @@ enum TrainingGoalType {
     case myPage
 }
 
-final class TrainingGoalViewController: BaseViewController, UICollectionViewDelegate {
+final class TrainingGoalViewController: BaseViewController {
     
     private let viewModel = TrainingGoalViewModel()
     
@@ -109,7 +109,7 @@ final class TrainingGoalViewController: BaseViewController, UICollectionViewDele
                                                 amplitudeSubject: amplitudeSubject)
         let output = viewModel.transform(input: input)
         
-        output.viewDidLoadResult
+        output.viewWillappearResult
             .sink { response in
                 self.trainingGoalCollectionView.planGoalArray = response
                 self.trainingGoalCollectionView.reloadData()
@@ -133,6 +133,12 @@ final class TrainingGoalViewController: BaseViewController, UICollectionViewDele
         output.errorResult
             .sink { error in
                 self.showToast(toastType: .smeemErrorToast(message: error))
+            }
+            .store(in: &cancelbag)
+        
+        output.loadingViewResult
+            .sink { isShown in
+                isShown ? SmeemLoadingView.showLoading() : SmeemLoadingView.hideLoading()
             }
             .store(in: &cancelbag)
     }

@@ -18,27 +18,34 @@ final class TrainingGoalViewModel {
     }
 
     struct Output {
-        let viewDidLoadResult: AnyPublisher<[Plan], Never>
+        let viewWillappearResult: AnyPublisher<[Plan], Never>
         let cellResult: AnyPublisher<SmeemButtonType, Never>
         let nextButtonResult: AnyPublisher<String, Never>
         let errorResult: AnyPublisher<SmeemError, Never>
+        let loadingViewResult: AnyPublisher<Bool, Never>
     }
     
     private let errorSubject = PassthroughSubject<SmeemError, Never>()
+    private let loadingViewSubject = PassthroughSubject<Bool, Never>()
     private var cancelbag = Set<AnyCancellable>()
     
     private var tempTarget = ""
 
     func transform(input: Input) -> Output {
         let viewDidLoadSubject = input.viewDidLoadSubject
+            .map { _ in
+                self.loadingViewSubject.send(true)
+            }
             .flatMap { _ -> AnyPublisher<[Plan], Never> in
                 return Future<[Plan], Never> { promise in
                     OnboardingAPI.shared.planList { result in
                         switch result {
                         case .success(let response):
                             promise(.success(response))
+                            self.loadingViewSubject.send(false)
                         case .failure(let error):
                             self.errorSubject.send(error)
+                            self.loadingViewSubject.send(false)
                         }
                     }
                 }
@@ -65,11 +72,13 @@ final class TrainingGoalViewModel {
             }
             .store(in: &cancelbag)
         
-        let errorOutput = errorSubject.eraseToAnyPublisher()
+        let errorResult = errorSubject.eraseToAnyPublisher()
+        let loadingViewResult = loadingViewSubject.eraseToAnyPublisher()
         
-        return Output(viewDidLoadResult: viewDidLoadSubject,
+        return Output(viewWillappearResult: viewDidLoadSubject,
                       cellResult: cellResult,
                       nextButtonResult: nextButtonResult,
-                      errorResult: errorOutput)
+                      errorResult: errorResult,
+                      loadingViewResult: loadingViewResult)
     }
 }

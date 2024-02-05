@@ -15,7 +15,6 @@ class BaseViewController: UIViewController {
         hiddenNavigationBar()
         setBackgroundColor()
         swipeRecognizer()
-        setButtonAction()
     }
     
     func setBackgroundColor() {
@@ -25,8 +24,6 @@ class BaseViewController: UIViewController {
     func hiddenNavigationBar() {
         self.navigationController?.isNavigationBarHidden = true
     }
-    
-    func setButtonAction() { }
     
     func swipeRecognizer() {
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(responseToSwipeGesture))

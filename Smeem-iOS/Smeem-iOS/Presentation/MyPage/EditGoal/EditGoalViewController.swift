@@ -32,7 +32,7 @@ final class EditGoalViewController: BaseViewController {
     private lazy var trainingGoalCollectionView = TrainingGoalsCollectionView(planGoalType: .myPage(targetIndex: targetIndex))
     
     private lazy var nextButton: SmeemButton = {
-        let button = SmeemButton(buttonType: .notEnabled, text: "다음")
+        let button = SmeemButton(buttonType: .enabled, text: "다음")
         button.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
         return button
     }()
@@ -119,6 +119,7 @@ extension EditGoalViewController {
             switch response {
             case .success(let response):
                 self.trainingGoalCollectionView.planGoalArray = response
+                self.trainingGoalCollectionView.reloadData()
             case .failure(let error):
                 self.showToast(toastType: .smeemErrorToast(message: error))
             }
