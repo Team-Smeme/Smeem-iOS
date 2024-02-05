@@ -13,14 +13,14 @@ public class OnboardingAPI {
     static let shared = OnboardingAPI()
     private let onboardingProvider = MoyaProvider<OnboardingService>(plugins: [MoyaLoggingPlugin()])
     
-    func planList(completion: @escaping (Result<[Plan], SmeemError>) -> ()) {
+    func planList(completion: @escaping (Result<[Goal], SmeemError>) -> ()) {
         onboardingProvider.request(.planList) { response in
             switch response {
             case .success(let result):
                 let statusCode = result.statusCode
                 
                 do {
-                    guard let data = try result.map(GeneralResponse<PlanListResponse>.self).data?.goals else { return }
+                    guard let data = try result.map(GeneralResponse<TrainingGoalResponse>.self).data?.goals else { return }
                     completion(.success(data))
                     
                 } catch {

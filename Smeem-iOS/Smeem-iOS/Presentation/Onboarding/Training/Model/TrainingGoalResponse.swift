@@ -1,5 +1,5 @@
 //
-//  PlanListResponse.swift
+//  TrainingGoalResponse.swift
 //  Smeem-iOS
 //
 //  Created by 황찬미 on 2023/07/01.
@@ -7,10 +7,10 @@
 
 import Foundation
 
-struct PlanListResponse: Codable {
-    let goals: [Plan]
+struct TrainingGoalResponse: Codable {
+    let goals: [Goal]
 }
 
-struct Plan: Codable {
+struct Goal: Codable {
     let goalType, name: String
 }

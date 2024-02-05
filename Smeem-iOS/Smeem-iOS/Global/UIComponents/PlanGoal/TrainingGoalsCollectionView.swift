@@ -24,7 +24,7 @@ final class TrainingGoalsCollectionView: BaseCollectionView {
 
     private var selectedTarget = ""
     private var selectedIndex = -1
-    var planGoalArray = [Plan]()
+    var planGoalArray = [Goal]()
     
     // MARK: UI Properties
     

@@ -18,7 +18,7 @@ final class TrainingGoalViewModel {
     }
 
     struct Output {
-        let viewWillappearResult: AnyPublisher<[Plan], Never>
+        let viewWillappearResult: AnyPublisher<[Goal], Never>
         let cellResult: AnyPublisher<SmeemButtonType, Never>
         let nextButtonResult: AnyPublisher<String, Never>
         let errorResult: AnyPublisher<SmeemError, Never>
@@ -36,8 +36,8 @@ final class TrainingGoalViewModel {
             .map { _ in
                 self.loadingViewSubject.send(true)
             }
-            .flatMap { _ -> AnyPublisher<[Plan], Never> in
-                return Future<[Plan], Never> { promise in
+            .flatMap { _ -> AnyPublisher<[Goal], Never> in
+                return Future<[Goal], Never> { promise in
                     OnboardingAPI.shared.planList { result in
                         switch result {
                         case .success(let response):
