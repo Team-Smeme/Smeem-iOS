@@ -89,6 +89,7 @@
 		4A454A832B6666FF0079D48D /* TrainingGoalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A454A822B6666FF0079D48D /* TrainingGoalViewModel.swift */; };
 		4A454A852B6667180079D48D /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A454A842B6667180079D48D /* ViewModel.swift */; };
 		4A454A882B691F850079D48D /* EditGoalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A454A872B691F850079D48D /* EditGoalViewController.swift */; };
+		4A4FEB012B721956001BBDF3 /* Combine+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4FEB002B721956001BBDF3 /* Combine+.swift */; };
 		4A6630362A51B0AD00D19CC9 /* EditDiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6630352A51B0AD00D19CC9 /* EditDiaryViewController.swift */; };
 		4A6630392A51E04600D19CC9 /* PatchDiaryRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6630382A51E04600D19CC9 /* PatchDiaryRequest.swift */; };
 		4A81C2972ACDAB2C0056E815 /* TrainingGoalsCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A81C2962ACDAB2C0056E815 /* TrainingGoalsCollectionView.swift */; };
@@ -243,6 +244,7 @@
 		4A454A842B6667180079D48D /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		4A454A872B691F850079D48D /* EditGoalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditGoalViewController.swift; sourceTree = "<group>"; };
 		4A4E21EE29D9B02500BF8747 /* Smeem-iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Smeem-iOS.entitlements"; sourceTree = "<group>"; };
+		4A4FEB002B721956001BBDF3 /* Combine+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Combine+.swift"; sourceTree = "<group>"; };
 		4A6630352A51B0AD00D19CC9 /* EditDiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditDiaryViewController.swift; sourceTree = "<group>"; };
 		4A6630382A51E04600D19CC9 /* PatchDiaryRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatchDiaryRequest.swift; sourceTree = "<group>"; };
 		4A81C2962ACDAB2C0056E815 /* TrainingGoalsCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingGoalsCollectionView.swift; sourceTree = "<group>"; };
@@ -442,6 +444,7 @@
 				4AE35E9D2A7FE8CE00465FD5 /* UICollectionViewCell+.swift */,
 				4AC00ECB2AD1C143009230DA /* UICollectionView+.swift */,
 				4AC00EDB2AD3E4F7009230DA /* UIControl+.swift */,
+				4A4FEB002B721956001BBDF3 /* Combine+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1301,6 +1304,7 @@
 				4A004D4F2B4ED760003C8936 /* TrainingGoalResponse.swift in Sources */,
 				6F294A3F2A26177E00856CC8 /* TrainingGoalCollectionViewCell.swift in Sources */,
 				37A574E62A02178D00312453 /* SmeemToastView.swift in Sources */,
+				4A4FEB012B721956001BBDF3 /* Combine+.swift in Sources */,
 				374F828C2AC327A200C128B9 /* SmeemTextViewHandler.swift in Sources */,
 				4A8FFA5229C9E1FD00FB76C0 /* SceneDelegate.swift in Sources */,
 				37ADCC022B0289AD00E474AA /* Observable.swift in Sources */,

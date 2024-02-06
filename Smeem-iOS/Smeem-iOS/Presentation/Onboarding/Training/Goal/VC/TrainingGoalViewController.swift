@@ -81,7 +81,6 @@ final class TrainingGoalViewController: BaseViewController {
     
     private lazy var nextButton: SmeemButton = {
         let button = SmeemButton(buttonType: .notEnabled, text: "다음")
-        button.addTarget(self, action: #selector(nextButtonDidTap), for: .touchUpInside)
         return button
     }()
     
@@ -103,6 +102,12 @@ final class TrainingGoalViewController: BaseViewController {
     // MARK: Methods
     
     private func bind() {
+        nextButton.tapPublisher
+            .sink { _ in
+                self.nextButtonTapped.send(())
+            }
+            .store(in: &cancelbag)
+        
         let input = TrainingGoalViewModel.Input(viewDidLoadSubject: viewWillAppearSubject,
                                                 cellTapped: cellTapped,
                                                 nextButtonTapped: nextButtonTapped,
@@ -141,10 +146,6 @@ final class TrainingGoalViewController: BaseViewController {
                 isShown ? SmeemLoadingView.showLoading() : SmeemLoadingView.hideLoading()
             }
             .store(in: &cancelbag)
-    }
-    
-    @objc func nextButtonDidTap() {
-        nextButtonTapped.send(())
     }
     
     private func setDelegate() {
