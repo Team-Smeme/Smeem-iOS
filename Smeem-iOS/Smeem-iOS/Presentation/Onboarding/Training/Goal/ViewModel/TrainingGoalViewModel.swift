@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-final class TrainingGoalViewModel {
+final class TrainingGoalViewModel: ViewModel {
 
     struct Input {
         let viewDidLoadSubject: PassthroughSubject<Void, Never>
