@@ -33,22 +33,23 @@ final class TrainingGoalViewModel {
 
     func transform(input: Input) -> Output {
         let viewDidLoadSubject = input.viewDidLoadSubject
-            .map { _ in
+            .handleEvents(receiveSubscription: { _ in
                 self.loadingViewSubject.send(true)
-            }
+            })
             .flatMap { _ -> AnyPublisher<[Goal], Never> in
                 return Future<[Goal], Never> { promise in
                     OnboardingAPI.shared.planList { result in
                         switch result {
                         case .success(let response):
                             promise(.success(response))
-                            self.loadingViewSubject.send(false)
                         case .failure(let error):
                             self.errorSubject.send(error)
-                            self.loadingViewSubject.send(false)
                         }
                     }
                 }
+                .handleEvents(receiveCompletion: { _ in
+                    self.loadingViewSubject.send(false)
+                })
                 .eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()
