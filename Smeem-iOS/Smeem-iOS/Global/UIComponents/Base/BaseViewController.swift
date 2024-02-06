@@ -18,6 +18,10 @@ class BaseViewController: UIViewController {
         setButtonAction()
     }
     
+    deinit {
+        print("\(self) is being deinitialized")
+    }
+    
     func setBackgroundColor() {
         view.backgroundColor = .smeemWhite
     }

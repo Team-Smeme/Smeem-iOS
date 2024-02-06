@@ -7,11 +7,6 @@
 
 import UIKit
 
-protocol PlaceholderDisplayable: AnyObject {
-    var placeholderText: String? { get set }
-    var placeholderColor: UIColor? { get set }
-}
-
 enum SmeemTextViewType {
     case display
     case editable(SmeemTextViewHandler)
@@ -23,7 +18,7 @@ final class SmeemTextView: UITextView {
     
     // MARK: Properties
     
-    var handler: SmeemTextViewHandler?
+    var textViewHandler: SmeemTextViewHandler?
     var placeholderText: String?
     var placeholderColor: UIColor?
     
@@ -33,19 +28,36 @@ final class SmeemTextView: UITextView {
         super.init(frame: frame, textContainer: textContainer)
     }
     
-    convenience init(type: SmeemTextViewType,
+    convenience init(diaryType: DiaryViewType,
+                     type: SmeemTextViewType,
                      placeholderColor color: UIColor = .gray300,
                      placeholderText placeholder: String?,
-                     textViewManager manager: SmeemTextViewHandler? = nil) {
+                     textViewManager handler: SmeemTextViewHandler? = nil) {
         self.init(frame: .zero, textContainer: nil)
         
         configureTextView(for: type, color: color, text: placeholder ?? "")
+        setKeyboardType(diaryType: diaryType)
         commonInit()
         updatePlaceholder()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+    }
+    
+    private func getKeyboardLanguage() -> String? {
+        return "ko-KR"
+    }
+
+    override var textInputMode: UITextInputMode? {
+        if let language = getKeyboardLanguage() {
+            for inputMode in UITextInputMode.activeInputModes {
+                if inputMode.primaryLanguage! == language {
+                    return inputMode
+                }
+            }
+        }
+        return super.textInputMode
     }
 }
 
@@ -57,6 +69,14 @@ extension SmeemTextView {
         self.configureTypingAttributes()
     }
     
+    private func setKeyboardType(diaryType: DiaryViewType) {
+        switch diaryType {
+        case .foregin, .stepTwoKorean:
+            self.keyboardType = .asciiCapable
+        default: break
+        }
+    }
+    
     private func configureTextView(for type: SmeemTextViewType, color: UIColor?, text: String?) {
         switch type {
         case .display:
@@ -65,26 +85,17 @@ extension SmeemTextView {
         case .editable(let manager):
             self.placeholderColor = color
             self.placeholderText = text
-            
+
             self.delegate = manager
-            manager.textView = self
-            self.handler = manager
-        }
-    }
-    
-    func placeholderTextForViewType(for viewType: DiaryViewType) -> String {
-        switch viewType {
-        case .foregin, .stepTwoKorean, .edit:
-            return "일기를 작성해주세요"
-        case .stepOneKorean:
-            return "완전한 문장으로 한국어 일기를 작성하면, 더욱 정확한 힌트를 받을 수 있어요."
+            self.textViewHandler = manager
+            manager.placeholderDelegate = self
         }
     }
 }
 
 // MARK: - PlaceholderDisplayable
 
-extension SmeemTextView: PlaceholderDisplayable {
+extension SmeemTextView: PlaceholderDelegate {
     func updatePlaceholder() {
         if text.isEmpty {
             text = placeholderText

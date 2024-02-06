@@ -7,11 +7,11 @@
 
 import Moya
 
-enum RandomSubjectService {
+enum RandomTopicService {
     case randomSubject
 }
 
-extension RandomSubjectService: BaseTargetType {
+extension RandomTopicService: BaseTargetType {
     var path: String {
         switch self {
         case .randomSubject:
