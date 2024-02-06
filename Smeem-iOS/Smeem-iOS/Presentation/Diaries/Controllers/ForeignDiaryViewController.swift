@@ -14,6 +14,7 @@ final class ForeignDiaryViewController: DiaryViewController {
         super.viewDidLoad()
         
         setNagivationBarDelegate()
+        handleInitialRandomTopicApiCall()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -48,6 +49,9 @@ extension ForeignDiaryViewController: NavigationBarActionDelegate {
     
     func didTapRightButton() {
         if viewModel?.isTextValid.value == true {
+            if viewModel?.isRandomTopicActive.value == false {
+                viewModel?.topicID = nil
+            }
             viewModel?.inputText.value = rootView?.inputTextView.text ?? ""
             rootView?.inputTextView.resignFirstResponder()
             viewModel?.postDiaryAPI { postDiaryResponse in

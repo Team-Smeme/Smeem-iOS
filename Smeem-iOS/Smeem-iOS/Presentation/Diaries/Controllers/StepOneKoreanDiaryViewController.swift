@@ -20,6 +20,7 @@ final class StepOneKoreanDiaryViewController: DiaryViewController {
         super.viewDidLoad()
         
         setNagivationBarDelegate()
+        handleInitialRandomTopicApiCall()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -51,6 +52,8 @@ extension StepOneKoreanDiaryViewController {
         let inputText = viewModel?.inputText.value
         
         delegate?.dataBind(topicID: viewModel?.getTopicID(), inputText: inputText ?? "")
+        
+        print("데이터바인드 성공", viewModel?.getTopicID())
         
         self.navigationController?.pushViewController(nextVC, animated: true)
     }

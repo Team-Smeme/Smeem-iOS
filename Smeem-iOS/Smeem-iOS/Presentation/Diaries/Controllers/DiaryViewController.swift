@@ -39,7 +39,6 @@ class DiaryViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        handleInitialRandomTopicApiCall()
         handleError()
     }
     
