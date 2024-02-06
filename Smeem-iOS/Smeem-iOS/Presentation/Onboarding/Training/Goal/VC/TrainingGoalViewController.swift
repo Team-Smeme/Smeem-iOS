@@ -129,8 +129,7 @@ final class TrainingGoalViewController: BaseViewController {
         
         output.nextButtonResult
             .sink { target in
-                let howOnboardingVC = HowOnboardingViewController()
-                howOnboardingVC.tempTarget = target
+                let howOnboardingVC = TrainingWayViewController(target: target)
                 self.navigationController?.pushViewController(howOnboardingVC, animated: true)
             }
             .store(in: &cancelbag)

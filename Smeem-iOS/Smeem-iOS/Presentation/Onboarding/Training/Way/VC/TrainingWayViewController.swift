@@ -1,26 +1,24 @@
 //
-//  HowOnboardingViewController.swift
+//  TrainingWayViewController.swift
 //  Smeem-iOS
 //
 //  Created by 황찬미 on 2023/05/16.
 //
 
 import UIKit
+import Combine
 
-final class HowOnboardingViewController: BaseViewController {
+final class TrainingWayViewController: BaseViewController {
     
-    // MARK: - Property
+    private let viewModel = TrainingWayViewModel()
     
-    var tempTarget = String()
-    var planName = String()
-    var planWay = String()
-    var planDetailWay = "" {
-        didSet {
-            configurePlanData()
-        }
-    }
+    // MARK: Publisher
     
-    // MARK: - UI Property
+    private let viewWillAppearSubject = PassthroughSubject<Void, Never>()
+    private let nextButtonTapped = PassthroughSubject<Void, Never>()
+    private var cancelBag = Set<AnyCancellable>()
+    
+    // MARK: UI Properties
     
     private let nowStepOneLabel: UILabel = {
         let label = UILabel()
@@ -79,43 +77,76 @@ final class HowOnboardingViewController: BaseViewController {
     
     private lazy var nextButton: SmeemButton = {
         let button = SmeemButton(buttonType: .enabled, text: "다음")
-        button.addTarget(self, action: #selector(nextButtonDidTap), for: .touchUpInside)
         return button
     }()
     
     // MARK: - Life Cycle
     
+    init(target: String) {
+        super.init(nibName: nil, bundle: nil)
+        
+        viewModel.target = target
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setLayout()
+        bind()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        detailPlanListGetAPI(tempTarget: tempTarget)
+        viewWillAppearSubject.send(())
     }
     
-    // MARK: - @objc
+    // MARK: - Methods
     
-    @objc func nextButtonDidTap() {
-        let alarmVC = AlarmSettingViewController()
-        alarmVC.targetData = tempTarget
-        self.navigationController?.pushViewController(alarmVC, animated: true)
-    }
-    
-    // MARK: - Custom Method
-    
-    private func configurePlanData() {
-        let planNameList = planWay.components(separatedBy: " 이상 ")
-        let planWayOne = planNameList[0] + " 이상"
-        let planWayTwo = planNameList[1]
-        let detailPlan = planDetailWay.split(separator: "\n").map{String($0)}
+    private func bind() {
+        nextButton.tapPublisher
+            .sink { _ in
+                self.nextButtonTapped.send(())
+            }
+            .store(in: &cancelBag)
         
-        howLearningView.setData(planName: planName, planWayOne: planWayOne, planWayTwo: planWayTwo, detailPlanOne: detailPlan[0], detailPlanTwo: detailPlan[1])
+        let input = TrainingWayViewModel.Input(viewWillAppearSubject: viewWillAppearSubject,
+                                               nextButtonTapped: nextButtonTapped)
+        let output = viewModel.transform(input: input)
+        
+        output.viewWillAppearResult
+            .sink { appData in
+                self.howLearningView.setModel(model: appData)
+            }
+            .store(in: &cancelBag)
+        
+        output.nextButtonResult
+            .sink { target in
+                let alarmVC = AlarmSettingViewController()
+                alarmVC.targetData = target
+                self.navigationController?.pushViewController(alarmVC, animated: true)
+            }
+            .store(in: &cancelBag)
+        
+        output.errorResult
+            .sink { error in
+                self.showToast(toastType: .smeemErrorToast(message: error))
+            }
+            .store(in: &cancelBag)
+        
+        output.loadingViewResult
+            .sink { isShown in
+                isShown ? SmeemLoadingView.showLoading() : SmeemLoadingView.hideLoading()
+            }
+            .store(in: &cancelBag)
     }
-    
-    // MARK: - Layout
-    
+}
+
+// MARK: - Layout
+
+extension TrainingWayViewController {
     private func setLayout() {
         view.addSubviews(nowStepOneLabel, divisionLabel, totalStepLabel, learningLabelStackView, howLearningView, nextButton)
         learningLabelStackView.addArrangedSubviews(titleLearningLabel, detailLearningLabel)
@@ -149,31 +180,6 @@ final class HowOnboardingViewController: BaseViewController {
             $0.leading.trailing.equalToSuperview().inset(18)
             $0.bottom.equalToSuperview().inset(50)
             $0.height.equalTo(convertByHeightRatio(60))
-        }
-    }
-}
-
-// MARK: - Network
-
-extension HowOnboardingViewController {
-    func detailPlanListGetAPI(tempTarget: String) {
-        SmeemLoadingView.showLoading()
-        
-        OnboardingAPI.shared.detailPlanList(param: tempTarget) { result in
-            
-            switch result {
-            case .success(let response):
-//                guard let response = response.data else { return }
-                self.planName = response.name
-                self.planWay = response.way
-                self.planDetailWay = response.detail
-                self.configurePlanData()
-                
-            case .failure(let error):
-                self.showToast(toastType: .smeemErrorToast(message: error))
-            }
-            
-            SmeemLoadingView.hideLoading()
         }
     }
 }

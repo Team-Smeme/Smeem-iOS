@@ -154,20 +154,20 @@ final class TrainingWayView: UIView {
         }
     }
     
+    func setModel(model: TrainingWayAppData) {
+        selectedMyGoalLabel.text = model.wayTitle
+        firstSelectedLearningHowLabel.text = model.wayOne
+        secondSelectedLearningHowLabel.text = model.wayTwo
+        firstDetailLabel.text = model.detailWayOne
+        secondDetailLabel.text = model.detailWayTwo
+    }
+    
     func setData(planName: String, planWayOne: String, planWayTwo: String, detailPlanOne: String, detailPlanTwo: String) {
         selectedMyGoalLabel.text = planName
         firstSelectedLearningHowLabel.text = planWayOne
         secondSelectedLearningHowLabel.text = planWayTwo
         firstDetailLabel.text = detailPlanOne
         secondDetailLabel.text = detailPlanTwo
-    }
-    
-    func setRefactorData(model: TrainingWayClientModel) {
-        selectedMyGoalLabel.text = model.trainingTitle
-        firstSelectedLearningHowLabel.text = model.trainingWays[0]
-        secondSelectedLearningHowLabel.text = model.trainingWays[1]
-        firstDetailLabel.text = model.detailTrainingWay[0]
-        secondDetailLabel.text = model.detailTrainingWay[1]
     }
     
     // MARK: - Layout

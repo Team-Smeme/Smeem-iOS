@@ -14,7 +14,7 @@ public class OnboardingAPI {
     private let onboardingProvider = MoyaProvider<OnboardingService>(plugins: [MoyaLoggingPlugin()])
     
     func planList(completion: @escaping (Result<[Goal], SmeemError>) -> ()) {
-        onboardingProvider.request(.planList) { response in
+        onboardingProvider.request(.trainingGoal) { response in
             switch response {
             case .success(let result):
                 let statusCode = result.statusCode
@@ -34,13 +34,13 @@ public class OnboardingAPI {
         }
     }
     
-    func detailPlanList(param: String, completion: @escaping (Result<DetailPlanListResponse, SmeemError>) -> ()) {
-        onboardingProvider.request(.detailPlanList(param: param)) { response in
+    func trainingWayGetAPI(param: String, completion: @escaping (Result<TrainingWayResponse, SmeemError>) -> ()) {
+        onboardingProvider.request(.trainingWay(param: param)) { response in
             switch response {
             case .success(let result):
                 let statusCode = result.statusCode
                 do {
-                    guard let data = try result.map(GeneralResponse<DetailPlanListResponse>.self).data else { return }
+                    guard let data = try result.map(GeneralResponse<TrainingWayResponse>.self).data else { return }
                     completion(.success(data))
                 } catch {
                     let error = NetworkManager.statusCodeErrorHandling(statusCode: statusCode)
