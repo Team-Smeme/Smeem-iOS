@@ -12,6 +12,7 @@ import UIKit
 final class StepTwoKoreanDiaryViewController: DiaryViewController {
     
     // MARK: - Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -59,11 +60,13 @@ extension StepTwoKoreanDiaryViewController: NavigationBarActionDelegate {
     }
     
     func didTapRightButton() {
-        if rootView?.navigationView.rightButton.titleLabel?.textColor == .point {
+        if viewModel?.isTextValid.value == true {
+            // TODO: 다듬읍시다..
             rootView?.inputTextView.resignFirstResponder()
             viewModel?.postDiaryAPI { postDiaryResponse in
                 self.handlePostDiaryResponse(postDiaryResponse)
             }
+            AmplitudeManager.shared.track(event: AmplitudeConstant.diary.sec_step_complete.event)
         } else {
             viewModel?.showRegExToast()
         }
@@ -85,6 +88,7 @@ extension StepTwoKoreanDiaryViewController: HintActionDelegate {
     func didTapHintButton() {
         viewModel?.toggleIsHintShowed()
         handleHintButton()
+        AmplitudeManager.shared.track(event: AmplitudeConstant.diary.hint_click.event)
     }
 }
 

@@ -17,6 +17,10 @@ class BaseViewController: UIViewController {
         swipeRecognizer()
     }
     
+    deinit {
+        print("\(self) is being deinitialized")
+    }
+    
     func setBackgroundColor() {
         view.backgroundColor = .smeemWhite
     }

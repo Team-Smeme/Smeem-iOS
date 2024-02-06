@@ -20,6 +20,7 @@ final class StepOneKoreanDiaryViewController: DiaryViewController {
         super.viewDidLoad()
         
         setNagivationBarDelegate()
+        handleInitialRandomTopicApiCall()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -52,6 +53,8 @@ extension StepOneKoreanDiaryViewController {
         
         delegate?.dataBind(topicID: viewModel?.getTopicID(), inputText: inputText ?? "")
         
+        print("데이터바인드 성공", viewModel?.getTopicID())
+        
         self.navigationController?.pushViewController(nextVC, animated: true)
     }
 }
@@ -65,9 +68,13 @@ extension StepOneKoreanDiaryViewController: NavigationBarActionDelegate {
     }
     
     func didTapRightButton() {
-        if rootView?.navigationView.rightButton.titleLabel?.textColor == .point {
+        if viewModel?.isTextValid.value == true {
+            if viewModel?.isRandomTopicActive.value == false {
+                viewModel?.topicID = nil
+            }
             rootView?.inputTextView.resignFirstResponder()
             handleRightNavigationButton()
+            AmplitudeManager.shared.track(event: AmplitudeConstant.diary.first_step_complete.event)
         } else {
             viewModel?.showRegExToast()
         }
