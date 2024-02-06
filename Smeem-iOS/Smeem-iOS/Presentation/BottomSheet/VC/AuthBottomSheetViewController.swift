@@ -22,7 +22,7 @@ final class BottomSheetViewController: UIViewController, LoginDelegate {
     
     private var hasPlan = false
     private var isRegistered = false
-    private var badges: [Badges] = []
+    private var badges: [Badge] = []
     
     private var kakaoAccessToken: String? {
         didSet {
@@ -229,7 +229,8 @@ extension BottomSheetViewController {
                 switch self.authType {
                 case .login:
                     if response.hasPlan == false {
-                        self.presentOnboardingPlanVC()
+                        let trainingGoalVC = TrainingGoalViewController()
+                        self.navigationController?.pushViewController(trainingGoalVC, animated: true)
                     } else if response.hasPlan == true && response.isRegistered == false {
                         self.presentOnboardingAcceptVC()
                     } else {

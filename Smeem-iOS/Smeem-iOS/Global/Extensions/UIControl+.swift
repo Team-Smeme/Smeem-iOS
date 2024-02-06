@@ -6,23 +6,51 @@
 //
 
 import UIKit
+import Combine
 
 extension UIControl {
-    func addAction(for controlEvents: UIControl.Event = .touchUpInside, _ closure: @escaping () -> ()) {
-        @objc class ClosureSleeve: NSObject {
-            let closure: () -> ()
+    func controlPublisher(for event: UIControl.Event) -> UIControl.EventPublisher {
+        return UIControl.EventPublisher(control: self, event: event)
+      }
+    
+    // Publisher
+    struct EventPublisher: Publisher {
+        typealias Output = UIControl
+        typealias Failure = Never
+        
+        let control: UIControl
+        let event: UIControl.Event
+        
+        func receive<S>(subscriber: S) where S : Subscriber, Never == S.Failure, UIControl == S.Input {
+            let subscription = EventSubscription(control: control, subscrier: subscriber, event: event)
+            subscriber.receive(subscription: subscription)
+        }
+    }
+    
+    // Subscription
+    fileprivate class EventSubscription<EventSubscriber: Subscriber>: Subscription where EventSubscriber.Input == UIControl, EventSubscriber.Failure == Never {
+
+        let control: UIControl
+        let event: UIControl.Event
+        var subscriber: EventSubscriber?
+        
+        init(control: UIControl, subscrier: EventSubscriber, event: UIControl.Event) {
+            self.control = control
+            self.subscriber = subscrier
+            self.event = event
             
-            init(_ closure: @escaping () -> ()) {
-                self.closure = closure
-            }
-            
-            @objc func invoke() {
-                closure()
-            }
+            control.addTarget(self, action: #selector(eventDidOccur), for: event)
         }
         
-        let sleeve = ClosureSleeve(closure)
-        addTarget(sleeve, action: #selector(ClosureSleeve.invoke), for: controlEvents)
-        objc_setAssociatedObject(self, "\(UUID())", sleeve, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
+        func request(_ demand: Subscribers.Demand) {}
+        
+        func cancel() {
+            subscriber = nil
+            control.removeTarget(self, action: #selector(eventDidOccur), for: event)
+        }
+        
+        @objc func eventDidOccur() {
+            _ = subscriber?.receive(control)
+        }
     }
 }

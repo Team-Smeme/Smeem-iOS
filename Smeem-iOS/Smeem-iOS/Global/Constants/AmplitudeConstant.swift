@@ -88,17 +88,17 @@ enum AmplitudeConstant {
     enum badge {
         case welcome_quit_click
         case welcome_more_click
-        case badge_more_click
+        case badge_more_click(String)
         case tenth_badge_click
         
         var event: BaseEvent {
             switch self {
             case .welcome_quit_click:
-                return BaseEvent(eventType: "welcome_quit_click", eventProperties: nil)
+                return BaseEvent(eventType: "welcome_quit_click", eventProperties: ["BadgeType":"EVENT"])
             case .welcome_more_click:
-                return BaseEvent(eventType: "welcome_more_click", eventProperties: nil)
-            case .badge_more_click:
-                return BaseEvent(eventType: "badge_more_click", eventProperties: nil)
+                return BaseEvent(eventType: "welcome_more_click", eventProperties: ["BadgeType":"EVENT"])
+            case .badge_more_click(let type):
+                return BaseEvent(eventType: "badge_more_click", eventProperties: ["BadgeType":type])
             case .tenth_badge_click:
                 return BaseEvent(eventType: "tenth_badge_click", eventProperties: nil)
             }

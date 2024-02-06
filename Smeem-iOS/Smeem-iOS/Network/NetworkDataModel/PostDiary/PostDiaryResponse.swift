@@ -23,10 +23,6 @@ struct PostDiaryResponse: Codable {
 
 struct PopupBadge: Codable {
     let name: String
-    let imageURL: String
-
-    enum CodingKeys: String, CodingKey {
-        case name
-        case imageURL = "imageUrl"
-    }
+    let imageUrl: String
+    let type: String
 }

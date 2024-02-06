@@ -20,7 +20,7 @@ struct MyPageResponse: Codable {
 extension MyPageResponse {
     static let empty = MyPageResponse(username: "", target: "", way: "", detail: "", targetLang: "", hasPushAlarm: false,
                                       trainingTime: TrainingTime(day: "", hour: 0, minute: 0),
-                                      badge: Badge(id: 0, name: "", type: "", imageURL: ""))
+                                      badge: Badge(id: 0, name: "", type: "", imageUrl: ""))
 }
 
 // MARK: - My Page Edit

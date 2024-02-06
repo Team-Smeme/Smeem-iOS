@@ -96,14 +96,14 @@ final class MyPageAPI {
         }
     }
     
-    func badgeListAPI(completion: @escaping (Result<BadgeListResponse, SmeemError>) -> ()) {
+    func badgeListAPI(completion: @escaping (Result<[MyPageBadgeArray], SmeemError>) -> ()) {
         myPageProvider.request(.badgeList) { result in
             switch result {
             case .success(let response):
                 let statusCode = response.statusCode
                 
                 do {
-                    guard let data = try response.map(GeneralResponse<BadgeListResponse>?.self)?.data else { return }
+                    guard let data = try response.map(GeneralResponse<MyPageBadgeListReponse>?.self)?.data?.badgeTypes else { return }
                     completion(.success(data))
                 } catch {
                     let error = NetworkManager.statusCodeErrorHandling(statusCode: statusCode)

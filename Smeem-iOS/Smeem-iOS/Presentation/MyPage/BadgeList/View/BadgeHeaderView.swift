@@ -53,7 +53,7 @@ final class BadgeHeaderView: UITableViewHeaderFooterView {
     func setLabelText() {
         switch labelType {
         case .welcome:
-            headerLabel.text = "웰컴 배지"
+            headerLabel.text = "스페셜배지"
         case .diaryCount:
             headerLabel.text = "일기 누적 수"
         case .dailyDiary:

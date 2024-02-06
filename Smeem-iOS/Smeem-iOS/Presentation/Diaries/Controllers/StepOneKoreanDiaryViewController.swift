@@ -76,7 +76,7 @@ extension StepOneKoreanDiaryViewController: NavigationBarActionDelegate {
             handleRightNavigationButton()
             AmplitudeManager.shared.track(event: AmplitudeConstant.diary.first_step_complete.event)
         } else {
-            viewModel?.showRegExToast()
+            viewModel?.showRegExKrToast()
         }
     }
 }

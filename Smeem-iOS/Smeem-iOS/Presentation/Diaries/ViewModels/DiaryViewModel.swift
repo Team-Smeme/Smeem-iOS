@@ -96,6 +96,10 @@ extension DiaryViewModel {
     func showRegExToast() {
         setToastViewType(.smeemToast(bodyType: .regEx))
     }
+    
+    func showRegExKrToast() {
+        setToastViewType(.smeemToast(bodyType: .regExKr))
+    }
 }
 
 // MARK: - Network
