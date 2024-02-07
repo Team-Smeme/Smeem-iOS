@@ -9,16 +9,11 @@ import UIKit
 
 import SnapKit
 
-protocol AlarmPickerDelegate {
-    func alarmDataSend(data: AlarmTimeAppData)
-}
-
 final class DatePickerFooterView: UICollectionReusableView {
     
     static let identifier = "identifier"
 
     var trainingTimeClosure: ((TrainingTime) -> Void)?
-    var alarmPickerDelegate: AlarmPickerDelegate?
     
     // MARK: - Property
     
@@ -109,11 +104,12 @@ final class DatePickerFooterView: UICollectionReusableView {
         totalText += " " + selectedDayAndNight
         inputTextField.text = totalText
         
-        let alarmTime = AlarmTimeAppData(hour: selectedHours,
-                                         minute: selectedMinute,
-                                         dayAndNight: selectedDayAndNight)
+        let trainingTime = TrainingTime(day: String(),
+                                        hour: calculateTime(dayAndNight: selectedDayAndNight,
+                                                            hours: selectedHours),
+                                        minute: Int(selectedMinute)!)
+        self.trainingTimeClosure?(trainingTime)
         
-        self.alarmPickerDelegate?.alarmDataSend(data: alarmTime)
         self.inputTextField.resignFirstResponder()
     }
     

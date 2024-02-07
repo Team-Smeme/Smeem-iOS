@@ -1,5 +1,5 @@
 //
-//  TrainingAlarmViewController.swift
+//  AlarmSettingViewController.swift
 //  Smeem-iOS
 //
 //  Created by 황찬미 on 2023/05/16.
@@ -7,19 +7,10 @@
 
 import AppTrackingTransparency
 import UIKit
-import Combine
 
-final class TrainingAlarmViewController: BaseViewController {
+final class AlarmSettingViewController: BaseViewController {
     
-    private let viewModel = TrainingAlarmViewModel()
-    
-    // MARK: Publisher
-    
-    private var cancelBag = Set<AnyCancellable>()
-    private let alarmTimeSubject = PassthroughSubject<AlarmTimeAppData, Never>()
-    private let alarmDaySubject = PassthroughSubject<Set<String>, Never>()
-    
-    // MARK: UI Properties
+    // MARK: - Property
     
     var targetData = String()
     var trainigDayData: String?
@@ -100,6 +91,14 @@ final class TrainingAlarmViewController: BaseViewController {
     
     private lazy var alarmCollectionView: AlarmCollectionView = {
         let collectionView = AlarmCollectionView()
+        
+        collectionView.trainingDayClosure = { traingData in
+            self.trainigDayData = traingData.day
+            self.completeButton.changeButtonType(buttonType: traingData.type)
+        }
+        collectionView.trainingTimeClosure = { data in
+            self.trainingTimeData = data
+        }
         return collectionView
     }()
     
@@ -109,21 +108,8 @@ final class TrainingAlarmViewController: BaseViewController {
         super.viewDidLoad()
         
         setLayout()
-        bind()
         
         AmplitudeManager.shared.track(event: AmplitudeConstant.Onboarding.onboarding_alarm_view.event)
-    }
-    
-    private func bind() {
-        let input = TrainingAlarmViewModel.Input(alarmTimeSubject: alarmTimeSubject,
-                                                 alarmDaySubject: alarmDaySubject)
-        let output = viewModel.transform(input: input)
-        
-        output.buttonTypeResult
-            .sink { type in
-                self.completeButton.changeButtonType(buttonType: type)
-            }
-            .store(in: &cancelBag)
     }
     
     // MARK: - @objc
@@ -176,44 +162,44 @@ final class TrainingAlarmViewController: BaseViewController {
         navigationController.modalPresentationStyle = .overFullScreen
         navigationController.isNavigationBarHidden = true
         
-//        var userPlanRequest = UserPlanRequest(target: String(),
-//                                              trainingTime: TrainingTime(day: String(), hour: Int(), minute: Int()),
-//                                              hasAlarm: Bool())
-//
-//
-//        if trainingTimeData == nil && trainigDayData == nil {
-//            userPlanRequest = UserPlanRequest(target: target,
-//                                                            trainingTime: TrainingTime(day: "MON,TUE,WED,THU,FRI",
-//                                                                                       hour: 22,
-//                                                                                       minute: 0),
-//                                                            hasAlarm: hasAlarm)
-//        } else if trainingTimeData == nil && trainigDayData != nil {
-//            userPlanRequest = UserPlanRequest(target: target,
-//                                                            trainingTime: TrainingTime(day: trainigDayData ?? "",
-//                                                                                       hour: 22,
-//                                                                                       minute: 0),
-//
-//                                                            hasAlarm: hasAlarm)
-//        } else if trainingTimeData != nil && trainigDayData == nil {
-//            userPlanRequest = UserPlanRequest(target: target,
-//                                                            trainingTime: TrainingTime(day: "MON,TUE,WED,THU,FRI",
-//                                                                                       hour: trainingTimeData?.hour ?? 0,
-//                                                                                       minute: trainingTimeData?.minute ?? 0),
-//                                                            hasAlarm: hasAlarm)
-//        } else {
-//            userPlanRequest = UserPlanRequest(target: target,
-//                                                            trainingTime: TrainingTime(day: trainigDayData ?? "",
-//                                                                                       hour: trainingTimeData?.hour ?? 0,
-//                                                                                       minute: trainingTimeData?.minute ?? 0),
-//                                                            hasAlarm: hasAlarm)
-//        }
+        var userPlanRequest = UserPlanRequest(target: String(),
+                                              trainingTime: TrainingTime(day: String(), hour: Int(), minute: Int()),
+                                              hasAlarm: Bool())
+        
+        
+        if trainingTimeData == nil && trainigDayData == nil {
+            userPlanRequest = UserPlanRequest(target: target,
+                                                            trainingTime: TrainingTime(day: "MON,TUE,WED,THU,FRI",
+                                                                                       hour: 22,
+                                                                                       minute: 0),
+                                                            hasAlarm: hasAlarm)
+        } else if trainingTimeData == nil && trainigDayData != nil {
+            userPlanRequest = UserPlanRequest(target: target,
+                                                            trainingTime: TrainingTime(day: trainigDayData ?? "",
+                                                                                       hour: 22,
+                                                                                       minute: 0),
+         
+                                                            hasAlarm: hasAlarm)
+        } else if trainingTimeData != nil && trainigDayData == nil {
+            userPlanRequest = UserPlanRequest(target: target,
+                                                            trainingTime: TrainingTime(day: "MON,TUE,WED,THU,FRI",
+                                                                                       hour: trainingTimeData?.hour ?? 0,
+                                                                                       minute: trainingTimeData?.minute ?? 0),
+                                                            hasAlarm: hasAlarm)
+        } else {
+            userPlanRequest = UserPlanRequest(target: target,
+                                                            trainingTime: TrainingTime(day: trainigDayData ?? "",
+                                                                                       hour: trainingTimeData?.hour ?? 0,
+                                                                                       minute: trainingTimeData?.minute ?? 0),
+                                                            hasAlarm: hasAlarm)
+        }
         
         /// 로그인하지 않은 유저일 경우, 회원가입 바텀시트 띄우기
         /// 앞에서 로그인하고 온 유저라는 것을 어떻게 아는가?
         if UserDefaultsManager.clientAuthType == AuthType.signup.rawValue {
             signupBottomSheetVC.authType = .signup
             signupBottomSheetVC.bottomSheetView.viewType = .signUp
-//            signupBottomSheetVC.userPlanRequest = userPlanRequest
+            signupBottomSheetVC.userPlanRequest = userPlanRequest
             signupBottomSheetVC.modalPresentationStyle = .overFullScreen
             self.present(navigationController, animated: false) {
                 signupBottomSheetVC.bottomSheetView.frame.origin.y = self.view.frame.height
@@ -223,7 +209,7 @@ final class TrainingAlarmViewController: BaseViewController {
             }
         } else {
         /// 로그인한 유저라면 닉네임 설정 뷰로 이동
-//            self.userPlanPatchAPI(userPlan: userPlanRequest, accessToken: UserDefaultsManager.clientAccessToken)
+            self.userPlanPatchAPI(userPlan: userPlanRequest, accessToken: UserDefaultsManager.clientAccessToken)
         }
     }
     
@@ -298,12 +284,21 @@ final class TrainingAlarmViewController: BaseViewController {
     }
 }
 
-extension TrainingAlarmViewController: AlarmCollectionViewDelegate {
-    func alarmTiemDataSend(data: AlarmTimeAppData) {
-        alarmTimeSubject.send(data)
-    }
-    
-    func alarmDayButtonDataSend(day: Set<String>) {
-        alarmDaySubject.send(day)
+extension AlarmSettingViewController {
+    private func userPlanPatchAPI(userPlan: UserPlanRequest, accessToken: String) {
+        SmeemLoadingView.showLoading()
+        OnboardingAPI.shared.userPlanPathAPI(param: userPlan, accessToken: accessToken) { result in
+            
+            switch result {
+            case .success(_):
+                let userNicknameVC = UserNicknameViewController()
+                self.navigationController?.pushViewController(userNicknameVC, animated: true)
+            case .failure(let error):
+                self.showToast(toastType: .smeemErrorToast(message: error))
+            }
+            
+            SmeemLoadingView.hideLoading()
+
+        }
     }
 }
