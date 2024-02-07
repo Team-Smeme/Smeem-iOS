@@ -92,6 +92,8 @@
 		4A4FEB012B721956001BBDF3 /* Combine+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4FEB002B721956001BBDF3 /* Combine+.swift */; };
 		4A4FEB092B728144001BBDF3 /* TrainingWayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4FEB082B728144001BBDF3 /* TrainingWayViewModel.swift */; };
 		4A4FEB0C2B7289E7001BBDF3 /* TrainingWayAppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4FEB0B2B7289E7001BBDF3 /* TrainingWayAppData.swift */; };
+		4A4FEB142B733824001BBDF3 /* TrainingAlarmViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4FEB132B733824001BBDF3 /* TrainingAlarmViewModel.swift */; };
+		4A4FEB172B735941001BBDF3 /* AlarmTimeAppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4FEB162B735941001BBDF3 /* AlarmTimeAppData.swift */; };
 		4A6630362A51B0AD00D19CC9 /* EditDiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6630352A51B0AD00D19CC9 /* EditDiaryViewController.swift */; };
 		4A6630392A51E04600D19CC9 /* PatchDiaryRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6630382A51E04600D19CC9 /* PatchDiaryRequest.swift */; };
 		4A81C2972ACDAB2C0056E815 /* TrainingGoalsCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A81C2962ACDAB2C0056E815 /* TrainingGoalsCollectionView.swift */; };
@@ -120,7 +122,7 @@
 		4AC00EDC2AD3E4F7009230DA /* UIControl+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC00EDB2AD3E4F7009230DA /* UIControl+.swift */; };
 		4AC00EE62AD432F2009230DA /* BaseCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC00EE52AD432F2009230DA /* BaseCollectionView.swift */; };
 		4AC00EEB2AD4527A009230DA /* TrainingWayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC00EEA2AD4527A009230DA /* TrainingWayViewController.swift */; };
-		4AC00EF02AD52F4C009230DA /* AlarmSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC00EEF2AD52F4C009230DA /* AlarmSettingViewController.swift */; };
+		4AC00EF02AD52F4C009230DA /* TrainingAlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC00EEF2AD52F4C009230DA /* TrainingAlarmViewController.swift */; };
 		4AC00EF32AD56C4C009230DA /* SmeemTextButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC00EF22AD56C4C009230DA /* SmeemTextButton.swift */; };
 		4AC00EF52AD57202009230DA /* TrainingAlarmDataSendProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC00EF42AD57202009230DA /* TrainingAlarmDataSendProtocol.swift */; };
 		4AC00EF72AD59C73009230DA /* AuthDataSendProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC00EF62AD59C73009230DA /* AuthDataSendProtocol.swift */; };
@@ -248,6 +250,8 @@
 		4A4FEB002B721956001BBDF3 /* Combine+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Combine+.swift"; sourceTree = "<group>"; };
 		4A4FEB082B728144001BBDF3 /* TrainingWayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingWayViewModel.swift; sourceTree = "<group>"; };
 		4A4FEB0B2B7289E7001BBDF3 /* TrainingWayAppData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingWayAppData.swift; sourceTree = "<group>"; };
+		4A4FEB132B733824001BBDF3 /* TrainingAlarmViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingAlarmViewModel.swift; sourceTree = "<group>"; };
+		4A4FEB162B735941001BBDF3 /* AlarmTimeAppData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmTimeAppData.swift; sourceTree = "<group>"; };
 		4A6630352A51B0AD00D19CC9 /* EditDiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditDiaryViewController.swift; sourceTree = "<group>"; };
 		4A6630382A51E04600D19CC9 /* PatchDiaryRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatchDiaryRequest.swift; sourceTree = "<group>"; };
 		4A81C2962ACDAB2C0056E815 /* TrainingGoalsCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingGoalsCollectionView.swift; sourceTree = "<group>"; };
@@ -274,7 +278,7 @@
 		4AC00EDB2AD3E4F7009230DA /* UIControl+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIControl+.swift"; sourceTree = "<group>"; };
 		4AC00EE52AD432F2009230DA /* BaseCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionView.swift; sourceTree = "<group>"; };
 		4AC00EEA2AD4527A009230DA /* TrainingWayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingWayViewController.swift; sourceTree = "<group>"; };
-		4AC00EEF2AD52F4C009230DA /* AlarmSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSettingViewController.swift; sourceTree = "<group>"; };
+		4AC00EEF2AD52F4C009230DA /* TrainingAlarmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingAlarmViewController.swift; sourceTree = "<group>"; };
 		4AC00EF22AD56C4C009230DA /* SmeemTextButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmeemTextButton.swift; sourceTree = "<group>"; };
 		4AC00EF42AD57202009230DA /* TrainingAlarmDataSendProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingAlarmDataSendProtocol.swift; sourceTree = "<group>"; };
 		4AC00EF62AD59C73009230DA /* AuthDataSendProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthDataSendProtocol.swift; sourceTree = "<group>"; };
@@ -488,6 +492,7 @@
 				4A0EA4532A014018006CCE52 /* Base */,
 				4A0EA45A2A014111006CCE52 /* API */,
 				4A0EA45C2A014126006CCE52 /* NetworkDataModel */,
+				4A4FEB0D2B72913A001BBDF3 /* Model */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -787,6 +792,54 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		4A4FEB0D2B72913A001BBDF3 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				4A4FEB0E2B729147001BBDF3 /* Onboarding */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		4A4FEB0E2B729147001BBDF3 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				4A4FEB0F2B729154001BBDF3 /* Training */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		4A4FEB0F2B729154001BBDF3 /* Training */ = {
+			isa = PBXGroup;
+			children = (
+				4A004D4E2B4ED760003C8936 /* TrainingGoalResponse.swift */,
+				4A004D502B4ED783003C8936 /* TrainingWayResponse.swift */,
+			);
+			path = Training;
+			sourceTree = "<group>";
+		};
+		4A4FEB112B733816001BBDF3 /* VC */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = VC;
+			sourceTree = "<group>";
+		};
+		4A4FEB122B73381A001BBDF3 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				4A4FEB132B733824001BBDF3 /* TrainingAlarmViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		4A4FEB152B735933001BBDF3 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				4A4FEB162B735941001BBDF3 /* AlarmTimeAppData.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		4A6630372A51E03B00D19CC9 /* PatchDiary */ = {
 			isa = PBXGroup;
 			children = (
@@ -948,8 +1001,6 @@
 			isa = PBXGroup;
 			children = (
 				4AC1D6822B4ED38200D39A98 /* OnboardingModel.swift */,
-				4A004D4E2B4ED760003C8936 /* TrainingGoalResponse.swift */,
-				4A004D502B4ED783003C8936 /* TrainingWayResponse.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1036,7 +1087,10 @@
 		4AEFD4C62A13907D00DAB2BD /* Alarm */ = {
 			isa = PBXGroup;
 			children = (
-				4AC00EEF2AD52F4C009230DA /* AlarmSettingViewController.swift */,
+				4A4FEB152B735933001BBDF3 /* Model */,
+				4A4FEB122B73381A001BBDF3 /* ViewModel */,
+				4A4FEB112B733816001BBDF3 /* VC */,
+				4AC00EEF2AD52F4C009230DA /* TrainingAlarmViewController.swift */,
 			);
 			path = Alarm;
 			sourceTree = "<group>";
@@ -1206,7 +1260,7 @@
 				4AC00ED72AD2E6E0009230DA /* TrainingStepView.swift in Sources */,
 				371E94162A87B83D0098280F /* NextButtonDelegate.swift in Sources */,
 				4AC00EE62AD432F2009230DA /* BaseCollectionView.swift in Sources */,
-				4AC00EF02AD52F4C009230DA /* AlarmSettingViewController.swift in Sources */,
+				4AC00EF02AD52F4C009230DA /* TrainingAlarmViewController.swift in Sources */,
 				4A004D562B4EE277003C8936 /* AuthService.swift in Sources */,
 				37DCA6742A484D5900FF8F90 /* PostDiaryAPI.swift in Sources */,
 				4A9FAB472A4C3D1200C40D5A /* BadgeListTableViewCell.swift in Sources */,
@@ -1238,6 +1292,7 @@
 				37A574CC29FF990E00312453 /* UIViewController+.swift in Sources */,
 				4A9E10E42A43468600295D07 /* BaseTargetType.swift in Sources */,
 				4A4FEB092B728144001BBDF3 /* TrainingWayViewModel.swift in Sources */,
+				4A4FEB142B733824001BBDF3 /* TrainingAlarmViewModel.swift in Sources */,
 				37A574C329FF6E9C00312453 /* Constant.swift in Sources */,
 				4AC1D6832B4ED38200D39A98 /* OnboardingModel.swift in Sources */,
 				4AC00EEB2AD4527A009230DA /* TrainingWayViewController.swift in Sources */,
@@ -1299,6 +1354,7 @@
 				4A454A832B6666FF0079D48D /* TrainingGoalViewModel.swift in Sources */,
 				37DCA66E2A484D3100FF8F90 /* PostDiaryResponse.swift in Sources */,
 				4A0EA4552A014027006CCE52 /* GeneralResponse.swift in Sources */,
+				4A4FEB172B735941001BBDF3 /* AlarmTimeAppData.swift in Sources */,
 				4AC00EF72AD59C73009230DA /* AuthDataSendProtocol.swift in Sources */,
 				4A9FAB482A4C3D1200C40D5A /* BadgeHeaderView.swift in Sources */,
 				4AC00ECC2AD1C143009230DA /* UICollectionView+.swift in Sources */,

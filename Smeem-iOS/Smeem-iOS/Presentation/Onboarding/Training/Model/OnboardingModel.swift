@@ -17,7 +17,8 @@ struct UserPlanRequest: Codable {
 
 struct TrainingTime: Codable {
     let day: String
-    let hour, minute: Int
+    let hour, minute: String
+    let dayAndNight: String
 }
 
 // MARK: - Nickname
@@ -34,12 +35,4 @@ struct ServiceAcceptResponse: Codable {
 struct NicknameCheckResponse: Codable {
     let isExist: Bool
 }
-
-//struct NicknameResponse: Codable {
-//    let success: Bool
-//    let message: String
-//    let data: ObjectID?
-//}
-//
-//struct ObjectID: Codable {}
 
