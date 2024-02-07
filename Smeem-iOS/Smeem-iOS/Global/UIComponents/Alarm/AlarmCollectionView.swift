@@ -118,7 +118,7 @@ extension AlarmCollectionView: UICollectionViewDelegate {
         guard let cell = collectionView.cellForItem(at: indexPath) as? AlarmCollectionViewCell else { return }
         cell.selctedCell(hasAlarm: hasAlarm)
         
-        selectedDayArray.insert(dayDicrionary[dayArray[indexPath.item]] ?? "")
+        selectedDayArray.insert(AlarmDefaultModel.dayDicrionary[AlarmDefaultModel.dayArray[indexPath.item]] ?? "")
         alarmDelegate?.alarmDayButtonDataSend(day: selectedDayArray)
         
     }
@@ -127,7 +127,7 @@ extension AlarmCollectionView: UICollectionViewDelegate {
         guard let cell = collectionView.cellForItem(at: indexPath) as? AlarmCollectionViewCell else { return }
         cell.desecltedCell()
         
-        selectedDayArray.remove(dayDicrionary[dayArray[indexPath.item]] ?? "")
+        selectedDayArray.remove(AlarmDefaultModel.dayDicrionary[AlarmDefaultModel.dayArray[indexPath.item]] ?? "")
         alarmDelegate?.alarmDayButtonDataSend(day: selectedDayArray)
     }
 }
@@ -136,13 +136,13 @@ extension AlarmCollectionView: UICollectionViewDelegate {
 
 extension AlarmCollectionView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return dayArray.count
+        return AlarmDefaultModel.dayArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier:  AlarmCollectionViewCell.identifier, for: indexPath) as? AlarmCollectionViewCell else { return UICollectionViewCell() }
         
-        let initalSelectedIndexPaths = selectedIndexPath.contains(indexPath)
+        let initalSelectedIndexPaths = AlarmDefaultModel.selectedIndexPath.contains(indexPath)
         
         if initalSelectedIndexPaths {
             cell.selctedCell(hasAlarm: hasAlarm)
@@ -151,7 +151,7 @@ extension AlarmCollectionView: UICollectionViewDataSource {
             cell.desecltedCell()
         }
         
-        cell.setData(dayArray[indexPath.item])
+        cell.setData(AlarmDefaultModel.dayArray[indexPath.item])
         return cell
     }
 }
