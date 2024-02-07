@@ -144,7 +144,7 @@ extension EditHowGoalViewController {
     func detailPlanListGetAPI(tempTarget: String) {
         SmeemLoadingView.showLoading()
         
-        OnboardingAPI.shared.detailPlanList(param: tempTarget) { result in
+        OnboardingAPI.shared.trainingWayGetAPI(param: tempTarget) { result in
             switch result {
             case .success(let response):
                 self.planName = response.name
