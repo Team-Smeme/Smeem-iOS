@@ -56,7 +56,7 @@ final class BottomSheetViewController: UIViewController, LoginDelegate {
     var defaultSignUpHeight: CGFloat = 394
     
     var popupBadgeData: [PopupBadge]?
-    var userPlanRequest: UserPlanRequest?
+    var userPlanRequest: TrainingPlanRequest?
     
     var authType: AuthType = .login
     
@@ -260,7 +260,7 @@ extension BottomSheetViewController {
         }
     }
     
-    private func userPlanPatchAPI(userPlan: UserPlanRequest, accessToken: String) {
+    private func userPlanPatchAPI(userPlan: TrainingPlanRequest, accessToken: String) {
         SmeemLoadingView.showLoading()
         
         OnboardingAPI.shared.userPlanPathAPI(param: userPlan, accessToken: accessToken) { response in

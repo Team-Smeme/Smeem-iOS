@@ -51,7 +51,7 @@ final class EditAlarmViewController: BaseViewController {
             self.completeButton.changeButtonType(buttonType: traingData.type)
         }
         collectionView.trainingTimeClosure = { data in
-            self.trainingTimeData = data
+//            self.trainingTimeData = data
         }
         return collectionView
     }()

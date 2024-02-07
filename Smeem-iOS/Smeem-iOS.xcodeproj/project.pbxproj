@@ -120,13 +120,15 @@
 		4AC00EDC2AD3E4F7009230DA /* UIControl+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC00EDB2AD3E4F7009230DA /* UIControl+.swift */; };
 		4AC00EE62AD432F2009230DA /* BaseCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC00EE52AD432F2009230DA /* BaseCollectionView.swift */; };
 		4AC00EEB2AD4527A009230DA /* TrainingWayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC00EEA2AD4527A009230DA /* TrainingWayViewController.swift */; };
-		4AC00EF02AD52F4C009230DA /* AlarmSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC00EEF2AD52F4C009230DA /* AlarmSettingViewController.swift */; };
+		4AC00EF02AD52F4C009230DA /* TrainingAlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC00EEF2AD52F4C009230DA /* TrainingAlarmViewController.swift */; };
 		4AC00EF32AD56C4C009230DA /* SmeemTextButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC00EF22AD56C4C009230DA /* SmeemTextButton.swift */; };
 		4AC00EF52AD57202009230DA /* TrainingAlarmDataSendProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC00EF42AD57202009230DA /* TrainingAlarmDataSendProtocol.swift */; };
 		4AC00EF72AD59C73009230DA /* AuthDataSendProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC00EF62AD59C73009230DA /* AuthDataSendProtocol.swift */; };
 		4AC047252A8FCAE100EBDC0E /* AuthManagementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC047242A8FCAE100EBDC0E /* AuthManagementViewController.swift */; };
 		4AC1D6832B4ED38200D39A98 /* OnboardingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC1D6822B4ED38200D39A98 /* OnboardingModel.swift */; };
 		4AC4B82D2A2F9FE200E147AA /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4B82C2A2F9FE200E147AA /* UserDefaultsManager.swift */; };
+		4AC707A82B73893200B1D791 /* AlarmTimeAppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC707A72B73893200B1D791 /* AlarmTimeAppData.swift */; };
+		4AC707AB2B738A5B00B1D791 /* TrainingAlarmViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC707AA2B738A5B00B1D791 /* TrainingAlarmViewModel.swift */; };
 		4AC9489829ED800800489C2B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4AC9489729ED800800489C2B /* GoogleService-Info.plist */; };
 		4AD04B3B2A1905BB004B7A58 /* DiaryScrollerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD04B3A2A1905BB004B7A58 /* DiaryScrollerView.swift */; };
 		4AD04B3D2A190E9A004B7A58 /* UITextView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD04B3C2A190E9A004B7A58 /* UITextView+.swift */; };
@@ -274,13 +276,15 @@
 		4AC00EDB2AD3E4F7009230DA /* UIControl+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIControl+.swift"; sourceTree = "<group>"; };
 		4AC00EE52AD432F2009230DA /* BaseCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionView.swift; sourceTree = "<group>"; };
 		4AC00EEA2AD4527A009230DA /* TrainingWayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingWayViewController.swift; sourceTree = "<group>"; };
-		4AC00EEF2AD52F4C009230DA /* AlarmSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSettingViewController.swift; sourceTree = "<group>"; };
+		4AC00EEF2AD52F4C009230DA /* TrainingAlarmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingAlarmViewController.swift; sourceTree = "<group>"; };
 		4AC00EF22AD56C4C009230DA /* SmeemTextButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmeemTextButton.swift; sourceTree = "<group>"; };
 		4AC00EF42AD57202009230DA /* TrainingAlarmDataSendProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingAlarmDataSendProtocol.swift; sourceTree = "<group>"; };
 		4AC00EF62AD59C73009230DA /* AuthDataSendProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthDataSendProtocol.swift; sourceTree = "<group>"; };
 		4AC047242A8FCAE100EBDC0E /* AuthManagementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManagementViewController.swift; sourceTree = "<group>"; };
 		4AC1D6822B4ED38200D39A98 /* OnboardingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingModel.swift; sourceTree = "<group>"; };
 		4AC4B82C2A2F9FE200E147AA /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
+		4AC707A72B73893200B1D791 /* AlarmTimeAppData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmTimeAppData.swift; sourceTree = "<group>"; };
+		4AC707AA2B738A5B00B1D791 /* TrainingAlarmViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingAlarmViewModel.swift; sourceTree = "<group>"; };
 		4AC9489729ED800800489C2B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		4AD04B382A190020004B7A58 /* UITextField+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+.swift"; sourceTree = "<group>"; };
 		4AD04B3A2A1905BB004B7A58 /* DiaryScrollerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryScrollerView.swift; sourceTree = "<group>"; };
@@ -965,6 +969,30 @@
 			path = Constants;
 			sourceTree = "<group>";
 		};
+		4AC707A22B73884F00B1D791 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				4AC707AA2B738A5B00B1D791 /* TrainingAlarmViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		4AC707A32B73885300B1D791 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				4AC707A72B73893200B1D791 /* AlarmTimeAppData.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		4AC707A62B7388DC00B1D791 /* VC */ = {
+			isa = PBXGroup;
+			children = (
+				4AC00EEF2AD52F4C009230DA /* TrainingAlarmViewController.swift */,
+			);
+			path = VC;
+			sourceTree = "<group>";
+		};
 		4AD04B3E2A19217B004B7A58 /* Correction */ = {
 			isa = PBXGroup;
 			children = (
@@ -1036,7 +1064,9 @@
 		4AEFD4C62A13907D00DAB2BD /* Alarm */ = {
 			isa = PBXGroup;
 			children = (
-				4AC00EEF2AD52F4C009230DA /* AlarmSettingViewController.swift */,
+				4AC707A62B7388DC00B1D791 /* VC */,
+				4AC707A22B73884F00B1D791 /* ViewModel */,
+				4AC707A32B73885300B1D791 /* Model */,
 			);
 			path = Alarm;
 			sourceTree = "<group>";
@@ -1206,7 +1236,7 @@
 				4AC00ED72AD2E6E0009230DA /* TrainingStepView.swift in Sources */,
 				371E94162A87B83D0098280F /* NextButtonDelegate.swift in Sources */,
 				4AC00EE62AD432F2009230DA /* BaseCollectionView.swift in Sources */,
-				4AC00EF02AD52F4C009230DA /* AlarmSettingViewController.swift in Sources */,
+				4AC00EF02AD52F4C009230DA /* TrainingAlarmViewController.swift in Sources */,
 				4A004D562B4EE277003C8936 /* AuthService.swift in Sources */,
 				37DCA6742A484D5900FF8F90 /* PostDiaryAPI.swift in Sources */,
 				4A9FAB472A4C3D1200C40D5A /* BadgeListTableViewCell.swift in Sources */,
@@ -1276,6 +1306,7 @@
 				37A574C829FF6F1C00312453 /* UIView+.swift in Sources */,
 				37A574D029FF9AEE00312453 /* UILabel+.swift in Sources */,
 				37A574CE29FF9A2D00312453 /* UIScreen+.swift in Sources */,
+				4AC707A82B73893200B1D791 /* AlarmTimeAppData.swift in Sources */,
 				37DCA6722A484D5000FF8F90 /* PostDiaryService.swift in Sources */,
 				379789072AAC707700C61EF4 /* NavigationBarType.swift in Sources */,
 				37DCA6702A484D3700FF8F90 /* PostDiaryRequest.swift in Sources */,
@@ -1304,6 +1335,7 @@
 				4AC00ECC2AD1C143009230DA /* UICollectionView+.swift in Sources */,
 				4A8FFA5029C9E1FD00FB76C0 /* AppDelegate.swift in Sources */,
 				6FE1298E2A4986CA005536C4 /* HomeDiaryResponse.swift in Sources */,
+				4AC707AB2B738A5B00B1D791 /* TrainingAlarmViewModel.swift in Sources */,
 				3728B8D52A2CFF2C00EF4CF8 /* StepOneKoreanDiaryViewController.swift in Sources */,
 				37DCA6692A480A8E00FF8F90 /* DetailDiaryAPI.swift in Sources */,
 				37A574C129FF6E9100312453 /* ColorLiterals.swift in Sources */,

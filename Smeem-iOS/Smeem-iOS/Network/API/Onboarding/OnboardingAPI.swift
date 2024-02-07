@@ -53,7 +53,7 @@ public class OnboardingAPI {
         }
     }
     
-    func userPlanPathAPI(param: UserPlanRequest, accessToken: String, completion: @escaping (Result<GeneralResponse<NilType>, SmeemError>) -> ()) {
+    func userPlanPathAPI(param: TrainingPlanRequest, accessToken: String, completion: @escaping (Result<GeneralResponse<NilType>, SmeemError>) -> ()) {
         onboardingProvider.request(.onboardingUserPlan(param: param, token: accessToken)) { response in
             switch response {
             case .success(let result):

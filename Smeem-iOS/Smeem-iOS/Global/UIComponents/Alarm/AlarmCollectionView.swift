@@ -14,13 +14,30 @@
 
 import UIKit
 
+protocol AlarmCollectionViewDelegate {
+    func alarmTiemDataSend(data: AlarmTimeAppData)
+    func alarmDayButtonDataSend(day: Set<String>)
+}
+
 final class AlarmCollectionView: UICollectionView {
     
     // MARK: - Property
     
+    var alarmDelegate: AlarmCollectionViewDelegate?
+    
     var dayArray = ["월", "화", "수", "목", "금", "토", "일"]
-    var selectedIndexPath = [IndexPath(item: 0, section: 0), IndexPath(item: 1, section: 0), IndexPath(item: 2, section: 0), IndexPath(item: 3, section: 0), IndexPath(item: 4, section: 0)]
-    var dayDicrionary: [String:String] = ["월": "MON", "화": "TUE", "수": "WED", "목": "THU", "금": "FRI", "토": "SAT", "일": "SUN"]
+    var selectedIndexPath = [IndexPath(item: 0, section: 0),
+                             IndexPath(item: 1, section: 0),
+                             IndexPath(item: 2, section: 0),
+                             IndexPath(item: 3, section: 0),
+                             IndexPath(item: 4, section: 0)]
+    var dayDicrionary: [String:String] = ["월": "MON",
+                                          "화": "TUE",
+                                          "수": "WED",
+                                          "목": "THU",
+                                          "금": "FRI",
+                                          "토": "SAT",
+                                          "일": "SUN"]
     
     var selectedDayArray: Set<String> = ["MON", "TUE", "WED", "THU", "FRI"] {
         didSet {
@@ -29,9 +46,9 @@ final class AlarmCollectionView: UICollectionView {
             trainingDayClosure?((Array(selectedDayArray).joined(separator: ","), .enabled))
         }
     }
-    
+
     var trainingDayClosure: (((day: String, type: SmeemButtonType)) -> Void)?
-    var trainingTimeClosure: (((hour: Int, minute: Int)) -> Void)?
+    var trainingTimeClosure: (((hour: String, minute: String, dayAndNight: String)) -> Void)?
     
     var myPageTime = (time: 100, minute: 100)
     var hasAlarm = true {
@@ -102,7 +119,7 @@ extension AlarmCollectionView: UICollectionViewDelegate {
         cell.selctedCell(hasAlarm: hasAlarm)
         
         selectedDayArray.insert(dayDicrionary[dayArray[indexPath.item]] ?? "")
-        print(selectedDayArray)
+        alarmDelegate?.alarmDayButtonDataSend(day: selectedDayArray)
         
     }
     
@@ -111,7 +128,7 @@ extension AlarmCollectionView: UICollectionViewDelegate {
         cell.desecltedCell()
         
         selectedDayArray.remove(dayDicrionary[dayArray[indexPath.item]] ?? "")
-        print(selectedDayArray)
+        alarmDelegate?.alarmDayButtonDataSend(day: selectedDayArray)
     }
 }
 
@@ -139,6 +156,12 @@ extension AlarmCollectionView: UICollectionViewDataSource {
     }
 }
 
+extension AlarmCollectionView: AlarmPickerDelegate {
+    func alarmDataSend(data: AlarmTimeAppData) {
+        self.alarmDelegate?.alarmTiemDataSend(data: data)
+    }
+}
+
 // MARK: - UICollectionViewDelegateFlowLayout
 
 extension AlarmCollectionView: UICollectionViewDelegateFlowLayout {
@@ -162,6 +185,8 @@ extension AlarmCollectionView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         guard let footerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: DatePickerFooterView.identifier, for: indexPath) as? DatePickerFooterView else { return UICollectionReusableView() }
         
+        footerView.alarmPickerDelegate = self
+        
         if myPageTime != (100, 100) {
             let str = footerView.calculateMyPageTime(hour: myPageTime.time, minute: myPageTime.minute)
             let splitStrOne = str.split(separator: ":")
@@ -181,18 +206,8 @@ extension AlarmCollectionView: UICollectionViewDelegateFlowLayout {
                 footerView.inputTextField.textColor = .point
                 footerView.alarmLabel.textColor = .point
             }
-        } else {
-            // 온보딩
-            print("온보딩")
         }
         
-        footerView.trainingTimeClosure = { data in
-            let hoursData = data.hour
-            let minuteData = data.minute
-            let traingData: (Int, Int) = (hoursData, minuteData)
-            
-            self.trainingTimeClosure?(traingData)
-        }
         return footerView
     }
 }
