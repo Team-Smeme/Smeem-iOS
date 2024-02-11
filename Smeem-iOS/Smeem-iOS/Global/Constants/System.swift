@@ -7,13 +7,6 @@
 
 import UIKit
 
-enum NetworkError: Error {
-    case invalidURL
-    case requestFailed
-    case invalidResponse
-    case failProjVersion
-}
-
 enum AppId: Int {
     case identifire = 6450711685
 }
@@ -25,9 +18,8 @@ struct System {
     
     /// 앱 스토어 최신 정보 확인
     func latestVersion() async throws -> String? {
-        print(AppId.identifire)
         guard let url = URL(string: "http://itunes.apple.com/lookup?id=\(AppId.identifire.rawValue)&country=kr") else {
-            throw NetworkError.invalidURL
+            throw SmeemError.clientError
         }
         
         do {
@@ -36,12 +28,12 @@ struct System {
             let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any]
 
             guard let results = json?["results"] as? [[String: Any]], let appStoreVersion = results[0]["version"] as? String else {
-                throw NetworkError.invalidResponse
+                throw SmeemError.clientError
             }
 
             return appStoreVersion
         } catch {
-            throw NetworkError.requestFailed
+            throw SmeemError.clientError
         }
     }
     

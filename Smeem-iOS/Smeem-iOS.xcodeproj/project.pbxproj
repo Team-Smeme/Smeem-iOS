@@ -116,6 +116,7 @@
 		4AA942D92A276C7900A552A0 /* KakaoSDKUser in Frameworks */ = {isa = PBXBuildFile; productRef = 4AA942D82A276C7900A552A0 /* KakaoSDKUser */; };
 		4AB7C9192B75F9B500845733 /* GesturePublisher+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB7C9182B75F9B500845733 /* GesturePublisher+.swift */; };
 		4AB7C91B2B7624CC00845733 /* ServiceAcceptAppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB7C91A2B7624CC00845733 /* ServiceAcceptAppData.swift */; };
+		4AB7C9262B78914100845733 /* SplashViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB7C9252B78914100845733 /* SplashViewModel.swift */; };
 		4ABE3FD12A811F8400D1D22E /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABE3FD02A811F8400D1D22E /* SplashViewController.swift */; };
 		4AC00ECC2AD1C143009230DA /* UICollectionView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC00ECB2AD1C143009230DA /* UICollectionView+.swift */; };
 		4AC00ED72AD2E6E0009230DA /* TrainingStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC00ED62AD2E6E0009230DA /* TrainingStepView.swift */; };
@@ -274,6 +275,7 @@
 		4AA1EEE92A5870690017FF97 /* Urbanist-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Urbanist-SemiBold.otf"; sourceTree = "<group>"; };
 		4AB7C9182B75F9B500845733 /* GesturePublisher+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GesturePublisher+.swift"; sourceTree = "<group>"; };
 		4AB7C91A2B7624CC00845733 /* ServiceAcceptAppData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAcceptAppData.swift; sourceTree = "<group>"; };
+		4AB7C9252B78914100845733 /* SplashViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewModel.swift; sourceTree = "<group>"; };
 		4AB9F5272AA9F78C00EBEE35 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		4AB9F5292AAA035300EBEE35 /* BaseResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseResponse.swift; sourceTree = "<group>"; };
 		4ABE3FD02A811F8400D1D22E /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
@@ -938,6 +940,31 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		4AB7C9222B78912A00845733 /* Splah */ = {
+			isa = PBXGroup;
+			children = (
+				4AB7C9242B78913500845733 /* VC */,
+				4AB7C9232B78913100845733 /* ViewModel */,
+			);
+			path = Splah;
+			sourceTree = "<group>";
+		};
+		4AB7C9232B78913100845733 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				4AB7C9252B78914100845733 /* SplashViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		4AB7C9242B78913500845733 /* VC */ = {
+			isa = PBXGroup;
+			children = (
+				4ABE3FD02A811F8400D1D22E /* SplashViewController.swift */,
+			);
+			path = VC;
+			sourceTree = "<group>";
+		};
 		4AC00EF82AD6D7D3009230DA /* Training */ = {
 			isa = PBXGroup;
 			children = (
@@ -1072,8 +1099,8 @@
 		4AD923E52A0650A000FF5E27 /* Splash */ = {
 			isa = PBXGroup;
 			children = (
+				4AB7C9222B78912A00845733 /* Splah */,
 				4AD923E62A0650B600FF5E27 /* SmeemStartViewController.swift */,
-				4ABE3FD02A811F8400D1D22E /* SplashViewController.swift */,
 			);
 			path = Splash;
 			sourceTree = "<group>";
@@ -1415,6 +1442,7 @@
 				4AC047252A8FCAE100EBDC0E /* AuthManagementViewController.swift in Sources */,
 				374FAF812A2CACCF00237A1A /* DiaryViewController.swift in Sources */,
 				37DCA65A2A47598700FF8F90 /* RandomTopicService.swift in Sources */,
+				4AB7C9262B78914100845733 /* SplashViewModel.swift in Sources */,
 				4A01235F2AAA2C1500E09646 /* SmeemLoadingView.swift in Sources */,
 				4A004D542B4EE26E003C8936 /* AuthAPI.swift in Sources */,
 				4A81C2972ACDAB2C0056E815 /* TrainingGoalsCollectionView.swift in Sources */,
