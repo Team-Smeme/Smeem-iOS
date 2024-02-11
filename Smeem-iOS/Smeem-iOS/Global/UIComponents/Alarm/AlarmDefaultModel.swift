@@ -10,10 +10,10 @@ import Foundation
 struct AlarmDefaultModel {
     static let dayArray = ["월", "화", "수", "목", "금", "토", "일"]
     static let selectedIndexPath = [IndexPath(item: 0, section: 0),
-                             IndexPath(item: 1, section: 0),
-                             IndexPath(item: 2, section: 0),
-                             IndexPath(item: 3, section: 0),
-                             IndexPath(item: 4, section: 0)]
+                                    IndexPath(item: 1, section: 0),
+                                    IndexPath(item: 2, section: 0),
+                                    IndexPath(item: 3, section: 0),
+                                    IndexPath(item: 4, section: 0)]
     static let dayDicrionary: [String:String] = ["월": "MON",
                                           "화": "TUE",
                                           "수": "WED",

@@ -142,7 +142,12 @@ extension AlarmCollectionView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier:  AlarmCollectionViewCell.identifier, for: indexPath) as? AlarmCollectionViewCell else { return UICollectionViewCell() }
         
-        let initalSelectedIndexPaths = AlarmDefaultModel.selectedIndexPath.contains(indexPath)
+        var initalSelectedIndexPaths = AlarmDefaultModel.selectedIndexPath.contains(indexPath)
+        
+        // TODO: 다음 업데이트 때 로직 수정
+        if myPageTime != (time: 100, minute: 100) {
+            initalSelectedIndexPaths = self.selectedIndexPath.contains(indexPath)
+        }
         
         if initalSelectedIndexPaths {
             cell.selctedCell(hasAlarm: hasAlarm)
