@@ -109,8 +109,7 @@ final class UserNicknameViewController: BaseViewController {
         
         output.nextButtonResult
             .sink { [weak self] _ in
-                let serviceVC = ServiceAcceptViewController()
-                serviceVC.nickNameData = self?.nicknameTextField.text ?? ""
+                let serviceVC = ServiceAcceptViewController(nickname: (self?.nicknameTextField.text!)!)
                 self?.navigationController?.pushViewController(serviceVC, animated: true)
             }
             .store(in: &cancelBag)

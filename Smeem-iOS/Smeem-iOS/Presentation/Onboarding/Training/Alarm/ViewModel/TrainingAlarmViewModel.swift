@@ -64,7 +64,6 @@ final class TrainingAlarmViewModel: ViewModel {
             .map { dayArray in
                 let dayList = !dayArray.isEmpty ? Array(dayArray).joined(separator: ",") : ""
                 self.trainingPlanRequest.trainingTime.day = dayList
-                print(self.trainingPlanRequest)
                 return dayArray.isEmpty ? SmeemButtonType.notEnabled : SmeemButtonType.enabled
             }
             .eraseToAnyPublisher()
