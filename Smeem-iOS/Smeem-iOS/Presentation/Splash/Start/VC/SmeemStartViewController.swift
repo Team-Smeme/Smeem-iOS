@@ -6,14 +6,22 @@
 //
 
 import UIKit
+import Combine
 
 import SnapKit
 
 final class SmeemStartViewController: BaseViewController {
     
-    // MARK: - Property
+    private let viewModel = SmeemStartViewModel()
     
-    // MARK: - UI Property
+    // MARK: Publisher
+    
+    private let loginButtonTapped = PassthroughSubject<Void, Never>()
+    private let startButtonTapped = PassthroughSubject<Void, Never>()
+    private let amplitudeSubject = PassthroughSubject<Void, Never>()
+    private var cancelBag = Set<AnyCancellable>()
+    
+    // MARK: UI Properties
     
     private let SmeemLogoIcon: UIImageView = {
         let imageView = UIImageView()
@@ -47,50 +55,71 @@ final class SmeemStartViewController: BaseViewController {
         button.titleLabel?.font = .b4
         button.setTitle("이미 계정이 있으신가요?", for: .normal)
         button.setTitleColor(.gray600, for: .normal)
-        button.addTarget(self, action: #selector(loginButtonDidTap), for: .touchUpInside)
         return button
     }()
     
     private lazy var startButton: SmeemButton = {
         let button = SmeemButton(buttonType: .enabled, text: "시작하기")
-        button.addTarget(self, action: #selector(startButtonDidTap), for: .touchUpInside)
         return button
     }()
     
-    // MARK: - Life Cycle
+    // MARK: Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setLayout()
-
-        AmplitudeManager.shared.track(event: AmplitudeConstant.Onboarding.first_view.event)
-    }
-    
-    // MARK: - @objc
-    
-    @objc func loginButtonDidTap() {
-        let loginBottomSheetVC = BottomSheetViewController()
-        UserDefaultsManager.clientAuthType = AuthType.login.rawValue
-        loginBottomSheetVC.authType = .login
-        loginBottomSheetVC.bottomSheetView.viewType = .login
-        let navigationController = UINavigationController(rootViewController: loginBottomSheetVC)
-        navigationController.modalPresentationStyle = .overFullScreen
         
-        present(navigationController, animated: false) {
-            loginBottomSheetVC.bottomSheetView.frame.origin.y = self.view.frame.height
-            UIView.animate(withDuration: 0.3) {
-                loginBottomSheetVC.bottomSheetView.frame.origin.y = self.view.frame.height-loginBottomSheetVC.defaultLoginHeight
+        setLayout()
+        bind()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        amplitudeSubject.send(())
+    }
+    
+    // MARK: Methods
+    
+    private func bind() {
+        loginButton.tapPublisher
+            .sink { [weak self] _ in
+                self?.loginButtonTapped.send(())
             }
-        }
+            .store(in: &cancelBag)
+        
+        startButton.tapPublisher
+            .sink { [weak self] _ in
+                self?.startButtonTapped.send(())
+            }
+            .store(in: &cancelBag)
+        
+        let input = SmeemStartViewModel.Input(loginButtonTapped: loginButtonTapped,
+                                              startButtonTapped: startButtonTapped,
+                                              amplitudeSubject: amplitudeSubject)
+        let output = viewModel.transform(input: input)
+        
+        output.loginButtonTapped
+            .sink { [weak self] type in
+                let loginBottomSheetVC = BottomSheetViewController()
+                loginBottomSheetVC.authType = type
+                loginBottomSheetVC.bottomSheetView.viewType = type
+                let navigationController = UINavigationController(rootViewController: loginBottomSheetVC)
+                navigationController.modalPresentationStyle = .overFullScreen
+                
+                self?.present(navigationController, animated: false) {
+                    loginBottomSheetVC.bottomSheetView.frame.origin.y = self?.view.frame.height ?? 0
+                    UIView.animate(withDuration: 0.3) {
+                        loginBottomSheetVC.bottomSheetView.frame.origin.y = self!.view.frame.height-loginBottomSheetVC.defaultLoginHeight
+                    }
+                }
+            }
+            .store(in: &cancelBag)
+        
+        output.startButtonTapped
+            .sink { [weak self] _ in
+                let trainingGoalsVC = TrainingGoalViewController()
+                self?.navigationController?.pushViewController(trainingGoalsVC, animated: true)
+            }
+            .store(in: &cancelBag)
     }
-    
-    @objc func startButtonDidTap() {
-        UserDefaultsManager.clientAuthType = AuthType.signup.rawValue
-        let trainingGoalsVC = TrainingGoalViewController()
-        self.navigationController?.pushViewController(trainingGoalsVC, animated: true)
-    }
-    
-    // MARK: - Custom Method
     
     private func setLayout() {
         view.addSubviews(SmeemLogoIcon, SmeemNameLabel, SmeemDescriptionLabel,

@@ -24,7 +24,7 @@ final class BottomSheetView: UIView {
     
     // MARK: - viewType
     
-    var viewType: ViewType = .login {
+    var viewType: AuthType = .login {
         didSet {
             setBottomSheetLayout()
         }
@@ -141,7 +141,7 @@ final class BottomSheetView: UIView {
         case .login:
             bottomSheetLabel.text = "로그인"
             guestLoginButton.isHidden = true
-        case .signUp:
+        case .signup:
 //            bottomSheetLabel.text = "회원가입"
 //
 //            guestLoginButton.snp.makeConstraints {

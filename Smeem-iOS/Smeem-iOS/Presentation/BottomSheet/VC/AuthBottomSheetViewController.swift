@@ -71,7 +71,7 @@ final class BottomSheetViewController: UIViewController, LoginDelegate {
     
     var bottomSheetView: BottomSheetView = {
         let view = BottomSheetView()
-        view.viewType = .signUp
+        view.viewType = .signup
         return view
     }()
     
