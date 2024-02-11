@@ -27,7 +27,8 @@ struct System {
 
             let json = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any]
 
-            guard let results = json?["results"] as? [[String: Any]], let appStoreVersion = results[0]["version"] as? String else {
+            guard let results = json?["results"] as? [[String: Any]],
+                  let appStoreVersion = results[0]["version"] as? String else {
                 throw SmeemError.clientError
             }
 

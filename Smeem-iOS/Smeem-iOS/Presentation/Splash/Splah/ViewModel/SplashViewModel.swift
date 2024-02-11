@@ -35,7 +35,6 @@ final class SplashViewModel: ViewModel {
                 self.loadingViewResult.send(true)
             })
             .delay(for: 0.5, scheduler: DispatchQueue.global())
-//            .receive(on: RunLoop.main)
             .flatMap { _ -> AnyPublisher<Void, Never> in
                 return Future<Void, Never> { promise in
                     Task {
@@ -50,6 +49,8 @@ final class SplashViewModel: ViewModel {
                                 UserDefaultsManager.accessToken != "" ? self.tokenCheckResult.send(()) :
                                                                         self.smeemStartResult.send(())
                             }
+                        } catch let error {
+                            self.errorResult.send(error as! SmeemError)
                         }
                     }
                 }
