@@ -38,4 +38,12 @@ extension UIView {
     func constraintByNotch(_ hasNotch: CGFloat, _ noNotch: CGFloat) -> CGFloat {
         return UIScreen.main.hasNotch ? hasNotch : noNotch
     }
+    
+    func getDeviceWidth() -> CGFloat {
+        return UIScreen.main.bounds.width
+    }
+    
+    func getDeviceHeight() -> CGFloat {
+        return UIScreen.main.bounds.height
+    }
 }
