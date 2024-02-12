@@ -107,6 +107,7 @@ extension RandomTopicView {
         contentLabel.snp.makeConstraints { make in
             make.top.equalTo(questionLabel)
             make.leading.equalTo(questionLabel)
+            make.trailing.equalToSuperview().inset(convertByWidthRatio(42))
         }
         
         refreshButton.snp.makeConstraints { make in
@@ -116,10 +117,6 @@ extension RandomTopicView {
     }
     
     private func updateViewHeightForNewContent() {
-        let labelWidth = getDeviceWidth() - convertByWidthRatio(36)
-        contentLabel.preferredMaxLayoutWidth = labelWidth
-        contentLabel.setNeedsLayout()
-        contentLabel.layoutIfNeeded()
         
         let contentLabelHeight: CGFloat = contentLabel.intrinsicContentSize.height
         
