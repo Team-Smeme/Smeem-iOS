@@ -115,26 +115,8 @@ extension RandomTopicView {
         }
     }
     
-    // MARK: - @objc
-    
-    @objc func refreshButtonDidTap() {
-        randomTopicRefreshDelegate?.refreshButtonTapped { [weak self] newContentText in
-            DispatchQueue.main.async {
-                self?.setData(contentText: newContentText ?? "")
-            }
-        }
-    }
-    
-    // MARK: - Custom Method
-    
-    func setData(contentText: String) {
-        contentLabel.text = "     " + contentText
-        contentLabel.setTextWithLineHeight(lineHeight: 22)
-        updateViewHeightForNewContent()
-    }
-
     private func updateViewHeightForNewContent() {
-        let labelWidth = UIScreen.main.bounds.width - 36
+        let labelWidth = getDeviceWidth() - convertByWidthRatio(36)
         contentLabel.preferredMaxLayoutWidth = labelWidth
         contentLabel.setNeedsLayout()
         contentLabel.layoutIfNeeded()
@@ -145,5 +127,25 @@ extension RandomTopicView {
             let newHeight: CGFloat = contentLabelHeight <= 22 ? 88 : contentLabelHeight + 66
             heightConstraint.update(offset: newHeight)
         }
+    }
+    
+    // MARK: - @objc
+    
+    @objc func refreshButtonDidTap() {
+        randomTopicRefreshDelegate?.refreshButtonTapped { [weak self] newContentText in
+            DispatchQueue.main.async {
+                self?.setData(contentText: newContentText ?? "")
+            }
+        }
+    }
+}
+
+// MARK: - Network
+
+extension RandomTopicView {
+    func setData(contentText: String) {
+        contentLabel.text = "     " + contentText
+        contentLabel.setTextWithLineHeight(lineHeight: 22)
+        updateViewHeightForNewContent()
     }
 }
