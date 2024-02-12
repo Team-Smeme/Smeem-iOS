@@ -38,7 +38,7 @@ final class RandomTopicView: UIView {
         label.font = .b1
         label.textColor = .point
         label.text = "Q."
-        label.setTextWithLineHeight(lineHeight: 21)
+        label.setTextWithLineHeight(lineHeight: 22)
         return label
     }()
     
