@@ -98,16 +98,14 @@ final class SmeemStartViewController: BaseViewController {
         
         output.loginButtonTapped
             .sink { [weak self] type in
-                let loginBottomSheetVC = BottomSheetViewController()
-                loginBottomSheetVC.authType = type
-                loginBottomSheetVC.bottomSheetView.viewType = type
+                let loginBottomSheetVC = LoginBottomSheetViewController()
                 let navigationController = UINavigationController(rootViewController: loginBottomSheetVC)
                 navigationController.modalPresentationStyle = .overFullScreen
                 
                 self?.present(navigationController, animated: false) {
                     loginBottomSheetVC.bottomSheetView.frame.origin.y = self?.view.frame.height ?? 0
                     UIView.animate(withDuration: 0.3) {
-                        loginBottomSheetVC.bottomSheetView.frame.origin.y = self!.view.frame.height-loginBottomSheetVC.defaultLoginHeight
+                        loginBottomSheetVC.bottomSheetView.frame.origin.y = self!.view.frame.height-282
                     }
                 }
             }

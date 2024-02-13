@@ -14,11 +14,6 @@ struct UserDefaultsManager {
         set { UserDefaults.standard.set(newValue, forKey: "socialToken")}
     }
     
-    static var kakaoRefreushToken: String {
-        get { return UserDefaults.standard.string(forKey: "kakaoRefreushToken") ?? ""}
-        set { UserDefaults.standard.set(newValue, forKey: "kakaoRefreushToken")}
-    }
-    
     static var accessToken: String {
         get { return UserDefaults.standard.string(forKey: "accessToken") ?? ""}
         set { UserDefaults.standard.set(newValue, forKey: "accessToken")}

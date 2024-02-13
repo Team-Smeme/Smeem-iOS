@@ -18,7 +18,11 @@ enum AuthType: String {
     case signup
 }
 
-final class BottomSheetViewController: UIViewController, LoginDelegate {
+final class BottomSheetViewController: UIViewController {
+    
+    // MARK: Publisher
+    
+    // MARK: UI Properties
     
     private var hasPlan = false
     private var isRegistered = false
@@ -52,16 +56,6 @@ final class BottomSheetViewController: UIViewController, LoginDelegate {
 
     // MARK: - Property
     
-    var defaultLoginHeight: CGFloat = 282
-    var defaultSignUpHeight: CGFloat = 394
-    
-    var popupBadgeData: [PopupBadge]?
-    var userPlanRequest: TrainingPlanRequest?
-    
-    var authType: AuthType = .login
-    
-    // MARK: - UI Property
-    
     private lazy var dimmedView: UIView = {
         let view = UIView()
         view.layer.backgroundColor = UIColor(red: 0.09, green: 0.09, blue: 0.086, alpha: 0.65).cgColor
@@ -71,18 +65,54 @@ final class BottomSheetViewController: UIViewController, LoginDelegate {
     
     var bottomSheetView: BottomSheetView = {
         let view = BottomSheetView()
-        view.viewType = .signup
+        view.backgroundColor = .smeemWhite
+        view.makeSelectedRoundCorners(cornerRadius: 30, maskedCorners: [.layerMinXMinYCorner, .layerMaxXMinYCorner])
         return view
     }()
     
-    // MARK: - Life Cycle
+    private let bottomSheetLabel: UILabel = {
+        let label = UILabel()
+        label.text = "로그인"
+        label.textColor = .black
+        label.font = .h3
+        return label
+    }()
+    
+    private lazy var cancelButton: UIButton = {
+        let button = UIButton()
+        button.setImage(Constant.Image.icnCancelGrey, for: .normal)
+//        button.addTarget(self, action: #selector(cancleButtonDidTap), for: .touchUpInside)
+        return button
+    }()
+    
+    private lazy var kakaoLoginButton: UIButton = {
+        let button = UIButton()
+        button.setImage(Constant.Image.btnKakaoLogin, for: .normal)
+//        button.addTarget(self, action: #selector(kakaoLoginButtonDidTap), for: .touchUpInside)
+        return button
+    }()
+    
+    private lazy var appleLoginButton: UIButton = {
+        let button = UIButton()
+        button.setImage(Constant.Image.btnAppleLogin, for: .normal)
+//        button.addTarget(self, action: #selector(appleLoginButtonDidTap), for: .touchUpInside)
+        return button
+    }()
+    
+    var userPlanRequest: TrainingPlanRequest?
+    
+    var authType: AuthType = .login
+    
+    // MARK: Life Cycle
+    
+    // MARK: Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setBackgroundColor()
         setLayout()
-        setBottomViewDelegate()
+//        setBottomViewDelegate()
     }
     
     // MARK: - @objc
@@ -125,37 +155,33 @@ final class BottomSheetViewController: UIViewController, LoginDelegate {
     }
     
     private func loginKakaoWithApp() {
-        UserApi.shared.loginWithKakaoTalk { oAuthToken, error in
-            if let _ = error {
-                print("⭐️⭐️⭐️ 에러 발생 ⭐️⭐️⭐️")
-                return
-            }
-            
-            print("Login with KAKAO App Success !!")
-            
-            self.kakaoAccessToken = oAuthToken?.accessToken
-            guard let refreshToken = oAuthToken?.refreshToken else { return }
-            UserDefaultsManager.kakaoRefreushToken = refreshToken
-        }
+//        UserApi.shared.loginWithKakaoTalk { oAuthToken, error in
+//            if let _ = error {
+//                print("⭐️⭐️⭐️ 에러 발생 ⭐️⭐️⭐️")
+//                return
+//            }
+//
+//            print("Login with KAKAO App Success !!")
+//
+//            self.kakaoAccessToken = oAuthToken?.accessToken
+//            guard let refreshToken = oAuthToken?.refreshToken else { return }
+//            UserDefaultsManager.kakaoRefreushToken = refreshToken
+//        }
     }
     
     private func loginKakaoWithWeb() {
-        UserApi.shared.loginWithKakaoAccount { oAuthToken, error in
-            if let _ = error {
-                print("⭐️⭐️⭐️ 에러 발생 ⭐️⭐️⭐️")
-                return
-            }
-            
-            print("Login with KAKAO App Success !!")
-            
-            self.kakaoAccessToken = oAuthToken?.accessToken
-            guard let refreshToken = oAuthToken?.refreshToken else { return }
-            UserDefaultsManager.kakaoRefreushToken = refreshToken
-        }
-    }
-
-    private func setBottomViewDelegate() {
-        self.bottomSheetView.delegate = self
+//        UserApi.shared.loginWithKakaoAccount { oAuthToken, error in
+//            if let _ = error {
+//                print("⭐️⭐️⭐️ 에러 발생 ⭐️⭐️⭐️")
+//                return
+//            }
+//
+//            print("Login with KAKAO App Success !!")
+//
+//            self.kakaoAccessToken = oAuthToken?.accessToken
+//            guard let refreshToken = oAuthToken?.refreshToken else { return }
+//            UserDefaultsManager.kakaoRefreushToken = refreshToken
+//        }
     }
     
     private func setBackgroundColor() {
@@ -164,21 +190,36 @@ final class BottomSheetViewController: UIViewController, LoginDelegate {
     
     private func setLayout() {
         view.addSubviews(dimmedView, bottomSheetView)
+        bottomSheetView.addSubviews(bottomSheetLabel, cancelButton, kakaoLoginButton, appleLoginButton)
         
         dimmedView.snp.makeConstraints {
             $0.top.leading.trailing.bottom.equalToSuperview()
         }
         
-        if bottomSheetView.viewType == .login {
-            bottomSheetView.snp.makeConstraints {
-                $0.height.equalTo(defaultLoginHeight)
-                $0.leading.trailing.bottom.equalToSuperview()
-            }
-        } else {
-            bottomSheetView.snp.makeConstraints {
-                $0.height.equalTo(defaultSignUpHeight)
-                $0.leading.trailing.bottom.equalToSuperview()
-            }
+        bottomSheetView.snp.makeConstraints {
+            $0.height.equalTo(282)
+            $0.leading.trailing.bottom.equalToSuperview()
+        }
+        
+        cancelButton.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(10)
+            $0.trailing.equalToSuperview().inset(10)
+            $0.width.height.equalTo(55)
+        }
+        
+        bottomSheetLabel.snp.makeConstraints {
+            $0.leading.equalToSuperview().inset(26)
+            $0.top.equalToSuperview().inset(56)
+        }
+        
+        kakaoLoginButton.snp.makeConstraints {
+            $0.top.equalTo(bottomSheetLabel.snp.bottom).offset(32)
+            $0.centerX.equalToSuperview()
+        }
+        
+        appleLoginButton.snp.makeConstraints {
+            $0.top.equalTo(kakaoLoginButton.snp.bottom).offset(10)
+            $0.centerX.equalToSuperview()
         }
     }
 }

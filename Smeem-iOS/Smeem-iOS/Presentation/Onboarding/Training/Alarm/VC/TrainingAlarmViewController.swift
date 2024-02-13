@@ -169,13 +169,12 @@ final class TrainingAlarmViewController: BaseViewController {
                 navigationController.modalPresentationStyle = .overFullScreen
                 navigationController.isNavigationBarHidden = true
                 signupBottomSheetVC.authType = .signup
-                signupBottomSheetVC.bottomSheetView.viewType = .signup
                 signupBottomSheetVC.userPlanRequest = request
                 signupBottomSheetVC.modalPresentationStyle = .overFullScreen
                 self.present(navigationController, animated: false) {
                     signupBottomSheetVC.bottomSheetView.frame.origin.y = self.view.frame.height
                     UIView.animate(withDuration: 0.3) {
-                        signupBottomSheetVC.bottomSheetView.frame.origin.y = self.view.frame.height-signupBottomSheetVC.defaultLoginHeight
+                        signupBottomSheetVC.bottomSheetView.frame.origin.y = self.view.frame.height-282
                     }
                 }
             }

@@ -118,6 +118,8 @@
 		4AB7C91B2B7624CC00845733 /* ServiceAcceptAppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB7C91A2B7624CC00845733 /* ServiceAcceptAppData.swift */; };
 		4AB7C9262B78914100845733 /* SplashViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB7C9252B78914100845733 /* SplashViewModel.swift */; };
 		4AB7C92B2B78A8D900845733 /* SmeemStartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB7C92A2B78A8D900845733 /* SmeemStartViewModel.swift */; };
+		4AB7C9302B78B44500845733 /* LoginBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB7C92F2B78B44500845733 /* LoginBottomSheetViewController.swift */; };
+		4AB7C9322B78B45300845733 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB7C9312B78B45300845733 /* LoginViewModel.swift */; };
 		4ABE3FD12A811F8400D1D22E /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABE3FD02A811F8400D1D22E /* SplashViewController.swift */; };
 		4AC00ECC2AD1C143009230DA /* UICollectionView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC00ECB2AD1C143009230DA /* UICollectionView+.swift */; };
 		4AC00ED72AD2E6E0009230DA /* TrainingStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC00ED62AD2E6E0009230DA /* TrainingStepView.swift */; };
@@ -278,6 +280,8 @@
 		4AB7C91A2B7624CC00845733 /* ServiceAcceptAppData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAcceptAppData.swift; sourceTree = "<group>"; };
 		4AB7C9252B78914100845733 /* SplashViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewModel.swift; sourceTree = "<group>"; };
 		4AB7C92A2B78A8D900845733 /* SmeemStartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmeemStartViewModel.swift; sourceTree = "<group>"; };
+		4AB7C92F2B78B44500845733 /* LoginBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginBottomSheetViewController.swift; sourceTree = "<group>"; };
+		4AB7C9312B78B45300845733 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		4AB9F5272AA9F78C00EBEE35 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		4AB9F5292AAA035300EBEE35 /* BaseResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseResponse.swift; sourceTree = "<group>"; };
 		4ABE3FD02A811F8400D1D22E /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
@@ -992,6 +996,31 @@
 			path = VC;
 			sourceTree = "<group>";
 		};
+		4AB7C92C2B78B42C00845733 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				4AB7C92E2B78B43500845733 /* VC */,
+				4AB7C92D2B78B43200845733 /* ViewModel */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		4AB7C92D2B78B43200845733 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				4AB7C9312B78B45300845733 /* LoginViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		4AB7C92E2B78B43500845733 /* VC */ = {
+			isa = PBXGroup;
+			children = (
+				4AB7C92F2B78B44500845733 /* LoginBottomSheetViewController.swift */,
+			);
+			path = VC;
+			sourceTree = "<group>";
+		};
 		4AC00EF82AD6D7D3009230DA /* Training */ = {
 			isa = PBXGroup;
 			children = (
@@ -1151,6 +1180,7 @@
 		4AE4B5172A06BF4A00D45F87 /* BottomSheet */ = {
 			isa = PBXGroup;
 			children = (
+				4AB7C92C2B78B42C00845733 /* Login */,
 				4AF58CE62A48209500305248 /* VC */,
 			);
 			path = BottomSheet;
@@ -1373,6 +1403,7 @@
 				4AB7C91B2B7624CC00845733 /* ServiceAcceptAppData.swift in Sources */,
 				4AC707B42B73D2D400B1D791 /* UserNicknameViewModel.swift in Sources */,
 				4AEB82952A4CB4F200C1114B /* BadgePopupViewController.swift in Sources */,
+				4AB7C9302B78B44500845733 /* LoginBottomSheetViewController.swift in Sources */,
 				4A08480E2B555FD0008327C7 /* AmplitudeConstant.swift in Sources */,
 				4A3774842A42E6EA00357DD1 /* ConfigConstant.swift in Sources */,
 				371107DF2ACAB709007A4AC2 /* BaseViewController.swift in Sources */,
@@ -1465,6 +1496,7 @@
 				37DCA6692A480A8E00FF8F90 /* DetailDiaryAPI.swift in Sources */,
 				37A574C129FF6E9100312453 /* ColorLiterals.swift in Sources */,
 				371107E92ACC7E3A007A4AC2 /* DiaryLayoutConfigurations.swift in Sources */,
+				4AB7C9322B78B45300845733 /* LoginViewModel.swift in Sources */,
 				37A574CA29FF980F00312453 /* UIStackView+.swift in Sources */,
 				6F294A422A26178C00856CC8 /* UserNickNameViewController.swift in Sources */,
 				4AC047252A8FCAE100EBDC0E /* AuthManagementViewController.swift in Sources */,
