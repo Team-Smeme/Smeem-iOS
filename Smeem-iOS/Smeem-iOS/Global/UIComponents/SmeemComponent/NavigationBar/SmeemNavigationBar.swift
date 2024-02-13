@@ -102,12 +102,14 @@ class SmeemNavigationBar: UIView {
     private func setLeftButtonLayout(_ margin: CGFloat) {
         leftButton.snp.makeConstraints { make in
             make.leading.equalToSuperview().offset(margin)
+            make.height.width.equalTo(40)
         }
     }
     
     private func setRightButtonLayout(_ margin: CGFloat) {
         rightButton.snp.makeConstraints { make in
             make.trailing.equalToSuperview().offset(-margin)
+            make.height.width.equalTo(40)
         }
     }
     
@@ -120,14 +122,15 @@ class SmeemNavigationBar: UIView {
         setStepLabelTitle(with: configuration.stepLabelTitle ?? "")
         
         switch configuration.layout {
+            /// TODO: 다이어리 step 1, ,2 분기
         case .diaryLayout:
-            setButtonLayouts(leftMargin: Constants.horizontalDiaryTextButtonGap.rawValue, rightMargin: Constants.horizontalDiaryTextButtonGap.rawValue)
+            setButtonLayouts(leftMargin: 12, rightMargin: 18)
         case .detailLayout:
-            setButtonLayouts(leftMargin: Constants.horizontalArrowButtonGap.rawValue, rightMargin: Constants.horizontalDiaryTextButtonGap.rawValue)
+            setButtonLayouts(leftMargin: 12, rightMargin: 18)
         case .editLayout, .commentLayout:
-            setButtonLayouts(leftMargin: Constants.horizontalEditCommentButtonsGap.rawValue, rightMargin: Constants.horizontalEditCommentButtonsGap.rawValue)
+            setButtonLayouts(leftMargin: 18, rightMargin: 18)
         case .myPageLayout:
-            setButtonLayouts(leftMargin: Constants.horizontalArrowButtonGap.rawValue, rightMargin: Constants.horizontalDotsIconButtonGap.rawValue)
+            setButtonLayouts(leftMargin: 10, rightMargin: 16)
         default:
             break
         }
@@ -149,7 +152,7 @@ extension SmeemNavigationBar {
     // TODO: 다 cgFoat
     enum Constants: CGFloat {
         case horizontalLeftButtonGap = 12
-        case horizontalDiaryTextButtonGap, horizontalEditCommentButtonsGap = 18
+        case horizontalDiaryTextButtonGap, horizontalEditCommentButtonsGap = 50
         case horizontalArrowButtonGap = 20
         case horizontalDotsIconButtonGap = 16
         case horizontalMypageButtonGap = 26

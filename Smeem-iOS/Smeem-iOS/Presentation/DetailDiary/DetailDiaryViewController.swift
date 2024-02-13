@@ -98,7 +98,7 @@ final class DetailDiaryViewController: BaseViewController {
         view.addSubviews(naviView, diaryScrollerView)
         
         naviView.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(44)
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(66)
         }

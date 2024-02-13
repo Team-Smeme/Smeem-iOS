@@ -68,6 +68,7 @@ final class DiaryScrollerView: UIScrollView {
         textView.isScrollEnabled = false
         textView.text = "I watched Avatar with my boyfriend at Hongdae CGV. I should have skimmed the previous season - Avatar1.. I really couldn’t get what they were saying and the universe(??). What I was annoyed then was 두팔 didn’t know that as me. I think 두팔 who is my boyfriend should study before wathcing…. but Avatar2 is amazing movie I think. In my personal opinion, the jjin main character of Avatar2 is not Sully, but his son. "
         textView.tintColor = .point
+        textView.textContainerInset = UIEdgeInsets(top: 16, left: 18, bottom: 16, right: 18)
 //        textView.configureAttributedText()
         return textView
     }()
@@ -134,7 +135,6 @@ final class DiaryScrollerView: UIScrollView {
         let newHeight = attributedString.boundingRect(with: CGSize(width: fixedWidth, height: .zero), options: .usesLineFragmentOrigin, context: nil).height
         textView.attributedText = attributedString
         textView.sizeToFit()
-        print("ㄹ아ㅓㅗㄹㅁㅇ", newHeight)
 
         return ceil(newHeight)
     }
@@ -160,9 +160,9 @@ final class DiaryScrollerView: UIScrollView {
         let correctionbottomInset: CGFloat = 78
         
         // bottomInset 값을 주었는데, 이상하게 적용이 안돼서 78을 또 더해줌... + 일기 수정 후 viewWillAppear에서 TextView 높이 계산 적용 안되는 이슈 해결
-        let detailDiaryViewHeight = detailDiaryTopInset+detailbottomInset+calculateTextViewHeight(textView: contentTextView)+78
+        let detailDiaryViewHeight = detailDiaryTopInset+detailbottomInset+calculateTextViewHeight(textView: contentTextView)
         // 임의로 한줄일 때의 랜덤주제 높이값 지정 +(2줄기준 84 높이 추가)
-        let detailDiaryRandomSubjectViewHeight = detailDiaryTopInset+detailbottomInset+calculateTextViewHeight(textView: contentTextView)+84+78
+        let detailDiaryRandomSubjectViewHeight = detailDiaryTopInset+detailbottomInset+calculateTextViewHeight(textView: contentTextView)+78
         let correctiontextViewHeight = correctionTopInset+correctionbottomInset+calculateTextViewHeight(textView: contentTextView)
             
         addSubview(contentView)
@@ -186,8 +186,8 @@ final class DiaryScrollerView: UIScrollView {
             }
                 
             contentTextView.snp.makeConstraints {
-                $0.top.equalTo(correnctionLabel.snp.bottom).offset(6)
-                $0.leading.trailing.equalToSuperview().inset(18)
+                $0.top.equalTo(correnctionLabel.snp.bottom)
+                $0.leading.trailing.equalToSuperview()
             }
                 
         case .correctionHasRandomSubject:
@@ -205,8 +205,8 @@ final class DiaryScrollerView: UIScrollView {
             }
                 
             contentTextView.snp.makeConstraints {
-                $0.top.equalToSuperview().inset(8)
-                $0.leading.trailing.equalToSuperview().inset(18)
+                $0.top.equalToSuperview()
+                $0.leading.trailing.equalToSuperview()
             }
                 
         case .detailDiaryHasRandomSubject:
@@ -223,8 +223,8 @@ final class DiaryScrollerView: UIScrollView {
             
             contentTextView.snp.makeConstraints {
                 // 텍스트뷰와의 간격을 위해 임의의 값 지정
-                $0.top.equalTo(randomSubjectView.snp.bottom).offset(5)
-                $0.leading.trailing.equalToSuperview().inset(18)
+                $0.top.equalTo(randomSubjectView.snp.bottom)
+                $0.leading.trailing.equalToSuperview()
             }
         }
             

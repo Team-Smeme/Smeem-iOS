@@ -19,9 +19,8 @@ final class DiaryDetailRandomSubjectView: UIView {
     
     private let questionLabel: UILabel = {
         let label = UILabel()
-        label.font = .b1
+        label.font = .c1
         label.textColor = .point
-        label.setTextWithLineHeight(lineHeight: 21)
         label.text = "Q."
         return label
     }()
@@ -31,7 +30,6 @@ final class DiaryDetailRandomSubjectView: UIView {
         label.font = .b4
         label.textColor = .smeemBlack
         label.numberOfLines = 0
-        label.setTextWithLineHeight(lineHeight: 22)
         label.text = "     " + "랜덤주제 한줄일 경우"
         return label
     }()
@@ -43,10 +41,16 @@ final class DiaryDetailRandomSubjectView: UIView {
         
         setRandomSubjectViewUI()
         setRandomSubjectViewLayout()
+        setLineHeight()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func setLineHeight() {
+        questionLabel.setTextWithLineHeight(lineHeight: 21)
+        contentLabel.setTextWithLineHeight(lineHeight: 22)
     }
     
     // MARK: - Custom Method
@@ -97,13 +101,14 @@ final class DiaryDetailRandomSubjectView: UIView {
         addSubviews(questionLabel, contentLabel)
         
         questionLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(convertByHeightRatio(20))
-            $0.leading.equalToSuperview().offset(convertByWidthRatio(25))
+            $0.top.equalToSuperview().offset(20)
+            $0.leading.equalToSuperview().offset(18)
         }
         
         contentLabel.snp.makeConstraints {
             $0.top.equalTo(questionLabel)
             $0.leading.equalTo(questionLabel)
+            $0.trailing.equalToSuperview().inset(24)
         }
     }
 }
