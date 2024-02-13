@@ -1,8 +1,8 @@
 //
-//  LoginBottomSheetViewController.swift
+//  SignupBottomSheetViewController.swift
 //  Smeem-iOS
 //
-//  Created by 황찬미 on 2023/05/06.
+//  Created by 황찬미 on 2/13/24.
 //
 
 import UIKit
@@ -11,9 +11,9 @@ import Combine
 import SnapKit
 import AuthenticationServices
 
-final class LoginBottomSheetViewController: UIViewController {
+final class SignupBottomSheetViewController: UIViewController {
     
-    private let viewModel = LoginViewModel()
+    private let viewModel = SignupViewModel()
     
     // MARK: Publisher
     
@@ -40,7 +40,7 @@ final class LoginBottomSheetViewController: UIViewController {
     
     private let bottomSheetLabel: UILabel = {
         let label = UILabel()
-        label.text = "로그인"
+        label.text = "회원가입"
         label.textColor = .black
         label.font = .h3
         return label
@@ -65,6 +65,16 @@ final class LoginBottomSheetViewController: UIViewController {
     }()
     
     // MARK: Life Cycle
+    
+    init(request: TrainingPlanRequest) {
+        super.init(nibName: nil, bundle: nil)
+        
+        viewModel.trainingPlanRequest = request
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -116,21 +126,15 @@ final class LoginBottomSheetViewController: UIViewController {
             }
             .store(in: &cancelBag)
         
-        let input = LoginViewModel.Input(kakaoLoginTapped: kakaoLoginTapped,
-                                         appleLoginSubject: appleLoginSubject,
-                                         dismissTapped: dismissTapped)
+        let input = SignupViewModel.Input(kakaoLoginTapped: kakaoLoginTapped,
+                                          appleLoginSubject: appleLoginSubject,
+                                          dismissTapped: dismissTapped)
         let output = viewModel.transform(input: input)
         
         output.presentHomeResult
-            .sink { [weak self] in
-                self?.changeRootViewController(HomeViewController())
-            }
-            .store(in: &cancelBag)
-        
-        output.presentTrainingResult
             .sink { [weak self] _ in
-                let trainingVC = TrainingGoalViewController()
-                self?.navigationController?.pushViewController(trainingVC, animated: true)
+                let homeVC = HomeViewController()
+                self?.changeRootViewController(homeVC)
             }
             .store(in: &cancelBag)
         
@@ -161,7 +165,7 @@ final class LoginBottomSheetViewController: UIViewController {
 
 // MARK: - Apple Login
 
-extension LoginBottomSheetViewController: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
+extension SignupBottomSheetViewController: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
         self.view.window!
     }
@@ -191,7 +195,7 @@ extension LoginBottomSheetViewController: ASAuthorizationControllerDelegate, ASA
 
 // MARK: - Layout
 
-extension LoginBottomSheetViewController {
+extension SignupBottomSheetViewController {
     private func setLayout() {
         view.addSubviews(dimmedView, bottomSheetView)
         bottomSheetView.addSubviews(bottomSheetLabel, dismissButton, kakaoLoginButton, appleLoginButton)
@@ -227,3 +231,4 @@ extension LoginBottomSheetViewController {
         }
     }
 }
+

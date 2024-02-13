@@ -1,8 +1,8 @@
 //
-//  LoginViewModel.swift
+//  SignupViewModel.swift
 //  Smeem-iOS
 //
-//  Created by 황찬미 on 2024/02/11.
+//  Created by 황찬미 on 2/13/24.
 //
 
 import Foundation
@@ -11,7 +11,7 @@ import Combine
 import KakaoSDKAuth
 import KakaoSDKUser
 
-final class LoginViewModel: ViewModel {
+final class SignupViewModel: ViewModel {
     
     struct Input {
         let kakaoLoginTapped: PassthroughSubject<Void, Never>
@@ -20,21 +20,23 @@ final class LoginViewModel: ViewModel {
     }
     
     struct Output {
-        let presentTrainingResult: AnyPublisher<Void, Never>
-        let presentServiceResult: AnyPublisher<Void, Never>
         let presentHomeResult: AnyPublisher<Void, Never>
+        let presentServiceResult: AnyPublisher<Void, Never>
         let loadingViewResult: AnyPublisher<Bool, Never>
         let errorResult: AnyPublisher<SmeemError, Never>
     }
     
     private let kakaoAppSubject = PassthroughSubject<Void, Never>()
     private let kakaoWebSubject = PassthroughSubject<Void, Never>()
-    private let presentTrainingResult = PassthroughSubject<Void, Never>()
     private let presentServiceResult = PassthroughSubject<Void, Never>()
     private let presentHomeResult = PassthroughSubject<Void, Never>()
+    private let amplitudeSubject = PassthroughSubject<Void, Never>()
     private let loadingViewResult = PassthroughSubject<Bool, Never>()
     private let errorResult = PassthroughSubject<SmeemError, Never>()
+    private let trainingPlanRequestSubject = PassthroughSubject<TrainingRequestModel, Never>()
     private var cancelBag = Set<AnyCancellable>()
+    
+    var trainingPlanRequest: TrainingPlanRequest?
     
     func transform(input: Input) -> Output {
         
@@ -48,13 +50,13 @@ final class LoginViewModel: ViewModel {
                         self.loginKakaoWithApp { token in
                             token == nil ? self.errorResult.send(.serverError) :
                             promise(.success(AuthModel(accessToken: token!.accessToken,
-                                                        type: "KAKAO")))
+                                                       type: "KAKAO")))
                         }
                     } else {
                         self.loginKakaoWithWeb { token in
                             token == nil ? self.errorResult.send(.serverError) :
                             promise(.success(AuthModel(accessToken: token!.accessToken,
-                                                        type: "KAKAO")))
+                                                       type: "KAKAO")))
                         }
                     }
                 }
@@ -86,15 +88,18 @@ final class LoginViewModel: ViewModel {
                                                                 fcmToken: UserDefaultsManager.fcmToken)) { result in
                         switch result {
                         case .success(let response):
+                            
                             UserDefaultsManager.clientAccessToken = response.accessToken
                             UserDefaultsManager.clientRefreshToken = response.refreshToken
                             
-                            if response.hasPlan == false {
-                                self.presentTrainingResult.send(())
-                            } else if response.hasPlan == true && response.isRegistered == false {
-                                self.presentServiceResult.send(())
+                            if response.hasPlan == false || (response.hasPlan == true && response.isRegistered == false) {
+                                self.amplitudeSubject.send(())
+                                
+                                guard let request = self.trainingPlanRequest else { return }
+                                self.trainingPlanRequestSubject.send(TrainingRequestModel(plan: request,
+                                                                                          accessToken: response.accessToken))
                             } else {
-                                // 삭제했다가 로그인한 유저 홈으로 이동
+                                // 계정이 있는 유저
                                 UserDefaultsManager.accessToken = response.accessToken
                                 UserDefaultsManager.refreshToken = response.refreshToken
                                 
@@ -112,20 +117,46 @@ final class LoginViewModel: ViewModel {
             }
             .eraseToAnyPublisher()
         
-        let presentTrainingResult = presentTrainingResult.eraseToAnyPublisher()
-        let presentServiceResult = presentServiceResult.eraseToAnyPublisher()
+        let presentServiceResult = trainingPlanRequestSubject
+            .handleEvents(receiveSubscription: { _ in
+                self.loadingViewResult.send(true)
+            })
+            .flatMap { request -> AnyPublisher<Void, Never> in
+                return Future<Void, Never> { premise in
+                    OnboardingAPI.shared.userPlanPathAPI(param: request.plan, accessToken: request.accessToken) { response in
+                        switch response {
+                        case .success(_):
+                            UserDefaultsManager.clientAccessToken = request.accessToken
+                            premise(.success(()))
+                        case .failure(let error):
+                            self.errorResult.send(error)
+                        }
+                    }
+                }
+                .handleEvents(receiveCompletion: { _ in
+                    self.loadingViewResult.send(false)
+                })
+                .eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
+        
+        amplitudeSubject
+            .sink { _ in
+                AmplitudeManager.shared.track(event: AmplitudeConstant.Onboarding.signup_success.event)
+            }
+            .store(in: &cancelBag)
+        
         let loadingViewResult = loadingViewResult.eraseToAnyPublisher()
         let errorResult = errorResult.eraseToAnyPublisher()
         
-        return Output(presentTrainingResult: presentTrainingResult,
+        return Output(presentHomeResult: presentHomeResult,
                       presentServiceResult: presentServiceResult,
-                      presentHomeResult: presentHomeResult,
                       loadingViewResult: loadingViewResult,
                       errorResult: errorResult)
     }
 }
 
-extension LoginViewModel {
+extension SignupViewModel {
     private func loginKakaoWithApp(completion: @escaping (OAuthToken?) -> ()) {
         UserApi.shared.loginWithKakaoTalk { oAuthToken, error in
             guard let authToken = oAuthToken else {
@@ -148,3 +179,4 @@ extension LoginViewModel {
         }
     }
 }
+

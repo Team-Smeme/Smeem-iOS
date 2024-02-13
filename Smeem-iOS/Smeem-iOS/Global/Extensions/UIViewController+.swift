@@ -103,20 +103,6 @@ extension UIViewController {
         })
     }
     
-//    func presentOnboardingPlanVC() {
-//        let onboardingGoalVC = TrainingGoalViewController(viewtype: .onboarding)
-//        self.navigationController?.pushViewController(onboardingGoalVC, animated: true)
-//    }
-    
-    func presentOnboardingAcceptVC() {
-        let bottomSheetVC = BottomSheetViewController()
-        let onboardingAcceptVC = UserNicknameViewController()
-        onboardingAcceptVC.userPlanRequest = bottomSheetVC.userPlanRequest
-        let _ = UINavigationController(rootViewController: onboardingAcceptVC)
-        self.navigationController?.pushViewController(onboardingAcceptVC, animated: true)
-        
-    }
-    
     func presentHomeVC() {
         let onboardingAcceptVC = HomeViewController()
         changeRootViewController(onboardingAcceptVC)

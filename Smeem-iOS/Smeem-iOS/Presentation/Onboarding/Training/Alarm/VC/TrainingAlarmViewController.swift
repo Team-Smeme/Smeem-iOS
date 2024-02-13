@@ -138,7 +138,7 @@ final class TrainingAlarmViewController: BaseViewController {
         
         completeButton.tapPublisher
             .sink { _ in
-                self.alarmButtonTapped.send(.alarmOff)
+                self.alarmButtonTapped.send(.alarmOn)
             }
             .store(in: &cancelBag)
         
@@ -164,13 +164,10 @@ final class TrainingAlarmViewController: BaseViewController {
         
         output.bottomSheetResult
             .sink { request in
-                let signupBottomSheetVC = BottomSheetViewController()
+                let signupBottomSheetVC = SignupBottomSheetViewController(request: request)
                 let navigationController = UINavigationController(rootViewController: signupBottomSheetVC)
                 navigationController.modalPresentationStyle = .overFullScreen
-                navigationController.isNavigationBarHidden = true
-                signupBottomSheetVC.authType = .signup
-                signupBottomSheetVC.userPlanRequest = request
-                signupBottomSheetVC.modalPresentationStyle = .overFullScreen
+                
                 self.present(navigationController, animated: false) {
                     signupBottomSheetVC.bottomSheetView.frame.origin.y = self.view.frame.height
                     UIView.animate(withDuration: 0.3) {

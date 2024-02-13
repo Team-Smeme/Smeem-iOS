@@ -17,7 +17,7 @@ final class SmeemStartViewModel: ViewModel {
     }
     
     struct Output {
-        let loginButtonTapped: AnyPublisher<AuthType, Never>
+        let loginButtonTapped: AnyPublisher<Void, Never>
         let startButtonTapped: AnyPublisher<Void, Never>
     }
     
@@ -27,7 +27,6 @@ final class SmeemStartViewModel: ViewModel {
         let loginButtonResult = input.loginButtonTapped
             .map { _ in
                 UserDefaultsManager.clientAuthType = AuthType.login.rawValue
-                return AuthType.login
             }
             .eraseToAnyPublisher()
         

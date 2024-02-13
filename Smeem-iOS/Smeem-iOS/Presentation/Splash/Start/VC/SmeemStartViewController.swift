@@ -97,7 +97,7 @@ final class SmeemStartViewController: BaseViewController {
         let output = viewModel.transform(input: input)
         
         output.loginButtonTapped
-            .sink { [weak self] type in
+            .sink { [weak self] _ in
                 let loginBottomSheetVC = LoginBottomSheetViewController()
                 let navigationController = UINavigationController(rootViewController: loginBottomSheetVC)
                 navigationController.modalPresentationStyle = .overFullScreen
