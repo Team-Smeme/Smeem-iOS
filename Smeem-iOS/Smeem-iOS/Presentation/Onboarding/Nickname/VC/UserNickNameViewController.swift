@@ -79,9 +79,9 @@ final class UserNicknameViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         
-        self.nicknameTextField.resignFirstResponder()
+        self.nicknameTextField.becomeFirstResponder()
     }
-
+    
     // MARK: Methods
     
     private func bind() {
