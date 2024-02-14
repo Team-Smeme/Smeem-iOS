@@ -304,16 +304,15 @@ final class HomeViewController: BaseViewController {
         floatingView.addSubviews(waitingLabel, adviceLabel, xButton)
         
         calendar.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(constraintByNotch(convertByWidthRatio(-20), convertByWidthRatio(-10)))
             $0.leading.equalToSuperview().offset(convertByWidthRatio(15))
             $0.trailing.equalToSuperview().offset(-convertByWidthRatio(15))
             $0.height.equalTo(convertByWidthRatio(422))
         }
         
         myPageButton.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(convertByHeightRatio(77)/2-convertByHeightRatio(40)/2+3)
-            $0.trailing.equalToSuperview().offset(-convertByWidthRatio(18))
-            $0.width.height.equalTo(convertByHeightRatio(40))
+            $0.top.equalTo(calendar.calendarHeaderView.snp.top).inset(constraintByNotch(convertByWidthRatio(25), convertByWidthRatio(18)))
+            $0.trailing.equalToSuperview().inset(18)
         }
         
         myPageBackView.snp.makeConstraints {
@@ -338,14 +337,7 @@ final class HomeViewController: BaseViewController {
         diaryThumbnail.snp.makeConstraints {
             $0.top.equalTo(border.snp.bottom)
             $0.centerX.width.equalToSuperview()
-            $0.height.equalTo(convertByHeightRatio(122))
-        }
-        
-        diaryText.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(convertByHeightRatio(54))
-            $0.centerX.equalToSuperview()
-            $0.leading.equalToSuperview().offset(convertByWidthRatio(18))
-            $0.trailing.equalToSuperview().offset(-convertByWidthRatio(18))
+            $0.height.equalTo(convertByHeightRatio(142))
         }
         
         diaryDate.snp.makeConstraints {
@@ -353,16 +345,22 @@ final class HomeViewController: BaseViewController {
             $0.leading.equalTo(diaryText.snp.leading)
         }
         
+        diaryText.snp.makeConstraints {
+            $0.top.equalTo(diaryDate.snp.bottom).offset(14)
+            $0.centerX.equalToSuperview()
+            $0.leading.trailing.equalToSuperview().inset(convertByWidthRatio(18))
+        }
+        
         fullViewButtonSymbol.snp.makeConstraints {
             $0.top.equalToSuperview().offset(convertByHeightRatio(20))
-            $0.trailing.equalToSuperview().offset(-convertByWidthRatio(22))
+            $0.trailing.equalToSuperview().offset(-convertByWidthRatio(18))
             $0.height.equalTo(convertByHeightRatio(10))
             $0.width.equalTo(convertByWidthRatio(6))
         }
         
         fullViewButtonText.snp.makeConstraints {
             $0.centerY.equalTo(fullViewButtonSymbol.snp.centerY)
-            $0.trailing.equalTo(fullViewButtonSymbol.snp.leading).offset(-convertByWidthRatio(8))
+            $0.trailing.equalTo(fullViewButtonSymbol.snp.leading).offset(-convertByWidthRatio(6))
         }
         
         emptyView.snp.makeConstraints {

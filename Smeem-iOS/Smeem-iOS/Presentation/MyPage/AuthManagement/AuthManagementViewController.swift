@@ -173,9 +173,9 @@ final class AuthManagementViewController: UIViewController {
                          authManagementTitlaLabel, logoutButton, resignButton, grayLineTwo)
         
         backButton.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).inset(11)
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(13)
             $0.leading.equalToSuperview().inset(10)
-            $0.height.width.equalTo(55)
+            $0.width.height.equalTo(40)
         }
         
         infomationTitleLabel.snp.makeConstraints {

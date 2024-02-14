@@ -355,9 +355,9 @@ final class MyPageViewController: BaseViewController {
         }
         
         backButton.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
-            $0.leading.equalToSuperview().offset(10)
-            $0.width.height.equalTo(55)
+            $0.top.equalToSuperview().inset(13)
+            $0.leading.equalToSuperview().inset(10)
+            $0.width.height.equalTo(40)
         }
         
         titleLabel.snp.makeConstraints{
@@ -365,9 +365,9 @@ final class MyPageViewController: BaseViewController {
         }
         
         moreButton.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
-            $0.trailing.equalToSuperview().offset(-10)
-            $0.width.height.equalTo(55)
+            $0.centerY.equalToSuperview().inset(13)
+            $0.trailing.equalToSuperview().inset(16)
+            $0.width.height.equalTo(40)
         }
         
         scrollView.snp.makeConstraints {

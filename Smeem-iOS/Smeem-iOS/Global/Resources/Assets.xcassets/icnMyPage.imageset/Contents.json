@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "icnMyPage.png",
+      "filename" : "icn_mypage.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "icnMyPage@2x.png",
+      "filename" : "icn_mypage@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "icnMyPage@3x.png",
+      "filename" : "icn_mypage@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
