@@ -7,21 +7,21 @@
 
 import UIKit
 
+protocol CellProtocol {
+    func cellIndexDataSend(indexPath: Int)
+}
+
 final class ServiceAcceptCollectionViewCell: UICollectionViewCell {
     
     static let identifier = "ServiceAcceptCollectionViewCell"
     
-    var trainingClosure: ((IndexPath) -> Void)?
-    
-    // MARK: - Property
+    var cellProtocol: CellProtocol?
     
     // MARK: - UI Property
     
     private lazy var checkButton: UIImageView = {
         let button = UIImageView()
         button.image = Constant.Image.icnCheckInactive
-//        button.setImage(Constant.Image.icnCheckInactive, for: .normal)
-//        button.addTarget(self, action: #selector(checkButtonDidTap), for: .touchUpInside)
         return button
     }()
     
@@ -29,7 +29,7 @@ final class ServiceAcceptCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.font = .b4
         label.setTextWithLineHeight(lineHeight: 22)
-        label.textColor = .smeemBlack
+        label.textColor = .gray600
         return label
     }()
     
@@ -55,7 +55,7 @@ final class ServiceAcceptCollectionViewCell: UICollectionViewCell {
     // MARK: - @objc
     
     @objc func moreButtonDidTap() {
-        trainingClosure?(getIndexPath()!)
+        cellProtocol?.cellIndexDataSend(indexPath: getIndexPath()!.item)
     }
     
     // MARK: - Custom Method

@@ -9,9 +9,15 @@ import UIKit
 
 import SnapKit
 
+protocol AlarmPickerDelegate {
+    func alarmDataSend(data: AlarmTimeAppData)
+}
+
 final class DatePickerFooterView: UICollectionReusableView {
     
     static let identifier = "identifier"
+    
+    var alarmPickerDelegate: AlarmPickerDelegate?
 
     var trainingTimeClosure: ((TrainingTime) -> Void)?
     
@@ -104,11 +110,10 @@ final class DatePickerFooterView: UICollectionReusableView {
         totalText += " " + selectedDayAndNight
         inputTextField.text = totalText
         
-        let trainingTime = TrainingTime(day: String(),
-                                        hour: calculateTime(dayAndNight: selectedDayAndNight,
-                                                            hours: selectedHours),
-                                        minute: Int(selectedMinute)!)
-        self.trainingTimeClosure?(trainingTime)
+        let alarmTime = AlarmTimeAppData(hour: selectedHours,
+                                         minute: selectedMinute,
+                                         dayAndNight: selectedDayAndNight)
+        self.alarmPickerDelegate?.alarmDataSend(data: alarmTime)
         
         self.inputTextField.resignFirstResponder()
     }
@@ -118,22 +123,6 @@ final class DatePickerFooterView: UICollectionReusableView {
     }
     
     // MARK: - Custom Method
-    
-    // 1 ~ 24
-    func calculateTime(dayAndNight: String, hours: String) -> Int {
-        if dayAndNight == "PM" {
-            if hours == "12" {
-                return 12 // 12 PM 그대로
-            }
-            return Int(hours)!+12 // 13~23시까지
-        } else {
-            if hours == "12" { // AM 00:00
-                return 24
-            } else {
-                return Int(hours)!
-            }
-        }
-    }
     
     func calculateMyPageTime(hour: Int, minute: Int) -> String {
         var dayAndNight = "" // 1 ~ 24

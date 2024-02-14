@@ -115,7 +115,7 @@ final class MyPageAPI {
         }
     }
     
-    func userPlanPathAPI(param: UserPlanRequest,
+    func userPlanPathAPI(param: TrainingPlanRequest,
                          completion: @escaping (Result<GeneralResponse<NilType>, SmeemError>) -> ()) {
         myPageProvider.request(.myPageUserPlan(param: param)) { result in
             switch result {

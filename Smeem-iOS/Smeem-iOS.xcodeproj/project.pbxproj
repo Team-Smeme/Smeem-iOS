@@ -71,9 +71,11 @@
 		4A004D5E2B4EE2B4003C8936 /* MyPageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A004D5D2B4EE2B4003C8936 /* MyPageService.swift */; };
 		4A004D602B4EE2BD003C8936 /* MyPageAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A004D5F2B4EE2BD003C8936 /* MyPageAPI.swift */; };
 		4A01235F2AAA2C1500E09646 /* SmeemLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A01235E2AAA2C1500E09646 /* SmeemLoadingView.swift */; };
+		4A07F8A82B7B3E5E004185F2 /* SignupBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A07F8A72B7B3E5E004185F2 /* SignupBottomSheetViewController.swift */; };
+		4A07F8AC2B7B3E7F004185F2 /* SignupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A07F8AB2B7B3E7F004185F2 /* SignupViewModel.swift */; };
+		4A07F8AF2B7B58B7004185F2 /* AuthModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A07F8AE2B7B58B7004185F2 /* AuthModel.swift */; };
 		4A08480C2B554513008327C7 /* AmplitudeSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4A08480B2B554513008327C7 /* AmplitudeSwift */; };
 		4A08480E2B555FD0008327C7 /* AmplitudeConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A08480D2B555FD0008327C7 /* AmplitudeConstant.swift */; };
-		4A0E8D5829F8362E00E0FC23 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0E8D5729F8362E00E0FC23 /* AuthViewController.swift */; };
 		4A0EA4552A014027006CCE52 /* GeneralResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EA4542A014027006CCE52 /* GeneralResponse.swift */; };
 		4A0EA4572A01403E006CCE52 /* MoyaLoggingPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EA4562A01403E006CCE52 /* MoyaLoggingPlugin.swift */; };
 		4A0EA4592A014103006CCE52 /* URLConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EA4582A014103006CCE52 /* URLConstant.swift */; };
@@ -114,28 +116,36 @@
 		4AA942D52A276C7900A552A0 /* KakaoSDKAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 4AA942D42A276C7900A552A0 /* KakaoSDKAuth */; };
 		4AA942D72A276C7900A552A0 /* KakaoSDKCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 4AA942D62A276C7900A552A0 /* KakaoSDKCommon */; };
 		4AA942D92A276C7900A552A0 /* KakaoSDKUser in Frameworks */ = {isa = PBXBuildFile; productRef = 4AA942D82A276C7900A552A0 /* KakaoSDKUser */; };
+		4AB7C9192B75F9B500845733 /* GesturePublisher+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB7C9182B75F9B500845733 /* GesturePublisher+.swift */; };
+		4AB7C91B2B7624CC00845733 /* ServiceAcceptAppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB7C91A2B7624CC00845733 /* ServiceAcceptAppData.swift */; };
+		4AB7C9262B78914100845733 /* SplashViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB7C9252B78914100845733 /* SplashViewModel.swift */; };
+		4AB7C92B2B78A8D900845733 /* SmeemStartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB7C92A2B78A8D900845733 /* SmeemStartViewModel.swift */; };
+		4AB7C9302B78B44500845733 /* LoginBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB7C92F2B78B44500845733 /* LoginBottomSheetViewController.swift */; };
+		4AB7C9322B78B45300845733 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB7C9312B78B45300845733 /* LoginViewModel.swift */; };
 		4ABE3FD12A811F8400D1D22E /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABE3FD02A811F8400D1D22E /* SplashViewController.swift */; };
 		4AC00ECC2AD1C143009230DA /* UICollectionView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC00ECB2AD1C143009230DA /* UICollectionView+.swift */; };
 		4AC00ED72AD2E6E0009230DA /* TrainingStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC00ED62AD2E6E0009230DA /* TrainingStepView.swift */; };
-		4AC00EDC2AD3E4F7009230DA /* UIControl+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC00EDB2AD3E4F7009230DA /* UIControl+.swift */; };
 		4AC00EE62AD432F2009230DA /* BaseCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC00EE52AD432F2009230DA /* BaseCollectionView.swift */; };
 		4AC00EEB2AD4527A009230DA /* TrainingWayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC00EEA2AD4527A009230DA /* TrainingWayViewController.swift */; };
-		4AC00EF02AD52F4C009230DA /* AlarmSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC00EEF2AD52F4C009230DA /* AlarmSettingViewController.swift */; };
+		4AC00EF02AD52F4C009230DA /* TrainingAlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC00EEF2AD52F4C009230DA /* TrainingAlarmViewController.swift */; };
 		4AC00EF32AD56C4C009230DA /* SmeemTextButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC00EF22AD56C4C009230DA /* SmeemTextButton.swift */; };
 		4AC00EF52AD57202009230DA /* TrainingAlarmDataSendProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC00EF42AD57202009230DA /* TrainingAlarmDataSendProtocol.swift */; };
 		4AC00EF72AD59C73009230DA /* AuthDataSendProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC00EF62AD59C73009230DA /* AuthDataSendProtocol.swift */; };
 		4AC047252A8FCAE100EBDC0E /* AuthManagementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC047242A8FCAE100EBDC0E /* AuthManagementViewController.swift */; };
 		4AC1D6832B4ED38200D39A98 /* OnboardingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC1D6822B4ED38200D39A98 /* OnboardingModel.swift */; };
 		4AC4B82D2A2F9FE200E147AA /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4B82C2A2F9FE200E147AA /* UserDefaultsManager.swift */; };
+		4AC707A82B73893200B1D791 /* AlarmTimeAppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC707A72B73893200B1D791 /* AlarmTimeAppData.swift */; };
+		4AC707AB2B738A5B00B1D791 /* TrainingAlarmViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC707AA2B738A5B00B1D791 /* TrainingAlarmViewModel.swift */; };
+		4AC707B02B73CFFA00B1D791 /* AlarmDefaultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC707AF2B73CFFA00B1D791 /* AlarmDefaultModel.swift */; };
+		4AC707B42B73D2D400B1D791 /* UserNicknameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC707B32B73D2D400B1D791 /* UserNicknameViewModel.swift */; };
+		4AC707B92B74D5CD00B1D791 /* ServiceAcceptViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC707B82B74D5CD00B1D791 /* ServiceAcceptViewModel.swift */; };
+		4AC707BB2B74DE3E00B1D791 /* ServiceAcceptCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC707BA2B74DE3E00B1D791 /* ServiceAcceptCollectionView.swift */; };
 		4AC9489829ED800800489C2B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4AC9489729ED800800489C2B /* GoogleService-Info.plist */; };
 		4AD04B3B2A1905BB004B7A58 /* DiaryScrollerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD04B3A2A1905BB004B7A58 /* DiaryScrollerView.swift */; };
 		4AD04B3D2A190E9A004B7A58 /* UITextView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD04B3C2A190E9A004B7A58 /* UITextView+.swift */; };
 		4AD04B402A1921AE004B7A58 /* CorrectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD04B3F2A1921AE004B7A58 /* CorrectionViewController.swift */; };
-		4AD923E92A0692C600FF5E27 /* AuthBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD923E82A0692C600FF5E27 /* AuthBottomSheetViewController.swift */; };
-		4AD923EB2A0692EA00FF5E27 /* BottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD923EA2A0692EA00FF5E27 /* BottomSheetView.swift */; };
 		4ADA41772A556209001C0285 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADA41762A556209001C0285 /* LoadingView.swift */; };
 		4ADCA2D62A9272E9002904EB /* EditAlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADCA2D52A9272E9002904EB /* EditAlarmViewController.swift */; };
-		4AE35E9C2A7FDC4200465FD5 /* ServiceAcceptTotalCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE35E9B2A7FDC4200465FD5 /* ServiceAcceptTotalCollectionViewCell.swift */; };
 		4AE35E9E2A7FE8CE00465FD5 /* UICollectionViewCell+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE35E9D2A7FE8CE00465FD5 /* UICollectionViewCell+.swift */; };
 		4AEB82952A4CB4F200C1114B /* BadgePopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEB82942A4CB4F100C1114B /* BadgePopupViewController.swift */; };
 		4AF58CE92A4820AA00305248 /* AuthNetworkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF58CE82A4820AA00305248 /* AuthNetworkModel.swift */; };
@@ -225,8 +235,10 @@
 		4A004D5D2B4EE2B4003C8936 /* MyPageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageService.swift; sourceTree = "<group>"; };
 		4A004D5F2B4EE2BD003C8936 /* MyPageAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageAPI.swift; sourceTree = "<group>"; };
 		4A01235E2AAA2C1500E09646 /* SmeemLoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmeemLoadingView.swift; sourceTree = "<group>"; };
+		4A07F8A72B7B3E5E004185F2 /* SignupBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupBottomSheetViewController.swift; sourceTree = "<group>"; };
+		4A07F8AB2B7B3E7F004185F2 /* SignupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewModel.swift; sourceTree = "<group>"; };
+		4A07F8AE2B7B58B7004185F2 /* AuthModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthModel.swift; sourceTree = "<group>"; };
 		4A08480D2B555FD0008327C7 /* AmplitudeConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmplitudeConstant.swift; sourceTree = "<group>"; };
-		4A0E8D5729F8362E00E0FC23 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 		4A0EA4542A014027006CCE52 /* GeneralResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralResponse.swift; sourceTree = "<group>"; };
 		4A0EA4562A01403E006CCE52 /* MoyaLoggingPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoyaLoggingPlugin.swift; sourceTree = "<group>"; };
 		4A0EA4582A014103006CCE52 /* URLConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLConstant.swift; sourceTree = "<group>"; };
@@ -266,32 +278,40 @@
 		4A9FAB432A4C3D1200C40D5A /* BadgeHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeHeaderView.swift; sourceTree = "<group>"; };
 		4A9FAB442A4C3D1200C40D5A /* DetailBadgeCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailBadgeCollectionViewCell.swift; sourceTree = "<group>"; };
 		4AA1EEE92A5870690017FF97 /* Urbanist-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Urbanist-SemiBold.otf"; sourceTree = "<group>"; };
+		4AB7C9182B75F9B500845733 /* GesturePublisher+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GesturePublisher+.swift"; sourceTree = "<group>"; };
+		4AB7C91A2B7624CC00845733 /* ServiceAcceptAppData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAcceptAppData.swift; sourceTree = "<group>"; };
+		4AB7C9252B78914100845733 /* SplashViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewModel.swift; sourceTree = "<group>"; };
+		4AB7C92A2B78A8D900845733 /* SmeemStartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmeemStartViewModel.swift; sourceTree = "<group>"; };
+		4AB7C92F2B78B44500845733 /* LoginBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginBottomSheetViewController.swift; sourceTree = "<group>"; };
+		4AB7C9312B78B45300845733 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		4AB9F5272AA9F78C00EBEE35 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		4AB9F5292AAA035300EBEE35 /* BaseResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseResponse.swift; sourceTree = "<group>"; };
 		4ABE3FD02A811F8400D1D22E /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		4AC00ECB2AD1C143009230DA /* UICollectionView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+.swift"; sourceTree = "<group>"; };
 		4AC00ED62AD2E6E0009230DA /* TrainingStepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingStepView.swift; sourceTree = "<group>"; };
-		4AC00EDB2AD3E4F7009230DA /* UIControl+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIControl+.swift"; sourceTree = "<group>"; };
 		4AC00EE52AD432F2009230DA /* BaseCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionView.swift; sourceTree = "<group>"; };
 		4AC00EEA2AD4527A009230DA /* TrainingWayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingWayViewController.swift; sourceTree = "<group>"; };
-		4AC00EEF2AD52F4C009230DA /* AlarmSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmSettingViewController.swift; sourceTree = "<group>"; };
+		4AC00EEF2AD52F4C009230DA /* TrainingAlarmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingAlarmViewController.swift; sourceTree = "<group>"; };
 		4AC00EF22AD56C4C009230DA /* SmeemTextButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmeemTextButton.swift; sourceTree = "<group>"; };
 		4AC00EF42AD57202009230DA /* TrainingAlarmDataSendProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingAlarmDataSendProtocol.swift; sourceTree = "<group>"; };
 		4AC00EF62AD59C73009230DA /* AuthDataSendProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthDataSendProtocol.swift; sourceTree = "<group>"; };
 		4AC047242A8FCAE100EBDC0E /* AuthManagementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManagementViewController.swift; sourceTree = "<group>"; };
 		4AC1D6822B4ED38200D39A98 /* OnboardingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingModel.swift; sourceTree = "<group>"; };
 		4AC4B82C2A2F9FE200E147AA /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
+		4AC707A72B73893200B1D791 /* AlarmTimeAppData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmTimeAppData.swift; sourceTree = "<group>"; };
+		4AC707AA2B738A5B00B1D791 /* TrainingAlarmViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingAlarmViewModel.swift; sourceTree = "<group>"; };
+		4AC707AF2B73CFFA00B1D791 /* AlarmDefaultModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmDefaultModel.swift; sourceTree = "<group>"; };
+		4AC707B32B73D2D400B1D791 /* UserNicknameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNicknameViewModel.swift; sourceTree = "<group>"; };
+		4AC707B82B74D5CD00B1D791 /* ServiceAcceptViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAcceptViewModel.swift; sourceTree = "<group>"; };
+		4AC707BA2B74DE3E00B1D791 /* ServiceAcceptCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAcceptCollectionView.swift; sourceTree = "<group>"; };
 		4AC9489729ED800800489C2B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		4AD04B382A190020004B7A58 /* UITextField+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+.swift"; sourceTree = "<group>"; };
 		4AD04B3A2A1905BB004B7A58 /* DiaryScrollerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryScrollerView.swift; sourceTree = "<group>"; };
 		4AD04B3C2A190E9A004B7A58 /* UITextView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+.swift"; sourceTree = "<group>"; };
 		4AD04B3F2A1921AE004B7A58 /* CorrectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CorrectionViewController.swift; sourceTree = "<group>"; };
 		4AD923E62A0650B600FF5E27 /* SmeemStartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmeemStartViewController.swift; sourceTree = "<group>"; };
-		4AD923E82A0692C600FF5E27 /* AuthBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthBottomSheetViewController.swift; sourceTree = "<group>"; };
-		4AD923EA2A0692EA00FF5E27 /* BottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetView.swift; sourceTree = "<group>"; };
 		4ADA41762A556209001C0285 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		4ADCA2D52A9272E9002904EB /* EditAlarmViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAlarmViewController.swift; sourceTree = "<group>"; };
-		4AE35E9B2A7FDC4200465FD5 /* ServiceAcceptTotalCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAcceptTotalCollectionViewCell.swift; sourceTree = "<group>"; };
 		4AE35E9D2A7FE8CE00465FD5 /* UICollectionViewCell+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewCell+.swift"; sourceTree = "<group>"; };
 		4AEB82942A4CB4F100C1114B /* BadgePopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgePopupViewController.swift; sourceTree = "<group>"; };
 		4AEFD4C92A1392DF00DAB2BD /* TrainingWayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingWayView.swift; sourceTree = "<group>"; };
@@ -445,8 +465,8 @@
 				6FE1298F2A49A5A6005536C4 /* Date+.swift */,
 				4AE35E9D2A7FE8CE00465FD5 /* UICollectionViewCell+.swift */,
 				4AC00ECB2AD1C143009230DA /* UICollectionView+.swift */,
-				4AC00EDB2AD3E4F7009230DA /* UIControl+.swift */,
 				4A4FEB002B721956001BBDF3 /* Combine+.swift */,
+				4AB7C9182B75F9B500845733 /* GesturePublisher+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -650,6 +670,39 @@
 			name = "Recovered References";
 			sourceTree = "<group>";
 		};
+		4A07F8A62B7B3E4A004185F2 /* Signup */ = {
+			isa = PBXGroup;
+			children = (
+				4A07F8A92B7B3E6B004185F2 /* VC */,
+				4A07F8AA2B7B3E74004185F2 /* ViewModel */,
+			);
+			path = Signup;
+			sourceTree = "<group>";
+		};
+		4A07F8A92B7B3E6B004185F2 /* VC */ = {
+			isa = PBXGroup;
+			children = (
+				4A07F8A72B7B3E5E004185F2 /* SignupBottomSheetViewController.swift */,
+			);
+			path = VC;
+			sourceTree = "<group>";
+		};
+		4A07F8AA2B7B3E74004185F2 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				4A07F8AB2B7B3E7F004185F2 /* SignupViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		4A07F8AD2B7B58B1004185F2 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				4A07F8AE2B7B58B7004185F2 /* AuthModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		4A0EA4532A014018006CCE52 /* Base */ = {
 			isa = PBXGroup;
 			children = (
@@ -698,7 +751,8 @@
 		4A13B7572A13D35800F4FB1E /* Nickname */ = {
 			isa = PBXGroup;
 			children = (
-				4A13B7582A13D37000F4FB1E /* UserNickNameViewController.swift */,
+				4AC707B22B73D13300B1D791 /* VC */,
+				4AC707B12B73D12E00B1D791 /* ViewModel */,
 			);
 			path = Nickname;
 			sourceTree = "<group>";
@@ -743,6 +797,7 @@
 				4A3F2E9B2A0B4C7100F6AC60 /* AlarmCollectionView.swift */,
 				4A3F2E962A0ABBAA00F6AC60 /* AlarmCollectionViewCell.swift */,
 				4A3F2E9F2A0C18B600F6AC60 /* DatePickerFooterView.swift */,
+				4AC707AF2B73CFFA00B1D791 /* AlarmDefaultModel.swift */,
 			);
 			path = Alarm;
 			sourceTree = "<group>";
@@ -815,9 +870,11 @@
 		4A8275D12A15129B0083A4AB /* Service */ = {
 			isa = PBXGroup;
 			children = (
-				4A8275D22A1513120083A4AB /* ServiceAcceptViewController.swift */,
-				4A8275D42A1519550083A4AB /* ServiceAcceptCollectionViewCell.swift */,
-				4AE35E9B2A7FDC4200465FD5 /* ServiceAcceptTotalCollectionViewCell.swift */,
+				4AC707B72B74D5BC00B1D791 /* VC */,
+				4AC707B62B74D5B800B1D791 /* ViewModel */,
+				4AB7C91C2B7886D000845733 /* View */,
+				4AC707B52B74D5B100B1D791 /* Cell */,
+				4AB7C91D2B7886E000845733 /* Model */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -906,6 +963,97 @@
 			path = MyPage;
 			sourceTree = "<group>";
 		};
+		4AB7C91C2B7886D000845733 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				4AC707BA2B74DE3E00B1D791 /* ServiceAcceptCollectionView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		4AB7C91D2B7886E000845733 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				4AB7C91A2B7624CC00845733 /* ServiceAcceptAppData.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		4AB7C9222B78912A00845733 /* Splah */ = {
+			isa = PBXGroup;
+			children = (
+				4AB7C9242B78913500845733 /* VC */,
+				4AB7C9232B78913100845733 /* ViewModel */,
+			);
+			path = Splah;
+			sourceTree = "<group>";
+		};
+		4AB7C9232B78913100845733 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				4AB7C9252B78914100845733 /* SplashViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		4AB7C9242B78913500845733 /* VC */ = {
+			isa = PBXGroup;
+			children = (
+				4ABE3FD02A811F8400D1D22E /* SplashViewController.swift */,
+			);
+			path = VC;
+			sourceTree = "<group>";
+		};
+		4AB7C9272B78A8C200845733 /* Start */ = {
+			isa = PBXGroup;
+			children = (
+				4AB7C9292B78A8CE00845733 /* VC */,
+				4AB7C9282B78A8CB00845733 /* ViewModel */,
+			);
+			path = Start;
+			sourceTree = "<group>";
+		};
+		4AB7C9282B78A8CB00845733 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				4AB7C92A2B78A8D900845733 /* SmeemStartViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		4AB7C9292B78A8CE00845733 /* VC */ = {
+			isa = PBXGroup;
+			children = (
+				4AD923E62A0650B600FF5E27 /* SmeemStartViewController.swift */,
+			);
+			path = VC;
+			sourceTree = "<group>";
+		};
+		4AB7C92C2B78B42C00845733 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				4AB7C92E2B78B43500845733 /* VC */,
+				4AB7C92D2B78B43200845733 /* ViewModel */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		4AB7C92D2B78B43200845733 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				4AB7C9312B78B45300845733 /* LoginViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		4AB7C92E2B78B43500845733 /* VC */ = {
+			isa = PBXGroup;
+			children = (
+				4AB7C92F2B78B44500845733 /* LoginBottomSheetViewController.swift */,
+			);
+			path = VC;
+			sourceTree = "<group>";
+		};
 		4AC00EF82AD6D7D3009230DA /* Training */ = {
 			isa = PBXGroup;
 			children = (
@@ -965,6 +1113,70 @@
 			path = Constants;
 			sourceTree = "<group>";
 		};
+		4AC707A22B73884F00B1D791 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				4AC707AA2B738A5B00B1D791 /* TrainingAlarmViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		4AC707A32B73885300B1D791 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				4AC707A72B73893200B1D791 /* AlarmTimeAppData.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		4AC707A62B7388DC00B1D791 /* VC */ = {
+			isa = PBXGroup;
+			children = (
+				4AC00EEF2AD52F4C009230DA /* TrainingAlarmViewController.swift */,
+			);
+			path = VC;
+			sourceTree = "<group>";
+		};
+		4AC707B12B73D12E00B1D791 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				4AC707B32B73D2D400B1D791 /* UserNicknameViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		4AC707B22B73D13300B1D791 /* VC */ = {
+			isa = PBXGroup;
+			children = (
+				4A13B7582A13D37000F4FB1E /* UserNickNameViewController.swift */,
+			);
+			path = VC;
+			sourceTree = "<group>";
+		};
+		4AC707B52B74D5B100B1D791 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				4A8275D42A1519550083A4AB /* ServiceAcceptCollectionViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		4AC707B62B74D5B800B1D791 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				4AC707B82B74D5CD00B1D791 /* ServiceAcceptViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		4AC707B72B74D5BC00B1D791 /* VC */ = {
+			isa = PBXGroup;
+			children = (
+				4A8275D22A1513120083A4AB /* ServiceAcceptViewController.swift */,
+			);
+			path = VC;
+			sourceTree = "<group>";
+		};
 		4AD04B3E2A19217B004B7A58 /* Correction */ = {
 			isa = PBXGroup;
 			children = (
@@ -976,8 +1188,8 @@
 		4AD923E52A0650A000FF5E27 /* Splash */ = {
 			isa = PBXGroup;
 			children = (
-				4AD923E62A0650B600FF5E27 /* SmeemStartViewController.swift */,
-				4ABE3FD02A811F8400D1D22E /* SplashViewController.swift */,
+				4AB7C9222B78912A00845733 /* Splah */,
+				4AB7C9272B78A8C200845733 /* Start */,
 			);
 			path = Splash;
 			sourceTree = "<group>";
@@ -1001,7 +1213,9 @@
 		4AE4B5172A06BF4A00D45F87 /* BottomSheet */ = {
 			isa = PBXGroup;
 			children = (
-				4AF58CE62A48209500305248 /* VC */,
+				4A07F8AD2B7B58B1004185F2 /* Model */,
+				4A07F8A62B7B3E4A004185F2 /* Signup */,
+				4AB7C92C2B78B42C00845733 /* Login */,
 			);
 			path = BottomSheet;
 			sourceTree = "<group>";
@@ -1036,7 +1250,9 @@
 		4AEFD4C62A13907D00DAB2BD /* Alarm */ = {
 			isa = PBXGroup;
 			children = (
-				4AC00EEF2AD52F4C009230DA /* AlarmSettingViewController.swift */,
+				4AC707A62B7388DC00B1D791 /* VC */,
+				4AC707A22B73884F00B1D791 /* ViewModel */,
+				4AC707A32B73885300B1D791 /* Model */,
 			);
 			path = Alarm;
 			sourceTree = "<group>";
@@ -1049,16 +1265,6 @@
 				4A8275D12A15129B0083A4AB /* Service */,
 			);
 			path = Onboarding;
-			sourceTree = "<group>";
-		};
-		4AF58CE62A48209500305248 /* VC */ = {
-			isa = PBXGroup;
-			children = (
-				4A0E8D5729F8362E00E0FC23 /* AuthViewController.swift */,
-				4AD923E82A0692C600FF5E27 /* AuthBottomSheetViewController.swift */,
-				4AD923EA2A0692EA00FF5E27 /* BottomSheetView.swift */,
-			);
-			path = VC;
 			sourceTree = "<group>";
 		};
 		4AF9E3EF2AC4143500104768 /* Home */ = {
@@ -1206,20 +1412,23 @@
 				4AC00ED72AD2E6E0009230DA /* TrainingStepView.swift in Sources */,
 				371E94162A87B83D0098280F /* NextButtonDelegate.swift in Sources */,
 				4AC00EE62AD432F2009230DA /* BaseCollectionView.swift in Sources */,
-				4AC00EF02AD52F4C009230DA /* AlarmSettingViewController.swift in Sources */,
+				4AC00EF02AD52F4C009230DA /* TrainingAlarmViewController.swift in Sources */,
 				4A004D562B4EE277003C8936 /* AuthService.swift in Sources */,
 				37DCA6742A484D5900FF8F90 /* PostDiaryAPI.swift in Sources */,
 				4A9FAB472A4C3D1200C40D5A /* BadgeListTableViewCell.swift in Sources */,
 				4A454A882B691F850079D48D /* EditGoalViewController.swift in Sources */,
 				373E38592A2F889500DF96F0 /* DiaryDetailRandomSubjectView.swift in Sources */,
 				6F294A3E2A26177B00856CC8 /* TrainingGoalViewController.swift in Sources */,
-				4AC00EDC2AD3E4F7009230DA /* UIControl+.swift in Sources */,
 				37A271642AA6078C001FFC38 /* SmeemNavigationBar.swift in Sources */,
 				4A6630392A51E04600D19CC9 /* PatchDiaryRequest.swift in Sources */,
 				4AF58CE92A4820AA00305248 /* AuthNetworkModel.swift in Sources */,
 				378E461F2B551A6F00D2A473 /* DeepLResponse.swift in Sources */,
 				3761116C2A278D0E0095EC5A /* String+.swift in Sources */,
+				4A07F8AC2B7B3E7F004185F2 /* SignupViewModel.swift in Sources */,
+				4AB7C91B2B7624CC00845733 /* ServiceAcceptAppData.swift in Sources */,
+				4AC707B42B73D2D400B1D791 /* UserNicknameViewModel.swift in Sources */,
 				4AEB82952A4CB4F200C1114B /* BadgePopupViewController.swift in Sources */,
+				4AB7C9302B78B44500845733 /* LoginBottomSheetViewController.swift in Sources */,
 				4A08480E2B555FD0008327C7 /* AmplitudeConstant.swift in Sources */,
 				4A3774842A42E6EA00357DD1 /* ConfigConstant.swift in Sources */,
 				371107DF2ACAB709007A4AC2 /* BaseViewController.swift in Sources */,
@@ -1227,13 +1436,14 @@
 				6FBC85742A4B603A00A43F98 /* MyPageNetworkModel.swift in Sources */,
 				6F294A482A27818200856CC8 /* HomeViewFloatingViewController.swift in Sources */,
 				37A574C529FF6EA800312453 /* FontLiterals.swift in Sources */,
+				4AB7C92B2B78A8D900845733 /* SmeemStartViewModel.swift in Sources */,
 				4A004D5B2B4EE29A003C8936 /* PushTestService.swift in Sources */,
 				379789052AAC706800C61EF4 /* SmeemNavigationFactory.swift in Sources */,
 				4AC00EF32AD56C4C009230DA /* SmeemTextButton.swift in Sources */,
 				37DCA65D2A475B5100FF8F90 /* RandomTopicResponse.swift in Sources */,
 				371107DA2AC99099007A4AC2 /* KeyboardFollowingLayoutHandler.swift in Sources */,
 				4A9FAB452A4C3D1200C40D5A /* BadgeListViewController.swift in Sources */,
-				4AD923E92A0692C600FF5E27 /* AuthBottomSheetViewController.swift in Sources */,
+				4AB7C9192B75F9B500845733 /* GesturePublisher+.swift in Sources */,
 				6F294A462A2617D500856CC8 /* TrainingWayView.swift in Sources */,
 				37A574CC29FF990E00312453 /* UIViewController+.swift in Sources */,
 				4A9E10E42A43468600295D07 /* BaseTargetType.swift in Sources */,
@@ -1251,9 +1461,9 @@
 				6F31802F2A24D1DB00089870 /* CalendarCell.swift in Sources */,
 				6FE1298A2A4982DA005536C4 /* HomeAPI.swift in Sources */,
 				374F828E2AC5DFFE00C128B9 /* DiaryBottomView.swift in Sources */,
+				4AC707B92B74D5CD00B1D791 /* ServiceAcceptViewModel.swift in Sources */,
 				4A3F2E972A0ABBAA00F6AC60 /* AlarmCollectionViewCell.swift in Sources */,
 				379789032AAC705B00C61EF4 /* NavigationBarActionDelegate.swift in Sources */,
-				4AE35E9C2A7FDC4200465FD5 /* ServiceAcceptTotalCollectionViewCell.swift in Sources */,
 				37DCA6572A47574300FF8F90 /* RandomTopicAPI.swift in Sources */,
 				37DCA6672A480A7300FF8F90 /* DetailDiaryService.swift in Sources */,
 				A3D7ECB72A26566A009857D6 /* EditNicknameViewController.swift in Sources */,
@@ -1269,13 +1479,14 @@
 				4A004D512B4ED783003C8936 /* TrainingWayResponse.swift in Sources */,
 				37DCA6602A48033400FF8F90 /* DetailDiaryViewController.swift in Sources */,
 				4A0EA4572A01403E006CCE52 /* MoyaLoggingPlugin.swift in Sources */,
-				4A0E8D5829F8362E00E0FC23 /* AuthViewController.swift in Sources */,
 				37035CF92AF2ADD2008EE521 /* DiaryViewModel.swift in Sources */,
 				4A004D5E2B4EE2B4003C8936 /* MyPageService.swift in Sources */,
 				6F294A452A2617B000856CC8 /* UITextField+.swift in Sources */,
 				37A574C829FF6F1C00312453 /* UIView+.swift in Sources */,
+				4A07F8AF2B7B58B7004185F2 /* AuthModel.swift in Sources */,
 				37A574D029FF9AEE00312453 /* UILabel+.swift in Sources */,
 				37A574CE29FF9A2D00312453 /* UIScreen+.swift in Sources */,
+				4AC707A82B73893200B1D791 /* AlarmTimeAppData.swift in Sources */,
 				37DCA6722A484D5000FF8F90 /* PostDiaryService.swift in Sources */,
 				379789072AAC707700C61EF4 /* NavigationBarType.swift in Sources */,
 				37DCA6702A484D3700FF8F90 /* PostDiaryRequest.swift in Sources */,
@@ -1289,13 +1500,13 @@
 				4A1882FA2A8BBD0D0088F590 /* SmeemStartViewController.swift in Sources */,
 				3728B8D32A2CFED300EF4CF8 /* ForeignDiaryViewController.swift in Sources */,
 				4ABE3FD12A811F8400D1D22E /* SplashViewController.swift in Sources */,
-				4AD923EB2A0692EA00FF5E27 /* BottomSheetView.swift in Sources */,
 				4A9FAB492A4C3D1200C40D5A /* DetailBadgeCollectionViewCell.swift in Sources */,
 				4AFD7C292B600FED00FE7EFF /* NetworkManager.swift in Sources */,
 				37DCA6652A48052200FF8F90 /* DetailDiaryResponse.swift in Sources */,
 				4AC4B82D2A2F9FE200E147AA /* UserDefaultsManager.swift in Sources */,
 				37A574E02A00CDCD00312453 /* SeparationLine.swift in Sources */,
 				3728B8D72A2CFF3A00EF4CF8 /* StepTwoKoreanDiaryViewController.swift in Sources */,
+				4A07F8A82B7B3E5E004185F2 /* SignupBottomSheetViewController.swift in Sources */,
 				4A454A832B6666FF0079D48D /* TrainingGoalViewModel.swift in Sources */,
 				37DCA66E2A484D3100FF8F90 /* PostDiaryResponse.swift in Sources */,
 				4A0EA4552A014027006CCE52 /* GeneralResponse.swift in Sources */,
@@ -1304,15 +1515,18 @@
 				4AC00ECC2AD1C143009230DA /* UICollectionView+.swift in Sources */,
 				4A8FFA5029C9E1FD00FB76C0 /* AppDelegate.swift in Sources */,
 				6FE1298E2A4986CA005536C4 /* HomeDiaryResponse.swift in Sources */,
+				4AC707AB2B738A5B00B1D791 /* TrainingAlarmViewModel.swift in Sources */,
 				3728B8D52A2CFF2C00EF4CF8 /* StepOneKoreanDiaryViewController.swift in Sources */,
 				37DCA6692A480A8E00FF8F90 /* DetailDiaryAPI.swift in Sources */,
 				37A574C129FF6E9100312453 /* ColorLiterals.swift in Sources */,
 				371107E92ACC7E3A007A4AC2 /* DiaryLayoutConfigurations.swift in Sources */,
+				4AB7C9322B78B45300845733 /* LoginViewModel.swift in Sources */,
 				37A574CA29FF980F00312453 /* UIStackView+.swift in Sources */,
 				6F294A422A26178C00856CC8 /* UserNickNameViewController.swift in Sources */,
 				4AC047252A8FCAE100EBDC0E /* AuthManagementViewController.swift in Sources */,
 				374FAF812A2CACCF00237A1A /* DiaryViewController.swift in Sources */,
 				37DCA65A2A47598700FF8F90 /* RandomTopicService.swift in Sources */,
+				4AB7C9262B78914100845733 /* SplashViewModel.swift in Sources */,
 				4A01235F2AAA2C1500E09646 /* SmeemLoadingView.swift in Sources */,
 				4A004D542B4EE26E003C8936 /* AuthAPI.swift in Sources */,
 				4A81C2972ACDAB2C0056E815 /* TrainingGoalsCollectionView.swift in Sources */,
@@ -1323,6 +1537,7 @@
 				4A004D4F2B4ED760003C8936 /* TrainingGoalResponse.swift in Sources */,
 				6F294A3F2A26177E00856CC8 /* TrainingGoalCollectionViewCell.swift in Sources */,
 				37A574E62A02178D00312453 /* SmeemToastView.swift in Sources */,
+				4AC707BB2B74DE3E00B1D791 /* ServiceAcceptCollectionView.swift in Sources */,
 				4A4FEB012B721956001BBDF3 /* Combine+.swift in Sources */,
 				374F828C2AC327A200C128B9 /* SmeemTextViewHandler.swift in Sources */,
 				4A8FFA5229C9E1FD00FB76C0 /* SceneDelegate.swift in Sources */,
@@ -1333,6 +1548,7 @@
 				4A4FEB0C2B7289E7001BBDF3 /* TrainingWayAppData.swift in Sources */,
 				4A0EA4642A014710006CCE52 /* SmeemButton.swift in Sources */,
 				371107DD2ACAB571007A4AC2 /* BaseView.swift in Sources */,
+				4AC707B02B73CFFA00B1D791 /* AlarmDefaultModel.swift in Sources */,
 				378E461A2B5516E200D2A473 /* DeepLAPI.swift in Sources */,
 				37EB69E62A4B3BC400075E4E /* DataBindProtocol.swift in Sources */,
 			);

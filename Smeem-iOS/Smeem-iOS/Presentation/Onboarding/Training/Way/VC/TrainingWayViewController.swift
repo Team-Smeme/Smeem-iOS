@@ -124,8 +124,7 @@ final class TrainingWayViewController: BaseViewController {
         
         output.nextButtonResult
             .sink { target in
-                let alarmVC = AlarmSettingViewController()
-                alarmVC.targetData = target
+                let alarmVC = TrainingAlarmViewController(target: target)
                 self.navigationController?.pushViewController(alarmVC, animated: true)
             }
             .store(in: &cancelBag)
