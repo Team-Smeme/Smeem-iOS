@@ -44,33 +44,36 @@ final class SplashViewController: BaseViewController {
         let output = viewModel.transform(input: input)
         
         output.updatePopupResult
-            .receive(on: RunLoop.main)
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 self?.presentUpdatePopup()
             }
             .store(in: &cancelBag)
         
         output.smeemStartResult
-            .receive(on: RunLoop.main)
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
-                self?.changeRootViewController(SmeemStartViewController())
+                let smeemStartVC = SmeemStartViewController()
+                self?.changeRootViewController(smeemStartVC)
             }
             .store(in: &cancelBag)
         
         output.homeStartResult
-            .receive(on: RunLoop.main)
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 self?.changeRootViewController(HomeViewController())
             }
             .store(in: &cancelBag)
         
         output.errorResult
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] error in
                 self?.showToast(toastType: .smeemErrorToast(message: error))
             }
             .store(in: &cancelBag)
         
         output.loadingViewResult
+            .receive(on: DispatchQueue.main)
             .sink { isShown in
                 isShown ? SmeemLoadingView.showLoading() : SmeemLoadingView.hideLoading()
             }

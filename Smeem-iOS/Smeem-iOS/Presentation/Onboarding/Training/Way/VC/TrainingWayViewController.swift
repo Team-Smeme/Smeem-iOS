@@ -117,12 +117,14 @@ final class TrainingWayViewController: BaseViewController {
         let output = viewModel.transform(input: input)
         
         output.viewWillAppearResult
+            .receive(on: DispatchQueue.main)
             .sink { appData in
                 self.howLearningView.setModel(model: appData)
             }
             .store(in: &cancelBag)
         
         output.nextButtonResult
+            .receive(on: DispatchQueue.main)
             .sink { target in
                 let alarmVC = TrainingAlarmViewController(target: target)
                 self.navigationController?.pushViewController(alarmVC, animated: true)
@@ -130,12 +132,14 @@ final class TrainingWayViewController: BaseViewController {
             .store(in: &cancelBag)
         
         output.errorResult
+            .receive(on: DispatchQueue.main)
             .sink { error in
                 self.showToast(toastType: .smeemErrorToast(message: error))
             }
             .store(in: &cancelBag)
         
         output.loadingViewResult
+            .receive(on: DispatchQueue.main)
             .sink { isShown in
                 isShown ? SmeemLoadingView.showLoading() : SmeemLoadingView.hideLoading()
             }

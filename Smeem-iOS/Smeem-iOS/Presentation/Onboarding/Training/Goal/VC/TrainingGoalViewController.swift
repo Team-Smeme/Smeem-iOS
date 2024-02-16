@@ -115,6 +115,7 @@ final class TrainingGoalViewController: BaseViewController {
         let output = viewModel.transform(input: input)
         
         output.viewWillappearResult
+            .receive(on: DispatchQueue.main)
             .sink { response in
                 self.trainingGoalCollectionView.planGoalArray = response
                 self.trainingGoalCollectionView.reloadData()
@@ -122,12 +123,14 @@ final class TrainingGoalViewController: BaseViewController {
             .store(in: &cancelbag)
         
         output.cellResult
+            .receive(on: DispatchQueue.main)
             .sink { type in
                 self.nextButton.changeButtonType(buttonType: type)
             }
             .store(in: &cancelbag)
         
         output.nextButtonResult
+            .receive(on: DispatchQueue.main)
             .sink { target in
                 let howOnboardingVC = TrainingWayViewController(target: target)
                 self.navigationController?.pushViewController(howOnboardingVC, animated: true)
@@ -135,12 +138,14 @@ final class TrainingGoalViewController: BaseViewController {
             .store(in: &cancelbag)
         
         output.errorResult
+            .receive(on: DispatchQueue.main)
             .sink { error in
                 self.showToast(toastType: .smeemErrorToast(message: error))
             }
             .store(in: &cancelbag)
         
         output.loadingViewResult
+            .receive(on: DispatchQueue.main)
             .sink { isShown in
                 isShown ? SmeemLoadingView.showLoading() : SmeemLoadingView.hideLoading()
             }

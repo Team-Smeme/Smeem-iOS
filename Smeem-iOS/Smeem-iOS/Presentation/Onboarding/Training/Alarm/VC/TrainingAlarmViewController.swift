@@ -151,18 +151,21 @@ final class TrainingAlarmViewController: BaseViewController {
         let output = viewModel.transform(input: input)
         
         output.buttonTypeResult
+            .receive(on: DispatchQueue.main)
             .sink { type in
                 self.completeButton.changeButtonType(buttonType: type)
             }
             .store(in: &cancelBag)
         
         output.alarmResult
+            .receive(on: DispatchQueue.main)
             .sink { _ in
                 self.requestNotificationPermission()
             }
             .store(in: &cancelBag)
         
         output.bottomSheetResult
+            .receive(on: DispatchQueue.main)
             .sink { request in
                 let signupBottomSheetVC = SignupBottomSheetViewController(request: request)
                 let navigationController = UINavigationController(rootViewController: signupBottomSheetVC)
@@ -178,6 +181,7 @@ final class TrainingAlarmViewController: BaseViewController {
             .store(in: &cancelBag)
         
         output.nicknameResult
+            .receive(on: DispatchQueue.main)
             .sink { _ in
                 let userNicknameVC = UserNicknameViewController()
                 self.navigationController?.pushViewController(userNicknameVC, animated: true)
@@ -185,12 +189,14 @@ final class TrainingAlarmViewController: BaseViewController {
             .store(in: &cancelBag)
         
         output.errorResult
+            .receive(on: DispatchQueue.main)
             .sink { error in
                 self.showToast(toastType: .smeemErrorToast(message: error))
             }
             .store(in: &cancelBag)
         
         output.loadingViewResult
+            .receive(on: DispatchQueue.main)
             .sink { isShown in
                 isShown ? SmeemLoadingView.showLoading() : SmeemLoadingView.hideLoading()
             }

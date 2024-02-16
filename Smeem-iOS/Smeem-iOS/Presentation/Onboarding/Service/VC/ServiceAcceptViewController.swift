@@ -113,30 +113,35 @@ final class ServiceAcceptViewController: BaseViewController {
         let output = viewModel.transform(input: input)
         
         output.totalViewResult
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] model in
                 self?.updateUI(state: model.totalViewState, indexPath: model.indexPathArray)
             }
             .store(in: &cancelBag)
         
         output.cellResult
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] model in
                 self?.updateCell(model: model)
             }
             .store(in: &cancelBag)
         
         output.cellIndexResult
+            .receive(on: DispatchQueue.main)
             .sink { url in
                 UIApplication.shared.open(url, options: [:])
             }
             .store(in: &cancelBag)
         
         output.totalViewStateResult
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] state in
                 self?.totalViewUI(state: state)
             }
             .store(in: &cancelBag)
         
         output.completeButtonResult
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] badges in
                 let homeVC = HomeViewController()
                 homeVC.badgePopupData = badges
@@ -145,12 +150,14 @@ final class ServiceAcceptViewController: BaseViewController {
             .store(in: &cancelBag)
         
         output.loadingViewSubject
+            .receive(on: DispatchQueue.main)
             .sink { isShown in
                 isShown ? SmeemLoadingView.showLoading() : SmeemLoadingView.hideLoading()
             }
             .store(in: &cancelBag)
         
         output.errorSubject
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] error in
                 self?.showToast(toastType: .smeemErrorToast(message: error))
             }
