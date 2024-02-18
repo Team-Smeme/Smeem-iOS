@@ -85,6 +85,7 @@
 		4A3373F52A45BF6600EFE6C4 /* OnboardingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3373F42A45BF6600EFE6C4 /* OnboardingService.swift */; };
 		4A3373F82A461ABC00EFE6C4 /* OnboardingAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3373F72A461ABC00EFE6C4 /* OnboardingAPI.swift */; };
 		4A3774842A42E6EA00357DD1 /* ConfigConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3774832A42E6EA00357DD1 /* ConfigConstant.swift */; };
+		4A3CFBC32B823A8400059DB3 /* Smeem_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A07F8DA2B821523004185F2 /* Smeem_iOSTests.swift */; };
 		4A3F2E972A0ABBAA00F6AC60 /* AlarmCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3F2E962A0ABBAA00F6AC60 /* AlarmCollectionViewCell.swift */; };
 		4A3F2E9C2A0B4C7100F6AC60 /* AlarmCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3F2E9B2A0B4C7100F6AC60 /* AlarmCollectionView.swift */; };
 		4A3F2EA02A0C18B600F6AC60 /* DatePickerFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3F2E9F2A0C18B600F6AC60 /* DatePickerFooterView.swift */; };
@@ -96,6 +97,7 @@
 		4A4FEB0C2B7289E7001BBDF3 /* TrainingWayAppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4FEB0B2B7289E7001BBDF3 /* TrainingWayAppData.swift */; };
 		4A6630362A51B0AD00D19CC9 /* EditDiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6630352A51B0AD00D19CC9 /* EditDiaryViewController.swift */; };
 		4A6630392A51E04600D19CC9 /* PatchDiaryRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6630382A51E04600D19CC9 /* PatchDiaryRequest.swift */; };
+		4A7F22252B8241DC0011DECF /* TrainingAlarmTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A07F8E22B821539004185F2 /* TrainingAlarmTest.swift */; };
 		4A81C2972ACDAB2C0056E815 /* TrainingGoalsCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A81C2962ACDAB2C0056E815 /* TrainingGoalsCollectionView.swift */; };
 		4A8FFA5029C9E1FD00FB76C0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8FFA4F29C9E1FD00FB76C0 /* AppDelegate.swift */; };
 		4A8FFA5229C9E1FD00FB76C0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8FFA5129C9E1FD00FB76C0 /* SceneDelegate.swift */; };
@@ -170,6 +172,16 @@
 		A3D7ECB72A26566A009857D6 /* EditNicknameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D7ECB62A26566A009857D6 /* EditNicknameViewController.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		4A07F8DC2B821523004185F2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4A8FFA4429C9E1FD00FB76C0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4A8FFA4B29C9E1FD00FB76C0;
+			remoteInfo = "Smeem-iOS";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		37035CF82AF2ADD2008EE521 /* DiaryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryViewModel.swift; sourceTree = "<group>"; };
 		371107D92AC99099007A4AC2 /* KeyboardFollowingLayoutHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardFollowingLayoutHandler.swift; sourceTree = "<group>"; };
@@ -238,6 +250,9 @@
 		4A07F8A72B7B3E5E004185F2 /* SignupBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupBottomSheetViewController.swift; sourceTree = "<group>"; };
 		4A07F8AB2B7B3E7F004185F2 /* SignupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewModel.swift; sourceTree = "<group>"; };
 		4A07F8AE2B7B58B7004185F2 /* AuthModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthModel.swift; sourceTree = "<group>"; };
+		4A07F8D82B821523004185F2 /* Smeem-iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Smeem-iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4A07F8DA2B821523004185F2 /* Smeem_iOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Smeem_iOSTests.swift; sourceTree = "<group>"; };
+		4A07F8E22B821539004185F2 /* TrainingAlarmTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingAlarmTest.swift; sourceTree = "<group>"; };
 		4A08480D2B555FD0008327C7 /* AmplitudeConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmplitudeConstant.swift; sourceTree = "<group>"; };
 		4A0EA4542A014027006CCE52 /* GeneralResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralResponse.swift; sourceTree = "<group>"; };
 		4A0EA4562A01403E006CCE52 /* MoyaLoggingPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoyaLoggingPlugin.swift; sourceTree = "<group>"; };
@@ -262,6 +277,7 @@
 		4A4FEB0B2B7289E7001BBDF3 /* TrainingWayAppData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingWayAppData.swift; sourceTree = "<group>"; };
 		4A6630352A51B0AD00D19CC9 /* EditDiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditDiaryViewController.swift; sourceTree = "<group>"; };
 		4A6630382A51E04600D19CC9 /* PatchDiaryRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatchDiaryRequest.swift; sourceTree = "<group>"; };
+		4A7F22262B8241FD0011DECF /* Smeem-Dev.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Smeem-Dev.xctestplan"; sourceTree = "<group>"; };
 		4A81C2962ACDAB2C0056E815 /* TrainingGoalsCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingGoalsCollectionView.swift; sourceTree = "<group>"; };
 		4A8275D22A1513120083A4AB /* ServiceAcceptViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAcceptViewController.swift; sourceTree = "<group>"; };
 		4A8275D42A1519550083A4AB /* ServiceAcceptCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAcceptCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -332,6 +348,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		4A07F8D52B821523004185F2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4A8FFA4929C9E1FD00FB76C0 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -703,6 +726,23 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		4A07F8D92B821523004185F2 /* Smeem-iOSTests */ = {
+			isa = PBXGroup;
+			children = (
+				4A07F8E12B821529004185F2 /* Training */,
+				4A07F8DA2B821523004185F2 /* Smeem_iOSTests.swift */,
+			);
+			path = "Smeem-iOSTests";
+			sourceTree = "<group>";
+		};
+		4A07F8E12B821529004185F2 /* Training */ = {
+			isa = PBXGroup;
+			children = (
+				4A07F8E22B821539004185F2 /* TrainingAlarmTest.swift */,
+			);
+			path = Training;
+			sourceTree = "<group>";
+		};
 		4A0EA4532A014018006CCE52 /* Base */ = {
 			isa = PBXGroup;
 			children = (
@@ -882,9 +922,11 @@
 		4A8FFA4329C9E1FD00FB76C0 = {
 			isa = PBXGroup;
 			children = (
+				4A7F22262B8241FD0011DECF /* Smeem-Dev.xctestplan */,
 				4A23621C2AFA868D005E4C58 /* Release.xcconfig */,
 				4A23621B2AFA8682005E4C58 /* Debug.xcconfig */,
 				4A8FFA4E29C9E1FD00FB76C0 /* Smeem-iOS */,
+				4A07F8D92B821523004185F2 /* Smeem-iOSTests */,
 				4A8FFA4D29C9E1FD00FB76C0 /* Products */,
 				4A01234F2AAA046200E09646 /* Recovered References */,
 			);
@@ -894,6 +936,7 @@
 			isa = PBXGroup;
 			children = (
 				4A8FFA4C29C9E1FD00FB76C0 /* Smeem-iOS.app */,
+				4A07F8D82B821523004185F2 /* Smeem-iOSTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1311,6 +1354,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		4A07F8D72B821523004185F2 /* Smeem-iOSTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4A07F8E02B821523004185F2 /* Build configuration list for PBXNativeTarget "Smeem-iOSTests" */;
+			buildPhases = (
+				4A07F8D42B821523004185F2 /* Sources */,
+				4A07F8D52B821523004185F2 /* Frameworks */,
+				4A07F8D62B821523004185F2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4A07F8DD2B821523004185F2 /* PBXTargetDependency */,
+			);
+			name = "Smeem-iOSTests";
+			productName = "Smeem-iOSTests";
+			productReference = 4A07F8D82B821523004185F2 /* Smeem-iOSTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		4A8FFA4B29C9E1FD00FB76C0 /* Smeem-iOS */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4A8FFA6029C9E1FE00FB76C0 /* Build configuration list for PBXNativeTarget "Smeem-iOS" */;
@@ -1350,9 +1411,13 @@
 				KnownAssetTags = (
 					New,
 				);
-				LastSwiftUpdateCheck = 1420;
+				LastSwiftUpdateCheck = 1520;
 				LastUpgradeCheck = 1430;
 				TargetAttributes = {
+					4A07F8D72B821523004185F2 = {
+						CreatedOnToolsVersion = 15.2;
+						TestTargetID = 4A8FFA4B29C9E1FD00FB76C0;
+					};
 					4A8FFA4B29C9E1FD00FB76C0 = {
 						CreatedOnToolsVersion = 14.2;
 					};
@@ -1381,11 +1446,19 @@
 			projectRoot = "";
 			targets = (
 				4A8FFA4B29C9E1FD00FB76C0 /* Smeem-iOS */,
+				4A07F8D72B821523004185F2 /* Smeem-iOSTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		4A07F8D62B821523004185F2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4A8FFA4A29C9E1FD00FB76C0 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1404,6 +1477,15 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		4A07F8D42B821523004185F2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4A3CFBC32B823A8400059DB3 /* Smeem_iOSTests.swift in Sources */,
+				4A7F22252B8241DC0011DECF /* TrainingAlarmTest.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4A8FFA4829C9E1FD00FB76C0 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1556,6 +1638,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		4A07F8DD2B821523004185F2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4A8FFA4B29C9E1FD00FB76C0 /* Smeem-iOS */;
+			targetProxy = 4A07F8DC2B821523004185F2 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		4A8FFA5A29C9E1FE00FB76C0 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -1568,6 +1658,59 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		4A07F8DE2B821523004185F2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = K8LLWYQWXD;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "smeemTest.Smeem-iOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Smeem-iOS.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Smeem-iOS";
+			};
+			name = Debug;
+		};
+		4A07F8DF2B821523004185F2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = K8LLWYQWXD;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "smeemTest.Smeem-iOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Smeem-iOS.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Smeem-iOS";
+			};
+			name = Release;
+		};
 		4A8FFA5E29C9E1FE00FB76C0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1771,6 +1914,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		4A07F8E02B821523004185F2 /* Build configuration list for PBXNativeTarget "Smeem-iOSTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4A07F8DE2B821523004185F2 /* Debug */,
+				4A07F8DF2B821523004185F2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		4A8FFA4729C9E1FD00FB76C0 /* Build configuration list for PBXProject "Smeem-iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

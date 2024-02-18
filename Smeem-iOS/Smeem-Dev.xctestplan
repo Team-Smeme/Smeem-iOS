@@ -1,0 +1,28 @@
+{
+  "configurations" : [
+    {
+      "id" : "88617B76-3494-436F-BDE4-57ADC44C2FB9",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:Smeem-iOS.xcodeproj",
+      "identifier" : "4A8FFA4B29C9E1FD00FB76C0",
+      "name" : "Smeem-iOS"
+    }
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:Smeem-iOS.xcodeproj",
+        "identifier" : "4A07F8D72B821523004185F2",
+        "name" : "Smeem-iOSTests"
+      }
+    }
+  ],
+  "version" : 1
+}

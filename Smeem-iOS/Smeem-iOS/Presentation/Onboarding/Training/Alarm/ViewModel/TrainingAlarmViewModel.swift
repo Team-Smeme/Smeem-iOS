@@ -35,12 +35,12 @@ final class TrainingAlarmViewModel: ViewModel {
     private let loadingViewSubject = PassthroughSubject<Bool, Never>()
     
     var target = ""
+    var trainingPlanRequest = TrainingPlanRequest(target: "DEVELOP",
+                                                  trainingTime: TrainingTime(day: "MON,TUE,WED,THU,FRI",
+                                                                             hour: 22,
+                                                                             minute: 0),
+                                                  hasAlarm: true)
     private var authType = AuthType.signup
-    private var trainingPlanRequest = TrainingPlanRequest(target: "DEVELOP",
-                                                          trainingTime: TrainingTime(day: "MON,TUE,WED,THU,FRI",
-                                                                                     hour: 22,
-                                                                                     minute: 0),
-                                                          hasAlarm: true)
     
     func transform(input: Input) -> Output {
         input.viewWillAppearSubject
