@@ -55,6 +55,23 @@ extension SmeemTextViewHandler {
     func containsKoreanCharacters(with text: String) -> Bool {
         return text.getArrayAfterRegex(regex: "[가-핳ㄱ-ㅎㅏ-ㅣ]").count > 0
     }
+    
+    // Placeholder가 표시되고 있는지
+    func isDisplayingPlaceholder(in textView: UITextView) -> Bool {
+        guard let placeholderColor = self.placeholderDelegate?.placeholderColor else { return false }
+        return textView.textColor == placeholderColor
+    }
+
+    // 새로운 텍스트가 비어있지 않은지
+    func isNewTextNotEmpty(_ text: String) -> Bool {
+        return !text.isEmpty
+    }
+
+    // 새로운 텍스트가 placeholder 텍스트와 다른지
+    func isNewTextDifferentFromPlaceholder(_ text: String) -> Bool {
+        guard let placeholderText = self.placeholderDelegate?.placeholderText else { return true }
+        return text != placeholderText
+    }
 }
 
 // MARK: - UITextViewDelegate
@@ -82,7 +99,6 @@ extension SmeemTextViewHandler: UITextViewDelegate {
         }
     }
     
-    // Text가 완전히 지워지는 시점 감지
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         guard let placeholderTextView = self.placeholderDelegate else { return true }
 
@@ -96,10 +112,20 @@ extension SmeemTextViewHandler: UITextViewDelegate {
             textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
             textViewDidChange(textView)
             return false
-        } else if textView.textColor == placeholderTextView.placeholderColor && !text.isEmpty {
+        } else if isDisplayingPlaceholder(in: textView) && text == "" {
+            // 백스페이스를 눌렀을 때
+            // 이전에 입력한 텍스트가 플레이스홀더로 인식되지 않도록 처리
+            textView.text = nil
+            textView.textColor = .smeemBlack
+            return false
+        }
+        
+        // 추가된 부분: 한 음절만 입력해도 자동으로 추가되는 문제 해결
+        if isDisplayingPlaceholder(in: textView) && isNewTextNotEmpty(text) && isNewTextDifferentFromPlaceholder(text) {
             textView.text = nil
             textView.textColor = .smeemBlack
         }
+
         return true
     }
 }
