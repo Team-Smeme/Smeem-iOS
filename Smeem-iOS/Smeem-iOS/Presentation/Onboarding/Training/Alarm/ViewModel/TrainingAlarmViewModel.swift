@@ -99,7 +99,7 @@ final class TrainingAlarmViewModel: ViewModel {
             .flatMap { _ -> AnyPublisher<Void, Never> in
                 return Future<Void, Never> { promise in
                     // 온보딩 이탈 가능성 있기 때문에 clinetAccessToken 값 저장
-                    OnboardingAPI.shared.userPlanPathAPI(param: self.trainingPlanRequest,
+                    OnboardingService.shared.userPlanPathAPI(param: self.trainingPlanRequest,
                                                          accessToken: UserDefaultsManager.clientAccessToken) { result in
                         
                         switch result {

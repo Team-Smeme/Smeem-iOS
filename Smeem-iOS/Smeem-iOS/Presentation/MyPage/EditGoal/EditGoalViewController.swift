@@ -115,7 +115,7 @@ extension EditGoalViewController: TrainingDataSendDelegate {
 extension EditGoalViewController {
     func planListGetAPI() {
         SmeemLoadingView.showLoading()
-        OnboardingAPI.shared.planList() { response in
+        OnboardingService.shared.planList() { response in
             
             switch response {
             case .success(let response):

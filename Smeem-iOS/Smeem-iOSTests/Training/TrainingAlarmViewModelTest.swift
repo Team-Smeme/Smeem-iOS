@@ -10,7 +10,7 @@ import Combine
 
 @testable import Smeem_iOS
 
-final class TrainingAlarmTest: XCTestCase {
+final class TrainingAlarmViewModelTest: XCTestCase {
     
     var viewModel: TrainingAlarmViewModel!
     var input: TrainingAlarmViewModel.Input!
@@ -37,7 +37,7 @@ final class TrainingAlarmTest: XCTestCase {
         
         // When
         var outputResult: SmeemButtonType!
-        var expectedResult: SmeemButtonType = .enabled
+        let expectedResult: SmeemButtonType = .enabled
         
         output.buttonTypeResult
             .sink { type in
@@ -60,7 +60,7 @@ final class TrainingAlarmTest: XCTestCase {
         
         // When
         var outputResult: SmeemButtonType!
-        var expectedResult: SmeemButtonType = .notEnabled
+        let expectedResult: SmeemButtonType = .notEnabled
         
         output.buttonTypeResult
             .sink { type in
@@ -78,16 +78,16 @@ final class TrainingAlarmTest: XCTestCase {
     
     func test_PM_12_00_시간데이터_계산잘되는지() {
         // Given
-        var value = AlarmTimeAppData(hour: "12", minute: "00", dayAndNight: "PM")
+        let value = AlarmTimeAppData(hour: "12", minute: "00", dayAndNight: "PM")
         
         // When
         input.alarmTimeSubject.send(value)
         
-        var outputHourResult = viewModel.trainingPlanRequest.trainingTime.hour
-        var outputMinuteResult = viewModel.trainingPlanRequest.trainingTime.minute
+        let outputHourResult = viewModel.trainingPlanRequest.trainingTime.hour
+        let outputMinuteResult = viewModel.trainingPlanRequest.trainingTime.minute
         
-        var expectedHourResult = 12
-        var expectedMinuteResult = 0
+        let expectedHourResult = 12
+        let expectedMinuteResult = 0
         
         // Then
         XCTAssertEqual(outputHourResult, expectedHourResult)
@@ -96,16 +96,16 @@ final class TrainingAlarmTest: XCTestCase {
     
     func test_AM_12_00_시간데이터_계산잘되는지() {
         // Given
-        var value = AlarmTimeAppData(hour: "12", minute: "00", dayAndNight: "AM")
+        let value = AlarmTimeAppData(hour: "12", minute: "00", dayAndNight: "AM")
         
         // When
         input.alarmTimeSubject.send(value)
         
-        var outputHourResult = viewModel.trainingPlanRequest.trainingTime.hour
-        var outputMinuteResult = viewModel.trainingPlanRequest.trainingTime.minute
+        let outputHourResult = viewModel.trainingPlanRequest.trainingTime.hour
+        let outputMinuteResult = viewModel.trainingPlanRequest.trainingTime.minute
         
-        var expectedHourResult = 24
-        var expectedMinuteResult = 0
+        let expectedHourResult = 24
+        let expectedMinuteResult = 0
         
         // Then
         XCTAssertEqual(outputHourResult, expectedHourResult)
@@ -114,16 +114,16 @@ final class TrainingAlarmTest: XCTestCase {
     
     func test_AM_3_30_시간데이터_계산잘되는지() {
         // Given
-        var value = AlarmTimeAppData(hour: "3", minute: "30", dayAndNight: "AM")
+        let value = AlarmTimeAppData(hour: "3", minute: "30", dayAndNight: "AM")
         
         // When
         input.alarmTimeSubject.send(value)
         
-        var outputHourResult = viewModel.trainingPlanRequest.trainingTime.hour
-        var outputMinuteResult = viewModel.trainingPlanRequest.trainingTime.minute
+        let outputHourResult = viewModel.trainingPlanRequest.trainingTime.hour
+        let outputMinuteResult = viewModel.trainingPlanRequest.trainingTime.minute
         
-        var expectedHourResult = 3
-        var expectedMinuteResult = 30
+        let expectedHourResult = 3
+        let expectedMinuteResult = 30
         
         // Then
         XCTAssertEqual(outputHourResult, expectedHourResult)
@@ -132,16 +132,16 @@ final class TrainingAlarmTest: XCTestCase {
     
     func test_PM_11_30_시간데이터_계산잘되는지() {
         // Given
-        var value = AlarmTimeAppData(hour: "11", minute: "30", dayAndNight: "PM")
+        let value = AlarmTimeAppData(hour: "11", minute: "30", dayAndNight: "PM")
         
         // When
         input.alarmTimeSubject.send(value)
         
-        var outputHourResult = viewModel.trainingPlanRequest.trainingTime.hour
-        var outputMinuteResult = viewModel.trainingPlanRequest.trainingTime.minute
+        let outputHourResult = viewModel.trainingPlanRequest.trainingTime.hour
+        let outputMinuteResult = viewModel.trainingPlanRequest.trainingTime.minute
         
-        var expectedHourResult = 23
-        var expectedMinuteResult = 30
+        let expectedHourResult = 23
+        let expectedMinuteResult = 30
         
         // Then
         XCTAssertEqual(outputHourResult, expectedHourResult)

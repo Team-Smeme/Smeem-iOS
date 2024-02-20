@@ -1,67 +1,122 @@
 //
-//  OnboardingService.swift
+//  OnboardingAPI.swift
 //  Smeem-iOS
 //
-//  Created by 황찬미 on 2023/06/23.
+//  Created by 황찬미 on 2023/06/24.
 //
 
 import Foundation
 import Moya
 
-enum OnboardingService {
-    case trainingGoal
-    case trainingWay(param: String)
-    case onboardingUserPlan(param: TrainingPlanRequest, token: String)
-    case serviceAccept(param: ServiceAcceptRequest, token: String)
-    case checkNickname(param: String, token: String)
-}
-
-extension OnboardingService: BaseTargetType {
-    var path: String {
-        switch self {
-        case .trainingGoal:
-            return URLConstant.trainingGoalsURL
-        case .trainingWay(let type):
-            return URLConstant.trainingGoalsURL+"/\(type)"
-        case .onboardingUserPlan:
-            return URLConstant.userTrainingInfo
-        case .serviceAccept:
-            return URLConstant.userURL
-        case .checkNickname:
-            return URLConstant.checkNickname
+public class OnboardingService {
+    
+    static let shared = OnboardingService()
+    private var provider = MoyaProvider<OnboardingEndPoint>(plugins: [MoyaLoggingPlugin()])
+    
+    init(provider: MoyaProvider<OnboardingEndPoint> = MoyaProvider<OnboardingEndPoint>()) {
+        self.provider = provider
+    }
+    
+    func planList(completion: @escaping (Result<[Goal], SmeemError>) -> ()) {
+        provider.request(.trainingGoal) { response in
+            switch response {
+            case .success(let result):
+                let statusCode = result.statusCode
+                print(statusCode)
+                
+                do {
+                    guard let data = try JSONDecoder().decode(GeneralResponse<TrainingGoalResponse>.self, from: result.data).data?.goals else { return }
+                    print("보여죠", data)
+                    completion(.success(data))
+                    
+                } catch {
+                    let error = NetworkManager.statusCodeErrorHandling(statusCode: statusCode)
+                    completion(.failure(error))
+                }
+                
+            case .failure(_):
+                completion(.failure(.userError))
+            }
         }
     }
     
-    var method: Moya.Method {
-        switch self {
-        case .trainingGoal, .trainingWay, .checkNickname:
-            return .get
-        case .onboardingUserPlan, .serviceAccept:
-            return .patch
+    func trainingWayGetAPI(param: String, completion: @escaping (Result<TrainingWayResponse, SmeemError>) -> ()) {
+        provider.request(.trainingWay(param: param)) { response in
+            switch response {
+            case .success(let result):
+                let statusCode = result.statusCode
+                do {
+                    guard let data = try result.map(GeneralResponse<TrainingWayResponse>.self).data else { return }
+                    completion(.success(data))
+                } catch {
+                    let error = NetworkManager.statusCodeErrorHandling(statusCode: statusCode)
+                    completion(.failure(error))
+                }
+                
+            case .failure(_):
+                completion(.failure(.userError))
+            }
         }
     }
     
-    var task: Moya.Task {
-        switch self {
-        case .trainingGoal, .trainingWay:
-            return .requestPlain
-        case .onboardingUserPlan(let param, _):
-            return .requestJSONEncodable(param)
-        case .serviceAccept(let param, _):
-            return .requestJSONEncodable(param)
-        case .checkNickname(let param, _):
-            return .requestParameters(parameters: ["name": param], encoding: URLEncoding.queryString)
+    func userPlanPathAPI(param: TrainingPlanRequest, accessToken: String, completion: @escaping (Result<GeneralResponse<NilType>, SmeemError>) -> ()) {
+        provider.request(.onboardingUserPlan(param: param, token: accessToken)) { response in
+            switch response {
+            case .success(let result):
+                let statusCode = result.statusCode
+                do {
+                    // TODO : response 형식에 따른 처리 고민 필요
+                    let data = try result.map(GeneralResponse<NilType>.self)
+                    print(data)
+                    completion(.success(data))
+                } catch {
+                    let error = NetworkManager.statusCodeErrorHandling(statusCode: statusCode)
+                    completion(.failure(error))
+                }
+                
+            case .failure(_):
+                completion(.failure(.userError))
+            }
         }
     }
     
-    var headers: [String : String]? {
-        switch self {
-        case .trainingGoal, .trainingWay:
-            return ["Content-Type": "application/json",
-                    "Authorization": ""]
-        case .onboardingUserPlan(_, let token), .serviceAccept(_, let token), .checkNickname(_, let token):
-            return ["Content-Type": "application/json",
-                    "Authorization": "Bearer " + token]
+    func serviceAcceptedPatch(param: ServiceAcceptRequest, accessToken: String, completion: @escaping (Result<ServiceAcceptResponse, SmeemError>) -> ()) {
+        provider.request(.serviceAccept(param: param, token: accessToken)) { response in
+            switch response {
+            case .success(let result):
+                let statusCode = result.statusCode
+                
+                do {
+                    guard let data = try result.map(GeneralResponse<ServiceAcceptResponse>.self).data else { return }
+                    completion(.success(data))
+                } catch {
+                    let error = NetworkManager.statusCodeErrorHandling(statusCode: statusCode)
+                    completion(.failure(error))
+                }
+                
+            case .failure(_):
+                completion(.failure(.userError))
+            }
+        }
+    }
+    
+    func ninknameCheckAPI(userName: String, accessToken: String, completion: @escaping (Result<NicknameCheckResponse, SmeemError>) -> Void) {
+        provider.request(.checkNickname(param: userName, token: accessToken)) { response in
+            switch response {
+            case .success(let result):
+                let statusCode = result.statusCode
+                
+                do {
+                    guard let data = try result.map(GeneralResponse<NicknameCheckResponse>.self).data else { return }
+                    completion(.success(data))
+                } catch {
+                    let error = NetworkManager.statusCodeErrorHandling(statusCode: statusCode)
+                    completion(.failure(error))
+                }
+                
+            case .failure(_):
+                completion(.failure(.userError))
+            }
         }
     }
 }

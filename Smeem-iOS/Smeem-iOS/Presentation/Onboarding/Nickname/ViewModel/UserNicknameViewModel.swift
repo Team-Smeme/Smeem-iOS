@@ -42,7 +42,7 @@ final class UserNicknameViewModel: ViewModel {
             })
             .flatMap { text -> AnyPublisher<Void, Never> in
                 return Future<Void, Never> { promise in
-                    OnboardingAPI.shared.ninknameCheckAPI(userName: text,
+                    OnboardingService.shared.ninknameCheckAPI(userName: text,
                                                           accessToken: UserDefaultsManager.clientAccessToken) { result in
                         switch result {
                         case .success(let response):

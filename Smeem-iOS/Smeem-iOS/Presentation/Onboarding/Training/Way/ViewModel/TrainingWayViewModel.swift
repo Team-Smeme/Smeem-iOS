@@ -34,7 +34,7 @@ final class TrainingWayViewModel: ViewModel {
             })
             .flatMap { _ -> AnyPublisher<TrainingWayAppData, Never> in
                 return Future<TrainingWayAppData, Never> { promise in
-                    OnboardingAPI.shared.trainingWayGetAPI(param: self.target) { result in
+                    OnboardingService.shared.trainingWayGetAPI(param: self.target) { result in
                         switch result {
                         case .success(let response):
                             let appData = self.configureWayData(training: response)

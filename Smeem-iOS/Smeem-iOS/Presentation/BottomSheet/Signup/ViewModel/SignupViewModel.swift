@@ -123,7 +123,7 @@ final class SignupViewModel: ViewModel {
             })
             .flatMap { request -> AnyPublisher<Void, Never> in
                 return Future<Void, Never> { premise in
-                    OnboardingAPI.shared.userPlanPathAPI(param: request.plan, accessToken: request.accessToken) { response in
+                    OnboardingService.shared.userPlanPathAPI(param: request.plan, accessToken: request.accessToken) { response in
                         switch response {
                         case .success(_):
                             UserDefaultsManager.clientAccessToken = request.accessToken
