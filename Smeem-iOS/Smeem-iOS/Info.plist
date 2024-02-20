@@ -2,8 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>DEEPL_API_KEY</key>
-	<string>$(DEEPL_API_KEY)</string>
+	<key>AMPLITUDE_APP_KEY</key>
+	<string>$(AMPLITUDE_APP_KEY)</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -15,6 +15,8 @@
 			</array>
 		</dict>
 	</array>
+	<key>DEEPL_API_KEY</key>
+	<string>$(DEEPL_API_KEY)</string>
 	<key>FirebaseAppDelegateProxyEnabled</key>
 	<false/>
 	<key>FirebaseMessagingAutoInitEnabled</key>
@@ -33,8 +35,6 @@
 	</dict>
 	<key>SERVER_URL</key>
 	<string>$(SERVER_URL)</string>
-	<key>AMPLITUDE_APP_KEY</key>
-	<string>$(AMPLITUDE_APP_KEY)</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Urbanist-SemiBold.otf</string>

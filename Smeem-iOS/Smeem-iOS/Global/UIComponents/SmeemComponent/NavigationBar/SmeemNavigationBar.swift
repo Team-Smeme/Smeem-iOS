@@ -121,9 +121,9 @@ class SmeemNavigationBar: UIView {
         
         switch configuration.layout {
         case .diaryLayout:
-            setButtonLayouts(leftMargin: Constants.horizontalDiaryTextButtonGap.rawValue, rightMargin: Constants.horizontalDiaryTextButtonGap.rawValue)
+            setButtonLayouts(leftMargin: 18, rightMargin: 18)
         case .detailLayout:
-            setButtonLayouts(leftMargin: Constants.horizontalArrowButtonGap.rawValue, rightMargin: Constants.horizontalDiaryTextButtonGap.rawValue)
+            setButtonLayouts(leftMargin: 18, rightMargin: 18)
         case .editLayout, .commentLayout:
             setButtonLayouts(leftMargin: Constants.horizontalEditCommentButtonsGap.rawValue, rightMargin: Constants.horizontalEditCommentButtonsGap.rawValue)
         case .myPageLayout:
@@ -149,7 +149,7 @@ extension SmeemNavigationBar {
     // TODO: 다 cgFoat
     enum Constants: CGFloat {
         case horizontalLeftButtonGap = 12
-        case horizontalDiaryTextButtonGap, horizontalEditCommentButtonsGap = 18
+        case horizontalEditCommentButtonsGap = 18
         case horizontalArrowButtonGap = 20
         case horizontalDotsIconButtonGap = 16
         case horizontalMypageButtonGap = 26

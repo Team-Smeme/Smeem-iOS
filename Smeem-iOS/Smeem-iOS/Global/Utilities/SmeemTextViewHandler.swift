@@ -115,9 +115,12 @@ extension SmeemTextViewHandler: UITextViewDelegate {
         } else if isDisplayingPlaceholder(in: textView) && text == "" {
             // 백스페이스를 눌렀을 때
             // 이전에 입력한 텍스트가 플레이스홀더로 인식되지 않도록 처리
-            textView.text = nil
-            textView.textColor = .smeemBlack
-            return false
+            if updatedText.count >= placeholderTextView.placeholderText?.count ?? 0 {
+                textView.text = placeholderTextView.placeholderText
+                textView.textColor = placeholderTextView.placeholderColor
+                textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
+                return false
+            }
         }
         
         // 추가된 부분: 한 음절만 입력해도 자동으로 추가되는 문제 해결

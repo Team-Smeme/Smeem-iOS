@@ -21,8 +21,8 @@ final class DiaryDetailRandomSubjectView: UIView {
         let label = UILabel()
         label.font = .b1
         label.textColor = .point
-        label.setTextWithLineHeight(lineHeight: 21)
         label.text = "Q."
+        label.setTextWithLineHeight(lineHeight: 22)
         return label
     }()
     

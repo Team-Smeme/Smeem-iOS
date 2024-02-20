@@ -53,8 +53,6 @@ extension StepOneKoreanDiaryViewController {
         
         delegate?.dataBind(topicID: viewModel?.getTopicID(), inputText: inputText ?? "")
         
-        print("데이터바인드 성공", viewModel?.getTopicID())
-        
         self.navigationController?.pushViewController(nextVC, animated: true)
     }
 }
