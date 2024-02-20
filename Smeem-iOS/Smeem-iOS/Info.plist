@@ -66,9 +66,5 @@
 	</array>
 	<key>VERSION</key>
 	<string>$(VERSION)</string>
-	<key>X_NAVER_CLIENT_ID</key>
-	<string>$(X_NAVER_CLIENT_ID)</string>
-	<key>X_NAVER_CLIENT_SECRET</key>
-	<string>$(X_NAVER_CLIENT_SECRET)</string>
 </dict>
 </plist>
