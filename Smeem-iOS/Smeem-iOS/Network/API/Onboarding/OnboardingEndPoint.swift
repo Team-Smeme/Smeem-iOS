@@ -72,6 +72,7 @@ extension OnboardingEndPoint {
         case .trainingGoal:
             return Data(
                 """
+                {
                     "success": true,
                     "message": "학습 목표 리스트 조회 성공",
                     "data": {

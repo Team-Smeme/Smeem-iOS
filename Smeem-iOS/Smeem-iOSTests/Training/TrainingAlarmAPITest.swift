@@ -12,8 +12,8 @@ import Moya
 
 final class TrainingAlarmAPITest: XCTestCase {
     
-    private var sut: OnboardingService!
     private var mockProvider: MoyaProvider<OnboardingEndPoint>!
+    private var sut: OnboardingService!
     
     var viewModel: TrainingAlarmViewModel!
 
@@ -31,25 +31,23 @@ final class TrainingAlarmAPITest: XCTestCase {
         sut = OnboardingService(provider: mockProvider)
     }
     
-//    func test_alarmAPI_잘호출되는지() {
-//        let expectation = XCTestExpectation(description: "request")
-//        
-//        var outputResult: [Goal]!
-//        sut.planList { result in
-//            print("이게 뭔데", result)
-//            switch result {
-//            case .success(let response):
-//                print("네트워크 성공")
-//                outputResult = response
-//                expectation.fulfill()
-//            case .failure(let error):
-//                print("일단 이렇게")
-//            }
-//        }
-//        
-//        wait(for: [expectation], timeout: 2.0)
-//        XCTAssertEqual(outputResult, goalModel)
-//    }
+    func test_alarmAPI_잘호출되는지() {
+        let expectation = XCTestExpectation(description: "request")
+        
+        var outputResult: [Goal]!
+        sut.planList { result in
+            switch result {
+            case .success(let response):
+                outputResult = response
+                expectation.fulfill()
+            case .failure(_):
+                print("에러 없음")
+            }
+        }
+        
+        wait(for: [expectation], timeout: 0.5)
+        XCTAssertEqual(outputResult, goalModel)
+    }
 
     override func tearDownWithError() throws {
         

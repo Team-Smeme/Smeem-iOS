@@ -22,11 +22,9 @@ public class OnboardingService {
             switch response {
             case .success(let result):
                 let statusCode = result.statusCode
-                print(statusCode)
                 
                 do {
-                    guard let data = try JSONDecoder().decode(GeneralResponse<TrainingGoalResponse>.self, from: result.data).data?.goals else { return }
-                    print("보여죠", data)
+                    guard let data = try result.map(GeneralResponse<TrainingGoalResponse>.self).data?.goals else { return }
                     completion(.success(data))
                     
                 } catch {
