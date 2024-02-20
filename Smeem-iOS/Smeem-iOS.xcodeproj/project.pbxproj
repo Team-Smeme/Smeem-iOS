@@ -98,7 +98,6 @@
 		4A6630362A51B0AD00D19CC9 /* EditDiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6630352A51B0AD00D19CC9 /* EditDiaryViewController.swift */; };
 		4A6630392A51E04600D19CC9 /* PatchDiaryRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6630382A51E04600D19CC9 /* PatchDiaryRequest.swift */; };
 		4A7F22252B8241DC0011DECF /* TrainingAlarmViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A07F8E22B821539004185F2 /* TrainingAlarmViewModelTest.swift */; };
-		4A7F22282B825A3C0011DECF /* TrainingAlarmAPITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7F22272B825A3C0011DECF /* TrainingAlarmAPITest.swift */; };
 		4A81C2972ACDAB2C0056E815 /* TrainingGoalsCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A81C2962ACDAB2C0056E815 /* TrainingGoalsCollectionView.swift */; };
 		4A8FFA5029C9E1FD00FB76C0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8FFA4F29C9E1FD00FB76C0 /* AppDelegate.swift */; };
 		4A8FFA5229C9E1FD00FB76C0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8FFA5129C9E1FD00FB76C0 /* SceneDelegate.swift */; };
@@ -152,6 +151,8 @@
 		4AE35E9E2A7FE8CE00465FD5 /* UICollectionViewCell+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE35E9D2A7FE8CE00465FD5 /* UICollectionViewCell+.swift */; };
 		4AEB82952A4CB4F200C1114B /* BadgePopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEB82942A4CB4F100C1114B /* BadgePopupViewController.swift */; };
 		4AF58CE92A4820AA00305248 /* AuthNetworkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF58CE82A4820AA00305248 /* AuthNetworkModel.swift */; };
+		4AF78D9B2B84A1DC0098E1FA /* TrainingAlarmAPITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF78D9A2B84A1DC0098E1FA /* TrainingAlarmAPITest.swift */; };
+		4AF78D9E2B84AB6A0098E1FA /* MockProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF78D9D2B84AB6A0098E1FA /* MockProvider.swift */; };
 		4AFD7C292B600FED00FE7EFF /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AFD7C282B600FED00FE7EFF /* NetworkManager.swift */; };
 		6F294A3E2A26177B00856CC8 /* TrainingGoalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF507742A10CD4D007C62B1 /* TrainingGoalViewController.swift */; };
 		6F294A3F2A26177E00856CC8 /* TrainingGoalCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF507762A10CD96007C62B1 /* TrainingGoalCollectionViewCell.swift */; };
@@ -279,7 +280,6 @@
 		4A6630352A51B0AD00D19CC9 /* EditDiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditDiaryViewController.swift; sourceTree = "<group>"; };
 		4A6630382A51E04600D19CC9 /* PatchDiaryRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatchDiaryRequest.swift; sourceTree = "<group>"; };
 		4A7F22262B8241FD0011DECF /* Smeem-Dev.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Smeem-Dev.xctestplan"; sourceTree = "<group>"; };
-		4A7F22272B825A3C0011DECF /* TrainingAlarmAPITest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingAlarmAPITest.swift; sourceTree = "<group>"; };
 		4A81C2962ACDAB2C0056E815 /* TrainingGoalsCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingGoalsCollectionView.swift; sourceTree = "<group>"; };
 		4A8275D22A1513120083A4AB /* ServiceAcceptViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAcceptViewController.swift; sourceTree = "<group>"; };
 		4A8275D42A1519550083A4AB /* ServiceAcceptCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAcceptCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -336,6 +336,8 @@
 		4AF507742A10CD4D007C62B1 /* TrainingGoalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingGoalViewController.swift; sourceTree = "<group>"; };
 		4AF507762A10CD96007C62B1 /* TrainingGoalCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingGoalCollectionViewCell.swift; sourceTree = "<group>"; };
 		4AF58CE82A4820AA00305248 /* AuthNetworkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthNetworkModel.swift; sourceTree = "<group>"; };
+		4AF78D9A2B84A1DC0098E1FA /* TrainingAlarmAPITest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrainingAlarmAPITest.swift; sourceTree = "<group>"; };
+		4AF78D9D2B84AB6A0098E1FA /* MockProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockProvider.swift; sourceTree = "<group>"; };
 		4AFD7C282B600FED00FE7EFF /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		6F294A472A27818200856CC8 /* HomeViewFloatingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewFloatingViewController.swift; sourceTree = "<group>"; };
 		6F31802E2A24D1DB00089870 /* CalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCell.swift; sourceTree = "<group>"; };
@@ -731,6 +733,7 @@
 		4A07F8D92B821523004185F2 /* Smeem-iOSTests */ = {
 			isa = PBXGroup;
 			children = (
+				4AF78D9C2B84AB5D0098E1FA /* Base */,
 				4A07F8E12B821529004185F2 /* Training */,
 				4A07F8DA2B821523004185F2 /* Smeem_iOSTests.swift */,
 			);
@@ -740,7 +743,8 @@
 		4A07F8E12B821529004185F2 /* Training */ = {
 			isa = PBXGroup;
 			children = (
-				4A07F8E22B821539004185F2 /* TrainingAlarmTest.swift */,
+				4A07F8E22B821539004185F2 /* TrainingAlarmViewModelTest.swift */,
+				4AF78D9A2B84A1DC0098E1FA /* TrainingAlarmAPITest.swift */,
 			);
 			path = Training;
 			sourceTree = "<group>";
@@ -1312,6 +1316,14 @@
 			path = Onboarding;
 			sourceTree = "<group>";
 		};
+		4AF78D9C2B84AB5D0098E1FA /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				4AF78D9D2B84AB6A0098E1FA /* MockProvider.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
 		4AF9E3EF2AC4143500104768 /* Home */ = {
 			isa = PBXGroup;
 			children = (
@@ -1483,8 +1495,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4A7F22282B825A3C0011DECF /* TrainingAlarmAPITest.swift in Sources */,
+				4AF78D9B2B84A1DC0098E1FA /* TrainingAlarmAPITest.swift in Sources */,
 				4A3CFBC32B823A8400059DB3 /* Smeem_iOSTests.swift in Sources */,
+				4AF78D9E2B84AB6A0098E1FA /* MockProvider.swift in Sources */,
 				4A7F22252B8241DC0011DECF /* TrainingAlarmViewModelTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1844,7 +1857,7 @@
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 20240116;
 				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = J5UBGNBDYX;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = K8LLWYQWXD;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Smeem-iOS/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "smeem-dev";
@@ -1863,7 +1876,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "Team.Smeem-iOS-Dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = smeem_debug;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "smeem release";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;

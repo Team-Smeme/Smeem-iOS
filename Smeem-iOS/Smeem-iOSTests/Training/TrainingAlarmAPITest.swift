@@ -10,35 +10,25 @@ import Moya
 
 @testable import Smeem_iOS
 
-final class TrainingAlarmAPITest: XCTestCase {
+final class TrainingAlarmAPITest: XCTestCase, MockProviderProtocol {
     
-    private var mockProvider: MoyaProvider<OnboardingEndPoint>!
-    private var sut: OnboardingService!
+    typealias targetEndPoint = OnboardingEndPoint
+    var sut: OnboardingService!
     
     var viewModel: TrainingAlarmViewModel!
 
     override func setUpWithError() throws {
-        
-        let endpointClosure = { (target: OnboardingEndPoint) -> Endpoint in
-            return Endpoint(url: target.path,
-                            sampleResponseClosure: { .networkResponse(200, target.sampleData) },
-                            method: target.method,
-                            task: target.task,
-                            httpHeaderFields: target.headers)
-        }
-        mockProvider = MoyaProvider<OnboardingEndPoint>(endpointClosure: endpointClosure,
-                                                        stubClosure: MoyaProvider.immediatelyStub)
+        var mockProvider: MoyaProvider<OnboardingEndPoint> = makeProvider()
         sut = OnboardingService(provider: mockProvider)
     }
     
-    func test_alarmAPI_잘호출되는지() {
+    func test_goalList_성공했을때() {
         let expectation = XCTestExpectation(description: "request")
         
         var outputResult: [Goal]!
         sut.planList { result in
             switch result {
             case .success(let response):
-                outputResult = response
                 expectation.fulfill()
             case .failure(_):
                 print("에러 없음")
