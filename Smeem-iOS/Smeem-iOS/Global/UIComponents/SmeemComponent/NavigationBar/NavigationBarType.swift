@@ -23,7 +23,7 @@ enum NavigationBarType {
         case .diaryStepOne:
             return .diaryLayout
         case .diaryStepTwo:
-            return .diaryLayout
+            return .detailLayout
         case .detail:
             return .detailLayout
         case .edit:
