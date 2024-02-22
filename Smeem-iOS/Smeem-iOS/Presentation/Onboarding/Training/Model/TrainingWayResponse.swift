@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct TrainingWayResponse:Codable {
+struct TrainingWayResponse: Codable, Equatable {
     let name: String
     let way: String
     let detail: String

@@ -9,20 +9,32 @@ import Foundation
 import Moya
 
 protocol MockProviderProtocol {
-    associatedtype targetEndPoint: TargetType
-    func makeProvider() -> MoyaProvider<targetEndPoint>
+    associatedtype TargetEndPoint: TargetType
+    func makeSuccessProvider() -> MoyaProvider<TargetEndPoint>
 }
 
 extension MockProviderProtocol {
-    func makeProvider() -> MoyaProvider<targetEndPoint> {
-        let endpointClosure = { (target: targetEndPoint) -> Endpoint in
+    func makeSuccessProvider() -> MoyaProvider<TargetEndPoint> {
+        let endpointClosure = { (target: TargetEndPoint) -> Endpoint in
             return Endpoint(url: target.path,
                             sampleResponseClosure: { .networkResponse(200, target.sampleData) },
                             method: target.method,
                             task: target.task,
                             httpHeaderFields: target.headers)
         }
-        return MoyaProvider<targetEndPoint>(endpointClosure: endpointClosure,
+        return MoyaProvider<TargetEndPoint>(endpointClosure: endpointClosure,
+                                            stubClosure: MoyaProvider.immediatelyStub)
+    }
+    
+    func makeFailureProvider() -> MoyaProvider<TargetEndPoint> {
+        let endpointClosure = { (target: TargetEndPoint) -> Endpoint in
+            return Endpoint(url: target.path,
+                            sampleResponseClosure: { .networkResponse(, target.sampleData) },
+                            method: target.method,
+                            task: target.task,
+                            httpHeaderFields: target.headers)
+        }
+        return MoyaProvider<TargetEndPoint>(endpointClosure: endpointClosure,
                                             stubClosure: MoyaProvider.immediatelyStub)
     }
 }

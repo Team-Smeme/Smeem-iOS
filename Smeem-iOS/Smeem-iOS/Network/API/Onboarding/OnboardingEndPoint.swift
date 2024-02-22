@@ -11,7 +11,7 @@ import Moya
 enum OnboardingEndPoint {
     case trainingGoal
     case trainingWay(param: String)
-    case onboardingUserPlan(param: TrainingPlanRequest, token: String)
+    case trainingUserPlan(param: TrainingPlanRequest, token: String)
     case serviceAccept(param: ServiceAcceptRequest, token: String)
     case checkNickname(param: String, token: String)
 }
@@ -23,7 +23,7 @@ extension OnboardingEndPoint: BaseTargetType {
             return URLConstant.trainingGoalsURL
         case .trainingWay(let type):
             return URLConstant.trainingGoalsURL+"/\(type)"
-        case .onboardingUserPlan:
+        case .trainingUserPlan:
             return URLConstant.userTrainingInfo
         case .serviceAccept:
             return URLConstant.userURL
@@ -36,7 +36,7 @@ extension OnboardingEndPoint: BaseTargetType {
         switch self {
         case .trainingGoal, .trainingWay, .checkNickname:
             return .get
-        case .onboardingUserPlan, .serviceAccept:
+        case .trainingUserPlan, .serviceAccept:
             return .patch
         }
     }
@@ -45,7 +45,7 @@ extension OnboardingEndPoint: BaseTargetType {
         switch self {
         case .trainingGoal, .trainingWay:
             return .requestPlain
-        case .onboardingUserPlan(let param, _):
+        case .trainingUserPlan(let param, _):
             return .requestJSONEncodable(param)
         case .serviceAccept(let param, _):
             return .requestJSONEncodable(param)
@@ -59,7 +59,7 @@ extension OnboardingEndPoint: BaseTargetType {
         case .trainingGoal, .trainingWay:
             return ["Content-Type": "application/json",
                     "Authorization": ""]
-        case .onboardingUserPlan(_, let token), .serviceAccept(_, let token), .checkNickname(_, let token):
+        case .trainingUserPlan(_, let token), .serviceAccept(_, let token), .checkNickname(_, let token):
             return ["Content-Type": "application/json",
                     "Authorization": "Bearer " + token]
         }
@@ -105,9 +105,22 @@ extension OnboardingEndPoint {
                     }
                 }
                 """.utf8
-                )
-            
-        case .onboardingUserPlan:
+            )
+        case .trainingWay:
+            return Data(
+                """
+                {
+                    "success": true,
+                    "message": "학습 목표 조회 성공",
+                    "data": {
+                        "name": "자기계발",
+                        "way": "주 5회 이상 smeem 랜덤 주제로 일기 작성하기",
+                        "detail": "사전 없이 일기 완성\nsmeem 연속 일기 배지 획득"
+                    }
+                }
+                """.utf8
+            )
+        case .trainingUserPlan:
             
             return Data(
                 """
@@ -118,9 +131,36 @@ extension OnboardingEndPoint {
                 }
                 """.utf8
             )
-        default: break
+        case .serviceAccept:
+            return Data(
+                """
+                {
+                    "success": true,
+                    "message": "닉네임 변경 성공",
+                    "data": {
+                        "badges": [
+                            {
+                                "name": "웰컴 배지",
+                                "imageUrl": "https://github.com/Team-Smeme/Smeme-plan/assets/120551217/6b3319cb-4c6f-4bf2-86dd-7576a44b46c7",
+                                "type": "EVENT"
+                            }
+                        ]
+                    }
+                }
+                """.utf8
+            )
+        case .checkNickname:
+            return Data(
+                """
+                {
+                    "success": true,
+                    "message": "닉네임 중복 검사 성공",
+                    "data": {
+                        "isExist": false
+                    }
+                }
+                """.utf8
+            )
         }
-        
-        return Data()
     }
 }

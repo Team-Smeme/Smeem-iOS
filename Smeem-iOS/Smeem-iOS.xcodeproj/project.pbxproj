@@ -151,7 +151,7 @@
 		4AE35E9E2A7FE8CE00465FD5 /* UICollectionViewCell+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE35E9D2A7FE8CE00465FD5 /* UICollectionViewCell+.swift */; };
 		4AEB82952A4CB4F200C1114B /* BadgePopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEB82942A4CB4F100C1114B /* BadgePopupViewController.swift */; };
 		4AF58CE92A4820AA00305248 /* AuthNetworkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF58CE82A4820AA00305248 /* AuthNetworkModel.swift */; };
-		4AF78D9B2B84A1DC0098E1FA /* TrainingAlarmAPITest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF78D9A2B84A1DC0098E1FA /* TrainingAlarmAPITest.swift */; };
+		4AF78D9B2B84A1DC0098E1FA /* OnboardingServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF78D9A2B84A1DC0098E1FA /* OnboardingServiceTest.swift */; };
 		4AF78D9E2B84AB6A0098E1FA /* MockProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF78D9D2B84AB6A0098E1FA /* MockProvider.swift */; };
 		4AFD7C292B600FED00FE7EFF /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AFD7C282B600FED00FE7EFF /* NetworkManager.swift */; };
 		6F294A3E2A26177B00856CC8 /* TrainingGoalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF507742A10CD4D007C62B1 /* TrainingGoalViewController.swift */; };
@@ -336,7 +336,7 @@
 		4AF507742A10CD4D007C62B1 /* TrainingGoalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingGoalViewController.swift; sourceTree = "<group>"; };
 		4AF507762A10CD96007C62B1 /* TrainingGoalCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingGoalCollectionViewCell.swift; sourceTree = "<group>"; };
 		4AF58CE82A4820AA00305248 /* AuthNetworkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthNetworkModel.swift; sourceTree = "<group>"; };
-		4AF78D9A2B84A1DC0098E1FA /* TrainingAlarmAPITest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrainingAlarmAPITest.swift; sourceTree = "<group>"; };
+		4AF78D9A2B84A1DC0098E1FA /* OnboardingServiceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingServiceTest.swift; sourceTree = "<group>"; };
 		4AF78D9D2B84AB6A0098E1FA /* MockProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockProvider.swift; sourceTree = "<group>"; };
 		4AFD7C282B600FED00FE7EFF /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		6F294A472A27818200856CC8 /* HomeViewFloatingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewFloatingViewController.swift; sourceTree = "<group>"; };
@@ -744,7 +744,7 @@
 			isa = PBXGroup;
 			children = (
 				4A07F8E22B821539004185F2 /* TrainingAlarmViewModelTest.swift */,
-				4AF78D9A2B84A1DC0098E1FA /* TrainingAlarmAPITest.swift */,
+				4AF78D9A2B84A1DC0098E1FA /* OnboardingServiceTest.swift */,
 			);
 			path = Training;
 			sourceTree = "<group>";
@@ -1495,7 +1495,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4AF78D9B2B84A1DC0098E1FA /* TrainingAlarmAPITest.swift in Sources */,
+				4AF78D9B2B84A1DC0098E1FA /* OnboardingServiceTest.swift in Sources */,
 				4A3CFBC32B823A8400059DB3 /* Smeem_iOSTests.swift in Sources */,
 				4AF78D9E2B84AB6A0098E1FA /* MockProvider.swift in Sources */,
 				4A7F22252B8241DC0011DECF /* TrainingAlarmViewModelTest.swift in Sources */,
@@ -1873,7 +1873,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 2.0.1;
-				PRODUCT_BUNDLE_IDENTIFIER = "Team.Smeem-iOS-Dev";
+				PRODUCT_BUNDLE_IDENTIFIER = "Team.Smeem-dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "smeem release";
@@ -1901,7 +1901,7 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = J5UBGNBDYX;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Smeem-iOS/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = smeem;
+				INFOPLIST_KEY_CFBundleDisplayName = "smeem-dev";
 				INFOPLIST_KEY_NSUserTrackingUsageDescription = "사용자의 데이터는 개인화된 광고 제공 목적으로 사용됩니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
