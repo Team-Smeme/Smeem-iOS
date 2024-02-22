@@ -102,8 +102,7 @@ class SmeemNavigationBar: UIView {
         
         rightButton.snp.makeConstraints { make in
             make.trailing.equalToSuperview().offset(-rightMargin)
-            make.width.equalTo(convertByWidthRatio(28))
-            make.height.equalTo(convertByWidthRatio(19))
+            make.size.equalTo(convertByWidthRatio(40))
         }
     }
     
