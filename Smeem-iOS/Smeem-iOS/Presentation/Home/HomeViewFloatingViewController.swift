@@ -11,6 +11,10 @@ import SnapKit
 
 final class HomeViewFloatingViewController: UIViewController {
     
+    // MARK: - Property
+    
+    private let diaryViewControllerFactory = DiaryViewControllerFactory(diaryViewFactory: DiaryViewFactory(), viewModel: DiaryViewModel())
+    
     // MARK: - UI Property
     
     private let buttonStackView: UIStackView = {
@@ -161,7 +165,7 @@ final class HomeViewFloatingViewController: UIViewController {
     
     @objc func foreignDiaryButtonDidTap(_ gesture: UITapGestureRecognizer) {
         AmplitudeManager.shared.track(event: AmplitudeConstant.diary.for_writing_click.event)
-        let nextVC = ForeignDiaryViewController.createWithForeignDiaryiew()
+        let nextVC = diaryViewControllerFactory.makeForeignDiaryViewController()
         nextVC.modalTransitionStyle = .coverVertical
         nextVC.modalPresentationStyle = .fullScreen
         present(nextVC, animated: true)
@@ -169,7 +173,7 @@ final class HomeViewFloatingViewController: UIViewController {
     
     @objc func koreanDiaryButtonDidTap(_ gesture: UITapGestureRecognizer) {
         AmplitudeManager.shared.track(event: AmplitudeConstant.diary.kor_writing_click.event)
-        let nextVC = StepOneKoreanDiaryViewController.createWithStepOneKoreanDiaryView()
+        let nextVC = diaryViewControllerFactory.makeStepOneKoreanDiaryViewController()
         let navigationController = UINavigationController(rootViewController: nextVC)
         navigationController.modalTransitionStyle = .coverVertical
         navigationController.modalPresentationStyle = .fullScreen
