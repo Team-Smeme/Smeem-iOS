@@ -11,25 +11,27 @@ import Moya
 public class OnboardingService {
     
     static let shared = OnboardingService()
-    private var provider = MoyaProvider<OnboardingEndPoint>(plugins: [MoyaLoggingPlugin()])
+    
+    private var provider: MoyaProvider<OnboardingEndPoint>!
     
     init(provider: MoyaProvider<OnboardingEndPoint> = MoyaProvider<OnboardingEndPoint>()) {
         self.provider = provider
     }
     
-    func planList(completion: @escaping (Result<[Goal], SmeemError>) -> ()) {
+    func trainingGoalGetAPI(completion: @escaping (Result<[Goal], SmeemError>) -> ()) {
         provider.request(.trainingGoal) { response in
             switch response {
             case .success(let result):
-                let statusCode = result.statusCode
-                
                 do {
-                    guard let data = try result.map(GeneralResponse<TrainingGoalResponse>.self).data?.goals else { return }
+                    try NetworkManager.statusCodeErrorHandling(statusCode: result.statusCode)
+                    guard let data = try? result.map(GeneralResponse<TrainingGoalResponse>.self).data?.goals else {
+                        throw SmeemError.clientError
+                    }
                     completion(.success(data))
                     
-                } catch {
-                    let error = NetworkManager.statusCodeErrorHandling(statusCode: statusCode)
-                    completion(.failure(error))
+                } catch let error {
+                    guard let smeemError = error as? SmeemError else { return }
+                    completion(.failure(smeemError))
                 }
                 
             case .failure(_):
@@ -42,12 +44,14 @@ public class OnboardingService {
         provider.request(.trainingWay(param: param)) { response in
             switch response {
             case .success(let result):
-                let statusCode = result.statusCode
                 do {
-                    guard let data = try result.map(GeneralResponse<TrainingWayResponse>.self).data else { return }
+                    try NetworkManager.statusCodeErrorHandling(statusCode: result.statusCode)
+                    guard let data = try? result.map(GeneralResponse<TrainingWayResponse>.self).data else {
+                        throw SmeemError.clientError
+                    }
                     completion(.success(data))
                 } catch {
-                    let error = NetworkManager.statusCodeErrorHandling(statusCode: statusCode)
+                    guard let error = error as? SmeemError else { return }
                     completion(.failure(error))
                 }
                 
@@ -58,17 +62,18 @@ public class OnboardingService {
     }
     
     func userPlanPathAPI(param: TrainingPlanRequest, accessToken: String, completion: @escaping (Result<GeneralResponse<NilType>, SmeemError>) -> ()) {
-        provider.request(.onboardingUserPlan(param: param, token: accessToken)) { response in
+        provider.request(.trainingUserPlan(param: param, token: accessToken)) { response in
             switch response {
             case .success(let result):
-                let statusCode = result.statusCode
                 do {
                     // TODO : response 형식에 따른 처리 고민 필요
-                    let data = try result.map(GeneralResponse<NilType>.self)
-                    print(data)
+                    try NetworkManager.statusCodeErrorHandling(statusCode: result.statusCode)
+                    guard let data = try? result.map(GeneralResponse<NilType>.self) else {
+                        throw SmeemError.clientError
+                    }
                     completion(.success(data))
                 } catch {
-                    let error = NetworkManager.statusCodeErrorHandling(statusCode: statusCode)
+                    guard let error = error as? SmeemError else { return }
                     completion(.failure(error))
                 }
                 
@@ -82,13 +87,14 @@ public class OnboardingService {
         provider.request(.serviceAccept(param: param, token: accessToken)) { response in
             switch response {
             case .success(let result):
-                let statusCode = result.statusCode
-                
                 do {
-                    guard let data = try result.map(GeneralResponse<ServiceAcceptResponse>.self).data else { return }
+                    try NetworkManager.statusCodeErrorHandling(statusCode: result.statusCode)
+                    guard let data = try? result.map(GeneralResponse<ServiceAcceptResponse>.self).data else {
+                        throw SmeemError.clientError
+                    }
                     completion(.success(data))
                 } catch {
-                    let error = NetworkManager.statusCodeErrorHandling(statusCode: statusCode)
+                    guard let error = error as? SmeemError else { return }
                     completion(.failure(error))
                 }
                 
@@ -102,13 +108,14 @@ public class OnboardingService {
         provider.request(.checkNickname(param: userName, token: accessToken)) { response in
             switch response {
             case .success(let result):
-                let statusCode = result.statusCode
-                
                 do {
-                    guard let data = try result.map(GeneralResponse<NicknameCheckResponse>.self).data else { return }
+                    try NetworkManager.statusCodeErrorHandling(statusCode: result.statusCode)
+                    guard let data = try? result.map(GeneralResponse<NicknameCheckResponse>.self).data else {
+                        throw SmeemError.clientError
+                    }
                     completion(.success(data))
                 } catch {
-                    let error = NetworkManager.statusCodeErrorHandling(statusCode: statusCode)
+                    guard let error = error as? SmeemError else { return }
                     completion(.failure(error))
                 }
                 

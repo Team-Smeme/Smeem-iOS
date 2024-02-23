@@ -38,7 +38,7 @@ final class TrainingGoalViewModel: ViewModel {
             })
             .flatMap { _ -> AnyPublisher<[Goal], Never> in
                 return Future<[Goal], Never> { promise in
-                    OnboardingService.shared.planList { result in
+                    OnboardingService.shared.trainingGoalGetAPI { result in
                         switch result {
                         case .success(let response):
                             promise(.success(response))

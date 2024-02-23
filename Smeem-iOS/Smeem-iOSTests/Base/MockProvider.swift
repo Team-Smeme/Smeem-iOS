@@ -29,7 +29,7 @@ extension MockProviderProtocol {
     func makeFailureProvider() -> MoyaProvider<TargetEndPoint> {
         let endpointClosure = { (target: TargetEndPoint) -> Endpoint in
             return Endpoint(url: target.path,
-                            sampleResponseClosure: { .networkResponse(, target.sampleData) },
+                            sampleResponseClosure: { .networkResponse(200, target.sampleData) },
                             method: target.method,
                             task: target.task,
                             httpHeaderFields: target.headers)
