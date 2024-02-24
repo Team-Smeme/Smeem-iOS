@@ -13,6 +13,8 @@ import KakaoSDKUser
 
 final class SignupViewModel: ViewModel {
     
+    private let provider = OnboardingService()
+    
     struct Input {
         let kakaoLoginTapped: PassthroughSubject<Void, Never>
         let appleLoginSubject: PassthroughSubject<String, Never>
@@ -123,7 +125,7 @@ final class SignupViewModel: ViewModel {
             })
             .flatMap { request -> AnyPublisher<Void, Never> in
                 return Future<Void, Never> { premise in
-                    OnboardingService.shared.userPlanPathAPI(param: request.plan, accessToken: request.accessToken) { response in
+                    self.provider.userPlanPathAPI(param: request.plan, accessToken: request.accessToken) { response in
                         switch response {
                         case .success(_):
                             UserDefaultsManager.clientAccessToken = request.accessToken

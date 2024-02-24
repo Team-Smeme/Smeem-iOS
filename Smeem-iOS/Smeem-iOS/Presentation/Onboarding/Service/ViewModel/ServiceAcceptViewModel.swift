@@ -21,7 +21,7 @@ struct cellStateModel {
 
 final class ServiceAcceptViewModel: ViewModel {
     
-    private var provider = OnboardingService()
+    private let provider = OnboardingService()
     
     struct Input {
         let totalViewTapped: PassthroughSubject<Void, Never>
