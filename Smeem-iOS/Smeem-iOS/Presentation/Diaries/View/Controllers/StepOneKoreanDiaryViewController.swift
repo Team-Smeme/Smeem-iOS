@@ -41,7 +41,7 @@ extension StepOneKoreanDiaryViewController {
     // MARK: - Action Helpers
     
     private func handleRightNavigationButton() {
-        let diaryViewControllerFactory = DiaryViewControllerFactory(diaryViewFactory: DiaryViewFactory(), viewModel: DiaryViewModel())
+        let diaryViewControllerFactory = DiaryViewControllerFactory(diaryViewFactory: DiaryViewFactory(), viewModel: DiaryViewModel(model: DiaryModel()))
         let nextVC = diaryViewControllerFactory.makeStepTwoKoreanDiaryViewController()
         delegate = nextVC
         
@@ -64,9 +64,9 @@ extension StepOneKoreanDiaryViewController: NavigationBarActionDelegate {
     }
     
     func didTapRightButton() {
-        if viewModel?.isTextValid.value == true {
+        if viewModel?.onUpdateTextValidation.value == true {
             if viewModel?.isRandomTopicActive.value == false {
-                viewModel?.topicID = nil
+                viewModel?.updateTopicID(topicID: nil)
             }
             rootView?.inputTextView.resignFirstResponder()
             handleRightNavigationButton()

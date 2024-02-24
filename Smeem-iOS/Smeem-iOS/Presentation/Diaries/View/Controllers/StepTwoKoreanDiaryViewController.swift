@@ -33,14 +33,14 @@ extension StepTwoKoreanDiaryViewController {
     }
     
     private func handleHintButton() {
-        guard let isHintShowed = viewModel?.isHintShowed.value else { return }
+        guard let isHintShowed = viewModel?.onUpdateHintButton.value else { return }
         
         rootView?.bottomView.updateHintButtonImage(isHintShowed)
         
         if isHintShowed {
             postDeepLApi(diaryText: rootView?.configuration.layoutConfig?.getHintViewText() ?? "")
         } else {
-            rootView?.configuration.layoutConfig?.hintTextView.text = viewModel?.hintText
+            rootView?.configuration.layoutConfig?.hintTextView.text = viewModel?.model.hintText
         }
     }
 }
@@ -53,7 +53,7 @@ extension StepTwoKoreanDiaryViewController: NavigationBarActionDelegate {
     }
     
     func didTapRightButton() {
-        if viewModel?.isTextValid.value == true {
+        if viewModel?.onUpdateTextValidation.value == true {
             // TODO: 다듬읍시다..
             rootView?.inputTextView.resignFirstResponder()
             viewModel?.postDiaryAPI { postDiaryResponse in
@@ -70,7 +70,7 @@ extension StepTwoKoreanDiaryViewController: NavigationBarActionDelegate {
 
 extension StepTwoKoreanDiaryViewController: DataBindProtocol {
     func dataBind(topicID: Int?, inputText: String) {
-        viewModel?.topicID = topicID
+        viewModel?.updateTopicID(topicID: topicID)
         rootView?.configuration.layoutConfig?.hintTextView.text = inputText
     }
 }
@@ -90,7 +90,7 @@ extension StepTwoKoreanDiaryViewController: HintActionDelegate {
 extension StepTwoKoreanDiaryViewController {
     func postDeepLApi(diaryText: String) {
         DeepLAPI.shared.postTargetText(text: diaryText) { [weak self] response in
-            self?.viewModel?.hintText = diaryText
+            self?.viewModel?.updateHintText(hintText: diaryText)
             self?.rootView?.configuration.layoutConfig?.hintTextView.text.removeAll()
             self?.rootView?.configuration.layoutConfig?.hintTextView.text = response?.translations.first?.text
         }

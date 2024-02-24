@@ -14,36 +14,34 @@ struct KeyboardInfo {
 
 // MARK: - DiaryViewModel
 
-class DiaryViewModel {
+final class DiaryViewModel {
+    
+    private (set) var model: DiaryModel
     
     private (set) var isRandomTopicActive: Observable<Bool> = Observable(false)
-    private (set) var isTextValid: Observable<Bool> = Observable(false)
+    private (set) var onUpdateTextValidation: Observable<Bool> = Observable(false)
     private (set) var inputText: Observable<String> = Observable("")
-    private (set) var isHintShowed: Observable<Bool> = Observable(false)
+    private (set) var onUpdateHintButton: Observable<Bool> = Observable(false)
     private (set) var onUpdateRandomTopic: Observable<Bool> = Observable(false)
     private (set) var onUpdateTopicContent: Observable<String> = Observable("")
     private (set) var keyboardInfo: Observable<KeyboardInfo?> = Observable(nil)
     private (set) var toastType: Observable<ToastViewType?> = Observable(nil)
+//    private (set) var onUpdateTopicID: Observable<Int> = Observable(0)
     
-    var topicID: Int? = nil
-    var topicContent: String?
-    var diaryID: Int?
-    var badgePopupContent: [PopupBadge]?
-    var isTopicCalled: Bool = false
-    var hintText: String?
-    
-    var onUpdateTextValidation: ((Bool) -> Void)?
-    var onUpdateHintButton: ((Bool) -> Void)?
     var onUpdateInputText: ((String) -> Void)?
     var onUpdateTopicID: ((String) -> Void)?
     var onError: ((Error) -> Void)?
+    
+    init(model: DiaryModel) {
+        self.model = model
+    }
 }
 
 // MARK: - Extensions
 
 extension DiaryViewModel {
     func updateTextValidation(_ isValid: Bool) {
-        isTextValid.value = isValid
+        onUpdateTextValidation.value = isValid
     }
     
     func toggleRandomTopic() {
@@ -51,11 +49,11 @@ extension DiaryViewModel {
     }
     
     func toggleIsHintShowed() {
-        isHintShowed.value = !isHintShowed.value
+        onUpdateHintButton.value = !onUpdateHintButton.value
     }
     
     func getTopicID() -> Int? {
-        return topicID ?? nil
+        return model.topicID ?? nil
     }
     
     func getInputText() -> String {
@@ -69,13 +67,24 @@ extension DiaryViewModel {
     func setToastViewType(_ type: ToastViewType) {
         toastType.value = type
     }
+    
+    func updateModel(isTopicCalled: Bool, topicContent: String?) {
+        model.isTopicCalled = isTopicCalled
+        model.topicContent = topicContent
+    }
+    
+    func updateTopicID(topicID: Int?) {
+        model.topicID = topicID
+    }
+    
+    func updateHintText(hintText: String) {
+        model.hintText = hintText
+    }
 }
 
 // MARK: - Action Helpers
 
 extension DiaryViewModel {
-    
-    // MARK: TextValidation
     func isTextValid(text: String, viewType: DiaryViewType) -> Bool {
         let smeemTextViewHandler = SmeemTextViewHandler()
         
@@ -111,8 +120,8 @@ extension DiaryViewModel {
             switch result {
             case .success(let response):
                 
-                self?.topicID = response.topicId
-                self?.topicContent = response.content
+                self?.model.topicID = response.topicId
+                self?.model.topicContent = response.content
                 self?.onUpdateTopicContent.value = response.content
             case .failure(let error):
                 self?.onError?(error)
@@ -128,8 +137,8 @@ extension DiaryViewModel {
             
             switch result {
             case .success(let response):
-                self.diaryID = response.diaryID
-                self.badgePopupContent = response.badges
+                self.model.diaryID = response.diaryID
+                self.model.badgePopupContent = response.badges
                 completion(response)
                 
             case .failure(let error):

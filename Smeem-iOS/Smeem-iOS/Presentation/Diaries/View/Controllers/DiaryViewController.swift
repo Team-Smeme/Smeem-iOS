@@ -77,14 +77,14 @@ extension DiaryViewController {
     }
     
     private func removeListeners() {
-        viewModel?.isTextValid.listener = nil
+        viewModel?.onUpdateTextValidation.listener = nil
         viewModel?.onUpdateRandomTopic.listener = nil
     }
     
     // MARK: - Setups
     
     private func bindTextValidationStatus() {
-        viewModel?.isTextValid.bind(listener: { [weak self] isValid in
+        viewModel?.onUpdateTextValidation.bind(listener: { [weak self] isValid in
             self?.rootView?.navigationView.updateRightButton(isValid: isValid)
         })
     }
@@ -107,6 +107,12 @@ extension DiaryViewController {
         })
     }
     
+//    private func bindTopicID() {
+//        viewModel?.onUpdateTopicID.bind(listener: { [weak self] id in
+//            self?.viewModel?.onUpdateTopicID(id)
+//        })
+//    }
+    
     private func setupKeyboardHandler() {
         guard let rootView = rootView else { return }
         keyboardHandler = KeyboardLayoutAndScrollingHandler(targetView: rootView.inputTextView, bottomView: rootView.bottomView)
@@ -122,14 +128,12 @@ extension DiaryViewController {
         rootView?.bottomView.updateRandomTopicButtonImage(isActive)
         
         if isActive {
-            if viewModel?.topicContent?.isEmpty == nil {
+            if viewModel?.model.topicContent?.isEmpty == nil {
                 viewModel?.callRandomTopicAPI()
             }
             updateViewWithRandomTopicActive()
         } else {
-            viewModel?.isTopicCalled = false
-            viewModel?.topicContent = nil
-            viewModel?.topicID = nil
+            viewModel?.updateModel(isTopicCalled: false, topicContent: nil)
         }
     }
     
@@ -195,7 +199,7 @@ extension DiaryViewController: ToolTipDelegate {
 extension DiaryViewController {
     func handleInitialRandomTopicApiCall() {
         viewModel?.callRandomTopicAPI()
-        self.rootView?.randomTopicView?.setData(contentText: viewModel?.topicContent ?? "")
+        self.rootView?.randomTopicView?.setData(contentText: viewModel?.model.topicContent ?? "")
     }
     
     func handlePostDiaryResponse(_ response: PostDiaryResponse?) {

@@ -41,9 +41,9 @@ extension ForeignDiaryViewController: NavigationBarActionDelegate {
     }
     
     func didTapRightButton() {
-        if viewModel?.isTextValid.value == true {
+        if viewModel?.onUpdateTextValidation.value == true {
             if viewModel?.isRandomTopicActive.value == false {
-                viewModel?.topicID = nil
+                viewModel?.updateTopicID(topicID: nil)
             }
             viewModel?.inputText.value = rootView?.inputTextView.text ?? ""
             rootView?.inputTextView.resignFirstResponder()

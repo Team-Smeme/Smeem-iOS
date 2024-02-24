@@ -16,6 +16,7 @@
 		371107E72ACBED3C007A4AC2 /* DiaryViewConfigurationBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371107E62ACBED3C007A4AC2 /* DiaryViewConfigurationBuilder.swift */; };
 		371107E92ACC7E3A007A4AC2 /* DiaryLayoutConfigurations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371107E82ACC7E3A007A4AC2 /* DiaryLayoutConfigurations.swift */; };
 		37144C512B88E949008565C4 /* DiaryViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37144C502B88E949008565C4 /* DiaryViewControllerFactory.swift */; };
+		37144C582B890923008565C4 /* DiaryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37144C572B890923008565C4 /* DiaryModel.swift */; };
 		371E94162A87B83D0098280F /* NextButtonDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371E94152A87B83D0098280F /* NextButtonDelegate.swift */; };
 		371E94192A87DA960098280F /* EditHowGoalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371E94182A87DA960098280F /* EditHowGoalViewController.swift */; };
 		3728B8D32A2CFED300EF4CF8 /* ForeignDiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3728B8D22A2CFED300EF4CF8 /* ForeignDiaryViewController.swift */; };
@@ -181,6 +182,7 @@
 		371107E62ACBED3C007A4AC2 /* DiaryViewConfigurationBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryViewConfigurationBuilder.swift; sourceTree = "<group>"; };
 		371107E82ACC7E3A007A4AC2 /* DiaryLayoutConfigurations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryLayoutConfigurations.swift; sourceTree = "<group>"; };
 		37144C502B88E949008565C4 /* DiaryViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryViewControllerFactory.swift; sourceTree = "<group>"; };
+		37144C572B890923008565C4 /* DiaryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryModel.swift; sourceTree = "<group>"; };
 		371E94152A87B83D0098280F /* NextButtonDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextButtonDelegate.swift; sourceTree = "<group>"; };
 		371E94182A87DA960098280F /* EditHowGoalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditHowGoalViewController.swift; sourceTree = "<group>"; };
 		3728B8D22A2CFED300EF4CF8 /* ForeignDiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForeignDiaryViewController.swift; sourceTree = "<group>"; };
@@ -389,6 +391,7 @@
 		37144C4F2B88E8F4008565C4 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				37144C572B890923008565C4 /* DiaryModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1503,6 +1506,7 @@
 				37035CF92AF2ADD2008EE521 /* DiaryViewModel.swift in Sources */,
 				4A004D5E2B4EE2B4003C8936 /* MyPageService.swift in Sources */,
 				6F294A452A2617B000856CC8 /* UITextField+.swift in Sources */,
+				37144C582B890923008565C4 /* DiaryModel.swift in Sources */,
 				37A574C829FF6F1C00312453 /* UIView+.swift in Sources */,
 				4A07F8AF2B7B58B7004185F2 /* AuthModel.swift in Sources */,
 				37A574D029FF9AEE00312453 /* UILabel+.swift in Sources */,

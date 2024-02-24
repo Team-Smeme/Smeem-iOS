@@ -13,7 +13,7 @@ final class HomeViewFloatingViewController: UIViewController {
     
     // MARK: - Property
     
-    private let diaryViewControllerFactory = DiaryViewControllerFactory(diaryViewFactory: DiaryViewFactory(), viewModel: DiaryViewModel())
+    private let diaryViewControllerFactory = DiaryViewControllerFactory(diaryViewFactory: DiaryViewFactory(), viewModel: DiaryViewModel(model: DiaryModel()))
     
     // MARK: - UI Property
     
