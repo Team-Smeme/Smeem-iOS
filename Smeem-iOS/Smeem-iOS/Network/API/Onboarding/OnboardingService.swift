@@ -8,9 +8,7 @@
 import Foundation
 import Moya
 
-public class OnboardingService {
-    
-    static let shared = OnboardingService()
+final class OnboardingService {
     
     private var provider: MoyaProvider<OnboardingEndPoint>!
     

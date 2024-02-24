@@ -10,6 +10,8 @@ import Combine
 
 final class UserNicknameViewModel: ViewModel {
     
+    private let provider = OnboardingService()
+    
     struct Input {
         let textFieldSubject: PassthroughSubject<String, Never>
         let nextButtonTapped: PassthroughSubject<String, Never>
@@ -42,7 +44,7 @@ final class UserNicknameViewModel: ViewModel {
             })
             .flatMap { text -> AnyPublisher<Void, Never> in
                 return Future<Void, Never> { promise in
-                    OnboardingService.shared.ninknameCheckAPI(userName: text,
+                    self.provider.ninknameCheckAPI(userName: text,
                                                           accessToken: UserDefaultsManager.clientAccessToken) { result in
                         switch result {
                         case .success(let response):

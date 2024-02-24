@@ -24,6 +24,7 @@ final class TrainingWayViewModel: ViewModel {
     
     private let errorSubject = PassthroughSubject<SmeemError, Never>()
     private let loadingViewSubject = PassthroughSubject<Bool, Never>()
+    private let provider = OnboardingService()
     
     var target = ""
     
@@ -34,7 +35,7 @@ final class TrainingWayViewModel: ViewModel {
             })
             .flatMap { _ -> AnyPublisher<TrainingWayAppData, Never> in
                 return Future<TrainingWayAppData, Never> { promise in
-                    OnboardingService.shared.trainingWayGetAPI(param: self.target) { result in
+                    self.provider.trainingWayGetAPI(param: self.target) { result in
                         switch result {
                         case .success(let response):
                             let appData = self.configureWayData(training: response)

@@ -41,6 +41,7 @@ final class TrainingAlarmViewModel: ViewModel {
                                                                              minute: 0),
                                                   hasAlarm: true)
     private var authType = AuthType.signup
+    private let provider = OnboardingService()
     
     func transform(input: Input) -> Output {
         input.viewWillAppearSubject
@@ -99,8 +100,8 @@ final class TrainingAlarmViewModel: ViewModel {
             .flatMap { _ -> AnyPublisher<Void, Never> in
                 return Future<Void, Never> { promise in
                     // 온보딩 이탈 가능성 있기 때문에 clinetAccessToken 값 저장
-                    OnboardingService.shared.userPlanPathAPI(param: self.trainingPlanRequest,
-                                                         accessToken: UserDefaultsManager.clientAccessToken) { result in
+                    self.provider.userPlanPathAPI(param: self.trainingPlanRequest,
+                                                  accessToken: UserDefaultsManager.clientAccessToken) { result in
                         
                         switch result {
                         case .success(_):
