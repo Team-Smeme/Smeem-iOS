@@ -115,32 +115,37 @@ final class TrainingGoalViewController: BaseViewController {
         let output = viewModel.transform(input: input)
         
         output.viewWillappearResult
-            .sink { response in
-                self.trainingGoalCollectionView.planGoalArray = response
-                self.trainingGoalCollectionView.reloadData()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] response in
+                self?.trainingGoalCollectionView.planGoalArray = response
+                self?.trainingGoalCollectionView.reloadData()
             }
             .store(in: &cancelbag)
         
         output.cellResult
-            .sink { type in
-                self.nextButton.changeButtonType(buttonType: type)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] type in
+                self?.nextButton.changeButtonType(buttonType: type)
             }
             .store(in: &cancelbag)
         
         output.nextButtonResult
-            .sink { target in
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] target in
                 let howOnboardingVC = TrainingWayViewController(target: target)
-                self.navigationController?.pushViewController(howOnboardingVC, animated: true)
+                self?.navigationController?.pushViewController(howOnboardingVC, animated: true)
             }
             .store(in: &cancelbag)
         
         output.errorResult
-            .sink { error in
-                self.showToast(toastType: .smeemErrorToast(message: error))
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] error in
+                self?.showToast(toastType: .smeemErrorToast(message: error))
             }
             .store(in: &cancelbag)
         
         output.loadingViewResult
+            .receive(on: DispatchQueue.main)
             .sink { isShown in
                 isShown ? SmeemLoadingView.showLoading() : SmeemLoadingView.hideLoading()
             }

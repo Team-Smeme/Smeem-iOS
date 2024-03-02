@@ -16,7 +16,7 @@ enum AlarmType {
 
 final class TrainingAlarmViewController: BaseViewController {
     
-    private let viewModel = TrainingAlarmViewModel()
+    private let viewModel = TrainingAlarmViewModel(provider: OnboardingService())
     
     // MARK: Publisher
     
@@ -131,14 +131,14 @@ final class TrainingAlarmViewController: BaseViewController {
     
     private func bind() {
         laterButton.tapPublisher
-            .sink { _ in
-                self.alarmButtonTapped.send(.alarmOff)
+            .sink { [weak self] _ in
+                self?.alarmButtonTapped.send(.alarmOff)
             }
             .store(in: &cancelBag)
         
         completeButton.tapPublisher
-            .sink { _ in
-                self.alarmButtonTapped.send(.alarmOn)
+            .sink { [weak self] _ in
+                self?.alarmButtonTapped.send(.alarmOn)
             }
             .store(in: &cancelBag)
         
@@ -151,46 +151,52 @@ final class TrainingAlarmViewController: BaseViewController {
         let output = viewModel.transform(input: input)
         
         output.buttonTypeResult
-            .sink { type in
-                self.completeButton.changeButtonType(buttonType: type)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] type in
+                self?.completeButton.changeButtonType(buttonType: type)
             }
             .store(in: &cancelBag)
         
         output.alarmResult
-            .sink { _ in
-                self.requestNotificationPermission()
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.requestNotificationPermission()
             }
             .store(in: &cancelBag)
         
         output.bottomSheetResult
-            .sink { request in
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] request in
                 let signupBottomSheetVC = SignupBottomSheetViewController(request: request)
                 let navigationController = UINavigationController(rootViewController: signupBottomSheetVC)
                 navigationController.modalPresentationStyle = .overFullScreen
                 
-                self.present(navigationController, animated: false) {
-                    signupBottomSheetVC.bottomSheetView.frame.origin.y = self.view.frame.height
+                self?.present(navigationController, animated: false) {
+                    signupBottomSheetVC.bottomSheetView.frame.origin.y = (self?.view.frame.height ?? 0)
                     UIView.animate(withDuration: 0.3) {
-                        signupBottomSheetVC.bottomSheetView.frame.origin.y = self.view.frame.height-282
+                        signupBottomSheetVC.bottomSheetView.frame.origin.y = (self?.view.frame.height ?? 0)-282
                     }
                 }
             }
             .store(in: &cancelBag)
         
         output.nicknameResult
-            .sink { _ in
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
                 let userNicknameVC = UserNicknameViewController()
-                self.navigationController?.pushViewController(userNicknameVC, animated: true)
+                self?.navigationController?.pushViewController(userNicknameVC, animated: true)
             }
             .store(in: &cancelBag)
         
         output.errorResult
-            .sink { error in
-                self.showToast(toastType: .smeemErrorToast(message: error))
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] error in
+                self?.showToast(toastType: .smeemErrorToast(message: error))
             }
             .store(in: &cancelBag)
         
         output.loadingViewResult
+            .receive(on: DispatchQueue.main)
             .sink { isShown in
                 isShown ? SmeemLoadingView.showLoading() : SmeemLoadingView.hideLoading()
             }

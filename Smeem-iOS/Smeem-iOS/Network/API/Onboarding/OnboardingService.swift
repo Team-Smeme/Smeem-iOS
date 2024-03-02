@@ -1,67 +1,151 @@
 //
-//  OnboardingService.swift
+//  OnboardingAPI.swift
 //  Smeem-iOS
 //
-//  Created by 황찬미 on 2023/06/23.
+//  Created by 황찬미 on 2023/06/24.
 //
 
 import Foundation
 import Moya
+import Combine
 
-enum OnboardingService {
-    case trainingGoal
-    case trainingWay(param: String)
-    case onboardingUserPlan(param: TrainingPlanRequest, token: String)
-    case serviceAccept(param: ServiceAcceptRequest, token: String)
-    case checkNickname(param: String, token: String)
-}
-
-extension OnboardingService: BaseTargetType {
-    var path: String {
-        switch self {
-        case .trainingGoal:
-            return URLConstant.trainingGoalsURL
-        case .trainingWay(let type):
-            return URLConstant.trainingGoalsURL+"/\(type)"
-        case .onboardingUserPlan:
-            return URLConstant.userTrainingInfo
-        case .serviceAccept:
-            return URLConstant.userURL
-        case .checkNickname:
-            return URLConstant.checkNickname
+final class OnboardingService: OnboardingServiceProtocol {
+    
+    var provider: MoyaProvider<OnboardingEndPoint>!
+    
+    init(provider: MoyaProvider<OnboardingEndPoint> = MoyaProvider<OnboardingEndPoint>()) {
+        self.provider = provider
+    }
+    
+    func trainingGoalGetAPI(completion: @escaping (Result<[Goal], SmeemError>) -> ()) {
+        provider.request(.trainingGoal) { response in
+            switch response {
+            case .success(let result):
+                do {
+                    try NetworkManager.statusCodeErrorHandling(statusCode: result.statusCode)
+                    guard let data = try? result.map(GeneralResponse<TrainingGoalResponse>.self).data?.goals else {
+                        throw SmeemError.clientError
+                    }
+                    completion(.success(data))
+                    
+                } catch let error {
+                    guard let smeemError = error as? SmeemError else { return }
+                    completion(.failure(smeemError))
+                }
+                
+            case .failure(_):
+                completion(.failure(.userError))
+            }
         }
     }
     
-    var method: Moya.Method {
-        switch self {
-        case .trainingGoal, .trainingWay, .checkNickname:
-            return .get
-        case .onboardingUserPlan, .serviceAccept:
-            return .patch
+    func trainingGoalGetAPI2() -> AnyPublisher<[Goal], SmeemError> {
+        return Future { promise in
+            self.provider.request(.trainingGoal) { response in
+                switch response {
+                case .success(let result):
+                    do {
+                        try NetworkManager.statusCodeErrorHandling(statusCode: result.statusCode)
+                        guard let data = try? result.map(GeneralResponse<TrainingGoalResponse>.self).data?.goals else {
+                            throw SmeemError.clientError
+                        }
+                        promise(.success(data))
+                        
+                    } catch let error {
+                        guard let smeemError = error as? SmeemError else { return }
+                        promise(.failure(smeemError))
+                    }
+                    
+                case .failure(_):
+                    promise(.failure(.userError))
+                }
+            }
+        }
+        .eraseToAnyPublisher()
+    }
+    
+    func trainingWayGetAPI(param: String, completion: @escaping (Result<TrainingWayResponse, SmeemError>) -> ()) {
+        provider.request(.trainingWay(param: param)) { response in
+            switch response {
+            case .success(let result):
+                do {
+                    try NetworkManager.statusCodeErrorHandling(statusCode: result.statusCode)
+                    guard let data = try? result.map(GeneralResponse<TrainingWayResponse>.self).data else {
+                        throw SmeemError.clientError
+                    }
+                    completion(.success(data))
+                } catch {
+                    guard let error = error as? SmeemError else { return }
+                    completion(.failure(error))
+                }
+                
+            case .failure(_):
+                completion(.failure(.userError))
+            }
         }
     }
     
-    var task: Moya.Task {
-        switch self {
-        case .trainingGoal, .trainingWay:
-            return .requestPlain
-        case .onboardingUserPlan(let param, _):
-            return .requestJSONEncodable(param)
-        case .serviceAccept(let param, _):
-            return .requestJSONEncodable(param)
-        case .checkNickname(let param, _):
-            return .requestParameters(parameters: ["name": param], encoding: URLEncoding.queryString)
+    func userPlanPathAPI(param: TrainingPlanRequest, accessToken: String, completion: @escaping (Result<GeneralResponse<NilType>, SmeemError>) -> ()) {
+        provider.request(.trainingUserPlan(param: param, token: accessToken)) { response in
+            switch response {
+            case .success(let result):
+                do {
+                    // TODO : response 형식에 따른 처리 고민 필요
+                    try NetworkManager.statusCodeErrorHandling(statusCode: result.statusCode)
+                    guard let data = try? result.map(GeneralResponse<NilType>.self) else {
+                        throw SmeemError.clientError
+                    }
+                    completion(.success(data))
+                } catch {
+                    guard let error = error as? SmeemError else { return }
+                    completion(.failure(error))
+                }
+                
+            case .failure(_):
+                completion(.failure(.userError))
+            }
         }
     }
     
-    var headers: [String : String]? {
-        switch self {
-        case .trainingGoal, .trainingWay:
-            return ["Content-Type": "application/json",
-                    "Authorization": ""]
-        case .onboardingUserPlan(_, let token), .serviceAccept(_, let token), .checkNickname(_, let token):
-            return ["Content-Type": "application/json",
-                    "Authorization": "Bearer " + token]
+    func serviceAcceptedPatch(param: ServiceAcceptRequest, accessToken: String, completion: @escaping (Result<ServiceAcceptResponse, SmeemError>) -> ()) {
+        provider.request(.serviceAccept(param: param, token: accessToken)) { response in
+            switch response {
+            case .success(let result):
+                do {
+                    try NetworkManager.statusCodeErrorHandling(statusCode: result.statusCode)
+                    guard let data = try? result.map(GeneralResponse<ServiceAcceptResponse>.self).data else {
+                        throw SmeemError.clientError
+                    }
+                    completion(.success(data))
+                } catch {
+                    guard let error = error as? SmeemError else { return }
+                    completion(.failure(error))
+                }
+                
+            case .failure(_):
+                completion(.failure(.userError))
+            }
+        }
+    }
+    
+    func ninknameCheckAPI(userName: String, accessToken: String, completion: @escaping (Result<NicknameCheckResponse, SmeemError>) -> Void) {
+        provider.request(.checkNickname(param: userName, token: accessToken)) { response in
+            switch response {
+            case .success(let result):
+                do {
+                    try NetworkManager.statusCodeErrorHandling(statusCode: result.statusCode)
+                    guard let data = try? result.map(GeneralResponse<NicknameCheckResponse>.self).data else {
+                        throw SmeemError.clientError
+                    }
+                    completion(.success(data))
+                } catch {
+                    guard let error = error as? SmeemError else { return }
+                    completion(.failure(error))
+                }
+                
+            case .failure(_):
+                completion(.failure(.userError))
+            }
         }
     }
 }

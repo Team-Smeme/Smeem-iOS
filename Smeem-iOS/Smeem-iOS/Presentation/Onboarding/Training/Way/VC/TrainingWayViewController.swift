@@ -107,8 +107,8 @@ final class TrainingWayViewController: BaseViewController {
     
     private func bind() {
         nextButton.tapPublisher
-            .sink { _ in
-                self.nextButtonTapped.send(())
+            .sink { [weak self] _ in
+                self?.nextButtonTapped.send(())
             }
             .store(in: &cancelBag)
         
@@ -117,25 +117,29 @@ final class TrainingWayViewController: BaseViewController {
         let output = viewModel.transform(input: input)
         
         output.viewWillAppearResult
-            .sink { appData in
-                self.howLearningView.setModel(model: appData)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] appData in
+                self?.howLearningView.setModel(model: appData)
             }
             .store(in: &cancelBag)
         
         output.nextButtonResult
-            .sink { target in
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] target in
                 let alarmVC = TrainingAlarmViewController(target: target)
-                self.navigationController?.pushViewController(alarmVC, animated: true)
+                self?.navigationController?.pushViewController(alarmVC, animated: true)
             }
             .store(in: &cancelBag)
         
         output.errorResult
-            .sink { error in
-                self.showToast(toastType: .smeemErrorToast(message: error))
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] error in
+                self?.showToast(toastType: .smeemErrorToast(message: error))
             }
             .store(in: &cancelBag)
         
         output.loadingViewResult
+            .receive(on: DispatchQueue.main)
             .sink { isShown in
                 isShown ? SmeemLoadingView.showLoading() : SmeemLoadingView.hideLoading()
             }

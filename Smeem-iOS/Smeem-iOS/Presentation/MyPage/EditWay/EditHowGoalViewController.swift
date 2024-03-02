@@ -8,6 +8,8 @@
 import UIKit
 
 final class EditHowGoalViewController: BaseViewController {
+    
+    private let provider = OnboardingService()
 
     var tempTarget = String()
     var planName = String()
@@ -144,7 +146,7 @@ extension EditHowGoalViewController {
     func detailPlanListGetAPI(tempTarget: String) {
         SmeemLoadingView.showLoading()
         
-        OnboardingAPI.shared.trainingWayGetAPI(param: tempTarget) { result in
+        self.provider.trainingWayGetAPI(param: tempTarget) { result in
             switch result {
             case .success(let response):
                 self.planName = response.name

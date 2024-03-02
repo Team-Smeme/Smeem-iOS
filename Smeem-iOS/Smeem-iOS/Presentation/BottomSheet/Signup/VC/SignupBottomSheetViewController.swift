@@ -94,6 +94,7 @@ final class SignupBottomSheetViewController: UIViewController {
             .store(in: &cancelBag)
         
         appleLoginButton.tapPublisher
+            .receive(on: DispatchQueue.main)
             .sink { _ in
                 let appleIDProvider = ASAuthorizationAppleIDProvider()
                 let request = appleIDProvider.createRequest()
@@ -107,6 +108,7 @@ final class SignupBottomSheetViewController: UIViewController {
             .store(in: &cancelBag)
         
         dismissButton.tapPublisher
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 UIView.animate(withDuration: 0.3, animations: {
                     self?.bottomSheetView.frame.origin.y = (self?.view.frame.height)!
@@ -117,6 +119,7 @@ final class SignupBottomSheetViewController: UIViewController {
             .store(in: &cancelBag)
         
         dimmedView.gesturePublisher
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 UIView.animate(withDuration: 0.3, animations: {
                     self?.bottomSheetView.frame.origin.y = (self?.view.frame.height)!
@@ -132,6 +135,7 @@ final class SignupBottomSheetViewController: UIViewController {
         let output = viewModel.transform(input: input)
         
         output.presentHomeResult
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 let homeVC = HomeViewController()
                 self?.changeRootViewController(homeVC)
@@ -139,6 +143,7 @@ final class SignupBottomSheetViewController: UIViewController {
             .store(in: &cancelBag)
         
         output.presentServiceResult
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 let nicknameVC = UserNicknameViewController()
                 self?.navigationController?.pushViewController(nicknameVC, animated: true)
@@ -146,12 +151,14 @@ final class SignupBottomSheetViewController: UIViewController {
             .store(in: &cancelBag)
         
         output.loadingViewResult
+            .receive(on: DispatchQueue.main)
             .sink { isShown in
                 isShown ? SmeemLoadingView.showLoading() : SmeemLoadingView.hideLoading()
             }
             .store(in: &cancelBag)
         
         output.errorResult
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] error in
                 self?.showToast(toastType: .smeemErrorToast(message: error))
             }

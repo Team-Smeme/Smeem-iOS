@@ -80,11 +80,15 @@
 		4A0EA4572A01403E006CCE52 /* MoyaLoggingPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EA4562A01403E006CCE52 /* MoyaLoggingPlugin.swift */; };
 		4A0EA4592A014103006CCE52 /* URLConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EA4582A014103006CCE52 /* URLConstant.swift */; };
 		4A0EA4642A014710006CCE52 /* SmeemButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EA4632A014710006CCE52 /* SmeemButton.swift */; };
+		4A0EE5FA2B89E00100158899 /* UserNicknameViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EE5F92B89E00100158899 /* UserNicknameViewModelTest.swift */; };
+		4A0EE6012B92138900158899 /* OnboardingServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EE6002B92138900158899 /* OnboardingServiceMock.swift */; };
+		4A0EE6042B9301E900158899 /* OnboardingServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EE6032B9301E900158899 /* OnboardingServiceProtocol.swift */; };
 		4A10A3A82AB8AA5800C145E9 /* System.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A10A3A72AB8AA5800C145E9 /* System.swift */; };
 		4A1882FA2A8BBD0D0088F590 /* SmeemStartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD923E62A0650B600FF5E27 /* SmeemStartViewController.swift */; };
-		4A3373F52A45BF6600EFE6C4 /* OnboardingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3373F42A45BF6600EFE6C4 /* OnboardingService.swift */; };
-		4A3373F82A461ABC00EFE6C4 /* OnboardingAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3373F72A461ABC00EFE6C4 /* OnboardingAPI.swift */; };
+		4A3373F52A45BF6600EFE6C4 /* OnboardingEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3373F42A45BF6600EFE6C4 /* OnboardingEndPoint.swift */; };
+		4A3373F82A461ABC00EFE6C4 /* OnboardingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3373F72A461ABC00EFE6C4 /* OnboardingService.swift */; };
 		4A3774842A42E6EA00357DD1 /* ConfigConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3774832A42E6EA00357DD1 /* ConfigConstant.swift */; };
+		4A3CFBC32B823A8400059DB3 /* Smeem_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A07F8DA2B821523004185F2 /* Smeem_iOSTests.swift */; };
 		4A3F2E972A0ABBAA00F6AC60 /* AlarmCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3F2E962A0ABBAA00F6AC60 /* AlarmCollectionViewCell.swift */; };
 		4A3F2E9C2A0B4C7100F6AC60 /* AlarmCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3F2E9B2A0B4C7100F6AC60 /* AlarmCollectionView.swift */; };
 		4A3F2EA02A0C18B600F6AC60 /* DatePickerFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3F2E9F2A0C18B600F6AC60 /* DatePickerFooterView.swift */; };
@@ -96,6 +100,7 @@
 		4A4FEB0C2B7289E7001BBDF3 /* TrainingWayAppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4FEB0B2B7289E7001BBDF3 /* TrainingWayAppData.swift */; };
 		4A6630362A51B0AD00D19CC9 /* EditDiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6630352A51B0AD00D19CC9 /* EditDiaryViewController.swift */; };
 		4A6630392A51E04600D19CC9 /* PatchDiaryRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6630382A51E04600D19CC9 /* PatchDiaryRequest.swift */; };
+		4A7F22252B8241DC0011DECF /* TrainingAlarmViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A07F8E22B821539004185F2 /* TrainingAlarmViewModelTest.swift */; };
 		4A81C2972ACDAB2C0056E815 /* TrainingGoalsCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A81C2962ACDAB2C0056E815 /* TrainingGoalsCollectionView.swift */; };
 		4A8FFA5029C9E1FD00FB76C0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8FFA4F29C9E1FD00FB76C0 /* AppDelegate.swift */; };
 		4A8FFA5229C9E1FD00FB76C0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8FFA5129C9E1FD00FB76C0 /* SceneDelegate.swift */; };
@@ -149,6 +154,8 @@
 		4AE35E9E2A7FE8CE00465FD5 /* UICollectionViewCell+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE35E9D2A7FE8CE00465FD5 /* UICollectionViewCell+.swift */; };
 		4AEB82952A4CB4F200C1114B /* BadgePopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEB82942A4CB4F100C1114B /* BadgePopupViewController.swift */; };
 		4AF58CE92A4820AA00305248 /* AuthNetworkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF58CE82A4820AA00305248 /* AuthNetworkModel.swift */; };
+		4AF78D9B2B84A1DC0098E1FA /* OnboardingServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF78D9A2B84A1DC0098E1FA /* OnboardingServiceTest.swift */; };
+		4AF78D9E2B84AB6A0098E1FA /* MockProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF78D9D2B84AB6A0098E1FA /* MockProvider.swift */; };
 		4AFD7C292B600FED00FE7EFF /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AFD7C282B600FED00FE7EFF /* NetworkManager.swift */; };
 		6F294A3E2A26177B00856CC8 /* TrainingGoalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF507742A10CD4D007C62B1 /* TrainingGoalViewController.swift */; };
 		6F294A3F2A26177E00856CC8 /* TrainingGoalCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF507762A10CD96007C62B1 /* TrainingGoalCollectionViewCell.swift */; };
@@ -169,6 +176,16 @@
 		A301B0A22A30720F006BE0BA /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = A301B0A12A30720F006BE0BA /* Kingfisher */; };
 		A3D7ECB72A26566A009857D6 /* EditNicknameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3D7ECB62A26566A009857D6 /* EditNicknameViewController.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		4A07F8DC2B821523004185F2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4A8FFA4429C9E1FD00FB76C0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4A8FFA4B29C9E1FD00FB76C0;
+			remoteInfo = "Smeem-iOS";
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		37035CF82AF2ADD2008EE521 /* DiaryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryViewModel.swift; sourceTree = "<group>"; };
@@ -238,17 +255,23 @@
 		4A07F8A72B7B3E5E004185F2 /* SignupBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupBottomSheetViewController.swift; sourceTree = "<group>"; };
 		4A07F8AB2B7B3E7F004185F2 /* SignupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewModel.swift; sourceTree = "<group>"; };
 		4A07F8AE2B7B58B7004185F2 /* AuthModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthModel.swift; sourceTree = "<group>"; };
+		4A07F8D82B821523004185F2 /* Smeem-iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Smeem-iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4A07F8DA2B821523004185F2 /* Smeem_iOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Smeem_iOSTests.swift; sourceTree = "<group>"; };
+		4A07F8E22B821539004185F2 /* TrainingAlarmViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingAlarmViewModelTest.swift; sourceTree = "<group>"; };
 		4A08480D2B555FD0008327C7 /* AmplitudeConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmplitudeConstant.swift; sourceTree = "<group>"; };
 		4A0EA4542A014027006CCE52 /* GeneralResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralResponse.swift; sourceTree = "<group>"; };
 		4A0EA4562A01403E006CCE52 /* MoyaLoggingPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoyaLoggingPlugin.swift; sourceTree = "<group>"; };
 		4A0EA4582A014103006CCE52 /* URLConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLConstant.swift; sourceTree = "<group>"; };
 		4A0EA4632A014710006CCE52 /* SmeemButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmeemButton.swift; sourceTree = "<group>"; };
+		4A0EE5F92B89E00100158899 /* UserNicknameViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNicknameViewModelTest.swift; sourceTree = "<group>"; };
+		4A0EE6002B92138900158899 /* OnboardingServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingServiceMock.swift; sourceTree = "<group>"; };
+		4A0EE6032B9301E900158899 /* OnboardingServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingServiceProtocol.swift; sourceTree = "<group>"; };
 		4A10A3A72AB8AA5800C145E9 /* System.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = System.swift; sourceTree = "<group>"; };
 		4A13B7582A13D37000F4FB1E /* UserNickNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNickNameViewController.swift; sourceTree = "<group>"; };
 		4A23621B2AFA8682005E4C58 /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
 		4A23621C2AFA868D005E4C58 /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
-		4A3373F42A45BF6600EFE6C4 /* OnboardingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingService.swift; sourceTree = "<group>"; };
-		4A3373F72A461ABC00EFE6C4 /* OnboardingAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingAPI.swift; sourceTree = "<group>"; };
+		4A3373F42A45BF6600EFE6C4 /* OnboardingEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingEndPoint.swift; sourceTree = "<group>"; };
+		4A3373F72A461ABC00EFE6C4 /* OnboardingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingService.swift; sourceTree = "<group>"; };
 		4A3774832A42E6EA00357DD1 /* ConfigConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigConstant.swift; sourceTree = "<group>"; };
 		4A3F2E962A0ABBAA00F6AC60 /* AlarmCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmCollectionViewCell.swift; sourceTree = "<group>"; };
 		4A3F2E9B2A0B4C7100F6AC60 /* AlarmCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmCollectionView.swift; sourceTree = "<group>"; };
@@ -262,6 +285,7 @@
 		4A4FEB0B2B7289E7001BBDF3 /* TrainingWayAppData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingWayAppData.swift; sourceTree = "<group>"; };
 		4A6630352A51B0AD00D19CC9 /* EditDiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditDiaryViewController.swift; sourceTree = "<group>"; };
 		4A6630382A51E04600D19CC9 /* PatchDiaryRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatchDiaryRequest.swift; sourceTree = "<group>"; };
+		4A7F22262B8241FD0011DECF /* Smeem-Dev.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Smeem-Dev.xctestplan"; sourceTree = "<group>"; };
 		4A81C2962ACDAB2C0056E815 /* TrainingGoalsCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingGoalsCollectionView.swift; sourceTree = "<group>"; };
 		4A8275D22A1513120083A4AB /* ServiceAcceptViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAcceptViewController.swift; sourceTree = "<group>"; };
 		4A8275D42A1519550083A4AB /* ServiceAcceptCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAcceptCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -318,6 +342,8 @@
 		4AF507742A10CD4D007C62B1 /* TrainingGoalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingGoalViewController.swift; sourceTree = "<group>"; };
 		4AF507762A10CD96007C62B1 /* TrainingGoalCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingGoalCollectionViewCell.swift; sourceTree = "<group>"; };
 		4AF58CE82A4820AA00305248 /* AuthNetworkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthNetworkModel.swift; sourceTree = "<group>"; };
+		4AF78D9A2B84A1DC0098E1FA /* OnboardingServiceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingServiceTest.swift; sourceTree = "<group>"; };
+		4AF78D9D2B84AB6A0098E1FA /* MockProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockProvider.swift; sourceTree = "<group>"; };
 		4AFD7C282B600FED00FE7EFF /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		6F294A472A27818200856CC8 /* HomeViewFloatingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewFloatingViewController.swift; sourceTree = "<group>"; };
 		6F31802E2A24D1DB00089870 /* CalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCell.swift; sourceTree = "<group>"; };
@@ -332,6 +358,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		4A07F8D52B821523004185F2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4A8FFA4929C9E1FD00FB76C0 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -703,6 +736,26 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		4A07F8D92B821523004185F2 /* Smeem-iOSTests */ = {
+			isa = PBXGroup;
+			children = (
+				4AF78D9C2B84AB5D0098E1FA /* Base */,
+				4A07F8E12B821529004185F2 /* Onboarding */,
+				4A07F8DA2B821523004185F2 /* Smeem_iOSTests.swift */,
+			);
+			path = "Smeem-iOSTests";
+			sourceTree = "<group>";
+		};
+		4A07F8E12B821529004185F2 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				4A0EE5FD2B92135900158899 /* Mock */,
+				4A0EE5F62B89DF8A00158899 /* ViewModel */,
+				4A0EE5F52B89DF8500158899 /* Service */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
 		4A0EA4532A014018006CCE52 /* Base */ = {
 			isa = PBXGroup;
 			children = (
@@ -748,6 +801,31 @@
 			path = NetworkDataModel;
 			sourceTree = "<group>";
 		};
+		4A0EE5F52B89DF8500158899 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				4AF78D9A2B84A1DC0098E1FA /* OnboardingServiceTest.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		4A0EE5F62B89DF8A00158899 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				4A07F8E22B821539004185F2 /* TrainingAlarmViewModelTest.swift */,
+				4A0EE5F92B89E00100158899 /* UserNicknameViewModelTest.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		4A0EE5FD2B92135900158899 /* Mock */ = {
+			isa = PBXGroup;
+			children = (
+				4A0EE6002B92138900158899 /* OnboardingServiceMock.swift */,
+			);
+			path = Mock;
+			sourceTree = "<group>";
+		};
 		4A13B7572A13D35800F4FB1E /* Nickname */ = {
 			isa = PBXGroup;
 			children = (
@@ -785,8 +863,9 @@
 		4A3373F62A461AAC00EFE6C4 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
-				4A3373F72A461ABC00EFE6C4 /* OnboardingAPI.swift */,
-				4A3373F42A45BF6600EFE6C4 /* OnboardingService.swift */,
+				4A3373F72A461ABC00EFE6C4 /* OnboardingService.swift */,
+				4A3373F42A45BF6600EFE6C4 /* OnboardingEndPoint.swift */,
+				4A0EE6032B9301E900158899 /* OnboardingServiceProtocol.swift */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
@@ -882,9 +961,11 @@
 		4A8FFA4329C9E1FD00FB76C0 = {
 			isa = PBXGroup;
 			children = (
+				4A7F22262B8241FD0011DECF /* Smeem-Dev.xctestplan */,
 				4A23621C2AFA868D005E4C58 /* Release.xcconfig */,
 				4A23621B2AFA8682005E4C58 /* Debug.xcconfig */,
 				4A8FFA4E29C9E1FD00FB76C0 /* Smeem-iOS */,
+				4A07F8D92B821523004185F2 /* Smeem-iOSTests */,
 				4A8FFA4D29C9E1FD00FB76C0 /* Products */,
 				4A01234F2AAA046200E09646 /* Recovered References */,
 			);
@@ -894,6 +975,7 @@
 			isa = PBXGroup;
 			children = (
 				4A8FFA4C29C9E1FD00FB76C0 /* Smeem-iOS.app */,
+				4A07F8D82B821523004185F2 /* Smeem-iOSTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1267,6 +1349,14 @@
 			path = Onboarding;
 			sourceTree = "<group>";
 		};
+		4AF78D9C2B84AB5D0098E1FA /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				4AF78D9D2B84AB6A0098E1FA /* MockProvider.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
 		4AF9E3EF2AC4143500104768 /* Home */ = {
 			isa = PBXGroup;
 			children = (
@@ -1311,6 +1401,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		4A07F8D72B821523004185F2 /* Smeem-iOSTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4A07F8E02B821523004185F2 /* Build configuration list for PBXNativeTarget "Smeem-iOSTests" */;
+			buildPhases = (
+				4A07F8D42B821523004185F2 /* Sources */,
+				4A07F8D52B821523004185F2 /* Frameworks */,
+				4A07F8D62B821523004185F2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4A07F8DD2B821523004185F2 /* PBXTargetDependency */,
+			);
+			name = "Smeem-iOSTests";
+			productName = "Smeem-iOSTests";
+			productReference = 4A07F8D82B821523004185F2 /* Smeem-iOSTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		4A8FFA4B29C9E1FD00FB76C0 /* Smeem-iOS */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4A8FFA6029C9E1FE00FB76C0 /* Build configuration list for PBXNativeTarget "Smeem-iOS" */;
@@ -1350,9 +1458,13 @@
 				KnownAssetTags = (
 					New,
 				);
-				LastSwiftUpdateCheck = 1420;
+				LastSwiftUpdateCheck = 1520;
 				LastUpgradeCheck = 1430;
 				TargetAttributes = {
+					4A07F8D72B821523004185F2 = {
+						CreatedOnToolsVersion = 15.2;
+						TestTargetID = 4A8FFA4B29C9E1FD00FB76C0;
+					};
 					4A8FFA4B29C9E1FD00FB76C0 = {
 						CreatedOnToolsVersion = 14.2;
 					};
@@ -1381,11 +1493,19 @@
 			projectRoot = "";
 			targets = (
 				4A8FFA4B29C9E1FD00FB76C0 /* Smeem-iOS */,
+				4A07F8D72B821523004185F2 /* Smeem-iOSTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		4A07F8D62B821523004185F2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4A8FFA4A29C9E1FD00FB76C0 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1404,6 +1524,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		4A07F8D42B821523004185F2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4AF78D9B2B84A1DC0098E1FA /* OnboardingServiceTest.swift in Sources */,
+				4A3CFBC32B823A8400059DB3 /* Smeem_iOSTests.swift in Sources */,
+				4AF78D9E2B84AB6A0098E1FA /* MockProvider.swift in Sources */,
+				4A0EE6012B92138900158899 /* OnboardingServiceMock.swift in Sources */,
+				4A7F22252B8241DC0011DECF /* TrainingAlarmViewModelTest.swift in Sources */,
+				4A0EE5FA2B89E00100158899 /* UserNicknameViewModelTest.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4A8FFA4829C9E1FD00FB76C0 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1473,7 +1606,7 @@
 				4AD04B3B2A1905BB004B7A58 /* DiaryScrollerView.swift in Sources */,
 				371107E72ACBED3C007A4AC2 /* DiaryViewConfigurationBuilder.swift in Sources */,
 				4A454A852B6667180079D48D /* ViewModel.swift in Sources */,
-				4A3373F52A45BF6600EFE6C4 /* OnboardingService.swift in Sources */,
+				4A3373F52A45BF6600EFE6C4 /* OnboardingEndPoint.swift in Sources */,
 				4A6630362A51B0AD00D19CC9 /* EditDiaryViewController.swift in Sources */,
 				4A3F2E9C2A0B4C7100F6AC60 /* AlarmCollectionView.swift in Sources */,
 				4A004D512B4ED783003C8936 /* TrainingWayResponse.swift in Sources */,
@@ -1536,6 +1669,7 @@
 				378E461C2B5516F200D2A473 /* DeepLService.swift in Sources */,
 				4A004D4F2B4ED760003C8936 /* TrainingGoalResponse.swift in Sources */,
 				6F294A3F2A26177E00856CC8 /* TrainingGoalCollectionViewCell.swift in Sources */,
+				4A0EE6042B9301E900158899 /* OnboardingServiceProtocol.swift in Sources */,
 				37A574E62A02178D00312453 /* SmeemToastView.swift in Sources */,
 				4AC707BB2B74DE3E00B1D791 /* ServiceAcceptCollectionView.swift in Sources */,
 				4A4FEB012B721956001BBDF3 /* Combine+.swift in Sources */,
@@ -1543,7 +1677,7 @@
 				4A8FFA5229C9E1FD00FB76C0 /* SceneDelegate.swift in Sources */,
 				37ADCC022B0289AD00E474AA /* Observable.swift in Sources */,
 				3797891C2AAE11D400C61EF4 /* NavigationBarConfigurationBuilder.swift in Sources */,
-				4A3373F82A461ABC00EFE6C4 /* OnboardingAPI.swift in Sources */,
+				4A3373F82A461ABC00EFE6C4 /* OnboardingService.swift in Sources */,
 				37A574E82A02424F00312453 /* RandomTopicView.swift in Sources */,
 				4A4FEB0C2B7289E7001BBDF3 /* TrainingWayAppData.swift in Sources */,
 				4A0EA4642A014710006CCE52 /* SmeemButton.swift in Sources */,
@@ -1555,6 +1689,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		4A07F8DD2B821523004185F2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4A8FFA4B29C9E1FD00FB76C0 /* Smeem-iOS */;
+			targetProxy = 4A07F8DC2B821523004185F2 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		4A8FFA5A29C9E1FE00FB76C0 /* LaunchScreen.storyboard */ = {
@@ -1568,6 +1710,59 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		4A07F8DE2B821523004185F2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = K8LLWYQWXD;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "smeemTest.Smeem-iOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Smeem-iOS.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Smeem-iOS";
+			};
+			name = Debug;
+		};
+		4A07F8DF2B821523004185F2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = K8LLWYQWXD;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "smeemTest.Smeem-iOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Smeem-iOS.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Smeem-iOS";
+			};
+			name = Release;
+		};
 		4A8FFA5E29C9E1FE00FB76C0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1694,11 +1889,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Smeem-iOS/Smeem-iOS.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 20240116;
 				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = J5UBGNBDYX;
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = K8LLWYQWXD;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Smeem-iOS/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "smeem-dev";
@@ -1714,10 +1909,10 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 2.0.1;
-				PRODUCT_BUNDLE_IDENTIFIER = "Team.Smeem-iOS-Dev";
+				PRODUCT_BUNDLE_IDENTIFIER = "Team.Smeem-dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = smeem_debug;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "smeem debug";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
@@ -1742,7 +1937,7 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = J5UBGNBDYX;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Smeem-iOS/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = smeem;
+				INFOPLIST_KEY_CFBundleDisplayName = "smeem-dev";
 				INFOPLIST_KEY_NSUserTrackingUsageDescription = "사용자의 데이터는 개인화된 광고 제공 목적으로 사용됩니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -1771,6 +1966,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		4A07F8E02B821523004185F2 /* Build configuration list for PBXNativeTarget "Smeem-iOSTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4A07F8DE2B821523004185F2 /* Debug */,
+				4A07F8DF2B821523004185F2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		4A8FFA4729C9E1FD00FB76C0 /* Build configuration list for PBXProject "Smeem-iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
