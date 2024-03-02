@@ -81,7 +81,6 @@
 		4A0EA4592A014103006CCE52 /* URLConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EA4582A014103006CCE52 /* URLConstant.swift */; };
 		4A0EA4642A014710006CCE52 /* SmeemButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EA4632A014710006CCE52 /* SmeemButton.swift */; };
 		4A0EE5FA2B89E00100158899 /* UserNicknameViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EE5F92B89E00100158899 /* UserNicknameViewModelTest.swift */; };
-		4A0EE5FC2B89E3D500158899 /* UserNicknameServicecTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EE5FB2B89E3D500158899 /* UserNicknameServicecTest.swift */; };
 		4A0EE6012B92138900158899 /* OnboardingServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EE6002B92138900158899 /* OnboardingServiceMock.swift */; };
 		4A0EE6042B9301E900158899 /* OnboardingServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EE6032B9301E900158899 /* OnboardingServiceProtocol.swift */; };
 		4A10A3A82AB8AA5800C145E9 /* System.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A10A3A72AB8AA5800C145E9 /* System.swift */; };
@@ -265,7 +264,6 @@
 		4A0EA4582A014103006CCE52 /* URLConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLConstant.swift; sourceTree = "<group>"; };
 		4A0EA4632A014710006CCE52 /* SmeemButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmeemButton.swift; sourceTree = "<group>"; };
 		4A0EE5F92B89E00100158899 /* UserNicknameViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNicknameViewModelTest.swift; sourceTree = "<group>"; };
-		4A0EE5FB2B89E3D500158899 /* UserNicknameServicecTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNicknameServicecTest.swift; sourceTree = "<group>"; };
 		4A0EE6002B92138900158899 /* OnboardingServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingServiceMock.swift; sourceTree = "<group>"; };
 		4A0EE6032B9301E900158899 /* OnboardingServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingServiceProtocol.swift; sourceTree = "<group>"; };
 		4A10A3A72AB8AA5800C145E9 /* System.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = System.swift; sourceTree = "<group>"; };
@@ -807,7 +805,6 @@
 			isa = PBXGroup;
 			children = (
 				4AF78D9A2B84A1DC0098E1FA /* OnboardingServiceTest.swift */,
-				4A0EE5FB2B89E3D500158899 /* UserNicknameServicecTest.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -1531,7 +1528,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4A0EE5FC2B89E3D500158899 /* UserNicknameServicecTest.swift in Sources */,
 				4AF78D9B2B84A1DC0098E1FA /* OnboardingServiceTest.swift in Sources */,
 				4A3CFBC32B823A8400059DB3 /* Smeem_iOSTests.swift in Sources */,
 				4AF78D9E2B84AB6A0098E1FA /* MockProvider.swift in Sources */,

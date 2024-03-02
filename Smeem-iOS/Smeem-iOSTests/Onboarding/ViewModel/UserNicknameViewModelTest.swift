@@ -114,5 +114,4 @@ final class UserNicknameViewModelTest: XCTestCase, MockProviderProtocol {
         self.output = nil
         self.cancelBag = nil
     }
-
 }
