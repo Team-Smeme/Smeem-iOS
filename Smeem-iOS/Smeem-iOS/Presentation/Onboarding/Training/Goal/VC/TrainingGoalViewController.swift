@@ -116,31 +116,31 @@ final class TrainingGoalViewController: BaseViewController {
         
         output.viewWillappearResult
             .receive(on: DispatchQueue.main)
-            .sink { response in
-                self.trainingGoalCollectionView.planGoalArray = response
-                self.trainingGoalCollectionView.reloadData()
+            .sink { [weak self] response in
+                self?.trainingGoalCollectionView.planGoalArray = response
+                self?.trainingGoalCollectionView.reloadData()
             }
             .store(in: &cancelbag)
         
         output.cellResult
             .receive(on: DispatchQueue.main)
-            .sink { type in
-                self.nextButton.changeButtonType(buttonType: type)
+            .sink { [weak self] type in
+                self?.nextButton.changeButtonType(buttonType: type)
             }
             .store(in: &cancelbag)
         
         output.nextButtonResult
             .receive(on: DispatchQueue.main)
-            .sink { target in
+            .sink { [weak self] target in
                 let howOnboardingVC = TrainingWayViewController(target: target)
-                self.navigationController?.pushViewController(howOnboardingVC, animated: true)
+                self?.navigationController?.pushViewController(howOnboardingVC, animated: true)
             }
             .store(in: &cancelbag)
         
         output.errorResult
             .receive(on: DispatchQueue.main)
-            .sink { error in
-                self.showToast(toastType: .smeemErrorToast(message: error))
+            .sink { [weak self] error in
+                self?.showToast(toastType: .smeemErrorToast(message: error))
             }
             .store(in: &cancelbag)
         

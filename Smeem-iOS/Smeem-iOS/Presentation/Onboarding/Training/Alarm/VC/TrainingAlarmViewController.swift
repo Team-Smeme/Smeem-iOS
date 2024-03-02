@@ -131,14 +131,14 @@ final class TrainingAlarmViewController: BaseViewController {
     
     private func bind() {
         laterButton.tapPublisher
-            .sink { _ in
-                self.alarmButtonTapped.send(.alarmOff)
+            .sink { [weak self] _ in
+                self?.alarmButtonTapped.send(.alarmOff)
             }
             .store(in: &cancelBag)
         
         completeButton.tapPublisher
-            .sink { _ in
-                self.alarmButtonTapped.send(.alarmOn)
+            .sink { [weak self] _ in
+                self?.alarmButtonTapped.send(.alarmOn)
             }
             .store(in: &cancelBag)
         
@@ -152,29 +152,29 @@ final class TrainingAlarmViewController: BaseViewController {
         
         output.buttonTypeResult
             .receive(on: DispatchQueue.main)
-            .sink { type in
-                self.completeButton.changeButtonType(buttonType: type)
+            .sink { [weak self] type in
+                self?.completeButton.changeButtonType(buttonType: type)
             }
             .store(in: &cancelBag)
         
         output.alarmResult
             .receive(on: DispatchQueue.main)
-            .sink { _ in
-                self.requestNotificationPermission()
+            .sink { [weak self] _ in
+                self?.requestNotificationPermission()
             }
             .store(in: &cancelBag)
         
         output.bottomSheetResult
             .receive(on: DispatchQueue.main)
-            .sink { request in
+            .sink { [weak self] request in
                 let signupBottomSheetVC = SignupBottomSheetViewController(request: request)
                 let navigationController = UINavigationController(rootViewController: signupBottomSheetVC)
                 navigationController.modalPresentationStyle = .overFullScreen
                 
-                self.present(navigationController, animated: false) {
-                    signupBottomSheetVC.bottomSheetView.frame.origin.y = self.view.frame.height
+                self?.present(navigationController, animated: false) {
+                    signupBottomSheetVC.bottomSheetView.frame.origin.y = (self?.view.frame.height ?? 0)
                     UIView.animate(withDuration: 0.3) {
-                        signupBottomSheetVC.bottomSheetView.frame.origin.y = self.view.frame.height-282
+                        signupBottomSheetVC.bottomSheetView.frame.origin.y = (self?.view.frame.height ?? 0)-282
                     }
                 }
             }
@@ -182,16 +182,16 @@ final class TrainingAlarmViewController: BaseViewController {
         
         output.nicknameResult
             .receive(on: DispatchQueue.main)
-            .sink { _ in
+            .sink { [weak self] _ in
                 let userNicknameVC = UserNicknameViewController()
-                self.navigationController?.pushViewController(userNicknameVC, animated: true)
+                self?.navigationController?.pushViewController(userNicknameVC, animated: true)
             }
             .store(in: &cancelBag)
         
         output.errorResult
             .receive(on: DispatchQueue.main)
-            .sink { error in
-                self.showToast(toastType: .smeemErrorToast(message: error))
+            .sink { [weak self] error in
+                self?.showToast(toastType: .smeemErrorToast(message: error))
             }
             .store(in: &cancelBag)
         

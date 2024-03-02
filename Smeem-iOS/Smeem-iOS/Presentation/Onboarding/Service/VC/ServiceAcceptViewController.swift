@@ -100,8 +100,8 @@ final class ServiceAcceptViewController: BaseViewController {
             .store(in: &cancelBag)
         
         completeButton.tapPublisher
-            .sink { _ in
-                self.completeButtonTapped.send(())
+            .sink { [weak self] _ in
+                self?.completeButtonTapped.send(())
             }
             .store(in: &cancelBag)
         

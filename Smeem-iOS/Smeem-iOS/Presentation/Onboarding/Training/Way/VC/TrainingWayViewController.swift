@@ -107,8 +107,8 @@ final class TrainingWayViewController: BaseViewController {
     
     private func bind() {
         nextButton.tapPublisher
-            .sink { _ in
-                self.nextButtonTapped.send(())
+            .sink { [weak self] _ in
+                self?.nextButtonTapped.send(())
             }
             .store(in: &cancelBag)
         
@@ -118,23 +118,23 @@ final class TrainingWayViewController: BaseViewController {
         
         output.viewWillAppearResult
             .receive(on: DispatchQueue.main)
-            .sink { appData in
-                self.howLearningView.setModel(model: appData)
+            .sink { [weak self] appData in
+                self?.howLearningView.setModel(model: appData)
             }
             .store(in: &cancelBag)
         
         output.nextButtonResult
             .receive(on: DispatchQueue.main)
-            .sink { target in
+            .sink { [weak self] target in
                 let alarmVC = TrainingAlarmViewController(target: target)
-                self.navigationController?.pushViewController(alarmVC, animated: true)
+                self?.navigationController?.pushViewController(alarmVC, animated: true)
             }
             .store(in: &cancelBag)
         
         output.errorResult
             .receive(on: DispatchQueue.main)
-            .sink { error in
-                self.showToast(toastType: .smeemErrorToast(message: error))
+            .sink { [weak self] error in
+                self?.showToast(toastType: .smeemErrorToast(message: error))
             }
             .store(in: &cancelBag)
         
