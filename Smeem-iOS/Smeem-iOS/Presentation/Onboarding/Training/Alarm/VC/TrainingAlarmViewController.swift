@@ -16,7 +16,7 @@ enum AlarmType {
 
 final class TrainingAlarmViewController: BaseViewController {
     
-    private let viewModel = TrainingAlarmViewModel()
+    private let viewModel = TrainingAlarmViewModel(provider: OnboardingService())
     
     // MARK: Publisher
     

@@ -28,7 +28,7 @@ final class TrainingGoalViewModel: ViewModel {
     private let errorSubject = PassthroughSubject<SmeemError, Never>()
     private let loadingViewSubject = PassthroughSubject<Bool, Never>()
     private var cancelbag = Set<AnyCancellable>()
-    private let provider = OnboardingService()
+    private var provider = OnboardingService()
     
     private var tempTarget = ""
 

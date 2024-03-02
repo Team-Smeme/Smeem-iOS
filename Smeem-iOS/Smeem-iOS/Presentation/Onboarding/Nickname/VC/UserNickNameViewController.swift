@@ -10,7 +10,7 @@ import Combine
 
 final class UserNicknameViewController: BaseViewController {
     
-    private let viewModel = UserNicknameViewModel()
+    private let viewModel = UserNicknameViewModel(provider: OnboardingService())
     
     // MARK: Publisher
     

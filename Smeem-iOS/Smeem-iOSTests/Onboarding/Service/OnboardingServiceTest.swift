@@ -11,23 +11,13 @@ import Moya
 @testable import Smeem_iOS
 
 final class OnboardingServiceTest: XCTestCase, MockProviderProtocol {
-    
     typealias TargetEndPoint = OnboardingEndPoint
     
-    var successSut: OnboardingService!
-    var failure400Sut: OnboardingService!
-    var failure500Sut: OnboardingService!
+    var sut: OnboardingService!
     
     override func setUpWithError() throws {
         let mockSuccessProvider: MoyaProvider<OnboardingEndPoint> = makeSuccessProvider()
-        successSut = OnboardingService(provider: mockSuccessProvider)
-        
-        let mockFailure400Provider: MoyaProvider<OnboardingEndPoint> = makeFailure400Provider()
-        failure400Sut = OnboardingService(provider: mockFailure400Provider)
-        
-        
-        let mockFailure500Provider: MoyaProvider<OnboardingEndPoint> = makeFailure500Provider()
-        failure500Sut = OnboardingService(provider: mockFailure500Provider)
+        sut = OnboardingService(provider: mockSuccessProvider)
     }
     
     func test_goalList_성공했을때() {
@@ -35,7 +25,7 @@ final class OnboardingServiceTest: XCTestCase, MockProviderProtocol {
         
         var outputResult: [Goal]!
         let expeactedResult = goalModel
-        successSut.trainingGoalGetAPI { result in
+        sut.trainingGoalGetAPI { result in
             switch result {
             case .success(let response):
                 outputResult = response
@@ -54,7 +44,7 @@ final class OnboardingServiceTest: XCTestCase, MockProviderProtocol {
         
         var outputResult: String!
         let expeactedResult = "회원 학습 계획 업데이트 성공"
-        successSut.userPlanPathAPI(param: TrainingPlanRequest(target: "DEVELOP",
+        sut.userPlanPathAPI(param: TrainingPlanRequest(target: "DEVELOP",
                                                               trainingTime: TrainingTime(day: "AM",
                                                                                          hour: 22,
                                                                                          minute: 0),
@@ -78,7 +68,7 @@ final class OnboardingServiceTest: XCTestCase, MockProviderProtocol {
         
         var outputResult: Bool!
         let expeactedResult = false
-        successSut.ninknameCheckAPI(userName: "짠미",
+        sut.ninknameCheckAPI(userName: "짠미",
                                     accessToken: "access Token") { result in
             switch result {
             case .success(let response):
@@ -97,7 +87,7 @@ final class OnboardingServiceTest: XCTestCase, MockProviderProtocol {
         
         var outputResult: String!
         let expeactedResult = "웰컴 배지"
-        successSut.serviceAcceptedPatch(param: ServiceAcceptRequest(username: "짠미2",
+        sut.serviceAcceptedPatch(param: ServiceAcceptRequest(username: "짠미2",
                                                                     termAccepted: true),
                                         accessToken: "access token") { result in
             switch result {
@@ -113,53 +103,30 @@ final class OnboardingServiceTest: XCTestCase, MockProviderProtocol {
         XCTAssertEqual(outputResult, expeactedResult)
     }
     
-    func test_goalListAPI_400에러일때() {
-        let expectation = XCTestExpectation()
-        
-        var outputResult: SmeemError!
-        let expeactedResult = SmeemError.clientError
-        failure400Sut.trainingGoalGetAPI { result in
-            switch result {
-            case .success(let response):
-                print(response)
-            case .failure(let error):
-                outputResult = error
-                expectation.fulfill()
-            }
+    func test_서버에러일때() {
+        var expeacted: SmeemError!
+        do {
+            try NetworkManager.statusCodeErrorHandling(statusCode: 500)
+        } catch {
+            guard let error = error as? SmeemError else { return }
+            expeacted = error
         }
-        
-        wait(for: [expectation], timeout: 0.5)
-        XCTAssertEqual(outputResult, expeactedResult)
+        XCTAssertEqual(expeacted, SmeemError.serverError)
     }
     
-    func test_trainingUserPlanAPI_500에러일때() {
-        let expectation = XCTestExpectation()
-        
-        var outputResult: SmeemError!
-        let expeactedResult = SmeemError.serverError
-        failure500Sut.userPlanPathAPI(param: TrainingPlanRequest(target: "DEVELOP",
-                                                                 trainingTime: TrainingTime(day: "AM",
-                                                                                         hour: 22,
-                                                                                         minute: 0),
-                                                                 hasAlarm: true),
-                                      accessToken: "access Token") { result in
-            switch result {
-            case .success(let response):
-                print(response)
-            case .failure(let error):
-                outputResult = error
-                expectation.fulfill()
-            }
+    func test_클라에러일때() {
+        var expeacted: SmeemError!
+        do {
+            try NetworkManager.statusCodeErrorHandling(statusCode: 400)
+        } catch {
+            guard let error = error as? SmeemError else { return }
+            expeacted = error
         }
-        
-        wait(for: [expectation], timeout: 0.5)
-        XCTAssertEqual(outputResult, expeactedResult)
+        XCTAssertEqual(expeacted, SmeemError.clientError)
     }
     
     override func tearDownWithError() throws {
-        successSut = nil
-        failure400Sut = nil
-        failure500Sut = nil
+        sut = nil
     }
 }
 

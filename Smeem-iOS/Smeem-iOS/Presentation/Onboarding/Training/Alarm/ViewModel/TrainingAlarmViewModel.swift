@@ -41,7 +41,11 @@ final class TrainingAlarmViewModel: ViewModel {
                                                                              minute: 0),
                                                   hasAlarm: true)
     private var authType = AuthType.signup
-    private let provider = OnboardingService()
+    private var provider: OnboardingServiceProtocol
+    
+    init(provider: OnboardingServiceProtocol) {
+        self.provider = provider
+    }
     
     func transform(input: Input) -> Output {
         input.viewWillAppearSubject
@@ -79,7 +83,7 @@ final class TrainingAlarmViewModel: ViewModel {
             .sink { _ in
                 // 시작하기 버튼 눌러서 시작한 유저 - 바텀시트 띄워 줘야 함
                 if self.authType == .signup {
-                    self.bottomSheetSubject.send(())
+                    self.nicknameSubject.send(())
                 } else {
                     // 앞에서 로그인하고 온 유서 - 닉네임 뷰로 이동
                     self.nicknameSubject.send(())
@@ -104,7 +108,8 @@ final class TrainingAlarmViewModel: ViewModel {
                                                   accessToken: UserDefaultsManager.clientAccessToken) { result in
                         
                         switch result {
-                        case .success(_):
+                        case .success(let response):
+                            print("알려조!", response.message)
                             promise(.success(()))
                         case .failure(let error):
                             self.errorSubject.send(error)

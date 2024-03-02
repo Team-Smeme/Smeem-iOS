@@ -7,10 +7,11 @@
 
 import Foundation
 import Moya
+import Combine
 
-final class OnboardingService {
+final class OnboardingService: OnboardingServiceProtocol {
     
-    private var provider: MoyaProvider<OnboardingEndPoint>!
+    var provider: MoyaProvider<OnboardingEndPoint>!
     
     init(provider: MoyaProvider<OnboardingEndPoint> = MoyaProvider<OnboardingEndPoint>()) {
         self.provider = provider
@@ -36,6 +37,31 @@ final class OnboardingService {
                 completion(.failure(.userError))
             }
         }
+    }
+    
+    func trainingGoalGetAPI2() -> AnyPublisher<[Goal], SmeemError> {
+        return Future { promise in
+            self.provider.request(.trainingGoal) { response in
+                switch response {
+                case .success(let result):
+                    do {
+                        try NetworkManager.statusCodeErrorHandling(statusCode: result.statusCode)
+                        guard let data = try? result.map(GeneralResponse<TrainingGoalResponse>.self).data?.goals else {
+                            throw SmeemError.clientError
+                        }
+                        promise(.success(data))
+                        
+                    } catch let error {
+                        guard let smeemError = error as? SmeemError else { return }
+                        promise(.failure(smeemError))
+                    }
+                    
+                case .failure(_):
+                    promise(.failure(.userError))
+                }
+            }
+        }
+        .eraseToAnyPublisher()
     }
     
     func trainingWayGetAPI(param: String, completion: @escaping (Result<TrainingWayResponse, SmeemError>) -> ()) {

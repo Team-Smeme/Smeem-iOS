@@ -12,13 +12,15 @@ import Combine
 
 final class TrainingAlarmViewModelTest: XCTestCase {
     
+    var provider: OnboardingServiceMock!
     var viewModel: TrainingAlarmViewModel!
     var input: TrainingAlarmViewModel.Input!
     var output: TrainingAlarmViewModel.Output!
     var cancelBag: Set<AnyCancellable>!
     
     override func setUpWithError() throws {
-        self.viewModel = TrainingAlarmViewModel()
+        self.provider = OnboardingServiceMock()
+        self.viewModel = TrainingAlarmViewModel(provider: provider)
         self.cancelBag = Set<AnyCancellable>()
         
         self.input = TrainingAlarmViewModel.Input(viewWillAppearSubject: PassthroughSubject<Void, Never>(),
@@ -146,6 +148,24 @@ final class TrainingAlarmViewModelTest: XCTestCase {
         // Then
         XCTAssertEqual(outputHourResult, expectedHourResult)
         XCTAssertEqual(outputMinuteResult, expectedMinuteResult)
+    }
+    
+    func test_alarmAPI_잘호출되는지() {
+        // Given
+        let expectation = XCTestExpectation(description: "button type expectedResult received")
+        
+        // When
+        
+        output.nicknameResult
+            .sink { _ in
+                expectation.fulfill()
+            }
+            .store(in: &cancelBag)
+        
+        input.nextFlowSubject.send(())
+        
+        // Then
+        wait(for: [expectation], timeout: 0.5)
     }
     
     override func tearDownWithError() throws {
