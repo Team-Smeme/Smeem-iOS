@@ -103,8 +103,8 @@ final class TrainingGoalViewController: BaseViewController {
     
     private func bind() {
         nextButton.tapPublisher
-            .sink { _ in
-                self.nextButtonTapped.send(())
+            .sink { [weak self] _ in
+                self?.nextButtonTapped.send(())
             }
             .store(in: &cancelbag)
         
