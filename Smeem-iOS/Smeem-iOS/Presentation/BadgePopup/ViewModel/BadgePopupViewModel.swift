@@ -42,13 +42,15 @@ final class BadgePopupViewModel: ViewModel {
             .sink { buttonType in
                 guard let popupBadge = self.popupBadge else { return }
                 let badgeType = popupBadge[0].type
-                if buttonType == .cancel && badgeType == "EVENT" {
-                    AmplitudeManager.shared.track(event: AmplitudeConstant.badge.welcome_quit_click.event)
+                if buttonType == .cancel {
+                    if badgeType == "EVENT" {
+                        AmplitudeManager.shared.track(event: AmplitudeConstant.badge.welcome_quit_click.event)
+                    }
                     self.cancelButtonSubject.send(())
                 } else if buttonType == .more && badgeType == "EVENT" {
                     AmplitudeManager.shared.track(event: AmplitudeConstant.badge.welcome_more_click.event)
                     self.moreBadgeListSubject.send(())
-                } else {
+                } else if buttonType == .more && badgeType != "EVENT" {
                     AmplitudeManager.shared.track(event: AmplitudeConstant.badge.badge_more_click(badgeType).event)
                     self.moreBadgeListSubject.send(())
                 }
