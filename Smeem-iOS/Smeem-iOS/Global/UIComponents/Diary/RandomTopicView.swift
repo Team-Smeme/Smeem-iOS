@@ -38,7 +38,7 @@ final class RandomTopicView: UIView {
         label.font = .b1
         label.textColor = .point
         label.text = "Q."
-        label.setTextWithLineHeight(lineHeight: 21)
+        label.setTextWithLineHeight(lineHeight: 22)
         return label
     }()
     
@@ -107,11 +107,22 @@ extension RandomTopicView {
         contentLabel.snp.makeConstraints { make in
             make.top.equalTo(questionLabel)
             make.leading.equalTo(questionLabel)
+            make.trailing.equalToSuperview().inset(convertByWidthRatio(42))
         }
         
         refreshButton.snp.makeConstraints { make in
             make.bottom.equalToSuperview().offset(convertByHeightRatio(-20))
             make.trailing.equalToSuperview().offset(convertByWidthRatio(-18))
+        }
+    }
+    
+    private func updateViewHeightForNewContent() {
+        
+        let contentLabelHeight: CGFloat = contentLabel.intrinsicContentSize.height
+        
+        if let heightConstraint = heightConstraint {
+            let newHeight: CGFloat = contentLabelHeight <= 22 ? 88 : contentLabelHeight + 66
+            heightConstraint.update(offset: newHeight)
         }
     }
     
@@ -124,26 +135,14 @@ extension RandomTopicView {
             }
         }
     }
-    
-    // MARK: - Custom Method
-    
+}
+
+// MARK: - Network
+
+extension RandomTopicView {
     func setData(contentText: String) {
         contentLabel.text = "     " + contentText
         contentLabel.setTextWithLineHeight(lineHeight: 22)
         updateViewHeightForNewContent()
-    }
-
-    private func updateViewHeightForNewContent() {
-        let labelWidth = UIScreen.main.bounds.width - 36
-        contentLabel.preferredMaxLayoutWidth = labelWidth
-        contentLabel.setNeedsLayout()
-        contentLabel.layoutIfNeeded()
-        
-        let contentLabelHeight: CGFloat = contentLabel.intrinsicContentSize.height
-        
-        if let heightConstraint = heightConstraint {
-            let newHeight: CGFloat = contentLabelHeight <= 22 ? 88 : contentLabelHeight + 66
-            heightConstraint.update(offset: newHeight)
-        }
     }
 }
