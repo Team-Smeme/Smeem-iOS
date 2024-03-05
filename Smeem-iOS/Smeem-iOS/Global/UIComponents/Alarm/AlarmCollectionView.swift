@@ -14,13 +14,30 @@
 
 import UIKit
 
+protocol AlarmCollectionViewDelegate {
+    func alarmTiemDataSend(data: AlarmTimeAppData)
+    func alarmDayButtonDataSend(day: Set<String>)
+}
+
 final class AlarmCollectionView: UICollectionView {
     
     // MARK: - Property
     
+    var alarmDelegate: AlarmCollectionViewDelegate?
+    
     var dayArray = ["월", "화", "수", "목", "금", "토", "일"]
-    var selectedIndexPath = [IndexPath(item: 0, section: 0), IndexPath(item: 1, section: 0), IndexPath(item: 2, section: 0), IndexPath(item: 3, section: 0), IndexPath(item: 4, section: 0)]
-    var dayDicrionary: [String:String] = ["월": "MON", "화": "TUE", "수": "WED", "목": "THU", "금": "FRI", "토": "SAT", "일": "SUN"]
+    var selectedIndexPath = [IndexPath(item: 0, section: 0),
+                             IndexPath(item: 1, section: 0),
+                             IndexPath(item: 2, section: 0),
+                             IndexPath(item: 3, section: 0),
+                             IndexPath(item: 4, section: 0)]
+    var dayDicrionary: [String:String] = ["월": "MON",
+                                          "화": "TUE",
+                                          "수": "WED",
+                                          "목": "THU",
+                                          "금": "FRI",
+                                          "토": "SAT",
+                                          "일": "SUN"]
     
     var selectedDayArray: Set<String> = ["MON", "TUE", "WED", "THU", "FRI"] {
         didSet {
@@ -29,9 +46,9 @@ final class AlarmCollectionView: UICollectionView {
             trainingDayClosure?((Array(selectedDayArray).joined(separator: ","), .enabled))
         }
     }
-    
+
     var trainingDayClosure: (((day: String, type: SmeemButtonType)) -> Void)?
-    var trainingTimeClosure: (((hour: Int, minute: Int)) -> Void)?
+    var trainingTimeClosure: (((hour: String, minute: String, dayAndNight: String)) -> Void)?
     
     var myPageTime = (time: 100, minute: 100)
     var hasAlarm = true {
@@ -101,8 +118,8 @@ extension AlarmCollectionView: UICollectionViewDelegate {
         guard let cell = collectionView.cellForItem(at: indexPath) as? AlarmCollectionViewCell else { return }
         cell.selctedCell(hasAlarm: hasAlarm)
         
-        selectedDayArray.insert(dayDicrionary[dayArray[indexPath.item]] ?? "")
-        print(selectedDayArray)
+        selectedDayArray.insert(AlarmDefaultModel.dayDicrionary[AlarmDefaultModel.dayArray[indexPath.item]] ?? "")
+        alarmDelegate?.alarmDayButtonDataSend(day: selectedDayArray)
         
     }
     
@@ -110,8 +127,8 @@ extension AlarmCollectionView: UICollectionViewDelegate {
         guard let cell = collectionView.cellForItem(at: indexPath) as? AlarmCollectionViewCell else { return }
         cell.desecltedCell()
         
-        selectedDayArray.remove(dayDicrionary[dayArray[indexPath.item]] ?? "")
-        print(selectedDayArray)
+        selectedDayArray.remove(AlarmDefaultModel.dayDicrionary[AlarmDefaultModel.dayArray[indexPath.item]] ?? "")
+        alarmDelegate?.alarmDayButtonDataSend(day: selectedDayArray)
     }
 }
 
@@ -119,13 +136,18 @@ extension AlarmCollectionView: UICollectionViewDelegate {
 
 extension AlarmCollectionView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return dayArray.count
+        return AlarmDefaultModel.dayArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier:  AlarmCollectionViewCell.identifier, for: indexPath) as? AlarmCollectionViewCell else { return UICollectionViewCell() }
         
-        let initalSelectedIndexPaths = selectedIndexPath.contains(indexPath)
+        var initalSelectedIndexPaths = AlarmDefaultModel.selectedIndexPath.contains(indexPath)
+        
+        // TODO: 다음 업데이트 때 로직 수정
+        if myPageTime != (time: 100, minute: 100) {
+            initalSelectedIndexPaths = self.selectedIndexPath.contains(indexPath)
+        }
         
         if initalSelectedIndexPaths {
             cell.selctedCell(hasAlarm: hasAlarm)
@@ -134,8 +156,14 @@ extension AlarmCollectionView: UICollectionViewDataSource {
             cell.desecltedCell()
         }
         
-        cell.setData(dayArray[indexPath.item])
+        cell.setData(AlarmDefaultModel.dayArray[indexPath.item])
         return cell
+    }
+}
+
+extension AlarmCollectionView: AlarmPickerDelegate {
+    func alarmDataSend(data: AlarmTimeAppData) {
+        self.alarmDelegate?.alarmTiemDataSend(data: data)
     }
 }
 
@@ -162,6 +190,8 @@ extension AlarmCollectionView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         guard let footerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: DatePickerFooterView.identifier, for: indexPath) as? DatePickerFooterView else { return UICollectionReusableView() }
         
+        footerView.alarmPickerDelegate = self
+        
         if myPageTime != (100, 100) {
             let str = footerView.calculateMyPageTime(hour: myPageTime.time, minute: myPageTime.minute)
             let splitStrOne = str.split(separator: ":")
@@ -181,18 +211,8 @@ extension AlarmCollectionView: UICollectionViewDelegateFlowLayout {
                 footerView.inputTextField.textColor = .point
                 footerView.alarmLabel.textColor = .point
             }
-        } else {
-            // 온보딩
-            print("온보딩")
         }
         
-        footerView.trainingTimeClosure = { data in
-            let hoursData = data.hour
-            let minuteData = data.minute
-            let traingData: (Int, Int) = (hoursData, minuteData)
-            
-            self.trainingTimeClosure?(traingData)
-        }
         return footerView
     }
 }

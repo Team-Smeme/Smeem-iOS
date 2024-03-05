@@ -28,6 +28,7 @@ final class TrainingGoalViewModel: ViewModel {
     private let errorSubject = PassthroughSubject<SmeemError, Never>()
     private let loadingViewSubject = PassthroughSubject<Bool, Never>()
     private var cancelbag = Set<AnyCancellable>()
+    private var provider = OnboardingService()
     
     private var tempTarget = ""
 
@@ -38,7 +39,7 @@ final class TrainingGoalViewModel: ViewModel {
             })
             .flatMap { _ -> AnyPublisher<[Goal], Never> in
                 return Future<[Goal], Never> { promise in
-                    OnboardingAPI.shared.planList { result in
+                    self.provider.trainingGoalGetAPI { result in
                         switch result {
                         case .success(let response):
                             promise(.success(response))

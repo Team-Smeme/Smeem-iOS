@@ -13,7 +13,7 @@ enum MyPageService {
     case myPageInfo
     case editNickname(param: EditNicknameRequest)
     case badgeList
-    case myPageUserPlan(param: UserPlanRequest)
+    case myPageUserPlan(param: TrainingPlanRequest)
     case editAlarmTime(param: EditAlarmTime)
     case editPush(param: EditPushRequest)
     case editGoal(param: EditGoalRequest)

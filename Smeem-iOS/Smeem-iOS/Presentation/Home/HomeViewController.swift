@@ -270,8 +270,7 @@ final class HomeViewController: BaseViewController {
     
     private func checkPopupView() {
         if !badgePopupData.isEmpty {
-            let popupVC = BadgePopupViewController()
-            popupVC.setData(self.badgePopupData)
+            let popupVC = BadgePopupViewController(popupBadge: badgePopupData)
             popupVC.modalTransitionStyle = .crossDissolve
             popupVC.modalPresentationStyle = .overCurrentContext
             self.present(popupVC, animated: true)

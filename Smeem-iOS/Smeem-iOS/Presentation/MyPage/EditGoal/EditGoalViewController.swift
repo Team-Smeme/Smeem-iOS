@@ -9,6 +9,8 @@ import UIKit
 
 final class EditGoalViewController: BaseViewController {
     
+    private let provider = OnboardingService()
+    
     private var targetIndex = -1
     private var tempTarget = ""
     
@@ -115,7 +117,7 @@ extension EditGoalViewController: TrainingDataSendDelegate {
 extension EditGoalViewController {
     func planListGetAPI() {
         SmeemLoadingView.showLoading()
-        OnboardingAPI.shared.planList() { response in
+        self.provider.trainingGoalGetAPI() { response in
             
             switch response {
             case .success(let response):

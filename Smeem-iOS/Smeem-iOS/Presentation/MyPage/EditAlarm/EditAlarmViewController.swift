@@ -19,8 +19,6 @@ final class EditAlarmViewController: BaseViewController {
     
     private var hasAlarm = false
     
-    private var trainingClosure: ((TrainingTime) -> Void)?
-    
     var dayIndexPathArray = [IndexPath]()
     
     // MARK: - UI Property
@@ -45,19 +43,11 @@ final class EditAlarmViewController: BaseViewController {
     
     private lazy var alarmCollectionView: AlarmCollectionView = {
         let collectionView = AlarmCollectionView()
-        
-        collectionView.trainingDayClosure = { traingData in
-            self.trainigDayData = traingData.day
-            self.completeButton.changeButtonType(buttonType: traingData.type)
-        }
-        collectionView.trainingTimeClosure = { data in
-            self.trainingTimeData = data
-        }
         return collectionView
     }()
     
     private lazy var completeButton: SmeemButton = {
-        let button = SmeemButton(buttonType: .notEnabled, text: "완료")
+        let button = SmeemButton(buttonType: .enabled, text: "완료")
         button.addTarget(self, action: #selector(completeButtonDidTap), for: .touchUpInside)
         return button
     }()
@@ -68,10 +58,15 @@ final class EditAlarmViewController: BaseViewController {
         super.viewDidLoad()
         
         setLayout()
+        setDelegate()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         setData()
+    }
+    
+    private func setDelegate() {
+        alarmCollectionView.alarmDelegate = self
     }
     
     // MARK: - @objc
@@ -125,6 +120,33 @@ final class EditAlarmViewController: BaseViewController {
             $0.bottom.equalToSuperview().inset(50)
             $0.leading.trailing.equalToSuperview().inset(18)
             $0.height.equalTo(60)
+        }
+    }
+}
+
+/// TODO: 임의 코드
+extension EditAlarmViewController: AlarmCollectionViewDelegate {
+    func alarmTiemDataSend(data: AlarmTimeAppData) {
+        var hour = 0
+        
+        if data.dayAndNight == "PM" {
+            // 12 PM 그대로, 13 ~ 23시까지
+            hour = data.hour == "12" ? 12 : Int(data.hour)!+12
+        } else {
+            // AM 00:00
+            hour = data.hour == "12" ? 24 : Int(data.hour)!
+        }
+        
+        var minute = data.minute == "00" ? 0 : 30
+        self.trainingTimeData = (hour, minute)
+    }
+    
+    func alarmDayButtonDataSend(day: Set<String>) {
+        if day.isEmpty {
+            completeButton.changeButtonType(buttonType: .notEnabled)
+        } else {
+            self.trainigDayData = Array(day).joined(separator: ",")
+            completeButton.changeButtonType(buttonType: .enabled)
         }
     }
 }

@@ -26,3 +26,7 @@ struct PopupBadge: Codable {
     let imageUrl: String
     let type: String
 }
+
+extension PopupBadge {
+    static let empty = [PopupBadge(name: "웰컴배지", imageUrl: "imageUrl", type: "EVENT")]
+}

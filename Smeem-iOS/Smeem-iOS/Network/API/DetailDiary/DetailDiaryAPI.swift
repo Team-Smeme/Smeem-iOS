@@ -16,13 +16,14 @@ final class DetailDiaryAPI {
         detailDiaryProvider.request(.detailDiary(diaryID: diaryID)) { result in
             switch result {
             case .success(let response):
-                let statusCode = response.statusCode
-                
                 do {
-                    guard let data = try response.map(GeneralResponse<DetailDiaryResponse>.self).data else { return }
+                    try NetworkManager.statusCodeErrorHandling(statusCode: response.statusCode)
+                    guard let data = try? response.map(GeneralResponse<DetailDiaryResponse>.self).data else {
+                        throw SmeemError.clientError
+                    }
                     completion(.success(data))
                 } catch {
-                    let error = NetworkManager.statusCodeErrorHandling(statusCode: statusCode)
+                    guard let error = error as? SmeemError else { return }
                     completion(.failure(error))
                 }
             case .failure(_):
@@ -36,12 +37,14 @@ final class DetailDiaryAPI {
         detailDiaryProvider.request(.deleteDiary(diaryID: diaryID)) { result in
             switch result {
             case .success(let response):
-                let statusCode = response.statusCode
                 do {
-                    guard let data = try response.map(GeneralResponse<NilType>?.self) else { return }
+                    try NetworkManager.statusCodeErrorHandling(statusCode: response.statusCode)
+                    guard let data = try? response.map(GeneralResponse<NilType>.self) else {
+                        throw SmeemError.clientError
+                    }
                     completion(.success(data))
                 } catch {
-                    let error = NetworkManager.statusCodeErrorHandling(statusCode: statusCode)
+                    guard let error = error as? SmeemError else { return }
                     completion(.failure(error))
                 }
             case .failure(_):
