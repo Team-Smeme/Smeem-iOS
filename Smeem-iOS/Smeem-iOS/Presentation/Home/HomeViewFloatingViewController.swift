@@ -13,7 +13,7 @@ final class HomeViewFloatingViewController: UIViewController {
     
     // MARK: - Property
     
-    private let diaryViewControllerFactory = DiaryViewControllerFactory(diaryViewFactory: DiaryViewFactory(), viewModel: DiaryViewModel(model: DiaryModel()))
+    private let factory = DiaryViewControllerFactory(diaryViewFactory: DiaryViewFactory(), viewModel: DiaryViewModel(model: DiaryModel()))
     
     // MARK: - UI Property
     
@@ -165,7 +165,7 @@ final class HomeViewFloatingViewController: UIViewController {
     
     @objc func foreignDiaryButtonDidTap(_ gesture: UITapGestureRecognizer) {
         AmplitudeManager.shared.track(event: AmplitudeConstant.diary.for_writing_click.event)
-        let nextVC = diaryViewControllerFactory.makeForeignDiaryViewController()
+        let nextVC = factory.makeForeignDiaryViewController()
         nextVC.modalTransitionStyle = .coverVertical
         nextVC.modalPresentationStyle = .fullScreen
         present(nextVC, animated: true)
@@ -173,7 +173,7 @@ final class HomeViewFloatingViewController: UIViewController {
     
     @objc func koreanDiaryButtonDidTap(_ gesture: UITapGestureRecognizer) {
         AmplitudeManager.shared.track(event: AmplitudeConstant.diary.kor_writing_click.event)
-        let nextVC = diaryViewControllerFactory.makeStepOneKoreanDiaryViewController()
+        let nextVC = factory.makeStepOneKoreanDiaryViewController()
         let navigationController = UINavigationController(rootViewController: nextVC)
         navigationController.modalTransitionStyle = .coverVertical
         navigationController.modalPresentationStyle = .fullScreen

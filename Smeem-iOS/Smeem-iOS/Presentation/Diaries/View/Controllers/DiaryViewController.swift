@@ -5,6 +5,7 @@
 //  Created by Joon Baek on 2023/06/04.
 //
 
+import Combine
 import UIKit
 
 // MARK: - DiaryViewController
@@ -14,9 +15,10 @@ class DiaryViewController: BaseViewController {
     // MARK: - Properties
     
     private (set) var rootView: DiaryView?
-    private (set) var viewModel: DiaryViewModel?
-    
+    private (set) var viewModel: DiaryViewModel
     private var keyboardHandler: KeyboardLayoutAndScrollingHandler?
+    
+    private var cancellables = Set<AnyCancellable>()
     
     // MARK: - Life Cycle
     
@@ -25,7 +27,7 @@ class DiaryViewController: BaseViewController {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         
-        setupSubscriptions()
+        subscribeToViewPublishers()
         setupDelegates()
         setupKeyboardHandler()
     }
@@ -52,7 +54,7 @@ class DiaryViewController: BaseViewController {
     }
     
     deinit {
-        removeListeners()
+        cancellables.forEach { $0.cancel() }
         keyboardHandler = nil
     }
 }
@@ -70,46 +72,50 @@ extension DiaryViewController {
         rootView?.toolTipDelegate = self
     }
     
-    private func setupSubscriptions() {
-        bindTextValidationStatus()
-        bindRandomTopicUpdates()
-        bindToastVisibility()
-    }
-    
-    private func removeListeners() {
-        viewModel?.onUpdateTextValidation.listener = nil
-        viewModel?.onUpdateRandomTopic.listener = nil
-    }
-    
     // MARK: - Setups
     
-    private func bindTextValidationStatus() {
-        viewModel?.onUpdateTextValidation.bind(listener: { [weak self] isValid in
-            self?.rootView?.navigationView.updateRightButton(isValid: isValid)
-        })
-    }
-    
-    private func bindRandomTopicUpdates() {
-        viewModel?.onUpdateTopicContent.bind(listener: { [weak self] content in
-            self?.rootView?.randomTopicView?.setData(contentText: content)
-        })
-        
-        viewModel?.onUpdateRandomTopic.bind(listener: { [weak self] isEnabled in
-            self?.updateViewWithRandomTopicActive()
-        })
-    }
-    
-    private func bindToastVisibility() {
-        viewModel?.toastType.bind(listener: { [weak self] toastType in
-            if let toastType {
-                self?.rootView?.showToast(with: toastType)
+    private func subscribeToViewPublishers() {
+        rootView?.leftButtonPublisher
+            .sink { [weak self] _ in
+                self?.viewModel.leftButtonTapped()
             }
-        })
+            .store(in: &cancellables)
+
+        rootView?.rightButtonPublisher
+            .sink { [weak self] _ in
+                self?.viewModel.rightButtonTapped()
+            }
+            .store(in: &cancellables)
     }
     
-//    private func bindTopicID() {
-//        viewModel?.onUpdateTopicID.bind(listener: { [weak self] id in
-//            self?.viewModel?.onUpdateTopicID(id)
+//    private func bindTextValidationStatus() {
+//        viewModel.onUpdateTextValidation.bind(listener: { [weak self] isValid in
+//            self?.rootView?.navigationView.updateRightButton(isValid: isValid)
+//        })
+//    }
+//    
+//    private func bindRandomTopicUpdates() {
+//        viewModel.onUpdateTopicContent.bind(listener: { [weak self] content in
+//            self?.rootView?.randomTopicView?.setData(contentText: content)
+//        })
+//        
+//        viewModel.onUpdateRandomTopic.bind(listener: { [weak self] isEnabled in
+//            self?.updateViewWithRandomTopicActive()
+//        })
+//    }
+//    
+//    private func bindToastVisibility() {
+//        viewModel.toastType.bind(listener: { [weak self] toastType in
+//            if let toastType {
+//                self?.rootView?.showToast(with: toastType)
+//            }
+//        })
+//    }
+//    
+//    private func bindRandomTopicActive() {
+//        viewModel.isRandomTopicActive.bind(listener: { [weak self] isActive in
+//            self?.rootView?.updateRandomTopicView(isRandomTopicActive: isActive)
+//            self?.rootView?.updateInputTextViewConstraints(isRandomTopicActive: isActive)
 //        })
 //    }
     
@@ -121,27 +127,18 @@ extension DiaryViewController {
     // MARK: - Custom Methods
     
     private func handleRandomTopicButtonTap() {
-        guard let isActive = viewModel?.isRandomTopicActive.value else {
-            return
-        }
+        let isActive = viewModel.isRandomTopicActive.value
         
         rootView?.bottomView.updateRandomTopicButtonImage(isActive)
         
         if isActive {
-            if viewModel?.model.topicContent?.isEmpty == nil {
-                viewModel?.callRandomTopicAPI()
+            if viewModel.model.topicContent?.isEmpty == nil {
+                viewModel.callRandomTopicAPI()
             }
-            updateViewWithRandomTopicActive()
+//            bindRandomTopicActive()
         } else {
-            viewModel?.updateModel(isTopicCalled: false, topicContent: nil)
+            viewModel.updateModel(isTopicCalled: false, topicContent: nil)
         }
-    }
-    
-    private func updateViewWithRandomTopicActive() {
-        viewModel?.isRandomTopicActive.bind(listener: { [weak self] isActive in
-            self?.rootView?.updateRandomTopicView(isRandomTopicActive: isActive)
-            self?.rootView?.updateInputTextViewConstraints(isRandomTopicActive: isActive)
-        })
     }
 }
 
@@ -149,7 +146,7 @@ extension DiaryViewController {
 
 extension DiaryViewController: RandomTopicRefreshDelegate {
     func refreshButtonTapped(completion: @escaping (String?) -> Void) {
-        viewModel?.callRandomTopicAPI()
+        viewModel.callRandomTopicAPI()
     }
 }
 
@@ -157,17 +154,17 @@ extension DiaryViewController: RandomTopicRefreshDelegate {
 
 extension DiaryViewController: SmeemTextViewHandlerDelegate {
     func textViewDidChange(text: String, viewType: DiaryViewType) {
-        let isValid = viewModel?.isTextValid(text: text, viewType: viewType)
-        viewModel?.updateTextValidation(isValid ?? false)
-        viewModel?.inputText.value = text
+        let isValid = viewModel.isTextValid(text: text, viewType: viewType)
+        viewModel.updateTextValidation(isValid)
+        viewModel.inputText.value = text
     }
     
     func onUpdateInputText(_ text: String) {
-        viewModel?.onUpdateInputText?(text)
+        viewModel.onUpdateInputText?(text)
     }
     
     func onUpdateTopicID(_ id: String) {
-        viewModel?.onUpdateTopicID?(id)
+        viewModel.onUpdateTopicID?(id)
     }
 }
 
@@ -180,7 +177,7 @@ extension DiaryViewController: RandomTopicActionDelegate {
             rootView?.removeToolTip()
         }
         
-        viewModel?.toggleRandomTopic()
+        viewModel.toggleRandomTopic()
         handleRandomTopicButtonTap()
     }
 }
@@ -198,8 +195,8 @@ extension DiaryViewController: ToolTipDelegate {
 
 extension DiaryViewController {
     func handleInitialRandomTopicApiCall() {
-        viewModel?.callRandomTopicAPI()
-        self.rootView?.randomTopicView?.setData(contentText: viewModel?.model.topicContent ?? "")
+        viewModel.callRandomTopicAPI()
+        self.rootView?.randomTopicView?.setData(contentText: viewModel.model.topicContent ?? "")
     }
     
     func handlePostDiaryResponse(_ response: PostDiaryResponse?) {
@@ -214,7 +211,7 @@ extension DiaryViewController {
     }
     
     func handleError() {
-        viewModel?.onError = { [weak self] error in
+        viewModel.onError = { [weak self] error in
             guard let error = error as? SmeemError else { return }
             
             self?.rootView?.showToast(with: .smeemErrorToast(message: error))

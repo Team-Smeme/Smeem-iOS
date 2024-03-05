@@ -45,11 +45,9 @@ extension StepOneKoreanDiaryViewController {
         let nextVC = diaryViewControllerFactory.makeStepTwoKoreanDiaryViewController()
         delegate = nextVC
         
-        let inputText = viewModel?.inputText.value
+        delegate?.dataBind(topicID: viewModel.getTopicID(), inputText: viewModel.getInputText())
         
-        delegate?.dataBind(topicID: viewModel?.getTopicID(), inputText: inputText ?? "")
-        
-        print("데이터바인드 성공", viewModel?.getTopicID())
+        print("데이터바인드 성공", viewModel.getTopicID())
         
         self.navigationController?.pushViewController(nextVC, animated: true)
     }
@@ -64,15 +62,15 @@ extension StepOneKoreanDiaryViewController: NavigationBarActionDelegate {
     }
     
     func didTapRightButton() {
-        if viewModel?.onUpdateTextValidation.value == true {
-            if viewModel?.isRandomTopicActive.value == false {
-                viewModel?.updateTopicID(topicID: nil)
+        if viewModel.onUpdateTextValidation.value == true {
+            if viewModel.isRandomTopicActive.value == false {
+                viewModel.updateTopicID(topicID: nil)
             }
             rootView?.inputTextView.resignFirstResponder()
             handleRightNavigationButton()
             AmplitudeManager.shared.track(event: AmplitudeConstant.diary.first_step_complete.event)
         } else {
-            viewModel?.showRegExKrToast()
+            viewModel.showRegExKrToast()
         }
     }
 }

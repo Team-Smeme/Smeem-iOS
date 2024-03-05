@@ -5,6 +5,7 @@
 //  Created by Joon Baek on 2023/10/02.
 //
 
+import Combine
 import UIKit
 
 import SnapKit
@@ -23,6 +24,14 @@ class DiaryView: BaseView {
     
     private let viewType: DiaryViewType
     private (set) var configuration: DiaryViewConfiguration
+    
+    var leftButtonPublisher: AnyPublisher<Void, Never> {
+        navigationView.leftButtonTapped.eraseToAnyPublisher()
+    }
+    
+    var rightButtonPublisher: AnyPublisher<Void, Never> {
+        navigationView.rightButtonTapped.eraseToAnyPublisher()
+    }
     
     weak var toolTipDelegate: ToolTipDelegate?
     

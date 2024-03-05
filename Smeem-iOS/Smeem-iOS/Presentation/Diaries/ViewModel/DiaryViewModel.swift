@@ -5,6 +5,7 @@
 //  Created by Joon Baek on 2023/11/02.
 //
 
+import Combine
 import UIKit
 
 struct KeyboardInfo {
@@ -14,23 +15,38 @@ struct KeyboardInfo {
 
 // MARK: - DiaryViewModel
 
-final class DiaryViewModel {
+final class DiaryViewModel: ViewModel {
+    // private으로 선언하면 어떨까요?
+    struct Input {
+        let onClickLeftButton = PassthroughSubject<Void, Never>()
+        let onClickRightButton = PassthroughSubject<Void, Never>()
+        let onClickRandomTopicButton = PassthroughSubject<Void, Never>()
+        let onClickHintButton = PassthroughSubject<Void, Never>()
+    }
+    
+    struct Output {
+        let shouldDismiss: AnyPublisher<Void, Never>
+        let shouldPostDiary: AnyPublisher<Void, Never>
+    }
     
     private (set) var model: DiaryModel
     
-    private (set) var isRandomTopicActive: Observable<Bool> = Observable(false)
-    private (set) var onUpdateTextValidation: Observable<Bool> = Observable(false)
-    private (set) var inputText: Observable<String> = Observable("")
-    private (set) var onUpdateHintButton: Observable<Bool> = Observable(false)
-    private (set) var onUpdateRandomTopic: Observable<Bool> = Observable(false)
-    private (set) var onUpdateTopicContent: Observable<String> = Observable("")
-    private (set) var keyboardInfo: Observable<KeyboardInfo?> = Observable(nil)
-    private (set) var toastType: Observable<ToastViewType?> = Observable(nil)
+    private (set) var isRandomTopicActive = CurrentValueSubject<Bool, Never>(false)
+    private (set) var onUpdateTextValidation = CurrentValueSubject<Bool, Never>(false)
+    private (set) var inputText = CurrentValueSubject<String, Never>("")
+    private (set) var onUpdateHintButton = CurrentValueSubject<Bool, Never>(false)
+    private (set) var onUpdateRandomTopic = CurrentValueSubject<Bool, Never>(false)
+    private (set) var onUpdateTopicContent = CurrentValueSubject<String, Never>("")
+    private (set) var keyboardInfo = CurrentValueSubject<KeyboardInfo?, Never>(nil)
+    private (set) var toastType = CurrentValueSubject<ToastViewType?, Never>(nil)
+    
 //    private (set) var onUpdateTopicID: Observable<Int> = Observable(0)
     
     var onUpdateInputText: ((String) -> Void)?
     var onUpdateTopicID: ((String) -> Void)?
     var onError: ((Error) -> Void)?
+    
+    private var cancellables = Set<AnyCancellable>()
     
     init(model: DiaryModel) {
         self.model = model
@@ -85,6 +101,14 @@ extension DiaryViewModel {
 // MARK: - Action Helpers
 
 extension DiaryViewModel {
+    func leftButtonTapped() {
+        print("✅")
+    }
+    
+    func rightButtonTapped() {
+        
+    }
+    
     func isTextValid(text: String, viewType: DiaryViewType) -> Bool {
         let smeemTextViewHandler = SmeemTextViewHandler()
         
@@ -109,6 +133,19 @@ extension DiaryViewModel {
     func showRegExKrToast() {
         setToastViewType(.smeemToast(bodyType: .regExKr))
     }
+    
+    func transform(input: DiaryViewModel.Input) -> DiaryViewModel.Output {
+        let shouldDismiss = input.onClickLeftButton
+            .map { _ in Void() }
+            .eraseToAnyPublisher()
+        
+        let shouldPostDiary = input.onClickRightButton
+            .filter { [weak self] _ in self?.onUpdateTextValidation.value == true }
+            .map { _ in Void() }
+            .eraseToAnyPublisher()
+        
+        return Output(shouldDismiss: shouldDismiss, shouldPostDiary: shouldPostDiary)
+    }
 }
 
 // MARK: - Network
@@ -131,9 +168,7 @@ extension DiaryViewModel {
     
     func postDiaryAPI(completion: @escaping(PostDiaryResponse?) -> Void) {
         
-        let inputText = inputText.value
-        
-        PostDiaryAPI.shared.postDiary(param: PostDiaryRequest(content: inputText, topicId: getTopicID())) { result in
+        PostDiaryAPI.shared.postDiary(param: PostDiaryRequest(content: getInputText(), topicId: getTopicID())) { result in
             
             switch result {
             case .success(let response):
