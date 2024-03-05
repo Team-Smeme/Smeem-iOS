@@ -61,7 +61,6 @@ final class TrainingAlarmViewModel: ViewModel {
                 let minute = data.minute == "00" ? 0 : 30
                 self.trainingPlanRequest.trainingTime.hour = hour
                 self.trainingPlanRequest.trainingTime.minute = minute
-                print(self.trainingPlanRequest)
             })
             .store(in: &cancelBag)
         
@@ -83,7 +82,7 @@ final class TrainingAlarmViewModel: ViewModel {
             .sink { _ in
                 // 시작하기 버튼 눌러서 시작한 유저 - 바텀시트 띄워 줘야 함
                 if self.authType == .signup {
-                    self.nicknameSubject.send(())
+                    self.bottomSheetSubject.send(())
                 } else {
                     // 앞에서 로그인하고 온 유서 - 닉네임 뷰로 이동
                     self.nicknameSubject.send(())
@@ -109,7 +108,6 @@ final class TrainingAlarmViewModel: ViewModel {
                         
                         switch result {
                         case .success(let response):
-                            print("알려조!", response.message)
                             promise(.success(()))
                         case .failure(let error):
                             self.errorSubject.send(error)

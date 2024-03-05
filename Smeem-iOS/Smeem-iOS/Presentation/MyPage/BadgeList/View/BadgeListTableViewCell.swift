@@ -53,7 +53,6 @@ final class BadgeListTableViewCell: UITableViewCell {
     private func setRegister() {
         detailBadgeCollectionView.register(DetailBadgeCollectionViewCell.self, forCellWithReuseIdentifier: DetailBadgeCollectionViewCell.identifier)
     }
-//    }
     
     // MARK: - Layout
     

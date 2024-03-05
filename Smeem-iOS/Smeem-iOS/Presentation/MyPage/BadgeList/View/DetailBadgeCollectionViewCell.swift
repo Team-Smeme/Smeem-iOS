@@ -36,7 +36,6 @@ final class DetailBadgeCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - @objc
     // MARK: - Custom Method
     
     func setBadgeData(data: (name: String, image: String)) {

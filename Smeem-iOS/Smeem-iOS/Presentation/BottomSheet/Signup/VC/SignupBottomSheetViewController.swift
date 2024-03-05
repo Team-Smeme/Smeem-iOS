@@ -88,14 +88,14 @@ final class SignupBottomSheetViewController: UIViewController {
     
     private func bind() {
         kakaoLoginButton.tapPublisher
-            .sink { _ in
-                self.kakaoLoginTapped.send(())
+            .sink { [weak self] _ in
+                self?.kakaoLoginTapped.send(())
             }
             .store(in: &cancelBag)
         
         appleLoginButton.tapPublisher
             .receive(on: DispatchQueue.main)
-            .sink { _ in
+            .sink { [weak self] _ in
                 let appleIDProvider = ASAuthorizationAppleIDProvider()
                 let request = appleIDProvider.createRequest()
                 request.requestedScopes = []
