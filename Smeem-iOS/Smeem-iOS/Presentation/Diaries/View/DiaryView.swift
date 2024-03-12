@@ -32,7 +32,7 @@ class DiaryView: BaseView {
     private (set) var inputTextView: SmeemTextView
     private (set) var bottomView: DiaryBottomView
     
-    private (set) var randomTopicView: RandomTopicView?
+    private (set) var randomTopicView: RandomTopicView
     private (set) var smeemToastView: SmeemToastView?
     
     private lazy var toolTip: UIImageView? = {
@@ -76,7 +76,7 @@ class DiaryView: BaseView {
     }
     
     deinit {
-        randomTopicView?.removeFromSuperview()
+        randomTopicView.removeFromSuperview()
         smeemToastView?.removeFromSuperview()
         toolTip?.removeFromSuperview()
     }
@@ -134,21 +134,19 @@ extension DiaryView {
     
     func updateRandomTopicView(isRandomTopicActive: Bool) {
         if isRandomTopicActive {
-            guard let randomTopicView = randomTopicView else { return }
-
             addSubview(randomTopicView)
             randomTopicView.snp.makeConstraints { make in
                 make.top.equalTo(navigationView.snp.bottom).offset(convertByHeightRatio(16))
                 make.leading.equalToSuperview()
             }
         } else {
-            randomTopicView?.removeFromSuperview()
+            randomTopicView.removeFromSuperview()
         }
     }
     
     func updateInputTextViewConstraints(isRandomTopicActive: Bool) {
         inputTextView.snp.remakeConstraints { make in
-            make.top.equalTo(isRandomTopicActive ? randomTopicView?.snp.bottom ?? 0 : navigationView.snp.bottom)
+            make.top.equalTo(isRandomTopicActive ? randomTopicView.snp.bottom ?? 0 : navigationView.snp.bottom)
             make.leading.trailing.equalToSuperview()
             make.bottom.equalTo(bottomView.snp.top)
         }

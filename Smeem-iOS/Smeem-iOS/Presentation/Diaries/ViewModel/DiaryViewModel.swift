@@ -5,7 +5,7 @@
 //  Created by Joon Baek on 2023/11/02.
 //
 
-import UIKit
+import Foundation
 import Combine
 
 struct KeyboardInfo {
@@ -17,23 +17,24 @@ struct KeyboardInfo {
 
 final class DiaryViewModel: ViewModel {
     struct Input {
-        
         let randomTopicButtonTapped: PassthroughSubject<Void, Never>
+        let refreshButtonTapped: PassthroughSubject<Void, Never>
         let hintButtonTapped: PassthroughSubject<Void, Never>
     }
     
     struct Output {
         let randomTopicButtonAction: AnyPublisher<Void, Never>
+        let refreshButtonAction: AnyPublisher<Void, Never>
         let hintButtonAction: AnyPublisher<Void, Never>
     }
     
     private (set) var model: DiaryModel
     
     private (set) var isRandomTopicActive = CurrentValueSubject<Bool, Never>(false)
+    private (set) var topicContentSubject = CurrentValueSubject<String, Never>("")
     private (set) var onUpdateTextValidation: Observable<Bool> = Observable(false)
     private (set) var inputText: Observable<String> = Observable("")
     private (set) var onUpdateHintButton: Observable<Bool> = Observable(false)
-    private (set) var onUpdateTopicContent: Observable<String> = Observable("")
     private (set) var keyboardInfo: Observable<KeyboardInfo?> = Observable(nil)
     private (set) var toastType: Observable<ToastViewType?> = Observable(nil)
 //    private (set) var onUpdateTopicID: Observable<Int> = Observable(0)
@@ -61,11 +62,19 @@ final class DiaryViewModel: ViewModel {
                 return Just<Void>(()).eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()
+        
+        let refreshButtonAction = input.refreshButtonTapped
+            .map {
+                self.callRandomTopicAPI()
+            }
+            .eraseToAnyPublisher()
+        
         let hintButtonAction = input.hintButtonTapped
             .map { print("hintButtonTapped") }
             .eraseToAnyPublisher()
         
         return Output(randomTopicButtonAction: randomTopicButtonAction,
+                      refreshButtonAction: refreshButtonAction,
                       hintButtonAction: hintButtonAction)
     }
 }
@@ -155,7 +164,7 @@ extension DiaryViewModel {
                 
                 self?.model.topicID = response.topicId
                 self?.model.topicContent = response.content
-                self?.onUpdateTopicContent.value = response.content
+                self?.topicContentSubject.value = response.content
             case .failure(let error):
                 self?.onError?(error)
             }

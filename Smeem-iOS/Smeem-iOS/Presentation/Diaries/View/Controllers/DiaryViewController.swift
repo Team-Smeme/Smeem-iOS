@@ -68,13 +68,11 @@ extension DiaryViewController {
     
     private func setupDelegates() {
         rootView.setTextViewHandlerDelegate(self)
-        rootView.randomTopicView?.randomTopicRefreshDelegate = self
         rootView.toolTipDelegate = self
     }
     
     private func setupSubscriptions() {
         bindTextValidationStatus()
-        bindRandomTopicUpdates()
         bindToastVisibility()
     }
     
@@ -86,29 +84,32 @@ extension DiaryViewController {
     
     private func bind() {
         let input = DiaryViewModel.Input(randomTopicButtonTapped: rootView.bottomView.randomTopicButtonTapped,
+                                         refreshButtonTapped: rootView.randomTopicView.refreshButtonTapped,
                                          hintButtonTapped: rootView.bottomView.hintButtonTapped)
         
         let output = viewModel.transform(input: input)
         
         output.randomTopicButtonAction
+            .receive(on: DispatchQueue.main)
             .sink { _ in
+                
+                let isActive = self.viewModel.isRandomTopicActive.value
+                let content = self.viewModel.topicContentSubject.value
+                
                 self.checkGuidToolTip()
-                
-                var isActive = self.viewModel.isRandomTopicActive.value
-                
-                DispatchQueue.main.async {
-                    self.rootView.bottomView.updateRandomTopicButtonImage(isActive)
-                    self.rootView.updateRandomTopicView(isRandomTopicActive: isActive)
-                    self.rootView.updateInputTextViewConstraints(isRandomTopicActive: isActive)
-                }
+                self.rootView.bottomView.updateRandomTopicButtonImage(isActive)
+                self.rootView.updateRandomTopicView(isRandomTopicActive: isActive)
+                self.rootView.updateInputTextViewConstraints(isRandomTopicActive: isActive)
+                self.rootView.randomTopicView.updateText(with: content)
             }
             .store(in: &cancelBag)
         
-        output.hintButtonAction
+        output.refreshButtonAction
+            .receive(on: DispatchQueue.main)
             .sink { _ in
-                DispatchQueue.main.async {
-                    
-                }
+                let content = self.viewModel.topicContentSubject.value
+                
+                self.rootView.randomTopicView.updateText(with: content)
             }
             .store(in: &cancelBag)
     }
@@ -116,12 +117,6 @@ extension DiaryViewController {
     private func bindTextValidationStatus() {
         viewModel.onUpdateTextValidation.bind(listener: { [weak self] isValid in
             self?.rootView.navigationView.updateRightButton(isValid: isValid)
-        })
-    }
-    
-    private func bindRandomTopicUpdates() {
-        viewModel.onUpdateTopicContent.bind(listener: { [weak self] content in
-            self?.rootView.randomTopicView?.setData(contentText: content)
         })
     }
     
@@ -133,11 +128,11 @@ extension DiaryViewController {
         })
     }
     
-//        private func bindTopicID() {
-//            viewModel?.onUpdateTopicID.bind(listener: { [weak self] id in
-//                self?.viewModel?.onUpdateTopicID(id)
-//            })
-//        }
+    //        private func bindTopicID() {
+    //            viewModel?.onUpdateTopicID.bind(listener: { [weak self] id in
+    //                self?.viewModel?.onUpdateTopicID(id)
+    //            })
+    //        }
     
     private func setupKeyboardHandler() {
         keyboardHandler = KeyboardLayoutAndScrollingHandler(targetView: rootView.inputTextView, bottomView: rootView.bottomView)
@@ -152,14 +147,6 @@ extension DiaryViewController {
             UserDefaultsManager.randomTopicToolTip = true
             rootView.removeToolTip()
         }
-    }
-}
-
-// MARK: - RandomTopicRefreshDelegate
-
-extension DiaryViewController: RandomTopicRefreshDelegate {
-    func refreshButtonTapped(completion: @escaping (String?) -> Void) {
-        viewModel.callRandomTopicAPI()
     }
 }
 
@@ -195,7 +182,7 @@ extension DiaryViewController: ToolTipDelegate {
 extension DiaryViewController {
     func handleInitialRandomTopicApiCall() {
         viewModel.callRandomTopicAPI()
-        self.rootView.randomTopicView?.setData(contentText: viewModel.model.topicContent ?? "")
+        self.rootView.randomTopicView.updateText(with: viewModel.model.topicContent ?? "")
     }
     
     func handlePostDiaryResponse(_ response: PostDiaryResponse?) {
