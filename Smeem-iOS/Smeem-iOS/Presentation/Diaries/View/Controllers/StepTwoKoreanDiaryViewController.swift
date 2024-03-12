@@ -17,7 +17,6 @@ final class StepTwoKoreanDiaryViewController: DiaryViewController {
         super.viewDidLoad()
         
         setNagivationBarDelegate()
-        setHintButtonDelegate()
     }
 }
 
@@ -25,22 +24,18 @@ final class StepTwoKoreanDiaryViewController: DiaryViewController {
 
 extension StepTwoKoreanDiaryViewController {
     private func setNagivationBarDelegate() {
-        rootView?.setNavigationBarDelegate(self)
-    }
-    
-    private func setHintButtonDelegate() {
-        rootView?.setHintButtonDelegate(self)
+        rootView.setNavigationBarDelegate(self)
     }
     
     private func handleHintButton() {
-        guard let isHintShowed = viewModel?.onUpdateHintButton.value else { return }
+        let isHintShowed = viewModel.onUpdateHintButton.value
         
-        rootView?.bottomView.updateHintButtonImage(isHintShowed)
+        rootView.bottomView.updateHintButtonImage(isHintShowed)
         
         if isHintShowed {
-            postDeepLApi(diaryText: rootView?.configuration.layoutConfig?.getHintViewText() ?? "")
+            postDeepLApi(diaryText: rootView.configuration.layoutConfig?.getHintViewText() ?? "")
         } else {
-            rootView?.configuration.layoutConfig?.hintTextView.text = viewModel?.model.hintText
+            rootView.configuration.layoutConfig?.hintTextView.text = viewModel.model.hintText
         }
     }
 }
@@ -53,15 +48,15 @@ extension StepTwoKoreanDiaryViewController: NavigationBarActionDelegate {
     }
     
     func didTapRightButton() {
-        if viewModel?.onUpdateTextValidation.value == true {
+        if viewModel.onUpdateTextValidation.value == true {
             // TODO: 다듬읍시다..
-            rootView?.inputTextView.resignFirstResponder()
-            viewModel?.postDiaryAPI { postDiaryResponse in
+            rootView.inputTextView.resignFirstResponder()
+            viewModel.postDiaryAPI { postDiaryResponse in
                 self.handlePostDiaryResponse(postDiaryResponse)
             }
             AmplitudeManager.shared.track(event: AmplitudeConstant.diary.sec_step_complete.event)
         } else {
-            viewModel?.showRegExToast()
+            viewModel.showRegExToast()
         }
     }
 }
@@ -70,16 +65,16 @@ extension StepTwoKoreanDiaryViewController: NavigationBarActionDelegate {
 
 extension StepTwoKoreanDiaryViewController: DataBindProtocol {
     func dataBind(topicID: Int?, inputText: String) {
-        viewModel?.updateTopicID(topicID: topicID)
-        rootView?.configuration.layoutConfig?.hintTextView.text = inputText
+        viewModel.updateTopicID(topicID: topicID)
+        rootView.configuration.layoutConfig?.hintTextView.text = inputText
     }
 }
 
 // MARK: - HintActionDelegate
 
-extension StepTwoKoreanDiaryViewController: HintActionDelegate {
+extension StepTwoKoreanDiaryViewController {
     func didTapHintButton() {
-        viewModel?.toggleIsHintShowed()
+        viewModel.toggleIsHintShowed()
         handleHintButton()
         AmplitudeManager.shared.track(event: AmplitudeConstant.diary.hint_click.event)
     }
@@ -90,9 +85,9 @@ extension StepTwoKoreanDiaryViewController: HintActionDelegate {
 extension StepTwoKoreanDiaryViewController {
     func postDeepLApi(diaryText: String) {
         DeepLAPI.shared.postTargetText(text: diaryText) { [weak self] response in
-            self?.viewModel?.updateHintText(hintText: diaryText)
-            self?.rootView?.configuration.layoutConfig?.hintTextView.text.removeAll()
-            self?.rootView?.configuration.layoutConfig?.hintTextView.text = response?.translations.first?.text
+            self?.viewModel.updateHintText(hintText: diaryText)
+            self?.rootView.configuration.layoutConfig?.hintTextView.text.removeAll()
+            self?.rootView.configuration.layoutConfig?.hintTextView.text = response?.translations.first?.text
         }
     }
 }

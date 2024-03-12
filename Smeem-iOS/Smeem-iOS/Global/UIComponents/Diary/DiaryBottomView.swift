@@ -6,16 +6,9 @@
 //
 
 import UIKit
+import Combine
 
 import SnapKit
-
-protocol RandomTopicActionDelegate: AnyObject {
-    func didTapRandomTopicButton()
-}
-
-protocol HintActionDelegate: AnyObject {
-    func didTapHintButton()
-}
 
 enum DiaryBottomViewType {
     case standard
@@ -30,8 +23,10 @@ final class DiaryBottomView: UIView {
     
     private let viewType: DiaryBottomViewType
     
-    weak var randomTopicDelegate: RandomTopicActionDelegate?
-    weak var hintDelegate: HintActionDelegate?
+    private (set) var randomTopicButtonTapped = PassthroughSubject<Void, Never>()
+    private (set) var hintButtonTapped = PassthroughSubject<Void, Never>()
+    
+    private var cancelBag = Set<AnyCancellable>()
     
     // MARK: - UI Properties
     
@@ -54,7 +49,7 @@ final class DiaryBottomView: UIView {
         setupUI()
         setupLayout()
         setRandomTopicDisabled()
-        addButtonTargets()
+        subscirbeButtonEvents()
     }
     
     required init?(coder: NSCoder) {
@@ -65,13 +60,6 @@ final class DiaryBottomView: UIView {
 // MARK: - Extensions
 
 extension DiaryBottomView {
-    
-    // MARK: - Settings
-    
-    private func addButtonTargets() {
-        randomTopicButton.addTarget(self, action: #selector(randomTopicButtonTapped), for: .touchUpInside)
-        hintButton.addTarget(self, action: #selector(hintButtonTapped), for: .touchUpInside)
-    }
     
     // MARK: - Layout Helpers
     
@@ -128,12 +116,12 @@ extension DiaryBottomView {
     
     // MARK: - Action Helpers
     
-    @objc func randomTopicButtonTapped() {
-        randomTopicDelegate?.didTapRandomTopicButton()
-    }
-    
-    @objc func hintButtonTapped() {
-        hintDelegate?.didTapHintButton()
+    private func subscirbeButtonEvents() {
+        randomTopicButton.tapPublisher.sink { [weak self] in
+            self?.randomTopicButtonTapped.send()
+            self?.hintButtonTapped.send()
+        }
+        .store(in: &cancelBag)
     }
     
     func updateRandomTopicButtonImage(_ isEnabled: Bool) {

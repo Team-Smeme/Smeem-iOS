@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 struct KeyboardInfo {
     var isKeyboardVisible: Bool = false
@@ -14,15 +15,24 @@ struct KeyboardInfo {
 
 // MARK: - DiaryViewModel
 
-final class DiaryViewModel {
+final class DiaryViewModel: ViewModel {
+    struct Input {
+        
+        let randomTopicButtonTapped: PassthroughSubject<Void, Never>
+        let hintButtonTapped: PassthroughSubject<Void, Never>
+    }
+    
+    struct Output {
+        let randomTopicButtonAction: AnyPublisher<Void, Never>
+        let hintButtonAction: AnyPublisher<Void, Never>
+    }
     
     private (set) var model: DiaryModel
     
-    private (set) var isRandomTopicActive: Observable<Bool> = Observable(false)
+    private (set) var isRandomTopicActive = CurrentValueSubject<Bool, Never>(false)
     private (set) var onUpdateTextValidation: Observable<Bool> = Observable(false)
     private (set) var inputText: Observable<String> = Observable("")
     private (set) var onUpdateHintButton: Observable<Bool> = Observable(false)
-    private (set) var onUpdateRandomTopic: Observable<Bool> = Observable(false)
     private (set) var onUpdateTopicContent: Observable<String> = Observable("")
     private (set) var keyboardInfo: Observable<KeyboardInfo?> = Observable(nil)
     private (set) var toastType: Observable<ToastViewType?> = Observable(nil)
@@ -34,6 +44,29 @@ final class DiaryViewModel {
     
     init(model: DiaryModel) {
         self.model = model
+    }
+    
+    func transform(input: Input) -> Output {
+        let randomTopicButtonAction = input.randomTopicButtonTapped
+            .flatMap{ [unowned self] _ -> AnyPublisher<Void, Never> in
+                self.isRandomTopicActive.value.toggle()
+                
+                if self.isRandomTopicActive.value {
+                    if self.model.topicContent?.isEmpty == nil {
+                        self.callRandomTopicAPI()
+                    }
+                } else {
+                    self.updateModel(isTopicCalled: false, topicContent: nil)
+                }
+                return Just<Void>(()).eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
+        let hintButtonAction = input.hintButtonTapped
+            .map { print("hintButtonTapped") }
+            .eraseToAnyPublisher()
+        
+        return Output(randomTopicButtonAction: randomTopicButtonAction,
+                      hintButtonAction: hintButtonAction)
     }
 }
 

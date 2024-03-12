@@ -35,7 +35,7 @@ final class StepOneKoreanDiaryViewController: DiaryViewController {
 
 extension StepOneKoreanDiaryViewController {
     private func setNagivationBarDelegate() {
-        rootView?.setNavigationBarDelegate(self)
+        rootView.setNavigationBarDelegate(self)
     }
     
     // MARK: - Action Helpers
@@ -45,11 +45,11 @@ extension StepOneKoreanDiaryViewController {
         let nextVC = diaryViewControllerFactory.makeStepTwoKoreanDiaryViewController()
         delegate = nextVC
         
-        let inputText = viewModel?.inputText.value
+        let inputText = viewModel.inputText.value
         
-        delegate?.dataBind(topicID: viewModel?.getTopicID(), inputText: inputText ?? "")
+        delegate?.dataBind(topicID: viewModel.getTopicID(), inputText: inputText ?? "")
         
-        print("데이터바인드 성공", viewModel?.getTopicID())
+        print("데이터바인드 성공", viewModel.getTopicID())
         
         self.navigationController?.pushViewController(nextVC, animated: true)
     }
@@ -59,20 +59,20 @@ extension StepOneKoreanDiaryViewController {
 
 extension StepOneKoreanDiaryViewController: NavigationBarActionDelegate {
     func didTapLeftButton() {
-        rootView?.removeToolTip()
+        rootView.removeToolTip()
         presentingViewController?.dismiss(animated: true)
     }
     
     func didTapRightButton() {
-        if viewModel?.onUpdateTextValidation.value == true {
-            if viewModel?.isRandomTopicActive.value == false {
-                viewModel?.updateTopicID(topicID: nil)
+        if viewModel.onUpdateTextValidation.value == true {
+            if viewModel.isRandomTopicActive.value == false {
+                viewModel.updateTopicID(topicID: nil)
             }
-            rootView?.inputTextView.resignFirstResponder()
+            rootView.inputTextView.resignFirstResponder()
             handleRightNavigationButton()
             AmplitudeManager.shared.track(event: AmplitudeConstant.diary.first_step_complete.event)
         } else {
-            viewModel?.showRegExKrToast()
+            viewModel.showRegExKrToast()
         }
     }
 }

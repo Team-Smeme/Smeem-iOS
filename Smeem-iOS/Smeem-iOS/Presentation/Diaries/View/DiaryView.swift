@@ -166,7 +166,7 @@ extension DiaryView {
     // MARK: - Tutorial
     
     private func checkTooltip() {
-        let randomTopicToolTip = UserDefaultsManager.randomSubjectToolTip
+        let randomTopicToolTip = UserDefaultsManager.randomTopicToolTip
 
         if !randomTopicToolTip {
             addSubview(toolTip ?? UIImageView())
@@ -203,10 +203,6 @@ extension DiaryView {
     
     func setTextViewHandlerDelegate(_ viewController: DiaryViewController) {
         inputTextView.textViewHandler?.textViewHandlerDelegate = viewController
-    }
-    
-    func setHintButtonDelegate(_ viewController: StepTwoKoreanDiaryViewController) {
-        bottomView.hintDelegate = viewController
     }
     
     func setInputText(_ text: String) {

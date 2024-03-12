@@ -28,7 +28,7 @@ final class ForeignDiaryViewController: DiaryViewController {
 
 extension ForeignDiaryViewController {
     private func setNagivationBarDelegate() {
-        rootView?.setNavigationBarDelegate(self)
+        rootView.setNavigationBarDelegate(self)
     }
 }
 
@@ -36,23 +36,23 @@ extension ForeignDiaryViewController {
 
 extension ForeignDiaryViewController: NavigationBarActionDelegate {
     func didTapLeftButton() {
-        rootView?.removeToolTip()
+        rootView.removeToolTip()
         presentingViewController?.dismiss(animated: true)
     }
     
     func didTapRightButton() {
-        if viewModel?.onUpdateTextValidation.value == true {
-            if viewModel?.isRandomTopicActive.value == false {
-                viewModel?.updateTopicID(topicID: nil)
+        if viewModel.onUpdateTextValidation.value == true {
+            if viewModel.isRandomTopicActive.value == false {
+                viewModel.updateTopicID(topicID: nil)
             }
-            viewModel?.inputText.value = rootView?.inputTextView.text ?? ""
-            rootView?.inputTextView.resignFirstResponder()
-            viewModel?.postDiaryAPI { postDiaryResponse in
+            viewModel.inputText.value = rootView.inputTextView.text ?? ""
+            rootView.inputTextView.resignFirstResponder()
+            viewModel.postDiaryAPI { postDiaryResponse in
                 self.handlePostDiaryResponse(postDiaryResponse)
             }
             AmplitudeManager.shared.track(event: AmplitudeConstant.diary.diary_complete.event)
         } else {
-            viewModel?.showRegExToast()
+            viewModel.showRegExToast()
         }
     }
 }
