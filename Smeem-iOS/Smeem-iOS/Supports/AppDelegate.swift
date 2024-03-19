@@ -42,8 +42,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("Revoked Notification")
             // 로그인 페이지로 이동
         }
-    
-        FirebaseApp.configure()
+        
+        #if DEBUG
+        let filePath = Bundle.main.path(forResource: "GoogleService-Info-Dev", ofType: "plist")!
+        #else
+        let filePath = Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist")!
+        #endif
+        let options: FirebaseOptions? = FirebaseOptions.init(contentsOfFile: filePath)
+        
+        FirebaseApp.configure(options: options!)
         
         // 메시지 대리자 설정
         Messaging.messaging().delegate = self
