@@ -88,7 +88,6 @@
 		4A3373F52A45BF6600EFE6C4 /* OnboardingEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3373F42A45BF6600EFE6C4 /* OnboardingEndPoint.swift */; };
 		4A3373F82A461ABC00EFE6C4 /* OnboardingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3373F72A461ABC00EFE6C4 /* OnboardingService.swift */; };
 		4A3774842A42E6EA00357DD1 /* ConfigConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3774832A42E6EA00357DD1 /* ConfigConstant.swift */; };
-		4A3CFBC32B823A8400059DB3 /* Smeem_iOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A07F8DA2B821523004185F2 /* Smeem_iOSTests.swift */; };
 		4A3F2E972A0ABBAA00F6AC60 /* AlarmCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3F2E962A0ABBAA00F6AC60 /* AlarmCollectionViewCell.swift */; };
 		4A3F2E9C2A0B4C7100F6AC60 /* AlarmCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3F2E9B2A0B4C7100F6AC60 /* AlarmCollectionView.swift */; };
 		4A3F2EA02A0C18B600F6AC60 /* DatePickerFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3F2E9F2A0C18B600F6AC60 /* DatePickerFooterView.swift */; };
@@ -107,6 +106,7 @@
 		4A8FFA5229C9E1FD00FB76C0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8FFA5129C9E1FD00FB76C0 /* SceneDelegate.swift */; };
 		4A8FFA5929C9E1FE00FB76C0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A8FFA5829C9E1FE00FB76C0 /* Assets.xcassets */; };
 		4A8FFA5C29C9E1FE00FB76C0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A8FFA5A29C9E1FE00FB76C0 /* LaunchScreen.storyboard */; };
+		4A9731D02BA9B92F00DEC0C8 /* GoogleService-Info-Dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4A9731CF2BA9B92F00DEC0C8 /* GoogleService-Info-Dev.plist */; };
 		4A9E10E42A43468600295D07 /* BaseTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9E10E32A43468600295D07 /* BaseTargetType.swift */; };
 		4A9FAB452A4C3D1200C40D5A /* BadgeListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9FAB3E2A4C3D1200C40D5A /* BadgeListViewController.swift */; };
 		4A9FAB462A4C3D1200C40D5A /* BadgeNetworkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9FAB402A4C3D1200C40D5A /* BadgeNetworkModel.swift */; };
@@ -257,7 +257,6 @@
 		4A07F8AB2B7B3E7F004185F2 /* SignupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewModel.swift; sourceTree = "<group>"; };
 		4A07F8AE2B7B58B7004185F2 /* AuthModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthModel.swift; sourceTree = "<group>"; };
 		4A07F8D82B821523004185F2 /* Smeem-iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Smeem-iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		4A07F8DA2B821523004185F2 /* Smeem_iOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Smeem_iOSTests.swift; sourceTree = "<group>"; };
 		4A07F8E22B821539004185F2 /* TrainingAlarmViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingAlarmViewModelTest.swift; sourceTree = "<group>"; };
 		4A08480D2B555FD0008327C7 /* AmplitudeConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmplitudeConstant.swift; sourceTree = "<group>"; };
 		4A0EA4542A014027006CCE52 /* GeneralResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralResponse.swift; sourceTree = "<group>"; };
@@ -297,6 +296,7 @@
 		4A8FFA5829C9E1FE00FB76C0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4A8FFA5B29C9E1FE00FB76C0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4A8FFA5D29C9E1FE00FB76C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4A9731CF2BA9B92F00DEC0C8 /* GoogleService-Info-Dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Dev.plist"; sourceTree = "<group>"; };
 		4A9E10E32A43468600295D07 /* BaseTargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTargetType.swift; sourceTree = "<group>"; };
 		4A9FAB3E2A4C3D1200C40D5A /* BadgeListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeListViewController.swift; sourceTree = "<group>"; };
 		4A9FAB402A4C3D1200C40D5A /* BadgeNetworkModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeNetworkModel.swift; sourceTree = "<group>"; };
@@ -743,7 +743,6 @@
 			children = (
 				4AF78D9C2B84AB5D0098E1FA /* Base */,
 				4A07F8E12B821529004185F2 /* Onboarding */,
-				4A07F8DA2B821523004185F2 /* Smeem_iOSTests.swift */,
 			);
 			path = "Smeem-iOSTests";
 			sourceTree = "<group>";
@@ -1002,6 +1001,7 @@
 			isa = PBXGroup;
 			children = (
 				4A4E21EE29D9B02500BF8747 /* Smeem-iOS.entitlements */,
+				4A9731CF2BA9B92F00DEC0C8 /* GoogleService-Info-Dev.plist */,
 				4AC9489729ED800800489C2B /* GoogleService-Info.plist */,
 				4A8FFA5D29C9E1FE00FB76C0 /* Info.plist */,
 				37A574B429FE203100312453 /* Global */,
@@ -1533,6 +1533,7 @@
 				4AC9489829ED800800489C2B /* GoogleService-Info.plist in Resources */,
 				4AA1EEEA2A5873A00017FF97 /* Urbanist-SemiBold.otf in Resources */,
 				37A574DB29FF9FFF00312453 /* Pretendard-Medium.otf in Resources */,
+				4A9731D02BA9B92F00DEC0C8 /* GoogleService-Info-Dev.plist in Resources */,
 				37A574D929FF9FFF00312453 /* Pretendard-SemiBold.otf in Resources */,
 				37A574DA29FF9FFF00312453 /* Pretendard-Regular.otf in Resources */,
 				4A8FFA5929C9E1FE00FB76C0 /* Assets.xcassets in Resources */,
@@ -1548,7 +1549,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4AF78D9B2B84A1DC0098E1FA /* OnboardingServiceTest.swift in Sources */,
-				4A3CFBC32B823A8400059DB3 /* Smeem_iOSTests.swift in Sources */,
 				4AF78D9E2B84AB6A0098E1FA /* MockProvider.swift in Sources */,
 				4A0EE6012B92138900158899 /* OnboardingServiceMock.swift in Sources */,
 				4A7F22252B8241DC0011DECF /* TrainingAlarmViewModelTest.swift in Sources */,
@@ -1911,7 +1911,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 20240116;
+				CURRENT_PROJECT_VERSION = 20240319;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = K8LLWYQWXD;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1952,12 +1952,12 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 20240116;
+				CURRENT_PROJECT_VERSION = 20240319;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = K8LLWYQWXD;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Smeem-iOS/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "smeem-dev";
+				INFOPLIST_KEY_CFBundleDisplayName = smeem;
 				INFOPLIST_KEY_NSUserTrackingUsageDescription = "사용자의 데이터는 개인화된 광고 제공 목적으로 사용됩니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
