@@ -40,7 +40,7 @@ final class TrainingAlarmViewModel: ViewModel {
                                                                              hour: 22,
                                                                              minute: 0),
                                                   hasAlarm: true)
-    private var authType = AuthType.signup
+    var authType = AuthType.signup
     private var provider: OnboardingServiceProtocol
     
     init(provider: OnboardingServiceProtocol) {

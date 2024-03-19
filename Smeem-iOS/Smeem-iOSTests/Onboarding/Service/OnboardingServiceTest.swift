@@ -16,8 +16,8 @@ final class OnboardingServiceTest: XCTestCase, MockProviderProtocol {
     var sut: OnboardingService!
     
     override func setUpWithError() throws {
-        let mockSuccessProvider: MoyaProvider<OnboardingEndPoint> = makeSuccessProvider()
-        sut = OnboardingService(provider: mockSuccessProvider)
+        let mockProvider: MoyaProvider<OnboardingEndPoint> = makeProvider()
+        sut = OnboardingService(provider: mockProvider)
     }
     
     func test_goalList_성공했을때() {
@@ -142,6 +142,7 @@ extension OnboardingServiceTest {
     
     var goalDetailModel: TrainingWayResponse {
         return TrainingWayResponse(name: "자기계발",
+                                   title: "DEVELOP",
                                    way: "주 5회 이상 smeem 랜덤 주제로 일기 작성하기",
                                    detail: "사전 없이 일기 완성\nsmeem 연속 일기 배지 획득")
     }

@@ -43,7 +43,7 @@ final class SplashViewModel: ViewModel {
                             let currentProjectVersion = System.appVersion!.split(separator: ".").map{$0}
 
                             // 업데이트 팝업 띄우기
-                            if appStoreVersion[0] < currentProjectVersion[0] {
+                            if appStoreVersion[0] < currentProjectVersion[0] || appStoreVersion[2] < currentProjectVersion[2] {
                                 promise(.success(()))
                             } else {
                                 UserDefaultsManager.accessToken != "" ? self.tokenCheckResult.send(()) :
