@@ -11,34 +11,45 @@ final class DetailDiaryAPI {
     static let shared = DetailDiaryAPI()
     private let detailDiaryProvider = MoyaProvider<DetailDiaryService>(plugins:[MoyaLoggingPlugin()])
     
-    private var detailDiaryData: DetailDiaryResponse?
-    
-    func getDetailDiary(diaryID: Int, complention: @escaping (DetailDiaryResponse?) -> Void) {
-        detailDiaryProvider.request(.detailDiary(diaryID: diaryID)) { response in
-            switch response {
-            case .success(let result):
+    func getDetailDiary(diaryID: Int,
+                        completion: @escaping (Result<DetailDiaryResponse, SmeemError>) -> ()) {
+        detailDiaryProvider.request(.detailDiary(diaryID: diaryID)) { result in
+            switch result {
+            case .success(let response):
                 do {
-                    self.detailDiaryData = try result.map(DetailDiaryResponse.self)
-                    complention(self.detailDiaryData)
+                    try NetworkManager.statusCodeErrorHandling(statusCode: response.statusCode)
+                    guard let data = try? response.map(GeneralResponse<DetailDiaryResponse>.self).data else {
+                        throw SmeemError.clientError
+                    }
+                    completion(.success(data))
                 } catch {
-                    print(error)
+                    guard let error = error as? SmeemError else { return }
+                    completion(.failure(error))
                 }
-            case .failure(let err):
-                print(err)
+            case .failure(_):
+                completion(.failure(.userError))
             }
         }
     }
     
-    func deleteDiary(diaryID: Int, complention: @escaping (GeneralResponse<VoidType>?) -> Void) {
-        detailDiaryProvider.request(.deleteDiary(diaryID: diaryID)) { response in
-            switch response {
-            case .success(let result):
-                guard let data = try? result.map(GeneralResponse<VoidType>.self) else { return }
-                complention(data)
-            case .failure(let err):
-                print(err)
+    func deleteDiary(diaryID: Int,
+                     completion: @escaping (Result<GeneralResponse<NilType>, SmeemError>) -> ()) {
+        detailDiaryProvider.request(.deleteDiary(diaryID: diaryID)) { result in
+            switch result {
+            case .success(let response):
+                do {
+                    try NetworkManager.statusCodeErrorHandling(statusCode: response.statusCode)
+                    guard let data = try? response.map(GeneralResponse<NilType>.self) else {
+                        throw SmeemError.clientError
+                    }
+                    completion(.success(data))
+                } catch {
+                    guard let error = error as? SmeemError else { return }
+                    completion(.failure(error))
+                }
+            case .failure(_):
+                completion(.failure(.userError))
             }
         }
-        
     }
 }

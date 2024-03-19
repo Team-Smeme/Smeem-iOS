@@ -1,32 +1,23 @@
 //
-//  AuthModel.swift
+//  File.swift
 //  Smeem-iOS
 //
-//  Created by 황찬미 on 2023/06/25.
+//  Created by 황찬미 on 2/13/24.
 //
 
 import Foundation
 
-struct LoginRequest: Codable {
-    let social: String
-    let fcmToken: String
+enum AuthType: String {
+    case signup
+    case login
 }
 
-struct LoginResponse: Codable {
+struct AuthModel {
     let accessToken: String
-    let refreshToken: String
-    let isRegistered: Bool
-    let hasPlan: Bool
-}
-
-struct Badges: Codable {
-    let id: Int
-    let name: String
     let type: String
-    let imageUrl: String
 }
 
-struct ReLoginResponse: Codable {
+struct TrainingRequestModel {
+    let plan: TrainingPlanRequest
     let accessToken: String
-    let refreshToken: String
 }

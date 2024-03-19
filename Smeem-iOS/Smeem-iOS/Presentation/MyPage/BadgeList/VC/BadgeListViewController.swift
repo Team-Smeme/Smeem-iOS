@@ -17,12 +17,10 @@ class BadgeListViewController: UIViewController {
     private var badgeHeaderData = [(name: String(), imageURL: String())]
     private var badgeListData = Array(repeating: Array(repeating: (name: String(), imageURL: String()), count: 0), count: 2)
     private var totalBadgeData = Array(repeating: Array(repeating: (name: String(), imageURL: String()), count: 4), count: 2)
-    private var dummayBadgeData = DummyModel().dummyBadgeData()
 
     // MARK: - UI Property
     
     private let headerContainerView = UIView()
-    private let loadingView = LoadingView()
     
     private lazy var cancelButton: UIButton = {
         let button = UIButton()
@@ -72,14 +70,9 @@ class BadgeListViewController: UIViewController {
         
         setBackgroundColor()
         setLayout()
-        hiddenNavigationBar()
         setDelegate()
         setRegister()
         badgeListGetAPI()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        self.showLodingView(loadingView: loadingView)
     }
 
     
@@ -106,55 +99,6 @@ class BadgeListViewController: UIViewController {
         let url = URL(string: badgeHeaderData[0].imageURL) ?? nil
         welcomeImage.kf.setImage(with: url)
         detailWelcomeLabel.text = badgeHeaderData[0].name
-    }
-    
-    // 획득하지 않은 더미 배지와 획득한 서버 데이터 배지를 합쳐 주는 함수
-    private func setBadgeData() {
-        if !badgeListData[0].isEmpty {
-            var globalIndex = 0
-            for (index, (name, image)) in badgeListData[0].enumerated() {
-                globalIndex = index
-                totalBadgeData[0][index] = (name, image)
-            }
-            
-            for i in globalIndex+1..<4 {
-                totalBadgeData[0][i] = dummayBadgeData[0][i]
-            }
-        } else {
-            for i in 0..<4 {
-                totalBadgeData[0][i] = dummayBadgeData[0][i]
-            }
-        }
-
-        if !badgeListData[1].isEmpty {
-            var globalIndex = 0
-            for (index, (name, image)) in badgeListData[1].enumerated() {
-                globalIndex = index
-                totalBadgeData[1][index] = (name, image)
-            }
-            for i in globalIndex+1..<4 {
-                totalBadgeData[1][i] = dummayBadgeData[1][i]
-            }
-        } else {
-            for i in 0..<4 {
-                totalBadgeData[1][i] = dummayBadgeData[1][i]
-            }
-        }
-
-//        if !badgeListData[2].isEmpty {
-//            var globalIndex = 0
-//            for (index, (name, image)) in badgeListData[2].enumerated() {
-//                globalIndex = index
-//                totalBadgeData[2][index] = (name, image)
-//            }
-//            for i in globalIndex+1..<4 {
-//                totalBadgeData[2][i] = dummayBadgeData[2][i]
-//            }
-//        } else {
-//            for i in 0..<4 {
-//                totalBadgeData[2][i] = dummayBadgeData[2][i]
-//            }
-//        }
     }
 
     
@@ -253,27 +197,37 @@ extension BadgeListViewController: UITableViewDataSource {
 
 extension BadgeListViewController {
     private func badgeListGetAPI() {
-        MyPageAPI.shared.badgeListAPI() { response in
-            guard let badges = response?.data?.badges else { return }
+        MyPageAPI.shared.badgeListAPI() { result in
             
-            self.hideLodingView(loadingView: self.loadingView)
-            
-            // 섹션에 따라 배열 데이터 담는 로직
-            for badge in badges {
-                if badge.type == "EVENT" {
-                    self.badgeHeaderData = [(badge.name, badge.imageURL)]
-                } else if badge.type == "COUNTING" {
-                    self.badgeListData[0].append((name: badge.name, imageURL: badge.imageURL))
-                } else if badge.type == "COMBO" {
-                    self.badgeListData[1].append((name: badge.name, imageURL: badge.imageURL))
-                } else {
-//                    self.badgeListData[2].append((name: badge.name, imageURL: badge.imageURL))
+            switch result {
+            case .success(let response):
+                
+                for data in response {
+                    if data.badgeType == "EVENT" {
+                        data.badges.forEach { badge in
+                            self.badgeHeaderData = [(badge.name, badge.imageUrl)]
+                        }
+                    } else if data.badgeType == "COUNTING" {
+                        data.badges.forEach { badge in
+                            self.badgeListData[0].append((name: badge.name, imageURL: badge.imageUrl))
+                        }
+                    } else if data.badgeType == "COMBO" {
+                        data.badges.forEach { badge  in
+                            self.badgeListData[1].append((name: badge.name, imageURL: badge.imageUrl))
+                        }
+                    } else {
+    //                    self.badgeListData[2].append((name: badge.name, imageURL: badge.imageURL))
+                    }
                 }
+                
+                self.totalBadgeData = self.badgeListData
+                
+                self.setHeaderViewData()
+                self.badgeListTableView.reloadData()
+                
+            case .failure(let error):
+                self.showToast(toastType: .smeemErrorToast(message: error))
             }
-            
-            self.setHeaderViewData()
-            self.setBadgeData()
-            self.badgeListTableView.reloadData()
         }
     }
 }

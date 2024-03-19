@@ -9,11 +9,11 @@ import UIKit
 
 import SnapKit
 
-final class MyPageViewController: UIViewController {
+final class MyPageViewController: BaseViewController {
     
     // MARK: - Property
     
-    private var userInfo = MyPageInfo(username: "", target: "", way: "", detail: "", targetLang: "", hasPushAlarm: true, trainingTime: TrainingTime(day: "", hour: 0, minute: 0), badge: Badge(id: 0, name: "", type: "", imageURL: ""))
+    private var userInfo = MyPageResponse(username: "", target: "", title: "", way: "", detail: "", targetLang: "", hasPushAlarm: true, trainingTime: TrainingTime(day: "", hour: 0, minute: 0), badge: Badge(id: 0, name: "", type: "", imageUrl: ""))
     var myPageSelectedIndexPath = ["MON": IndexPath(item: 0, section: 0), "TUE":IndexPath(item: 1, section: 0), "WED":IndexPath(item: 2, section: 0), "THU":IndexPath(item: 3, section: 0), "FRI":IndexPath(item: 4, section: 0), "SAT":IndexPath(item: 5, section: 0), "SUN":IndexPath(item: 6, section: 0)]
     var indexPathArray: [IndexPath] = []
     var hasAlarm = Bool()
@@ -41,7 +41,6 @@ final class MyPageViewController: UIViewController {
     
     private let headerContainerView = UIView()
     private let contentView = UIView()
-    private let loadingView = LoadingView()
     
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -86,9 +85,8 @@ final class MyPageViewController: UIViewController {
         return editButton
     }()
     
-    private let howLearningView: HowLearningView = {
-        let view = HowLearningView()
-        view.buttontype = .logo
+    private let howLearningView: TrainingWayView = {
+        let view = TrainingWayView(type: .isShown)
         return view
     }()
     
@@ -201,7 +199,7 @@ final class MyPageViewController: UIViewController {
     }()
     
     private lazy var alarmCollectionView: AlarmCollectionView = {
-        let collectionView = AlarmCollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        let collectionView = AlarmCollectionView()
         collectionView.isUserInteractionEnabled = false
         return collectionView
     }()
@@ -220,14 +218,14 @@ final class MyPageViewController: UIViewController {
         super.viewDidLoad()
     
         setLayout()
-        swipeRecognizer()
         setupHowLearningViewTapGestureRecognizer()
+        
+        AmplitudeManager.shared.track(event: AmplitudeConstant.myPage.mypage_view.event)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.showLodingView(loadingView: loadingView)
         myPageInfoAPI()
     }
     
@@ -251,7 +249,7 @@ final class MyPageViewController: UIViewController {
     
     @objc func pushButtonDidTap(_ sender: UIButton) {
         hasAlarm = !hasAlarm
-        editPushPatchAPI(pushData: editPushRequest(hasAlarm: hasAlarm))
+        editPushPatchAPI(pushData: EditPushRequest(hasAlarm: hasAlarm))
     }
     
     @objc func badgeImageDidTap() {
@@ -259,17 +257,9 @@ final class MyPageViewController: UIViewController {
         self.navigationController?.pushViewController(badgeListVC, animated: true)
     }
     
-    @objc func responseToSwipeGesture() {
-        self.navigationController?.popViewController(animated: true)
-    }
-    
     @objc func howLearningViewTapped() {
-        let goalVC = GoalViewController(viewtype: .myPage)
-        
-        if let selectedIndex = getIndexFromGoalText(goalText: userInfo.target) {
-            goalVC.selectedGoalIndex = selectedIndex
-            goalVC.selectedGoalLabel = goalTextToIndex[userInfo.target]!.1
-        }
+        let goalVC = EditGoalViewController(targetIndex: goalTextToIndex[userInfo.title]!.0,
+                                            tempTarget: goalTextToIndex[userInfo.title]!.1)
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(goalDataReceived),
@@ -301,9 +291,9 @@ final class MyPageViewController: UIViewController {
         let planWayTwo = planNameList[1]
         let detailPlan = userInfo.detail.split(separator: "\n").map{String($0)}
         
-        howLearningView.setData(planName: userInfo.target, planWayOne: planWayOne, planWayTwo: planWayTwo, detailPlanOne: detailPlan[0], detailPlanTwo: detailPlan[1])
+        howLearningView.setData(planName: userInfo.title, planWayOne: planWayOne, planWayTwo: planWayTwo, detailPlanOne: detailPlan[0], detailPlanTwo: detailPlan[1])
         nickNameLabel.text = userInfo.username
-        let url = URL(string: userInfo.badge.imageURL)
+        let url = URL(string: userInfo.badge.imageUrl)
         badgeImage.kf.setImage(with: url)
         badgeNameLabel.text = (userInfo.badge.name)
         badgeSummaryLabel.text = "축하해요! \(userInfo.badge.name)를 획득했어요!"
@@ -329,16 +319,8 @@ final class MyPageViewController: UIViewController {
             indexPathArray.append(myPageSelectedIndexPath[String(dayArray[i])]!)
         }
         
-        print("lkfjsadkfdsakfhsadkjf✅✅✅✅✅✅✅✅✅✅, ", self.indexPathArray)
-        
         alarmCollectionView.selectedIndexPath = indexPathArray
         alarmCollectionView.myPageTime = (userInfo.trainingTime.hour, userInfo.trainingTime.minute)
-    }
-    
-    private func swipeRecognizer() {
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(responseToSwipeGesture))
-        swipeRight.direction = UISwipeGestureRecognizer.Direction.right
-        self.view.addGestureRecognizer(swipeRight)
     }
     
     private func setupHowLearningViewTapGestureRecognizer() {
@@ -351,18 +333,13 @@ final class MyPageViewController: UIViewController {
     }
     
     private func loadToastMessage() {
-        showToast(toastType: .defaultToast(bodyType: .changed))
+        showToast(toastType: .smeemToast(bodyType: .changed))
     }
     
     // MARK: - Layout
     
-    private func setBackgroundColor() {
-        view.backgroundColor = .white
-    }
-    
     private func setLayout() {
         setBackgroundColor()
-        hiddenNavigationBar()
         
         view.addSubviews(headerContainerView, scrollView)
         headerContainerView.addSubviews(backButton, titleLabel, moreButton)
@@ -523,21 +500,29 @@ extension MyPageViewController: EditMypageDelegate {
 
 extension MyPageViewController {
     private func myPageInfoAPI() {
-        MyPageAPI.shared.myPageInfo() { response in
-            guard let myPageInfo = response?.data else { return }
+        SmeemLoadingView.showLoading()
+        
+        MyPageAPI.shared.myPageInfo() { result in
             
-            self.userInfo = myPageInfo
-            self.setData()
-            self.hideLodingView(loadingView: self.loadingView)
+            switch result {
+            case .success(let response):
+                self.userInfo = response
+                self.setData()
+            case .failure(let error):
+                self.showToast(toastType: .smeemErrorToast(message: error))
+            }
+            
+            SmeemLoadingView.hideLoading()
         }
     }
     
-    private func editPushPatchAPI(pushData: editPushRequest) {
-        MyPageAPI.shared.editPushAPI(param: pushData) { response in
-            // 성공했으면
-            if response.success == true {
-                print("lkfjsadkfdsakfhsadkjf✅✅✅✅✅✅✅✅✅✅, ", self.indexPathArray)
-                // 그에 맞춰서 색깔 변화
+    private func editPushPatchAPI(pushData: EditPushRequest) {
+        SmeemLoadingView.showLoading()
+        
+        MyPageAPI.shared.editPushAPI(param: pushData) { result in
+            
+            switch result {
+            case .success(_):
                 self.alarmCollectionView.hasAlarm = pushData.hasAlarm
                 self.alarmCollectionView.selectedIndexPath = self.indexPathArray
                 
@@ -548,7 +533,11 @@ extension MyPageViewController {
                     self.alarmPushToggleButton.isOn = true
                     self.alarmPushToggleButton.onTintColor = .point
                 }
+            case .failure(let error):
+                self.showToast(toastType: .smeemErrorToast(message: error))
             }
+            
+            SmeemLoadingView.hideLoading()
         }
     }
 }

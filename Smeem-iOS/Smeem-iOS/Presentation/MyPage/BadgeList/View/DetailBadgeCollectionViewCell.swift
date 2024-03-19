@@ -36,18 +36,12 @@ final class DetailBadgeCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - @objc
     // MARK: - Custom Method
     
-    func setdummyData(dummy: (name: String, image: String)) {
-        if dummy.image.hasPrefix("https") {
-            let url = URL(string: dummy.image)
-            badgeImage.kf.setImage(with: url)
-            badgeNameLabel.text = dummy.name
-        } else {
-            badgeImage.image = UIImage(named: dummy.image)
-            badgeNameLabel.text = dummy.name
-        }
+    func setBadgeData(data: (name: String, image: String)) {
+        let url = URL(string: data.image)
+        badgeImage.kf.setImage(with: url)
+        badgeNameLabel.text = data.name
     }
     // MARK: - Layout
     

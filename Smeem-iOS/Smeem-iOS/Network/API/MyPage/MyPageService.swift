@@ -13,9 +13,9 @@ enum MyPageService {
     case myPageInfo
     case editNickname(param: EditNicknameRequest)
     case badgeList
-    case myPageUserPlan(param: UserPlanRequest)
+    case myPageUserPlan(param: TrainingPlanRequest)
     case editAlarmTime(param: EditAlarmTime)
-    case editPush(param: editPushRequest)
+    case editPush(param: EditPushRequest)
     case editGoal(param: EditGoalRequest)
     case checkNinkname(param: String)
 }
@@ -30,9 +30,9 @@ extension MyPageService: BaseTargetType {
         case .badgeList:
             return URLConstant.badgesListURL
         case .myPageUserPlan, .editGoal:
-            return URLConstant.userPlanURL
+            return URLConstant.userTrainingInfo
         case .editAlarmTime:
-            return URLConstant.userPlanURL
+            return URLConstant.userTrainingInfo
         case .editPush:
             return URLConstant.pushURL
         case .checkNinkname:

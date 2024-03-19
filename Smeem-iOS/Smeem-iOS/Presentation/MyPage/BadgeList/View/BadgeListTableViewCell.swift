@@ -53,7 +53,6 @@ final class BadgeListTableViewCell: UITableViewCell {
     private func setRegister() {
         detailBadgeCollectionView.register(DetailBadgeCollectionViewCell.self, forCellWithReuseIdentifier: DetailBadgeCollectionViewCell.identifier)
     }
-//    }
     
     // MARK: - Layout
     
@@ -79,7 +78,7 @@ extension BadgeListTableViewCell: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailBadgeCollectionViewCell.identifier, for: indexPath) as? DetailBadgeCollectionViewCell else { return UICollectionViewCell() }
-            cell.setdummyData(dummy: (self.badgeData[indexPath.row].name, self.badgeData[indexPath.row].imageURL))
+            cell.setBadgeData(data: (self.badgeData[indexPath.row].name, self.badgeData[indexPath.row].imageURL))
         return cell
     }
 }

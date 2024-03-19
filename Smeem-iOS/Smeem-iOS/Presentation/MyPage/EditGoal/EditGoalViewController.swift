@@ -2,24 +2,19 @@
 //  EditGoalViewController.swift
 //  Smeem-iOS
 //
-//  Created by Joon Baek on 2023/08/13.
+//  Created by 황찬미 on 2024/01/30.
 //
 
 import UIKit
 
-final class EditGoalViewController: UIViewController {
+final class EditGoalViewController: BaseViewController {
     
-    var tempTarget = String()
-    var planName = String()
-    var planWay = String()
-    var planDetailWay = "" {
-        didSet {
-            configurePlanData()
-        }
-    }
+    private let provider = OnboardingService()
+    
+    private var targetIndex = -1
+    private var tempTarget = ""
     
     private let navigationBarView = UIView()
-    private let loadingView = LoadingView()
     
     private lazy var backButton: UIButton = {
         let button = UIButton()
@@ -36,75 +31,48 @@ final class EditGoalViewController: UIViewController {
         return label
     }()
     
-    private let howLearningView: HowLearningView = {
-        let view = HowLearningView()
-        view.buttontype = .logo
-        return view
-    }()
+    private lazy var trainingGoalCollectionView = TrainingGoalsCollectionView(planGoalType: .myPage(targetIndex: targetIndex))
     
     private lazy var nextButton: SmeemButton = {
-        let button = SmeemButton()
-        button.smeemButtonType = .enabled
-        button.setTitle("완료", for: .normal)
-        button.addTarget(self, action: #selector(nextButtonDidTap), for: .touchUpInside)
+        let button = SmeemButton(buttonType: .enabled, text: "다음")
+        button.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
         return button
     }()
+    
+    init(targetIndex: Int, tempTarget: String) {
+        super.init(nibName: nil, bundle: nil)
+        self.targetIndex = targetIndex
+        self.tempTarget = tempTarget
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setLayout()
-        setBackgroundColor()
-        swipeRecognizer()
+        planListGetAPI()
+        setDelegate()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        self.showLodingView(loadingView: loadingView)
-        detailPlanListGetAPI(tempTarget: tempTarget)
+    private func setDelegate() {
+        trainingGoalCollectionView.trainingDelegate = self
     }
     
-    private func setBackgroundColor() {
-        view.backgroundColor = .white
+    @objc func nextButtonTapped() {
+        let editHowGoalVC = EditHowGoalViewController()
+        editHowGoalVC.tempTarget = tempTarget
+        self.navigationController?.pushViewController(editHowGoalVC, animated: true)
     }
-    
-    private func configurePlanData() {
-        let planNameList = planWay.components(separatedBy: " 이상 ")
-        let planWayOne = planNameList[0] + " 이상"
-        let planWayTwo = planNameList[1]
-        let detailPlan = planDetailWay.split(separator: "\n").map{String($0)}
-        
-        howLearningView.setData(planName: planName, planWayOne: planWayOne, planWayTwo: planWayTwo, detailPlanOne: detailPlan[0], detailPlanTwo: detailPlan[1])
-    }
-    
-    private func swipeRecognizer() {
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(responseToSwipeGesture))
-        swipeRight.direction = UISwipeGestureRecognizer.Direction.right
-        self.view.addGestureRecognizer(swipeRight)
-    }
-
-}
-
-extension EditGoalViewController {
-
-    // MARK: - @objc
     
     @objc func backButtonDidTap(_ sender: UIButton) {
         self.navigationController?.popViewController(animated: true)
     }
     
-    @objc func nextButtonDidTap() {
-        self.showLodingView(loadingView: loadingView)
-        patchGoalAPI(target: tempTarget)
-    }
-    
-    @objc func responseToSwipeGesture() {
-        self.navigationController?.popViewController(animated: true)
-    }
-    
-    // MARK: - Layout
-    
     private func setLayout() {
-        view.addSubviews(navigationBarView, howLearningView, nextButton)
+        view.addSubviews(navigationBarView, trainingGoalCollectionView, nextButton)
         navigationBarView.addSubviews(backButton, titleLabel)
         
         navigationBarView.snp.makeConstraints {
@@ -123,9 +91,10 @@ extension EditGoalViewController {
             $0.centerX.centerY.equalToSuperview()
         }
         
-        howLearningView.snp.makeConstraints {
-            $0.top.equalTo(navigationBarView.snp.bottom).offset(14)
-            $0.leading.trailing.equalToSuperview().inset(24)
+        trainingGoalCollectionView.snp.makeConstraints {
+            $0.top.equalTo(navigationBarView.snp.bottom).offset(17)
+            $0.leading.trailing.equalToSuperview()
+            $0.bottom.equalTo(nextButton.snp.bottom).offset(80)
         }
         
         nextButton.snp.makeConstraints {
@@ -136,37 +105,29 @@ extension EditGoalViewController {
     }
 }
 
-extension EditGoalViewController {
-    func patchGoalAPI(target: String) {
-        MyPageAPI.shared.changeGoal(param: EditGoalRequest(target: target)) { response in
-            
-            guard let _ = response.data else { return }
-            self.hideLodingView(loadingView: self.loadingView)
-            
-            NotificationCenter.default.post(name: NSNotification.Name("goalData"), object: true)
-            
-            if let navigationController = self.navigationController {
-                let viewControllers = navigationController.viewControllers
-                if viewControllers.count >= 2 {
-                    let viewControllerToPopTo = viewControllers[viewControllers.count - 3] // 해당 인덱스에 있는 뷰 컨트롤러로 돌아가려면 -3로 설정합니다.
-                    navigationController.popToViewController(viewControllerToPopTo, animated: true)
-                }
-            }
-        }
+extension EditGoalViewController: TrainingDataSendDelegate {
+    func sendTargetData(targetString: String, buttonType: SmeemButtonType) {
+        self.nextButton.changeButtonType(buttonType: buttonType)
+        self.tempTarget = targetString
     }
-    
-    func detailPlanListGetAPI(tempTarget: String) {
-        self.showLodingView(loadingView: loadingView)
-        OnboardingAPI.shared.detailPlanList(param: tempTarget) { response in
-            guard let data = response.data else { return }
+}
+
+// MARK: - Network
+
+extension EditGoalViewController {
+    func planListGetAPI() {
+        SmeemLoadingView.showLoading()
+        self.provider.trainingGoalGetAPI() { response in
             
-            self.hideLodingView(loadingView: self.loadingView)
+            switch response {
+            case .success(let response):
+                self.trainingGoalCollectionView.planGoalArray = response
+                self.trainingGoalCollectionView.reloadData()
+            case .failure(let error):
+                self.showToast(toastType: .smeemErrorToast(message: error))
+            }
             
-            self.planName = data.name
-            self.planWay = data.way
-            self.planDetailWay = data.detail
-            
-            self.configurePlanData()
+            SmeemLoadingView.hideLoading()
         }
     }
 }

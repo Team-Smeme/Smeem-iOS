@@ -10,7 +10,7 @@ import UIKit
 import FSCalendar
 import SnapKit
 
-final class HomeViewController: UIViewController {
+final class HomeViewController: BaseViewController {
     
     // MARK: - Property
     
@@ -169,14 +169,10 @@ final class HomeViewController: UIViewController {
     }()
     
     private lazy var addDiaryButton: SmeemButton = {
-        let addDiaryButton = SmeemButton()
-        addDiaryButton.smeemButtonType = .enabled
-        addDiaryButton.setTitle("일기 작성하기", for: .normal)
+        let addDiaryButton = SmeemButton(buttonType: .enabled, text: "일기 작성하기")
         addDiaryButton.addTarget(self, action: #selector(self.addDiaryButtonDidTap(_:)), for: .touchUpInside)
         return addDiaryButton
     }()
-    
-    private let loadingView = LoadingView()
     
     // MARK: - Life Cycle
     
@@ -188,11 +184,12 @@ final class HomeViewController: UIViewController {
         setLayout()
         setDelegate()
         setSwipe()
+        
+        AmplitudeManager.shared.track(event: AmplitudeConstant.home.home_view.event)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         homeDiaryWithAPI(start: Date().startOfMonth().addingDate(addValue: -7), end: Date().endOfMonth().addingDate(addValue: 7))
-        hiddenNavigationBar()
         checkPopupView()
     }
     
@@ -200,6 +197,10 @@ final class HomeViewController: UIViewController {
     
     @objc func swipeEvent(_ swipe: UISwipeGestureRecognizer) {
         if (swipe.location(in: self.view).y < border.frame.origin.y + 20) {
+            if swipe.direction == .down {
+                AmplitudeManager.shared.track(event: AmplitudeConstant.home.full_calendar_appear.event)
+            }
+            
             let topConstant: CGFloat = (swipe.direction == .up) ? 168 : 60
             let newScopeMode: FSCalendarScope = (swipe.direction == .up) ? .week : .month
             calendar.setScope(newScopeMode, animated: true)
@@ -268,21 +269,17 @@ final class HomeViewController: UIViewController {
     }
     
     private func checkPopupView() {
-        self.showLodingView(loadingView: loadingView)
         if !badgePopupData.isEmpty {
-            self.hideLodingView(loadingView: loadingView)
-            let popupVC = BadgePopupViewController()
-            popupVC.setData(self.badgePopupData)
+            let popupVC = BadgePopupViewController(popupBadge: badgePopupData)
             popupVC.modalTransitionStyle = .crossDissolve
             popupVC.modalPresentationStyle = .overCurrentContext
             self.present(popupVC, animated: true)
         }
-        self.hideLodingView(loadingView: loadingView)
         badgePopupData = []
     }
     
     private func loadToastMessage() {
-        showToast(toastType: .defaultToast(bodyType: .completed))
+        showToast(toastType: .smeemToast(bodyType: .completed))
     }
     
     private func pushShowPage() {
@@ -297,10 +294,6 @@ final class HomeViewController: UIViewController {
     
     // MARK: - Layout
     
-    private func setBackgroundColor() {
-        view.backgroundColor = .white
-    }
-    
     private func setLayout() {
         hiddenNavigationBar()
         
@@ -310,15 +303,15 @@ final class HomeViewController: UIViewController {
         floatingView.addSubviews(waitingLabel, adviceLabel, xButton)
         
         calendar.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(constraintByNotch(convertByWidthRatio(-20), convertByWidthRatio(-10)))
             $0.leading.equalToSuperview().offset(convertByWidthRatio(15))
             $0.trailing.equalToSuperview().offset(-convertByWidthRatio(15))
             $0.height.equalTo(convertByWidthRatio(422))
         }
         
         myPageButton.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(convertByHeightRatio(77)/2-convertByHeightRatio(40)/2+3)
-            $0.trailing.equalToSuperview().offset(-convertByWidthRatio(18))
+            $0.top.equalTo(calendar.calendarHeaderView.snp.top).inset(constraintByNotch(convertByWidthRatio(25), convertByWidthRatio(18)))
+            $0.trailing.equalToSuperview().inset(18)
             $0.width.height.equalTo(convertByHeightRatio(40))
         }
         
@@ -513,17 +506,26 @@ extension HomeViewController: FSCalendarDelegateAppearance {
 extension HomeViewController {
     /// 이번 달+a (앞뒤로 일주일 여유분까지) 일기 불러오는 함수
     func homeDiaryWithAPI(start: String, end: String) {
-        HomeAPI.shared.homeDiaryList(startDate: start, endDate: end) { response in
+        SmeemLoadingView.showLoading()
+        
+        HomeAPI.shared.homeDiaryList(startDate: start, endDate: end) { result in
             
-            guard let homeDiariesData = response?.data?.diaries else { return }
-            homeDiariesData.forEach {
-                self.homeDiaryDict[String($0.createdAt.prefix(10))] = HomeDiaryCustom(diaryId: $0.diaryId, content: $0.content, createdTime: String($0.createdAt.suffix(5)))
+            switch result {
+            case .success(let response):
+                
+                response.diaries.forEach {
+                    self.homeDiaryDict[String($0.createdAt.prefix(10))] = HomeDiaryCustom(diaryId: $0.diaryId, content: $0.content, createdTime: String($0.createdAt.suffix(5)))
+                }
+                self.writtenDaysStringList = self.homeDiaryDict
+                    .map { $0.key }
+                self.setData()
+                self.configureBottomLayout(date: self.currentDate)
+                self.calendar.reloadData()
+            case .failure(let error):
+                self.showToast(toastType: .smeemErrorToast(message: error))
             }
-            self.writtenDaysStringList = self.homeDiaryDict
-                .map { $0.key }
-            self.setData()
-            self.configureBottomLayout(date: self.currentDate)
-            self.calendar.reloadData()
+            
+            SmeemLoadingView.hideLoading()
         }
     }
 }

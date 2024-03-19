@@ -10,8 +10,8 @@ import UIKit
 extension UIViewController {
     
     /// 화면 진입시 키보드 바로 올라오게 해 주는 메서드
-    func showKeyboard(textView: UIView) {
-        textView.becomeFirstResponder()
+    func showKeyboard(textView: UIView?) {
+        textView?.becomeFirstResponder()
     }
     
     /// 화면밖 터치시 키보드를 내려 주는 메서드
@@ -71,11 +71,6 @@ extension UIViewController {
         return (convert / 812) * getDeviceHeight()
     }
     
-    /// 상단 네비바 hidden
-    func hiddenNavigationBar() {
-        self.navigationController?.isNavigationBarHidden = true
-    }
-    
     /// 부분 글자 스타일 변경 함수
     func changePartialStringStyle(mainString: String,
                                   pointString: String,
@@ -108,34 +103,6 @@ extension UIViewController {
         })
     }
     
-    /// showLodingView
-    func showLodingView(loadingView: LoadingView) {
-        view.addSubview(loadingView)
-        loadingView.snp.makeConstraints {
-            $0.top.leading.trailing.bottom.equalToSuperview()
-        }
-        
-        loadingView.isLoading = true
-    }
-    
-    func hideLodingView(loadingView: LoadingView) {
-        loadingView.isLoading = false
-    }
-    
-    func presentOnboardingPlanVC() {
-        let onboardingGoalVC = GoalViewController(viewtype: .onboarding)
-        self.navigationController?.pushViewController(onboardingGoalVC, animated: true)
-    }
-    
-    func presentOnboardingAcceptVC() {
-        let bottomSheetVC = BottomSheetViewController()
-        let onboardingAcceptVC = UserNicknameViewController()
-        onboardingAcceptVC.userPlanRequest = bottomSheetVC.userPlanRequest
-        let _ = UINavigationController(rootViewController: onboardingAcceptVC)
-        self.navigationController?.pushViewController(onboardingAcceptVC, animated: true)
-        
-    }
-    
     func presentHomeVC() {
         let onboardingAcceptVC = HomeViewController()
         changeRootViewController(onboardingAcceptVC)
@@ -149,7 +116,12 @@ extension UIViewController {
     func showToast(toastType: ToastViewType, keyboardHeight: CGFloat = 0, delay: TimeInterval = 1) {
         let toastView = SmeemToastView(type: toastType)
         let offKeyboardOffset = convertByHeightRatio(54)
-        toastView.show(in: self.view, offset: offKeyboardOffset, keyboardHeight: keyboardHeight)
+        toastView.show(in: self.view, hasKeyboard: false)
         toastView.hide(after: delay)
+    }
+    
+    func createNavigationBar(type: NavigationBarType) -> SmeemNavigationBar {
+        let navigationBar = NavigationBarFactory.create(type: type)
+        return navigationBar
     }
 }

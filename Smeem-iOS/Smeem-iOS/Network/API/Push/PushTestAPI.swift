@@ -11,14 +11,22 @@ final class PushTestAPI {
     static let shared = PushTestAPI()
     private let pushTestProvider = MoyaProvider<PushTestService>(plugins: [MoyaLoggingPlugin()])
     
-    func getPustTest(completion: @escaping (GeneralResponse<VoidType>?) -> Void) {
-        pushTestProvider.request(.pushTest) { response in
-            switch response {
-            case .success(let result):
-                guard let data = try? result.map(GeneralResponse<VoidType>.self) else { return }
-                completion(data)
-            case .failure(let err):
-                print(err)
+    func getPustTest(completion: @escaping (Result<GeneralResponse<NilType>, SmeemError>) -> ()) {
+        pushTestProvider.request(.pushTest) { result in
+            switch result {
+            case .success(let response):
+                let statusCode = response.statusCode
+                
+                do {
+                    guard let data = try response.map(GeneralResponse<NilType>?.self) else { return }
+                    completion(.success(data))
+                } catch {
+//                    let error = NetworkManager.statusCodeErrorHandling(statusCode: statusCode)
+                    completion(.failure(error as! SmeemError))
+                }
+                
+            case .failure(_):
+                completion(.failure(.userError))
             }
         }
     }

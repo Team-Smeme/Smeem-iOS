@@ -11,33 +11,45 @@ final class PostDiaryAPI {
     static let shared = PostDiaryAPI()
     private let postDiaryProvider = MoyaProvider<PostDiaryService>(plugins: [MoyaLoggingPlugin()])
     
-    private var postDiaryData: GeneralResponse<PostDiaryResponse>?
-    
-    func postDiary(param:PostDiaryRequest, completion: @escaping (GeneralResponse<PostDiaryResponse>?) -> Void) {
-        postDiaryProvider.request(.postDiary(param: param)) { response in
-            switch response {
-            case .success(let result):
+    func postDiary(param:PostDiaryRequest, completion: @escaping (Result<PostDiaryResponse, SmeemError>) -> Void) {
+        postDiaryProvider.request(.postDiary(param: param)) { result in
+            switch result {
+            case .success(let response):
                 do {
-                    self.postDiaryData = try
-                    result.map(GeneralResponse<PostDiaryResponse>.self)
-                    completion(self.postDiaryData)
+                    try NetworkManager.statusCodeErrorHandling(statusCode: response.statusCode)
+                    guard let data = try
+                            response.map(GeneralResponse<PostDiaryResponse>.self).data else {
+                        throw SmeemError.clientError
+                    }
+                    completion(.success(data))
+                    
                 } catch {
-                    print(error)
+                    guard let error = error as? SmeemError else { return }
+                    completion(.failure(error))
                 }
-            case .failure(let err):
-                print(err)
+                
+            case .failure(_):
+                completion(.failure(.userError))
             }
         }
     }
     
-    func patchDiary(param: PatchDiaryRequest, diaryID: Int, completion: @escaping (GeneralResponse<VoidType>?) -> Void) {
-        postDiaryProvider.request(.patchDiary(param: param, query: diaryID)) { response in
-            switch response {
-            case .success(let result):
-                guard let data = try? result.map(GeneralResponse<VoidType>.self) else { return }
-                completion(data)
-            case .failure(let err):
-                print(err)
+    func patchDiary(param: PatchDiaryRequest, diaryID: Int, completion: @escaping (Result<NilType, SmeemError>) -> Void) {
+        postDiaryProvider.request(.patchDiary(param: param, query: diaryID)) { result in
+            switch result {
+            case .success(let response):
+                do {
+                    try NetworkManager.statusCodeErrorHandling(statusCode: response.statusCode)
+                    guard let data = try? response.map(GeneralResponse<NilType>.self).data else {
+                        throw SmeemError.clientError
+                    }
+                    completion(.success(data))
+                } catch {
+                    guard let error = error as? SmeemError else { return }
+                    completion(.failure(error))
+                }
+            case .failure(_):
+                completion(.failure(.userError))
             }
         }
     }

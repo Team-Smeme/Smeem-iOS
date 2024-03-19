@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class EditAlarmViewController: UIViewController {
+final class EditAlarmViewController: BaseViewController {
     
     // MARK: - Property
     
@@ -19,15 +19,12 @@ final class EditAlarmViewController: UIViewController {
     
     private var hasAlarm = false
     
-    private var trainingClosure: ((TrainingTime) -> Void)?
-    
     var dayIndexPathArray = [IndexPath]()
     
     // MARK: - UI Property
     
     private let naviView = UIView()
     private let datePickerFooterView = DatePickerFooterView()
-    private let loadingView = LoadingView()
     
     private lazy var backButton: UIButton = {
         let button = UIButton()
@@ -45,21 +42,12 @@ final class EditAlarmViewController: UIViewController {
     }()
     
     private lazy var alarmCollectionView: AlarmCollectionView = {
-        let collectionView = AlarmCollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-        
-        collectionView.trainingDayClosure = { traingData in
-            self.trainigDayData = traingData.day
-            self.completeButton.smeemButtonType = traingData.type
-        }
-        collectionView.trainingTimeClosure = { data in
-            self.trainingTimeData = data
-        }
+        let collectionView = AlarmCollectionView()
         return collectionView
     }()
     
     private lazy var completeButton: SmeemButton = {
-        let button = SmeemButton()
-        button.setTitle("완료", for: .normal)
+        let button = SmeemButton(buttonType: .enabled, text: "완료")
         button.addTarget(self, action: #selector(completeButtonDidTap), for: .touchUpInside)
         return button
     }()
@@ -69,14 +57,16 @@ final class EditAlarmViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setBackgroundColor()
         setLayout()
-        hiddenNavigationBar()
-        swipeRecognizer()
+        setDelegate()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         setData()
+    }
+    
+    private func setDelegate() {
+        alarmCollectionView.alarmDelegate = self
     }
     
     // MARK: - @objc
@@ -86,20 +76,9 @@ final class EditAlarmViewController: UIViewController {
     }
     
     @objc func completeButtonDidTap() {
-        self.showLodingView(loadingView: loadingView)
         editAlarmTimePatchAPI(alarmTime: EditAlarmTime(trainingTime: TrainingTime(day: trainigDayData!,
                                                                                   hour: trainingTimeData!.hour,
                                                                                   minute: trainingTimeData!.minute)))
-    }
-    
-    @objc func responseToSwipeGesture() {
-        self.navigationController?.popViewController(animated: true)
-    }
-    
-    private func swipeRecognizer() {
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(responseToSwipeGesture))
-        swipeRight.direction = UISwipeGestureRecognizer.Direction.right
-        self.view.addGestureRecognizer(swipeRight)
     }
     
     // MARK: - Custom Method
@@ -108,10 +87,6 @@ final class EditAlarmViewController: UIViewController {
         alarmCollectionView.selectedIndexPath = dayIndexPathArray
         alarmCollectionView.myPageTime = (trainingTimeData!.0, trainingTimeData!.1)
         alarmCollectionView.selectedDayArray = Set(trainigDayData!.components(separatedBy: ","))
-    }
-    
-    private func setBackgroundColor() {
-        view.backgroundColor = .white
     }
     
     private func setLayout() {
@@ -149,16 +124,47 @@ final class EditAlarmViewController: UIViewController {
     }
 }
 
+/// TODO: 임의 코드
+extension EditAlarmViewController: AlarmCollectionViewDelegate {
+    func alarmTiemDataSend(data: AlarmTimeAppData) {
+        var hour = 0
+        
+        if data.dayAndNight == "PM" {
+            // 12 PM 그대로, 13 ~ 23시까지
+            hour = data.hour == "12" ? 12 : Int(data.hour)!+12
+        } else {
+            // AM 00:00
+            hour = data.hour == "12" ? 24 : Int(data.hour)!
+        }
+        
+        var minute = data.minute == "00" ? 0 : 30
+        self.trainingTimeData = (hour, minute)
+    }
+    
+    func alarmDayButtonDataSend(day: Set<String>) {
+        if day.isEmpty {
+            completeButton.changeButtonType(buttonType: .notEnabled)
+        } else {
+            self.trainigDayData = Array(day).joined(separator: ",")
+            completeButton.changeButtonType(buttonType: .enabled)
+        }
+    }
+}
+
 extension EditAlarmViewController {
     private func editAlarmTimePatchAPI(alarmTime: EditAlarmTime) {
-        MyPageAPI.shared.editAlarmTimeAPI(param: alarmTime) { respons in
-            self.hideLodingView(loadingView: self.loadingView)
-            if respons.success == true {
+        SmeemLoadingView.showLoading()
+        
+        MyPageAPI.shared.editAlarmTimeAPI(param: alarmTime) { response in
+            switch response {
+            case .success(_):
                 self.editAlarmDelegate?.editMyPageData()
                 self.navigationController?.popViewController(animated: true)
-            } else {
-                print("학습 목표 API 호출 실패")
+            case .failure(let error):
+                self.showToast(toastType: .smeemErrorToast(message: error))
             }
+            
+            SmeemLoadingView.hideLoading()
         }
     }
 }

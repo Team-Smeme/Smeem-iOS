@@ -17,9 +17,9 @@ enum URLConstant {
     
     // MARK: Onboarding
     
-    static let planListURL = "/goals"
+    static let trainingGoalsURL = "/goals"
     static let userURL = "/members"
-    static let userPlanURL = "/members/plan"
+    static let userTrainingInfo = "/members/plan"
     static let checkNickname = "/members/nickname/check"
     
     // MARK: - MyPage
@@ -44,10 +44,10 @@ enum URLConstant {
     
     static let pushURL = "/members/push"
     
-    // MARK: - Papago
+    // MARK: - DeepL
     
-    static let papagoBaseURL = "https://openapi.naver.com"
-    static let papagoPathURL = "/v1/papago/n2mt"
+    static let deepLBaseURL = "https://api-free.deepl.com"
+    static let deepLPathURL = "/v2/translate"
     
     // MARK: - Push
     
