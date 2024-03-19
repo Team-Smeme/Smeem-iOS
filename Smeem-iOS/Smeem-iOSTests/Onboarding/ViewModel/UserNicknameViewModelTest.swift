@@ -23,7 +23,7 @@ final class UserNicknameViewModelTest: XCTestCase, MockProviderProtocol {
     override func setUpWithError() throws {
         self.provider = OnboardingServiceMock()
         self.viewModel = UserNicknameViewModel(provider: provider)
-        self.viewModel.provider = OnboardingService(provider: makeSuccessProvider())
+        self.viewModel.provider = OnboardingService(provider: makeProvider())
         self.input = UserNicknameViewModel.Input(textFieldSubject: PassthroughSubject<String, Never>(),
                                                  nextButtonTapped: PassthroughSubject<String, Never>())
         self.output = viewModel.transform(input: input)

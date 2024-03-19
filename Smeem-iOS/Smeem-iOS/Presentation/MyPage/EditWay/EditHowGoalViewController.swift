@@ -149,7 +149,7 @@ extension EditHowGoalViewController {
         self.provider.trainingWayGetAPI(param: tempTarget) { result in
             switch result {
             case .success(let response):
-                self.planName = response.name
+                self.planName = response.title
                 self.planWay = response.way
                 self.planDetailWay = response.detail
                 self.configurePlanData()

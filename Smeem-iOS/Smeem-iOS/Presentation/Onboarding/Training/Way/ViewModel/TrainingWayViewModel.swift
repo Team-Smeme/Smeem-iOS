@@ -10,13 +10,6 @@ import Combine
 
 final class TrainingWayViewModel: ViewModel {
     
-    private let trainingWayDic = ["DEVELOP": "자기계발",
-                                  "HOBBY": "취미로 즐기기",
-                                  "APPLY": "현지 언어 체득",
-                                  "BUSINESS": "유창한 비지니스 영어",
-                                  "EXAM": "어학 시험 고득점",
-                                  "NONE": "아직 모르겠어요"]
-    
     struct Input {
         let viewWillAppearSubject: PassthroughSubject<Void, Never>
         let nextButtonTapped: PassthroughSubject<Void, Never>
@@ -75,7 +68,7 @@ final class TrainingWayViewModel: ViewModel {
     }
     
     private func configureWayData(training: TrainingWayResponse) -> TrainingWayAppData {
-        let wayTitle = trainingWayDic[training.name]!
+        let wayTitle = training.title
         let wayArray = training.way.components(separatedBy: " 이상 ")
         let wayOne = wayArray[0] + " 이상"
         let wayTwo = wayArray[1]

@@ -9,6 +9,7 @@ import Foundation
 
 struct TrainingWayResponse: Codable, Equatable {
     let name: String
+    let title: String
     let way: String
     let detail: String
 }

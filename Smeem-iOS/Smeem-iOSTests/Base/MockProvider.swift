@@ -10,11 +10,11 @@ import Moya
 
 protocol MockProviderProtocol {
     associatedtype TargetEndPoint: TargetType
-    func makeSuccessProvider() -> MoyaProvider<TargetEndPoint>
+    func makeProvider() -> MoyaProvider<TargetEndPoint>
 }
 
 extension MockProviderProtocol {
-    func makeSuccessProvider() -> MoyaProvider<TargetEndPoint> {
+    func makeProvider() -> MoyaProvider<TargetEndPoint> {
         let endpointClosure = { (target: TargetEndPoint) -> Endpoint in
             return Endpoint(url: target.path,
                             sampleResponseClosure: { .networkResponse(200, target.sampleData) },

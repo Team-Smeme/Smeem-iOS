@@ -17,6 +17,7 @@ final class OnboardingServiceMock: OnboardingServiceProtocol {
     
     func trainingWayGetAPI(param: String, completion: @escaping (Result<Smeem_iOS.TrainingWayResponse, Smeem_iOS.SmeemError>) -> ()) {
         completion(.success(TrainingWayResponse(name: "test",
+                                                title: "test",
                                                 way: "test",
                                                 detail: "test")))
     }

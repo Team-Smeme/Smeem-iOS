@@ -152,10 +152,12 @@ final class TrainingAlarmViewModelTest: XCTestCase {
     
     func test_alarmAPI_잘호출되는지() {
         // Given
-        let expectation = XCTestExpectation(description: "button type expectedResult received")
+        let expectation = XCTestExpectation()
         
         // When
+        viewModel.authType = .login
         
+        // TODO: ViewModel 
         output.nicknameResult
             .sink { _ in
                 expectation.fulfill()
