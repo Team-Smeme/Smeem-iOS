@@ -6,16 +6,22 @@
 //
 
 import UIKit
+import Combine
 
 import SnapKit
 
 // MARK: - BaseNavigationBar
 
-class SmeemNavigationBar: UIView {
+final class SmeemNavigationBar: UIView {
     
-    // MARK: - Properties
+    // MARK: - Publishers
     
     weak var actionDelegate: NavigationBarActionDelegate?
+    
+    private (set) var leftButtonTapped = PassthroughSubject<Void, Never>()
+    private (set) var rightButtonTapped = PassthroughSubject<Void, Never>()
+    
+    private var cancelBag = Set<AnyCancellable>()
     
     // MARK: - UI Properties
     
@@ -53,7 +59,6 @@ class SmeemNavigationBar: UIView {
         super.init(frame: .zero)
         
         setLayout()
-        addButtonTargets()
     }
     
     required init?(coder: NSCoder) {
@@ -133,12 +138,16 @@ class SmeemNavigationBar: UIView {
         }
     }
     
-    @objc func leftButtonTapped() {
-        actionDelegate?.didTapLeftButton()
-    }
-    
-    @objc func rightButtonTapped() {
-        actionDelegate?.didTapRightButton()
+    private func subscribeButtonEvents() {
+        leftButton.tapPublisher.sink { [weak self] in
+            self?.leftButtonTapped.send()
+        }
+        .store(in: &cancelBag)
+        
+        rightButton.tapPublisher.sink { [weak self] in
+            self?.rightButtonTapped.send()
+        }
+        .store(in: &cancelBag)
     }
 }
 
@@ -175,11 +184,6 @@ extension SmeemNavigationBar {
         rightButton.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
         }
-    }
-    
-    private func addButtonTargets() {
-        leftButton.addTarget(self, action: #selector(leftButtonTapped), for: .touchUpInside)
-        rightButton.addTarget(self, action: #selector(rightButtonTapped), for: .touchUpInside)
     }
     
     func updateRightButton(isValid: Bool) {

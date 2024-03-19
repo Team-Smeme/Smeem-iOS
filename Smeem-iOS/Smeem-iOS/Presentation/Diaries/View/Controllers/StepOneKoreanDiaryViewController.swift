@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 // MARK: - StepOneKoreanDiaryViewController
 
@@ -15,7 +16,24 @@ final class StepOneKoreanDiaryViewController: DiaryViewController {
     
     weak var delegate: DataBindProtocol?
     
+    private var viewModel: StepOneKoreanDiaryViewModel
+    
+    private let viewFactory = DiaryViewFactory()
+    
+    private var cancelBag = Set<AnyCancellable>()
+    
     // MARK: - Life Cycle
+    
+    init(viewModel: StepOneKoreanDiaryViewModel) {
+        self.viewModel = viewModel
+        super.init(rootView: viewFactory.createStepOneKoreanDiaryView())
+        
+        bind()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +49,42 @@ final class StepOneKoreanDiaryViewController: DiaryViewController {
     }
 }
 
+// MARK: - Bind
+
+extension StepOneKoreanDiaryViewController {
+    private func bind() {
+        let input = StepOneKoreanDiaryViewModel.Input(randomTopicButtonTapped: rootView.bottomView.randomTopicButtonTapped,
+                                         refreshButtonTapped: rootView.randomTopicView.refreshButtonTapped)
+        
+        let output = viewModel.transform(input: input)
+        
+        output.randomTopicButtonAction
+            .receive(on: DispatchQueue.main)
+            .sink { _ in
+                
+                let isActive = self.viewModel.isRandomTopicActive.value
+                let content = self.viewModel.topicContentSubject.value
+                
+                self.checkGuidToolTip()
+                self.rootView.bottomView.updateRandomTopicButtonImage(isActive)
+                self.rootView.updateRandomTopicView(isRandomTopicActive: isActive)
+                self.rootView.updateInputTextViewConstraints(isRandomTopicActive: isActive)
+                self.rootView.randomTopicView.updateText(with: content)
+            }
+            .store(in: &cancelBag)
+        
+        output.refreshButtonAction
+            .receive(on: DispatchQueue.main)
+            .sink { _ in
+                let content = self.viewModel.topicContentSubject.value
+                
+                self.rootView.randomTopicView.updateText(with: content)
+            }
+            .store(in: &cancelBag)
+    }
+}
+
+
 // MARK: - Extensions
 
 extension StepOneKoreanDiaryViewController {
@@ -41,17 +95,15 @@ extension StepOneKoreanDiaryViewController {
     // MARK: - Action Helpers
     
     private func handleRightNavigationButton() {
-        let diaryViewControllerFactory = DiaryViewControllerFactory(diaryViewFactory: DiaryViewFactory(), viewModel: DiaryViewModel(model: DiaryModel()))
-        let nextVC = diaryViewControllerFactory.makeStepTwoKoreanDiaryViewController()
-        delegate = nextVC
+//        let diaryViewControllerFactory = DiaryViewControllerFactory(diaryViewFactory: DiaryViewFactory(), viewModel: DiaryViewModel(model: DiaryModel()))
+//        let nextVC = diaryViewControllerFactory.makeStepTwoKoreanDiaryViewController()
+//        delegate = nextVC
+//        
+//        let inputText = viewModel.inputText.value
+//        
+//        delegate?.dataBind(topicID: viewModel.getTopicID(), inputText: inputText ?? "")
         
-        let inputText = viewModel.inputText.value
-        
-        delegate?.dataBind(topicID: viewModel.getTopicID(), inputText: inputText ?? "")
-        
-        print("데이터바인드 성공", viewModel.getTopicID())
-        
-        self.navigationController?.pushViewController(nextVC, animated: true)
+//        self.navigationController?.pushViewController(nextVC, animated: true)
     }
 }
 
@@ -64,15 +116,15 @@ extension StepOneKoreanDiaryViewController: NavigationBarActionDelegate {
     }
     
     func didTapRightButton() {
-        if viewModel.onUpdateTextValidation.value == true {
-            if viewModel.isRandomTopicActive.value == false {
-                viewModel.updateTopicID(topicID: nil)
-            }
-            rootView.inputTextView.resignFirstResponder()
-            handleRightNavigationButton()
-            AmplitudeManager.shared.track(event: AmplitudeConstant.diary.first_step_complete.event)
-        } else {
-            viewModel.showRegExKrToast()
-        }
+//        if viewModel.onUpdateTextValidation.value == true {
+//            if viewModel.isRandomTopicActive.value == false {
+//                viewModel.updateTopicID(topicID: nil)
+//            }
+//            rootView.inputTextView.resignFirstResponder()
+//            handleRightNavigationButton()
+//            AmplitudeManager.shared.track(event: AmplitudeConstant.diary.first_step_complete.event)
+//        } else {
+//            viewModel.showRegExKrToast()
+//        }
     }
 }

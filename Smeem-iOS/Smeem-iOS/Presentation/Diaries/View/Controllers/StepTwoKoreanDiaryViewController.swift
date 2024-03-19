@@ -6,10 +6,27 @@
 //
 
 import UIKit
+import Combine
 
 // MARK: - StepTwoKoreanDiaryViewController
 
 final class StepTwoKoreanDiaryViewController: DiaryViewController {
+    
+    private var cancelBag = Set<AnyCancellable>()
+    
+    private let viewModel: StepTwoKoreanDiaryViewModel
+    
+    private let viewFactory = DiaryViewFactory()
+    
+    init(viewModel: StepTwoKoreanDiaryViewModel) {
+        self.viewModel = viewModel
+        super.init(rootView: viewFactory.createStepTwoKoreanDiaryView())
+        
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - Life Cycle
     
@@ -17,6 +34,28 @@ final class StepTwoKoreanDiaryViewController: DiaryViewController {
         super.viewDidLoad()
         
         setNagivationBarDelegate()
+        bind()
+    }
+}
+
+extension StepTwoKoreanDiaryViewController {
+    private func bind() {
+        let input = StepTwoKoreanDiaryViewModel.Input(hintButtonTapped: rootView.bottomView.hintButtonTapped)
+        
+        let output = viewModel.transform(input: input)
+        
+        output.hintButtonAction
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                // TODO: 수정 필요
+                self?.viewModel.toggleIsHintShowed()
+                guard let isHintShowed = self?.viewModel.onUpdateHintButton.value
+                else { return }
+                
+                self?.rootView.bottomView.updateHintButtonImage(isHintShowed)
+            }
+            .store(in: &cancelBag)
+
     }
 }
 
@@ -28,15 +67,7 @@ extension StepTwoKoreanDiaryViewController {
     }
     
     private func handleHintButton() {
-        let isHintShowed = viewModel.onUpdateHintButton.value
-        
-        rootView.bottomView.updateHintButtonImage(isHintShowed)
-        
-        if isHintShowed {
-            postDeepLApi(diaryText: rootView.configuration.layoutConfig?.getHintViewText() ?? "")
-        } else {
-            rootView.configuration.layoutConfig?.hintTextView.text = viewModel.model.hintText
-        }
+
     }
 }
 
@@ -67,16 +98,6 @@ extension StepTwoKoreanDiaryViewController: DataBindProtocol {
     func dataBind(topicID: Int?, inputText: String) {
         viewModel.updateTopicID(topicID: topicID)
         rootView.configuration.layoutConfig?.hintTextView.text = inputText
-    }
-}
-
-// MARK: - HintActionDelegate
-
-extension StepTwoKoreanDiaryViewController {
-    func didTapHintButton() {
-        viewModel.toggleIsHintShowed()
-        handleHintButton()
-        AmplitudeManager.shared.track(event: AmplitudeConstant.diary.hint_click.event)
     }
 }
 

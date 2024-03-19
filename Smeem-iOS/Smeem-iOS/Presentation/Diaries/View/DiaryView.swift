@@ -17,7 +17,7 @@ protocol ToolTipDelegate: AnyObject {
 
 // MARK: - DiaryView
 
-class DiaryView: BaseView {
+final class DiaryView: BaseView {
     
     // MARK: - Properties
     

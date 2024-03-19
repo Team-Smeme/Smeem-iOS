@@ -27,6 +27,9 @@
 		374F828E2AC5DFFE00C128B9 /* DiaryBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374F828D2AC5DFFE00C128B9 /* DiaryBottomView.swift */; };
 		374FAF812A2CACCF00237A1A /* DiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374FAF802A2CACCF00237A1A /* DiaryViewController.swift */; };
 		3761116C2A278D0E0095EC5A /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3761116B2A278D0E0095EC5A /* String+.swift */; };
+		378B20EE2BA0A01600604935 /* ForeignDiaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378B20ED2BA0A01600604935 /* ForeignDiaryViewModel.swift */; };
+		378B20F02BA0A02400604935 /* StepOneKoreanDiaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378B20EF2BA0A02400604935 /* StepOneKoreanDiaryViewModel.swift */; };
+		378B20F22BA0A03000604935 /* StepTwoKoreanDiaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378B20F12BA0A03000604935 /* StepTwoKoreanDiaryViewModel.swift */; };
 		378E461A2B5516E200D2A473 /* DeepLAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378E46192B5516E200D2A473 /* DeepLAPI.swift */; };
 		378E461C2B5516F200D2A473 /* DeepLService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378E461B2B5516F200D2A473 /* DeepLService.swift */; };
 		378E461F2B551A6F00D2A473 /* DeepLResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378E461E2B551A6F00D2A473 /* DeepLResponse.swift */; };
@@ -193,6 +196,9 @@
 		374F828D2AC5DFFE00C128B9 /* DiaryBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryBottomView.swift; sourceTree = "<group>"; };
 		374FAF802A2CACCF00237A1A /* DiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryViewController.swift; sourceTree = "<group>"; };
 		3761116B2A278D0E0095EC5A /* String+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
+		378B20ED2BA0A01600604935 /* ForeignDiaryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForeignDiaryViewModel.swift; sourceTree = "<group>"; };
+		378B20EF2BA0A02400604935 /* StepOneKoreanDiaryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepOneKoreanDiaryViewModel.swift; sourceTree = "<group>"; };
+		378B20F12BA0A03000604935 /* StepTwoKoreanDiaryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepTwoKoreanDiaryViewModel.swift; sourceTree = "<group>"; };
 		378E46192B5516E200D2A473 /* DeepLAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLAPI.swift; sourceTree = "<group>"; };
 		378E461B2B5516F200D2A473 /* DeepLService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLService.swift; sourceTree = "<group>"; };
 		378E461E2B551A6F00D2A473 /* DeepLResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLResponse.swift; sourceTree = "<group>"; };
@@ -396,15 +402,6 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		37144C542B88FBB4008565C4 /* DepenecyInjection */ = {
-			isa = PBXGroup;
-			children = (
-				37144C522B88F85E008565C4 /* DependencyContainer.swift */,
-				37144C552B88FBCF008565C4 /* Injected.swift */,
-			);
-			path = DepenecyInjection;
-			sourceTree = "<group>";
-		};
 		371E94172A87DA6E0098280F /* EditGoal */ = {
 			isa = PBXGroup;
 			children = (
@@ -560,6 +557,9 @@
 			isa = PBXGroup;
 			children = (
 				37035CF82AF2ADD2008EE521 /* DiaryViewModel.swift */,
+				378B20ED2BA0A01600604935 /* ForeignDiaryViewModel.swift */,
+				378B20EF2BA0A02400604935 /* StepOneKoreanDiaryViewModel.swift */,
+				378B20F12BA0A03000604935 /* StepTwoKoreanDiaryViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1460,6 +1460,7 @@
 				6FBC85742A4B603A00A43F98 /* MyPageNetworkModel.swift in Sources */,
 				6F294A482A27818200856CC8 /* HomeViewFloatingViewController.swift in Sources */,
 				37A574C529FF6EA800312453 /* FontLiterals.swift in Sources */,
+				378B20F02BA0A02400604935 /* StepOneKoreanDiaryViewModel.swift in Sources */,
 				4AB7C92B2B78A8D900845733 /* SmeemStartViewModel.swift in Sources */,
 				4A004D5B2B4EE29A003C8936 /* PushTestService.swift in Sources */,
 				379789052AAC706800C61EF4 /* SmeemNavigationFactory.swift in Sources */,
@@ -1536,12 +1537,14 @@
 				37DCA66E2A484D3100FF8F90 /* PostDiaryResponse.swift in Sources */,
 				4A0EA4552A014027006CCE52 /* GeneralResponse.swift in Sources */,
 				4AC00EF72AD59C73009230DA /* AuthDataSendProtocol.swift in Sources */,
+				378B20EE2BA0A01600604935 /* ForeignDiaryViewModel.swift in Sources */,
 				4A9FAB482A4C3D1200C40D5A /* BadgeHeaderView.swift in Sources */,
 				4AC00ECC2AD1C143009230DA /* UICollectionView+.swift in Sources */,
 				4A8FFA5029C9E1FD00FB76C0 /* AppDelegate.swift in Sources */,
 				6FE1298E2A4986CA005536C4 /* HomeDiaryResponse.swift in Sources */,
 				4AC707AB2B738A5B00B1D791 /* TrainingAlarmViewModel.swift in Sources */,
 				3728B8D52A2CFF2C00EF4CF8 /* StepOneKoreanDiaryViewController.swift in Sources */,
+				378B20F22BA0A03000604935 /* StepTwoKoreanDiaryViewModel.swift in Sources */,
 				37DCA6692A480A8E00FF8F90 /* DetailDiaryAPI.swift in Sources */,
 				37A574C129FF6E9100312453 /* ColorLiterals.swift in Sources */,
 				371107E92ACC7E3A007A4AC2 /* DiaryLayoutConfigurations.swift in Sources */,
