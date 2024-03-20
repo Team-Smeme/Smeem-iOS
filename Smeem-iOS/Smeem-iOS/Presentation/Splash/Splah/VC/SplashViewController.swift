@@ -10,7 +10,7 @@ import Combine
 
 final class SplashViewController: BaseViewController {
     
-    private let viewModel = SplashViewModel()
+    private let viewModel = SplashViewModel(provider: SplashService())
     
     // MARK: Publisher
     
@@ -45,8 +45,8 @@ final class SplashViewController: BaseViewController {
         
         output.updatePopupResult
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                self?.presentUpdatePopup()
+            .sink { [weak self] model in
+                self?.presentUpdatePopup(model: model)
             }
             .store(in: &cancelBag)
         
@@ -82,8 +82,10 @@ final class SplashViewController: BaseViewController {
     
     // MARK: - Method
     
-    private func presentUpdatePopup() {
-        let updateAlert = UIAlertController(title: "업데이트 알림", message: "보다 나아진 스밈의 최신 버전을 준비했어요! 새로운 버전으로 업데이트 후 이용해주세요.", preferredStyle: UIAlertController.Style.alert)
+    private func presentUpdatePopup(model: UpdateTextModel) {
+        let updateAlert = UIAlertController(title: model.title,
+                                            message: model.content,
+                                            preferredStyle: UIAlertController.Style.alert)
         
         let update = UIAlertAction(title: "업데이트", style: UIAlertAction.Style.default) { (_) in
             System().openAppStore()

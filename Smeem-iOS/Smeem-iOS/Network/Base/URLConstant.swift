@@ -9,6 +9,10 @@ import Foundation
 
 enum URLConstant {
     
+    // MARK: Splash
+    
+    static let updateURL = "versions/client/app"
+    
     // MARK: Auth
     
     static let loginURL = "/auth"
