@@ -48,7 +48,6 @@ final class SplashViewModel: ViewModel {
                     self.provider.updateGetAPI { result in
                         switch result {
                         case .success(let response):
-                            
                             if self.checkVersion(client: self.appVersion,
                                                  now: response.iosVersion.version,
                                                  force: response.iosVersion.forceVersion) {
