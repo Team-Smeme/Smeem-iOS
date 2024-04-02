@@ -15,31 +15,30 @@ struct KeyboardInfo {
 
 // MARK: - DiaryViewModel
 
-final class DiaryViewModel: ViewModel {
+class DiaryViewModel: ViewModel {
     struct Input {
-        let randomTopicButtonTapped: PassthroughSubject<Void, Never>
-        let refreshButtonTapped: PassthroughSubject<Void, Never>
-        let hintButtonTapped: PassthroughSubject<Void, Never>
+        var textDidChangeSubject: PassthroughSubject<String, Never>
     }
     
     struct Output {
-        let randomTopicButtonAction: AnyPublisher<Void, Never>
-        let refreshButtonAction: AnyPublisher<Void, Never>
-        let hintButtonAction: AnyPublisher<Void, Never>
+        let textValidationAction: AnyPublisher<Bool, Never>
     }
     
     private (set) var model: DiaryModel
+    private var cancelBag = Set<AnyCancellable>()
+    
+    private (set) var viewTypeSubject = CurrentValueSubject<DiaryViewType, Never>(.stepOneKorean)
+    
+    private var textValidationState = PassthroughSubject<Bool, Never>()
     
     private (set) var isRandomTopicActive = CurrentValueSubject<Bool, Never>(false)
     private (set) var topicContentSubject = CurrentValueSubject<String, Never>("")
     private (set) var onUpdateTextValidation: Observable<Bool> = Observable(false)
     private (set) var inputText: Observable<String> = Observable("")
-    private (set) var onUpdateHintButton: Observable<Bool> = Observable(false)
     private (set) var keyboardInfo: Observable<KeyboardInfo?> = Observable(nil)
     private (set) var toastType: Observable<ToastViewType?> = Observable(nil)
 //    private (set) var onUpdateTopicID: Observable<Int> = Observable(0)
     
-    var onUpdateInputText: ((String) -> Void)?
     var onUpdateTopicID: ((String) -> Void)?
     var onError: ((Error) -> Void)?
     
@@ -48,34 +47,20 @@ final class DiaryViewModel: ViewModel {
     }
     
     func transform(input: Input) -> Output {
-        let randomTopicButtonAction = input.randomTopicButtonTapped
-            .flatMap{ [unowned self] _ -> AnyPublisher<Void, Never> in
-                self.isRandomTopicActive.value.toggle()
-                
-                if self.isRandomTopicActive.value {
-                    if self.model.topicContent?.isEmpty == nil {
-                        self.callRandomTopicAPI()
-                    }
-                } else {
-                    self.updateModel(isTopicCalled: false, topicContent: nil)
+        input.textDidChangeSubject
+            .sink { [weak self] text in
+                guard let viewType = self?.viewTypeSubject.value else {
+                    return
                 }
-                return Just<Void>(()).eraseToAnyPublisher()
+                let isValid = self?.validateText(with: text, viewType: viewType) ?? false
+                
+                self?.textValidationState.send(isValid)
             }
-            .eraseToAnyPublisher()
+            .store(in: &cancelBag)
         
-        let refreshButtonAction = input.refreshButtonTapped
-            .map {
-                self.callRandomTopicAPI()
-            }
-            .eraseToAnyPublisher()
+        let diaryTextAction = textValidationState.eraseToAnyPublisher()
         
-        let hintButtonAction = input.hintButtonTapped
-            .map { print("hintButtonTapped") }
-            .eraseToAnyPublisher()
-        
-        return Output(randomTopicButtonAction: randomTopicButtonAction,
-                      refreshButtonAction: refreshButtonAction,
-                      hintButtonAction: hintButtonAction)
+        return Output(textValidationAction: diaryTextAction)
     }
 }
 
@@ -90,16 +75,12 @@ extension DiaryViewModel {
         isRandomTopicActive.value = !isRandomTopicActive.value
     }
     
-    func toggleIsHintShowed() {
-        onUpdateHintButton.value = !onUpdateHintButton.value
-    }
+//    func toggleIsHintShowed() {
+//        onUpdateHintButton.value = !onUpdateHintButton.value
+//    }
     
     func getTopicID() -> Int? {
         return model.topicID ?? nil
-    }
-    
-    func getInputText() -> String {
-        return inputText.value
     }
     
     func updateKeyboardInfo(info: KeyboardInfo) {
@@ -127,7 +108,7 @@ extension DiaryViewModel {
 // MARK: - Action Helpers
 
 extension DiaryViewModel {
-    func isTextValid(text: String, viewType: DiaryViewType) -> Bool {
+    func validateText(with text: String, viewType: DiaryViewType) -> Bool {
         let smeemTextViewHandler = SmeemTextViewHandler()
         
         let placeholderText = smeemTextViewHandler.placeholderTextForViewType(for: viewType)

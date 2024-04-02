@@ -10,12 +10,12 @@ import Combine
 
 // MARK: - DiaryViewController
 
-class DiaryViewController: BaseViewController {
+class DiaryViewController<ViewModelType: DiaryViewModel>: BaseViewController {
     
     // MARK: - Properties
     
     private (set) var rootView: DiaryView
-//    private (set) var viewModel: DiaryViewModel
+    private (set) var viewModel: ViewModelType
     
     private var keyboardHandler: KeyboardLayoutAndScrollingHandler?
     
@@ -23,8 +23,9 @@ class DiaryViewController: BaseViewController {
     
     // MARK: - Life Cycle
     
-    init(rootView: DiaryView) {
+    init(rootView: DiaryView, viewModel: ViewModelType) {
         self.rootView = rootView
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         
         setupSubscriptions()
@@ -45,6 +46,7 @@ class DiaryViewController: BaseViewController {
         super.viewDidLoad()
         
         handleError()
+        bind()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -62,16 +64,29 @@ class DiaryViewController: BaseViewController {
 
 extension DiaryViewController {
     
+    private func bind() {
+        // TODO: 강제 언래핑(근데 사용해도 되지 않을까)
+        let input = DiaryViewModel.Input(textDidChangeSubject: rootView.inputTextView.textViewHandler!.textDidChangeSubject)
+        let output = viewModel.transform(input: input)
+        
+        output.textValidationAction
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] isValid in
+                self?.rootView.navigationView.updateRightButton(isValid: isValid)
+            }
+            .store(in: &cancelBag)
+    }
+    
     // MARK: - Settings
     
     private func setupDelegates() {
-        rootView.setTextViewHandlerDelegate(self)
+        //        rootView.setTextViewHandlerDelegate(self)
         rootView.toolTipDelegate = self
     }
     
     private func setupSubscriptions() {
-//        bindTextValidationStatus()
-//        bindToastVisibility()
+        //        bindTextValidationStatus()
+        //        bindToastVisibility()
     }
     
     // MARK: - Setups
@@ -82,19 +97,20 @@ extension DiaryViewController {
         })
     }
     
-//    private func bindToastVisibility() {
-//        viewModel.toastType.bind(listener: { [weak self] toastType in
-//            if let toastType {
-//                self?.rootView.showToast(with: toastType)
-//            }
-//        })
-//    }
+    //    private func bindToastVisibility() {
+    //        viewModel.toastType.bind(listener: { [weak self] toastType in
+    //            if let toastType {
+    //                self?.rootView.showToast(with: toastType)
+    //            }
+    //        })
+    //    }
     
-    //        private func bindTopicID() {
-    //            viewModel?.onUpdateTopicID.bind(listener: { [weak self] id in
-    //                self?.viewModel?.onUpdateTopicID(id)
-    //            })
-    //        }
+    private func bindTopicID() {
+        print("bindTopicID")
+        //        viewModel.onUpdateTopicID.bind(listener: { [weak self] id in
+        //            self?.viewModel.onUpdateTopicID(id)
+        //        })
+    }
     
     private func setupKeyboardHandler() {
         keyboardHandler = KeyboardLayoutAndScrollingHandler(targetView: rootView.inputTextView, bottomView: rootView.bottomView)
@@ -117,19 +133,14 @@ extension DiaryViewController {
 extension DiaryViewController: SmeemTextViewHandlerDelegate {
     func textViewDidChange(text: String, viewType: DiaryViewType) {
         print("textViewDidChange")
-//        let isValid = viewModel.isTextValid(text: text, viewType: viewType)
-//        viewModel.updateTextValidation(isValid)
-//        viewModel.inputText.value = text
-    }
-    
-    func onUpdateInputText(_ text: String) {
-        print("onUpdateInputText")
-//        viewModel.onUpdateInputText?(text)
+        let isValid = viewModel.validateText(with: text, viewType: viewType)
+        viewModel.updateTextValidation(isValid)
+        viewModel.inputText.value = text
     }
     
     func onUpdateTopicID(_ id: String) {
         print("onUpdateTopicID")
-//        viewModel.onUpdateTopicID?(id)
+        //        viewModel.onUpdateTopicID?(id)
     }
 }
 
@@ -146,8 +157,8 @@ extension DiaryViewController: ToolTipDelegate {
 
 extension DiaryViewController {
     func handleInitialRandomTopicApiCall() {
-//        viewModel.callRandomTopicAPI()
-//        self.rootView.randomTopicView.updateText(with: viewModel.model.topicContent ?? "")
+        //        viewModel.callRandomTopicAPI()
+        //        self.rootView.randomTopicView.updateText(with: viewModel.model.topicContent ?? "")
     }
     
     func handlePostDiaryResponse(_ response: PostDiaryResponse?) {
@@ -163,10 +174,10 @@ extension DiaryViewController {
     
     func handleError() {
         print("handleError")
-//        viewModel.onError = { [weak self] error in
-//            guard let error = error as? SmeemError else { return }
-//            
-//            self?.rootView.showToast(with: .smeemErrorToast(message: error))
-//        }
+        //        viewModel.onError = { [weak self] error in
+        //            guard let error = error as? SmeemError else { return }
+        //
+        //            self?.rootView.showToast(with: .smeemErrorToast(message: error))
+        //        }
     }
 }

@@ -10,18 +10,15 @@ import Combine
 
 // MARK: - ForeignDiaryViewController
 
-final class ForeignDiaryViewController: DiaryViewController {
-    
-    private let viewModel: ForeignDiaryViewModel
+final class ForeignDiaryViewController: DiaryViewController<ForeignDiaryViewModel> {
     private let viewFactory = DiaryViewFactory()
     
     private var cancelBag = Set<AnyCancellable>()
     
     // MARK: - Life Cycle
     
-    init(viewModel: ForeignDiaryViewModel) {
-        self.viewModel = viewModel
-        super.init(rootView: viewFactory.createStepOneKoreanDiaryView())
+    init(viewModel:ForeignDiaryViewModel) {
+        super.init(rootView: viewFactory.createStepOneKoreanDiaryView(), viewModel:viewModel )
     }
     
     required init?(coder: NSCoder) {

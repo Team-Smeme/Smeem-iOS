@@ -10,25 +10,22 @@ import Combine
 
 // MARK: - StepTwoKoreanDiaryViewController
 
-final class StepTwoKoreanDiaryViewController: DiaryViewController {
+final class StepTwoKoreanDiaryViewController: DiaryViewController<StepTwoKoreanDiaryViewModel> {
     
     private var cancelBag = Set<AnyCancellable>()
     
-    private let viewModel: StepTwoKoreanDiaryViewModel
-    
     private let viewFactory = DiaryViewFactory()
     
+    // MARK: - Life Cycle
+    
     init(viewModel: StepTwoKoreanDiaryViewModel) {
-        self.viewModel = viewModel
-        super.init(rootView: viewFactory.createStepTwoKoreanDiaryView())
+        super.init(rootView: viewFactory.createStepTwoKoreanDiaryView(), viewModel: viewModel)
         
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,17 +41,17 @@ extension StepTwoKoreanDiaryViewController {
         
         let output = viewModel.transform(input: input)
         
-        output.hintButtonAction
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] in
-                // TODO: 수정 필요
-                self?.viewModel.toggleIsHintShowed()
-                guard let isHintShowed = self?.viewModel.onUpdateHintButton.value
-                else { return }
-                
-                self?.rootView.bottomView.updateHintButtonImage(isHintShowed)
-            }
-            .store(in: &cancelBag)
+//        output.hintButtonAction
+//            .receive(on: DispatchQueue.main)
+//            .sink { [weak self] in
+//                // TODO: 수정 필요
+//                self?.viewModel.toggleIsHintShowed()
+//                guard let isHintShowed = self?.viewModel.onUpdateHintButton.value
+//                else { return }
+//                
+//                self?.rootView.bottomView.updateHintButtonImage(isHintShowed)
+//            }
+//            .store(in: &cancelBag)
 
     }
 }

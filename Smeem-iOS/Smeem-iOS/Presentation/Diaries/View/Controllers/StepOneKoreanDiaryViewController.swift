@@ -10,13 +10,11 @@ import Combine
 
 // MARK: - StepOneKoreanDiaryViewController
 
-final class StepOneKoreanDiaryViewController: DiaryViewController {
+final class StepOneKoreanDiaryViewController: DiaryViewController<StepOneKoreanDiaryViewModel> {
     
     // MARK: - Properties
     
     weak var delegate: DataBindProtocol?
-    
-    private var viewModel: StepOneKoreanDiaryViewModel
     
     private let viewFactory = DiaryViewFactory()
     
@@ -25,8 +23,7 @@ final class StepOneKoreanDiaryViewController: DiaryViewController {
     // MARK: - Life Cycle
     
     init(viewModel: StepOneKoreanDiaryViewModel) {
-        self.viewModel = viewModel
-        super.init(rootView: viewFactory.createStepOneKoreanDiaryView())
+        super.init(rootView: viewFactory.createStepOneKoreanDiaryView(), viewModel: viewModel)
         
         bind()
     }

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 import SnapKit
 
@@ -18,6 +19,8 @@ protocol ToolTipDelegate: AnyObject {
 // MARK: - DiaryView
 
 final class DiaryView: BaseView {
+    
+    private (set) var viewTypeSubject = PassthroughSubject<DiaryViewType, Never>()
     
     // MARK: - Properties
     
@@ -65,6 +68,7 @@ final class DiaryView: BaseView {
         
         setLayout()
         checkTooltip()
+        viewTypeSubject.send(viewType)
     }
     
     override func layoutSubviews() {
@@ -199,9 +203,9 @@ extension DiaryView {
         navigationView.actionDelegate = delegate
     }
     
-    func setTextViewHandlerDelegate(_ viewController: DiaryViewController) {
-        inputTextView.textViewHandler?.textViewHandlerDelegate = viewController
-    }
+//    func setTextViewHandlerDelegate(_ viewController: DiaryViewController) {
+//        inputTextView.textViewHandler?.textViewHandlerDelegate = viewController
+//    }
     
     func setInputText(_ text: String) {
         inputTextView.text = text
