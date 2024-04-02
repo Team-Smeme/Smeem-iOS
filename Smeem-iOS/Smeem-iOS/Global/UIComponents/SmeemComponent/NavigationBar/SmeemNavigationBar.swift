@@ -59,6 +59,7 @@ final class SmeemNavigationBar: UIView {
         super.init(frame: .zero)
         
         setLayout()
+        subscribeButtonEvents()
     }
     
     required init?(coder: NSCoder) {

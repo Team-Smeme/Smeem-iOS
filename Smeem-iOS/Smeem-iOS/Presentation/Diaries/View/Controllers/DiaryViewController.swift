@@ -80,7 +80,6 @@ extension DiaryViewController {
     // MARK: - Settings
     
     private func setupDelegates() {
-        //        rootView.setTextViewHandlerDelegate(self)
         rootView.toolTipDelegate = self
     }
     
@@ -156,11 +155,6 @@ extension DiaryViewController: ToolTipDelegate {
 // MARK: - Network
 
 extension DiaryViewController {
-    func handleInitialRandomTopicApiCall() {
-        //        viewModel.callRandomTopicAPI()
-        //        self.rootView.randomTopicView.updateText(with: viewModel.model.topicContent ?? "")
-    }
-    
     func handlePostDiaryResponse(_ response: PostDiaryResponse?) {
         DispatchQueue.main.async {
             let homeVC = HomeViewController()

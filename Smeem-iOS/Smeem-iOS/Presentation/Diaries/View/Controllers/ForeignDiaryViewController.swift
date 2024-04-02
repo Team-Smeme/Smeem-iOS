@@ -28,7 +28,6 @@ final class ForeignDiaryViewController: DiaryViewController<ForeignDiaryViewMode
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        handleInitialRandomTopicApiCall()
         bind()
     }
     

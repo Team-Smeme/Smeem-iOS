@@ -10,14 +10,24 @@ import Combine
 
 final class StepTwoKoreanDiaryViewModel: DiaryViewModel {
     struct Input {
+        let leftButtonTapped: PassthroughSubject<Void, Never>
+        let rightButtonTapped: PassthroughSubject<Void, Never>
         let hintButtonTapped: PassthroughSubject<Void, Never>
     }
     
     struct Output {
+        let leftButtonAction: AnyPublisher<Void, Never>
+        let rightButtonAction: AnyPublisher<Void, Never>
         let hintButtonAction: AnyPublisher<Void, Never>
     }
     
     func transform(input: Input) -> Output {
+        let leftButtonAction = input.leftButtonTapped
+            .eraseToAnyPublisher()
+        
+        let rightButtonAction = input.rightButtonTapped
+            .eraseToAnyPublisher()
+        
         let hintButtonAction = input.hintButtonTapped
             .map { 
 //                if self.onUpdateHintButton.value == true {
@@ -29,6 +39,8 @@ final class StepTwoKoreanDiaryViewModel: DiaryViewModel {
             }
             .eraseToAnyPublisher()
         
-        return Output(hintButtonAction: hintButtonAction)
+        return Output(leftButtonAction: leftButtonAction,
+                      rightButtonAction: rightButtonAction,
+                      hintButtonAction: hintButtonAction)
     }
 }

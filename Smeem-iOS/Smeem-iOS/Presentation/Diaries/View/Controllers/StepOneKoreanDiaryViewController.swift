@@ -24,8 +24,6 @@ final class StepOneKoreanDiaryViewController: DiaryViewController<StepOneKoreanD
     
     init(viewModel: StepOneKoreanDiaryViewModel) {
         super.init(rootView: viewFactory.createStepOneKoreanDiaryView(), viewModel: viewModel)
-        
-        bind()
     }
     
     required init?(coder: NSCoder) {
@@ -35,8 +33,8 @@ final class StepOneKoreanDiaryViewController: DiaryViewController<StepOneKoreanD
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        bind()
         setNagivationBarDelegate()
-        handleInitialRandomTopicApiCall()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -50,10 +48,36 @@ final class StepOneKoreanDiaryViewController: DiaryViewController<StepOneKoreanD
 
 extension StepOneKoreanDiaryViewController {
     private func bind() {
-        let input = StepOneKoreanDiaryViewModel.Input(randomTopicButtonTapped: rootView.bottomView.randomTopicButtonTapped,
-                                         refreshButtonTapped: rootView.randomTopicView.refreshButtonTapped)
+        let input = StepOneKoreanDiaryViewModel.Input(leftButtonTapped: rootView.navigationView.leftButtonTapped,
+                                                rightButtonTapped: rootView.navigationView.rightButtonTapped,
+                                                randomTopicButtonTapped: rootView.bottomView.randomTopicButtonTapped,
+                                                refreshButtonTapped: rootView.randomTopicView.refreshButtonTapped)
         
         let output = viewModel.transform(input: input)
+        
+        output.leftButtonAction
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.rootView.removeToolTip()
+                self?.presentingViewController?.dismiss(animated: true)
+            }
+            .store(in: &cancelBag)
+        
+        output.rightButtonAction
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.rootView.inputTextView.resignFirstResponder()
+                let diaryViewControllerFactory = DiaryViewControllerFactory(diaryViewFactory: DiaryViewFactory())
+                let nextVC = diaryViewControllerFactory.makeStepTwoKoreanDiaryViewController()
+                self?.delegate = nextVC
+                
+                let inputText = self?.viewModel.inputText.value
+                
+                self?.delegate?.dataBind(topicID: self?.viewModel.getTopicID(), inputText: inputText ?? "")
+                
+                self?.navigationController?.pushViewController(nextVC, animated: true)
+            }
+            .store(in: &cancelBag)
         
         output.randomTopicButtonAction
             .receive(on: DispatchQueue.main)
@@ -87,20 +111,6 @@ extension StepOneKoreanDiaryViewController {
 extension StepOneKoreanDiaryViewController {
     private func setNagivationBarDelegate() {
         rootView.setNavigationBarDelegate(self)
-    }
-    
-    // MARK: - Action Helpers
-    
-    private func handleRightNavigationButton() {
-//        let diaryViewControllerFactory = DiaryViewControllerFactory(diaryViewFactory: DiaryViewFactory(), viewModel: DiaryViewModel(model: DiaryModel()))
-//        let nextVC = diaryViewControllerFactory.makeStepTwoKoreanDiaryViewController()
-//        delegate = nextVC
-//        
-//        let inputText = viewModel.inputText.value
-//        
-//        delegate?.dataBind(topicID: viewModel.getTopicID(), inputText: inputText ?? "")
-        
-//        self.navigationController?.pushViewController(nextVC, animated: true)
     }
 }
 

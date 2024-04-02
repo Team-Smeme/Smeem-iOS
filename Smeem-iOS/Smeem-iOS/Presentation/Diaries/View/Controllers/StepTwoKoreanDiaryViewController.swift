@@ -37,9 +37,19 @@ final class StepTwoKoreanDiaryViewController: DiaryViewController<StepTwoKoreanD
 
 extension StepTwoKoreanDiaryViewController {
     private func bind() {
-        let input = StepTwoKoreanDiaryViewModel.Input(hintButtonTapped: rootView.bottomView.hintButtonTapped)
+        let input = StepTwoKoreanDiaryViewModel.Input(leftButtonTapped: rootView.navigationView.leftButtonTapped,
+                                                      rightButtonTapped: rootView.navigationView.rightButtonTapped,
+                                                      hintButtonTapped: rootView.bottomView.hintButtonTapped)
         
         let output = viewModel.transform(input: input)
+        
+        output.leftButtonAction
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.rootView.removeToolTip()
+                self?.navigationController?.popViewController(animated: true)
+            }
+            .store(in: &cancelBag)
         
 //        output.hintButtonAction
 //            .receive(on: DispatchQueue.main)

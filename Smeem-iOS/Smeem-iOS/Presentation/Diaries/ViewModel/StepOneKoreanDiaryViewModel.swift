@@ -10,16 +10,40 @@ import Combine
 
 final class StepOneKoreanDiaryViewModel: DiaryViewModel {
     struct Input {
+        let leftButtonTapped: PassthroughSubject<Void, Never>
+        let rightButtonTapped: PassthroughSubject<Void, Never>
         let randomTopicButtonTapped: PassthroughSubject<Void, Never>
         let refreshButtonTapped: PassthroughSubject<Void, Never>
     }
     
     struct Output {
+        let leftButtonAction: AnyPublisher<Void, Never>
+        let rightButtonAction: AnyPublisher<Void, Never>
         let randomTopicButtonAction: AnyPublisher<Void, Never>
         let refreshButtonAction: AnyPublisher<Void, Never>
     }
     
     func transform(input: Input) -> Output {
+        let leftButtonAction = input.leftButtonTapped
+            .eraseToAnyPublisher()
+        
+        let rightButtonAction = input.rightButtonTapped
+            .map {
+                if self.onUpdateTextValidation.value == true {
+                    if self.isRandomTopicActive.value == false {
+                        self.updateTopicID(topicID: nil)
+                    }
+//                    inputText.value = rootView.inputTextView.text ?? ""
+//                    postDiaryAPI { postDiaryResponse in
+//                        self.handlePostDiaryResponse(postDiaryResponse)
+//                    }
+                    AmplitudeManager.shared.track(event: AmplitudeConstant.diary.diary_complete.event)
+                } else {
+//                    showRegExToast()
+                }
+            }
+            .eraseToAnyPublisher()
+        
         let randomTopicButtonAction = input.randomTopicButtonTapped
             .flatMap{ [unowned self] _ -> AnyPublisher<Void, Never> in
                 self.isRandomTopicActive.value.toggle()
@@ -41,7 +65,10 @@ final class StepOneKoreanDiaryViewModel: DiaryViewModel {
             }
             .eraseToAnyPublisher()
         
-        return Output(randomTopicButtonAction: randomTopicButtonAction, refreshButtonAction: refreshButtonAction)
+        return Output(leftButtonAction: leftButtonAction,
+                      rightButtonAction: rightButtonAction,
+                      randomTopicButtonAction: randomTopicButtonAction,
+                      refreshButtonAction: refreshButtonAction)
     }
 }
 

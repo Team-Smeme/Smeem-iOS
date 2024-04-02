@@ -71,4 +71,10 @@ final class ForeignDiaryViewModel: DiaryViewModel {
                       randomTopicButtonAction: randomTopicButtonAction,
                       refreshButtonAction: refreshButtonAction)
     }
+    
+    override init(model: DiaryModel) {
+        super.init(model: model)
+        
+        self.callRandomTopicAPI()
+    }
 }
