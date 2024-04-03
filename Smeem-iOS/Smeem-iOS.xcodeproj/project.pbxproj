@@ -113,6 +113,8 @@
 		4A9731D92BAAB70500DEC0C8 /* UpdateResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9731D82BAAB70500DEC0C8 /* UpdateResponse.swift */; };
 		4A9731DD2BAAC79800DEC0C8 /* SplashViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9731DC2BAAC79800DEC0C8 /* SplashViewModelTest.swift */; };
 		4A9731DF2BAAC7F300DEC0C8 /* SplashServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9731DE2BAAC7F300DEC0C8 /* SplashServiceMock.swift */; };
+		4A9731E12BB4179F00DEC0C8 /* UIImageView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9731E02BB4179F00DEC0C8 /* UIImageView+.swift */; };
+		4A9731E32BB4182400DEC0C8 /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9731E22BB4182400DEC0C8 /* ImageCacheManager.swift */; };
 		4A9E10E42A43468600295D07 /* BaseTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9E10E32A43468600295D07 /* BaseTargetType.swift */; };
 		4A9FAB452A4C3D1200C40D5A /* BadgeListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9FAB3E2A4C3D1200C40D5A /* BadgeListViewController.swift */; };
 		4A9FAB462A4C3D1200C40D5A /* BadgeNetworkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9FAB402A4C3D1200C40D5A /* BadgeNetworkModel.swift */; };
@@ -309,6 +311,8 @@
 		4A9731D82BAAB70500DEC0C8 /* UpdateResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateResponse.swift; sourceTree = "<group>"; };
 		4A9731DC2BAAC79800DEC0C8 /* SplashViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewModelTest.swift; sourceTree = "<group>"; };
 		4A9731DE2BAAC7F300DEC0C8 /* SplashServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashServiceMock.swift; sourceTree = "<group>"; };
+		4A9731E02BB4179F00DEC0C8 /* UIImageView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+.swift"; sourceTree = "<group>"; };
+		4A9731E22BB4182400DEC0C8 /* ImageCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheManager.swift; sourceTree = "<group>"; };
 		4A9E10E32A43468600295D07 /* BaseTargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTargetType.swift; sourceTree = "<group>"; };
 		4A9FAB3E2A4C3D1200C40D5A /* BadgeListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeListViewController.swift; sourceTree = "<group>"; };
 		4A9FAB402A4C3D1200C40D5A /* BadgeNetworkModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeNetworkModel.swift; sourceTree = "<group>"; };
@@ -514,6 +518,7 @@
 				4AC00ECB2AD1C143009230DA /* UICollectionView+.swift */,
 				4A4FEB002B721956001BBDF3 /* Combine+.swift */,
 				4AB7C9182B75F9B500845733 /* GesturePublisher+.swift */,
+				4A9731E02BB4179F00DEC0C8 /* UIImageView+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1235,6 +1240,7 @@
 				4AC4B82C2A2F9FE200E147AA /* UserDefaultsManager.swift */,
 				4A10A3A72AB8AA5800C145E9 /* System.swift */,
 				4A08480D2B555FD0008327C7 /* AmplitudeConstant.swift */,
+				4A9731E22BB4182400DEC0C8 /* ImageCacheManager.swift */,
 			);
 			path = Constants;
 			sourceTree = "<group>";
@@ -1705,6 +1711,7 @@
 				371107E92ACC7E3A007A4AC2 /* DiaryLayoutConfigurations.swift in Sources */,
 				4AB7C9322B78B45300845733 /* LoginViewModel.swift in Sources */,
 				37A574CA29FF980F00312453 /* UIStackView+.swift in Sources */,
+				4A9731E12BB4179F00DEC0C8 /* UIImageView+.swift in Sources */,
 				6F294A422A26178C00856CC8 /* UserNickNameViewController.swift in Sources */,
 				4AC047252A8FCAE100EBDC0E /* AuthManagementViewController.swift in Sources */,
 				374FAF812A2CACCF00237A1A /* DiaryViewController.swift in Sources */,
@@ -1714,6 +1721,7 @@
 				4A59EBA02B9367C2004D9823 /* BadgePopupViewModel.swift in Sources */,
 				4A004D542B4EE26E003C8936 /* AuthAPI.swift in Sources */,
 				4A81C2972ACDAB2C0056E815 /* TrainingGoalsCollectionView.swift in Sources */,
+				4A9731E32BB4182400DEC0C8 /* ImageCacheManager.swift in Sources */,
 				371107E52ACBEA69007A4AC2 /* DiaryViewFactory.swift in Sources */,
 				6F294A442A26179900856CC8 /* ServiceAcceptCollectionViewCell.swift in Sources */,
 				4A9FAB462A4C3D1200C40D5A /* BadgeNetworkModel.swift in Sources */,

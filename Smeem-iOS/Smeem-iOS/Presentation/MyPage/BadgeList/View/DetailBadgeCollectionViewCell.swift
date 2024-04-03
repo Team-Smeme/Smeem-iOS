@@ -40,7 +40,14 @@ final class DetailBadgeCollectionViewCell: UICollectionViewCell {
     
     func setBadgeData(data: (name: String, image: String)) {
         let url = URL(string: data.image)
-        badgeImage.kf.setImage(with: url)
+        Task {
+            do {
+                try await badgeImage.loadImage(data.image)
+            } catch let error {
+                print("안녕!!!", error.localizedDescription)
+            }
+        }
+//        badgeImage.kf.setImage(with: url)
         badgeNameLabel.text = data.name
     }
     // MARK: - Layout
