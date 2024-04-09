@@ -18,6 +18,7 @@ struct KeyboardInfo {
 class DiaryViewModel: ViewModel {
     struct Input {
         var textDidChangeSubject: PassthroughSubject<String, Never>
+        var viewTypeSubject: CurrentValueSubject<DiaryViewType?, Never>
     }
     
     struct Output {
@@ -25,21 +26,19 @@ class DiaryViewModel: ViewModel {
     }
     
     private (set) var model: DiaryModel
-    private var cancelBag = Set<AnyCancellable>()
-    
-    private (set) var viewTypeSubject = CurrentValueSubject<DiaryViewType, Never>(.stepOneKorean)
     
     private var textValidationState = PassthroughSubject<Bool, Never>()
+    private var cancelBag = Set<AnyCancellable>()
     
     private (set) var isRandomTopicActive = CurrentValueSubject<Bool, Never>(false)
     private (set) var topicContentSubject = CurrentValueSubject<String, Never>("")
-    private (set) var onUpdateTextValidation: Observable<Bool> = Observable(false)
-    private (set) var inputText: Observable<String> = Observable("")
     private (set) var keyboardInfo: Observable<KeyboardInfo?> = Observable(nil)
     private (set) var toastType: Observable<ToastViewType?> = Observable(nil)
-//    private (set) var onUpdateTopicID: Observable<Int> = Observable(0)
     
-    var onUpdateTopicID: ((String) -> Void)?
+    // TODO: 꼭 필요한가?
+//    private var toastMessageFlag: Bool = false
+//    private var badgePopupData: [PopupBadge] = []
+    
     var onError: ((Error) -> Void)?
     
     init(model: DiaryModel) {
@@ -49,12 +48,12 @@ class DiaryViewModel: ViewModel {
     func transform(input: Input) -> Output {
         input.textDidChangeSubject
             .sink { [weak self] text in
-                guard let viewType = self?.viewTypeSubject.value else {
-                    return
-                }
-                let isValid = self?.validateText(with: text, viewType: viewType) ?? false
+                guard let viewType = input.viewTypeSubject.value,
+                      let isValid = self?.validateText(with: text, viewType: viewType)
+                else { return }
                 
                 self?.textValidationState.send(isValid)
+                self?.topicContentSubject.send(text)
             }
             .store(in: &cancelBag)
         
@@ -67,17 +66,9 @@ class DiaryViewModel: ViewModel {
 // MARK: - Extensions
 
 extension DiaryViewModel {
-    func updateTextValidation(_ isValid: Bool) {
-        onUpdateTextValidation.value = isValid
-    }
-    
     func toggleRandomTopic() {
         isRandomTopicActive.value = !isRandomTopicActive.value
     }
-    
-//    func toggleIsHintShowed() {
-//        onUpdateHintButton.value = !onUpdateHintButton.value
-//    }
     
     func getTopicID() -> Int? {
         return model.topicID ?? nil
@@ -91,9 +82,14 @@ extension DiaryViewModel {
         toastType.value = type
     }
     
-    func updateModel(isTopicCalled: Bool, topicContent: String?) {
+    func updateTopicStatus(isTopicCalled: Bool, topicContent: String?) {
         model.isTopicCalled = isTopicCalled
         model.topicContent = topicContent
+    }
+    
+    func updateDiaryInfo(diaryID: Int, badgePopupContent: [PopupBadge]) {
+        model.diaryID = diaryID
+        model.badgePopupContent = badgePopupContent
     }
     
     func updateTopicID(topicID: Int?) {
@@ -142,30 +138,12 @@ extension DiaryViewModel {
             
             switch result {
             case .success(let response):
-                
                 self?.model.topicID = response.topicId
                 self?.model.topicContent = response.content
                 self?.topicContentSubject.value = response.content
-            case .failure(let error):
-                self?.onError?(error)
-            }
-        }
-    }
-    
-    func postDiaryAPI(completion: @escaping(PostDiaryResponse?) -> Void) {
-        
-        let inputText = inputText.value
-        
-        PostDiaryAPI.shared.postDiary(param: PostDiaryRequest(content: inputText, topicId: getTopicID())) { result in
-            
-            switch result {
-            case .success(let response):
-                self.model.diaryID = response.diaryID
-                self.model.badgePopupContent = response.badges
-                completion(response)
                 
             case .failure(let error):
-                self.onError?(error)
+                self?.onError?(error)
             }
         }
     }

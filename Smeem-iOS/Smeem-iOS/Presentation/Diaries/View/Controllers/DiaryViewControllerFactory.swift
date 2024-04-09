@@ -11,7 +11,7 @@ import UIKit
 
 final class DiaryViewControllerFactory {
     
-    let diaryViewFactory: DiaryViewFactory
+    private let diaryViewFactory: DiaryViewFactory
     
     init(diaryViewFactory: DiaryViewFactory) {
         self.diaryViewFactory = diaryViewFactory

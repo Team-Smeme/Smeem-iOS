@@ -20,7 +20,7 @@ protocol ToolTipDelegate: AnyObject {
 
 final class DiaryView: BaseView {
     
-    private (set) var viewTypeSubject = PassthroughSubject<DiaryViewType, Never>()
+    private (set) var viewTypeSubject = CurrentValueSubject<DiaryViewType?, Never>(.none)
     
     // MARK: - Properties
     

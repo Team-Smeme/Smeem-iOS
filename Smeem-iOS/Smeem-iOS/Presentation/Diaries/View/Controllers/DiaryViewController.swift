@@ -19,6 +19,7 @@ class DiaryViewController<ViewModelType: DiaryViewModel>: BaseViewController {
     
     private var keyboardHandler: KeyboardLayoutAndScrollingHandler?
     
+    private (set) var amplitudeSubject = PassthroughSubject<Void, Never>()
     private var cancelBag = Set<AnyCancellable>()
     
     // MARK: - Life Cycle
@@ -53,6 +54,7 @@ class DiaryViewController<ViewModelType: DiaryViewModel>: BaseViewController {
         super.viewDidAppear(animated)
         
         showKeyboard(textView: rootView.inputTextView)
+        amplitudeSubject.send()
     }
     
     deinit {
@@ -66,7 +68,8 @@ extension DiaryViewController {
     
     private func bind() {
         // TODO: 강제 언래핑(근데 사용해도 되지 않을까)
-        let input = DiaryViewModel.Input(textDidChangeSubject: rootView.inputTextView.textViewHandler!.textDidChangeSubject)
+        let input = DiaryViewModel.Input(textDidChangeSubject: rootView.inputTextView.textViewHandler!.textDidChangeSubject,
+                                         viewTypeSubject: rootView.viewTypeSubject)
         let output = viewModel.transform(input: input)
         
         output.textValidationAction
@@ -84,17 +87,10 @@ extension DiaryViewController {
     }
     
     private func setupSubscriptions() {
-        //        bindTextValidationStatus()
         //        bindToastVisibility()
     }
     
     // MARK: - Setups
-    
-    private func bindTextValidationStatus() {
-        viewModel.onUpdateTextValidation.bind(listener: { [weak self] isValid in
-            self?.rootView.navigationView.updateRightButton(isValid: isValid)
-        })
-    }
     
     //    private func bindToastVisibility() {
     //        viewModel.toastType.bind(listener: { [weak self] toastType in
@@ -103,13 +99,6 @@ extension DiaryViewController {
     //            }
     //        })
     //    }
-    
-    private func bindTopicID() {
-        print("bindTopicID")
-        //        viewModel.onUpdateTopicID.bind(listener: { [weak self] id in
-        //            self?.viewModel.onUpdateTopicID(id)
-        //        })
-    }
     
     private func setupKeyboardHandler() {
         keyboardHandler = KeyboardLayoutAndScrollingHandler(targetView: rootView.inputTextView, bottomView: rootView.bottomView)
@@ -124,22 +113,6 @@ extension DiaryViewController {
             UserDefaultsManager.randomTopicToolTip = true
             rootView.removeToolTip()
         }
-    }
-}
-
-// MARK: - SmeemTextViewHandlerDelegate
-
-extension DiaryViewController: SmeemTextViewHandlerDelegate {
-    func textViewDidChange(text: String, viewType: DiaryViewType) {
-        print("textViewDidChange")
-        let isValid = viewModel.validateText(with: text, viewType: viewType)
-        viewModel.updateTextValidation(isValid)
-        viewModel.inputText.value = text
-    }
-    
-    func onUpdateTopicID(_ id: String) {
-        print("onUpdateTopicID")
-        //        viewModel.onUpdateTopicID?(id)
     }
 }
 
@@ -158,9 +131,6 @@ extension DiaryViewController {
     func handlePostDiaryResponse(_ response: PostDiaryResponse?) {
         DispatchQueue.main.async {
             let homeVC = HomeViewController()
-            homeVC.toastMessageFlag = true
-            homeVC.badgePopupData = response?.badges ?? []
-            
             let rootVC = UINavigationController(rootViewController: homeVC)
             homeVC.changeRootViewControllerAndPresent(rootVC)
         }

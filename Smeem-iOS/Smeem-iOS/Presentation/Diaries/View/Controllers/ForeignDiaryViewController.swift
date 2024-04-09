@@ -18,7 +18,7 @@ final class ForeignDiaryViewController: DiaryViewController<ForeignDiaryViewMode
     // MARK: - Life Cycle
     
     init(viewModel:ForeignDiaryViewModel) {
-        super.init(rootView: viewFactory.createStepOneKoreanDiaryView(), viewModel:viewModel )
+        super.init(rootView: viewFactory.createForeginDiaryView(), viewModel:viewModel )
     }
     
     required init?(coder: NSCoder) {
@@ -45,7 +45,8 @@ extension ForeignDiaryViewController {
         let input = ForeignDiaryViewModel.Input(leftButtonTapped: rootView.navigationView.leftButtonTapped,
                                                 rightButtonTapped: rootView.navigationView.rightButtonTapped,
                                                 randomTopicButtonTapped: rootView.bottomView.randomTopicButtonTapped,
-                                                refreshButtonTapped: rootView.randomTopicView.refreshButtonTapped)
+                                                refreshButtonTapped: rootView.randomTopicView.refreshButtonTapped, 
+                                                amplitudeSubject: self.amplitudeSubject)
         
         let output = viewModel.transform(input: input)
         
@@ -61,6 +62,12 @@ extension ForeignDiaryViewController {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in
                 self?.rootView.inputTextView.resignFirstResponder()
+                
+                let homeVC = HomeViewController()
+                let rootVC = UINavigationController(rootViewController: homeVC)
+                
+                homeVC.handlePostDiaryAPI(with: )
+                homeVC.changeRootViewControllerAndPresent(rootVC)
             }
             .store(in: &cancelBag)
         
@@ -87,25 +94,5 @@ extension ForeignDiaryViewController {
                 self?.rootView.randomTopicView.updateText(with: content ?? "")
             }
             .store(in: &cancelBag)
-    }
-}
-
-// MARK: - NavigationBarActionDelegate
-
-extension ForeignDiaryViewController {
-    func didTapRightButton() {
-        //        if viewModel.onUpdateTextValidation.value == true {
-        //            if viewModel.isRandomTopicActive.value == false {
-        //                viewModel.updateTopicID(topicID: nil)
-        //            }
-        //            viewModel.inputText.value = rootView.inputTextView.text ?? ""
-        //            rootView.inputTextView.resignFirstResponder()
-        //            viewModel.postDiaryAPI { postDiaryResponse in
-        //                self.handlePostDiaryResponse(postDiaryResponse)
-        //            }
-        //            AmplitudeManager.shared.track(event: AmplitudeConstant.diary.diary_complete.event)
-        //        } else {
-        //            viewModel.showRegExToast()
-        //        }
     }
 }
