@@ -27,8 +27,11 @@ final class StepTwoKoreanDiaryViewModel: DiaryViewModel {
     }
     
     private (set) var diaryPostedSubject = CurrentValueSubject<PostDiaryResponse?, Never>(nil)
+    private let amplitudeSubject = PassthroughSubject<Void, Never>()
     private let loadingViewResult = PassthroughSubject<Bool, Never>()
     private let errorResult = PassthroughSubject<SmeemError, Never>()
+    
+    private var cancelBag = Set<AnyCancellable>()
     
     func transform(input: Input) -> Output {
         input.hintTextsubject
@@ -60,6 +63,7 @@ final class StepTwoKoreanDiaryViewModel: DiaryViewModel {
                             self?.updateDiaryInfo(diaryID: response.diaryID, badgePopupContent: response.badges)
                             self?.diaryPostedSubject.send(response)
                             promise(.success(()))
+                            self?.amplitudeSubject.send()
                         case .failure(let error):
                             self?.errorResult.send(error)
                         }
