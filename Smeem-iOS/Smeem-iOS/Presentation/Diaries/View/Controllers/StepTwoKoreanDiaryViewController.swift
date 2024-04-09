@@ -60,16 +60,11 @@ extension StepTwoKoreanDiaryViewController {
         output.rightButtonAction
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in
-//                if viewModel.onUpdateTextValidation.value == true {
-//                    // TODO: 다듬읍시다..
-//                    rootView.inputTextView.resignFirstResponder()
-//                    viewModel.postDiaryAPI { postDiaryResponse in
-//                        self?.handlePostDiaryResponse(postDiaryResponse)
-//                    }
-//                    AmplitudeManager.shared.track(event: AmplitudeConstant.diary.sec_step_complete.event)
-//                } else {
-//                    viewModel.showRegExToast()
-//                }
+                self?.rootView.inputTextView.resignFirstResponder()
+                
+                let homeVC = HomeViewController()
+                let rootVC = UINavigationController(rootViewController: homeVC)
+                homeVC.changeRootViewControllerAndPresent(rootVC)
             }
             .store(in: &cancelBag)
         
