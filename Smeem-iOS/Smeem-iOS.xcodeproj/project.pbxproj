@@ -55,6 +55,7 @@
 		37A574E82A02424F00312453 /* RandomTopicView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574E72A02424F00312453 /* RandomTopicView.swift */; };
 		37ADCC022B0289AD00E474AA /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ADCC012B0289AD00E474AA /* Observable.swift */; };
 		37B360AA2AC2A4680006C8ED /* SmeemTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B360A92AC2A4680006C8ED /* SmeemTextView.swift */; };
+		37BCADF22BC3FFBF006EF960 /* DetailDiaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BCADF12BC3FFBF006EF960 /* DetailDiaryViewModel.swift */; };
 		37DCA6572A47574300FF8F90 /* RandomTopicAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DCA6562A47574300FF8F90 /* RandomTopicAPI.swift */; };
 		37DCA65A2A47598700FF8F90 /* RandomTopicService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DCA6592A47598700FF8F90 /* RandomTopicService.swift */; };
 		37DCA65D2A475B5100FF8F90 /* RandomTopicResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DCA65C2A475B5100FF8F90 /* RandomTopicResponse.swift */; };
@@ -224,6 +225,7 @@
 		37A574E72A02424F00312453 /* RandomTopicView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomTopicView.swift; sourceTree = "<group>"; };
 		37ADCC012B0289AD00E474AA /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		37B360A92AC2A4680006C8ED /* SmeemTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmeemTextView.swift; sourceTree = "<group>"; };
+		37BCADF12BC3FFBF006EF960 /* DetailDiaryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailDiaryViewModel.swift; sourceTree = "<group>"; };
 		37DCA6562A47574300FF8F90 /* RandomTopicAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomTopicAPI.swift; sourceTree = "<group>"; };
 		37DCA6592A47598700FF8F90 /* RandomTopicService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomTopicService.swift; sourceTree = "<group>"; };
 		37DCA65C2A475B5100FF8F90 /* RandomTopicResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomTopicResponse.swift; sourceTree = "<group>"; };
@@ -608,6 +610,7 @@
 			isa = PBXGroup;
 			children = (
 				37DCA65F2A48033400FF8F90 /* DetailDiaryViewController.swift */,
+				37BCADF12BC3FFBF006EF960 /* DetailDiaryViewModel.swift */,
 			);
 			path = DetailDiary;
 			sourceTree = "<group>";
@@ -1567,6 +1570,7 @@
 				37A574E62A02178D00312453 /* SmeemToastView.swift in Sources */,
 				4AC707BB2B74DE3E00B1D791 /* ServiceAcceptCollectionView.swift in Sources */,
 				4A4FEB012B721956001BBDF3 /* Combine+.swift in Sources */,
+				37BCADF22BC3FFBF006EF960 /* DetailDiaryViewModel.swift in Sources */,
 				374F828C2AC327A200C128B9 /* SmeemTextViewHandler.swift in Sources */,
 				4A8FFA5229C9E1FD00FB76C0 /* SceneDelegate.swift in Sources */,
 				37ADCC022B0289AD00E474AA /* Observable.swift in Sources */,
