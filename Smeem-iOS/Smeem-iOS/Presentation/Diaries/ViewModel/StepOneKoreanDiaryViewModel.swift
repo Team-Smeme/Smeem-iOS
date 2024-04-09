@@ -21,7 +21,15 @@ final class StepOneKoreanDiaryViewModel: DiaryViewModel {
         let rightButtonAction: AnyPublisher<Void, Never>
         let randomTopicButtonAction: AnyPublisher<Void, Never>
         let refreshButtonAction: AnyPublisher<Void, Never>
+        let loadingViewResult: AnyPublisher<Bool, Never>
+        let errorResult: AnyPublisher<SmeemError, Never>
     }
+    
+    private let amplitudeSubject = PassthroughSubject<Void, Never>()
+    private let loadingViewResult = PassthroughSubject<Bool, Never>()
+    private let errorResult = PassthroughSubject<SmeemError, Never>()
+    
+    private var cancelBag = Set<AnyCancellable>()
     
     func transform(input: Input) -> Output {
         let leftButtonAction = input.leftButtonTapped
@@ -36,10 +44,8 @@ final class StepOneKoreanDiaryViewModel: DiaryViewModel {
                 guard let inputText = self?.getDiaryText() else { return }
                 
                 self?.diaryTextSubject.send(inputText)
+                self?.amplitudeSubject.send()
             })
-//            .flatMap { [weak self] _ -> AnyPublisher<Void, Never> in
-//                AmplitudeManager.shared.track(event: AmplitudeConstant.diary.diary_complete.event)
-//            }
             .eraseToAnyPublisher()
         
         let randomTopicButtonAction = input.randomTopicButtonTapped
@@ -63,10 +69,21 @@ final class StepOneKoreanDiaryViewModel: DiaryViewModel {
             }
             .eraseToAnyPublisher()
         
+        amplitudeSubject
+            .sink { _ in
+                AmplitudeManager.shared.track(event: AmplitudeConstant.diary.first_step_complete.event)
+            }
+            .store(in: &cancelBag)
+        
+        let loadingViewResult = loadingViewResult.eraseToAnyPublisher()
+        let errorResult = errorResult.eraseToAnyPublisher()
+        
         return Output(leftButtonAction: leftButtonAction,
                       rightButtonAction: rightButtonAction,
                       randomTopicButtonAction: randomTopicButtonAction,
-                      refreshButtonAction: refreshButtonAction)
+                      refreshButtonAction: refreshButtonAction,
+                      loadingViewResult: loadingViewResult,
+                      errorResult: errorResult)
     }
 }
 

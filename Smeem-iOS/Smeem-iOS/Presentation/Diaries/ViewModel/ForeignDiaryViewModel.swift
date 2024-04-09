@@ -14,7 +14,6 @@ final class ForeignDiaryViewModel: DiaryViewModel {
         let rightButtonTapped: PassthroughSubject<Void, Never>
         let randomTopicButtonTapped: PassthroughSubject<Void, Never>
         let refreshButtonTapped: PassthroughSubject<Void, Never>
-        let amplitudeSubject: PassthroughSubject<Void, Never>
     }
     
     struct Output {
@@ -22,29 +21,24 @@ final class ForeignDiaryViewModel: DiaryViewModel {
         let rightButtonAction: AnyPublisher<Void, Never>
         let randomTopicButtonAction: AnyPublisher<Void, Never>
         let refreshButtonAction: AnyPublisher<Void, Never>
+        let loadingViewResult: AnyPublisher<Bool, Never>
         let errorResult: AnyPublisher<SmeemError, Never>
-        let loadingViewAction: AnyPublisher<Bool, Never>
     }
     
     private (set) var diaryPostedSubject = CurrentValueSubject<PostDiaryResponse?, Never>(nil)
-    private let loadingViewAction = PassthroughSubject<Bool, Never>()
+    private let amplitudeSubject = PassthroughSubject<Void, Never>()
+    private let loadingViewResult = PassthroughSubject<Bool, Never>()
     private let errorResult = PassthroughSubject<SmeemError, Never>()
     
     private var cancelBag = Set<AnyCancellable>()
     
     func transform(input: Input) -> Output {
-        input.amplitudeSubject
-            .sink { _ in
-                AmplitudeManager.shared.track(event: AmplitudeConstant.diary.diary_complete.event)
-            }
-            .store(in: &cancelBag)
-        
         let leftButtonAction = input.leftButtonTapped
             .eraseToAnyPublisher()
         
         let rightButtonAction = input.rightButtonTapped
             .handleEvents(receiveSubscription: { [weak self] _ in
-                self?.loadingViewAction.send(true)
+                self?.loadingViewResult.send(true)
             })
             .flatMap { [weak self] _ -> AnyPublisher<Void, Never> in
                 if self?.isRandomTopicActive.value == false {
@@ -61,6 +55,7 @@ final class ForeignDiaryViewModel: DiaryViewModel {
                         case .success(let response):
                             self?.updateDiaryInfo(diaryID: response.diaryID, badgePopupContent: response.badges)
                             self?.diaryPostedSubject.send(response)
+                            self?.amplitudeSubject.send()
                             promise(.success(()))
                         case .failure(let error):
                             self?.errorResult.send(error)
@@ -68,7 +63,7 @@ final class ForeignDiaryViewModel: DiaryViewModel {
                     }
                 }
                 .handleEvents(receiveCompletion: { [weak self] _ in
-                    self?.loadingViewAction.send(false)
+                    self?.loadingViewResult.send(false)
                 })
                 .eraseToAnyPublisher()
             }
@@ -95,15 +90,21 @@ final class ForeignDiaryViewModel: DiaryViewModel {
             }
             .eraseToAnyPublisher()
         
+        amplitudeSubject
+            .sink { _ in
+                AmplitudeManager.shared.track(event: AmplitudeConstant.diary.diary_complete.event)
+            }
+            .store(in: &cancelBag)
+        
+        let loadingViewResult = loadingViewResult.eraseToAnyPublisher()
         let errorResult = errorResult.eraseToAnyPublisher()
-        let loadingViewAction = loadingViewAction.eraseToAnyPublisher()
         
         return Output(leftButtonAction: leftButtonAction,
                       rightButtonAction: rightButtonAction,
                       randomTopicButtonAction: randomTopicButtonAction,
                       refreshButtonAction: refreshButtonAction,
-                      errorResult: errorResult,
-                      loadingViewAction: loadingViewAction)
+                      loadingViewResult: loadingViewResult,
+                      errorResult: errorResult)
     }
     
     override init(model: DiaryModel) {
