@@ -67,7 +67,7 @@ class DiaryViewController<ViewModelType: DiaryViewModel>: BaseViewController {
 extension DiaryViewController {
     
     private func bind() {
-        // TODO: 강제 언래핑(근데 사용해도 되지 않을까)
+        // TODO: 강제 언래핑?
         let input = DiaryViewModel.Input(textDidChangeSubject: rootView.inputTextView.textViewHandler!.textDidChangeSubject,
                                          viewTypeSubject: rootView.viewTypeSubject)
         let output = viewModel.transform(input: input)

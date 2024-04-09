@@ -65,8 +65,6 @@ extension ForeignDiaryViewController {
                 
                 let homeVC = HomeViewController()
                 let rootVC = UINavigationController(rootViewController: homeVC)
-                
-                homeVC.handlePostDiaryAPI(with: )
                 homeVC.changeRootViewControllerAndPresent(rootVC)
             }
             .store(in: &cancelBag)
@@ -89,9 +87,9 @@ extension ForeignDiaryViewController {
         output.refreshButtonAction
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in
-                let content = self?.viewModel.topicContentSubject.value
+                guard let content = self?.viewModel.topicContentSubject.value else { return }
                 
-                self?.rootView.randomTopicView.updateText(with: content ?? "")
+                self?.rootView.randomTopicView.updateText(with: content)
             }
             .store(in: &cancelBag)
     }

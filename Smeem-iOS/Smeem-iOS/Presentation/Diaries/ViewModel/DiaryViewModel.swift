@@ -17,7 +17,7 @@ struct KeyboardInfo {
 
 class DiaryViewModel: ViewModel {
     struct Input {
-        var textDidChangeSubject: PassthroughSubject<String, Never>
+        var textDidChangeSubject: CurrentValueSubject<String?, Never>
         var viewTypeSubject: CurrentValueSubject<DiaryViewType?, Never>
     }
     
@@ -31,13 +31,15 @@ class DiaryViewModel: ViewModel {
     private var cancelBag = Set<AnyCancellable>()
     
     private (set) var isRandomTopicActive = CurrentValueSubject<Bool, Never>(false)
-    private (set) var topicContentSubject = CurrentValueSubject<String, Never>("")
+    private (set) var diaryTextSubject = CurrentValueSubject<String?, Never>(nil)
+    private (set) var topicContentSubject = CurrentValueSubject<String?, Never>(nil)
     private (set) var keyboardInfo: Observable<KeyboardInfo?> = Observable(nil)
     private (set) var toastType: Observable<ToastViewType?> = Observable(nil)
     
     // TODO: 꼭 필요한가?
 //    private var toastMessageFlag: Bool = false
-//    private var badgePopupData: [PopupBadge] = []
+    
+    private var diaryText: String? = nil
     
     var onError: ((Error) -> Void)?
     
@@ -49,11 +51,12 @@ class DiaryViewModel: ViewModel {
         input.textDidChangeSubject
             .sink { [weak self] text in
                 guard let viewType = input.viewTypeSubject.value,
-                      let isValid = self?.validateText(with: text, viewType: viewType)
+                      let isValid = self?.validateText(with: text ?? "", viewType: viewType)
                 else { return }
                 
                 self?.textValidationState.send(isValid)
-                self?.topicContentSubject.send(text)
+                self?.diaryTextSubject.send(text)
+                self?.diaryText = text
             }
             .store(in: &cancelBag)
         
@@ -96,8 +99,8 @@ extension DiaryViewModel {
         model.topicID = topicID
     }
     
-    func updateHintText(hintText: String) {
-        model.hintText = hintText
+    func getDiaryText() -> String? {
+        return diaryText
     }
 }
 

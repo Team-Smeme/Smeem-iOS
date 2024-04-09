@@ -30,7 +30,7 @@ final class SmeemTextViewHandler: NSObject {
     
     weak var placeholderDelegate: PlaceholderDelegate?
     weak var textViewHandlerDelegate: SmeemTextViewHandlerDelegate?
-    private (set) var textDidChangeSubject = PassthroughSubject<String, Never>()
+    private (set) var textDidChangeSubject = CurrentValueSubject<String?, Never>(nil)
     
     var viewType: DiaryViewType?
 }

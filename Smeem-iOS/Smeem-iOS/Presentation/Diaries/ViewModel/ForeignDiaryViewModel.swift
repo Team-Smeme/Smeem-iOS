@@ -26,10 +26,7 @@ final class ForeignDiaryViewModel: DiaryViewModel {
         let loadingViewAction: AnyPublisher<Bool, Never>
     }
     
-    private let postDiaryResponseSubject = PassthroughSubject<PostDiaryResponse?, Never>()
-    private var postDiaryResponsePublisher: AnyPublisher<PostDiaryResponse?, Never> {
-        postDiaryResponseSubject.eraseToAnyPublisher()
-    }
+    private (set) var diaryPostedSubject = CurrentValueSubject<PostDiaryResponse?, Never>(nil)
     private let loadingViewAction = PassthroughSubject<Bool, Never>()
     private let errorResult = PassthroughSubject<SmeemError, Never>()
     
@@ -55,7 +52,7 @@ final class ForeignDiaryViewModel: DiaryViewModel {
                 }
                 
                 return Future<Void, Never> { promise in
-                    guard let inputText = self?.topicContentSubject.value else {
+                    guard let inputText = self?.getDiaryText() else {
                         promise(.success(()))
                         return
                     }
@@ -64,7 +61,7 @@ final class ForeignDiaryViewModel: DiaryViewModel {
                         switch result {
                         case .success(let response):
                             self?.updateDiaryInfo(diaryID: response.diaryID, badgePopupContent: response.badges)
-                            self?.postDiaryResponseSubject.send(response)
+                            self?.diaryPostedSubject.send(response)
                             promise(.success(()))
                         case .failure(let error):
                             self?.errorResult.send(error)
@@ -99,7 +96,6 @@ final class ForeignDiaryViewModel: DiaryViewModel {
             }
             .eraseToAnyPublisher()
         
-        let postDiaryResponseResult = postDiaryResponseSubject.eraseToAnyPublisher()
         let errorResult = errorResult.eraseToAnyPublisher()
         let loadingViewAction = loadingViewAction.eraseToAnyPublisher()
         
