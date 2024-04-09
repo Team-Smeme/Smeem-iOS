@@ -53,7 +53,6 @@ final class ForeignDiaryViewModel: DiaryViewModel {
                 
                 return Future<Void, Never> { promise in
                     guard let inputText = self?.getDiaryText() else {
-                        promise(.success(()))
                         return
                     }
                     

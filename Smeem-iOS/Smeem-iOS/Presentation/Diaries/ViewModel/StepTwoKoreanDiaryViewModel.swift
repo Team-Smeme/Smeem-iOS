@@ -13,12 +13,14 @@ final class StepTwoKoreanDiaryViewModel: DiaryViewModel {
         let leftButtonTapped: PassthroughSubject<Void, Never>
         let rightButtonTapped: PassthroughSubject<Void, Never>
         let hintButtonTapped: PassthroughSubject<Void, Never>
+        let hintTextsubject: PassthroughSubject<String, Never>
     }
     
     struct Output {
         let leftButtonAction: AnyPublisher<Void, Never>
         let rightButtonAction: AnyPublisher<Void, Never>
         let hintButtonAction: AnyPublisher<Void, Never>
+        let koreanDiaryResult: AnyPublisher<String?, Never>
     }
     
     func transform(input: Input) -> Output {
@@ -29,18 +31,17 @@ final class StepTwoKoreanDiaryViewModel: DiaryViewModel {
             .eraseToAnyPublisher()
         
         let hintButtonAction = input.hintButtonTapped
-            .map { 
-//                if self.onUpdateHintButton.value == true {
-////                    self.postDeepLApi(diaryText: rootView.configuration.layoutConfig?.getHintViewText() ?? "")
-//                } else {
-////                    rootView.configuration.layoutConfig?.hintTextView.text = viewModel.model.hintText
-//                }
-//                //                AmplitudeManager.shared.track(event: AmplitudeConstant.diary.hint_click.event)
+            .map { [weak self] _ in
+//                self?.postDeepLApi(diaryText: )
+//                                AmplitudeManager.shared.track(event: AmplitudeConstant.diary.hint_click.event)
             }
             .eraseToAnyPublisher()
         
+        let koreanDiaryResult = diaryTextSubject.eraseToAnyPublisher()
+        
         return Output(leftButtonAction: leftButtonAction,
                       rightButtonAction: rightButtonAction,
-                      hintButtonAction: hintButtonAction)
+                      hintButtonAction: hintButtonAction, 
+                      koreanDiaryResult: koreanDiaryResult)
     }
 }

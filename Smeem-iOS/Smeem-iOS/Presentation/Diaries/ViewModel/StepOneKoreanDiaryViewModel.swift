@@ -28,20 +28,18 @@ final class StepOneKoreanDiaryViewModel: DiaryViewModel {
             .eraseToAnyPublisher()
         
         let rightButtonAction = input.rightButtonTapped
-            .map {
-                if self.onUpdateTextValidation.value == true {
-                    if self.isRandomTopicActive.value == false {
-                        self.updateTopicID(topicID: nil)
-                    }
-//                    inputText.value = rootView.inputTextView.text ?? ""
-//                    postDiaryAPI { postDiaryResponse in
-//                        self.handlePostDiaryResponse(postDiaryResponse)
-//                    }
-                    AmplitudeManager.shared.track(event: AmplitudeConstant.diary.diary_complete.event)
-                } else {
-//                    showRegExToast()
+            .handleEvents(receiveOutput: { [weak self] _ in
+                if self?.isRandomTopicActive.value == false {
+                    self?.updateTopicID(topicID: nil)
                 }
-            }
+                
+                guard let inputText = self?.getDiaryText() else { return }
+                
+                self?.diaryTextSubject.send(inputText)
+            })
+//            .flatMap { [weak self] _ -> AnyPublisher<Void, Never> in
+//                AmplitudeManager.shared.track(event: AmplitudeConstant.diary.diary_complete.event)
+//            }
             .eraseToAnyPublisher()
         
         let randomTopicButtonAction = input.randomTopicButtonTapped
@@ -53,7 +51,7 @@ final class StepOneKoreanDiaryViewModel: DiaryViewModel {
                         self.callRandomTopicAPI()
                     }
                 } else {
-                    self.updateModel(isTopicCalled: false, topicContent: nil)
+                    self.updateTopicStatus(isTopicCalled: false, topicContent: nil)
                 }
                 return Just<Void>(()).eraseToAnyPublisher()
             }

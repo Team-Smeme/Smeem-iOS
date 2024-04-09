@@ -33,9 +33,9 @@ extension DiaryViewControllerFactory {
         return StepOneKoreanDiaryViewController(viewModel: viewModel)
     }
     
-    func makeStepTwoKoreanDiaryViewController() -> StepTwoKoreanDiaryViewController {
+    func makeStepTwoKoreanDiaryViewController(with text: String) -> StepTwoKoreanDiaryViewController {
         let viewModel = StepTwoKoreanDiaryViewModel(model: DiaryModel())
         let stepTwoKoreanDiaryView = diaryViewFactory.createStepTwoKoreanDiaryView()
-        return StepTwoKoreanDiaryViewController(viewModel: viewModel)
+        return StepTwoKoreanDiaryViewController(viewModel: viewModel, text: text)
     }
 }

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class StepTwoKoreanLayoutConfig {
+final class StepTwoKoreanLayoutConfig {
     let hintTextView: UITextView
     let thickLine: UIView
     
@@ -18,7 +18,7 @@ class StepTwoKoreanLayoutConfig {
 }
 
 extension StepTwoKoreanLayoutConfig {
-    private static func createHintTextView() -> UITextView {
+    static func createHintTextView() -> UITextView {
         let textView = UITextView()
         textView.font = .b4
         textView.textContainerInset = .init(top: 16, left: 18, bottom: 16, right: 38)

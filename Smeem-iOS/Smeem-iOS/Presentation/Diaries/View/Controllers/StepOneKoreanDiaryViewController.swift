@@ -68,13 +68,7 @@ extension StepOneKoreanDiaryViewController {
             .sink { [weak self] in
                 self?.rootView.inputTextView.resignFirstResponder()
                 let diaryViewControllerFactory = DiaryViewControllerFactory(diaryViewFactory: DiaryViewFactory())
-                let nextVC = diaryViewControllerFactory.makeStepTwoKoreanDiaryViewController()
-                self?.delegate = nextVC
-                
-                let inputText = self?.viewModel.inputText.value
-                
-                self?.delegate?.dataBind(topicID: self?.viewModel.getTopicID(), inputText: inputText ?? "")
-                
+                let nextVC = diaryViewControllerFactory.makeStepTwoKoreanDiaryViewController(with: self?.rootView.inputTextView.text ?? "")
                 self?.navigationController?.pushViewController(nextVC, animated: true)
             }
             .store(in: &cancelBag)
@@ -84,7 +78,7 @@ extension StepOneKoreanDiaryViewController {
             .sink { _ in
                 
                 let isActive = self.viewModel.isRandomTopicActive.value
-                let content = self.viewModel.topicContentSubject.value
+                guard let content = self.viewModel.topicContentSubject.value else { return }
                 
                 self.checkGuidToolTip()
                 self.rootView.bottomView.updateRandomTopicButtonImage(isActive)
@@ -97,7 +91,7 @@ extension StepOneKoreanDiaryViewController {
         output.refreshButtonAction
             .receive(on: DispatchQueue.main)
             .sink { _ in
-                let content = self.viewModel.topicContentSubject.value
+                guard let content = self.viewModel.topicContentSubject.value else { return }
                 
                 self.rootView.randomTopicView.updateText(with: content)
             }
