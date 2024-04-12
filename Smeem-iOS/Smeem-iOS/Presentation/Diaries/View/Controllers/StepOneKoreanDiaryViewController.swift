@@ -67,6 +67,7 @@ extension StepOneKoreanDiaryViewController {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in
                 self?.rootView.inputTextView.resignFirstResponder()
+                
                 let diaryViewControllerFactory = DiaryViewControllerFactory(diaryViewFactory: DiaryViewFactory())
                 let nextVC = diaryViewControllerFactory.makeStepTwoKoreanDiaryViewController(with: self?.rootView.inputTextView.text ?? "")
                 self?.navigationController?.pushViewController(nextVC, animated: true)

@@ -8,11 +8,6 @@
 import Foundation
 import Combine
 
-struct KeyboardInfo {
-    var isKeyboardVisible: Bool = false
-    var keyboardHeight: CGFloat = 0.0
-}
-
 // MARK: - DiaryViewModel
 
 class DiaryViewModel: ViewModel {
@@ -27,14 +22,13 @@ class DiaryViewModel: ViewModel {
     
     private (set) var model: DiaryModel
     
-    private var textValidationState = PassthroughSubject<Bool, Never>()
-    private var cancelBag = Set<AnyCancellable>()
-    
     private (set) var isRandomTopicActive = CurrentValueSubject<Bool, Never>(false)
     private (set) var diaryTextSubject = CurrentValueSubject<String?, Never>(nil)
     private (set) var topicContentSubject = CurrentValueSubject<String?, Never>(nil)
-    private (set) var keyboardInfo: Observable<KeyboardInfo?> = Observable(nil)
     private (set) var toastType: Observable<ToastViewType?> = Observable(nil)
+    private var textValidationState = PassthroughSubject<Bool, Never>()
+    
+    private var cancelBag = Set<AnyCancellable>()
     
     // TODO: 꼭 필요한가?
 //    private var toastMessageFlag: Bool = false
@@ -69,16 +63,12 @@ class DiaryViewModel: ViewModel {
 // MARK: - Extensions
 
 extension DiaryViewModel {
-    func toggleRandomTopic() {
-        isRandomTopicActive.value = !isRandomTopicActive.value
-    }
-    
     func getTopicID() -> Int? {
         return model.topicID ?? nil
     }
     
-    func updateKeyboardInfo(info: KeyboardInfo) {
-        keyboardInfo.value = info
+    func getDiaryText() -> String? {
+        return diaryText
     }
     
     func setToastViewType(_ type: ToastViewType) {
@@ -97,10 +87,6 @@ extension DiaryViewModel {
     
     func updateTopicID(topicID: Int?) {
         model.topicID = topicID
-    }
-    
-    func getDiaryText() -> String? {
-        return diaryText
     }
 }
 

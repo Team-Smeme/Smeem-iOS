@@ -29,7 +29,6 @@ class DiaryViewController<ViewModelType: DiaryViewModel>: BaseViewController {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         
-        setupSubscriptions()
         setupDelegates()
         setupKeyboardHandler()
     }
@@ -86,10 +85,6 @@ extension DiaryViewController {
         rootView.toolTipDelegate = self
     }
     
-    private func setupSubscriptions() {
-        //        bindToastVisibility()
-    }
-    
     // MARK: - Setups
     
     //    private func bindToastVisibility() {
@@ -128,14 +123,6 @@ extension DiaryViewController: ToolTipDelegate {
 // MARK: - Network
 
 extension DiaryViewController {
-    func handlePostDiaryResponse(_ response: PostDiaryResponse?) {
-        DispatchQueue.main.async {
-            let homeVC = HomeViewController()
-            let rootVC = UINavigationController(rootViewController: homeVC)
-            homeVC.changeRootViewControllerAndPresent(rootVC)
-        }
-    }
-    
     func handleError() {
         print("handleError")
         //        viewModel.onError = { [weak self] error in
