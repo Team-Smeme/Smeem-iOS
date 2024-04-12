@@ -24,7 +24,7 @@ final class DiaryView: BaseView {
     
     // MARK: - Properties
     
-    private let viewType: DiaryViewType
+    private (set) var viewType: DiaryViewType
     private (set) var configuration: DiaryViewConfiguration
     
     weak var toolTipDelegate: ToolTipDelegate?

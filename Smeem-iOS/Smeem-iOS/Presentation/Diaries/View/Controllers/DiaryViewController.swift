@@ -12,15 +12,18 @@ import Combine
 
 class DiaryViewController<ViewModelType: DiaryViewModel>: BaseViewController {
     
+    // MARK: - Subjects
+    
+    private (set) var amplitudeSubject = PassthroughSubject<Void, Never>()
+    
+    private var cancelBag = Set<AnyCancellable>()
+    
     // MARK: - Properties
     
     private (set) var rootView: DiaryView
     private (set) var viewModel: ViewModelType
     
     private var keyboardHandler: KeyboardLayoutAndScrollingHandler?
-    
-    private (set) var amplitudeSubject = PassthroughSubject<Void, Never>()
-    private var cancelBag = Set<AnyCancellable>()
     
     // MARK: - Life Cycle
     
@@ -45,7 +48,6 @@ class DiaryViewController<ViewModelType: DiaryViewModel>: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        handleError()
         bind()
     }
     
@@ -71,10 +73,18 @@ extension DiaryViewController {
                                          viewTypeSubject: rootView.viewTypeSubject)
         let output = viewModel.transform(input: input)
         
-        output.textValidationAction
+        output.textValidationResult
             .receive(on: DispatchQueue.main)
             .sink { [weak self] isValid in
+                
                 self?.rootView.navigationView.updateRightButton(isValid: isValid)
+            }
+            .store(in: &cancelBag)
+        
+        output.errorResult
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] error in
+                self?.showToast(toastType: .smeemErrorToast(message: error))
             }
             .store(in: &cancelBag)
     }
@@ -85,22 +95,12 @@ extension DiaryViewController {
         rootView.toolTipDelegate = self
     }
     
-    // MARK: - Setups
-    
-    //    private func bindToastVisibility() {
-    //        viewModel.toastType.bind(listener: { [weak self] toastType in
-    //            if let toastType {
-    //                self?.rootView.showToast(with: toastType)
-    //            }
-    //        })
-    //    }
-    
     private func setupKeyboardHandler() {
         keyboardHandler = KeyboardLayoutAndScrollingHandler(targetView: rootView.inputTextView, bottomView: rootView.bottomView)
     }
 }
 
-// MARK: - ActionHelpers
+// MARK: - Action Helpers
 
 extension DiaryViewController {
     func checkGuidToolTip() {
@@ -117,18 +117,5 @@ extension DiaryViewController: ToolTipDelegate {
     func didTapToolTipButton() {
         rootView.removeToolTip()
         UserDefaultsManager.randomTopicToolTip = true
-    }
-}
-
-// MARK: - Network
-
-extension DiaryViewController {
-    func handleError() {
-        print("handleError")
-        //        viewModel.onError = { [weak self] error in
-        //            guard let error = error as? SmeemError else { return }
-        //
-        //            self?.rootView.showToast(with: .smeemErrorToast(message: error))
-        //        }
     }
 }

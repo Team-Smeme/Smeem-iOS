@@ -22,13 +22,11 @@ final class ForeignDiaryViewModel: DiaryViewModel {
         let randomTopicButtonAction: AnyPublisher<Void, Never>
         let refreshButtonAction: AnyPublisher<Void, Never>
         let loadingViewResult: AnyPublisher<Bool, Never>
-        let errorResult: AnyPublisher<SmeemError, Never>
     }
     
     private (set) var diaryPostedSubject = CurrentValueSubject<PostDiaryResponse?, Never>(nil)
     private let amplitudeSubject = PassthroughSubject<Void, Never>()
     private let loadingViewResult = PassthroughSubject<Bool, Never>()
-    private let errorResult = PassthroughSubject<SmeemError, Never>()
     
     private var cancelBag = Set<AnyCancellable>()
     
@@ -58,7 +56,7 @@ final class ForeignDiaryViewModel: DiaryViewModel {
                             self?.amplitudeSubject.send()
                             promise(.success(()))
                         case .failure(let error):
-                            self?.errorResult.send(error)
+                            self?.sendError(error)
                         }
                     }
                 }
@@ -97,14 +95,12 @@ final class ForeignDiaryViewModel: DiaryViewModel {
             .store(in: &cancelBag)
         
         let loadingViewResult = loadingViewResult.eraseToAnyPublisher()
-        let errorResult = errorResult.eraseToAnyPublisher()
         
         return Output(leftButtonAction: leftButtonAction,
                       rightButtonAction: rightButtonAction,
                       randomTopicButtonAction: randomTopicButtonAction,
                       refreshButtonAction: refreshButtonAction,
-                      loadingViewResult: loadingViewResult,
-                      errorResult: errorResult)
+                      loadingViewResult: loadingViewResult)
     }
     
     override init(model: DiaryModel) {
