@@ -24,7 +24,7 @@ final class DiaryBottomView: UIView {
     private let viewType: DiaryBottomViewType
     
     private (set) var randomTopicButtonTapped = PassthroughSubject<Void, Never>()
-    private (set) var hintButtonTapped = PassthroughSubject<Void, Never>()
+    private (set) var hintButtonTapped = PassthroughSubject<Bool, Never>()
     
     private var cancelBag = Set<AnyCancellable>()
     
@@ -119,7 +119,11 @@ extension DiaryBottomView {
     private func subscirbeButtonEvents() {
         randomTopicButton.tapPublisher.sink { [weak self] in
             self?.randomTopicButtonTapped.send()
-            self?.hintButtonTapped.send()
+        }
+        .store(in: &cancelBag)
+        
+        hintButton.tapPublisher.sink { [weak self] in
+            self?.hintButtonTapped.send(true)
         }
         .store(in: &cancelBag)
     }

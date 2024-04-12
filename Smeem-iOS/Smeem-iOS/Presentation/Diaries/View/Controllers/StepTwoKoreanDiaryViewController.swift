@@ -13,7 +13,9 @@ import Combine
 final class StepTwoKoreanDiaryViewController: DiaryViewController<StepTwoKoreanDiaryViewModel> {
     
     // MARK: - Subjects
-
+    
+    private (set) var hintTextSubject = PassthroughSubject<String, Never>()
+    
     private var cancelBag = Set<AnyCancellable>()
     
     // MARK: - Properties
@@ -25,7 +27,7 @@ final class StepTwoKoreanDiaryViewController: DiaryViewController<StepTwoKoreanD
     init(viewModel: StepTwoKoreanDiaryViewModel, text: String?) {
         super.init(rootView: viewFactory.createStepTwoKoreanDiaryView(), viewModel: viewModel)
         
-        rootView.configuration.layoutConfig?.hintTextView.text = text
+        rootView.configuration.layoutConfig?.updateHintViewText(with: text)
     }
     
     required init?(coder: NSCoder) {
@@ -37,6 +39,7 @@ final class StepTwoKoreanDiaryViewController: DiaryViewController<StepTwoKoreanD
         
         // 왜 viewDidLoad에서 해야하지?
         bind()
+        hintTextSubject.send(rootView.configuration.layoutConfig?.getHintViewText() ?? "")
     }
 }
 
@@ -45,7 +48,7 @@ extension StepTwoKoreanDiaryViewController {
         let input = StepTwoKoreanDiaryViewModel.Input(leftButtonTapped: rootView.navigationView.leftButtonTapped,
                                                       rightButtonTapped: rootView.navigationView.rightButtonTapped,
                                                       hintButtonTapped: rootView.bottomView.hintButtonTapped,
-                                                      hintTextsubject: rootView.bottomView.hintTextSubject)
+                                                      hintTextsubject: hintTextSubject)
         
         let output = viewModel.transform(input: input)
         
@@ -70,24 +73,21 @@ extension StepTwoKoreanDiaryViewController {
         
         output.hintButtonAction
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] in
-//                guard let isHintShowed = self?.viewModel.hint.value
-//                else { return }
+            .sink { [weak self] _ in
+                guard let isHintShowed = self?.viewModel.getIsHintShowed()
+                else { return }
                 
-//                self?.rootView.bottomView.updateHintButtonImage(isHintShowed)
+                self?.rootView.bottomView.updateHintButtonImage(isHintShowed)
+//                self?.rootView.configuration.layoutConfig?.hintTextView.text.removeAll()
+//                
             }
             .store(in: &cancelBag)
-    }
-}
-
-// MARK: - Network
-
-extension StepTwoKoreanDiaryViewController {
-    func postDeepLApi(diaryText: String) {
-        DeepLAPI.shared.postTargetText(text: diaryText) { [weak self] response in
-//            self?.viewModel.updateHintText(hintText: diaryText)
-            self?.rootView.configuration.layoutConfig?.hintTextView.text.removeAll()
-            self?.rootView.configuration.layoutConfig?.hintTextView.text = response?.translations.first?.text
-        }
+        
+        output.postHintResult
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] text in
+                self?.rootView.configuration.layoutConfig?.updateHintViewText(with: text)
+            }
+            .store(in: &cancelBag)
     }
 }

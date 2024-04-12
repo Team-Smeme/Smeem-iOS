@@ -45,8 +45,7 @@ extension ForeignDiaryViewController {
         let input = ForeignDiaryViewModel.Input(leftButtonTapped: rootView.navigationView.leftButtonTapped,
                                                 rightButtonTapped: rootView.navigationView.rightButtonTapped,
                                                 randomTopicButtonTapped: rootView.bottomView.randomTopicButtonTapped,
-                                                refreshButtonTapped: rootView.randomTopicView.refreshButtonTapped, 
-                                                amplitudeSubject: self.amplitudeSubject)
+                                                refreshButtonTapped: rootView.randomTopicView.refreshButtonTapped)
         
         let output = viewModel.transform(input: input)
         

@@ -32,4 +32,8 @@ extension StepTwoKoreanLayoutConfig {
     func getHintViewText() -> String {
         return hintTextView.text ?? ""
     }
+    
+    func updateHintViewText(with text: String?) {
+        hintTextView.text = text
+    }
 }
