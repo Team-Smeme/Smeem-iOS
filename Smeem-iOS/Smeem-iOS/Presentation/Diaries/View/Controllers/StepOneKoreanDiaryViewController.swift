@@ -12,13 +12,15 @@ import Combine
 
 final class StepOneKoreanDiaryViewController: DiaryViewController<StepOneKoreanDiaryViewModel> {
     
-    // MARK: - Properties
+    // MARK: - Subjects
     
-    weak var delegate: DataBindProtocol?
-    
-    private let viewFactory = DiaryViewFactory()
+    private let viewDidLoadSubject = PassthroughSubject<Void, Never>()
     
     private var cancelBag = Set<AnyCancellable>()
+    
+    // MARK: - Properties
+    
+    private let viewFactory = DiaryViewFactory()
     
     // MARK: - Life Cycle
     
@@ -34,7 +36,7 @@ final class StepOneKoreanDiaryViewController: DiaryViewController<StepOneKoreanD
         super.viewDidLoad()
         
         bind()
-        setNagivationBarDelegate()
+        viewDidLoadSubject.send()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -48,10 +50,13 @@ final class StepOneKoreanDiaryViewController: DiaryViewController<StepOneKoreanD
 
 extension StepOneKoreanDiaryViewController {
     private func bind() {
-        let input = StepOneKoreanDiaryViewModel.Input(leftButtonTapped: rootView.navigationView.leftButtonTapped,
-                                                rightButtonTapped: rootView.navigationView.rightButtonTapped,
-                                                randomTopicButtonTapped: rootView.bottomView.randomTopicButtonTapped,
-                                                refreshButtonTapped: rootView.randomTopicView.refreshButtonTapped)
+        let input = StepOneKoreanDiaryViewModel.Input(viewDidLoadSubject: viewDidLoadSubject,
+                                                      leftButtonTapped: rootView.navigationView.leftButtonTapped,
+                                                      rightButtonTapped: rootView.navigationView.rightButtonTapped,
+                                                      randomTopicButtonTapped: rootView.bottomView.randomTopicButtonTapped,
+                                                      refreshButtonTapped: rootView.randomTopicView.refreshButtonTapped,
+                                                      toolTipTapped: rootView.toolTipTapped
+        )
         
         let output = viewModel.transform(input: input)
         
@@ -67,66 +72,48 @@ extension StepOneKoreanDiaryViewController {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in
                 self?.rootView.inputTextView.resignFirstResponder()
-                
+                guard let diaryText = self?.rootView.inputTextView.text else { return }
                 let diaryViewControllerFactory = DiaryViewControllerFactory(diaryViewFactory: DiaryViewFactory())
-                let nextVC = diaryViewControllerFactory.makeStepTwoKoreanDiaryViewController(with: self?.rootView.inputTextView.text ?? "")
+                let nextVC = diaryViewControllerFactory.makeStepTwoKoreanDiaryViewController(with: diaryText)
                 self?.navigationController?.pushViewController(nextVC, animated: true)
             }
             .store(in: &cancelBag)
         
         output.randomTopicButtonAction
             .receive(on: DispatchQueue.main)
-            .sink { _ in
+            .sink { [weak self] in
                 
-                let isActive = self.viewModel.isRandomTopicActive.value
-                guard let content = self.viewModel.topicContentSubject.value else { return }
+                guard let isActive = self?.viewModel.isRandomTopicActive.value,
+                      let content = self?.viewModel.topicContentSubject.value else { return }
                 
-                self.checkGuidToolTip()
-                self.rootView.bottomView.updateRandomTopicButtonImage(isActive)
-                self.rootView.updateRandomTopicView(isRandomTopicActive: isActive)
-                self.rootView.updateInputTextViewConstraints(isRandomTopicActive: isActive)
-                self.rootView.randomTopicView.updateText(with: content)
+                self?.rootView.bottomView.updateRandomTopicButtonImage(isActive)
+                self?.rootView.updateRandomTopicView(isRandomTopicActive: isActive)
+                self?.rootView.updateInputTextViewConstraints(isRandomTopicActive: isActive)
+                self?.rootView.randomTopicView.updateText(with: content)
             }
             .store(in: &cancelBag)
         
         output.refreshButtonAction
             .receive(on: DispatchQueue.main)
-            .sink { _ in
-                guard let content = self.viewModel.topicContentSubject.value else { return }
+            .sink { [weak self] in
+                guard let content = self?.viewModel.topicContentSubject.value else { return }
                 
-                self.rootView.randomTopicView.updateText(with: content)
+                self?.rootView.randomTopicView.updateText(with: content)
             }
             .store(in: &cancelBag)
-    }
-}
-
-
-// MARK: - Extensions
-
-extension StepOneKoreanDiaryViewController {
-    private func setNagivationBarDelegate() {
-        rootView.setNavigationBarDelegate(self)
-    }
-}
-
-// MARK: - NavigationBarActionDelegate
-
-extension StepOneKoreanDiaryViewController: NavigationBarActionDelegate {
-    func didTapLeftButton() {
-        rootView.removeToolTip()
-        presentingViewController?.dismiss(animated: true)
-    }
-    
-    func didTapRightButton() {
-//        if viewModel.onUpdateTextValidation.value == true {
-//            if viewModel.isRandomTopicActive.value == false {
-//                viewModel.updateTopicID(topicID: nil)
-//            }
-//            rootView.inputTextView.resignFirstResponder()
-//            handleRightNavigationButton()
-//            AmplitudeManager.shared.track(event: AmplitudeConstant.diary.first_step_complete.event)
-//        } else {
-//            viewModel.showRegExKrToast()
-//        }
+        
+        output.toolTipAction
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.rootView.removeToolTip()
+            }
+            .store(in: &cancelBag)
+        
+        output.toolTipResult
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.rootView.setToolTip()
+            }
+            .store(in: &cancelBag)
     }
 }

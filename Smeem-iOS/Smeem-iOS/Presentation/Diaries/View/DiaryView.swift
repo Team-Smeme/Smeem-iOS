@@ -21,7 +21,12 @@ protocol ToolTipDelegate: AnyObject {
 
 final class DiaryView: BaseView {
     
+    // MARK: - Subjects
+    
     private (set) var viewTypeSubject = CurrentValueSubject<DiaryViewType?, Never>(.none)
+    private (set) var toolTipTapped = PassthroughSubject<Void, Never>()
+    
+    private var cancelBag = Set<AnyCancellable>()
     
     // MARK: - Properties
     
@@ -47,12 +52,9 @@ final class DiaryView: BaseView {
     private (set) var randomTopicView: RandomTopicView
     private (set) var smeemToastView: SmeemToastView?
     
-    private lazy var toolTip: UIImageView? = {
+    private lazy var toolTip: UIImageView = {
         let image = UIImageView()
         image.image = Constant.Image.icnToolTip
-        
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(toolTipButtonTapped))
-        image.addGestureRecognizer(tapGesture)
         image.isUserInteractionEnabled = true
         return image
     }()
@@ -76,7 +78,7 @@ final class DiaryView: BaseView {
         super.init(frame: .zero)
         
         setLayout()
-        checkTooltip()
+        subscribeToolTipView()
         viewTypeSubject.send(viewType)
     }
     
@@ -91,16 +93,16 @@ final class DiaryView: BaseView {
     deinit {
         randomTopicView.removeFromSuperview()
         smeemToastView?.removeFromSuperview()
-        toolTip?.removeFromSuperview()
+        toolTip.removeFromSuperview()
     }
 }
 
 // MARK: - Layout Helpers
 
 extension DiaryView {
-    func setLayout() {
+    private func setLayout() {
         addSubviews(navigationView, inputTextView, bottomView)
-
+        
         navigationView.snp.makeConstraints { make in
             make.top.leading.trailing.equalTo(safeAreaLayoutGuide)
             make.height.equalTo(convertByHeightRatio(Constant.Layout.navigationBarHeight))
@@ -132,18 +134,17 @@ extension DiaryView {
             make.centerX.equalToSuperview()
         }
     }
-    
-    func updateInputTextViewConstraintsForStepTwoView() {
-        if viewType == .stepTwoKorean {
-            inputTextView.snp.remakeConstraints { make in
-                make.top.equalTo(configuration.layoutConfig?.thickLine.snp.bottom ?? navigationView.snp.bottom)
-                make.leading.trailing.equalToSuperview()
-                make.bottom.equalTo(bottomView.snp.top)
-            }
-        }
-    }
+}
+
+// MARK: - Action Helpers
+
+extension DiaryView {
     
     // MARK: - RandomTopicView
+    
+    func setInputText(_ text: String) {
+        inputTextView.text = text
+    }
     
     func updateRandomTopicView(isRandomTopicActive: Bool) {
         if isRandomTopicActive {
@@ -159,11 +160,23 @@ extension DiaryView {
     
     func updateInputTextViewConstraints(isRandomTopicActive: Bool) {
         inputTextView.snp.remakeConstraints { make in
-            make.top.equalTo(isRandomTopicActive ? randomTopicView.snp.bottom ?? 0 : navigationView.snp.bottom)
+            make.top.equalTo(isRandomTopicActive ? randomTopicView.snp.bottom : navigationView.snp.bottom)
             make.leading.trailing.equalToSuperview()
             make.bottom.equalTo(bottomView.snp.top)
         }
     }
+    
+    func updateInputTextViewConstraintsForStepTwoView() {
+        if viewType == .stepTwoKorean {
+            inputTextView.snp.remakeConstraints { make in
+                make.top.equalTo(configuration.layoutConfig?.thickLine.snp.bottom ?? navigationView.snp.bottom)
+                make.leading.trailing.equalToSuperview()
+                make.bottom.equalTo(bottomView.snp.top)
+            }
+        }
+    }
+    
+    // MARK: - ToastView
     
     func showToast(with toastType: ToastViewType) {
         if smeemToastView == nil {
@@ -173,50 +186,31 @@ extension DiaryView {
         smeemToastView?.show(in: self, hasKeyboard: true)
         smeemToastView?.hide(after: 3)
     }
-    
-    // MARK: - Tutorial
-    
-    private func checkTooltip() {
-        let randomTopicToolTip = UserDefaultsManager.randomTopicToolTip
+}
 
-        if !randomTopicToolTip {
-            addSubview(toolTip ?? UIImageView())
+// MARK: - ToolTip
 
-            toolTip?.snp.makeConstraints { make in
-                make.width.equalTo(convertByWidthRatio(180))
-                make.height.equalTo(convertByHeightRatio(48))
-                make.bottom.equalTo(keyboardLayoutGuide.snp.top).offset(constraintByNotch(-37, -42))
-                make.trailing.equalToSuperview().inset(convertByHeightRatio(18))
-            }
-        } else {
-            toolTip = nil
+extension DiaryView {
+    func setToolTip() {
+        addSubview(toolTip)
+        
+        toolTip.snp.makeConstraints { make in
+            make.width.equalTo(convertByWidthRatio(180))
+            make.height.equalTo(convertByHeightRatio(48))
+            make.bottom.equalTo(keyboardLayoutGuide.snp.top).offset(constraintByNotch(-37, -42))
+            make.trailing.equalToSuperview().inset(convertByHeightRatio(18))
         }
     }
     
+    private func subscribeToolTipView() {
+        toolTip.gesturePublisher
+            .sink { [weak self] _ in
+                self?.toolTipTapped.send()
+            }
+            .store(in: &cancelBag)
+    }
+    
     func removeToolTip() {
-        toolTip?.removeFromSuperview()
-    }
-    
-    @objc func toolTipButtonTapped() {
-        toolTipDelegate?.didTapToolTipButton()
-    }
-}
-
-// MARK: - Helpers
-
-extension DiaryView {
-    
-    // MARK: - Settings
-    
-    func setNavigationBarDelegate(_ delegate: NavigationBarActionDelegate?) {
-        navigationView.actionDelegate = delegate
-    }
-    
-//    func setTextViewHandlerDelegate(_ viewController: DiaryViewController) {
-//        inputTextView.textViewHandler?.textViewHandlerDelegate = viewController
-//    }
-    
-    func setInputText(_ text: String) {
-        inputTextView.text = text
+        toolTip.removeFromSuperview()
     }
 }

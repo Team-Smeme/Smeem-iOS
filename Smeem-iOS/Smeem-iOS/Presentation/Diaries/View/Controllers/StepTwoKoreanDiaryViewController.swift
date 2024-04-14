@@ -37,7 +37,6 @@ final class StepTwoKoreanDiaryViewController: DiaryViewController<StepTwoKoreanD
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // 왜 viewDidLoad에서 해야하지?
         bind()
         hintTextSubject.send(rootView.configuration.layoutConfig?.getHintViewText() ?? "")
     }
@@ -78,8 +77,6 @@ extension StepTwoKoreanDiaryViewController {
                 else { return }
                 
                 self?.rootView.bottomView.updateHintButtonImage(isHintShowed)
-//                self?.rootView.configuration.layoutConfig?.hintTextView.text.removeAll()
-//                
             }
             .store(in: &cancelBag)
         

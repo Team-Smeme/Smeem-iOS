@@ -26,7 +26,7 @@ class DiaryViewModel: ViewModel {
     private (set) var isRandomTopicActive = CurrentValueSubject<Bool, Never>(false)
     private (set) var diaryTextSubject = CurrentValueSubject<String?, Never>(nil)
     private (set) var topicContentSubject = CurrentValueSubject<String?, Never>(nil)
-    private var textValidationState = PassthroughSubject<Bool, Never>()
+    private (set) var textValidationState = CurrentValueSubject<Bool, Never>(false)
     private let errorResult = PassthroughSubject<SmeemError, Never>()
     
     private var cancelBag = Set<AnyCancellable>()

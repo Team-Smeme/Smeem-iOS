@@ -11,9 +11,16 @@ import Combine
 // MARK: - ForeignDiaryViewController
 
 final class ForeignDiaryViewController: DiaryViewController<ForeignDiaryViewModel> {
-    private let viewFactory = DiaryViewFactory()
+    
+    // MARK: - Subjects
+    
+    private let viewDidLoadSubject = PassthroughSubject<Void, Never>()
     
     private var cancelBag = Set<AnyCancellable>()
+    
+    // MARK: - Properties
+    
+    private let viewFactory = DiaryViewFactory()
     
     // MARK: - Life Cycle
     
@@ -29,6 +36,7 @@ final class ForeignDiaryViewController: DiaryViewController<ForeignDiaryViewMode
         super.viewDidLoad()
         
         bind()
+        viewDidLoadSubject.send()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -42,10 +50,12 @@ final class ForeignDiaryViewController: DiaryViewController<ForeignDiaryViewMode
 
 extension ForeignDiaryViewController {
     private func bind() {
-        let input = ForeignDiaryViewModel.Input(leftButtonTapped: rootView.navigationView.leftButtonTapped,
+        let input = ForeignDiaryViewModel.Input(viewDidLoadSubject: viewDidLoadSubject,
+                                                leftButtonTapped: rootView.navigationView.leftButtonTapped,
                                                 rightButtonTapped: rootView.navigationView.rightButtonTapped,
                                                 randomTopicButtonTapped: rootView.bottomView.randomTopicButtonTapped,
-                                                refreshButtonTapped: rootView.randomTopicView.refreshButtonTapped)
+                                                refreshButtonTapped: rootView.randomTopicView.refreshButtonTapped, 
+                                                toolTipTapped: rootView.toolTipTapped)
         
         let output = viewModel.transform(input: input)
         
@@ -72,10 +82,8 @@ extension ForeignDiaryViewController {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in
                 guard let isActive = self?.viewModel.isRandomTopicActive.value,
-                      let content = self?.viewModel.topicContentSubject.value
-                else { return }
+                      let content = self?.viewModel.topicContentSubject.value else { return }
                 
-                self?.checkGuidToolTip()
                 self?.rootView.bottomView.updateRandomTopicButtonImage(isActive)
                 self?.rootView.updateRandomTopicView(isRandomTopicActive: isActive)
                 self?.rootView.updateInputTextViewConstraints(isRandomTopicActive: isActive)
@@ -89,6 +97,20 @@ extension ForeignDiaryViewController {
                 guard let content = self?.viewModel.topicContentSubject.value else { return }
                 
                 self?.rootView.randomTopicView.updateText(with: content)
+            }
+            .store(in: &cancelBag)
+        
+        output.toolTipAction
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.rootView.removeToolTip()
+            }
+            .store(in: &cancelBag)
+        
+        output.toolTipResult
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.rootView.setToolTip()
             }
             .store(in: &cancelBag)
     }

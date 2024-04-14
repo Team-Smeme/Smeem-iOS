@@ -49,7 +49,7 @@ struct UserDefaultsManager {
         set { UserDefaults.standard.set(newValue, forKey: "hasKakaoToken")}
     }
     
-    static var randomTopicToolTip: Bool {
+    static var shouldShowToolTip: Bool {
         get { return UserDefaults.standard.bool(forKey: "randomSubjectToolTip")}
         set { UserDefaults.standard.set(newValue, forKey: "randomSubjectToolTip")}
     }

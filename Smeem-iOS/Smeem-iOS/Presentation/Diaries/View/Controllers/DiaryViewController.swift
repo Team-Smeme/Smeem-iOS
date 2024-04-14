@@ -35,7 +35,6 @@ class DiaryViewController<ViewModelType: DiaryViewModel>: BaseViewController {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         
-        setupDelegates()
         setupKeyboardHandler()
     }
     
@@ -60,18 +59,12 @@ class DiaryViewController<ViewModelType: DiaryViewModel>: BaseViewController {
         showKeyboard(textView: rootView.inputTextView)
         amplitudeSubject.send()
     }
-    
-    deinit {
-        keyboardHandler = nil
-    }
 }
 
 // MARK: - Extensions
 
 extension DiaryViewController {
-    
     private func bind() {
-        // TODO: 강제 언래핑?
         let input = DiaryViewModel.Input(textDidChangeSubject: rootView.inputTextView.textViewHandler!.textDidChangeSubject,
                                          viewTypeSubject: rootView.viewTypeSubject)
         let output = viewModel.transform(input: input)
@@ -79,7 +72,6 @@ extension DiaryViewController {
         output.textValidationResult
             .receive(on: DispatchQueue.main)
             .sink { [weak self] isValid in
-                
                 self?.rootView.navigationView.updateRightButton(isValid: isValid)
             }
             .store(in: &cancelBag)
@@ -92,33 +84,7 @@ extension DiaryViewController {
             .store(in: &cancelBag)
     }
     
-    // MARK: - Settings
-    
-    private func setupDelegates() {
-        rootView.toolTipDelegate = self
-    }
-    
     private func setupKeyboardHandler() {
         keyboardHandler = KeyboardLayoutAndScrollingHandler(targetView: rootView.inputTextView, bottomView: rootView.bottomView)
-    }
-}
-
-// MARK: - Action Helpers
-
-extension DiaryViewController {
-    func checkGuidToolTip() {
-        if !UserDefaultsManager.randomTopicToolTip {
-            UserDefaultsManager.randomTopicToolTip = true
-            rootView.removeToolTip()
-        }
-    }
-}
-
-// MARK: - ToolTipDelegate
-
-extension DiaryViewController: ToolTipDelegate {
-    func didTapToolTipButton() {
-        rootView.removeToolTip()
-        UserDefaultsManager.randomTopicToolTip = true
     }
 }

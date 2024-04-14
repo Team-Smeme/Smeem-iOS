@@ -10,10 +10,12 @@ import Combine
 
 final class ForeignDiaryViewModel: DiaryViewModel {
     struct Input {
+        let viewDidLoadSubject: PassthroughSubject<Void, Never>
         let leftButtonTapped: PassthroughSubject<Void, Never>
         let rightButtonTapped: PassthroughSubject<Void, Never>
         let randomTopicButtonTapped: PassthroughSubject<Void, Never>
         let refreshButtonTapped: PassthroughSubject<Void, Never>
+        let toolTipTapped: PassthroughSubject<Void, Never>
     }
     
     struct Output {
@@ -21,16 +23,25 @@ final class ForeignDiaryViewModel: DiaryViewModel {
         let rightButtonAction: AnyPublisher<Void, Never>
         let randomTopicButtonAction: AnyPublisher<Void, Never>
         let refreshButtonAction: AnyPublisher<Void, Never>
+        let toolTipAction: AnyPublisher<Void, Never>
+        let toolTipResult: AnyPublisher<Void, Never>
         let loadingViewResult: AnyPublisher<Bool, Never>
     }
     
     private (set) var diaryPostedSubject = CurrentValueSubject<PostDiaryResponse?, Never>(nil)
+    private let toolTipSubject = PassthroughSubject<Void, Never>()
     private let amplitudeSubject = PassthroughSubject<Void, Never>()
     private let loadingViewResult = PassthroughSubject<Bool, Never>()
     
     private var cancelBag = Set<AnyCancellable>()
     
     func transform(input: Input) -> Output {
+        input.viewDidLoadSubject
+            .sink { [weak self] in
+                self?.toolTipSubject.send()
+            }
+            .store(in: &cancelBag)
+        
         let leftButtonAction = input.leftButtonTapped
             .eraseToAnyPublisher()
         
@@ -88,6 +99,16 @@ final class ForeignDiaryViewModel: DiaryViewModel {
             }
             .eraseToAnyPublisher()
         
+        let toolTipAction = input.toolTipTapped
+            .handleEvents(receiveOutput:  { _ in
+                UserDefaultsManager.shouldShowToolTip = false
+            })
+            .eraseToAnyPublisher()
+        
+        let toolTipResult = toolTipSubject
+            .filter { _ in UserDefaultsManager.shouldShowToolTip == true }
+            .eraseToAnyPublisher()
+        
         amplitudeSubject
             .sink { _ in
                 AmplitudeManager.shared.track(event: AmplitudeConstant.diary.diary_complete.event)
@@ -102,6 +123,8 @@ final class ForeignDiaryViewModel: DiaryViewModel {
                       rightButtonAction: rightButtonAction,
                       randomTopicButtonAction: randomTopicButtonAction,
                       refreshButtonAction: refreshButtonAction,
+                      toolTipAction: toolTipAction,
+                      toolTipResult: toolTipResult,
                       loadingViewResult: loadingViewResult)
     }
     

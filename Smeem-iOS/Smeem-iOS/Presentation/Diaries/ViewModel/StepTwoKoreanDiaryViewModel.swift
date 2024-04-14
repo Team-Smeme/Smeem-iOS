@@ -58,9 +58,7 @@ final class StepTwoKoreanDiaryViewModel: DiaryViewModel {
                 }
                 
                 return Future<Void, Never> { promise in
-                    guard let inputText = self?.getDiaryText() else {
-                        return
-                    }
+                    guard let inputText = self?.getDiaryText() else { return }
                     
                     PostDiaryAPI.shared.postDiary(param: PostDiaryRequest(content: inputText, topicId: self?.getTopicID())) { result in
                         switch result {
