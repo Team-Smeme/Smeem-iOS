@@ -35,6 +35,12 @@ final class ForeignDiaryViewModel: DiaryViewModel {
     
     private var cancelBag = Set<AnyCancellable>()
     
+    override init(model: DiaryModel) {
+        super.init(model: model)
+        
+        self.callRandomTopicAPI({})
+    }
+    
     func transform(input: Input) -> Output {
         input.viewDidLoadSubject
             .sink { [weak self] in
@@ -79,23 +85,24 @@ final class ForeignDiaryViewModel: DiaryViewModel {
             .eraseToAnyPublisher()
         
         let randomTopicButtonAction = input.randomTopicButtonTapped
-            .flatMap { [unowned self] _ -> AnyPublisher<Void, Never> in
-                self.isRandomTopicActive.value.toggle()
+            .flatMap { [weak self] _ -> AnyPublisher<Void, Never> in
+                self?.isRandomTopicActive.value.toggle()
                 
-                if self.isRandomTopicActive.value {
-                    if self.model.topicContent?.isEmpty == nil {
-                        self.callRandomTopicAPI()
-                    }
-                } else {
-                    self.updateTopicStatus(isTopicCalled: false, topicContent: nil)
+                if self?.isRandomTopicActive.value == false {
+                    self?.updateTopicStatus(isTopicCalled: false, topicContent: nil)
                 }
                 return Just<Void>(()).eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()
         
         let refreshButtonAction = input.refreshButtonTapped
-            .map {
-                self.callRandomTopicAPI()
+            .flatMap { [weak self] _ -> AnyPublisher<Void, Never> in
+                Future { promise in
+                    self?.callRandomTopicAPI({
+                        promise(.success(()))
+                    })
+                }
+                .eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()
         
@@ -126,11 +133,5 @@ final class ForeignDiaryViewModel: DiaryViewModel {
                       toolTipAction: toolTipAction,
                       toolTipResult: toolTipResult,
                       loadingViewResult: loadingViewResult)
-    }
-    
-    override init(model: DiaryModel) {
-        super.init(model: model)
-        
-        self.callRandomTopicAPI()
     }
 }

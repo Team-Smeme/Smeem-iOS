@@ -80,7 +80,6 @@ final class StepTwoKoreanDiaryViewModel: DiaryViewModel {
             .eraseToAnyPublisher()
         
         let hintButtonAction = input.hintButtonTapped
-        // TODO: unowned 고려해보기
             .map { [weak self] _ -> Bool in
                 self?.isHintShowed.toggle()
                 if self?.translatedText.isEmpty == true {

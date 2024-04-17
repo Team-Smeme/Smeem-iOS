@@ -21,7 +21,7 @@ class DiaryViewModel: ViewModel {
         let errorResult: AnyPublisher<SmeemError, Never>
     }
     
-    private (set) var model: DiaryModel
+    // MARK: - Subjects
     
     private (set) var isRandomTopicActive = CurrentValueSubject<Bool, Never>(false)
     private (set) var diaryTextSubject = CurrentValueSubject<String?, Never>(nil)
@@ -32,13 +32,19 @@ class DiaryViewModel: ViewModel {
     private var cancelBag = Set<AnyCancellable>()
     
     // TODO: 꼭 필요한가?
-//    private var toastMessageFlag: Bool = false
+    //    private var toastMessageFlag: Bool = false
     
     private var diaryText: String? = nil
+    
+    private (set) var model: DiaryModel
+    
+    // MARK: - Life Cycle
     
     init(model: DiaryModel) {
         self.model = model
     }
+    
+    // MARK: - Transform
     
     func transform(input: Input) -> Output {
         input.textDidChangeSubject
@@ -61,7 +67,7 @@ class DiaryViewModel: ViewModel {
     }
 }
 
-// MARK: - Internal Helpers
+// MARK: - Private Helpers
 
 extension DiaryViewModel {
     private func validateText(with text: String, viewType: DiaryViewType) -> Bool {
@@ -82,7 +88,7 @@ extension DiaryViewModel {
     }
 }
 
-// MARK: - private helpers
+// MARK: - Internal Helpers
 
 extension DiaryViewModel {
     func getTopicID() -> Int? {
@@ -115,17 +121,18 @@ extension DiaryViewModel {
 // MARK: - Network
 
 extension DiaryViewModel {
-    func callRandomTopicAPI() {
+    func callRandomTopicAPI(_ completion: @escaping () -> Void) {
         RandomTopicAPI.shared.getRandomSubject { [weak self] result in
-            
             switch result {
             case .success(let response):
                 self?.model.topicID = response.topicId
                 self?.model.topicContent = response.content
                 self?.topicContentSubject.value = response.content
+                completion()
                 
             case .failure(let error):
                 self?.errorResult.send(error)
+                completion()
             }
         }
     }

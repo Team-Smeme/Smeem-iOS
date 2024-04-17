@@ -37,7 +37,7 @@ final class StepOneKoreanDiaryViewModel: DiaryViewModel {
     override init(model: DiaryModel) {
         super.init(model: model)
         
-        self.callRandomTopicAPI()
+        self.callRandomTopicAPI({})
     }
     
     func transform(input: Input) -> Output {
@@ -65,23 +65,21 @@ final class StepOneKoreanDiaryViewModel: DiaryViewModel {
             .eraseToAnyPublisher()
         
         let randomTopicButtonAction = input.randomTopicButtonTapped
-            .flatMap { [unowned self] _ -> AnyPublisher<Void, Never> in
-                self.isRandomTopicActive.value.toggle()
+            .flatMap { [weak self] _ -> AnyPublisher<Void, Never> in
+                self?.isRandomTopicActive.value.toggle()
                 
-                if self.isRandomTopicActive.value {
-                    if self.model.topicContent?.isEmpty == nil {
-                        self.callRandomTopicAPI()
-                    }
-                } else {
-                    self.updateTopicStatus(isTopicCalled: false, topicContent: nil)
+                if self?.isRandomTopicActive.value == false {
+                    self?.updateTopicStatus(isTopicCalled: false, topicContent: nil)
                 }
                 return Just<Void>(()).eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()
         
         let refreshButtonAction = input.refreshButtonTapped
-            .map {
-                self.callRandomTopicAPI()
+            .flatMap { [weak self] _ -> AnyPublisher<Void, Never> in
+                self?.callRandomTopicAPI({})
+                return Just<Void>(()).eraseToAnyPublisher()
+                    .eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()
         
@@ -112,4 +110,3 @@ final class StepOneKoreanDiaryViewModel: DiaryViewModel {
                       loadingViewResult: loadingViewResult)
     }
 }
-

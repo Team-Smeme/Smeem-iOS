@@ -25,7 +25,7 @@ final class ForeignDiaryViewController: DiaryViewController<ForeignDiaryViewMode
     // MARK: - Life Cycle
     
     init(viewModel:ForeignDiaryViewModel) {
-        super.init(rootView: viewFactory.createForeginDiaryView(), viewModel:viewModel )
+        super.init(rootView: viewFactory.createForeginDiaryView(), viewModel:viewModel)
     }
     
     required init?(coder: NSCoder) {
