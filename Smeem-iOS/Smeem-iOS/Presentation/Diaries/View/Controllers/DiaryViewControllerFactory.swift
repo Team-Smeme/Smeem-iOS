@@ -11,12 +11,10 @@ import UIKit
 
 final class DiaryViewControllerFactory {
     
-    let diaryViewFactory: DiaryViewFactory
-    let viewModel: DiaryViewModel
+    private let diaryViewFactory: DiaryViewFactory
     
-    init(diaryViewFactory: DiaryViewFactory, viewModel: DiaryViewModel) {
+    init(diaryViewFactory: DiaryViewFactory) {
         self.diaryViewFactory = diaryViewFactory
-        self.viewModel = viewModel
     }
 }
 
@@ -24,17 +22,20 @@ final class DiaryViewControllerFactory {
 
 extension DiaryViewControllerFactory {
     func makeForeignDiaryViewController() -> ForeignDiaryViewController {
+        let viewModel = ForeignDiaryViewModel(model: DiaryModel())
         let foreignDiaryView = diaryViewFactory.createForeginDiaryView()
-        return ForeignDiaryViewController(rootView: foreignDiaryView, viewModel: viewModel)
+        return ForeignDiaryViewController(viewModel: viewModel)
     }
     
     func makeStepOneKoreanDiaryViewController() -> StepOneKoreanDiaryViewController {
+        let viewModel = StepOneKoreanDiaryViewModel(model: DiaryModel())
         let stepOneKoreanDiaryView = diaryViewFactory.createStepOneKoreanDiaryView()
-        return StepOneKoreanDiaryViewController(rootView: stepOneKoreanDiaryView, viewModel: viewModel)
+        return StepOneKoreanDiaryViewController(viewModel: viewModel)
     }
     
-    func makeStepTwoKoreanDiaryViewController() -> StepTwoKoreanDiaryViewController {
+    func makeStepTwoKoreanDiaryViewController(with text: String) -> StepTwoKoreanDiaryViewController {
+        let viewModel = StepTwoKoreanDiaryViewModel(model: DiaryModel())
         let stepTwoKoreanDiaryView = diaryViewFactory.createStepTwoKoreanDiaryView()
-        return StepTwoKoreanDiaryViewController(rootView: stepTwoKoreanDiaryView, viewModel: viewModel)
+        return StepTwoKoreanDiaryViewController(viewModel: viewModel, text: text)
     }
 }

@@ -7,27 +7,34 @@
 
 import Combine
 import UIKit
+import Combine
 
 // MARK: - DiaryViewController
 
-class DiaryViewController: BaseViewController {
+class DiaryViewController<ViewModelType: DiaryViewModel>: BaseViewController {
+    
+    // MARK: - Subjects
+    
+    private (set) var amplitudeSubject = PassthroughSubject<Void, Never>()
+    
+    private var cancelBag = Set<AnyCancellable>()
     
     // MARK: - Properties
     
-    private (set) var rootView: DiaryView?
-    private (set) var viewModel: DiaryViewModel
+    private (set) var rootView: DiaryView
+    private (set) var viewModel: ViewModelType
+    
     private var keyboardHandler: KeyboardLayoutAndScrollingHandler?
     
     private var cancellables = Set<AnyCancellable>()
     
     // MARK: - Life Cycle
     
-    init(rootView: DiaryView, viewModel: DiaryViewModel) {
+    init(rootView: DiaryView, viewModel: ViewModelType) {
         self.rootView = rootView
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         
-        subscribeToViewPublishers()
         setupDelegates()
         setupKeyboardHandler()
     }
@@ -44,17 +51,17 @@ class DiaryViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        handleError()
+        bind()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        showKeyboard(textView: rootView?.inputTextView)
+        showKeyboard(textView: rootView.inputTextView)
+        amplitudeSubject.send()
     }
     
     deinit {
-        cancellables.forEach { $0.cancel() }
         keyboardHandler = nil
     }
 }
@@ -63,122 +70,47 @@ class DiaryViewController: BaseViewController {
 
 extension DiaryViewController {
     
+    private func bind() {
+        // TODO: 강제 언래핑?
+        let input = DiaryViewModel.Input(textDidChangeSubject: rootView.inputTextView.textViewHandler!.textDidChangeSubject,
+                                         viewTypeSubject: rootView.viewTypeSubject)
+        let output = viewModel.transform(input: input)
+        
+        output.textValidationResult
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] isValid in
+                
+                self?.rootView.navigationView.updateRightButton(isValid: isValid)
+            }
+            .store(in: &cancelBag)
+        
+        output.errorResult
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] error in
+                self?.showToast(toastType: .smeemErrorToast(message: error))
+            }
+            .store(in: &cancelBag)
+    }
+    
     // MARK: - Settings
     
     private func setupDelegates() {
-        rootView?.setTextViewHandlerDelegate(self)
-        rootView?.bottomView.randomTopicDelegate = self
-        rootView?.randomTopicView?.randomTopicRefreshDelegate = self
-        rootView?.toolTipDelegate = self
+        rootView.toolTipDelegate = self
     }
-    
-    // MARK: - Setups
-    
-    private func subscribeToViewPublishers() {
-        rootView?.leftButtonPublisher
-            .sink { [weak self] _ in
-                self?.viewModel.leftButtonTapped()
-            }
-            .store(in: &cancellables)
-
-        rootView?.rightButtonPublisher
-            .sink { [weak self] _ in
-                self?.viewModel.rightButtonTapped()
-            }
-            .store(in: &cancellables)
-    }
-    
-//    private func bindTextValidationStatus() {
-//        viewModel.onUpdateTextValidation.bind(listener: { [weak self] isValid in
-//            self?.rootView?.navigationView.updateRightButton(isValid: isValid)
-//        })
-//    }
-//    
-//    private func bindRandomTopicUpdates() {
-//        viewModel.onUpdateTopicContent.bind(listener: { [weak self] content in
-//            self?.rootView?.randomTopicView?.setData(contentText: content)
-//        })
-//        
-//        viewModel.onUpdateRandomTopic.bind(listener: { [weak self] isEnabled in
-//            self?.updateViewWithRandomTopicActive()
-//        })
-//    }
-//    
-//    private func bindToastVisibility() {
-//        viewModel.toastType.bind(listener: { [weak self] toastType in
-//            if let toastType {
-//                self?.rootView?.showToast(with: toastType)
-//            }
-//        })
-//    }
-//    
-//    private func bindRandomTopicActive() {
-//        viewModel.isRandomTopicActive.bind(listener: { [weak self] isActive in
-//            self?.rootView?.updateRandomTopicView(isRandomTopicActive: isActive)
-//            self?.rootView?.updateInputTextViewConstraints(isRandomTopicActive: isActive)
-//        })
-//    }
     
     private func setupKeyboardHandler() {
-        guard let rootView = rootView else { return }
         keyboardHandler = KeyboardLayoutAndScrollingHandler(targetView: rootView.inputTextView, bottomView: rootView.bottomView)
     }
-    
-    // MARK: - Custom Methods
-    
-    private func handleRandomTopicButtonTap() {
-        let isActive = viewModel.isRandomTopicActive.value
-        
-        rootView?.bottomView.updateRandomTopicButtonImage(isActive)
-        
-        if isActive {
-            if viewModel.model.topicContent?.isEmpty == nil {
-                viewModel.callRandomTopicAPI()
-            }
-//            bindRandomTopicActive()
-        } else {
-            viewModel.updateModel(isTopicCalled: false, topicContent: nil)
+}
+
+// MARK: - Action Helpers
+
+extension DiaryViewController {
+    func checkGuidToolTip() {
+        if !UserDefaultsManager.randomTopicToolTip {
+            UserDefaultsManager.randomTopicToolTip = true
+            rootView.removeToolTip()
         }
-    }
-}
-
-// MARK: - RandomTopicRefreshDelegate
-
-extension DiaryViewController: RandomTopicRefreshDelegate {
-    func refreshButtonTapped(completion: @escaping (String?) -> Void) {
-        viewModel.callRandomTopicAPI()
-    }
-}
-
-// MARK: - SmeemTextViewHandlerDelegate
-
-extension DiaryViewController: SmeemTextViewHandlerDelegate {
-    func textViewDidChange(text: String, viewType: DiaryViewType) {
-        let isValid = viewModel.isTextValid(text: text, viewType: viewType)
-        viewModel.updateTextValidation(isValid)
-        viewModel.inputText.value = text
-    }
-    
-    func onUpdateInputText(_ text: String) {
-        viewModel.onUpdateInputText?(text)
-    }
-    
-    func onUpdateTopicID(_ id: String) {
-        viewModel.onUpdateTopicID?(id)
-    }
-}
-
-// MARK: - BottomViewActionDelegate
-
-extension DiaryViewController: RandomTopicActionDelegate {
-    func didTapRandomTopicButton() {
-        if !UserDefaultsManager.randomSubjectToolTip {
-            UserDefaultsManager.randomSubjectToolTip = true
-            rootView?.removeToolTip()
-        }
-        
-        viewModel.toggleRandomTopic()
-        handleRandomTopicButtonTap()
     }
 }
 
@@ -186,35 +118,7 @@ extension DiaryViewController: RandomTopicActionDelegate {
 
 extension DiaryViewController: ToolTipDelegate {
     func didTapToolTipButton() {
-        rootView?.removeToolTip()
-        UserDefaultsManager.randomSubjectToolTip = true
-    }
-}
-
-// MARK: - Network
-
-extension DiaryViewController {
-    func handleInitialRandomTopicApiCall() {
-        viewModel.callRandomTopicAPI()
-        self.rootView?.randomTopicView?.setData(contentText: viewModel.model.topicContent ?? "")
-    }
-    
-    func handlePostDiaryResponse(_ response: PostDiaryResponse?) {
-        DispatchQueue.main.async {
-            let homeVC = HomeViewController()
-            homeVC.toastMessageFlag = true
-            homeVC.badgePopupData = response?.badges ?? []
-            
-            let rootVC = UINavigationController(rootViewController: homeVC)
-            homeVC.changeRootViewControllerAndPresent(rootVC)
-        }
-    }
-    
-    func handleError() {
-        viewModel.onError = { [weak self] error in
-            guard let error = error as? SmeemError else { return }
-            
-            self?.rootView?.showToast(with: .smeemErrorToast(message: error))
-        }
+        rootView.removeToolTip()
+        UserDefaultsManager.randomTopicToolTip = true
     }
 }

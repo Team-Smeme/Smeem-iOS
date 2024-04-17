@@ -7,6 +7,7 @@
 
 import Combine
 import UIKit
+import Combine
 
 import SnapKit
 
@@ -18,11 +19,13 @@ protocol ToolTipDelegate: AnyObject {
 
 // MARK: - DiaryView
 
-class DiaryView: BaseView {
+final class DiaryView: BaseView {
+    
+    private (set) var viewTypeSubject = CurrentValueSubject<DiaryViewType?, Never>(.none)
     
     // MARK: - Properties
     
-    private let viewType: DiaryViewType
+    private (set) var viewType: DiaryViewType
     private (set) var configuration: DiaryViewConfiguration
     
     var leftButtonPublisher: AnyPublisher<Void, Never> {
@@ -41,7 +44,7 @@ class DiaryView: BaseView {
     private (set) var inputTextView: SmeemTextView
     private (set) var bottomView: DiaryBottomView
     
-    private (set) var randomTopicView: RandomTopicView?
+    private (set) var randomTopicView: RandomTopicView
     private (set) var smeemToastView: SmeemToastView?
     
     private lazy var toolTip: UIImageView? = {
@@ -74,6 +77,7 @@ class DiaryView: BaseView {
         
         setLayout()
         checkTooltip()
+        viewTypeSubject.send(viewType)
     }
     
     override func layoutSubviews() {
@@ -85,7 +89,7 @@ class DiaryView: BaseView {
     }
     
     deinit {
-        randomTopicView?.removeFromSuperview()
+        randomTopicView.removeFromSuperview()
         smeemToastView?.removeFromSuperview()
         toolTip?.removeFromSuperview()
     }
@@ -143,21 +147,19 @@ extension DiaryView {
     
     func updateRandomTopicView(isRandomTopicActive: Bool) {
         if isRandomTopicActive {
-            guard let randomTopicView = randomTopicView else { return }
-
             addSubview(randomTopicView)
             randomTopicView.snp.makeConstraints { make in
                 make.top.equalTo(navigationView.snp.bottom).offset(convertByHeightRatio(16))
                 make.leading.equalToSuperview()
             }
         } else {
-            randomTopicView?.removeFromSuperview()
+            randomTopicView.removeFromSuperview()
         }
     }
     
     func updateInputTextViewConstraints(isRandomTopicActive: Bool) {
         inputTextView.snp.remakeConstraints { make in
-            make.top.equalTo(isRandomTopicActive ? randomTopicView?.snp.bottom ?? 0 : navigationView.snp.bottom)
+            make.top.equalTo(isRandomTopicActive ? randomTopicView.snp.bottom ?? 0 : navigationView.snp.bottom)
             make.leading.trailing.equalToSuperview()
             make.bottom.equalTo(bottomView.snp.top)
         }
@@ -175,7 +177,7 @@ extension DiaryView {
     // MARK: - Tutorial
     
     private func checkTooltip() {
-        let randomTopicToolTip = UserDefaultsManager.randomSubjectToolTip
+        let randomTopicToolTip = UserDefaultsManager.randomTopicToolTip
 
         if !randomTopicToolTip {
             addSubview(toolTip ?? UIImageView())
@@ -210,13 +212,9 @@ extension DiaryView {
         navigationView.actionDelegate = delegate
     }
     
-    func setTextViewHandlerDelegate(_ viewController: DiaryViewController) {
-        inputTextView.textViewHandler?.textViewHandlerDelegate = viewController
-    }
-    
-    func setHintButtonDelegate(_ viewController: StepTwoKoreanDiaryViewController) {
-        bottomView.hintDelegate = viewController
-    }
+//    func setTextViewHandlerDelegate(_ viewController: DiaryViewController) {
+//        inputTextView.textViewHandler?.textViewHandlerDelegate = viewController
+//    }
     
     func setInputText(_ text: String) {
         inputTextView.text = text

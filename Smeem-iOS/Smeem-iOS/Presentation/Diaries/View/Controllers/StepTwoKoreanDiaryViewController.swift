@@ -6,91 +6,88 @@
 //
 
 import UIKit
+import Combine
 
 // MARK: - StepTwoKoreanDiaryViewController
 
-final class StepTwoKoreanDiaryViewController: DiaryViewController {
+final class StepTwoKoreanDiaryViewController: DiaryViewController<StepTwoKoreanDiaryViewModel> {
+    
+    // MARK: - Subjects
+    
+    private (set) var hintTextSubject = PassthroughSubject<String, Never>()
+    
+    private var cancelBag = Set<AnyCancellable>()
+    
+    // MARK: - Properties
+    
+    private let viewFactory = DiaryViewFactory()
     
     // MARK: - Life Cycle
+    
+    init(viewModel: StepTwoKoreanDiaryViewModel, text: String?) {
+        super.init(rootView: viewFactory.createStepTwoKoreanDiaryView(), viewModel: viewModel)
+        
+        rootView.configuration.layoutConfig?.updateHintViewText(with: text)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setNagivationBarDelegate()
-        setHintButtonDelegate()
+        // 왜 viewDidLoad에서 해야하지?
+        bind()
+        hintTextSubject.send(rootView.configuration.layoutConfig?.getHintViewText() ?? "")
     }
 }
-
-// MARK: - Extensions
 
 extension StepTwoKoreanDiaryViewController {
-    private func setNagivationBarDelegate() {
-        rootView?.setNavigationBarDelegate(self)
-    }
-    
-    private func setHintButtonDelegate() {
-        rootView?.setHintButtonDelegate(self)
-    }
-}
-
-// MARK: - NavigationBarActionDelegate
-
-extension StepTwoKoreanDiaryViewController: NavigationBarActionDelegate {
-    func didTapLeftButton() {
-        navigationController?.popViewController(animated: true)
-    }
-    
-    func didTapRightButton() {
-        if viewModel.onUpdateTextValidation.value == true {
-            // TODO: 다듬읍시다..
-            rootView?.inputTextView.resignFirstResponder()
-            viewModel.postDiaryAPI { postDiaryResponse in
-                self.handlePostDiaryResponse(postDiaryResponse)
+    private func bind() {
+        let input = StepTwoKoreanDiaryViewModel.Input(leftButtonTapped: rootView.navigationView.leftButtonTapped,
+                                                      rightButtonTapped: rootView.navigationView.rightButtonTapped,
+                                                      hintButtonTapped: rootView.bottomView.hintButtonTapped,
+                                                      hintTextsubject: hintTextSubject)
+        
+        let output = viewModel.transform(input: input)
+        
+        output.leftButtonAction
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.rootView.removeToolTip()
+                self?.navigationController?.popViewController(animated: true)
             }
-            AmplitudeManager.shared.track(event: AmplitudeConstant.diary.sec_step_complete.event)
-        } else {
-            viewModel.showRegExToast()
-        }
-    }
-}
-
-// MARK: - DataBindProtocol
-
-extension StepTwoKoreanDiaryViewController: DataBindProtocol {
-    func dataBind(topicID: Int?, inputText: String) {
-        viewModel.updateTopicID(topicID: topicID)
-        rootView?.configuration.layoutConfig?.hintTextView.text = inputText
-    }
-}
-
-// MARK: - HintActionDelegate
-
-extension StepTwoKoreanDiaryViewController: HintActionDelegate {
-    func didTapHintButton() {
-        viewModel.toggleIsHintShowed()
+            .store(in: &cancelBag)
         
-        let isHintShowed = viewModel.onUpdateHintButton.value
+        output.rightButtonAction
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.rootView.inputTextView.resignFirstResponder()
+                
+                let homeVC = HomeViewController()
+                let rootVC = UINavigationController(rootViewController: homeVC)
+                homeVC.changeRootViewControllerAndPresent(rootVC)
+            }
+            .store(in: &cancelBag)
         
-        rootView?.bottomView.updateHintButtonImage(isHintShowed)
+        output.hintButtonAction
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                guard let isHintShowed = self?.viewModel.getIsHintShowed()
+                else { return }
+                
+                self?.rootView.bottomView.updateHintButtonImage(isHintShowed)
+//                self?.rootView.configuration.layoutConfig?.hintTextView.text.removeAll()
+//                
+            }
+            .store(in: &cancelBag)
         
-        if isHintShowed {
-            postDeepLApi(diaryText: rootView?.configuration.layoutConfig?.getHintViewText() ?? "")
-        } else {
-            rootView?.configuration.layoutConfig?.hintTextView.text = viewModel.model.hintText
-        }
-        
-        AmplitudeManager.shared.track(event: AmplitudeConstant.diary.hint_click.event)
-    }
-}
-
-// MARK: - Network
-
-extension StepTwoKoreanDiaryViewController {
-    func postDeepLApi(diaryText: String) {
-        DeepLAPI.shared.postTargetText(text: diaryText) { [weak self] response in
-            self?.viewModel.updateHintText(hintText: diaryText)
-            self?.rootView?.configuration.layoutConfig?.hintTextView.text.removeAll()
-            self?.rootView?.configuration.layoutConfig?.hintTextView.text = response?.translations.first?.text
-        }
+        output.postHintResult
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] text in
+                self?.rootView.configuration.layoutConfig?.updateHintViewText(with: text)
+            }
+            .store(in: &cancelBag)
     }
 }

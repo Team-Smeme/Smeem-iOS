@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 protocol PlaceholderDelegate: AnyObject {
     var placeholderText: String? { get set }
@@ -14,7 +15,6 @@ protocol PlaceholderDelegate: AnyObject {
 
 protocol SmeemTextViewHandlerDelegate: AnyObject {
     func textViewDidChange(text: String, viewType: DiaryViewType)
-    func onUpdateInputText(_ text: String)
 }
 
 protocol PlaceholderDisplayable: AnyObject {
@@ -30,6 +30,7 @@ final class SmeemTextViewHandler: NSObject {
     
     weak var placeholderDelegate: PlaceholderDelegate?
     weak var textViewHandlerDelegate: SmeemTextViewHandlerDelegate?
+    private (set) var textDidChangeSubject = CurrentValueSubject<String?, Never>(nil)
     
     var viewType: DiaryViewType?
 }
@@ -71,7 +72,7 @@ extension SmeemTextViewHandler: UITextViewDelegate {
             textViewHandlerDelegate?.textViewDidChange(text: textView.text, viewType: viewType)
         }
         
-        textViewHandlerDelegate?.onUpdateInputText(textView.text ?? "")
+        textDidChangeSubject.send(textView.text ?? "")
     }
     
     func textViewDidChangeSelection(_ textView: UITextView) {
