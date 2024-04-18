@@ -21,10 +21,13 @@ final class HomeAPI {
             case .success(let response):
                 let statusCode = response.statusCode
                 do {
-                    guard let data = try response.map(GeneralResponse<HomeDiaryResponse>.self).data else { return }
+                    try NetworkManager.statusCodeErrorHandling(statusCode: response.statusCode)
+                    guard let data = try? response.map(GeneralResponse<HomeDiaryResponse>.self).data else {
+                        throw SmeemError.clientError
+                    }
                     completion(.success(data))
                 } catch {
-                    let error = NetworkManager.statusCodeErrorHandling(statusCode: statusCode)
+                    guard let error = error as? SmeemError else { return }
                     completion(.failure(error))
                 }
             case .failure(_):

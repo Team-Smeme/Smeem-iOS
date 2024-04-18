@@ -13,7 +13,7 @@ final class MyPageViewController: BaseViewController {
     
     // MARK: - Property
     
-    private var userInfo = MyPageResponse(username: "", target: "", way: "", detail: "", targetLang: "", hasPushAlarm: true, trainingTime: TrainingTime(day: "", hour: 0, minute: 0), badge: Badge(id: 0, name: "", type: "", imageUrl: ""))
+    private var userInfo = MyPageResponse(username: "", target: "", title: "", way: "", detail: "", targetLang: "", hasPushAlarm: true, trainingTime: TrainingTime(day: "", hour: 0, minute: 0), badge: Badge(id: 0, name: "", type: "", imageUrl: ""))
     var myPageSelectedIndexPath = ["MON": IndexPath(item: 0, section: 0), "TUE":IndexPath(item: 1, section: 0), "WED":IndexPath(item: 2, section: 0), "THU":IndexPath(item: 3, section: 0), "FRI":IndexPath(item: 4, section: 0), "SAT":IndexPath(item: 5, section: 0), "SUN":IndexPath(item: 6, section: 0)]
     var indexPathArray: [IndexPath] = []
     var hasAlarm = Bool()
@@ -258,8 +258,8 @@ final class MyPageViewController: BaseViewController {
     }
     
     @objc func howLearningViewTapped() {
-        let goalVC = EditGoalViewController(targetIndex: goalTextToIndex[userInfo.target]!.0,
-                                            tempTarget: goalTextToIndex[userInfo.target]!.1)
+        let goalVC = EditGoalViewController(targetIndex: goalTextToIndex[userInfo.title]!.0,
+                                            tempTarget: goalTextToIndex[userInfo.title]!.1)
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(goalDataReceived),
@@ -291,7 +291,7 @@ final class MyPageViewController: BaseViewController {
         let planWayTwo = planNameList[1]
         let detailPlan = userInfo.detail.split(separator: "\n").map{String($0)}
         
-        howLearningView.setData(planName: userInfo.target, planWayOne: planWayOne, planWayTwo: planWayTwo, detailPlanOne: detailPlan[0], detailPlanTwo: detailPlan[1])
+        howLearningView.setData(planName: userInfo.title, planWayOne: planWayOne, planWayTwo: planWayTwo, detailPlanOne: detailPlan[0], detailPlanTwo: detailPlan[1])
         nickNameLabel.text = userInfo.username
         let url = URL(string: userInfo.badge.imageUrl)
         badgeImage.kf.setImage(with: url)

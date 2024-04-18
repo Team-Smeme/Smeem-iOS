@@ -97,6 +97,7 @@ final class SmeemStartViewController: BaseViewController {
         let output = viewModel.transform(input: input)
         
         output.loginButtonTapped
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 let loginBottomSheetVC = LoginBottomSheetViewController()
                 let navigationController = UINavigationController(rootViewController: loginBottomSheetVC)
@@ -112,6 +113,7 @@ final class SmeemStartViewController: BaseViewController {
             .store(in: &cancelBag)
         
         output.startButtonTapped
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 let trainingGoalsVC = TrainingGoalViewController()
                 self?.navigationController?.pushViewController(trainingGoalsVC, animated: true)

@@ -21,6 +21,8 @@ struct cellStateModel {
 
 final class ServiceAcceptViewModel: ViewModel {
     
+    private let provider = OnboardingService()
+    
     struct Input {
         let totalViewTapped: PassthroughSubject<Void, Never>
         let cellSelected: PassthroughSubject<Int, Never>
@@ -106,7 +108,7 @@ final class ServiceAcceptViewModel: ViewModel {
             .flatMap { _ -> AnyPublisher<[PopupBadge], Never> in
                 return Future<[PopupBadge], Never> { promise in
                     // 온보딩 이탈 가능성 있기 때문에 clinetAccessToken 값 저장
-                    OnboardingAPI.shared.serviceAcceptedPatch(param: ServiceAcceptRequest(username: self.nickname,
+                    self.provider.serviceAcceptedPatch(param: ServiceAcceptRequest(username: self.nickname,
                                                                                           termAccepted: true),
                                                               accessToken: UserDefaultsManager.clientAccessToken) { result in
                         switch result {

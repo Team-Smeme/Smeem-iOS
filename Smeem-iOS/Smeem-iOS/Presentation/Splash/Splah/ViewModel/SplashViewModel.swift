@@ -10,12 +10,14 @@ import Combine
 
 final class SplashViewModel: ViewModel {
     
+    private let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
+    
     struct Input {
         let checkUpdatePopup: PassthroughSubject<Void, Never>
     }
     
     struct Output {
-        let updatePopupResult: AnyPublisher<Void, Never>
+        let updatePopupResult: AnyPublisher<UpdateTextModel, Never>
         let homeStartResult: AnyPublisher<Void, Never>
         let smeemStartResult: AnyPublisher<Void, Never>
         let errorResult: AnyPublisher<SmeemError, Never>
@@ -29,28 +31,35 @@ final class SplashViewModel: ViewModel {
     private let smeemStartResult = PassthroughSubject<Void, Never>()
     private var cancelBag = Set<AnyCancellable>()
     
+    private var provider: SplashServiceProtocol
+    
+    init(provider: SplashServiceProtocol) {
+        self.provider = provider
+    }
+    
     func transform(input: Input) -> Output {
         let updatePopupResult = input.checkUpdatePopup
             .handleEvents(receiveSubscription: { _ in
                 self.loadingViewResult.send(true)
             })
             .delay(for: 0.5, scheduler: DispatchQueue.global())
-            .flatMap { _ -> AnyPublisher<Void, Never> in
-                return Future<Void, Never> { promise in
-                    Task {
-                        do {
-                            let appStoreVersion = try await System().latestVersion()!.split(separator: ".").map{$0}
-                            let currentProjectVersion = System.appVersion!.split(separator: ".").map{$0}
-
-                            // 업데이트 팝업 띄우기
-                            if appStoreVersion[0] < currentProjectVersion[0] {
-                                promise(.success(()))
+            .flatMap { _ -> AnyPublisher<UpdateTextModel, Never> in
+                return Future<UpdateTextModel, Never> { promise in
+                    self.provider.updateGetAPI { result in
+                        switch result {
+                        case .success(let response):
+                            if self.checkVersion(client: self.appVersion,
+                                                 now: response.iosVersion.version,
+                                                 force: response.iosVersion.forceVersion) {
+                                
+                                promise(.success(UpdateTextModel(title: response.title,
+                                                                 content: response.content)))
                             } else {
                                 UserDefaultsManager.accessToken != "" ? self.tokenCheckResult.send(()) :
                                                                         self.smeemStartResult.send(())
                             }
-                        } catch let error {
-                            self.errorResult.send(error as! SmeemError)
+                        case .failure(let error):
+                            self.errorResult.send(error)
                         }
                     }
                 }
@@ -105,6 +114,23 @@ final class SplashViewModel: ViewModel {
                       errorResult: errorResult,
                       loadingViewResult: loadingViewResult)
         
+    }
+}
+
+extension SplashViewModel {
+    func checkVersion(client: String, now: String, force: String) -> Bool {
+        let clientVersion = client.split(separator: ".").map{$0}
+        let nowVersion = now.split(separator: ".").map{$0}
+        let forceVersion = force.split(separator: ".").map{$0}
+        
+        // force가 크고 현재 앱 버전이랑 now랑 다를 때 -> 강업
+        if forceVersion[0] > clientVersion[0] && clientVersion != nowVersion {
+            return true
+        } else {
+        // force가 크고, 현재 앱 버전이랑 now랑 같을 때 -> 강업하고 온 유저
+        // force가 안 큼 -> 강업할 필요 없는 상태
+            return false
+        }
     }
 }
     

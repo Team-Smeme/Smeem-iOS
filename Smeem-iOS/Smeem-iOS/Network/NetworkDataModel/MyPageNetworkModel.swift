@@ -10,7 +10,7 @@ import Foundation
 // MARK: - My Page
 
 struct MyPageResponse: Codable {
-    let username, target, way, detail: String
+    let username, target, title, way, detail: String
     let targetLang: String
     var hasPushAlarm: Bool
     let trainingTime: TrainingTime
@@ -18,7 +18,7 @@ struct MyPageResponse: Codable {
 }
 
 extension MyPageResponse {
-    static let empty = MyPageResponse(username: "", target: "", way: "", detail: "", targetLang: "", hasPushAlarm: false,
+    static let empty = MyPageResponse(username: "", target: "", title: "", way: "", detail: "", targetLang: "", hasPushAlarm: false,
                                       trainingTime: TrainingTime(day: "", hour: 0, minute: 0),
                                       badge: Badge(id: 0, name: "", type: "", imageUrl: ""))
 }

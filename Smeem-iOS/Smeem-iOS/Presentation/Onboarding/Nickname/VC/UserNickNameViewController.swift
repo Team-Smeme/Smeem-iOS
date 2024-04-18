@@ -10,7 +10,7 @@ import Combine
 
 final class UserNicknameViewController: BaseViewController {
     
-    private let viewModel = UserNicknameViewModel()
+    private let viewModel = UserNicknameViewModel(provider: OnboardingService())
     
     // MARK: Publisher
     
@@ -102,12 +102,14 @@ final class UserNicknameViewController: BaseViewController {
         let output = viewModel.transform(input: input)
         
         output.textFieldResult
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] type in
                 self?.nextButton.changeButtonType(buttonType: type)
             }
             .store(in: &cancelBag)
         
         output.nextButtonResult
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 let serviceVC = ServiceAcceptViewController(nickname: (self?.nicknameTextField.text!)!)
                 self?.navigationController?.pushViewController(serviceVC, animated: true)
@@ -115,6 +117,7 @@ final class UserNicknameViewController: BaseViewController {
             .store(in: &cancelBag)
         
         output.nicknameDuplicateResult
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 self?.doubleCheckLabel.isHidden = false
                 self?.nextButton.changeButtonType(buttonType: .enabled)
@@ -122,12 +125,14 @@ final class UserNicknameViewController: BaseViewController {
             .store(in: &cancelBag)
         
         output.loadingViewResult
+            .receive(on: DispatchQueue.main)
             .sink { isShown in
                 isShown ? SmeemLoadingView.showLoading() : SmeemLoadingView.hideLoading()
             }
             .store(in: &cancelBag)
         
         output.errorResult
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] error in
                 self?.showToast(toastType: .smeemErrorToast(message: error))
             }

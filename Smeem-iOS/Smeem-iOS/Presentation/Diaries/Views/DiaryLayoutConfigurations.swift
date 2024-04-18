@@ -1,5 +1,5 @@
 //
-//  DiaryLayoutConfigurations.swift
+//  StepTwoKoreanLayoutConfig.swift
 //  Smeem-iOS
 //
 //  Created by Joon Baek on 2023/10/04.

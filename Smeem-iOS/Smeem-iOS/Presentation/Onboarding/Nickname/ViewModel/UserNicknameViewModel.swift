@@ -10,6 +10,8 @@ import Combine
 
 final class UserNicknameViewModel: ViewModel {
     
+    var provider: OnboardingServiceProtocol!
+    
     struct Input {
         let textFieldSubject: PassthroughSubject<String, Never>
         let nextButtonTapped: PassthroughSubject<String, Never>
@@ -28,6 +30,10 @@ final class UserNicknameViewModel: ViewModel {
     private let nicknameDuplicateSubject = PassthroughSubject<Void, Never>()
     private let loadingViewSubject = PassthroughSubject<Bool, Never>()
     
+    init(provider: OnboardingServiceProtocol) {
+        self.provider = provider
+    }
+    
     func transform(input: Input) -> Output {
         let textFieldResult = input.textFieldSubject
             .compactMap{$0}
@@ -39,10 +45,11 @@ final class UserNicknameViewModel: ViewModel {
         let nextButtonResult = input.nextButtonTapped
             .handleEvents(receiveSubscription: { _ in
                 self.loadingViewSubject.send(true)
+                print("여기로 들어옴")
             })
             .flatMap { text -> AnyPublisher<Void, Never> in
                 return Future<Void, Never> { promise in
-                    OnboardingAPI.shared.ninknameCheckAPI(userName: text,
+                    self.provider.ninknameCheckAPI(userName: text,
                                                           accessToken: UserDefaultsManager.clientAccessToken) { result in
                         switch result {
                         case .success(let response):
@@ -50,9 +57,11 @@ final class UserNicknameViewModel: ViewModel {
                             if response.isExist {
                                 self.nicknameDuplicateSubject.send(())
                             } else {
+                                print("그리고 여기로?")
                                 promise(.success(()))
                             }
                         case .failure(let error):
+                            print("여기는?")
                             self.errorSubject.send(error)
                         }
                     }

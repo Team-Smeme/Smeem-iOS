@@ -16,16 +16,15 @@ final class MyPageAPI {
         myPageProvider.request(.myPageInfo) { result in
             switch result {
             case .success(let response):
-                let statusCode = response.statusCode
-                
                 do {
-                    guard let data = try response.map(GeneralResponse<MyPageResponse>.self).data else {
-                        throw NetworkManager.statusCodeErrorHandling(statusCode: statusCode)
+                    try NetworkManager.statusCodeErrorHandling(statusCode: response.statusCode)
+                    guard let data = try? response.map(GeneralResponse<MyPageResponse>.self).data else {
+                        throw SmeemError.clientError
                     }
-                    
                     completion(.success(data))
                 } catch {
-                    completion(.failure(error as! SmeemError))
+                    guard let error = error as? SmeemError else { return }
+                    completion(.failure(error))
                 }
             case .failure(_):
                 completion(.failure(.userError))
@@ -38,15 +37,15 @@ final class MyPageAPI {
         myPageProvider.request(.editNickname(param: request)) { result in
             switch result {
             case .success(let response):
-                let statusCode = response.statusCode
-                
                 do {
+                    try NetworkManager.statusCodeErrorHandling(statusCode: response.statusCode)
                     guard let data = try response.map(GeneralResponse<ServiceAcceptResponse>.self).data else {
-                        throw NetworkManager.statusCodeErrorHandling(statusCode: statusCode)
+                        throw SmeemError.clientError
                     }
                     completion(.success(data))
                 } catch {
-                    completion(.failure(error as! SmeemError))
+                    guard let error = error as? SmeemError else { return }
+                    completion(.failure(error))
                 }
                 
             case .failure(_):
@@ -60,15 +59,15 @@ final class MyPageAPI {
         myPageProvider.request(.checkNinkname(param: param)) { result in
             switch result {
             case .success(let response):
-                let statusCode = response.statusCode
-                
                 do {
+                    try NetworkManager.statusCodeErrorHandling(statusCode: response.statusCode)
                     guard let data = try? response.map(GeneralResponse<NicknameCheckResponse>.self).data else {
-                        throw NetworkManager.statusCodeErrorHandling(statusCode: statusCode)
+                        throw SmeemError.clientError
                     }
                     completion(.success(data))
                 } catch {
-                    completion(.failure(error as! SmeemError))
+                    guard let error = error as? SmeemError else { return }
+                    completion(.failure(error))
                 }
             case .failure(_):
                 completion(.failure(.userError))
@@ -81,13 +80,14 @@ final class MyPageAPI {
         myPageProvider.request(.editGoal(param: param)) { result in
             switch result {
             case .success(let response):
-                let statusCode = response.statusCode
-                
                 do {
-                    guard let data = try response.map(GeneralResponse<NilType>?.self) else { return }
+                    try NetworkManager.statusCodeErrorHandling(statusCode: response.statusCode)
+                    guard let data = try? response.map(GeneralResponse<NilType>.self) else {
+                        throw SmeemError.clientError
+                    }
                     completion(.success(data))
                 } catch {
-                    let error = NetworkManager.statusCodeErrorHandling(statusCode: statusCode)
+                    guard let error = error as? SmeemError else { return }
                     completion(.failure(error))
                 }
             case .failure(_):
@@ -100,13 +100,14 @@ final class MyPageAPI {
         myPageProvider.request(.badgeList) { result in
             switch result {
             case .success(let response):
-                let statusCode = response.statusCode
-                
                 do {
-                    guard let data = try response.map(GeneralResponse<MyPageBadgeListReponse>?.self)?.data?.badgeTypes else { return }
+                    try NetworkManager.statusCodeErrorHandling(statusCode: response.statusCode)
+                    guard let data = try? response.map(GeneralResponse<MyPageBadgeListReponse>.self).data?.badgeTypes else {
+                        throw SmeemError.clientError
+                    }
                     completion(.success(data))
                 } catch {
-                    let error = NetworkManager.statusCodeErrorHandling(statusCode: statusCode)
+                    guard let error = error as? SmeemError else { return }
                     completion(.failure(error))
                 }
             case .failure(_):
@@ -120,13 +121,14 @@ final class MyPageAPI {
         myPageProvider.request(.myPageUserPlan(param: param)) { result in
             switch result {
             case .success(let response):
-                let statusCode = response.statusCode
-                
                 do {
-                    guard let data = try response.map(GeneralResponse<NilType>?.self) else { return }
+                    try NetworkManager.statusCodeErrorHandling(statusCode: response.statusCode)
+                    guard let data = try? response.map(GeneralResponse<NilType>.self) else {
+                        throw SmeemError.clientError
+                    }
                     completion(.success(data))
                 } catch {
-                    let error = NetworkManager.statusCodeErrorHandling(statusCode: statusCode)
+                    guard let error = error as? SmeemError else { return }
                     completion(.failure(error))
                 }
             case .failure(_):
@@ -140,12 +142,14 @@ final class MyPageAPI {
         myPageProvider.request(.editAlarmTime(param: param)) { result in
             switch result {
             case .success(let response):
-                let statusCode = response.statusCode
                 do {
-                    guard let data = try response.map(GeneralResponse<NilType>?.self) else { return }
+                    try NetworkManager.statusCodeErrorHandling(statusCode: response.statusCode)
+                    guard let data = try? response.map(GeneralResponse<NilType>.self) else {
+                        throw SmeemError.clientError
+                    }
                     completion(.success(data))
                 } catch {
-                    let error = NetworkManager.statusCodeErrorHandling(statusCode: statusCode)
+                    guard let error = error as? SmeemError else { return }
                     completion(.failure(error))
                 }
             case .failure(_):
@@ -159,13 +163,14 @@ final class MyPageAPI {
         myPageProvider.request(.editPush(param: param)) { result in
             switch result {
             case .success(let response):
-                let statusCode = response.statusCode
-                
                 do {
-                    guard let data = try response.map(GeneralResponse<NilType>?.self) else { return }
+                    try NetworkManager.statusCodeErrorHandling(statusCode: response.statusCode)
+                    guard let data = try response.map(GeneralResponse<NilType>?.self) else {
+                        throw SmeemError.clientError
+                    }
                     completion(.success(data))
                 } catch {
-                    let error = NetworkManager.statusCodeErrorHandling(statusCode: statusCode)
+                    guard let error = error as? SmeemError else { return }
                     completion(.failure(error))
                 }
             case .failure(_):

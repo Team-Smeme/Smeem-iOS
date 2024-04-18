@@ -13,17 +13,17 @@ final class RandomTopicAPI {
     private let randomTopicProvider = MoyaProvider<RandomTopicService>(plugins: [MoyaLoggingPlugin()])
     
     func getRandomSubject(completion: @escaping (Result<RandomTopicResponse, SmeemError>) -> Void) {
-        randomTopicProvider.request(.randomSubject) { response in
-            switch response {
-            case .success(let result):
-                let statusCode = result.statusCode
-                
+        randomTopicProvider.request(.randomSubject) { result in
+            switch result {
+            case .success(let response):
                 do {
-                    guard let data = try result.map(GeneralResponse<RandomTopicResponse>.self).data else { return }
+                    try NetworkManager.statusCodeErrorHandling(statusCode: response.statusCode)
+                    guard let data = try? response.map(GeneralResponse<RandomTopicResponse>.self).data else {
+                        throw SmeemError.clientError
+                    }
                     completion(.success(data))
-                    
                 } catch {
-                    let error = NetworkManager.statusCodeErrorHandling(statusCode: statusCode)
+                    guard let error = error as? SmeemError else { return }
                     completion(.failure(error))
                 }
             case .failure(_):

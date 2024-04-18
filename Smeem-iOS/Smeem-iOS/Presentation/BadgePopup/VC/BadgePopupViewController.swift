@@ -7,16 +7,26 @@
 
 import UIKit
 import StoreKit
+import Combine
 
 import SnapKit
 
+enum BadgeButtonType {
+    case cancel
+    case more
+}
+
 final class BadgePopupViewController: UIViewController, SKStoreProductViewControllerDelegate {
     
-    // MARK: - Property
+    private let viewModel = BadgePopupViewModel()
     
-    private var type = ""
+    // MARK: Publisher
     
-    // MARK: - UI Property
+    private let viewWillAppearSubject = PassthroughSubject<Void, Never>()
+    private let amplitudeSujbect = PassthroughSubject<BadgeButtonType, Never>()
+    private var cancelBag = Set<AnyCancellable>()
+    
+    // MARK: UI Properties
     
     private let popupView: UIView = {
         let view = UIView()
@@ -59,81 +69,106 @@ final class BadgePopupViewController: UIViewController, SKStoreProductViewContro
         button.backgroundColor = .gray100
         button.titleLabel?.font = .c2
         button.setTitleColor(.gray600, for: .normal)
-        button.addTarget(self, action: #selector(cancelButtonDidTap), for: .touchUpInside)
         return button
     }()
     
     private lazy var presentBadgeListButton: SmeemButton = {
         let button = SmeemButton(buttonType: .enabled, text: "배지 모두보기")
         button.titleLabel?.font = .c2
-        button.addTarget(self, action: #selector(badgeButtonDidTap), for: .touchUpInside)
         return button
     }()
     
-    // MARK: - Life Cycle
+    // MARK: Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setBackgroundColor()
         setLayout()
+        bind()
     }
     
-    // MARK: - @objc
+    override func viewWillAppear(_ animated: Bool) {
+        viewWillAppearSubject.send(())
+    }
     
-    @objc func cancelButtonDidTap() {
-        if type == "EVENT" {
-            AmplitudeManager.shared.track(event: AmplitudeConstant.badge.welcome_quit_click.event)
-        }
+    init(popupBadge: [PopupBadge]) {
+        super.init(nibName: nil, bundle: nil)
+        self.viewModel.popupBadge = popupBadge
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    
+    // MARK: - Method
+    
+    private func bind() {
+        cancleButton.tapPublisher
+            .sink { [weak self] _ in
+                self?.amplitudeSujbect.send(.cancel)
+            }
+            .store(in: &cancelBag)
         
-        self.dismiss(animated: true)
-    }
-    
-    @objc func badgeButtonDidTap() {
-        setBadgeMoreAmplitude(type: type)
-        let badgeListVC = BadgeListViewController()
-        badgeListVC.modalTransitionStyle = .crossDissolve
-        badgeListVC.modalPresentationStyle = .fullScreen
-        self.present(badgeListVC, animated: true)
-    }
-    
-    // MARK: - Custom Method
-    
-    func setData(_ popupData: [PopupBadge]) {
-        for popup in popupData {
-            let url = URL(string: popup.imageUrl)
-            badgeImage.kf.setImage(with: url)
-            badgeTitleLabel.text = popup.name
-            badgeDetailLabel.text = """
-                                    축하해요!
-                                    \(popup.name)를 획득했어요!
-                                    """
-            type = popup.type
-        }
+        presentBadgeListButton.tapPublisher
+            .sink { [weak self] _ in
+                self?.amplitudeSujbect.send(.more)
+            }
+            .store(in: &cancelBag)
         
-        if popupData[0].name == "열 번째 일기" {
-            if let scene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {
-                DispatchQueue.main.async {
-                    SKStoreReviewController.requestReview(in: scene)
+        let input = BadgePopupViewModel.Input(viewWillAppearSubject: viewWillAppearSubject,
+                                              amplitudeSujbect: amplitudeSujbect)
+        let output = viewModel.transform(input: input)
+        
+        output.viewWillAppearResult
+            .sink { [weak self] popupBadge in
+                for popup in popupBadge {
+                    let url = URL(string: popup.imageUrl)
+                    self?.badgeImage.kf.setImage(with: url)
+                    self?.badgeTitleLabel.text = popup.name
+                    self?.badgeDetailLabel.text = """
+                                                축하해요!
+                                                \(popup.name)를 획득했어요!
+                                                """
                 }
             }
-        }
+            .store(in: &cancelBag)
+        
+        output.cancelButtonResult
+            .sink { [weak self] _ in
+                self?.dismiss(animated: true)
+            }
+            .store(in: &cancelBag)
+        
+        output.moreBadgeListResult
+            .sink { [weak self] _ in
+                let badgeListVC = BadgeListViewController()
+                badgeListVC.modalTransitionStyle = .crossDissolve
+                badgeListVC.modalPresentationStyle = .fullScreen
+                self?.present(badgeListVC, animated: true)
+            }
+            .store(in: &cancelBag)
+        
+        output.reviewPopupResult
+            .sink { _ in
+                if let scene = UIApplication.shared.connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {
+                    DispatchQueue.main.async {
+                        SKStoreReviewController.requestReview(in: scene)
+                    }
+                }
+            }
+            .store(in: &cancelBag)
     }
     
     func productViewControllerDidFinish(_ viewController: SKStoreProductViewController) {
         viewController.dismiss(animated: true)
     }
-    
-    // MARK: - Layout
-    
-    private func setBadgeMoreAmplitude(type: String) {
-        if type == "EVENT" {
-            AmplitudeManager.shared.track(event: AmplitudeConstant.badge.welcome_more_click.event)
-        } else {
-            AmplitudeManager.shared.track(event: AmplitudeConstant.badge.badge_more_click(type).event)
-        }
-    }
-    
+}
+
+// MARK: - Layout
+
+extension BadgePopupViewController {
     private func setBackgroundColor() {
         view.backgroundColor = .popupBackground
     }
@@ -179,5 +214,4 @@ final class BadgePopupViewController: UIViewController, SKStoreProductViewContro
             $0.height.equalTo(convertByHeightRatio(50))
         }
     }
-
 }

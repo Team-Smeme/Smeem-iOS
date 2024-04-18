@@ -35,12 +35,17 @@ final class TrainingAlarmViewModel: ViewModel {
     private let loadingViewSubject = PassthroughSubject<Bool, Never>()
     
     var target = ""
-    private var authType = AuthType.signup
-    private var trainingPlanRequest = TrainingPlanRequest(target: "DEVELOP",
-                                                          trainingTime: TrainingTime(day: "MON,TUE,WED,THU,FRI",
-                                                                                     hour: 22,
-                                                                                     minute: 0),
-                                                          hasAlarm: true)
+    var trainingPlanRequest = TrainingPlanRequest(target: "DEVELOP",
+                                                  trainingTime: TrainingTime(day: "MON,TUE,WED,THU,FRI",
+                                                                             hour: 22,
+                                                                             minute: 0),
+                                                  hasAlarm: true)
+    var authType = AuthType.signup
+    private var provider: OnboardingServiceProtocol
+    
+    init(provider: OnboardingServiceProtocol) {
+        self.provider = provider
+    }
     
     func transform(input: Input) -> Output {
         input.viewWillAppearSubject
@@ -56,7 +61,6 @@ final class TrainingAlarmViewModel: ViewModel {
                 let minute = data.minute == "00" ? 0 : 30
                 self.trainingPlanRequest.trainingTime.hour = hour
                 self.trainingPlanRequest.trainingTime.minute = minute
-                print(self.trainingPlanRequest)
             })
             .store(in: &cancelBag)
         
@@ -99,11 +103,11 @@ final class TrainingAlarmViewModel: ViewModel {
             .flatMap { _ -> AnyPublisher<Void, Never> in
                 return Future<Void, Never> { promise in
                     // 온보딩 이탈 가능성 있기 때문에 clinetAccessToken 값 저장
-                    OnboardingAPI.shared.userPlanPathAPI(param: self.trainingPlanRequest,
-                                                         accessToken: UserDefaultsManager.clientAccessToken) { result in
+                    self.provider.userPlanPathAPI(param: self.trainingPlanRequest,
+                                                  accessToken: UserDefaultsManager.clientAccessToken) { result in
                         
                         switch result {
-                        case .success(_):
+                        case .success(let response):
                             promise(.success(()))
                         case .failure(let error):
                             self.errorSubject.send(error)

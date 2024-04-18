@@ -19,7 +19,7 @@ final class SmeemLoadingView: UIActivityIndicatorView {
             } else {
                 loadingIndicatorView = UIActivityIndicatorView(style: .medium)
                 loadingIndicatorView.frame = window.frame
-                loadingIndicatorView.backgroundColor = .popupBackground
+                loadingIndicatorView.backgroundColor = .clear
                 window.addSubview(loadingIndicatorView)
             }
 

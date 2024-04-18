@@ -21,8 +21,8 @@ final class PushTestAPI {
                     guard let data = try response.map(GeneralResponse<NilType>?.self) else { return }
                     completion(.success(data))
                 } catch {
-                    let error = NetworkManager.statusCodeErrorHandling(statusCode: statusCode)
-                    completion(.failure(error))
+//                    let error = NetworkManager.statusCodeErrorHandling(statusCode: statusCode)
+                    completion(.failure(error as! SmeemError))
                 }
                 
             case .failure(_):
