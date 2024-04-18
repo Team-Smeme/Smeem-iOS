@@ -23,11 +23,11 @@
 		3728B8D52A2CFF2C00EF4CF8 /* StepOneKoreanDiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3728B8D42A2CFF2C00EF4CF8 /* StepOneKoreanDiaryViewController.swift */; };
 		3728B8D72A2CFF3A00EF4CF8 /* StepTwoKoreanDiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3728B8D62A2CFF3A00EF4CF8 /* StepTwoKoreanDiaryViewController.swift */; };
 		373E38592A2F889500DF96F0 /* DiaryDetailRandomSubjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373E38582A2F889500DF96F0 /* DiaryDetailRandomSubjectView.swift */; };
-		37499E3D2BD0C3A100BA6FAF /* SharedDiaryDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37499E3C2BD0C3A100BA6FAF /* SharedDiaryDataService.swift */; };
 		374F828C2AC327A200C128B9 /* SmeemTextViewHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374F828B2AC327A200C128B9 /* SmeemTextViewHandler.swift */; };
 		374F828E2AC5DFFE00C128B9 /* DiaryBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374F828D2AC5DFFE00C128B9 /* DiaryBottomView.swift */; };
 		374FAF812A2CACCF00237A1A /* DiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374FAF802A2CACCF00237A1A /* DiaryViewController.swift */; };
 		3761116C2A278D0E0095EC5A /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3761116B2A278D0E0095EC5A /* String+.swift */; };
+		3785072F2BD1480C004CC922 /* SharedDiaryDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37499E3C2BD0C3A100BA6FAF /* SharedDiaryDataService.swift */; };
 		378B20EE2BA0A01600604935 /* ForeignDiaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378B20ED2BA0A01600604935 /* ForeignDiaryViewModel.swift */; };
 		378B20F02BA0A02400604935 /* StepOneKoreanDiaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378B20EF2BA0A02400604935 /* StepOneKoreanDiaryViewModel.swift */; };
 		378B20F22BA0A03000604935 /* StepTwoKoreanDiaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378B20F12BA0A03000604935 /* StepTwoKoreanDiaryViewModel.swift */; };
@@ -454,7 +454,6 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-			path = Model;
 		371E94172A87DA6E0098280F /* EditGoal */ = {
 			isa = PBXGroup;
 			children = (
@@ -1640,6 +1639,7 @@
 				4AB7C91B2B7624CC00845733 /* ServiceAcceptAppData.swift in Sources */,
 				4AC707B42B73D2D400B1D791 /* UserNicknameViewModel.swift in Sources */,
 				4AEB82952A4CB4F200C1114B /* BadgePopupViewController.swift in Sources */,
+				3785072F2BD1480C004CC922 /* SharedDiaryDataService.swift in Sources */,
 				4AB7C9302B78B44500845733 /* LoginBottomSheetViewController.swift in Sources */,
 				4A08480E2B555FD0008327C7 /* AmplitudeConstant.swift in Sources */,
 				4A3774842A42E6EA00357DD1 /* ConfigConstant.swift in Sources */,

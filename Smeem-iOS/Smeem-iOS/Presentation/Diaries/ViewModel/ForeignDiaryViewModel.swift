@@ -61,11 +61,10 @@ final class ForeignDiaryViewModel: DiaryViewModel {
                 }
                 
                 return Future<Void, Never> { promise in
-                    guard let inputText = self?.getDiaryText() else {
-                        return
-                    }
+                    guard let inputText = self?.getDiaryText() else { return }
+                    let topicID = SharedDiaryDataService.shared.topicID
                     
-                    PostDiaryAPI.shared.postDiary(param: PostDiaryRequest(content: inputText, topicId: self?.getTopicID())) { result in
+                    PostDiaryAPI.shared.postDiary(param: PostDiaryRequest(content: inputText, topicId: topicID)) { result in
                         switch result {
                         case .success(let response):
                             self?.updateDiaryInfo(diaryID: response.diaryID, badgePopupContent: response.badges)

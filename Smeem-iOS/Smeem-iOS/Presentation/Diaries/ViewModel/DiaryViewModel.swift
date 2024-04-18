@@ -98,7 +98,7 @@ extension DiaryViewModel {
     }
     
     func updateTopicID(to id: Int?) {
-        model.topicID = id
+        SharedDiaryDataService.shared.topicID = id
     }
     
     func updateTopicStatus(isTopicCalled: Bool, topicContent: String?) {

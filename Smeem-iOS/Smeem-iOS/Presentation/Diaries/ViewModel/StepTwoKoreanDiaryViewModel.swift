@@ -50,16 +50,12 @@ final class StepTwoKoreanDiaryViewModel: DiaryViewModel {
         let rightButtonAction = input.rightButtonTapped
             .filter { [weak self] in self?.textValidationState.value == true }
             .handleEvents(receiveSubscription: { [weak self] _ in
-                if self?.isRandomTopicActive.value == false {
-                    self?.updateTopicID(to: nil)
-                }
-                
                 self?.loadingViewResult.send(true)
             })
             .flatMap { [weak self] _ -> AnyPublisher<Void, Never> in
                 return Future<Void, Never> { promise in
-                    guard let inputText = self?.getDiaryText(),
-                          let topicID = SharedDiaryDataService.shared.topicID else { return }
+                    guard let inputText = self?.getDiaryText() else { return }
+                    let topicID = SharedDiaryDataService.shared.topicID
                     
                     PostDiaryAPI.shared.postDiary(param: PostDiaryRequest(content: inputText, topicId: topicID)) { result in
                         switch result {

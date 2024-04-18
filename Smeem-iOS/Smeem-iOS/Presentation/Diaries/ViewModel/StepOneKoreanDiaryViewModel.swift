@@ -54,6 +54,8 @@ final class StepOneKoreanDiaryViewModel: DiaryViewModel {
             .handleEvents(receiveOutput: { [weak self] _ in
                 if self?.isRandomTopicActive.value == false {
                     self?.updateTopicID(to: nil)
+                } else {
+                    SharedDiaryDataService.shared.topicID = self?.model.topicID
                 }
             })
             .eraseToAnyPublisher()
