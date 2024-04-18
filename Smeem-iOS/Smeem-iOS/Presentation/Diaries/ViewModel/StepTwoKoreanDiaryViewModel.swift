@@ -21,7 +21,6 @@ final class StepTwoKoreanDiaryViewModel: DiaryViewModel {
         let rightButtonAction: AnyPublisher<Void, Never>
         let hintButtonAction: AnyPublisher<Bool, Never>
         let postHintResult: AnyPublisher<String?, Never>
-        let koreanDiaryResult: AnyPublisher<String?, Never>
         let errorResult: AnyPublisher<SmeemError, Never>
         let loadingViewAction: AnyPublisher<Bool, Never>
     }
@@ -49,18 +48,20 @@ final class StepTwoKoreanDiaryViewModel: DiaryViewModel {
             .eraseToAnyPublisher()
         
         let rightButtonAction = input.rightButtonTapped
+            .filter { [weak self] in self?.textValidationState.value == true }
             .handleEvents(receiveSubscription: { [weak self] _ in
+                if self?.isRandomTopicActive.value == false {
+                    self?.updateTopicID(to: nil)
+                }
+                
                 self?.loadingViewResult.send(true)
             })
             .flatMap { [weak self] _ -> AnyPublisher<Void, Never> in
-                if self?.isRandomTopicActive.value == false {
-                    self?.updateTopicID(topicID: nil)
-                }
-                
                 return Future<Void, Never> { promise in
-                    guard let inputText = self?.getDiaryText() else { return }
+                    guard let inputText = self?.getDiaryText(),
+                          let topicID = SharedDiaryDataService.shared.topicID else { return }
                     
-                    PostDiaryAPI.shared.postDiary(param: PostDiaryRequest(content: inputText, topicId: self?.getTopicID())) { result in
+                    PostDiaryAPI.shared.postDiary(param: PostDiaryRequest(content: inputText, topicId: topicID)) { result in
                         switch result {
                         case .success(let response):
                             self?.updateDiaryInfo(diaryID: response.diaryID, badgePopupContent: response.badges)
@@ -100,7 +101,6 @@ final class StepTwoKoreanDiaryViewModel: DiaryViewModel {
             }
             .store(in: &cancelBag)
         
-        let koreanDiaryResult = diaryTextSubject.eraseToAnyPublisher()
         let errorResult = errorResult.eraseToAnyPublisher()
         let loadingViewResult = loadingViewResult.eraseToAnyPublisher()
         
@@ -108,7 +108,6 @@ final class StepTwoKoreanDiaryViewModel: DiaryViewModel {
                       rightButtonAction: rightButtonAction,
                       hintButtonAction: hintButtonAction,
                       postHintResult: postHintResult,
-                      koreanDiaryResult: koreanDiaryResult,
                       errorResult: errorResult,
                       loadingViewAction: loadingViewResult)
     }

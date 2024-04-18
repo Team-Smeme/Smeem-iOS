@@ -37,13 +37,12 @@ final class ForeignDiaryViewModel: DiaryViewModel {
     
     override init(model: DiaryModel) {
         super.init(model: model)
-        
-        self.callRandomTopicAPI({})
     }
     
     func transform(input: Input) -> Output {
         input.viewDidLoadSubject
             .sink { [weak self] in
+                self?.callRandomTopicAPI({})
                 self?.toolTipSubject.send()
             }
             .store(in: &cancelBag)
@@ -52,12 +51,13 @@ final class ForeignDiaryViewModel: DiaryViewModel {
             .eraseToAnyPublisher()
         
         let rightButtonAction = input.rightButtonTapped
+            .filter { [weak self] in self?.textValidationState.value == true }
             .handleEvents(receiveSubscription: { [weak self] _ in
                 self?.loadingViewResult.send(true)
             })
             .flatMap { [weak self] _ -> AnyPublisher<Void, Never> in
                 if self?.isRandomTopicActive.value == false {
-                    self?.updateTopicID(topicID: nil)
+                    self?.updateTopicID(to: nil)
                 }
                 
                 return Future<Void, Never> { promise in
@@ -121,8 +121,6 @@ final class ForeignDiaryViewModel: DiaryViewModel {
                 AmplitudeManager.shared.track(event: AmplitudeConstant.diary.diary_complete.event)
             }
             .store(in: &cancelBag)
-        
-        let loadingViewResult = loadingViewResult.eraseToAnyPublisher()
         
         let loadingViewResult = loadingViewResult.eraseToAnyPublisher()
         

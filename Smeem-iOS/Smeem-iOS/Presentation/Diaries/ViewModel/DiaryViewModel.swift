@@ -24,7 +24,6 @@ class DiaryViewModel: ViewModel {
     // MARK: - Subjects
     
     private (set) var isRandomTopicActive = CurrentValueSubject<Bool, Never>(false)
-    private (set) var diaryTextSubject = CurrentValueSubject<String?, Never>(nil)
     private (set) var topicContentSubject = CurrentValueSubject<String?, Never>(nil)
     private (set) var textValidationState = CurrentValueSubject<Bool, Never>(false)
     private let errorResult = PassthroughSubject<SmeemError, Never>()
@@ -54,7 +53,6 @@ class DiaryViewModel: ViewModel {
                 else { return }
                 
                 self?.textValidationState.send(isValid)
-                self?.diaryTextSubject.send(text)
                 self?.diaryText = text
             }
             .store(in: &cancelBag)
@@ -99,6 +97,10 @@ extension DiaryViewModel {
         return diaryText
     }
     
+    func updateTopicID(to id: Int?) {
+        model.topicID = id
+    }
+    
     func updateTopicStatus(isTopicCalled: Bool, topicContent: String?) {
         model.isTopicCalled = isTopicCalled
         model.topicContent = topicContent
@@ -107,10 +109,6 @@ extension DiaryViewModel {
     func updateDiaryInfo(diaryID: Int, badgePopupContent: [PopupBadge]) {
         model.diaryID = diaryID
         model.badgePopupContent = badgePopupContent
-    }
-    
-    func updateTopicID(topicID: Int?) {
-        model.topicID = topicID
     }
     
     func sendError(_ error: SmeemError) {
@@ -128,6 +126,7 @@ extension DiaryViewModel {
                 self?.model.topicID = response.topicId
                 self?.model.topicContent = response.content
                 self?.topicContentSubject.value = response.content
+                SharedDiaryDataService.shared.topicID = self?.model.topicID
                 completion()
                 
             case .failure(let error):

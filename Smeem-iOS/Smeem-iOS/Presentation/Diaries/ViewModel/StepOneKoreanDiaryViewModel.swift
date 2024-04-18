@@ -36,13 +36,12 @@ final class StepOneKoreanDiaryViewModel: DiaryViewModel {
     
     override init(model: DiaryModel) {
         super.init(model: model)
-        
-        self.callRandomTopicAPI({})
     }
     
     func transform(input: Input) -> Output {
         input.viewDidLoadSubject
             .sink { [weak self] in
+                self?.callRandomTopicAPI({})
                 self?.toolTipSubject.send()
             }
             .store(in: &cancelBag)
@@ -54,13 +53,8 @@ final class StepOneKoreanDiaryViewModel: DiaryViewModel {
             .filter { [weak self] in self?.textValidationState.value == true }
             .handleEvents(receiveOutput: { [weak self] _ in
                 if self?.isRandomTopicActive.value == false {
-                    self?.updateTopicID(topicID: nil)
+                    self?.updateTopicID(to: nil)
                 }
-                
-                guard let inputText = self?.getDiaryText() else { return }
-                
-                self?.diaryTextSubject.send(inputText)
-                self?.amplitudeSubject.send()
             })
             .eraseToAnyPublisher()
         
