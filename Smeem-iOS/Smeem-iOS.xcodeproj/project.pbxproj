@@ -454,6 +454,7 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+			path = Model;
 		371E94172A87DA6E0098280F /* EditGoal */ = {
 			isa = PBXGroup;
 			children = (
