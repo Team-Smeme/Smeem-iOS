@@ -136,6 +136,7 @@
 		4AB7C9322B78B45300845733 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB7C9312B78B45300845733 /* LoginViewModel.swift */; };
 		4ABCBCBA2BD6A6EE003138A8 /* MySummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABCBCB92BD6A6EE003138A8 /* MySummaryViewController.swift */; };
 		4ABCBCBE2BD784A0003138A8 /* MySmeemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABCBCBD2BD784A0003138A8 /* MySmeemCollectionViewCell.swift */; };
+		4ABCBCC02BD7C521003138A8 /* MyPlanCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABCBCBF2BD7C521003138A8 /* MyPlanCollectionViewCell.swift */; };
 		4ABE3FD12A811F8400D1D22E /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABE3FD02A811F8400D1D22E /* SplashViewController.swift */; };
 		4AC00ECC2AD1C143009230DA /* UICollectionView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC00ECB2AD1C143009230DA /* UICollectionView+.swift */; };
 		4AC00ED72AD2E6E0009230DA /* TrainingStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC00ED62AD2E6E0009230DA /* TrainingStepView.swift */; };
@@ -328,6 +329,7 @@
 		4AB9F5292AAA035300EBEE35 /* BaseResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseResponse.swift; sourceTree = "<group>"; };
 		4ABCBCB92BD6A6EE003138A8 /* MySummaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySummaryViewController.swift; sourceTree = "<group>"; };
 		4ABCBCBD2BD784A0003138A8 /* MySmeemCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySmeemCollectionViewCell.swift; sourceTree = "<group>"; };
+		4ABCBCBF2BD7C521003138A8 /* MyPlanCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPlanCollectionViewCell.swift; sourceTree = "<group>"; };
 		4ABE3FD02A811F8400D1D22E /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		4AC00ECB2AD1C143009230DA /* UICollectionView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+.swift"; sourceTree = "<group>"; };
 		4AC00ED62AD2E6E0009230DA /* TrainingStepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingStepView.swift; sourceTree = "<group>"; };
@@ -1190,6 +1192,7 @@
 			children = (
 				4ABCBCB92BD6A6EE003138A8 /* MySummaryViewController.swift */,
 				4ABCBCBD2BD784A0003138A8 /* MySmeemCollectionViewCell.swift */,
+				4ABCBCBF2BD7C521003138A8 /* MyPlanCollectionViewCell.swift */,
 			);
 			path = MySummary;
 			sourceTree = "<group>";
@@ -1675,6 +1678,7 @@
 				4A3F2E9C2A0B4C7100F6AC60 /* AlarmCollectionView.swift in Sources */,
 				4A004D512B4ED783003C8936 /* TrainingWayResponse.swift in Sources */,
 				37DCA6602A48033400FF8F90 /* DetailDiaryViewController.swift in Sources */,
+				4ABCBCC02BD7C521003138A8 /* MyPlanCollectionViewCell.swift in Sources */,
 				4A0EA4572A01403E006CCE52 /* MoyaLoggingPlugin.swift in Sources */,
 				37035CF92AF2ADD2008EE521 /* DiaryViewModel.swift in Sources */,
 				4A004D5E2B4EE2B4003C8936 /* MyPageService.swift in Sources */,

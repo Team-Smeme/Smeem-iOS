@@ -81,6 +81,38 @@ final class MySummaryViewController: BaseViewController {
         return label
     }()
     
+    private let myPlanView: UIView = {
+        let view = UIView()
+        view.makeRoundCorner(cornerRadius: 15)
+        view.backgroundColor = .clear
+        view.layer.borderWidth = 1
+        view.layer.borderColor = UIColor.gray100.cgColor
+        return view
+    }()
+    
+    private let myPlanTitleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "매일 일기 작성하기"
+        label.font = .s2
+        label.textColor = .black
+        return label
+    }()
+    
+    private let myPlanDetailLabel: UILabel = {
+        let label = UILabel()
+        label.text = "유창한 비지니스 영어"
+        label.font = .c2
+        label.textColor = .black
+        return label
+    }()
+    
+    private lazy var myPlanCollectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.backgroundColor = .white
+        return collectionView
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -92,9 +124,11 @@ final class MySummaryViewController: BaseViewController {
     private func setLayout() {
         view.addSubview(summaryScrollerView)
         summaryScrollerView.addSubview(contentView)
-        contentView.addSubviews(naviView, mySmeemLabel, mySmeemView)
+        contentView.addSubviews(naviView, mySmeemLabel, mySmeemView,
+                                myPlanLabel, myPlanView)
         naviView.addSubviews(backButton, summaryLabel, settingButton)
         mySmeemView.addSubview(mySmeemCollectionView)
+        myPlanView.addSubviews(myPlanTitleLabel, myPlanDetailLabel, myPlanCollectionView)
         
         summaryScrollerView.snp.makeConstraints {
             $0.edges.equalTo(view.safeAreaLayoutGuide)
@@ -129,7 +163,7 @@ final class MySummaryViewController: BaseViewController {
         
         mySmeemLabel.snp.makeConstraints {
             $0.top.equalTo(naviView.snp.bottom).offset(18)
-            $0.leading.equalToSuperview().inset(18)
+            $0.leading.equalToSuperview().inset(26)
         }
         
         mySmeemView.snp.makeConstraints {
@@ -141,29 +175,58 @@ final class MySummaryViewController: BaseViewController {
         mySmeemCollectionView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
+        
+        myPlanLabel.snp.makeConstraints {
+            $0.top.equalTo(mySmeemView.snp.bottom).offset(36)
+            $0.leading.equalToSuperview().inset(26)
+        }
+        
+        myPlanView.snp.makeConstraints {
+            $0.top.equalTo(myPlanLabel.snp.bottom).offset(12)
+            $0.leading.trailing.equalToSuperview().inset(18)
+            $0.height.equalTo(120)
+        }
+        
+        myPlanTitleLabel.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(18)
+            $0.leading.equalToSuperview().inset(17)
+        }
+        
+        myPlanDetailLabel.snp.makeConstraints {
+            $0.top.equalTo(myPlanTitleLabel.snp.bottom).offset(4)
+            $0.leading.equalTo(myPlanTitleLabel)
+        }
+        
+        myPlanCollectionView.snp.makeConstraints {
+            $0.top.equalTo(myPlanDetailLabel.snp.bottom).offset(22)
+            $0.leading.trailing.equalToSuperview().inset(18)
+            $0.bottom.equalToSuperview()
+        }
     }
     
     private func registerCell() {
         mySmeemCollectionView.registerCell(cellType: MySmeemCollectionViewCell.self)
+        myPlanCollectionView.registerCell(cellType: MyPlanCollectionViewCell.self)
     }
     
     private func setDelegate() {
         mySmeemCollectionView.delegate = self
         mySmeemCollectionView.dataSource = self
+        
+        myPlanCollectionView.delegate = self
+        myPlanCollectionView.dataSource = self
     }
 }
 
-extension MySummaryViewController: UICollectionViewDelegateFlowLayout {
-    
-//    func colld
-    
-}
+extension MySummaryViewController: UICollectionViewDelegateFlowLayout { }
 
 extension MySummaryViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == self.mySmeemCollectionView {
             return mySmeemModel.count
+        } else if collectionView == self.myPlanCollectionView {
+            return 7
         }
         
         return Int()
@@ -176,6 +239,10 @@ extension MySummaryViewController: UICollectionViewDataSource {
             cell.setTextData(text: mySmeemModel[indexPath.item])
             cell.setNumberData(number: "23")
             return cell
+        } else if collectionView == self.myPlanCollectionView {
+            let cell = self.myPlanCollectionView.dequeueReusableCell(cellType: MyPlanCollectionViewCell.self,
+                                                                     indexPath: indexPath)
+            return cell
         }
         
         return UICollectionViewCell()
@@ -186,8 +253,14 @@ extension MySummaryViewController: UICollectionViewDataSource {
             let leadingTrailingInset = 90.0
             let itemSpacing = 60.0
             let cellCount = 4.0
-            return CGSize(width: (UIScreen.main.bounds.width-(leadingTrailingInset+itemSpacing))/cellCount,
+            return CGSize(width: (Constant.Screen.width-(leadingTrailingInset+itemSpacing))/cellCount,
                           height: 46)
+        } else if collectionView == self.myPlanCollectionView {
+            let leadingTrailingInset = 73.0
+            let itemSpacing = 162.0
+            let cellCount = 7.0
+            return CGSize(width: (UIScreen.main.bounds.width-(leadingTrailingInset+itemSpacing))/cellCount,
+                          height: (UIScreen.main.bounds.width-(leadingTrailingInset+itemSpacing))/cellCount)
         }
         return CGSize()
     }
@@ -196,6 +269,8 @@ extension MySummaryViewController: UICollectionViewDataSource {
         /// 왜 20 아니냐...
         if collectionView == self.mySmeemCollectionView {
             return 10.0
+        } else if collectionView == self.myPlanCollectionView {
+            return 27.0
         }
         return CGFloat()
     }
@@ -204,6 +279,7 @@ extension MySummaryViewController: UICollectionViewDataSource {
         if collectionView == self.mySmeemCollectionView {
             return UIEdgeInsets(top: 18, left: 27, bottom: 18, right: 28)
         }
+        
         return UIEdgeInsets()
     }
 }
