@@ -11,6 +11,7 @@ import SnapKit
 final class MySummaryViewController: BaseViewController {
     
     private let mySmeemModel = ["방문일", "총 일기", "연속 일기", "배지"]
+    private let myPlanDataArray = ["1", "2", "3", "4", "5", "6", "7"]
     
     private let summaryScrollerView: UIScrollView = {
         let scrollerView = UIScrollView()
@@ -113,22 +114,60 @@ final class MySummaryViewController: BaseViewController {
         return collectionView
     }()
     
+    private let emptyView: UIView = {
+        let view = UIView()
+        view.makeRoundCorner(cornerRadius: 15)
+        view.backgroundColor = .clear
+        view.layer.borderWidth = 1
+        view.layer.borderColor = UIColor.gray100.cgColor
+        return view
+    }()
+    
+    private let emptyPlanLabel: UILabel = {
+        let label = UILabel()
+        label.text = "아직 플랜이 없어요!"
+        label.font = .b2
+        label.textColor = .gray500
+        return label
+    }()
+    
+    private let planSettingLabel: UILabel = {
+        let label = UILabel()
+        label.text = "플랜 설정하러 가기"
+        label.font = .c2
+        label.textColor = .gray400
+        return label
+    }()
+    
+    private let emptyLabelStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.distribution = .fillEqually
+        stackView.spacing = 6
+        stackView.alignment = .center
+        return stackView
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setLayout()
         registerCell()
         setDelegate()
+        
+//        myPlanView.isHidden = true
     }
     
     private func setLayout() {
         view.addSubview(summaryScrollerView)
         summaryScrollerView.addSubview(contentView)
         contentView.addSubviews(naviView, mySmeemLabel, mySmeemView,
-                                myPlanLabel, myPlanView)
+                                myPlanLabel, myPlanView, emptyView)
         naviView.addSubviews(backButton, summaryLabel, settingButton)
         mySmeemView.addSubview(mySmeemCollectionView)
         myPlanView.addSubviews(myPlanTitleLabel, myPlanDetailLabel, myPlanCollectionView)
+        emptyView.addSubviews(emptyLabelStackView)
+        emptyLabelStackView.addArrangedSubviews(emptyPlanLabel, planSettingLabel)
         
         summaryScrollerView.snp.makeConstraints {
             $0.edges.equalTo(view.safeAreaLayoutGuide)
@@ -202,6 +241,16 @@ final class MySummaryViewController: BaseViewController {
             $0.leading.trailing.equalToSuperview().inset(18)
             $0.bottom.equalToSuperview()
         }
+        
+        emptyView.snp.makeConstraints {
+            $0.top.equalTo(myPlanLabel.snp.bottom).offset(12)
+            $0.leading.trailing.equalToSuperview().inset(18)
+            $0.height.equalTo(120)
+        }
+        
+        emptyLabelStackView.snp.makeConstraints {
+            $0.center.equalToSuperview()
+        }
     }
     
     private func registerCell() {
@@ -242,6 +291,8 @@ extension MySummaryViewController: UICollectionViewDataSource {
         } else if collectionView == self.myPlanCollectionView {
             let cell = self.myPlanCollectionView.dequeueReusableCell(cellType: MyPlanCollectionViewCell.self,
                                                                      indexPath: indexPath)
+            cell.setNumberData(text: myPlanDataArray[indexPath.item])
+            cell.deactivateCell()
             return cell
         }
         
