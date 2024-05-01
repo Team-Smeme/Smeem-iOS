@@ -1216,14 +1216,12 @@
 		4ABCBCB82BD6A6E3003138A8 /* MySummary */ = {
 			isa = PBXGroup;
 			children = (
-				4ABCBCB92BD6A6EE003138A8 /* MySummaryViewController.swift */,
-				4ABCBCBD2BD784A0003138A8 /* MySmeemCollectionViewCell.swift */,
-				4ABCBCBF2BD7C521003138A8 /* MyPlanCollectionViewCell.swift */,
-				4ABCBCC12BD90481003138A8 /* MyBadgeCollectionViewCell.swift */,
-				4ABCBCCF2BDE9BA1003138A8 /* MySummaryViewModel.swift */,
-				4ABCBCD52BDFC6BD003138A8 /* MySmeemCollectionViewDataSource.swift */,
-				4ABCBCD72BE2230F003138A8 /* MyPlanCollectionViewDataSource.swift */,
-				4ABCBCD92BE22733003138A8 /* MyPlanCollectionViewLayout.swift */,
+				4ABCBCDE2BE24B8E003138A8 /* VC */,
+				4ABCBCDF2BE24B90003138A8 /* ViewModel */,
+				4ABCBCDD2BE24B8A003138A8 /* View */,
+				4ABCBCE02BE24B9E003138A8 /* Cell */,
+				4ABCBCE22BE24BB3003138A8 /* Delegate */,
+				4ABCBCE12BE24BA8003138A8 /* DataSource */,
 			);
 			path = MySummary;
 			sourceTree = "<group>";
@@ -1247,6 +1245,56 @@
 				4ABCBCDB2BE2484B003138A8 /* MyPlanAppData.swift */,
 			);
 			path = MySummary;
+			sourceTree = "<group>";
+		};
+		4ABCBCDD2BE24B8A003138A8 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		4ABCBCDE2BE24B8E003138A8 /* VC */ = {
+			isa = PBXGroup;
+			children = (
+				4ABCBCB92BD6A6EE003138A8 /* MySummaryViewController.swift */,
+			);
+			path = VC;
+			sourceTree = "<group>";
+		};
+		4ABCBCDF2BE24B90003138A8 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				4ABCBCCF2BDE9BA1003138A8 /* MySummaryViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		4ABCBCE02BE24B9E003138A8 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				4ABCBCC12BD90481003138A8 /* MyBadgeCollectionViewCell.swift */,
+				4ABCBCBF2BD7C521003138A8 /* MyPlanCollectionViewCell.swift */,
+				4ABCBCBD2BD784A0003138A8 /* MySmeemCollectionViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		4ABCBCE12BE24BA8003138A8 /* DataSource */ = {
+			isa = PBXGroup;
+			children = (
+				4ABCBCD72BE2230F003138A8 /* MyPlanCollectionViewDataSource.swift */,
+				4ABCBCD52BDFC6BD003138A8 /* MySmeemCollectionViewDataSource.swift */,
+			);
+			path = DataSource;
+			sourceTree = "<group>";
+		};
+		4ABCBCE22BE24BB3003138A8 /* Delegate */ = {
+			isa = PBXGroup;
+			children = (
+				4ABCBCD92BE22733003138A8 /* MyPlanCollectionViewLayout.swift */,
+			);
+			path = Delegate;
 			sourceTree = "<group>";
 		};
 		4AC00EF82AD6D7D3009230DA /* Training */ = {

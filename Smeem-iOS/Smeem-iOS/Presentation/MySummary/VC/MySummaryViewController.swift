@@ -51,6 +51,7 @@ final class MySummaryViewController: BaseViewController {
     private let settingButton: UIButton = {
         let button = UIButton()
         button.setTitle("설정", for: .normal)
+        button.titleLabel?.font = .b2
         button.setTitleColor(.gray500, for: .normal)
         return button
     }()
