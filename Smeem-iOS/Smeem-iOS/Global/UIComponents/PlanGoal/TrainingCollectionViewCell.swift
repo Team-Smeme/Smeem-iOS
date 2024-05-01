@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-final class TrainingGoalCollectionViewCell: UICollectionViewCell {
+final class TrainingCollectionViewCell: UICollectionViewCell {
     
     // MARK: UI Properties
     

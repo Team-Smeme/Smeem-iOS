@@ -10,7 +10,7 @@ import Moya
 import Combine
 
 final class OnboardingService: OnboardingServiceProtocol {
-    
+
     var provider: MoyaProvider<OnboardingEndPoint>!
     
     init(provider: MoyaProvider<OnboardingEndPoint> = MoyaProvider<OnboardingEndPoint>()) {
@@ -39,29 +39,26 @@ final class OnboardingService: OnboardingServiceProtocol {
         }
     }
     
-    func trainingGoalGetAPI2() -> AnyPublisher<[Goal], SmeemError> {
-        return Future { promise in
-            self.provider.request(.trainingGoal) { response in
-                switch response {
-                case .success(let result):
-                    do {
-                        try NetworkManager.statusCodeErrorHandling(statusCode: result.statusCode)
-                        guard let data = try? result.map(GeneralResponse<TrainingGoalResponse>.self).data?.goals else {
-                            throw SmeemError.clientError
-                        }
-                        promise(.success(data))
-                        
-                    } catch let error {
-                        guard let smeemError = error as? SmeemError else { return }
-                        promise(.failure(smeemError))
+    func trainingPlanGETAPI(completion: @escaping (Result<[Plans], SmeemError>) -> ()) {
+        provider.request(.trainingPlan) { response in
+            switch response {
+            case .success(let result):
+                do {
+                    try NetworkManager.statusCodeErrorHandling(statusCode: result.statusCode)
+                    guard let data = try? result.map(GeneralResponse<TrainingPlanResponse>.self).data?.plans else {
+                        throw SmeemError.clientError
                     }
+                    completion(.success(data))
                     
-                case .failure(_):
-                    promise(.failure(.userError))
+                } catch let error {
+                    guard let smeemError = error as? SmeemError else { return }
+                    completion(.failure(smeemError))
                 }
+                
+            case .failure(_):
+                completion(.failure(.userError))
             }
         }
-        .eraseToAnyPublisher()
     }
     
     func trainingWayGetAPI(param: String, completion: @escaping (Result<TrainingWayResponse, SmeemError>) -> ()) {
