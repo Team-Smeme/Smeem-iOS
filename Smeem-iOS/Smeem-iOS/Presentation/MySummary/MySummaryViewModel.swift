@@ -83,10 +83,17 @@ final class MySummaryViewModel: ViewModel {
         let totalHasMyPlanResult = Publishers.Zip(mySummaryResult, myPlanResult)
             .map { result -> TotalMySummaryResponse in
                 self.loadingViewSubject.send(false)
+                var clearCountArray: [Int] = []
+                (1...result.1.clearCount).forEach { number in
+                    clearCountArray.append(number)
+                }
                 return TotalMySummaryResponse(mySumamryText: self.mySmeemModel.map{$0},
                                               mySummaryNumber: [result.0.visitDays, result.0.diaryCount,
                                                                 result.0.diaryComboCount, result.0.badgeCount],
-                                              myPlan: result.1)
+                                              myPlan: MyPlanAppData(plan: result.1.plan,
+                                                                    goal: result.1.goal,
+                                                                    clearedCount: result.1.clearedCount,
+                                                                    clearCount: clearCountArray))
             }
             .eraseToAnyPublisher()
         

@@ -146,6 +146,9 @@
 		4ABCBCD02BDE9BA1003138A8 /* MySummaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABCBCCF2BDE9BA1003138A8 /* MySummaryViewModel.swift */; };
 		4ABCBCD22BDFB037003138A8 /* TotalMySummaryResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABCBCD12BDFB037003138A8 /* TotalMySummaryResponse.swift */; };
 		4ABCBCD62BDFC6BD003138A8 /* MySmeemCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABCBCD52BDFC6BD003138A8 /* MySmeemCollectionViewDataSource.swift */; };
+		4ABCBCD82BE2230F003138A8 /* MyPlanCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABCBCD72BE2230F003138A8 /* MyPlanCollectionViewDataSource.swift */; };
+		4ABCBCDA2BE22733003138A8 /* MyPlanCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABCBCD92BE22733003138A8 /* MyPlanCollectionViewLayout.swift */; };
+		4ABCBCDC2BE2484B003138A8 /* MyPlanAppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABCBCDB2BE2484B003138A8 /* MyPlanAppData.swift */; };
 		4ABE3FD12A811F8400D1D22E /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABE3FD02A811F8400D1D22E /* SplashViewController.swift */; };
 		4AC00ECC2AD1C143009230DA /* UICollectionView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC00ECB2AD1C143009230DA /* UICollectionView+.swift */; };
 		4AC00ED72AD2E6E0009230DA /* TrainingStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC00ED62AD2E6E0009230DA /* TrainingStepView.swift */; };
@@ -348,6 +351,9 @@
 		4ABCBCCF2BDE9BA1003138A8 /* MySummaryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySummaryViewModel.swift; sourceTree = "<group>"; };
 		4ABCBCD12BDFB037003138A8 /* TotalMySummaryResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalMySummaryResponse.swift; sourceTree = "<group>"; };
 		4ABCBCD52BDFC6BD003138A8 /* MySmeemCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySmeemCollectionViewDataSource.swift; sourceTree = "<group>"; };
+		4ABCBCD72BE2230F003138A8 /* MyPlanCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPlanCollectionViewDataSource.swift; sourceTree = "<group>"; };
+		4ABCBCD92BE22733003138A8 /* MyPlanCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPlanCollectionViewLayout.swift; sourceTree = "<group>"; };
+		4ABCBCDB2BE2484B003138A8 /* MyPlanAppData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPlanAppData.swift; sourceTree = "<group>"; };
 		4ABE3FD02A811F8400D1D22E /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		4AC00ECB2AD1C143009230DA /* UICollectionView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+.swift"; sourceTree = "<group>"; };
 		4AC00ED62AD2E6E0009230DA /* TrainingStepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingStepView.swift; sourceTree = "<group>"; };
@@ -1216,6 +1222,8 @@
 				4ABCBCC12BD90481003138A8 /* MyBadgeCollectionViewCell.swift */,
 				4ABCBCCF2BDE9BA1003138A8 /* MySummaryViewModel.swift */,
 				4ABCBCD52BDFC6BD003138A8 /* MySmeemCollectionViewDataSource.swift */,
+				4ABCBCD72BE2230F003138A8 /* MyPlanCollectionViewDataSource.swift */,
+				4ABCBCD92BE22733003138A8 /* MyPlanCollectionViewLayout.swift */,
 			);
 			path = MySummary;
 			sourceTree = "<group>";
@@ -1236,6 +1244,7 @@
 				4ABCBCC92BDD3E3D003138A8 /* MySummaryResponse.swift */,
 				4ABCBCCD2BDE95D0003138A8 /* MyPlanResponse.swift */,
 				4ABCBCD12BDFB037003138A8 /* TotalMySummaryResponse.swift */,
+				4ABCBCDB2BE2484B003138A8 /* MyPlanAppData.swift */,
 			);
 			path = MySummary;
 			sourceTree = "<group>";
@@ -1748,14 +1757,17 @@
 				4AC00EF52AD57202009230DA /* TrainingAlarmDataSendProtocol.swift in Sources */,
 				4AD04B402A1921AE004B7A58 /* CorrectionViewController.swift in Sources */,
 				4A1882FA2A8BBD0D0088F590 /* SmeemStartViewController.swift in Sources */,
+				4ABCBCDA2BE22733003138A8 /* MyPlanCollectionViewLayout.swift in Sources */,
 				3728B8D32A2CFED300EF4CF8 /* ForeignDiaryViewController.swift in Sources */,
 				4ABE3FD12A811F8400D1D22E /* SplashViewController.swift in Sources */,
 				4A9FAB492A4C3D1200C40D5A /* DetailBadgeCollectionViewCell.swift in Sources */,
 				4ABCBCD02BDE9BA1003138A8 /* MySummaryViewModel.swift in Sources */,
 				4AFD7C292B600FED00FE7EFF /* NetworkManager.swift in Sources */,
 				37DCA6652A48052200FF8F90 /* DetailDiaryResponse.swift in Sources */,
+				4ABCBCD82BE2230F003138A8 /* MyPlanCollectionViewDataSource.swift in Sources */,
 				4AC4B82D2A2F9FE200E147AA /* UserDefaultsManager.swift in Sources */,
 				37A574E02A00CDCD00312453 /* SeparationLine.swift in Sources */,
+				4ABCBCDC2BE2484B003138A8 /* MyPlanAppData.swift in Sources */,
 				3728B8D72A2CFF3A00EF4CF8 /* StepTwoKoreanDiaryViewController.swift in Sources */,
 				4A07F8A82B7B3E5E004185F2 /* SignupBottomSheetViewController.swift in Sources */,
 				4ABCBCC52BDD3375003138A8 /* MySummaryEndPoint.swift in Sources */,

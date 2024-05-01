@@ -10,5 +10,5 @@ import Foundation
 struct TotalMySummaryResponse: Codable {
     let mySumamryText: [String]
     let mySummaryNumber: [Int]
-    let myPlan: MyPlanResponse?
+    let myPlan: MyPlanAppData?
 }
