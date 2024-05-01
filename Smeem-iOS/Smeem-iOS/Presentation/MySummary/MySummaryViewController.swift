@@ -7,11 +7,21 @@
 
 import UIKit
 import SnapKit
+import Combine
 
 final class MySummaryViewController: BaseViewController {
     
-    private let mySmeemModel = ["방문일", "총 일기", "연속 일기", "배지"]
+    // MARK: Publisher
+    
+    private let mySummarySubject = PassthroughSubject<Void, Never>()
+    private let myPlanSubject = PassthroughSubject<Void, Never>()
+    private var cancelBag = Set<AnyCancellable>()
+    
+    private var mySmeemDatasource: MySmeemCollectionViewDataSource!
     private let myPlanDataArray = ["1", "2", "3", "4", "5", "6", "7"]
+    private let viewModel = MySummaryViewModel(provider: MySummaryService())
+    
+    // MARK: UI Properties
     
     private let summaryScrollerView: UIScrollView = {
         let scrollerView = UIScrollView()
@@ -88,6 +98,7 @@ final class MySummaryViewController: BaseViewController {
         view.backgroundColor = .clear
         view.layer.borderWidth = 1
         view.layer.borderColor = UIColor.gray100.cgColor
+        view.isHidden = true
         return view
     }()
     
@@ -120,6 +131,7 @@ final class MySummaryViewController: BaseViewController {
         view.backgroundColor = .clear
         view.layer.borderWidth = 1
         view.layer.borderColor = UIColor.gray100.cgColor
+        view.isHidden = true
         return view
     }()
     
@@ -148,21 +160,93 @@ final class MySummaryViewController: BaseViewController {
         return stackView
     }()
     
+    private let myBadgeLabel: UILabel = {
+        let label = UILabel()
+        label.text = "나의 배지"
+        label.font = .s1
+        label.textColor = .black
+        return label
+    }()
+    
+    private lazy var myBadgeCollectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.backgroundColor = .white
+        return collectionView
+    }()
+    
+    // MARK: Life Cycle
+    
+    override func viewWillAppear(_ animated: Bool) {
+        mySummarySubject.send(())
+        myPlanSubject.send(())
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setLayout()
         registerCell()
         setDelegate()
+        bind()
+    }
+    
+    // MARK: - Method
+    
+    private func bind() {
+        backButton.tapPublisher
+            .sink { [weak self] _ in
+                self?.navigationController?.popViewController(animated: true)
+            }
+            .store(in: &cancelBag)
         
-//        myPlanView.isHidden = true
+        let input = MySummaryViewModel.Input(mySummarySubject: mySummarySubject,
+                                             myPlanSubject: myPlanSubject)
+        let output = viewModel.transform(input: input)
+        
+        output.totalHasMyPlanResult
+            .sink { [weak self] response in
+                self?.emptyView.removeFromSuperview()
+                self?.myPlanView.isHidden = false
+                self?.mySmeemDatasource = MySmeemCollectionViewDataSource(numberItems: response.mySummaryNumber,
+                                                                          textItems: response.mySumamryText)
+                self?.mySmeemCollectionView.dataSource = self?.mySmeemDatasource
+                self?.mySmeemCollectionView.reloadData()
+            }
+            .store(in: &cancelBag)
+        
+        output.totalHasNotPlanResult
+            .sink { [weak self] response in
+                self?.myPlanView.removeFromSuperview()
+                self?.emptyView.isHidden = false
+                self?.mySmeemDatasource = MySmeemCollectionViewDataSource(numberItems: response.mySummaryNumber,
+                                                                          textItems: response.mySumamryText)
+                self?.mySmeemCollectionView.dataSource = self?.mySmeemDatasource
+                self?.mySmeemCollectionView.reloadData()
+            }
+            .store(in: &cancelBag)
+        
+        output.errorResult
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] error in
+                self?.showToast(toastType: .smeemErrorToast(message: error))
+            }
+            .store(in: &cancelBag)
+        
+        output.loadingViewResult
+            .receive(on: DispatchQueue.main)
+            .sink { isShown in
+                isShown ? SmeemLoadingView.showLoading() : SmeemLoadingView.hideLoading()
+            }
+            .store(in: &cancelBag)
     }
     
     private func setLayout() {
         view.addSubview(summaryScrollerView)
         summaryScrollerView.addSubview(contentView)
         contentView.addSubviews(naviView, mySmeemLabel, mySmeemView,
-                                myPlanLabel, myPlanView, emptyView)
+                                myPlanLabel, myPlanView, emptyView,
+                                myBadgeLabel, myBadgeCollectionView)
         naviView.addSubviews(backButton, summaryLabel, settingButton)
         mySmeemView.addSubview(mySmeemCollectionView)
         myPlanView.addSubviews(myPlanTitleLabel, myPlanDetailLabel, myPlanCollectionView)
@@ -176,7 +260,8 @@ final class MySummaryViewController: BaseViewController {
         contentView.snp.makeConstraints {
             $0.edges.equalTo(summaryScrollerView.contentLayoutGuide)
             $0.width.equalTo(summaryScrollerView.frameLayoutGuide)
-            $0.height.equalTo(1000)
+            /// 기기별로 높이 어떻게 줄 건지...
+            $0.height.equalTo(convertByWidthRatio(810))
         }
         
         naviView.snp.makeConstraints {
@@ -251,19 +336,33 @@ final class MySummaryViewController: BaseViewController {
         emptyLabelStackView.snp.makeConstraints {
             $0.center.equalToSuperview()
         }
+        
+        myBadgeLabel.snp.makeConstraints {
+            $0.top.equalTo(myPlanLabel.snp.bottom).offset(178)
+            $0.leading.equalToSuperview().inset(26)
+        }
+        
+        myBadgeCollectionView.snp.makeConstraints {
+            $0.top.equalTo(myBadgeLabel.snp.bottom).offset(12)
+            $0.leading.trailing.bottom.equalToSuperview()
+        }
     }
     
     private func registerCell() {
         mySmeemCollectionView.registerCell(cellType: MySmeemCollectionViewCell.self)
         myPlanCollectionView.registerCell(cellType: MyPlanCollectionViewCell.self)
+        myBadgeCollectionView.registerCell(cellType: MyBadgeCollectionViewCell.self)
     }
     
     private func setDelegate() {
         mySmeemCollectionView.delegate = self
-        mySmeemCollectionView.dataSource = self
+//        mySmeemCollectionView.dataSource = self
         
         myPlanCollectionView.delegate = self
         myPlanCollectionView.dataSource = self
+        
+        myBadgeCollectionView.delegate = self
+        myBadgeCollectionView.dataSource = self
     }
 }
 
@@ -272,27 +371,30 @@ extension MySummaryViewController: UICollectionViewDelegateFlowLayout { }
 extension MySummaryViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if collectionView == self.mySmeemCollectionView {
-            return mySmeemModel.count
-        } else if collectionView == self.myPlanCollectionView {
+        if collectionView == self.myPlanCollectionView {
             return 7
+        } else if collectionView == self.myBadgeCollectionView {
+            return 9
         }
         
         return Int()
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if collectionView == self.mySmeemCollectionView {
-            let cell = self.mySmeemCollectionView.dequeueReusableCell(cellType: MySmeemCollectionViewCell.self,
-                                                                      indexPath: indexPath)
-            cell.setTextData(text: mySmeemModel[indexPath.item])
-            cell.setNumberData(number: "23")
-            return cell
-        } else if collectionView == self.myPlanCollectionView {
+        if collectionView == self.myPlanCollectionView {
             let cell = self.myPlanCollectionView.dequeueReusableCell(cellType: MyPlanCollectionViewCell.self,
                                                                      indexPath: indexPath)
             cell.setNumberData(text: myPlanDataArray[indexPath.item])
             cell.deactivateCell()
+            return cell
+        } else if collectionView == self.myBadgeCollectionView {
+            let cell = self.myBadgeCollectionView.dequeueReusableCell(cellType: MyBadgeCollectionViewCell.self,
+                                                                      indexPath: indexPath)
+//            if indexPath.item == 1 {
+//                cell.setBadgeLayout()
+//            } else {
+//                cell.setLayout()
+//            }
             return cell
         }
         
@@ -312,6 +414,13 @@ extension MySummaryViewController: UICollectionViewDataSource {
             let cellCount = 7.0
             return CGSize(width: (UIScreen.main.bounds.width-(leadingTrailingInset+itemSpacing))/cellCount,
                           height: (UIScreen.main.bounds.width-(leadingTrailingInset+itemSpacing))/cellCount)
+        } else if collectionView == self.myBadgeCollectionView {
+            let leadingTrailingInset = 36.0
+            let itemSpacing = 16.0
+            let cellCount = 3.0
+            print((UIScreen.main.bounds.width-(leadingTrailingInset+itemSpacing))/cellCount)
+            return CGSize(width: (UIScreen.main.bounds.width-(leadingTrailingInset+itemSpacing))/cellCount,
+                          height: (UIScreen.main.bounds.width-(leadingTrailingInset+itemSpacing))/cellCount)
         }
         return CGSize()
     }
@@ -322,13 +431,26 @@ extension MySummaryViewController: UICollectionViewDataSource {
             return 10.0
         } else if collectionView == self.myPlanCollectionView {
             return 27.0
+        } else if collectionView == self.myBadgeCollectionView {
+            return 8.0
         }
+        
+        return CGFloat()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        if collectionView == self.myBadgeCollectionView {
+            return 8.0
+        }
+        
         return CGFloat()
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         if collectionView == self.mySmeemCollectionView {
             return UIEdgeInsets(top: 18, left: 27, bottom: 18, right: 28)
+        } else if collectionView == self.myBadgeCollectionView {
+            return UIEdgeInsets(top: 0, left: 18, bottom: 0, right: 17)
         }
         
         return UIEdgeInsets()

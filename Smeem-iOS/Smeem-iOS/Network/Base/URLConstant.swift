@@ -31,6 +31,12 @@ enum URLConstant {
     static let badgesListURL = "/members/badges"
     static let myPageURL = "/members/me"
     
+    // MARK: - MySummary
+    
+    static let mySummaryURL = "/members/performance/summary"
+    static let myPlanURL = "/members/plan"
+    static let myBadgeURL = "/members/badges"
+    
     // MARK: - Diary
     
     static let diaryURL = "/diaries"
