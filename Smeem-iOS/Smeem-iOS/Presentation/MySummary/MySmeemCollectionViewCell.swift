@@ -34,8 +34,8 @@ final class MySmeemCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setNumberData(number: String) {
-        numberLabel.text = number
+    func setNumberData(number: Int) {
+        numberLabel.text = String(number)
     }
     
     func setTextData(text: String) {
