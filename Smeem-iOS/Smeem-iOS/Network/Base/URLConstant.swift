@@ -22,6 +22,7 @@ enum URLConstant {
     // MARK: Onboarding
     
     static let trainingGoalsURL = "/goals"
+    static let trainingPlanURL = "/plans"
     static let userURL = "/members"
     static let userTrainingInfo = "/members/plan"
     static let checkNickname = "/members/nickname/check"

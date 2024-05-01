@@ -132,8 +132,8 @@ final class TrainingGoalViewController: BaseViewController {
         output.nextButtonResult
             .receive(on: DispatchQueue.main)
             .sink { [weak self] target in
-                let howOnboardingVC = TrainingWayViewController(target: target)
-                self?.navigationController?.pushViewController(howOnboardingVC, animated: true)
+                let trainingPlanVC = TrainingPlanViewController(target: target)
+                self?.navigationController?.pushViewController(trainingPlanVC, animated: true)
             }
             .store(in: &cancelbag)
         

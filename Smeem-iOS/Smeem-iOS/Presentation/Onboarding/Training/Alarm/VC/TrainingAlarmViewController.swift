@@ -100,10 +100,11 @@ final class TrainingAlarmViewController: BaseViewController {
     
     // MARK: - Life Cycle
     
-    init(target: String) {
+    init(target: String, planId: Int) {
         super.init(nibName: nil, bundle: nil)
         
         viewModel.target = target
+        viewModel.planId = planId
     }
     
     required init?(coder: NSCoder) {

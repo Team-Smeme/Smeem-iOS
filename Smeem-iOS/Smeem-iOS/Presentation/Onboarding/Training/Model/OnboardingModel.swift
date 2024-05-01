@@ -13,6 +13,7 @@ struct TrainingPlanRequest: Codable {
     var target: String
     var trainingTime: TrainingTime
     var hasAlarm: Bool
+    var planId: Int
 }
 
 struct TrainingTime: Codable {
