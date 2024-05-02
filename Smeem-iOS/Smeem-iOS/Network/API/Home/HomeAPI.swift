@@ -35,4 +35,25 @@ final class HomeAPI {
             }
         }
     }
+    
+    func visitPatchAPI(completion: @escaping (Result<GeneralResponse<NilType>, SmeemError>) -> ()) {
+        homeProvider.request(.visit) { result in
+            switch result {
+            case .success(let response):
+                let statusCode = response.statusCode
+                do {
+                    try NetworkManager.statusCodeErrorHandling(statusCode: response.statusCode)
+                    guard let data = try? response.map(GeneralResponse<NilType>.self) else {
+                        throw SmeemError.clientError
+                    }
+                    completion(.success(data))
+                } catch {
+                    guard let error = error as? SmeemError else { return }
+                    completion(.failure(error))
+                }
+            case .failure(_):
+                completion(.failure(.userError))
+            }
+        }
+    }
 }
