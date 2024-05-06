@@ -22,28 +22,11 @@ final class MyPlanCollectionViewLayout: NSObject, UICollectionViewDelegateFlowLa
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        switch cellNumber {
-        case 1, 3:
-            let leadingTrailingInset = 73.0
-            let itemSpacing = 224.0
-            let cellCount = 3.0
-            return CGSize(width: (UIScreen.main.bounds.width-(leadingTrailingInset+itemSpacing))/cellCount,
-                          height: (UIScreen.main.bounds.width-(leadingTrailingInset+itemSpacing))/cellCount)
-        case 5:
-            let leadingTrailingInset = 73.0
-            let itemSpacing = 184.0
-            let cellCount = 5.0
-            return CGSize(width: (UIScreen.main.bounds.width-(leadingTrailingInset+itemSpacing))/cellCount,
-                          height: (UIScreen.main.bounds.width-(leadingTrailingInset+itemSpacing))/cellCount)
-        case 7:
             let leadingTrailingInset = 73.0
             let itemSpacing = 162.0
             let cellCount = 7.0
             return CGSize(width: (UIScreen.main.bounds.width-(leadingTrailingInset+itemSpacing))/cellCount,
                           height: (UIScreen.main.bounds.width-(leadingTrailingInset+itemSpacing))/cellCount)
-        default:
-            return CGSize(width: 20.0, height: 20.0)
-        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
