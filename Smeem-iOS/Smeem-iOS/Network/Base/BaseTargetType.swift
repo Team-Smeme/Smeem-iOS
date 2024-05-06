@@ -9,11 +9,16 @@ import Foundation
 
 import Moya
 
+enum ServerVersion {
+    case v2
+    case v3
+}
+
 protocol BaseTargetType: TargetType { }
 
 extension BaseTargetType {
     var baseURL: URL {
-        return URL(string: ConfigConstant.serverURL)!
+        return URL(string: ConfigConstant.serverURLV2)!
     }
     
     var sampleData: Data {
