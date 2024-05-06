@@ -14,7 +14,16 @@ enum MySummaryEndPoint {
     case myBadge
 }
 
-extension MySummaryEndPoint: BaseTargetType {
+extension MySummaryEndPoint: TargetType {
+    var baseURL: URL {
+        switch self {
+        case .mySummary, .myPlan:
+            return URL(string: ConfigConstant.serverURLV2)!
+        case .myBadge:
+            return  URL(string: ConfigConstant.serverURLV3)!
+        }
+    }
+    
     var path: String {
         switch self {
         case .mySummary:
@@ -22,7 +31,7 @@ extension MySummaryEndPoint: BaseTargetType {
         case .myPlan:
             return URLConstant.myPlanURL
         case .myBadge:
-            return URLConstant.myPageURL
+            return URLConstant.myBadgeURL
         }
     }
     

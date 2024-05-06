@@ -39,9 +39,6 @@ final class MyBadgeCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-//        backgroundColor = .darkGray
-//        setLayout()
-        
         setLayout()
     }
     

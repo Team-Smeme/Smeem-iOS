@@ -11,4 +11,5 @@ struct TotalMySummaryResponse: Codable {
     let mySumamryText: [String]
     let mySummaryNumber: [Int]
     let myPlan: MyPlanAppData?
+    let myBadge: [MySummaryBadgeResponse]
 }

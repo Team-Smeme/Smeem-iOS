@@ -33,9 +33,16 @@ enum ConfigConstant {
     }()
     
     // MARK: - Base URL
-    static let serverURL: String = {
-        guard let serverURL = Bundle.main.object(forInfoDictionaryKey: "SERVER_URL") as? String else {
-            fatalError("server url typecasting failed")
+    static let serverURLV2: String = {
+        guard let serverURL = Bundle.main.object(forInfoDictionaryKey: "SERVER_URL_V2") as? String else {
+            fatalError("server url v2 typecasting failed")
+        }
+        return serverURL
+    }()
+    
+    static let serverURLV3: String = {
+        guard let serverURL = Bundle.main.object(forInfoDictionaryKey: "SERVER_URL_V3") as? String else {
+            fatalError("server url v3 typecasting failed")
         }
         return serverURL
     }()

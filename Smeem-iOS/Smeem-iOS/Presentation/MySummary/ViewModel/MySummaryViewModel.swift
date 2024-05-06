@@ -17,6 +17,7 @@ final class MySummaryViewModel: ViewModel {
     struct Input {
         let mySummarySubject: PassthroughSubject<Void, Never>
         let myPlanSubject: PassthroughSubject<Void, Never>
+        let myBadgeSubject: PassthroughSubject<Void, Never>
     }
     
     struct Output {
@@ -77,10 +78,27 @@ final class MySummaryViewModel: ViewModel {
             }
             .eraseToAnyPublisher()
         
+        let myBadgeResult = input.myBadgeSubject
+            .flatMap { _ -> AnyPublisher<[MySummaryBadgeResponse], Never> in
+                self.loadingViewSubject.send(true)
+                return Future<[MySummaryBadgeResponse], Never> { promise in
+                    self.provider.myBadgeGetAPI { result in
+                        switch result {
+                        case .success(let response):
+                            promise(.success(response))
+                        case .failure(let error):
+                            self.errorSubject.send(error)
+                        }
+                    }
+                }
+                .eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
+        
         let planSettingResult = planSettingSubject.eraseToAnyPublisher()
         let loadingViewResult = loadingViewSubject.eraseToAnyPublisher()
         
-        let totalHasMyPlanResult = Publishers.Zip(mySummaryResult, myPlanResult)
+        let totalHasMyPlanResult = Publishers.Zip3(mySummaryResult, myPlanResult, myBadgeResult)
             .map { result -> TotalMySummaryResponse in
                 self.loadingViewSubject.send(false)
                 var clearCountArray: [Int] = []
@@ -93,17 +111,19 @@ final class MySummaryViewModel: ViewModel {
                                               myPlan: MyPlanAppData(plan: result.1.plan,
                                                                     goal: result.1.goal,
                                                                     clearedCount: result.1.clearedCount,
-                                                                    clearCount: clearCountArray))
+                                                                    clearCount: clearCountArray),
+                                              myBadge: result.2)
             }
             .eraseToAnyPublisher()
         
-        let totalHasNotPlanResult = Publishers.Zip(mySummaryResult, planSettingResult)
+        let totalHasNotPlanResult = Publishers.Zip3(mySummaryResult, planSettingResult, myBadgeResult)
             .map { result -> TotalMySummaryResponse in
                 self.loadingViewSubject.send(false)
                 return TotalMySummaryResponse(mySumamryText: self.mySmeemModel.map{$0},
                                               mySummaryNumber: [result.0.visitDays, result.0.diaryCount,
                                                                 result.0.diaryComboCount, result.0.badgeCount],
-                                              myPlan: nil)
+                                              myPlan: nil,
+                                              myBadge: result.2)
             }
             .eraseToAnyPublisher()
         

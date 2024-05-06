@@ -11,8 +11,9 @@ import Moya
 final class MySummaryService: MySummaryServiceProtocol {
     
     var provider: MoyaProvider<MySummaryEndPoint>!
+//    
     
-    init(provider: MoyaProvider<MySummaryEndPoint> = MoyaProvider<MySummaryEndPoint>()) {
+    init(provider: MoyaProvider<MySummaryEndPoint> = MoyaProvider<MySummaryEndPoint>(plugins: [MoyaLoggingPlugin()])) {
         self.provider = provider
     }
     
@@ -56,7 +57,23 @@ final class MySummaryService: MySummaryServiceProtocol {
         }
     }
     
-//    func myBadgeGetAPI(completion: @escaping (Result<NilType, SmeemError>) -> ()) {
-//        completion(.success(nil))
-//    }
+    func myBadgeGetAPI(completion: @escaping (Result<[MySummaryBadgeResponse], SmeemError>) -> ()) {
+        self.provider.request(.myBadge) { result in
+            switch result {
+            case .success(let response):
+                do {
+                    try NetworkManager.statusCodeErrorHandling(statusCode: response.statusCode)
+                    guard let data = try? response.map(GeneralResponse<MySummaryBadgeArrayResponse>.self).data?.badges else {
+                        throw SmeemError.clientError
+                    }
+                    completion(.success(data))
+                } catch let error {
+                    guard let error = error as? SmeemError else { return }
+                    completion(.failure(error))
+                }
+            case .failure(_):
+                completion(.failure(.userError))
+            }
+        }
+    }
 }

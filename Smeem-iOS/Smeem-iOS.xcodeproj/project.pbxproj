@@ -161,6 +161,8 @@
 		4AC047252A8FCAE100EBDC0E /* AuthManagementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC047242A8FCAE100EBDC0E /* AuthManagementViewController.swift */; };
 		4AC1D6832B4ED38200D39A98 /* OnboardingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC1D6822B4ED38200D39A98 /* OnboardingModel.swift */; };
 		4AC4B82D2A2F9FE200E147AA /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4B82C2A2F9FE200E147AA /* UserDefaultsManager.swift */; };
+		4AC705812BE8B69E003C5310 /* MySummaryBadgeResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC705802BE8B69E003C5310 /* MySummaryBadgeResponse.swift */; };
+		4AC705832BE8BA60003C5310 /* MyBadgeCollectionViewDatasource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC705822BE8BA60003C5310 /* MyBadgeCollectionViewDatasource.swift */; };
 		4AC707A82B73893200B1D791 /* AlarmTimeAppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC707A72B73893200B1D791 /* AlarmTimeAppData.swift */; };
 		4AC707AB2B738A5B00B1D791 /* TrainingAlarmViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC707AA2B738A5B00B1D791 /* TrainingAlarmViewModel.swift */; };
 		4AC707B02B73CFFA00B1D791 /* AlarmDefaultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC707AF2B73CFFA00B1D791 /* AlarmDefaultModel.swift */; };
@@ -366,6 +368,8 @@
 		4AC047242A8FCAE100EBDC0E /* AuthManagementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManagementViewController.swift; sourceTree = "<group>"; };
 		4AC1D6822B4ED38200D39A98 /* OnboardingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingModel.swift; sourceTree = "<group>"; };
 		4AC4B82C2A2F9FE200E147AA /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
+		4AC705802BE8B69E003C5310 /* MySummaryBadgeResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySummaryBadgeResponse.swift; sourceTree = "<group>"; };
+		4AC705822BE8BA60003C5310 /* MyBadgeCollectionViewDatasource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyBadgeCollectionViewDatasource.swift; sourceTree = "<group>"; };
 		4AC707A72B73893200B1D791 /* AlarmTimeAppData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmTimeAppData.swift; sourceTree = "<group>"; };
 		4AC707AA2B738A5B00B1D791 /* TrainingAlarmViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingAlarmViewModel.swift; sourceTree = "<group>"; };
 		4AC707AF2B73CFFA00B1D791 /* AlarmDefaultModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmDefaultModel.swift; sourceTree = "<group>"; };
@@ -1243,6 +1247,7 @@
 				4ABCBCCD2BDE95D0003138A8 /* MyPlanResponse.swift */,
 				4ABCBCD12BDFB037003138A8 /* TotalMySummaryResponse.swift */,
 				4ABCBCDB2BE2484B003138A8 /* MyPlanAppData.swift */,
+				4AC705802BE8B69E003C5310 /* MySummaryBadgeResponse.swift */,
 			);
 			path = MySummary;
 			sourceTree = "<group>";
@@ -1285,6 +1290,7 @@
 			children = (
 				4ABCBCD72BE2230F003138A8 /* MyPlanCollectionViewDataSource.swift */,
 				4ABCBCD52BDFC6BD003138A8 /* MySmeemCollectionViewDataSource.swift */,
+				4AC705822BE8BA60003C5310 /* MyBadgeCollectionViewDatasource.swift */,
 			);
 			path = DataSource;
 			sourceTree = "<group>";
@@ -1712,6 +1718,7 @@
 				4AC00EF02AD52F4C009230DA /* TrainingAlarmViewController.swift in Sources */,
 				4A004D562B4EE277003C8936 /* AuthService.swift in Sources */,
 				37DCA6742A484D5900FF8F90 /* PostDiaryAPI.swift in Sources */,
+				4AC705832BE8BA60003C5310 /* MyBadgeCollectionViewDatasource.swift in Sources */,
 				4A9FAB472A4C3D1200C40D5A /* BadgeListTableViewCell.swift in Sources */,
 				4A454A882B691F850079D48D /* EditGoalViewController.swift in Sources */,
 				373E38592A2F889500DF96F0 /* DiaryDetailRandomSubjectView.swift in Sources */,
@@ -1810,6 +1817,7 @@
 				4ABE3FD12A811F8400D1D22E /* SplashViewController.swift in Sources */,
 				4A9FAB492A4C3D1200C40D5A /* DetailBadgeCollectionViewCell.swift in Sources */,
 				4ABCBCD02BDE9BA1003138A8 /* MySummaryViewModel.swift in Sources */,
+				4AC705812BE8B69E003C5310 /* MySummaryBadgeResponse.swift in Sources */,
 				4AFD7C292B600FED00FE7EFF /* NetworkManager.swift in Sources */,
 				37DCA6652A48052200FF8F90 /* DetailDiaryResponse.swift in Sources */,
 				4ABCBCD82BE2230F003138A8 /* MyPlanCollectionViewDataSource.swift in Sources */,
