@@ -33,8 +33,10 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
-	<key>SERVER_URL</key>
-	<string>$(SERVER_URL)</string>
+	<key>SERVER_URL_V2</key>
+	<string>$(SERVER_URL_V2)</string>
+	<key>SERVER_URL_V3</key>
+	<string>$(SERVER_URL_V3)</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Urbanist-SemiBold.otf</string>
