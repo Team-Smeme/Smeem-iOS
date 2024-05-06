@@ -15,11 +15,13 @@ final class MySummaryViewController: BaseViewController {
     
     private let mySummarySubject = PassthroughSubject<Void, Never>()
     private let myPlanSubject = PassthroughSubject<Void, Never>()
+    private let myBadgeSubject = PassthroughSubject<Void, Never>()
     private var cancelBag = Set<AnyCancellable>()
     
-    private var mySmeemDatasource: MySmeemCollectionViewDataSource!
+    private var mySmeemDataSource: MySmeemCollectionViewDataSource!
     private var myPlanFlowLayout: MyPlanCollectionViewLayout!
     private var myPlanDataSource: MyPlanCollectionViewDataSource!
+    private var myBadgeDataSource: MyBadgeCollectionViewDatasource!
     
     private let viewModel = MySummaryViewModel(provider: MySummaryService())
     
@@ -176,6 +178,7 @@ final class MySummaryViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         mySummarySubject.send(())
         myPlanSubject.send(())
+        myBadgeSubject.send(())
     }
     
     override func viewDidLoad() {
@@ -197,16 +200,17 @@ final class MySummaryViewController: BaseViewController {
             .store(in: &cancelBag)
         
         let input = MySummaryViewModel.Input(mySummarySubject: mySummarySubject,
-                                             myPlanSubject: myPlanSubject)
+                                             myPlanSubject: myPlanSubject,
+                                             myBadgeSubject: myBadgeSubject)
         let output = viewModel.transform(input: input)
         
         output.totalHasMyPlanResult
             .sink { [weak self] response in
                 self?.emptyView.removeFromSuperview()
                 self?.myPlanView.isHidden = false
-                self?.mySmeemDatasource = MySmeemCollectionViewDataSource(numberItems: response.mySummaryNumber,
+                self?.mySmeemDataSource = MySmeemCollectionViewDataSource(numberItems: response.mySummaryNumber,
                                                                           textItems: response.mySumamryText)
-                self?.mySmeemCollectionView.dataSource = self?.mySmeemDatasource
+                self?.mySmeemCollectionView.dataSource = self?.mySmeemDataSource
                 self?.mySmeemCollectionView.reloadData()
                 
                 self?.myPlanFlowLayout = MyPlanCollectionViewLayout(cellCount: response.myPlan!.clearCount.count)
@@ -216,6 +220,10 @@ final class MySummaryViewController: BaseViewController {
                 self?.myPlanCollectionView.dataSource = self?.myPlanDataSource
                 self?.myPlanCollectionView.delegate = self?.myPlanFlowLayout
                 self?.myPlanCollectionView.reloadData()
+                
+                self?.myBadgeDataSource = MyBadgeCollectionViewDatasource(badgeData: response.myBadge)
+                self?.myBadgeCollectionView.dataSource = self?.myBadgeDataSource
+                self?.myBadgeCollectionView.reloadData()
             }
             .store(in: &cancelBag)
         
@@ -225,10 +233,14 @@ final class MySummaryViewController: BaseViewController {
                 self?.myPlanCollectionView.removeFromSuperview()
                 self?.emptyView.isHidden = false
 
-                self?.mySmeemDatasource = MySmeemCollectionViewDataSource(numberItems: response.mySummaryNumber,
+                self?.mySmeemDataSource = MySmeemCollectionViewDataSource(numberItems: response.mySummaryNumber,
                                                                           textItems: response.mySumamryText)
-                self?.mySmeemCollectionView.dataSource = self?.mySmeemDatasource
+                self?.mySmeemCollectionView.dataSource = self?.mySmeemDataSource
                 self?.mySmeemCollectionView.reloadData()
+                
+                self?.myBadgeDataSource = MyBadgeCollectionViewDatasource(badgeData: response.myBadge)
+                self?.myBadgeCollectionView.dataSource = self?.myBadgeDataSource
+                self?.myBadgeCollectionView.reloadData()
             }
             .store(in: &cancelBag)
         
@@ -267,7 +279,7 @@ final class MySummaryViewController: BaseViewController {
             $0.edges.equalTo(summaryScrollerView.contentLayoutGuide)
             $0.width.equalTo(summaryScrollerView.frameLayoutGuide)
             /// 기기별로 높이 어떻게 줄 건지...
-            $0.height.equalTo(convertByWidthRatio(810))
+            $0.height.equalTo(convertByWidthRatio(895))
         }
         
         naviView.snp.makeConstraints {
@@ -362,41 +374,13 @@ final class MySummaryViewController: BaseViewController {
     
     private func setDelegate() {
         mySmeemCollectionView.delegate = self
-        
-//        myPlanCollectionView.delegate = self
-//        myPlanCollectionView.dataSource = self
-        
         myBadgeCollectionView.delegate = self
-        myBadgeCollectionView.dataSource = self
     }
 }
 
 extension MySummaryViewController: UICollectionViewDelegateFlowLayout { }
 
-extension MySummaryViewController: UICollectionViewDataSource {
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if collectionView == self.myBadgeCollectionView {
-            return 9
-        }
-        
-        return Int()
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if collectionView == self.myBadgeCollectionView {
-            let cell = self.myBadgeCollectionView.dequeueReusableCell(cellType: MyBadgeCollectionViewCell.self,
-                                                                      indexPath: indexPath)
-//            if indexPath.item == 1 {
-//                cell.setBadgeLayout()
-//            } else {
-//                cell.setLayout()
-//            }
-            return cell
-        }
-        
-        return UICollectionViewCell()
-    }
+extension MySummaryViewController {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == self.mySmeemCollectionView {
