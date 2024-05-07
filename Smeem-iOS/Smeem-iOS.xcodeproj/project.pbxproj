@@ -174,6 +174,11 @@
 		4AC705912BEA1E49003C5310 /* NicknameContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC705902BEA1E49003C5310 /* NicknameContainerView.swift */; };
 		4AC705932BEA1E52003C5310 /* LanguageContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC705922BEA1E52003C5310 /* LanguageContainerView.swift */; };
 		4AC705952BEA1E58003C5310 /* AlarmContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC705942BEA1E58003C5310 /* AlarmContainerView.swift */; };
+		4AC7059A2BEA2A2B003C5310 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC705992BEA2A2B003C5310 /* SettingViewModel.swift */; };
+		4AC7059D2BEA2A8E003C5310 /* SettingEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC7059C2BEA2A8E003C5310 /* SettingEndPoint.swift */; };
+		4AC705A02BEA2AAA003C5310 /* SettingServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC7059F2BEA2AAA003C5310 /* SettingServiceProtocol.swift */; };
+		4AC705A22BEA2AB1003C5310 /* SettingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC705A12BEA2AB1003C5310 /* SettingService.swift */; };
+		4AC705A42BEA2C99003C5310 /* SettingResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC705A32BEA2C99003C5310 /* SettingResponse.swift */; };
 		4AC707A82B73893200B1D791 /* AlarmTimeAppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC707A72B73893200B1D791 /* AlarmTimeAppData.swift */; };
 		4AC707AB2B738A5B00B1D791 /* TrainingAlarmViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC707AA2B738A5B00B1D791 /* TrainingAlarmViewModel.swift */; };
 		4AC707B02B73CFFA00B1D791 /* AlarmDefaultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC707AF2B73CFFA00B1D791 /* AlarmDefaultModel.swift */; };
@@ -392,6 +397,11 @@
 		4AC705902BEA1E49003C5310 /* NicknameContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameContainerView.swift; sourceTree = "<group>"; };
 		4AC705922BEA1E52003C5310 /* LanguageContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageContainerView.swift; sourceTree = "<group>"; };
 		4AC705942BEA1E58003C5310 /* AlarmContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmContainerView.swift; sourceTree = "<group>"; };
+		4AC705992BEA2A2B003C5310 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
+		4AC7059C2BEA2A8E003C5310 /* SettingEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingEndPoint.swift; sourceTree = "<group>"; };
+		4AC7059F2BEA2AAA003C5310 /* SettingServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingServiceProtocol.swift; sourceTree = "<group>"; };
+		4AC705A12BEA2AB1003C5310 /* SettingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingService.swift; sourceTree = "<group>"; };
+		4AC705A32BEA2C99003C5310 /* SettingResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingResponse.swift; sourceTree = "<group>"; };
 		4AC707A72B73893200B1D791 /* AlarmTimeAppData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmTimeAppData.swift; sourceTree = "<group>"; };
 		4AC707AA2B738A5B00B1D791 /* TrainingAlarmViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingAlarmViewModel.swift; sourceTree = "<group>"; };
 		4AC707AF2B73CFFA00B1D791 /* AlarmDefaultModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmDefaultModel.swift; sourceTree = "<group>"; };
@@ -853,6 +863,7 @@
 		4A0EA45A2A014111006CCE52 /* API */ = {
 			isa = PBXGroup;
 			children = (
+				4AC7059B2BEA2A82003C5310 /* Setting */,
 				4ABCBCC32BDD3364003138A8 /* MySummary */,
 				4A9731D12BAAB55000DEC0C8 /* Splash */,
 				378E46182B5516A900D2A473 /* DeepL */,
@@ -1434,11 +1445,47 @@
 		4AC705892BEA0BD3003C5310 /* Setting */ = {
 			isa = PBXGroup;
 			children = (
+				4AC705962BEA2A0B003C5310 /* VC */,
+				4AC705972BEA2A10003C5310 /* ViewModel */,
+				4AC705982BEA2A15003C5310 /* View */,
+			);
+			path = Setting;
+			sourceTree = "<group>";
+		};
+		4AC705962BEA2A0B003C5310 /* VC */ = {
+			isa = PBXGroup;
+			children = (
 				4AC7058A2BEA0BE2003C5310 /* SettingViewController.swift */,
+			);
+			path = VC;
+			sourceTree = "<group>";
+		};
+		4AC705972BEA2A10003C5310 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				4AC705992BEA2A2B003C5310 /* SettingViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		4AC705982BEA2A15003C5310 /* View */ = {
+			isa = PBXGroup;
+			children = (
 				4AC7058E2BEA1E40003C5310 /* PlanContainerView.swift */,
 				4AC705902BEA1E49003C5310 /* NicknameContainerView.swift */,
 				4AC705922BEA1E52003C5310 /* LanguageContainerView.swift */,
 				4AC705942BEA1E58003C5310 /* AlarmContainerView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		4AC7059B2BEA2A82003C5310 /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				4AC7059C2BEA2A8E003C5310 /* SettingEndPoint.swift */,
+				4AC7059F2BEA2AAA003C5310 /* SettingServiceProtocol.swift */,
+				4AC705A12BEA2AB1003C5310 /* SettingService.swift */,
+				4AC705A32BEA2C99003C5310 /* SettingResponse.swift */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -1850,6 +1897,7 @@
 				4A004D602B4EE2BD003C8936 /* MyPageAPI.swift in Sources */,
 				4AE35E9E2A7FE8CE00465FD5 /* UICollectionViewCell+.swift in Sources */,
 				4A10A3A82AB8AA5800C145E9 /* System.swift in Sources */,
+				4AC705A02BEA2AAA003C5310 /* SettingServiceProtocol.swift in Sources */,
 				4A3F2EA02A0C18B600F6AC60 /* DatePickerFooterView.swift in Sources */,
 				37B360AA2AC2A4680006C8ED /* SmeemTextView.swift in Sources */,
 				6FE1298C2A498338005536C4 /* HomeService.swift in Sources */,
@@ -1871,6 +1919,7 @@
 				4AD04B3B2A1905BB004B7A58 /* DiaryScrollerView.swift in Sources */,
 				4ABCBCBE2BD784A0003138A8 /* MySmeemCollectionViewCell.swift in Sources */,
 				4AC705952BEA1E58003C5310 /* AlarmContainerView.swift in Sources */,
+				4AC7059A2BEA2A2B003C5310 /* SettingViewModel.swift in Sources */,
 				4A9731D32BAAB55D00DEC0C8 /* SplashEndPoint.swift in Sources */,
 				371107E72ACBED3C007A4AC2 /* DiaryViewConfigurationBuilder.swift in Sources */,
 				4A454A852B6667180079D48D /* ViewModel.swift in Sources */,
@@ -1928,6 +1977,7 @@
 				6FE1298E2A4986CA005536C4 /* HomeDiaryResponse.swift in Sources */,
 				4AC707AB2B738A5B00B1D791 /* TrainingAlarmViewModel.swift in Sources */,
 				3728B8D52A2CFF2C00EF4CF8 /* StepOneKoreanDiaryViewController.swift in Sources */,
+				4AC705A22BEA2AB1003C5310 /* SettingService.swift in Sources */,
 				37DCA6692A480A8E00FF8F90 /* DetailDiaryAPI.swift in Sources */,
 				37A574C129FF6E9100312453 /* ColorLiterals.swift in Sources */,
 				371107E92ACC7E3A007A4AC2 /* DiaryLayoutConfigurations.swift in Sources */,
@@ -1947,6 +1997,7 @@
 				4A9FAB462A4C3D1200C40D5A /* BadgeNetworkModel.swift in Sources */,
 				378E461C2B5516F200D2A473 /* DeepLService.swift in Sources */,
 				4A004D4F2B4ED760003C8936 /* TrainingGoalResponse.swift in Sources */,
+				4AC705A42BEA2C99003C5310 /* SettingResponse.swift in Sources */,
 				6F294A3F2A26177E00856CC8 /* TrainingCollectionViewCell.swift in Sources */,
 				6F294A3F2A26177E00856CC8 /* TrainingCollectionViewCell.swift in Sources */,
 				4ABCBCD62BDFC6BD003138A8 /* MySmeemCollectionViewDataSource.swift in Sources */,
@@ -1962,6 +2013,7 @@
 				4A9731D72BAAB6E100DEC0C8 /* SplashServiceProtocol.swift in Sources */,
 				37A574E82A02424F00312453 /* RandomTopicView.swift in Sources */,
 				4ABCBCCA2BDD3E3D003138A8 /* MySummaryResponse.swift in Sources */,
+				4AC7059D2BEA2A8E003C5310 /* SettingEndPoint.swift in Sources */,
 				4A4FEB0C2B7289E7001BBDF3 /* TrainingWayAppData.swift in Sources */,
 				4A0EA4642A014710006CCE52 /* SmeemButton.swift in Sources */,
 				371107DD2ACAB571007A4AC2 /* BaseView.swift in Sources */,

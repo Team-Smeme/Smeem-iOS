@@ -11,7 +11,6 @@ import Moya
 final class MySummaryService: MySummaryServiceProtocol {
     
     var provider: MoyaProvider<MySummaryEndPoint>!
-//    
     
     init(provider: MoyaProvider<MySummaryEndPoint> = MoyaProvider<MySummaryEndPoint>(plugins: [MoyaLoggingPlugin()])) {
         self.provider = provider
