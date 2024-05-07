@@ -1,5 +1,5 @@
 //
-//  GoalOnboardingViewController.swift
+//  TrainingPlanViewController.swift
 //  Smeem-iOS
 //
 //  Created by 황찬미 on 2023/05/14.
@@ -8,28 +8,24 @@
 import UIKit
 import Combine
 
-enum TrainingGoalType {
-    case onboarding
-    case myPage
-}
-
-final class TrainingGoalViewController: BaseViewController {
+final class TrainingPlanViewController: BaseViewController {
     
-    private let viewModel = TrainingGoalViewModel()
+    private let viewModel = TrainingPlanViewModel()
     
     // MARK: - Subject
     
     private let viewDidLoadSubject = PassthroughSubject<Void, Never>()
-    private let amplitudeSubject = PassthroughSubject<Void, Never>()
-    private let cellTapped = PassthroughSubject<(String, SmeemButtonType), Never>()
+    private let cellTapped = PassthroughSubject<(Int, SmeemButtonType), Never>()
     private let nextButtonTapped = PassthroughSubject<Void, Never>()
     private var cancelbag = Set<AnyCancellable>()
+    
+    private var trainingCollectionViewDatasource: TrainingCollectionViewDatasource!
     
     // MARK: - UI Components
     
     private let nowStepOneLabel: UILabel = {
         let label = UILabel()
-        label.text = "1"
+        label.text = "2"
         label.font = .s1
         label.setTextWithLineHeight(lineHeight: 21)
         label.textColor = .point
@@ -54,7 +50,7 @@ final class TrainingGoalViewController: BaseViewController {
     
     private let titleLearningLabel: UILabel = {
         let label = UILabel()
-        label.text = "트레이닝 목표 설정"
+        label.text = "트레이닝 플랜 설정"
         label.font = .h2
         label.textColor = .black
         return label
@@ -62,7 +58,7 @@ final class TrainingGoalViewController: BaseViewController {
     
     private let detailLearningLabel: UILabel = {
         let label = UILabel()
-        label.text = "마이페이지에서 언제든지 수정할 수 있어요!"
+        label.text = "목표를 이루기 위한 일기 작성 플랜을 세워요."
         label.font = .b4
         label.textColor = .black
         return label
@@ -76,8 +72,14 @@ final class TrainingGoalViewController: BaseViewController {
         stackView.spacing = 6
         return stackView
     }()
+
+    private lazy var trainingPlanCollectionView: UICollectionView = {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.backgroundColor = .white
+        return collectionView
+    }()
     
-    private let trainingGoalCollectionView = TrainingGoalsCollectionView(planGoalType: .onboarding)
     
     private lazy var nextButton: SmeemButton = {
         let button = SmeemButton(buttonType: .notEnabled, text: "다음")
@@ -86,12 +88,23 @@ final class TrainingGoalViewController: BaseViewController {
     
     // MARK: - Life Cycle
     
+    init(target: String) {
+        super.init(nibName: nil, bundle: nil)
+        
+        viewModel.target = target
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setLayout()
-        setDelegate()
+        registerCell()
         bind()
+        setDelegate()
         sendInput()
     }
     
@@ -104,17 +117,17 @@ final class TrainingGoalViewController: BaseViewController {
             }
             .store(in: &cancelbag)
         
-        let input = TrainingGoalViewModel.Input(viewDidLoadSubject: viewDidLoadSubject,
+        let input = TrainingPlanViewModel.Input(viewDidLoadSubject: viewDidLoadSubject,
                                                 cellTapped: cellTapped,
-                                                nextButtonTapped: nextButtonTapped,
-                                                amplitudeSubject: amplitudeSubject)
+                                                nextButtonTapped: nextButtonTapped)
         let output = viewModel.transform(input: input)
         
         output.viewDidLoadResult
             .receive(on: DispatchQueue.main)
             .sink { [weak self] response in
-                self?.trainingGoalCollectionView.planGoalArray = response
-                self?.trainingGoalCollectionView.reloadData()
+                self?.trainingCollectionViewDatasource = TrainingCollectionViewDatasource(trainingItems: response)
+                self?.trainingPlanCollectionView.dataSource = self?.trainingCollectionViewDatasource
+                self?.trainingPlanCollectionView.reloadData()
             }
             .store(in: &cancelbag)
         
@@ -127,9 +140,9 @@ final class TrainingGoalViewController: BaseViewController {
         
         output.nextButtonResult
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] target in
-                let trainingPlanVC = TrainingPlanViewController(target: target)
-                self?.navigationController?.pushViewController(trainingPlanVC, animated: true)
+            .sink { [weak self] (target, id) in
+                let trainingAlarmVC = TrainingAlarmViewController(target: target, planId: id)
+                self?.navigationController?.pushViewController(trainingAlarmVC, animated: true)
             }
             .store(in: &cancelbag)
         
@@ -148,29 +161,48 @@ final class TrainingGoalViewController: BaseViewController {
             .store(in: &cancelbag)
     }
     
+    private func registerCell() {
+        trainingPlanCollectionView.registerCell(cellType: TrainingCollectionViewCell.self)
+    }
+    
     private func setDelegate() {
-        trainingGoalCollectionView.trainingDelegate = self
+        trainingPlanCollectionView.delegate = self
     }
     
     private func sendInput() {
         viewDidLoadSubject.send(())
-        amplitudeSubject.send(())
     }
 }
 
-// MARK: - Delegate
+// MARK: - UICollectionViewFlowLayout
 
-extension TrainingGoalViewController: TrainingDataSendDelegate {
-    func sendTargetData(targetString: String, buttonType: SmeemButtonType) {
-        self.cellTapped.send((targetString, buttonType))
+extension TrainingPlanViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? TrainingCollectionViewCell else { return }
+        cell.selctedCell()
+        self.cellTapped.send((indexPath.item+1, .enabled))
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? TrainingCollectionViewCell else { return }
+        cell.desecltedCell()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let cellInset: CGFloat = 18
+        return CGSize(width: UIScreen.main.bounds.width-(cellInset*2), height: convertByHeightRatio(60))
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 12
     }
 }
 
 // MARK: - Layout
 
-extension TrainingGoalViewController {
+extension TrainingPlanViewController {
     private func setLayout() {
-        view.addSubviews(nowStepOneLabel, divisionLabel, totalStepLabel, trainingLabelStackView, trainingGoalCollectionView, nextButton)
+        view.addSubviews(nowStepOneLabel, divisionLabel, totalStepLabel, trainingLabelStackView, trainingPlanCollectionView, nextButton)
         trainingLabelStackView.addArrangedSubviews(titleLearningLabel, detailLearningLabel)
         
         nowStepOneLabel.snp.makeConstraints {
@@ -193,7 +225,7 @@ extension TrainingGoalViewController {
             $0.top.equalTo(totalStepLabel.snp.bottom).offset(19)
         }
         
-        trainingGoalCollectionView.snp.makeConstraints {
+        trainingPlanCollectionView.snp.makeConstraints {
             $0.top.equalTo(trainingLabelStackView.snp.bottom).offset(28)
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalTo(nextButton.snp.bottom).offset(80)

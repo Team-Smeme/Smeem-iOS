@@ -1,26 +1,25 @@
 //
-//  TrainingGoalViewModel.swift
+//  TrainingPlanViewModel.swift
 //  Smeem-iOS
 //
-//  Created by 황찬미 on 2024/01/28.
+//  Created by 황찬미 on 5/1/24.
 //
 
 import Foundation
 import Combine
 
-final class TrainingGoalViewModel: ViewModel {
-
+final class TrainingPlanViewModel: ViewModel {
+    
     struct Input {
         let viewDidLoadSubject: PassthroughSubject<Void, Never>
-        let cellTapped: PassthroughSubject<(String, SmeemButtonType), Never>
+        let cellTapped: PassthroughSubject<(Int, SmeemButtonType), Never>
         let nextButtonTapped: PassthroughSubject<Void, Never>
-        let amplitudeSubject: PassthroughSubject<Void, Never>
     }
-
+    
     struct Output {
-        let viewDidLoadResult: AnyPublisher<[Goal], Never>
+        let viewDidLoadResult: AnyPublisher<[Plans], Never>
         let cellResult: AnyPublisher<SmeemButtonType, Never>
-        let nextButtonResult: AnyPublisher<String, Never>
+        let nextButtonResult: AnyPublisher<(String, Int), Never>
         let errorResult: AnyPublisher<SmeemError, Never>
         let loadingViewResult: AnyPublisher<Bool, Never>
     }
@@ -30,54 +29,52 @@ final class TrainingGoalViewModel: ViewModel {
     private var cancelbag = Set<AnyCancellable>()
     private var provider = OnboardingService()
     
-    private var tempTarget = ""
-
+    var target = ""
+    var planId = 1
+    
     func transform(input: Input) -> Output {
-        let viewDidLoadSubject = input.viewDidLoadSubject
-            .handleEvents(receiveSubscription: { _ in
+        let viewWillAppearResult = input.viewDidLoadSubject
+            .flatMap { _ -> AnyPublisher<[Plans], Never> in
                 self.loadingViewSubject.send(true)
-            })
-            .flatMap { _ -> AnyPublisher<[Goal], Never> in
-                return Future<[Goal], Never> { promise in
-                    self.provider.trainingGoalGetAPI { result in
+                return Future<[Plans], Never> { promise in
+                    self.provider.trainingPlanGETAPI { result in
                         switch result {
                         case .success(let response):
+                            self.loadingViewSubject.send(false)
                             promise(.success(response))
                         case .failure(let error):
                             self.errorSubject.send(error)
                         }
                     }
                 }
-                .handleEvents(receiveCompletion: { _ in
-                    self.loadingViewSubject.send(false)
-                })
                 .eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()
         
         let cellResult = input.cellTapped
-            .map { target, buttonType in
-                self.tempTarget = target
+            .map { id, buttonType in
+                self.planId = id
                 return buttonType
             }
             .eraseToAnyPublisher()
         
         let nextButtonResult = input.nextButtonTapped
             .map { _ in
-                return self.tempTarget
+                return (self.target, self.planId)
             }
             .eraseToAnyPublisher()
         
-        input.amplitudeSubject
-            .sink { _ in
-                AmplitudeManager.shared.track(event: AmplitudeConstant.Onboarding.onboarding_goal_view.event)
-            }
-            .store(in: &cancelbag)
-        
-        let errorResult = errorSubject.eraseToAnyPublisher()
         let loadingViewResult = loadingViewSubject.eraseToAnyPublisher()
         
-        return Output(viewDidLoadResult: viewDidLoadSubject,
+        let errorResult = errorSubject
+            .map { smeemError in
+                self.loadingViewSubject.send(false)
+                return smeemError
+            }
+            .eraseToAnyPublisher()
+        
+        
+        return Output(viewDidLoadResult: viewWillAppearResult,
                       cellResult: cellResult,
                       nextButtonResult: nextButtonResult,
                       errorResult: errorResult,

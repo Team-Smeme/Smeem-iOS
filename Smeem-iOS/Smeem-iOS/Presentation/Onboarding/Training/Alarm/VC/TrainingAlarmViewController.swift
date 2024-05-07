@@ -21,7 +21,7 @@ final class TrainingAlarmViewController: BaseViewController {
     // MARK: Publisher
     
     private var cancelBag = Set<AnyCancellable>()
-    private let viewWillAppearSubject = PassthroughSubject<Void, Never>()
+    private let viewDidLoadSubject = PassthroughSubject<Void, Never>()
     private let alarmTimeSubject = PassthroughSubject<AlarmTimeAppData, Never>()
     private let alarmDaySubject = PassthroughSubject<Set<String>, Never>()
     private let alarmButtonTapped = PassthroughSubject<AlarmType, Never>()
@@ -100,10 +100,11 @@ final class TrainingAlarmViewController: BaseViewController {
     
     // MARK: - Life Cycle
     
-    init(target: String) {
+    init(target: String, planId: Int) {
         super.init(nibName: nil, bundle: nil)
         
         viewModel.target = target
+        viewModel.planId = planId
     }
     
     required init?(coder: NSCoder) {
@@ -116,11 +117,7 @@ final class TrainingAlarmViewController: BaseViewController {
         setLayout()
         setDelegate()
         bind()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        self.viewWillAppearSubject.send(())
-        self.amplitudeSubject.send(())
+        sendInput()
     }
     
     private func setDelegate() {
@@ -142,7 +139,7 @@ final class TrainingAlarmViewController: BaseViewController {
             }
             .store(in: &cancelBag)
         
-        let input = TrainingAlarmViewModel.Input(viewWillAppearSubject: viewWillAppearSubject,
+        let input = TrainingAlarmViewModel.Input(viewDidLoadSubject: viewDidLoadSubject,
                                                  alarmTimeSubject: alarmTimeSubject,
                                                  alarmDaySubject: alarmDaySubject,
                                                  alarmButtonTapped: alarmButtonTapped,
@@ -202,6 +199,11 @@ final class TrainingAlarmViewController: BaseViewController {
                 isShown ? SmeemLoadingView.showLoading() : SmeemLoadingView.hideLoading()
             }
             .store(in: &cancelBag)
+    }
+    
+    private func sendInput() {
+        self.viewDidLoadSubject.send(())
+        self.amplitudeSubject.send(())
     }
     
     private func requestNotificationPermission() {

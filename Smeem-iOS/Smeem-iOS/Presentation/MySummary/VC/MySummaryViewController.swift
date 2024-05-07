@@ -199,6 +199,13 @@ final class MySummaryViewController: BaseViewController {
             }
             .store(in: &cancelBag)
         
+        settingButton.tapPublisher
+            .sink { [weak self] _ in
+                let authVC = AuthManagementViewController()
+                self?.navigationController?.pushViewController(authVC, animated: true)
+            }
+            .store(in: &cancelBag)
+        
         let input = MySummaryViewModel.Input(mySummarySubject: mySummarySubject,
                                              myPlanSubject: myPlanSubject,
                                              myBadgeSubject: myBadgeSubject)
