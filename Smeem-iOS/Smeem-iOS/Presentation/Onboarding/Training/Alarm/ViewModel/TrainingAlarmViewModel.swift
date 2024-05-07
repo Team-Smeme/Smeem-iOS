@@ -11,7 +11,7 @@ import Combine
 final class TrainingAlarmViewModel: ViewModel {
     
     struct Input {
-        let viewWillAppearSubject: PassthroughSubject<Void, Never>
+        let viewDidLoadSubject: PassthroughSubject<Void, Never>
         let alarmTimeSubject: PassthroughSubject<AlarmTimeAppData, Never>
         let alarmDaySubject: PassthroughSubject<Set<String>, Never>
         let alarmButtonTapped: PassthroughSubject<AlarmType, Never>
@@ -50,7 +50,7 @@ final class TrainingAlarmViewModel: ViewModel {
     }
     
     func transform(input: Input) -> Output {
-        input.viewWillAppearSubject
+        input.viewDidLoadSubject
             .sink { _ in
                 self.authType = UserDefaultsManager.clientAuthType == self.authType.rawValue ? .signup : .login
                 self.trainingPlanRequest.target = self.target

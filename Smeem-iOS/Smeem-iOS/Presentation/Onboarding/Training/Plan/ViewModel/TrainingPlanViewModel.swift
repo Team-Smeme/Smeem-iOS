@@ -11,13 +11,13 @@ import Combine
 final class TrainingPlanViewModel: ViewModel {
     
     struct Input {
-        let viewWillappearSubject: PassthroughSubject<Void, Never>
+        let viewDidLoadSubject: PassthroughSubject<Void, Never>
         let cellTapped: PassthroughSubject<(Int, SmeemButtonType), Never>
         let nextButtonTapped: PassthroughSubject<Void, Never>
     }
     
     struct Output {
-        let viewWillappearResult: AnyPublisher<[Plans], Never>
+        let viewDidLoadResult: AnyPublisher<[Plans], Never>
         let cellResult: AnyPublisher<SmeemButtonType, Never>
         let nextButtonResult: AnyPublisher<(String, Int), Never>
         let errorResult: AnyPublisher<SmeemError, Never>
@@ -33,7 +33,7 @@ final class TrainingPlanViewModel: ViewModel {
     var planId = 1
     
     func transform(input: Input) -> Output {
-        let viewWillAppearResult = input.viewWillappearSubject
+        let viewWillAppearResult = input.viewDidLoadSubject
             .flatMap { _ -> AnyPublisher<[Plans], Never> in
                 self.loadingViewSubject.send(true)
                 return Future<[Plans], Never> { promise in
@@ -74,7 +74,7 @@ final class TrainingPlanViewModel: ViewModel {
             .eraseToAnyPublisher()
         
         
-        return Output(viewWillappearResult: viewWillAppearResult,
+        return Output(viewDidLoadResult: viewWillAppearResult,
                       cellResult: cellResult,
                       nextButtonResult: nextButtonResult,
                       errorResult: errorResult,

@@ -14,7 +14,7 @@ final class TrainingPlanViewController: BaseViewController {
     
     // MARK: - Subject
     
-    private let viewWillAppearSubject = PassthroughSubject<Void, Never>()
+    private let viewDidLoadSubject = PassthroughSubject<Void, Never>()
     private let cellTapped = PassthroughSubject<(Int, SmeemButtonType), Never>()
     private let nextButtonTapped = PassthroughSubject<Void, Never>()
     private var cancelbag = Set<AnyCancellable>()
@@ -105,10 +105,7 @@ final class TrainingPlanViewController: BaseViewController {
         registerCell()
         bind()
         setDelegate()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        viewWillAppearSubject.send(())
+        sendInput()
     }
     
     // MARK: Methods
@@ -120,12 +117,12 @@ final class TrainingPlanViewController: BaseViewController {
             }
             .store(in: &cancelbag)
         
-        let input = TrainingPlanViewModel.Input(viewWillappearSubject: viewWillAppearSubject,
+        let input = TrainingPlanViewModel.Input(viewDidLoadSubject: viewDidLoadSubject,
                                                 cellTapped: cellTapped,
                                                 nextButtonTapped: nextButtonTapped)
         let output = viewModel.transform(input: input)
         
-        output.viewWillappearResult
+        output.viewDidLoadResult
             .receive(on: DispatchQueue.main)
             .sink { [weak self] response in
                 self?.trainingCollectionViewDatasource = TrainingCollectionViewDatasource(trainingItems: response)
@@ -170,6 +167,10 @@ final class TrainingPlanViewController: BaseViewController {
     
     private func setDelegate() {
         trainingPlanCollectionView.delegate = self
+    }
+    
+    private func sendInput() {
+        viewDidLoadSubject.send(())
     }
 }
 
