@@ -172,7 +172,7 @@ extension AlarmCollectionView: AlarmPickerDelegate {
 extension AlarmCollectionView: UICollectionViewDelegateFlowLayout {
     // (cell size, itemSpacing)
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = (UIScreen.main.bounds.width-46)/7
+        let width = (UIScreen.main.bounds.width-36)/7
         let cellSize = CGSize(width: width, height: 49)
         return cellSize
     }

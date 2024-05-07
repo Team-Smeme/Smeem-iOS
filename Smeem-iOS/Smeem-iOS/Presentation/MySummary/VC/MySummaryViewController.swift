@@ -201,7 +201,7 @@ final class MySummaryViewController: BaseViewController {
         
         settingButton.tapPublisher
             .sink { [weak self] _ in
-                let authVC = AuthManagementViewController()
+                let authVC = SettingViewController()
                 self?.navigationController?.pushViewController(authVC, animated: true)
             }
             .store(in: &cancelBag)
