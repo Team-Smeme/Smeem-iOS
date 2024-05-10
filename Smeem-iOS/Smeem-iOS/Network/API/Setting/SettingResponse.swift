@@ -13,5 +13,9 @@ struct SettingResponse: Codable {
     let hasPushAlarm: Bool
     let trainingTime: TrainingTime
     let badge: Badge
-    let trainingPlan: Plans
+    let trainingPlan: Plans?
+}
+
+struct PlanIdRequest: Codable {
+    let planId: Int
 }

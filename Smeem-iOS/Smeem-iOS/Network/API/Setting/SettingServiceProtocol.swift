@@ -11,4 +11,6 @@ protocol SettingServiceProtocol {
     func settingGetAPI(completion: @escaping (Result<SettingResponse, SmeemError>) -> ())
     func editPushAPI(param: EditPushRequest,
                      completion: @escaping (Result<GeneralResponse<NilType>, SmeemError>) -> ())
+    func editPlanPatchAPI(param: PlanIdRequest,
+                          completion: @escaping (Result<GeneralResponse<NilType>, SmeemError>) -> ())
 }

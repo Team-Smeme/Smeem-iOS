@@ -11,6 +11,7 @@ import Moya
 enum SettingEndPoint {
     case settingInfo
     case editPush(param: EditPushRequest)
+    case editPlan(param: PlanIdRequest)
 }
 
 extension SettingEndPoint: BaseTargetType {
@@ -20,6 +21,8 @@ extension SettingEndPoint: BaseTargetType {
             return URLConstant.settingURL
         case .editPush:
             return URLConstant.pushURL
+        case .editPlan:
+            return URLConstant.userTrainingInfo
         }
     }
     
@@ -27,7 +30,7 @@ extension SettingEndPoint: BaseTargetType {
         switch self {
         case .settingInfo:
             return .get
-        case .editPush:
+        case .editPush, .editPlan:
             return .patch
         }
     }
@@ -37,6 +40,8 @@ extension SettingEndPoint: BaseTargetType {
         case .settingInfo:
             return .requestPlain
         case .editPush(let param):
+            return .requestJSONEncodable(param)
+        case .editPlan(let param):
             return .requestJSONEncodable(param)
         }
     }

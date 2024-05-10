@@ -20,5 +20,5 @@ struct MySummaryBadgeResponse: Codable {
     let contentForNonBadgeOwner: String?
     let contentForBadgeOwner: String?
     let imageUrl: String
-    let badgeAcquisitionRatio: Int
+    let badgeAcquisitionRatio: Double
 }
