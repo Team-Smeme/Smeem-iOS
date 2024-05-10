@@ -6,8 +6,12 @@
 //
 
 import UIKit
+import Combine
 
 final class AlarmContainerView: UIView {
+    
+    let toggleTapped = PassthroughSubject<Void, Never>()
+    private var cancelBag = Set<AnyCancellable>()
     
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -44,10 +48,29 @@ final class AlarmContainerView: UIView {
         super.init(frame: .zero)
         
         setLayout()
+        bind()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setAlarmData(data: Bool) {
+        if !data {
+            self.alarmPushToggleButton.isOn = false
+            self.alarmPushToggleButton.tintColor = .lightGray
+        } else {
+            self.alarmPushToggleButton.isOn = true
+            self.alarmPushToggleButton.onTintColor = .point
+        }
+    }
+    
+    private func bind() {
+        alarmPushToggleButton.statePublisher
+            .sink { [weak self] _ in
+                self?.toggleTapped.send(())
+            }
+            .store(in: &cancelBag)
     }
     
     private func setLayout() {

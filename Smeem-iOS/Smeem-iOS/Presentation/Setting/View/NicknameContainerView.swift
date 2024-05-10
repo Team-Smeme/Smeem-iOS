@@ -6,8 +6,12 @@
 //
 
 import UIKit
+import Combine
 
 final class NicknameContainerView: UIView {
+    
+    let editButtonTapped = PassthroughSubject<Void, Never>()
+    private var cancelBag = Set<AnyCancellable>()
     
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -44,10 +48,19 @@ final class NicknameContainerView: UIView {
         
         setLayout()
         setLabel()
+        bind()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func bind() {
+        editDetailButton.tapPublisher
+            .sink { [weak self] _ in
+                self?.editButtonTapped.send(())
+            }
+            .store(in: &cancelBag)
     }
     
     
@@ -73,15 +86,6 @@ final class NicknameContainerView: UIView {
             $0.centerY.equalToSuperview()
             $0.leading.equalToSuperview().offset(convertByWidthRatio(20))
         }
-    }
-    
-    private func setLabel() {
-        titleLabel.text = "나의 플랜"
-    }
-    
-    func hasPlanData(data: String) {
-        detailLabel.text = data
-        editDetailButton.setTitle("수정하기", for: .normal)
         
         editDetailButton.snp.makeConstraints {
             $0.top.trailing.bottom.equalToSuperview()
@@ -89,15 +93,8 @@ final class NicknameContainerView: UIView {
         }
     }
     
-    func hasNotPlanData() {
-        detailLabel.text = "아직 플랜이 없어요!"
-        detailLabel.font = .b4
-        detailLabel.textColor = .gray500
-        editDetailButton.setTitle("플랜 설정하기", for: .normal)
-        
-        editDetailButton.snp.makeConstraints {
-            $0.top.trailing.bottom.equalToSuperview()
-            $0.width.equalTo(117)
-        }
+    private func setLabel() {
+        titleLabel.text = "닉네임 변경"
+        editDetailButton.setTitle("수정하기", for: .normal)
     }
 }

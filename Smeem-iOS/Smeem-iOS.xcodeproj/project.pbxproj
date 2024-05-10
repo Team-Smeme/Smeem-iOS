@@ -170,8 +170,8 @@
 		4AC705812BE8B69E003C5310 /* MySummaryBadgeResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC705802BE8B69E003C5310 /* MySummaryBadgeResponse.swift */; };
 		4AC705832BE8BA60003C5310 /* MyBadgeCollectionViewDatasource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC705822BE8BA60003C5310 /* MyBadgeCollectionViewDatasource.swift */; };
 		4AC7058B2BEA0BE2003C5310 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC7058A2BEA0BE2003C5310 /* SettingViewController.swift */; };
-		4AC7058F2BEA1E40003C5310 /* PlanContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC7058E2BEA1E40003C5310 /* PlanContainerView.swift */; };
-		4AC705912BEA1E49003C5310 /* NicknameContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC705902BEA1E49003C5310 /* NicknameContainerView.swift */; };
+		4AC7058F2BEA1E40003C5310 /* NicknameContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC7058E2BEA1E40003C5310 /* NicknameContainerView.swift */; };
+		4AC705912BEA1E49003C5310 /* PlanContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC705902BEA1E49003C5310 /* PlanContainerView.swift */; };
 		4AC705932BEA1E52003C5310 /* LanguageContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC705922BEA1E52003C5310 /* LanguageContainerView.swift */; };
 		4AC705952BEA1E58003C5310 /* AlarmContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC705942BEA1E58003C5310 /* AlarmContainerView.swift */; };
 		4AC7059A2BEA2A2B003C5310 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC705992BEA2A2B003C5310 /* SettingViewModel.swift */; };
@@ -179,6 +179,9 @@
 		4AC705A02BEA2AAA003C5310 /* SettingServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC7059F2BEA2AAA003C5310 /* SettingServiceProtocol.swift */; };
 		4AC705A22BEA2AB1003C5310 /* SettingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC705A12BEA2AB1003C5310 /* SettingService.swift */; };
 		4AC705A42BEA2C99003C5310 /* SettingResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC705A32BEA2C99003C5310 /* SettingResponse.swift */; };
+		4AC705A62BEA58EA003C5310 /* SettingAppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC705A52BEA58EA003C5310 /* SettingAppData.swift */; };
+		4AC705A92BECE064003C5310 /* EditPlanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC705A82BECE064003C5310 /* EditPlanViewController.swift */; };
+		4AC705AE2BECF0D4003C5310 /* EditPlanViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC705AD2BECF0D4003C5310 /* EditPlanViewModel.swift */; };
 		4AC707A82B73893200B1D791 /* AlarmTimeAppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC707A72B73893200B1D791 /* AlarmTimeAppData.swift */; };
 		4AC707AB2B738A5B00B1D791 /* TrainingAlarmViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC707AA2B738A5B00B1D791 /* TrainingAlarmViewModel.swift */; };
 		4AC707B02B73CFFA00B1D791 /* AlarmDefaultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC707AF2B73CFFA00B1D791 /* AlarmDefaultModel.swift */; };
@@ -393,8 +396,8 @@
 		4AC705802BE8B69E003C5310 /* MySummaryBadgeResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySummaryBadgeResponse.swift; sourceTree = "<group>"; };
 		4AC705822BE8BA60003C5310 /* MyBadgeCollectionViewDatasource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyBadgeCollectionViewDatasource.swift; sourceTree = "<group>"; };
 		4AC7058A2BEA0BE2003C5310 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
-		4AC7058E2BEA1E40003C5310 /* PlanContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanContainerView.swift; sourceTree = "<group>"; };
-		4AC705902BEA1E49003C5310 /* NicknameContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameContainerView.swift; sourceTree = "<group>"; };
+		4AC7058E2BEA1E40003C5310 /* NicknameContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameContainerView.swift; sourceTree = "<group>"; };
+		4AC705902BEA1E49003C5310 /* PlanContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanContainerView.swift; sourceTree = "<group>"; };
 		4AC705922BEA1E52003C5310 /* LanguageContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageContainerView.swift; sourceTree = "<group>"; };
 		4AC705942BEA1E58003C5310 /* AlarmContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmContainerView.swift; sourceTree = "<group>"; };
 		4AC705992BEA2A2B003C5310 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
@@ -402,6 +405,9 @@
 		4AC7059F2BEA2AAA003C5310 /* SettingServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingServiceProtocol.swift; sourceTree = "<group>"; };
 		4AC705A12BEA2AB1003C5310 /* SettingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingService.swift; sourceTree = "<group>"; };
 		4AC705A32BEA2C99003C5310 /* SettingResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingResponse.swift; sourceTree = "<group>"; };
+		4AC705A52BEA58EA003C5310 /* SettingAppData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingAppData.swift; sourceTree = "<group>"; };
+		4AC705A82BECE064003C5310 /* EditPlanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPlanViewController.swift; sourceTree = "<group>"; };
+		4AC705AD2BECF0D4003C5310 /* EditPlanViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPlanViewModel.swift; sourceTree = "<group>"; };
 		4AC707A72B73893200B1D791 /* AlarmTimeAppData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmTimeAppData.swift; sourceTree = "<group>"; };
 		4AC707AA2B738A5B00B1D791 /* TrainingAlarmViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingAlarmViewModel.swift; sourceTree = "<group>"; };
 		4AC707AF2B73CFFA00B1D791 /* AlarmDefaultModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmDefaultModel.swift; sourceTree = "<group>"; };
@@ -559,6 +565,7 @@
 		37A574B529FE204500312453 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				4AC705A72BECE051003C5310 /* Edit */,
 				4AC705892BEA0BD3003C5310 /* Setting */,
 				4ABCBCB82BD6A6E3003138A8 /* MySummary */,
 				4ADA41752A556185001C0285 /* LodingView */,
@@ -1464,6 +1471,7 @@
 			isa = PBXGroup;
 			children = (
 				4AC705992BEA2A2B003C5310 /* SettingViewModel.swift */,
+				4AC705A52BEA58EA003C5310 /* SettingAppData.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1471,8 +1479,8 @@
 		4AC705982BEA2A15003C5310 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				4AC7058E2BEA1E40003C5310 /* PlanContainerView.swift */,
-				4AC705902BEA1E49003C5310 /* NicknameContainerView.swift */,
+				4AC7058E2BEA1E40003C5310 /* NicknameContainerView.swift */,
+				4AC705902BEA1E49003C5310 /* PlanContainerView.swift */,
 				4AC705922BEA1E52003C5310 /* LanguageContainerView.swift */,
 				4AC705942BEA1E58003C5310 /* AlarmContainerView.swift */,
 			);
@@ -1488,6 +1496,15 @@
 				4AC705A32BEA2C99003C5310 /* SettingResponse.swift */,
 			);
 			path = Setting;
+			sourceTree = "<group>";
+		};
+		4AC705A72BECE051003C5310 /* Edit */ = {
+			isa = PBXGroup;
+			children = (
+				4AC705A82BECE064003C5310 /* EditPlanViewController.swift */,
+				4AC705AD2BECF0D4003C5310 /* EditPlanViewModel.swift */,
+			);
+			path = Edit;
 			sourceTree = "<group>";
 		};
 		4AC707A22B73884F00B1D791 /* ViewModel */ = {
@@ -1851,6 +1868,7 @@
 				4A9FAB472A4C3D1200C40D5A /* BadgeListTableViewCell.swift in Sources */,
 				4A454A882B691F850079D48D /* EditGoalViewController.swift in Sources */,
 				373E38592A2F889500DF96F0 /* DiaryDetailRandomSubjectView.swift in Sources */,
+				4AC705AE2BECF0D4003C5310 /* EditPlanViewModel.swift in Sources */,
 				6F294A3E2A26177B00856CC8 /* TrainingGoalViewController.swift in Sources */,
 				4ABCBCCE2BDE95D0003138A8 /* MyPlanResponse.swift in Sources */,
 				4A9731D92BAAB70500DEC0C8 /* UpdateResponse.swift in Sources */,
@@ -1919,6 +1937,7 @@
 				4AD04B3B2A1905BB004B7A58 /* DiaryScrollerView.swift in Sources */,
 				4ABCBCBE2BD784A0003138A8 /* MySmeemCollectionViewCell.swift in Sources */,
 				4AC705952BEA1E58003C5310 /* AlarmContainerView.swift in Sources */,
+				4AC705A62BEA58EA003C5310 /* SettingAppData.swift in Sources */,
 				4AC7059A2BEA2A2B003C5310 /* SettingViewModel.swift in Sources */,
 				4A9731D32BAAB55D00DEC0C8 /* SplashEndPoint.swift in Sources */,
 				371107E72ACBED3C007A4AC2 /* DiaryViewConfigurationBuilder.swift in Sources */,
@@ -1950,7 +1969,7 @@
 				4AC00EF52AD57202009230DA /* TrainingAlarmDataSendProtocol.swift in Sources */,
 				4AD04B402A1921AE004B7A58 /* CorrectionViewController.swift in Sources */,
 				4A1882FA2A8BBD0D0088F590 /* SmeemStartViewController.swift in Sources */,
-				4AC7058F2BEA1E40003C5310 /* PlanContainerView.swift in Sources */,
+				4AC7058F2BEA1E40003C5310 /* NicknameContainerView.swift in Sources */,
 				4ABCBCDA2BE22733003138A8 /* MyPlanCollectionViewLayout.swift in Sources */,
 				3728B8D32A2CFED300EF4CF8 /* ForeignDiaryViewController.swift in Sources */,
 				4ABE3FD12A811F8400D1D22E /* SplashViewController.swift in Sources */,
@@ -2019,7 +2038,8 @@
 				371107DD2ACAB571007A4AC2 /* BaseView.swift in Sources */,
 				371C69D32BE112AD000D745D /* BottomSheetPresentable.swift in Sources */,
 				4AC707B02B73CFFA00B1D791 /* AlarmDefaultModel.swift in Sources */,
-				4AC705912BEA1E49003C5310 /* NicknameContainerView.swift in Sources */,
+				4AC705912BEA1E49003C5310 /* PlanContainerView.swift in Sources */,
+				4AC705A92BECE064003C5310 /* EditPlanViewController.swift in Sources */,
 				378E461A2B5516E200D2A473 /* DeepLAPI.swift in Sources */,
 				37EB69E62A4B3BC400075E4E /* DataBindProtocol.swift in Sources */,
 			);
