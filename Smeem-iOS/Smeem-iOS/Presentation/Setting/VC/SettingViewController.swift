@@ -8,17 +8,13 @@
 import UIKit
 import Combine
 
-protocol EditSettingProtocol: AnyObject {
-    func editSetting()
-}
-
 final class SettingViewController: BaseViewController {
     
     private let viewWillAppearSubject = PassthroughSubject<Void, Never>()
-    private let pushButtonTapped = PassthroughSubject<Void, Never>()
     private let nicknameButtonTapped = PassthroughSubject<Void, Never>()
-    private let alarmToggleTapped = PassthroughSubject<Void, Never>()
     private let planButtonTapped = PassthroughSubject<Void, Never>()
+    private let alarmToggleTapped = PassthroughSubject<Void, Never>()
+    private let alarmButtnTapped = PassthroughSubject<Void, Never>()
     private var cancelBag = Set<AnyCancellable>()
     private let toastSubject = PassthroughSubject<Void, Never>()
     private let viewModel = SettingViewModel(provider: SettingService())
@@ -56,6 +52,7 @@ final class SettingViewController: BaseViewController {
     private let nicknameContainerView = NicknameContainerView()
     private let languageContainerView = LanguageContainerView()
     private let alarmContainerView = AlarmContainerView()
+    private let alarmCollectionContainerView = UIView()
     private let alarmCollectionView = AlarmCollectionView()
     
     override func viewDidLoad() {
@@ -71,12 +68,14 @@ final class SettingViewController: BaseViewController {
     
     private func bind() {
         backButton.tapPublisher
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 self?.navigationController?.popViewController(animated: true)
             }
             .store(in: &cancelBag)
         
         moreButton.tapPublisher
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 let authVC = AuthManagementViewController()
                 self?.navigationController?.pushViewController(authVC, animated: true)
@@ -97,35 +96,49 @@ final class SettingViewController: BaseViewController {
         
         alarmContainerView.toggleTapped
             .sink { [weak self] _ in
-                self?.pushButtonTapped.send(())
+                self?.alarmToggleTapped.send(())
+            }
+            .store(in: &cancelBag)
+        
+        alarmCollectionContainerView.gesturePublisher
+            .sink { [weak self] _ in
+                self?.alarmButtnTapped.send(())
             }
             .store(in: &cancelBag)
         
         let output = viewModel.transform(input: SettingViewModel.Input(viewWillAppearSubject: viewWillAppearSubject,
-                                                                       pushButtonTapped: pushButtonTapped,
+                                                                       alarmToggleSubject: alarmToggleTapped,
                                                                        nicknameButtonTapped: nicknameButtonTapped,
-                                                                       planButtonTapped: planButtonTapped))
+                                                                       planButtonTapped: planButtonTapped,
+                                                                       alarmButtonTapped: alarmButtnTapped))
         output.hasPlanResult
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] response in
                 self?.nicknameContainerView.setNicknameData(data: response.nickname)
                 self?.planContainerView.hasPlanData(data: response.plan!.content)
                 self?.alarmContainerView.setAlarmData(data: response.hasPushAlarm)
                 self?.alarmCollectionView.selectedIndexPath = response.alarmIndexPath
                 self?.alarmCollectionView.hasAlarm = response.hasPushAlarm
+                self?.alarmCollectionView.myPageTime = (response.alarmTime.hour, response.alarmTime.minute)
+                self?.alarmCollectionView.reloadData()
             }
             .store(in: &cancelBag)
         
         output.hasNotPlanResult
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] response in
                 self?.nicknameContainerView.setNicknameData(data: response.nickname)
                 self?.planContainerView.hasNotPlanData()
                 self?.alarmContainerView.setAlarmData(data: response.hasPushAlarm)
                 self?.alarmCollectionView.selectedIndexPath = response.alarmIndexPath
                 self?.alarmCollectionView.hasAlarm = response.hasPushAlarm
+                self?.alarmCollectionView.myPageTime = (response.alarmTime.hour, response.alarmTime.minute)
+                self?.alarmCollectionView.reloadData()
             }
             .store(in: &cancelBag)
         
-        output.pushButtonResult
+        output.alarmToggleResult
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] hasAlarm in
                 self?.alarmContainerView.setAlarmData(data: hasAlarm)
                 self?.alarmCollectionView.hasAlarm = hasAlarm
@@ -133,14 +146,21 @@ final class SettingViewController: BaseViewController {
             .store(in: &cancelBag)
         
         output.nicknameResult
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] nickname in
-                let editVC = EditNicknameViewController()
-                editVC.nickName = nickname
-                self?.navigationController?.pushViewController(editVC, animated: true)
+                let editNicknameVC = EditNicknameViewController()
+                editNicknameVC.toastSubject
+                    .sink { [weak self] _ in
+                        self?.toastSubject.send(())
+                    }
+                    .store(in: &editNicknameVC.cancelBag)
+                editNicknameVC.nickName = nickname
+                self?.navigationController?.pushViewController(editNicknameVC, animated: true)
             }
             .store(in: &cancelBag)
         
         output.planButtonResult
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] plan in
                 let editPlanVC = EditPlanViewController(planId: plan?.id)
                 editPlanVC.toastSubject
@@ -149,6 +169,36 @@ final class SettingViewController: BaseViewController {
                     }
                     .store(in: &editPlanVC.cancelBag)
                 self?.navigationController?.pushViewController(editPlanVC, animated: true)
+            }
+            .store(in: &cancelBag)
+        
+        output.alarmButtonResult
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] (indexPath, time) in
+                let editAlarmVC = EditAlarmViewController()
+                editAlarmVC.toastSubject
+                    .sink { [weak self] _ in
+                        self?.toastSubject.send(())
+                    }
+                    .store(in: &editAlarmVC.cancelBag)
+                editAlarmVC.dayIndexPathArray = indexPath
+                editAlarmVC.trainigDayData = time.day
+                editAlarmVC.trainingTimeData = (time.hour, time.minute)
+                self?.navigationController?.pushViewController(editAlarmVC, animated: true)
+            }
+            .store(in: &cancelBag)
+        
+        output.errorResult
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] error in
+                self?.showToast(toastType: .smeemErrorToast(message: error))
+            }
+            .store(in: &cancelBag)
+        
+        output.loadingViewResult
+            .receive(on: DispatchQueue.main)
+            .sink { isShown in
+                isShown ? SmeemLoadingView.showLoading() : SmeemLoadingView.hideLoading()
             }
             .store(in: &cancelBag)
         
@@ -166,6 +216,7 @@ final class SettingViewController: BaseViewController {
         summaryScrollerView.addSubview(contentView)
         contentView.addSubviews(planContainerView, nicknameContainerView,
                                 languageContainerView, alarmContainerView, alarmCollectionView)
+        alarmCollectionView.addSubview(alarmCollectionContainerView)
         
         naviView.snp.makeConstraints {
             $0.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
@@ -227,6 +278,11 @@ final class SettingViewController: BaseViewController {
             $0.leading.trailing.equalToSuperview().inset(18)
             $0.bottom.equalToSuperview().offset(-convertByHeightRatio(80))
             $0.height.equalTo(convertByHeightRatio(133))
+        }
+        
+        alarmCollectionContainerView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+            $0.width.height.equalTo(alarmCollectionView)
         }
     }
 }
