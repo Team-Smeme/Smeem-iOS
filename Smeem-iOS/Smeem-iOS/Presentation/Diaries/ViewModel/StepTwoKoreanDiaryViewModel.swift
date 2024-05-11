@@ -8,16 +8,19 @@
 import Foundation
 import Combine
 
+enum AmplitudeType {
+    case secStepComplete
+    case hintClick
+}
+
 final class StepTwoKoreanDiaryViewModel: DiaryViewModel {
     struct Input {
-        let leftButtonTapped: PassthroughSubject<Void, Never>
         let rightButtonTapped: PassthroughSubject<Void, Never>
         let hintButtonTapped: PassthroughSubject<Bool, Never>
         let hintTextsubject: PassthroughSubject<String, Never>
     }
     
     struct Output {
-        let leftButtonAction: AnyPublisher<Void, Never>
         let rightButtonAction: AnyPublisher<Void, Never>
         let hintButtonAction: AnyPublisher<Bool, Never>
         let postHintResult: AnyPublisher<String?, Never>
@@ -26,7 +29,8 @@ final class StepTwoKoreanDiaryViewModel: DiaryViewModel {
     }
     
     private (set) var diaryPostedSubject = CurrentValueSubject<PostDiaryResponse?, Never>(nil)
-    private let amplitudeSubject = PassthroughSubject<Void, Never>()
+    
+    private let amplitudeSubject = PassthroughSubject<AmplitudeType, Never>()
     private let postHintResult = PassthroughSubject<String?, Never>()
     private let loadingViewResult = PassthroughSubject<Bool, Never>()
     private let errorResult = PassthroughSubject<SmeemError, Never>()
@@ -44,9 +48,6 @@ final class StepTwoKoreanDiaryViewModel: DiaryViewModel {
             }
             .store(in: &cancelBag)
         
-        let leftButtonAction = input.leftButtonTapped
-            .eraseToAnyPublisher()
-        
         let rightButtonAction = input.rightButtonTapped
             .filter { [weak self] in self?.textValidationState.value == true }
             .handleEvents(receiveSubscription: { [weak self] _ in
@@ -63,7 +64,7 @@ final class StepTwoKoreanDiaryViewModel: DiaryViewModel {
                             self?.updateDiaryInfo(diaryID: response.diaryID, badgePopupContent: response.badges)
                             self?.diaryPostedSubject.send(response)
                             promise(.success(()))
-                            self?.amplitudeSubject.send()
+                            self?.amplitudeSubject.send(.secStepComplete)
                         case .failure(let error):
                             self?.errorResult.send(error)
                         }
@@ -83,7 +84,7 @@ final class StepTwoKoreanDiaryViewModel: DiaryViewModel {
                     self?.postDeepLApi(diaryText: self?.hintText ?? "")
                 }
 
-                AmplitudeManager.shared.track(event: AmplitudeConstant.diary.hint_click.event)
+                self?.amplitudeSubject.send(.hintClick)
                 return self?.isHintShowed ?? false
             }
             .eraseToAnyPublisher()
@@ -92,16 +93,20 @@ final class StepTwoKoreanDiaryViewModel: DiaryViewModel {
             .eraseToAnyPublisher()
         
         amplitudeSubject
-            .sink { _ in
-                AmplitudeManager.shared.track(event: AmplitudeConstant.diary.sec_step_complete.event)
+            .sink { type in
+                switch type {
+                case .secStepComplete:
+                    AmplitudeManager.shared.track(event: AmplitudeConstant.diary.sec_step_complete.event)
+                case .hintClick:
+                    AmplitudeManager.shared.track(event: AmplitudeConstant.diary.hint_click.event)
+                }
             }
             .store(in: &cancelBag)
         
         let errorResult = errorResult.eraseToAnyPublisher()
         let loadingViewResult = loadingViewResult.eraseToAnyPublisher()
         
-        return Output(leftButtonAction: leftButtonAction,
-                      rightButtonAction: rightButtonAction,
+        return Output(rightButtonAction: rightButtonAction,
                       hintButtonAction: hintButtonAction,
                       postHintResult: postHintResult,
                       errorResult: errorResult,
@@ -121,9 +126,14 @@ extension StepTwoKoreanDiaryViewModel {
 
 extension StepTwoKoreanDiaryViewModel {
     private func postDeepLApi(diaryText: String) {
-        DeepLAPI.shared.postTargetText(text: diaryText) { [weak self] response in
-            self?.translatedText = response?.translations.first?.text ?? ""
-            self?.postHintResult.send(self?.translatedText)
+        DeepLAPI.shared.postTargetText(text: diaryText) { [weak self] result in
+            switch result {
+            case .success(let response):
+                self?.translatedText = response?.translations.first?.text ?? ""
+                self?.postHintResult.send(self?.translatedText)
+            case .failure(let error):
+                self?.errorResult.send(error)
+            }
         }
     }
 }

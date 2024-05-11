@@ -11,7 +11,6 @@ import Combine
 final class StepOneKoreanDiaryViewModel: DiaryViewModel {
     struct Input {
         let viewDidLoadSubject: PassthroughSubject<Void, Never>
-        let leftButtonTapped: PassthroughSubject<Void, Never>
         let rightButtonTapped: PassthroughSubject<Void, Never>
         let randomTopicButtonTapped: PassthroughSubject<Void, Never>
         let refreshButtonTapped: PassthroughSubject<Void, Never>
@@ -19,7 +18,6 @@ final class StepOneKoreanDiaryViewModel: DiaryViewModel {
     }
     
     struct Output {
-        let leftButtonAction: AnyPublisher<Void, Never>
         let rightButtonAction: AnyPublisher<Void, Never>
         let randomTopicButtonAction: AnyPublisher<Void, Never>
         let refreshButtonAction: AnyPublisher<Void, Never>
@@ -46,18 +44,16 @@ final class StepOneKoreanDiaryViewModel: DiaryViewModel {
             }
             .store(in: &cancelBag)
         
-        let leftButtonAction = input.leftButtonTapped
-            .eraseToAnyPublisher()
-        
         let rightButtonAction = input.rightButtonTapped
             .filter { [weak self] in self?.textValidationState.value == true }
-            .handleEvents(receiveOutput: { [weak self] _ in
+            .flatMap { [weak self] _ in
                 if self?.isRandomTopicActive.value == false {
                     self?.updateTopicID(to: nil)
                 } else {
                     SharedDiaryDataService.shared.topicID = self?.model.topicID
                 }
-            })
+                return Just<Void>(()).eraseToAnyPublisher()
+            }
             .eraseToAnyPublisher()
         
         let randomTopicButtonAction = input.randomTopicButtonTapped
@@ -80,9 +76,10 @@ final class StepOneKoreanDiaryViewModel: DiaryViewModel {
             .eraseToAnyPublisher()
         
         let toolTipAction = input.toolTipTapped
-            .handleEvents(receiveOutput:  { _ in
+            .flatMap {
                 UserDefaultsManager.shouldShowToolTip = false
-            })
+                return Just<Void>(()).eraseToAnyPublisher()
+            }
             .eraseToAnyPublisher()
         
         let toolTipResult = toolTipSubject
@@ -97,8 +94,7 @@ final class StepOneKoreanDiaryViewModel: DiaryViewModel {
         
         let loadingViewResult = loadingViewResult.eraseToAnyPublisher()
         
-        return Output(leftButtonAction: leftButtonAction,
-                      rightButtonAction: rightButtonAction,
+        return Output(rightButtonAction: rightButtonAction,
                       randomTopicButtonAction: randomTopicButtonAction,
                       refreshButtonAction: refreshButtonAction,
                       toolTipAction: toolTipAction,

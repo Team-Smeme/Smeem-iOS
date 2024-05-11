@@ -51,7 +51,6 @@ final class StepOneKoreanDiaryViewController: DiaryViewController<StepOneKoreanD
 extension StepOneKoreanDiaryViewController {
     private func bind() {
         let input = StepOneKoreanDiaryViewModel.Input(viewDidLoadSubject: viewDidLoadSubject,
-                                                      leftButtonTapped: rootView.navigationView.leftButtonTapped,
                                                       rightButtonTapped: rootView.navigationView.rightButtonTapped,
                                                       randomTopicButtonTapped: rootView.bottomView.randomTopicButtonTapped,
                                                       refreshButtonTapped: rootView.randomTopicView.refreshButtonTapped,
@@ -60,7 +59,7 @@ extension StepOneKoreanDiaryViewController {
         
         let output = viewModel.transform(input: input)
         
-        output.leftButtonAction
+        rootView.navigationView.leftButtonTapped
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in
                 self?.rootView.removeToolTip()
