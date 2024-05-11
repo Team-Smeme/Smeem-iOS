@@ -1,28 +1,28 @@
 //
-//  MySummaryService.swift
+//  SettingService.swift
 //  Smeem-iOS
 //
-//  Created by 황찬미 on 4/28/24.
+//  Created by 황찬미 on 5/7/24.
 //
 
 import Foundation
 import Moya
 
-final class MySummaryService: MySummaryServiceProtocol {
+final class SettingService: SettingServiceProtocol {
+
+    var provider: MoyaProvider<SettingEndPoint>!
     
-    var provider: MoyaProvider<MySummaryEndPoint>!
-    
-    init(provider: MoyaProvider<MySummaryEndPoint> = MoyaProvider<MySummaryEndPoint>(plugins: [MoyaLoggingPlugin()])) {
+    init(provider: MoyaProvider<SettingEndPoint> = MoyaProvider<SettingEndPoint>(plugins: [MoyaLoggingPlugin()])) {
         self.provider = provider
     }
     
-    func mySummaryGetAPI(completion: @escaping (Result<MySummaryResponse, SmeemError>) -> ()) {
-        self.provider.request(.mySummary) { result in
+    func settingGetAPI(completion: @escaping (Result<SettingResponse, SmeemError>) -> ()) {
+        self.provider.request(.settingInfo) { result in
             switch result {
             case .success(let response):
                 do {
                     try NetworkManager.statusCodeErrorHandling(statusCode: response.statusCode)
-                    guard let data = try? response.map(GeneralResponse<MySummaryResponse>.self).data else {
+                    guard let data = try? response.map(GeneralResponse<SettingResponse>.self).data else {
                         throw SmeemError.clientError
                     }
                     completion(.success(data))
@@ -36,17 +36,17 @@ final class MySummaryService: MySummaryServiceProtocol {
         }
     }
     
-    func myPlanGetAPI(completion: @escaping (Result<GeneralResponse<MyPlanResponse>, SmeemError>) -> ()) {
-        self.provider.request(.myPlan) { result in
+    func editPushAPI(param: EditPushRequest, completion: @escaping (Result<GeneralResponse<NilType>, SmeemError>) -> ()) {
+        self.provider.request(.editPush(param: param)) { result in
             switch result {
             case .success(let response):
                 do {
                     try NetworkManager.statusCodeErrorHandling(statusCode: response.statusCode)
-                    guard let data = try? response.map(GeneralResponse<MyPlanResponse>.self) else {
+                    guard let data = try response.map(GeneralResponse<NilType>?.self) else {
                         throw SmeemError.clientError
                     }
                     completion(.success(data))
-                } catch let error {
+                } catch {
                     guard let error = error as? SmeemError else { return }
                     completion(.failure(error))
                 }
@@ -56,17 +56,18 @@ final class MySummaryService: MySummaryServiceProtocol {
         }
     }
     
-    func myBadgeGetAPI(completion: @escaping (Result<[MySummaryBadgeResponse], SmeemError>) -> ()) {
-        self.provider.request(.myBadge) { result in
+    func editPlanPatchAPI(param: PlanIdRequest,
+                          completion: @escaping (Result<GeneralResponse<NilType>, SmeemError>) -> ()) {
+        self.provider.request(.editPlan(param: param)) { result in
             switch result {
             case .success(let response):
                 do {
                     try NetworkManager.statusCodeErrorHandling(statusCode: response.statusCode)
-                    guard let data = try? response.map(GeneralResponse<MySummaryBadgeArrayResponse>.self).data?.badges else {
+                    guard let data = try response.map(GeneralResponse<NilType>?.self) else {
                         throw SmeemError.clientError
                     }
                     completion(.success(data))
-                } catch let error {
+                } catch {
                     guard let error = error as? SmeemError else { return }
                     completion(.failure(error))
                 }

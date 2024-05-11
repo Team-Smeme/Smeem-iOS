@@ -288,7 +288,7 @@ extension TrainingAlarmViewController {
         
         alarmCollectionView.snp.makeConstraints {
             $0.top.equalTo(timeSettingLabelStackView.snp.bottom).offset(28)
-            $0.leading.trailing.equalToSuperview().inset(23)
+            $0.leading.trailing.equalToSuperview().inset(18)
             $0.centerX.equalToSuperview()
             $0.height.equalTo(convertByHeightRatio(133))
         }

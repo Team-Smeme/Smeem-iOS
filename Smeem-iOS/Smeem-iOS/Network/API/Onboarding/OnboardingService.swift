@@ -13,7 +13,7 @@ final class OnboardingService: OnboardingServiceProtocol {
 
     var provider: MoyaProvider<OnboardingEndPoint>!
     
-    init(provider: MoyaProvider<OnboardingEndPoint> = MoyaProvider<OnboardingEndPoint>()) {
+    init(provider: MoyaProvider<OnboardingEndPoint> = MoyaProvider<OnboardingEndPoint>(plugins: [MoyaLoggingPlugin()])) {
         self.provider = provider
     }
     

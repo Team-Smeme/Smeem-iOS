@@ -8,16 +8,14 @@
 import UIKit
 
 import SnapKit
-
-protocol EditMypageDelegate: AnyObject {
-    func editMyPageData()
-}
+import Combine
 
 final class EditNicknameViewController: BaseViewController {
     
     // MARK: - Property
     
-    weak var editNicknameDelegate: EditMypageDelegate?
+    let toastSubject = PassthroughSubject<Void, Never>()
+    var cancelBag = Set<AnyCancellable>()
     
     var nickName = String()
     var checkDouble = Bool()
@@ -220,7 +218,7 @@ extension EditNicknameViewController {
         MyPageAPI.shared.changeMyNickName(request: EditNicknameRequest(username: nickname)) { result in
             switch result {
             case .success(_):
-                self.editNicknameDelegate?.editMyPageData()
+                self.toastSubject.send(())
                 self.navigationController?.popViewController(animated: true)
             case .failure(let error):
                 self.showToast(toastType: .smeemErrorToast(message: error))
