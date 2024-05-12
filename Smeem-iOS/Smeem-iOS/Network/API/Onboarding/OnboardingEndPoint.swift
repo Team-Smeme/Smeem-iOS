@@ -10,6 +10,7 @@ import Moya
 
 enum OnboardingEndPoint {
     case trainingGoal
+    case trainingPlan
     case trainingWay(param: String)
     case trainingUserPlan(param: TrainingPlanRequest, token: String)
     case serviceAccept(param: ServiceAcceptRequest, token: String)
@@ -21,6 +22,8 @@ extension OnboardingEndPoint: BaseTargetType {
         switch self {
         case .trainingGoal:
             return URLConstant.trainingGoalsURL
+        case .trainingPlan:
+            return URLConstant.trainingPlanURL
         case .trainingWay(let type):
             return URLConstant.trainingGoalsURL+"/\(type)"
         case .trainingUserPlan:
@@ -34,7 +37,7 @@ extension OnboardingEndPoint: BaseTargetType {
     
     var method: Moya.Method {
         switch self {
-        case .trainingGoal, .trainingWay, .checkNickname:
+        case .trainingGoal, .trainingPlan, .trainingWay, .checkNickname:
             return .get
         case .trainingUserPlan, .serviceAccept:
             return .patch
@@ -43,7 +46,7 @@ extension OnboardingEndPoint: BaseTargetType {
     
     var task: Moya.Task {
         switch self {
-        case .trainingGoal, .trainingWay:
+        case .trainingGoal, .trainingPlan, .trainingWay:
             return .requestPlain
         case .trainingUserPlan(let param, _):
             return .requestJSONEncodable(param)
@@ -56,7 +59,7 @@ extension OnboardingEndPoint: BaseTargetType {
     
     var headers: [String : String]? {
         switch self {
-        case .trainingGoal, .trainingWay:
+        case .trainingGoal, .trainingPlan, .trainingWay:
             return ["Content-Type": "application/json",
                     "Authorization": ""]
         case .trainingUserPlan(_, let token), .serviceAccept(_, let token), .checkNickname(_, let token):
@@ -106,6 +109,8 @@ extension OnboardingEndPoint {
                 }
                 """.utf8
             )
+        case .trainingPlan:
+            return Data()
         case .trainingWay:
             return Data(
                 """

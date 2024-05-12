@@ -228,7 +228,7 @@ final class HomeViewController: BaseViewController {
     }
     
     @objc func myPageButtonDidTap(_ sender: UIButton) {
-        let myPageVC = MyPageViewController()
+        let myPageVC = MySummaryViewController()
         self.navigationController?.pushViewController(myPageVC, animated: true)
     }
     

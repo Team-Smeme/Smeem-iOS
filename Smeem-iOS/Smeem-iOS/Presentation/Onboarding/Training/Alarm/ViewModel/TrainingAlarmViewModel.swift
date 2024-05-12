@@ -11,7 +11,7 @@ import Combine
 final class TrainingAlarmViewModel: ViewModel {
     
     struct Input {
-        let viewWillAppearSubject: PassthroughSubject<Void, Never>
+        let viewDidLoadSubject: PassthroughSubject<Void, Never>
         let alarmTimeSubject: PassthroughSubject<AlarmTimeAppData, Never>
         let alarmDaySubject: PassthroughSubject<Set<String>, Never>
         let alarmButtonTapped: PassthroughSubject<AlarmType, Never>
@@ -35,11 +35,13 @@ final class TrainingAlarmViewModel: ViewModel {
     private let loadingViewSubject = PassthroughSubject<Bool, Never>()
     
     var target = ""
+    var planId = 1
     var trainingPlanRequest = TrainingPlanRequest(target: "DEVELOP",
                                                   trainingTime: TrainingTime(day: "MON,TUE,WED,THU,FRI",
                                                                              hour: 22,
                                                                              minute: 0),
-                                                  hasAlarm: true)
+                                                  hasAlarm: true,
+                                                  planId: 1)
     var authType = AuthType.signup
     private var provider: OnboardingServiceProtocol
     
@@ -48,10 +50,11 @@ final class TrainingAlarmViewModel: ViewModel {
     }
     
     func transform(input: Input) -> Output {
-        input.viewWillAppearSubject
+        input.viewDidLoadSubject
             .sink { _ in
                 self.authType = UserDefaultsManager.clientAuthType == self.authType.rawValue ? .signup : .login
                 self.trainingPlanRequest.target = self.target
+                self.trainingPlanRequest.planId = self.planId
             }
             .store(in: &cancelBag)
             
@@ -107,7 +110,7 @@ final class TrainingAlarmViewModel: ViewModel {
                                                   accessToken: UserDefaultsManager.clientAccessToken) { result in
                         
                         switch result {
-                        case .success(let response):
+                        case .success(_):
                             promise(.success(()))
                         case .failure(let error):
                             self.errorSubject.send(error)

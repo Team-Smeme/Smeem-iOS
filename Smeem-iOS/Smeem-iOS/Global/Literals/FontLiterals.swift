@@ -68,6 +68,14 @@ extension UIFont {
         return UIFont.font(.pretendardRegular, ofSize: 12)
     }
     
+    @nonobjc class var c5: UIFont {
+        return UIFont.font(.pretendardSemiBold, ofSize: 12)
+    }
+    
+    @nonobjc class var c6: UIFont {
+        return UIFont.font(.pretendardMedium, ofSize: 9)
+    }
+    
     @nonobjc class var u1: UIFont {
         return UIFont.font(.urbanistSemiBold, ofSize: 28)
     }

@@ -15,6 +15,8 @@
 		371107E52ACBEA69007A4AC2 /* DiaryViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371107E42ACBEA69007A4AC2 /* DiaryViewFactory.swift */; };
 		371107E72ACBED3C007A4AC2 /* DiaryViewConfigurationBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371107E62ACBED3C007A4AC2 /* DiaryViewConfigurationBuilder.swift */; };
 		371107E92ACC7E3A007A4AC2 /* DiaryLayoutConfigurations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371107E82ACC7E3A007A4AC2 /* DiaryLayoutConfigurations.swift */; };
+		371C69D32BE112AD000D745D /* BottomSheetPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371C69D22BE112AD000D745D /* BottomSheetPresentable.swift */; };
+		371C69D52BE11926000D745D /* BadgeBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371C69D42BE11926000D745D /* BadgeBottomSheetViewController.swift */; };
 		37144C512B88E949008565C4 /* DiaryViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37144C502B88E949008565C4 /* DiaryViewControllerFactory.swift */; };
 		37144C582B890923008565C4 /* DiaryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37144C572B890923008565C4 /* DiaryModel.swift */; };
 		371E94162A87B83D0098280F /* NextButtonDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371E94152A87B83D0098280F /* NextButtonDelegate.swift */; };
@@ -141,6 +143,25 @@
 		4AB7C92B2B78A8D900845733 /* SmeemStartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB7C92A2B78A8D900845733 /* SmeemStartViewModel.swift */; };
 		4AB7C9302B78B44500845733 /* LoginBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB7C92F2B78B44500845733 /* LoginBottomSheetViewController.swift */; };
 		4AB7C9322B78B45300845733 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB7C9312B78B45300845733 /* LoginViewModel.swift */; };
+		4ABCBCBA2BD6A6EE003138A8 /* MySummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABCBCB92BD6A6EE003138A8 /* MySummaryViewController.swift */; };
+		4ABCBCBE2BD784A0003138A8 /* MySmeemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABCBCBD2BD784A0003138A8 /* MySmeemCollectionViewCell.swift */; };
+		4ABCBCC02BD7C521003138A8 /* MyPlanCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABCBCBF2BD7C521003138A8 /* MyPlanCollectionViewCell.swift */; };
+		4ABCBCC22BD90481003138A8 /* MyBadgeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABCBCC12BD90481003138A8 /* MyBadgeCollectionViewCell.swift */; };
+		4ABCBCC52BDD3375003138A8 /* MySummaryEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABCBCC42BDD3375003138A8 /* MySummaryEndPoint.swift */; };
+		4ABCBCC72BDD3983003138A8 /* MySummaryServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABCBCC62BDD3983003138A8 /* MySummaryServiceProtocol.swift */; };
+		4ABCBCCA2BDD3E3D003138A8 /* MySummaryResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABCBCC92BDD3E3D003138A8 /* MySummaryResponse.swift */; };
+		4ABCBCCC2BDE8E44003138A8 /* MySummaryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABCBCCB2BDE8E44003138A8 /* MySummaryService.swift */; };
+		4ABCBCCE2BDE95D0003138A8 /* MyPlanResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABCBCCD2BDE95D0003138A8 /* MyPlanResponse.swift */; };
+		4ABCBCD02BDE9BA1003138A8 /* MySummaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABCBCCF2BDE9BA1003138A8 /* MySummaryViewModel.swift */; };
+		4ABCBCD22BDFB037003138A8 /* TotalMySummaryResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABCBCD12BDFB037003138A8 /* TotalMySummaryResponse.swift */; };
+		4ABCBCD62BDFC6BD003138A8 /* MySmeemCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABCBCD52BDFC6BD003138A8 /* MySmeemCollectionViewDataSource.swift */; };
+		4ABCBCD82BE2230F003138A8 /* MyPlanCollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABCBCD72BE2230F003138A8 /* MyPlanCollectionViewDataSource.swift */; };
+		4ABCBCDA2BE22733003138A8 /* MyPlanCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABCBCD92BE22733003138A8 /* MyPlanCollectionViewLayout.swift */; };
+		4ABCBCDC2BE2484B003138A8 /* MyPlanAppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABCBCDB2BE2484B003138A8 /* MyPlanAppData.swift */; };
+		4ABCBCE52BE25D82003138A8 /* TrainingPlanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABCBCE42BE25D82003138A8 /* TrainingPlanViewController.swift */; };
+		4ABCBCE72BE25E51003138A8 /* TrainingPlanResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABCBCE62BE25E51003138A8 /* TrainingPlanResponse.swift */; };
+		4ABCBCEA2BE26079003138A8 /* TrainingPlanViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABCBCE92BE26079003138A8 /* TrainingPlanViewModel.swift */; };
+		4ABCBCEC2BE261B0003138A8 /* TrainingCollectionViewDatasource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABCBCEB2BE261B0003138A8 /* TrainingCollectionViewDatasource.swift */; };
 		4ABE3FD12A811F8400D1D22E /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABE3FD02A811F8400D1D22E /* SplashViewController.swift */; };
 		4AC00ECC2AD1C143009230DA /* UICollectionView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC00ECB2AD1C143009230DA /* UICollectionView+.swift */; };
 		4AC00ED72AD2E6E0009230DA /* TrainingStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC00ED62AD2E6E0009230DA /* TrainingStepView.swift */; };
@@ -153,6 +174,21 @@
 		4AC047252A8FCAE100EBDC0E /* AuthManagementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC047242A8FCAE100EBDC0E /* AuthManagementViewController.swift */; };
 		4AC1D6832B4ED38200D39A98 /* OnboardingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC1D6822B4ED38200D39A98 /* OnboardingModel.swift */; };
 		4AC4B82D2A2F9FE200E147AA /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC4B82C2A2F9FE200E147AA /* UserDefaultsManager.swift */; };
+		4AC705812BE8B69E003C5310 /* MySummaryBadgeResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC705802BE8B69E003C5310 /* MySummaryBadgeResponse.swift */; };
+		4AC705832BE8BA60003C5310 /* MyBadgeCollectionViewDatasource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC705822BE8BA60003C5310 /* MyBadgeCollectionViewDatasource.swift */; };
+		4AC7058B2BEA0BE2003C5310 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC7058A2BEA0BE2003C5310 /* SettingViewController.swift */; };
+		4AC7058F2BEA1E40003C5310 /* NicknameContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC7058E2BEA1E40003C5310 /* NicknameContainerView.swift */; };
+		4AC705912BEA1E49003C5310 /* PlanContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC705902BEA1E49003C5310 /* PlanContainerView.swift */; };
+		4AC705932BEA1E52003C5310 /* LanguageContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC705922BEA1E52003C5310 /* LanguageContainerView.swift */; };
+		4AC705952BEA1E58003C5310 /* AlarmContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC705942BEA1E58003C5310 /* AlarmContainerView.swift */; };
+		4AC7059A2BEA2A2B003C5310 /* SettingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC705992BEA2A2B003C5310 /* SettingViewModel.swift */; };
+		4AC7059D2BEA2A8E003C5310 /* SettingEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC7059C2BEA2A8E003C5310 /* SettingEndPoint.swift */; };
+		4AC705A02BEA2AAA003C5310 /* SettingServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC7059F2BEA2AAA003C5310 /* SettingServiceProtocol.swift */; };
+		4AC705A22BEA2AB1003C5310 /* SettingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC705A12BEA2AB1003C5310 /* SettingService.swift */; };
+		4AC705A42BEA2C99003C5310 /* SettingResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC705A32BEA2C99003C5310 /* SettingResponse.swift */; };
+		4AC705A62BEA58EA003C5310 /* SettingAppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC705A52BEA58EA003C5310 /* SettingAppData.swift */; };
+		4AC705A92BECE064003C5310 /* EditPlanViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC705A82BECE064003C5310 /* EditPlanViewController.swift */; };
+		4AC705AE2BECF0D4003C5310 /* EditPlanViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC705AD2BECF0D4003C5310 /* EditPlanViewModel.swift */; };
 		4AC707A82B73893200B1D791 /* AlarmTimeAppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC707A72B73893200B1D791 /* AlarmTimeAppData.swift */; };
 		4AC707AB2B738A5B00B1D791 /* TrainingAlarmViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC707AA2B738A5B00B1D791 /* TrainingAlarmViewModel.swift */; };
 		4AC707B02B73CFFA00B1D791 /* AlarmDefaultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC707AF2B73CFFA00B1D791 /* AlarmDefaultModel.swift */; };
@@ -172,7 +208,7 @@
 		4AF78D9E2B84AB6A0098E1FA /* MockProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF78D9D2B84AB6A0098E1FA /* MockProvider.swift */; };
 		4AFD7C292B600FED00FE7EFF /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AFD7C282B600FED00FE7EFF /* NetworkManager.swift */; };
 		6F294A3E2A26177B00856CC8 /* TrainingGoalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF507742A10CD4D007C62B1 /* TrainingGoalViewController.swift */; };
-		6F294A3F2A26177E00856CC8 /* TrainingGoalCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF507762A10CD96007C62B1 /* TrainingGoalCollectionViewCell.swift */; };
+		6F294A3F2A26177E00856CC8 /* TrainingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF507762A10CD96007C62B1 /* TrainingCollectionViewCell.swift */; };
 		6F294A422A26178C00856CC8 /* UserNickNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A13B7582A13D37000F4FB1E /* UserNickNameViewController.swift */; };
 		6F294A432A26179700856CC8 /* ServiceAcceptViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8275D22A1513120083A4AB /* ServiceAcceptViewController.swift */; };
 		6F294A442A26179900856CC8 /* ServiceAcceptCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8275D42A1519550083A4AB /* ServiceAcceptCollectionViewCell.swift */; };
@@ -210,6 +246,8 @@
 		371107E42ACBEA69007A4AC2 /* DiaryViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryViewFactory.swift; sourceTree = "<group>"; };
 		371107E62ACBED3C007A4AC2 /* DiaryViewConfigurationBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryViewConfigurationBuilder.swift; sourceTree = "<group>"; };
 		371107E82ACC7E3A007A4AC2 /* DiaryLayoutConfigurations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryLayoutConfigurations.swift; sourceTree = "<group>"; };
+		371C69D22BE112AD000D745D /* BottomSheetPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetPresentable.swift; sourceTree = "<group>"; };
+		371C69D42BE11926000D745D /* BadgeBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeBottomSheetViewController.swift; sourceTree = "<group>"; };
 		37144C502B88E949008565C4 /* DiaryViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryViewControllerFactory.swift; sourceTree = "<group>"; };
 		37144C572B890923008565C4 /* DiaryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryModel.swift; sourceTree = "<group>"; };
 		371E94152A87B83D0098280F /* NextButtonDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextButtonDelegate.swift; sourceTree = "<group>"; };
@@ -338,6 +376,25 @@
 		4AB7C9312B78B45300845733 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		4AB9F5272AA9F78C00EBEE35 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		4AB9F5292AAA035300EBEE35 /* BaseResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseResponse.swift; sourceTree = "<group>"; };
+		4ABCBCB92BD6A6EE003138A8 /* MySummaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySummaryViewController.swift; sourceTree = "<group>"; };
+		4ABCBCBD2BD784A0003138A8 /* MySmeemCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySmeemCollectionViewCell.swift; sourceTree = "<group>"; };
+		4ABCBCBF2BD7C521003138A8 /* MyPlanCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPlanCollectionViewCell.swift; sourceTree = "<group>"; };
+		4ABCBCC12BD90481003138A8 /* MyBadgeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyBadgeCollectionViewCell.swift; sourceTree = "<group>"; };
+		4ABCBCC42BDD3375003138A8 /* MySummaryEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySummaryEndPoint.swift; sourceTree = "<group>"; };
+		4ABCBCC62BDD3983003138A8 /* MySummaryServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySummaryServiceProtocol.swift; sourceTree = "<group>"; };
+		4ABCBCC92BDD3E3D003138A8 /* MySummaryResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySummaryResponse.swift; sourceTree = "<group>"; };
+		4ABCBCCB2BDE8E44003138A8 /* MySummaryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySummaryService.swift; sourceTree = "<group>"; };
+		4ABCBCCD2BDE95D0003138A8 /* MyPlanResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPlanResponse.swift; sourceTree = "<group>"; };
+		4ABCBCCF2BDE9BA1003138A8 /* MySummaryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySummaryViewModel.swift; sourceTree = "<group>"; };
+		4ABCBCD12BDFB037003138A8 /* TotalMySummaryResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalMySummaryResponse.swift; sourceTree = "<group>"; };
+		4ABCBCD52BDFC6BD003138A8 /* MySmeemCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySmeemCollectionViewDataSource.swift; sourceTree = "<group>"; };
+		4ABCBCD72BE2230F003138A8 /* MyPlanCollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPlanCollectionViewDataSource.swift; sourceTree = "<group>"; };
+		4ABCBCD92BE22733003138A8 /* MyPlanCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPlanCollectionViewLayout.swift; sourceTree = "<group>"; };
+		4ABCBCDB2BE2484B003138A8 /* MyPlanAppData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPlanAppData.swift; sourceTree = "<group>"; };
+		4ABCBCE42BE25D82003138A8 /* TrainingPlanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingPlanViewController.swift; sourceTree = "<group>"; };
+		4ABCBCE62BE25E51003138A8 /* TrainingPlanResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingPlanResponse.swift; sourceTree = "<group>"; };
+		4ABCBCE92BE26079003138A8 /* TrainingPlanViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingPlanViewModel.swift; sourceTree = "<group>"; };
+		4ABCBCEB2BE261B0003138A8 /* TrainingCollectionViewDatasource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingCollectionViewDatasource.swift; sourceTree = "<group>"; };
 		4ABE3FD02A811F8400D1D22E /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		4AC00ECB2AD1C143009230DA /* UICollectionView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+.swift"; sourceTree = "<group>"; };
 		4AC00ED62AD2E6E0009230DA /* TrainingStepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingStepView.swift; sourceTree = "<group>"; };
@@ -350,6 +407,21 @@
 		4AC047242A8FCAE100EBDC0E /* AuthManagementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManagementViewController.swift; sourceTree = "<group>"; };
 		4AC1D6822B4ED38200D39A98 /* OnboardingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingModel.swift; sourceTree = "<group>"; };
 		4AC4B82C2A2F9FE200E147AA /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
+		4AC705802BE8B69E003C5310 /* MySummaryBadgeResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySummaryBadgeResponse.swift; sourceTree = "<group>"; };
+		4AC705822BE8BA60003C5310 /* MyBadgeCollectionViewDatasource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyBadgeCollectionViewDatasource.swift; sourceTree = "<group>"; };
+		4AC7058A2BEA0BE2003C5310 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
+		4AC7058E2BEA1E40003C5310 /* NicknameContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameContainerView.swift; sourceTree = "<group>"; };
+		4AC705902BEA1E49003C5310 /* PlanContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanContainerView.swift; sourceTree = "<group>"; };
+		4AC705922BEA1E52003C5310 /* LanguageContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageContainerView.swift; sourceTree = "<group>"; };
+		4AC705942BEA1E58003C5310 /* AlarmContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmContainerView.swift; sourceTree = "<group>"; };
+		4AC705992BEA2A2B003C5310 /* SettingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewModel.swift; sourceTree = "<group>"; };
+		4AC7059C2BEA2A8E003C5310 /* SettingEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingEndPoint.swift; sourceTree = "<group>"; };
+		4AC7059F2BEA2AAA003C5310 /* SettingServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingServiceProtocol.swift; sourceTree = "<group>"; };
+		4AC705A12BEA2AB1003C5310 /* SettingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingService.swift; sourceTree = "<group>"; };
+		4AC705A32BEA2C99003C5310 /* SettingResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingResponse.swift; sourceTree = "<group>"; };
+		4AC705A52BEA58EA003C5310 /* SettingAppData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingAppData.swift; sourceTree = "<group>"; };
+		4AC705A82BECE064003C5310 /* EditPlanViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPlanViewController.swift; sourceTree = "<group>"; };
+		4AC705AD2BECF0D4003C5310 /* EditPlanViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPlanViewModel.swift; sourceTree = "<group>"; };
 		4AC707A72B73893200B1D791 /* AlarmTimeAppData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmTimeAppData.swift; sourceTree = "<group>"; };
 		4AC707AA2B738A5B00B1D791 /* TrainingAlarmViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingAlarmViewModel.swift; sourceTree = "<group>"; };
 		4AC707AF2B73CFFA00B1D791 /* AlarmDefaultModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmDefaultModel.swift; sourceTree = "<group>"; };
@@ -368,7 +440,7 @@
 		4AEB82942A4CB4F100C1114B /* BadgePopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgePopupViewController.swift; sourceTree = "<group>"; };
 		4AEFD4C92A1392DF00DAB2BD /* TrainingWayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingWayView.swift; sourceTree = "<group>"; };
 		4AF507742A10CD4D007C62B1 /* TrainingGoalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingGoalViewController.swift; sourceTree = "<group>"; };
-		4AF507762A10CD96007C62B1 /* TrainingGoalCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingGoalCollectionViewCell.swift; sourceTree = "<group>"; };
+		4AF507762A10CD96007C62B1 /* TrainingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingCollectionViewCell.swift; sourceTree = "<group>"; };
 		4AF58CE82A4820AA00305248 /* AuthNetworkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthNetworkModel.swift; sourceTree = "<group>"; };
 		4AF78D9A2B84A1DC0098E1FA /* OnboardingServiceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingServiceTest.swift; sourceTree = "<group>"; };
 		4AF78D9D2B84AB6A0098E1FA /* MockProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockProvider.swift; sourceTree = "<group>"; };
@@ -445,6 +517,15 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		371C69D12BE1126E000D745D /* BottomSheet */ = {
+			isa = PBXGroup;
+			children = (
+				371C69D22BE112AD000D745D /* BottomSheetPresentable.swift */,
+				371C69D42BE11926000D745D /* BadgeBottomSheetViewController.swift */,
+			);
+			path = BottomSheet;
+			sourceTree = "<group>";
+		};
 		37144C4F2B88E8F4008565C4 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -508,6 +589,9 @@
 		37A574B529FE204500312453 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				4AC705A72BECE051003C5310 /* Edit */,
+				4AC705892BEA0BD3003C5310 /* Setting */,
+				4ABCBCB82BD6A6E3003138A8 /* MySummary */,
 				4ADA41752A556185001C0285 /* LodingView */,
 				37DCA65E2A48030A00FF8F90 /* DetailDiary */,
 				37CD0DB32A1DEE64001F03E7 /* Diaries */,
@@ -545,6 +629,7 @@
 		37A574B729FE208A00312453 /* UIComponents */ = {
 			isa = PBXGroup;
 			children = (
+				371C69D12BE1126E000D745D /* BottomSheet */,
 				4A81C2952ACDAB0A0056E815 /* HowLearning */,
 				4A81C2942ACDAAF80056E815 /* PlanGoal */,
 				371107DB2ACAB4E3007A4AC2 /* Base */,
@@ -814,6 +899,8 @@
 		4A0EA45A2A014111006CCE52 /* API */ = {
 			isa = PBXGroup;
 			children = (
+				4AC7059B2BEA2A82003C5310 /* Setting */,
+				4ABCBCC32BDD3364003138A8 /* MySummary */,
 				4A9731D12BAAB55000DEC0C8 /* Splash */,
 				378E46182B5516A900D2A473 /* DeepL */,
 				4A004D5C2B4EE2AC003C8936 /* MyPage */,
@@ -831,6 +918,7 @@
 		4A0EA45C2A014126006CCE52 /* NetworkDataModel */ = {
 			isa = PBXGroup;
 			children = (
+				4ABCBCC82BDD3E33003138A8 /* MySummary */,
 				4AF58CE82A4820AA00305248 /* AuthNetworkModel.swift */,
 				4A9FAB402A4C3D1200C40D5A /* BadgeNetworkModel.swift */,
 				6FBC85732A4B603A00A43F98 /* MyPageNetworkModel.swift */,
@@ -994,7 +1082,7 @@
 			isa = PBXGroup;
 			children = (
 				4A81C2962ACDAB2C0056E815 /* TrainingGoalsCollectionView.swift */,
-				4AF507762A10CD96007C62B1 /* TrainingGoalCollectionViewCell.swift */,
+				4AF507762A10CD96007C62B1 /* TrainingCollectionViewCell.swift */,
 			);
 			path = PlanGoal;
 			sourceTree = "<group>";
@@ -1209,11 +1297,108 @@
 			path = VC;
 			sourceTree = "<group>";
 		};
+		4ABCBCB82BD6A6E3003138A8 /* MySummary */ = {
+			isa = PBXGroup;
+			children = (
+				4ABCBCDE2BE24B8E003138A8 /* VC */,
+				4ABCBCDF2BE24B90003138A8 /* ViewModel */,
+				4ABCBCDD2BE24B8A003138A8 /* View */,
+				4ABCBCE02BE24B9E003138A8 /* Cell */,
+				4ABCBCE22BE24BB3003138A8 /* Delegate */,
+				4ABCBCE12BE24BA8003138A8 /* DataSource */,
+			);
+			path = MySummary;
+			sourceTree = "<group>";
+		};
+		4ABCBCC32BDD3364003138A8 /* MySummary */ = {
+			isa = PBXGroup;
+			children = (
+				4ABCBCC42BDD3375003138A8 /* MySummaryEndPoint.swift */,
+				4ABCBCC62BDD3983003138A8 /* MySummaryServiceProtocol.swift */,
+				4ABCBCCB2BDE8E44003138A8 /* MySummaryService.swift */,
+			);
+			path = MySummary;
+			sourceTree = "<group>";
+		};
+		4ABCBCC82BDD3E33003138A8 /* MySummary */ = {
+			isa = PBXGroup;
+			children = (
+				4ABCBCC92BDD3E3D003138A8 /* MySummaryResponse.swift */,
+				4ABCBCCD2BDE95D0003138A8 /* MyPlanResponse.swift */,
+				4ABCBCD12BDFB037003138A8 /* TotalMySummaryResponse.swift */,
+				4ABCBCDB2BE2484B003138A8 /* MyPlanAppData.swift */,
+				4AC705802BE8B69E003C5310 /* MySummaryBadgeResponse.swift */,
+			);
+			path = MySummary;
+			sourceTree = "<group>";
+		};
+		4ABCBCDD2BE24B8A003138A8 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		4ABCBCDE2BE24B8E003138A8 /* VC */ = {
+			isa = PBXGroup;
+			children = (
+				4ABCBCB92BD6A6EE003138A8 /* MySummaryViewController.swift */,
+			);
+			path = VC;
+			sourceTree = "<group>";
+		};
+		4ABCBCDF2BE24B90003138A8 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				4ABCBCCF2BDE9BA1003138A8 /* MySummaryViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		4ABCBCE02BE24B9E003138A8 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				4ABCBCC12BD90481003138A8 /* MyBadgeCollectionViewCell.swift */,
+				4ABCBCBF2BD7C521003138A8 /* MyPlanCollectionViewCell.swift */,
+				4ABCBCBD2BD784A0003138A8 /* MySmeemCollectionViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		4ABCBCE12BE24BA8003138A8 /* DataSource */ = {
+			isa = PBXGroup;
+			children = (
+				4ABCBCD72BE2230F003138A8 /* MyPlanCollectionViewDataSource.swift */,
+				4ABCBCD52BDFC6BD003138A8 /* MySmeemCollectionViewDataSource.swift */,
+				4AC705822BE8BA60003C5310 /* MyBadgeCollectionViewDatasource.swift */,
+			);
+			path = DataSource;
+			sourceTree = "<group>";
+		};
+		4ABCBCE22BE24BB3003138A8 /* Delegate */ = {
+			isa = PBXGroup;
+			children = (
+				4ABCBCD92BE22733003138A8 /* MyPlanCollectionViewLayout.swift */,
+			);
+			path = Delegate;
+			sourceTree = "<group>";
+		};
+		4ABCBCE32BE25D77003138A8 /* Plan */ = {
+			isa = PBXGroup;
+			children = (
+				4AC7057D2BE27001003C5310 /* VC */,
+				4AC7057E2BE27004003C5310 /* ViewModel */,
+				4AC7057F2BE2700C003C5310 /* Datasource */,
+			);
+			path = Plan;
+			sourceTree = "<group>";
+		};
 		4AC00EF82AD6D7D3009230DA /* Training */ = {
 			isa = PBXGroup;
 			children = (
 				4AC1D6812B4ED37700D39A98 /* Model */,
 				4AEFD4C22A136E5F00DAB2BD /* Goal */,
+				4ABCBCE32BE25D77003138A8 /* Plan */,
 				4AEFD4C32A136E6F00DAB2BD /* Way */,
 				4AEFD4C62A13907D00DAB2BD /* Alarm */,
 				4AC00EFA2AD6D82B009230DA /* View */,
@@ -1250,6 +1435,7 @@
 		4AC1D6812B4ED37700D39A98 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				4ABCBCE62BE25E51003138A8 /* TrainingPlanResponse.swift */,
 				4AC1D6822B4ED38200D39A98 /* OnboardingModel.swift */,
 				4A004D4E2B4ED760003C8936 /* TrainingGoalResponse.swift */,
 				4A004D502B4ED783003C8936 /* TrainingWayResponse.swift */,
@@ -1266,6 +1452,88 @@
 				4A08480D2B555FD0008327C7 /* AmplitudeConstant.swift */,
 			);
 			path = Constants;
+			sourceTree = "<group>";
+		};
+		4AC7057D2BE27001003C5310 /* VC */ = {
+			isa = PBXGroup;
+			children = (
+				4ABCBCE42BE25D82003138A8 /* TrainingPlanViewController.swift */,
+			);
+			path = VC;
+			sourceTree = "<group>";
+		};
+		4AC7057E2BE27004003C5310 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				4ABCBCE92BE26079003138A8 /* TrainingPlanViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		4AC7057F2BE2700C003C5310 /* Datasource */ = {
+			isa = PBXGroup;
+			children = (
+				4ABCBCEB2BE261B0003138A8 /* TrainingCollectionViewDatasource.swift */,
+			);
+			path = Datasource;
+			sourceTree = "<group>";
+		};
+		4AC705892BEA0BD3003C5310 /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				4AC705962BEA2A0B003C5310 /* VC */,
+				4AC705972BEA2A10003C5310 /* ViewModel */,
+				4AC705982BEA2A15003C5310 /* View */,
+			);
+			path = Setting;
+			sourceTree = "<group>";
+		};
+		4AC705962BEA2A0B003C5310 /* VC */ = {
+			isa = PBXGroup;
+			children = (
+				4AC7058A2BEA0BE2003C5310 /* SettingViewController.swift */,
+			);
+			path = VC;
+			sourceTree = "<group>";
+		};
+		4AC705972BEA2A10003C5310 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				4AC705992BEA2A2B003C5310 /* SettingViewModel.swift */,
+				4AC705A52BEA58EA003C5310 /* SettingAppData.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		4AC705982BEA2A15003C5310 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				4AC7058E2BEA1E40003C5310 /* NicknameContainerView.swift */,
+				4AC705902BEA1E49003C5310 /* PlanContainerView.swift */,
+				4AC705922BEA1E52003C5310 /* LanguageContainerView.swift */,
+				4AC705942BEA1E58003C5310 /* AlarmContainerView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		4AC7059B2BEA2A82003C5310 /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				4AC7059C2BEA2A8E003C5310 /* SettingEndPoint.swift */,
+				4AC7059F2BEA2AAA003C5310 /* SettingServiceProtocol.swift */,
+				4AC705A12BEA2AB1003C5310 /* SettingService.swift */,
+				4AC705A32BEA2C99003C5310 /* SettingResponse.swift */,
+			);
+			path = Setting;
+			sourceTree = "<group>";
+		};
+		4AC705A72BECE051003C5310 /* Edit */ = {
+			isa = PBXGroup;
+			children = (
+				4AC705A82BECE064003C5310 /* EditPlanViewController.swift */,
+				4AC705AD2BECF0D4003C5310 /* EditPlanViewModel.swift */,
+			);
+			path = Edit;
 			sourceTree = "<group>";
 		};
 		4AC707A22B73884F00B1D791 /* ViewModel */ = {
@@ -1625,11 +1893,16 @@
 				4A004D562B4EE277003C8936 /* AuthService.swift in Sources */,
 				37144C512B88E949008565C4 /* DiaryViewControllerFactory.swift in Sources */,
 				37DCA6742A484D5900FF8F90 /* PostDiaryAPI.swift in Sources */,
+				4ABCBCE72BE25E51003138A8 /* TrainingPlanResponse.swift in Sources */,
+				4AC705832BE8BA60003C5310 /* MyBadgeCollectionViewDatasource.swift in Sources */,
 				4A9FAB472A4C3D1200C40D5A /* BadgeListTableViewCell.swift in Sources */,
 				4A454A882B691F850079D48D /* EditGoalViewController.swift in Sources */,
 				373E38592A2F889500DF96F0 /* DiaryDetailRandomSubjectView.swift in Sources */,
+				4AC705AE2BECF0D4003C5310 /* EditPlanViewModel.swift in Sources */,
 				6F294A3E2A26177B00856CC8 /* TrainingGoalViewController.swift in Sources */,
+				4ABCBCCE2BDE95D0003138A8 /* MyPlanResponse.swift in Sources */,
 				4A9731D92BAAB70500DEC0C8 /* UpdateResponse.swift in Sources */,
+				4ABCBCEC2BE261B0003138A8 /* TrainingCollectionViewDatasource.swift in Sources */,
 				37A271642AA6078C001FFC38 /* SmeemNavigationBar.swift in Sources */,
 				4A6630392A51E04600D19CC9 /* PatchDiaryRequest.swift in Sources */,
 				4AF58CE92A4820AA00305248 /* AuthNetworkModel.swift in Sources */,
@@ -1644,33 +1917,42 @@
 				4A08480E2B555FD0008327C7 /* AmplitudeConstant.swift in Sources */,
 				4A3774842A42E6EA00357DD1 /* ConfigConstant.swift in Sources */,
 				371107DF2ACAB709007A4AC2 /* BaseViewController.swift in Sources */,
+				4AC7058B2BEA0BE2003C5310 /* SettingViewController.swift in Sources */,
+				371C69D52BE11926000D745D /* BadgeBottomSheetViewController.swift in Sources */,
 				6FBC856B2A4B1F9200A43F98 /* MyPageViewController.swift in Sources */,
 				6FBC85742A4B603A00A43F98 /* MyPageNetworkModel.swift in Sources */,
 				6F294A482A27818200856CC8 /* HomeViewFloatingViewController.swift in Sources */,
 				37A574C529FF6EA800312453 /* FontLiterals.swift in Sources */,
+				4ABCBCC22BD90481003138A8 /* MyBadgeCollectionViewCell.swift in Sources */,
 				378B20F02BA0A02400604935 /* StepOneKoreanDiaryViewModel.swift in Sources */,
 				4AB7C92B2B78A8D900845733 /* SmeemStartViewModel.swift in Sources */,
 				4A004D5B2B4EE29A003C8936 /* PushTestService.swift in Sources */,
 				379789052AAC706800C61EF4 /* SmeemNavigationFactory.swift in Sources */,
 				4AC00EF32AD56C4C009230DA /* SmeemTextButton.swift in Sources */,
 				37DCA65D2A475B5100FF8F90 /* RandomTopicResponse.swift in Sources */,
+				4ABCBCCC2BDE8E44003138A8 /* MySummaryService.swift in Sources */,
 				371107DA2AC99099007A4AC2 /* KeyboardFollowingLayoutHandler.swift in Sources */,
 				4A9FAB452A4C3D1200C40D5A /* BadgeListViewController.swift in Sources */,
+				4ABCBCE52BE25D82003138A8 /* TrainingPlanViewController.swift in Sources */,
 				4AB7C9192B75F9B500845733 /* GesturePublisher+.swift in Sources */,
 				6F294A462A2617D500856CC8 /* TrainingWayView.swift in Sources */,
 				37A574CC29FF990E00312453 /* UIViewController+.swift in Sources */,
+				4ABCBCEA2BE26079003138A8 /* TrainingPlanViewModel.swift in Sources */,
 				4A9E10E42A43468600295D07 /* BaseTargetType.swift in Sources */,
 				4A4FEB092B728144001BBDF3 /* TrainingWayViewModel.swift in Sources */,
 				37A574C329FF6E9C00312453 /* Constant.swift in Sources */,
 				4AC1D6832B4ED38200D39A98 /* OnboardingModel.swift in Sources */,
 				4AC00EEB2AD4527A009230DA /* TrainingWayViewController.swift in Sources */,
+				4AC705932BEA1E52003C5310 /* LanguageContainerView.swift in Sources */,
 				4A004D602B4EE2BD003C8936 /* MyPageAPI.swift in Sources */,
 				4AE35E9E2A7FE8CE00465FD5 /* UICollectionViewCell+.swift in Sources */,
 				4A10A3A82AB8AA5800C145E9 /* System.swift in Sources */,
+				4AC705A02BEA2AAA003C5310 /* SettingServiceProtocol.swift in Sources */,
 				4A3F2EA02A0C18B600F6AC60 /* DatePickerFooterView.swift in Sources */,
 				37B360AA2AC2A4680006C8ED /* SmeemTextView.swift in Sources */,
 				6FE1298C2A498338005536C4 /* HomeService.swift in Sources */,
 				4AD04B3D2A190E9A004B7A58 /* UITextView+.swift in Sources */,
+				4ABCBCC72BDD3983003138A8 /* MySummaryServiceProtocol.swift in Sources */,
 				6F31802F2A24D1DB00089870 /* CalendarCell.swift in Sources */,
 				6FE1298A2A4982DA005536C4 /* HomeAPI.swift in Sources */,
 				374F828E2AC5DFFE00C128B9 /* DiaryBottomView.swift in Sources */,
@@ -1678,12 +1960,17 @@
 				4A3F2E972A0ABBAA00F6AC60 /* AlarmCollectionViewCell.swift in Sources */,
 				379789032AAC705B00C61EF4 /* NavigationBarActionDelegate.swift in Sources */,
 				37DCA6572A47574300FF8F90 /* RandomTopicAPI.swift in Sources */,
+				4ABCBCD22BDFB037003138A8 /* TotalMySummaryResponse.swift in Sources */,
 				37DCA6672A480A7300FF8F90 /* DetailDiaryService.swift in Sources */,
 				A3D7ECB72A26566A009857D6 /* EditNicknameViewController.swift in Sources */,
 				371E94192A87DA960098280F /* EditHowGoalViewController.swift in Sources */,
 				6FE129902A49A5A6005536C4 /* Date+.swift in Sources */,
 				6F62668C2A04EA3B000365CD /* HomeViewController.swift in Sources */,
 				4AD04B3B2A1905BB004B7A58 /* DiaryScrollerView.swift in Sources */,
+				4ABCBCBE2BD784A0003138A8 /* MySmeemCollectionViewCell.swift in Sources */,
+				4AC705952BEA1E58003C5310 /* AlarmContainerView.swift in Sources */,
+				4AC705A62BEA58EA003C5310 /* SettingAppData.swift in Sources */,
+				4AC7059A2BEA2A2B003C5310 /* SettingViewModel.swift in Sources */,
 				4A9731D32BAAB55D00DEC0C8 /* SplashEndPoint.swift in Sources */,
 				371107E72ACBED3C007A4AC2 /* DiaryViewConfigurationBuilder.swift in Sources */,
 				4A454A852B6667180079D48D /* ViewModel.swift in Sources */,
@@ -1692,6 +1979,7 @@
 				4A3F2E9C2A0B4C7100F6AC60 /* AlarmCollectionView.swift in Sources */,
 				4A004D512B4ED783003C8936 /* TrainingWayResponse.swift in Sources */,
 				37DCA6602A48033400FF8F90 /* DetailDiaryViewController.swift in Sources */,
+				4ABCBCC02BD7C521003138A8 /* MyPlanCollectionViewCell.swift in Sources */,
 				4A0EA4572A01403E006CCE52 /* MoyaLoggingPlugin.swift in Sources */,
 				37035CF92AF2ADD2008EE521 /* DiaryViewModel.swift in Sources */,
 				4A004D5E2B4EE2B4003C8936 /* MyPageService.swift in Sources */,
@@ -1702,6 +1990,7 @@
 				37A574D029FF9AEE00312453 /* UILabel+.swift in Sources */,
 				37A574CE29FF9A2D00312453 /* UIScreen+.swift in Sources */,
 				4AC707A82B73893200B1D791 /* AlarmTimeAppData.swift in Sources */,
+				4ABCBCBA2BD6A6EE003138A8 /* MySummaryViewController.swift in Sources */,
 				37DCA6722A484D5000FF8F90 /* PostDiaryService.swift in Sources */,
 				379789072AAC707700C61EF4 /* NavigationBarType.swift in Sources */,
 				37DCA6702A484D3700FF8F90 /* PostDiaryRequest.swift in Sources */,
@@ -1713,15 +2002,22 @@
 				4AC00EF52AD57202009230DA /* TrainingAlarmDataSendProtocol.swift in Sources */,
 				4AD04B402A1921AE004B7A58 /* CorrectionViewController.swift in Sources */,
 				4A1882FA2A8BBD0D0088F590 /* SmeemStartViewController.swift in Sources */,
+				4AC7058F2BEA1E40003C5310 /* NicknameContainerView.swift in Sources */,
+				4ABCBCDA2BE22733003138A8 /* MyPlanCollectionViewLayout.swift in Sources */,
 				3728B8D32A2CFED300EF4CF8 /* ForeignDiaryViewController.swift in Sources */,
 				4ABE3FD12A811F8400D1D22E /* SplashViewController.swift in Sources */,
 				4A9FAB492A4C3D1200C40D5A /* DetailBadgeCollectionViewCell.swift in Sources */,
+				4ABCBCD02BDE9BA1003138A8 /* MySummaryViewModel.swift in Sources */,
+				4AC705812BE8B69E003C5310 /* MySummaryBadgeResponse.swift in Sources */,
 				4AFD7C292B600FED00FE7EFF /* NetworkManager.swift in Sources */,
 				37DCA6652A48052200FF8F90 /* DetailDiaryResponse.swift in Sources */,
+				4ABCBCD82BE2230F003138A8 /* MyPlanCollectionViewDataSource.swift in Sources */,
 				4AC4B82D2A2F9FE200E147AA /* UserDefaultsManager.swift in Sources */,
 				37A574E02A00CDCD00312453 /* SeparationLine.swift in Sources */,
+				4ABCBCDC2BE2484B003138A8 /* MyPlanAppData.swift in Sources */,
 				3728B8D72A2CFF3A00EF4CF8 /* StepTwoKoreanDiaryViewController.swift in Sources */,
 				4A07F8A82B7B3E5E004185F2 /* SignupBottomSheetViewController.swift in Sources */,
+				4ABCBCC52BDD3375003138A8 /* MySummaryEndPoint.swift in Sources */,
 				4A454A832B6666FF0079D48D /* TrainingGoalViewModel.swift in Sources */,
 				37DCA66E2A484D3100FF8F90 /* PostDiaryResponse.swift in Sources */,
 				4A0EA4552A014027006CCE52 /* GeneralResponse.swift in Sources */,
@@ -1734,6 +2030,7 @@
 				6FE1298E2A4986CA005536C4 /* HomeDiaryResponse.swift in Sources */,
 				4AC707AB2B738A5B00B1D791 /* TrainingAlarmViewModel.swift in Sources */,
 				3728B8D52A2CFF2C00EF4CF8 /* StepOneKoreanDiaryViewController.swift in Sources */,
+				4AC705A22BEA2AB1003C5310 /* SettingService.swift in Sources */,
 				378B20F22BA0A03000604935 /* StepTwoKoreanDiaryViewModel.swift in Sources */,
 				37DCA6692A480A8E00FF8F90 /* DetailDiaryAPI.swift in Sources */,
 				37A574C129FF6E9100312453 /* ColorLiterals.swift in Sources */,
@@ -1754,7 +2051,10 @@
 				4A9FAB462A4C3D1200C40D5A /* BadgeNetworkModel.swift in Sources */,
 				378E461C2B5516F200D2A473 /* DeepLService.swift in Sources */,
 				4A004D4F2B4ED760003C8936 /* TrainingGoalResponse.swift in Sources */,
-				6F294A3F2A26177E00856CC8 /* TrainingGoalCollectionViewCell.swift in Sources */,
+				4AC705A42BEA2C99003C5310 /* SettingResponse.swift in Sources */,
+				6F294A3F2A26177E00856CC8 /* TrainingCollectionViewCell.swift in Sources */,
+				6F294A3F2A26177E00856CC8 /* TrainingCollectionViewCell.swift in Sources */,
+				4ABCBCD62BDFC6BD003138A8 /* MySmeemCollectionViewDataSource.swift in Sources */,
 				4A0EE6042B9301E900158899 /* OnboardingServiceProtocol.swift in Sources */,
 				37A574E62A02178D00312453 /* SmeemToastView.swift in Sources */,
 				4AC707BB2B74DE3E00B1D791 /* ServiceAcceptCollectionView.swift in Sources */,
@@ -1767,10 +2067,15 @@
 				4A3373F82A461ABC00EFE6C4 /* OnboardingService.swift in Sources */,
 				4A9731D72BAAB6E100DEC0C8 /* SplashServiceProtocol.swift in Sources */,
 				37A574E82A02424F00312453 /* RandomTopicView.swift in Sources */,
+				4ABCBCCA2BDD3E3D003138A8 /* MySummaryResponse.swift in Sources */,
+				4AC7059D2BEA2A8E003C5310 /* SettingEndPoint.swift in Sources */,
 				4A4FEB0C2B7289E7001BBDF3 /* TrainingWayAppData.swift in Sources */,
 				4A0EA4642A014710006CCE52 /* SmeemButton.swift in Sources */,
 				371107DD2ACAB571007A4AC2 /* BaseView.swift in Sources */,
+				371C69D32BE112AD000D745D /* BottomSheetPresentable.swift in Sources */,
 				4AC707B02B73CFFA00B1D791 /* AlarmDefaultModel.swift in Sources */,
+				4AC705912BEA1E49003C5310 /* PlanContainerView.swift in Sources */,
+				4AC705A92BECE064003C5310 /* EditPlanViewController.swift in Sources */,
 				378E461A2B5516E200D2A473 /* DeepLAPI.swift in Sources */,
 				37EB69E62A4B3BC400075E4E /* DataBindProtocol.swift in Sources */,
 			);

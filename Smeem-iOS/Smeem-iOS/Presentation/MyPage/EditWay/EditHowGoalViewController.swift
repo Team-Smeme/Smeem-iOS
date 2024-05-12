@@ -20,8 +20,6 @@ final class EditHowGoalViewController: BaseViewController {
         }
     }
     
-    weak var delegate: EditMypageDelegate?
-    
     private let navigationBarView = UIView()
     
     private lazy var backButton: UIButton = {
