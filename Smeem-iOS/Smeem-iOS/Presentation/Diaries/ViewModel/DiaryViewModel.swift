@@ -30,9 +30,6 @@ class DiaryViewModel: ViewModel {
     
     private var cancelBag = Set<AnyCancellable>()
     
-    // TODO: 꼭 필요한가?
-    //    private var toastMessageFlag: Bool = false
-    
     private var diaryText: String? = nil
     
     private (set) var model: DiaryModel

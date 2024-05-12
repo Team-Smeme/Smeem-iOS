@@ -51,7 +51,6 @@ final class ForeignDiaryViewController: DiaryViewController<ForeignDiaryViewMode
 extension ForeignDiaryViewController {
     private func bind() {
         let input = ForeignDiaryViewModel.Input(viewDidLoadSubject: viewDidLoadSubject,
-                                                leftButtonTapped: rootView.navigationView.leftButtonTapped,
                                                 rightButtonTapped: rootView.navigationView.rightButtonTapped,
                                                 randomTopicButtonTapped: rootView.bottomView.randomTopicButtonTapped,
                                                 refreshButtonTapped: rootView.randomTopicView.refreshButtonTapped, 
@@ -59,7 +58,7 @@ extension ForeignDiaryViewController {
         
         let output = viewModel.transform(input: input)
         
-        output.leftButtonAction
+        rootView.navigationView.leftButtonTapped
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in
                 self?.rootView.removeToolTip()

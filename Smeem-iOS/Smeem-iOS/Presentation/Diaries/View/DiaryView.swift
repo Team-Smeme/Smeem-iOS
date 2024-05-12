@@ -50,7 +50,7 @@ final class DiaryView: BaseView {
     private (set) var bottomView: DiaryBottomView
     
     private (set) var randomTopicView: RandomTopicView
-    private (set) var smeemToastView: SmeemToastView?
+    private (set) var toastView: SmeemToastView
     
     private lazy var toolTip: UIImageView = {
         let image = UIImageView()
@@ -66,7 +66,8 @@ final class DiaryView: BaseView {
          navigationBar: SmeemNavigationBar,
          inputTextView: SmeemTextView,
          bottomView: DiaryBottomView,
-         randomTopicView: RandomTopicView) {
+         randomTopicView: RandomTopicView,
+         toastView: SmeemToastView) {
         
         self.viewType = viewType
         self.configuration = configuration
@@ -74,6 +75,7 @@ final class DiaryView: BaseView {
         self.inputTextView = inputTextView
         self.bottomView = bottomView
         self.randomTopicView = randomTopicView
+        self.toastView = toastView
         
         super.init(frame: .zero)
         
@@ -92,7 +94,7 @@ final class DiaryView: BaseView {
     
     deinit {
         randomTopicView.removeFromSuperview()
-        smeemToastView?.removeFromSuperview()
+        toastView.removeFromSuperview()
         toolTip.removeFromSuperview()
     }
 }
@@ -179,12 +181,8 @@ extension DiaryView {
     // MARK: - ToastView
     
     func showToast(with toastType: ToastViewType) {
-        if smeemToastView == nil {
-            smeemToastView = SmeemToastView(type: toastType)
-        }
-        
-        smeemToastView?.show(in: self, hasKeyboard: true)
-        smeemToastView?.hide(after: 3)
+        toastView.show(in: self, hasKeyboard: true)
+        toastView.hide(after: 3)
     }
 }
 

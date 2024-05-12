@@ -171,7 +171,7 @@ extension SmeemNavigationBar {
         }
     }
     
-    func updateRightButton(isValid: Bool) {
+    func updateRightButton(with isValid: Bool) {
         self.rightButton.setTitleColor(isValid ? .point : .gray300, for: .normal)
     }
 }

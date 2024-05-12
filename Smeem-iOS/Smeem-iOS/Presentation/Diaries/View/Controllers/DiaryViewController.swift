@@ -71,14 +71,14 @@ extension DiaryViewController {
         output.textValidationResult
             .receive(on: DispatchQueue.main)
             .sink { [weak self] isValid in
-                self?.rootView.navigationView.updateRightButton(isValid: isValid)
+                self?.rootView.navigationView.updateRightButton(with: isValid)
             }
             .store(in: &cancelBag)
         
         output.errorResult
             .receive(on: DispatchQueue.main)
             .sink { [weak self] error in
-                self?.showToast(toastType: .smeemErrorToast(message: error))
+                self?.rootView.showToast(with: .smeemErrorToast(message: error))
             }
             .store(in: &cancelBag)
     }

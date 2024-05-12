@@ -67,7 +67,9 @@ extension DiaryViewFactory {
         let inputTextView = SmeemTextView(diaryType: handler.viewType!, type: configuration.textViewType, placeholderText: configuration.placeholderText)
         let bottomView = DiaryBottomView(viewType: configuration.bottomViewType)
         let randomTopicView = RandomTopicView()
+        // 초깃값
+        let toastView = SmeemToastView(type: .smeemToast(bodyType: .completed))
         
-        return DiaryView(viewType: viewType, configuration: configuration, navigationBar: navigationBar, inputTextView: inputTextView, bottomView: bottomView, randomTopicView: randomTopicView)
+        return DiaryView(viewType: viewType, configuration: configuration, navigationBar: navigationBar, inputTextView: inputTextView, bottomView: bottomView, randomTopicView: randomTopicView, toastView: toastView)
     }
 }

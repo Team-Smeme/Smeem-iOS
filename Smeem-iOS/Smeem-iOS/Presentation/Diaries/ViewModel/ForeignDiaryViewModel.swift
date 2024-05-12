@@ -11,7 +11,6 @@ import Combine
 final class ForeignDiaryViewModel: DiaryViewModel {
     struct Input {
         let viewDidLoadSubject: PassthroughSubject<Void, Never>
-        let leftButtonTapped: PassthroughSubject<Void, Never>
         let rightButtonTapped: PassthroughSubject<Void, Never>
         let randomTopicButtonTapped: PassthroughSubject<Void, Never>
         let refreshButtonTapped: PassthroughSubject<Void, Never>
@@ -19,7 +18,6 @@ final class ForeignDiaryViewModel: DiaryViewModel {
     }
     
     struct Output {
-        let leftButtonAction: AnyPublisher<Void, Never>
         let rightButtonAction: AnyPublisher<Void, Never>
         let randomTopicButtonAction: AnyPublisher<Void, Never>
         let refreshButtonAction: AnyPublisher<Void, Never>
@@ -46,9 +44,6 @@ final class ForeignDiaryViewModel: DiaryViewModel {
                 self?.toolTipSubject.send()
             }
             .store(in: &cancelBag)
-        
-        let leftButtonAction = input.leftButtonTapped
-            .eraseToAnyPublisher()
         
         let rightButtonAction = input.rightButtonTapped
             .filter { [weak self] in self?.textValidationState.value == true }
@@ -106,9 +101,9 @@ final class ForeignDiaryViewModel: DiaryViewModel {
             .eraseToAnyPublisher()
         
         let toolTipAction = input.toolTipTapped
-            .handleEvents(receiveOutput:  { _ in
+            .map {
                 UserDefaultsManager.shouldShowToolTip = false
-            })
+            }
             .eraseToAnyPublisher()
         
         let toolTipResult = toolTipSubject
@@ -123,8 +118,7 @@ final class ForeignDiaryViewModel: DiaryViewModel {
         
         let loadingViewResult = loadingViewResult.eraseToAnyPublisher()
         
-        return Output(leftButtonAction: leftButtonAction,
-                      rightButtonAction: rightButtonAction,
+        return Output(rightButtonAction: rightButtonAction,
                       randomTopicButtonAction: randomTopicButtonAction,
                       refreshButtonAction: refreshButtonAction,
                       toolTipAction: toolTipAction,
