@@ -9,13 +9,14 @@ import UIKit
 import SnapKit
 import Combine
 
-final class MySummaryViewController: BaseViewController {
+final class MySummaryViewController: BaseViewController, BottomSheetPresentable {
     
     // MARK: Publisher
     
     private let mySummarySubject = PassthroughSubject<Void, Never>()
     private let myPlanSubject = PassthroughSubject<Void, Never>()
     private let myBadgeSubject = PassthroughSubject<Void, Never>()
+    private let badgeCellTapped = PassthroughSubject<Int, Never>()
     private var cancelBag = Set<AnyCancellable>()
     
     private var mySmeemDataSource: MySmeemCollectionViewDataSource!
@@ -208,7 +209,8 @@ final class MySummaryViewController: BaseViewController {
         
         let input = MySummaryViewModel.Input(mySummarySubject: mySummarySubject,
                                              myPlanSubject: myPlanSubject,
-                                             myBadgeSubject: myBadgeSubject)
+                                             myBadgeSubject: myBadgeSubject,
+                                             badgeCellTapped: badgeCellTapped)
         let output = viewModel.transform(input: input)
         
         output.totalHasMyPlanResult
@@ -248,6 +250,14 @@ final class MySummaryViewController: BaseViewController {
                 self?.myBadgeDataSource = MyBadgeCollectionViewDatasource(badgeData: response.myBadge)
                 self?.myBadgeCollectionView.dataSource = self?.myBadgeDataSource
                 self?.myBadgeCollectionView.reloadData()
+            }
+            .store(in: &cancelBag)
+        
+        output.badgeCellResult
+            .sink { [weak self] response in
+                let badgeBottomSheetVC = BadgeBottomSheetViewController()
+                badgeBottomSheetVC.setData(data: response)
+                self?.presentBottomSheet(viewController: badgeBottomSheetVC)
             }
             .store(in: &cancelBag)
         
@@ -385,7 +395,11 @@ final class MySummaryViewController: BaseViewController {
     }
 }
 
-extension MySummaryViewController: UICollectionViewDelegateFlowLayout { }
+extension MySummaryViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.badgeCellTapped.send(indexPath.item)
+    }
+}
 
 extension MySummaryViewController {
     

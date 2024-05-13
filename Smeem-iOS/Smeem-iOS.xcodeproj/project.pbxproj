@@ -504,15 +504,6 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		371C69D12BE1126E000D745D /* BottomSheet */ = {
-			isa = PBXGroup;
-			children = (
-				371C69D22BE112AD000D745D /* BottomSheetPresentable.swift */,
-				371C69D42BE11926000D745D /* BadgeBottomSheetViewController.swift */,
-			);
-			path = BottomSheet;
-			sourceTree = "<group>";
-		};
 		371E94172A87DA6E0098280F /* EditGoal */ = {
 			isa = PBXGroup;
 			children = (
@@ -567,9 +558,10 @@
 		37A574B529FE204500312453 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				4AA5E4B52BF24CEB00F308C8 /* BadgeBottomSheet */,
 				4AC705A72BECE051003C5310 /* Edit */,
-				4AC705892BEA0BD3003C5310 /* Setting */,
 				4ABCBCB82BD6A6E3003138A8 /* MySummary */,
+				4AC705892BEA0BD3003C5310 /* Setting */,
 				4ADA41752A556185001C0285 /* LodingView */,
 				37DCA65E2A48030A00FF8F90 /* DetailDiary */,
 				37CD0DB32A1DEE64001F03E7 /* Diaries */,
@@ -607,7 +599,6 @@
 		37A574B729FE208A00312453 /* UIComponents */ = {
 			isa = PBXGroup;
 			children = (
-				371C69D12BE1126E000D745D /* BottomSheet */,
 				4A81C2952ACDAB0A0056E815 /* HowLearning */,
 				4A81C2942ACDAAF80056E815 /* PlanGoal */,
 				371107DB2ACAB4E3007A4AC2 /* Base */,
@@ -1177,6 +1168,15 @@
 				6FBC856A2A4B1F9200A43F98 /* MyPageViewController.swift */,
 			);
 			path = MyPage;
+			sourceTree = "<group>";
+		};
+		4AA5E4B52BF24CEB00F308C8 /* BadgeBottomSheet */ = {
+			isa = PBXGroup;
+			children = (
+				371C69D22BE112AD000D745D /* BottomSheetPresentable.swift */,
+				371C69D42BE11926000D745D /* BadgeBottomSheetViewController.swift */,
+			);
+			path = BadgeBottomSheet;
 			sourceTree = "<group>";
 		};
 		4AB7C91C2B7886D000845733 /* View */ = {

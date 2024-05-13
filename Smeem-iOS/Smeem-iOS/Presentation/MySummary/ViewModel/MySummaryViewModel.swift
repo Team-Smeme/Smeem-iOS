@@ -11,6 +11,7 @@ import Combine
 final class MySummaryViewModel: ViewModel {
     
     var provider: MySummaryServiceProtocol!
+    var badgeData: [MySummaryBadgeResponse]!
     
     private let mySmeemModel = ["방문일", "총 일기", "연속 일기", "배지"]
     
@@ -18,6 +19,7 @@ final class MySummaryViewModel: ViewModel {
         let mySummarySubject: PassthroughSubject<Void, Never>
         let myPlanSubject: PassthroughSubject<Void, Never>
         let myBadgeSubject: PassthroughSubject<Void, Never>
+        let badgeCellTapped: PassthroughSubject<Int, Never>
     }
     
     struct Output {
@@ -25,6 +27,7 @@ final class MySummaryViewModel: ViewModel {
         let totalHasNotPlanResult: AnyPublisher<TotalMySummaryResponse, Never>
         let errorResult: AnyPublisher<SmeemError, Never>
         let loadingViewResult: AnyPublisher<Bool, Never>
+        let badgeCellResult: AnyPublisher<MySummaryBadgeAppData, Never>
     }
     
     private var cancelBag = Set<AnyCancellable>()
@@ -92,6 +95,7 @@ final class MySummaryViewModel: ViewModel {
                     self.provider.myBadgeGetAPI { result in
                         switch result {
                         case .success(let response):
+                            self.badgeData = response
                             promise(.success(response))
                         case .failure(let error):
                             self.errorSubject.send(error)
@@ -135,6 +139,30 @@ final class MySummaryViewModel: ViewModel {
             }
             .store(in: &cancelBag)
         
+        let badgeCellResult = input.badgeCellTapped
+            .map { indexPath -> MySummaryBadgeAppData in
+                let badgeData = self.badgeData[indexPath]
+                let ratioString = calculateBadgeRatio(ratio: badgeData.badgeAcquisitionRatio)
+                return MySummaryBadgeAppData(badgeId: badgeData.badgeId,
+                                             name: badgeData.name,
+                                             type: badgeData.type,
+                                             hasBadge: badgeData.hasBadge,
+                                             remainingNumber: badgeData.remainingNumber,
+                                             contentForNonBadgeOwner: badgeData.contentForNonBadgeOwner,
+                                             contentForBadgeOwner: badgeData.contentForBadgeOwner,
+                                             imageUrl: badgeData.imageUrl,
+                                             badgeAcquisitionRatio: ratioString)
+            }
+            .eraseToAnyPublisher()
+        
+        func calculateBadgeRatio(ratio: Double) -> String {
+            if String(ratio).count == 4 {
+                return String(Int(ratio))
+            } else {
+                return String(ratio)
+            }
+        }
+        
         let totalHasMyPlanResult = totalHasMyPlanSubject.eraseToAnyPublisher()
         let totalHasNotPlanResult = totalHasNotPlanSubject.eraseToAnyPublisher()
         let errorResult = errorSubject.eraseToAnyPublisher()
@@ -143,7 +171,9 @@ final class MySummaryViewModel: ViewModel {
         
         return Output(totalHasMyPlanResult: totalHasMyPlanResult,
                       totalHasNotPlanResult: totalHasNotPlanResult,
-                      errorResult: errorResult, loadingViewResult: loadingViewResult)
+                      errorResult: errorResult,
+                      loadingViewResult: loadingViewResult,
+                      badgeCellResult: badgeCellResult)
     }
     
 }
