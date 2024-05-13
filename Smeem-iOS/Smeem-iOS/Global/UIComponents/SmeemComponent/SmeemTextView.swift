@@ -81,7 +81,8 @@ extension SmeemTextView {
         switch diaryType {
         case .foregin, .stepTwoKorean:
             self.keyboardType = .asciiCapable
-        default: break
+        default: 
+            break
         }
     }
     

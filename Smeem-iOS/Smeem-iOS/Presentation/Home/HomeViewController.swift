@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 import FSCalendar
 import SnapKit
@@ -13,6 +14,8 @@ import SnapKit
 final class HomeViewController: BaseViewController {
     
     // MARK: - Property
+    
+    private var foreignDiaryViewModel = ForeignDiaryViewModel(model: DiaryModel())
     
     private let weekdayLabels = ["S", "M", "T", "W", "T", "F", "S"]
     private let gregorian = Calendar(identifier: .gregorian)
@@ -23,13 +26,15 @@ final class HomeViewController: BaseViewController {
     var badgePopupData = [PopupBadge]()
     var isKeyboardVisible: Bool = false
     var keyboardHeight: CGFloat = 0.0
-    var toastMessageFlag = false {
+    private var toastMessageFlag = false {
         didSet {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 self.loadToastMessage()
             }
         }
     }
+    
+    private var cancelBag = Set<AnyCancellable>()
     
     // MARK: - UI Property
     
@@ -184,6 +189,7 @@ final class HomeViewController: BaseViewController {
         setLayout()
         setDelegate()
         setSwipe()
+        subscribe()
         
         AmplitudeManager.shared.track(event: AmplitudeConstant.home.home_view.event)
     }
@@ -290,6 +296,20 @@ final class HomeViewController: BaseViewController {
       DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
         completion()
       }
+    }
+    
+    private func subscribe() {
+        foreignDiaryViewModel.diaryPostedSubject
+            .compactMap { $0 }
+            .sink { [weak self] response in
+                self?.handlePostDiaryAPI(with: response)
+            }
+            .store(in: &cancelBag)
+    }
+    
+    func handlePostDiaryAPI(with response: PostDiaryResponse?) {
+        toastMessageFlag = true
+        badgePopupData = response?.badges ?? []
     }
     
     // MARK: - Layout
