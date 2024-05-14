@@ -16,7 +16,7 @@ final class DeepLAPI {
     
     private var deepLResponse: DeepLResponse?
     
-    func postTargetText(text: String, completion: @escaping ((DeepLResponse)?) -> Void) {
+    func postTargetText(text: String, completion: @escaping (Result<DeepLResponse?, SmeemError>) -> Void) {
         let deepLService = DeepLService(text: text, authToken: ConfigConstant.deepLToken)
         
         deepLProvider.request(deepLService) { result in
@@ -25,13 +25,13 @@ final class DeepLAPI {
                 do {
                     let decoder = JSONDecoder()
                     let deepLResponse = try decoder.decode(DeepLResponse.self, from: response.data)
-                    completion(deepLResponse)
+                    completion(.success(deepLResponse))
                 } catch {
-                    print("Failed to decode DeepLResponse: \(error)")
-                    completion(nil)
+                    guard let error = error as? SmeemError else { return }
+                    completion(.failure(error))
                 }
             case .failure(let error):
-                print(error.localizedDescription)
+                completion(.failure(.userError))
             }
         }
     }

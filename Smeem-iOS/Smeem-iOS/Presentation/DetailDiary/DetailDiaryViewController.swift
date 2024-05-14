@@ -6,12 +6,19 @@
 //
 
 import UIKit
+import Combine
 
 import SnapKit
 
 final class DetailDiaryViewController: BaseViewController {
     
-    // MARK: - Property
+    // MARK: - Subjects
+    
+    private var cancelBag = Set<AnyCancellable>()
+    
+    // MARK: - Properties
+    
+    private let viewModel = DetailDiaryViewModel()
     
     var diaryContent = String()
     var isRandomTopic = String()
@@ -35,13 +42,39 @@ final class DetailDiaryViewController: BaseViewController {
         
         setLayout()
         swipeRecognizer()
-        setDelegate()
+        bind()
         
         AmplitudeManager.shared.track(event: AmplitudeConstant.diaryDetail.mydiary_click.event)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         detailDiaryWithAPI(diaryID: diaryId)
+    }
+}
+
+extension DetailDiaryViewController {
+    
+    // MARK: - Bind
+    
+    private func bind() {
+        let input = DetailDiaryViewModel.Input(leftButtonTapped: naviView.leftButtonTapped,
+                                               rightButtonTapped: naviView.rightButtonTapped)
+        
+        let output = viewModel.transform(input: input)
+        
+        output.leftButtonAction
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.navigationController?.popViewController(animated: true)
+            }
+            .store(in: &cancelBag)
+        
+        output.rightButtonAction
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.showActionSheet()
+            }
+            .store(in: &cancelBag)
     }
     
     // MARK: - @objc
@@ -107,22 +140,6 @@ final class DetailDiaryViewController: BaseViewController {
             $0.top.equalTo(naviView.snp.bottom)
             $0.leading.trailing.bottom.equalToSuperview()
         }
-    }
-    
-    private func setDelegate() {
-        naviView.actionDelegate = self
-    }
-}
-
-// MARK: - NavigationBarActionDelegate
-
-extension DetailDiaryViewController: NavigationBarActionDelegate {
-    func didTapLeftButton() {
-        self.navigationController?.popViewController(animated: true)
-    }
-    
-    func didTapRightButton() {
-        showActionSheet()
     }
 }
 
