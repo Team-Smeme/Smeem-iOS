@@ -11,6 +11,7 @@ import Moya
 
 enum HomeService {
     case HomeDiary(startDate: String, endDate: String)
+    case visit
 }
 
 extension HomeService: BaseTargetType {
@@ -18,6 +19,8 @@ extension HomeService: BaseTargetType {
         switch self {
         case .HomeDiary:
             return URLConstant.diaryURL
+        case .visit:
+            return URLConstant.visitURL
         }
     }
     
@@ -25,6 +28,8 @@ extension HomeService: BaseTargetType {
         switch self {
         case .HomeDiary:
             return .get
+        case .visit:
+            return .patch
         }
     }
     
@@ -34,6 +39,8 @@ extension HomeService: BaseTargetType {
             return .requestParameters(parameters: ["start": startDate,
                                                    "end": endDate],
                                       encoding: URLEncoding.queryString)
+        case .visit:
+            return .requestPlain
         }
     }
     

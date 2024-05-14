@@ -197,6 +197,7 @@ final class HomeViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         homeDiaryWithAPI(start: Date().startOfMonth().addingDate(addValue: -7), end: Date().endOfMonth().addingDate(addValue: 7))
         checkPopupView()
+        visitPatchAPI()
     }
     
     // MARK: - @objc
@@ -546,6 +547,21 @@ extension HomeViewController {
             }
             
             SmeemLoadingView.hideLoading()
+        }
+    }
+    
+    func visitPatchAPI() {
+        SmeemLoadingView.showLoading()
+        
+        HomeAPI.shared.visitPatchAPI { result in
+            
+            switch result {
+            case .success(_):
+                SmeemLoadingView.hideLoading()
+            case .failure(let error):
+                self.showToast(toastType: .smeemErrorToast(message: error))
+                SmeemLoadingView.hideLoading()
+            }
         }
     }
 }
