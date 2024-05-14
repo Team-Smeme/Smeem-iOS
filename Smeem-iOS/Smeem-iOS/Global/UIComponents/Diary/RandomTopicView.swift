@@ -14,6 +14,7 @@
 
 
 import UIKit
+import Combine
 
 import SnapKit
 
@@ -27,11 +28,12 @@ final class RandomTopicView: UIView {
     
     // MARK: - Properties
     
-    weak var randomTopicRefreshDelegate: RandomTopicRefreshDelegate?
-    
-    private var heightConstraint: Constraint?
+    private (set) var refreshButtonTapped = PassthroughSubject<Void, Never>()
+    private var cancelBag = Set<AnyCancellable>()
     
     // MARK: - UI Properties
+    
+    private var heightConstraint: Constraint?
     
     private let questionLabel: UILabel = {
         let label = UILabel()
@@ -55,7 +57,6 @@ final class RandomTopicView: UIView {
     private lazy var refreshButton: UIButton = {
         let button = UIButton()
         button.setImage(Constant.Image.icnRefresh, for: .normal)
-        button.addTarget(self, action: #selector(refreshButtonDidTap), for: .touchUpInside)
         return button
     }()
     
@@ -66,6 +67,7 @@ final class RandomTopicView: UIView {
         
         setRandomSubjectViewUI()
         setRandomSubjectViewLayout()
+        subscribeButtonEvent()
     }
     
     required init?(coder: NSCoder) {
@@ -128,19 +130,16 @@ extension RandomTopicView {
     
     // MARK: - @objc
     
-    @objc func refreshButtonDidTap() {
-        randomTopicRefreshDelegate?.refreshButtonTapped { [weak self] newContentText in
-            DispatchQueue.main.async {
-                self?.setData(contentText: newContentText ?? "")
-            }
+    private func subscribeButtonEvent() {
+        refreshButton.tapPublisher.sink { [weak self] in
+            self?.refreshButtonTapped.send()
         }
+        .store(in: &cancelBag)
     }
-}
-
-// MARK: - Network
-
-extension RandomTopicView {
-    func setData(contentText: String) {
+    
+    // MARK: - Custom Method
+    
+    func updateText(with contentText: String) {
         contentLabel.text = "     " + contentText
         contentLabel.setTextWithLineHeight(lineHeight: 22)
         updateViewHeightForNewContent()

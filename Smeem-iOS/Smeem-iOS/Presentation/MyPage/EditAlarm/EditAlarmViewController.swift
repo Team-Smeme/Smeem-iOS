@@ -6,12 +6,14 @@
 //
 
 import UIKit
+import Combine
 
 final class EditAlarmViewController: BaseViewController {
     
     // MARK: - Property
     
-    weak var editAlarmDelegate: EditMypageDelegate?
+    let toastSubject = PassthroughSubject<Void, Never>()
+    var cancelBag = Set<AnyCancellable>()
     
     var trainigDayData: String?
     var trainingTimeData: (hour: Int, minute: Int)?
@@ -111,7 +113,7 @@ final class EditAlarmViewController: BaseViewController {
         
         alarmCollectionView.snp.makeConstraints {
             $0.top.equalTo(naviView.snp.bottom).offset(14)
-            $0.leading.trailing.equalToSuperview().inset(23)
+            $0.leading.trailing.equalToSuperview().inset(18)
             $0.centerX.equalToSuperview()
             $0.height.equalTo(convertByHeightRatio(133))
         }
@@ -158,7 +160,7 @@ extension EditAlarmViewController {
         MyPageAPI.shared.editAlarmTimeAPI(param: alarmTime) { response in
             switch response {
             case .success(_):
-                self.editAlarmDelegate?.editMyPageData()
+                self.toastSubject.send(())
                 self.navigationController?.popViewController(animated: true)
             case .failure(let error):
                 self.showToast(toastType: .smeemErrorToast(message: error))

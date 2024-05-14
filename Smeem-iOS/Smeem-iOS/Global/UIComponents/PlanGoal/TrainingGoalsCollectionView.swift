@@ -51,7 +51,7 @@ final class TrainingGoalsCollectionView: BaseCollectionView {
     }
     
     private func registerCell() {
-        self.registerCell(cellType: TrainingGoalCollectionViewCell.self)
+        self.registerCell(cellType: TrainingCollectionViewCell.self)
     }
     
     private func setDelegate() {
@@ -68,7 +68,7 @@ extension TrainingGoalsCollectionView: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = dequeueReusableCell(cellType: TrainingGoalCollectionViewCell.self, indexPath: indexPath)
+        let cell = dequeueReusableCell(cellType: TrainingCollectionViewCell.self, indexPath: indexPath)
         cell.setData(planGoalArray[indexPath.item].name)
         
         if selectedIndex != -1 && indexPath.item == selectedIndex {
@@ -86,7 +86,7 @@ extension TrainingGoalsCollectionView: UICollectionViewDataSource {
 
 extension TrainingGoalsCollectionView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let cell = collectionView.cellForItem(at: indexPath) as? TrainingGoalCollectionViewCell else { return }
+        guard let cell = collectionView.cellForItem(at: indexPath) as? TrainingCollectionViewCell else { return }
         cell.selctedCell()
         
         selectedIndex = indexPath.item
@@ -95,7 +95,7 @@ extension TrainingGoalsCollectionView: UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        guard let cell = collectionView.cellForItem(at: indexPath) as? TrainingGoalCollectionViewCell else { return }
+        guard let cell = collectionView.cellForItem(at: indexPath) as? TrainingCollectionViewCell else { return }
         cell.desecltedCell()
     }
 }

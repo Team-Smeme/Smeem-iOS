@@ -12,7 +12,7 @@ final class SplashService: SplashServiceProtocol {
     
     var provider: MoyaProvider<SplashEndPoint>!
     
-    init(provider: MoyaProvider<SplashEndPoint> = MoyaProvider<SplashEndPoint>()) {
+    init(provider: MoyaProvider<SplashEndPoint> = MoyaProvider<SplashEndPoint>(plugins: [MoyaLoggingPlugin()])) {
         self.provider = provider
     }
     

@@ -126,8 +126,8 @@ final class TrainingWayViewController: BaseViewController {
         output.nextButtonResult
             .receive(on: DispatchQueue.main)
             .sink { [weak self] target in
-                let alarmVC = TrainingAlarmViewController(target: target)
-                self?.navigationController?.pushViewController(alarmVC, animated: true)
+//                let alarmVC = TrainingAlarmViewController(target: target)
+//                self?.navigationController?.pushViewController(alarmVC, animated: true)
             }
             .store(in: &cancelBag)
         
