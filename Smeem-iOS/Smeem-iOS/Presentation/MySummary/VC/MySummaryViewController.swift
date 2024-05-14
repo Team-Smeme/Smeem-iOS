@@ -177,6 +177,8 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
     // MARK: Life Cycle
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
         mySummarySubject.send(())
         myPlanSubject.send(())
         myBadgeSubject.send(())
@@ -195,12 +197,14 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
     
     private func bind() {
         backButton.tapPublisher
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 self?.navigationController?.popViewController(animated: true)
             }
             .store(in: &cancelBag)
         
         settingButton.tapPublisher
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 let authVC = SettingViewController()
                 self?.navigationController?.pushViewController(authVC, animated: true)
@@ -254,6 +258,7 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
             .store(in: &cancelBag)
         
         output.badgeCellResult
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] response in
                 let badgeBottomSheetVC = BadgeBottomSheetViewController()
                 badgeBottomSheetVC.setData(data: response)
