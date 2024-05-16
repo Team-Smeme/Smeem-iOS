@@ -137,16 +137,16 @@ final class BadgePopupViewController: UIViewController, SKStoreProductViewContro
         
         output.cancelButtonResult
             .sink { [weak self] _ in
-                self?.dismiss(animated: true)
+                self?.navigationController?.popViewController(animated: true)
             }
             .store(in: &cancelBag)
         
         output.moreBadgeListResult
             .sink { [weak self] _ in
-                let badgeListVC = BadgeListViewController()
-                badgeListVC.modalTransitionStyle = .crossDissolve
-                badgeListVC.modalPresentationStyle = .fullScreen
-                self?.present(badgeListVC, animated: true)
+                let summaryVC = UINavigationController(rootViewController: MySummaryViewController())
+                summaryVC.modalTransitionStyle = .crossDissolve
+                summaryVC.modalPresentationStyle = .fullScreen
+                self?.present(summaryVC, animated: true)
             }
             .store(in: &cancelBag)
         

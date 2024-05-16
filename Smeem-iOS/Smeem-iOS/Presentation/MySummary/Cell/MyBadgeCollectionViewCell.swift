@@ -11,6 +11,12 @@ final class MyBadgeCollectionViewCell: UICollectionViewCell {
     
     // MARK: - UI Property
     
+    private let badgeLockImage: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = Constant.Image.btnLockBadge
+        return imageView
+    }()
+    
     private let badgeImage: UIImageView = {
         let imageView = UIImageView()
         imageView.image = Constant.Image.btnLockBadge
@@ -25,21 +31,11 @@ final class MyBadgeCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    private let badgeStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .vertical
-        stackView.distribution = .equalSpacing
-        stackView.spacing = 4
-        stackView.alignment = .center
-        return stackView
-    }()
-    
     // MARK: - Life Cycle
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-//        setLayout()
+
     }
     
     required init?(coder: NSCoder) {
@@ -56,24 +52,33 @@ final class MyBadgeCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Layout
     
-    func setBadgeLayout() {
-        addSubview(badgeStackView)
-        badgeStackView.addArrangedSubviews(badgeImage, badgeNameLabel)
-        
-        badgeImage.snp.makeConstraints {
-            $0.width.height.equalTo(66)
-        }
-        
-        badgeStackView.snp.makeConstraints {
-            $0.center.equalToSuperview()
-        }
-    }
-    
     func setLayout() {
         addSubview(badgeImage)
         
         badgeImage.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
+    }
+    
+    func setBadgeLayout() {
+        addSubviews(badgeImage, badgeNameLabel)
+        
+        let superViewWidth = self.frame.width-42
+        
+        badgeImage.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(convertByWidthRatio(11))
+            $0.centerX.equalToSuperview()
+            $0.width.height.equalTo(superViewWidth)
+        }
+        
+        badgeNameLabel.snp.makeConstraints {
+            $0.top.equalTo(badgeImage.snp.bottom).offset(3)
+            $0.centerX.equalTo(badgeImage)
+        }
+    }
+    
+    func setBadgeHidden() {
+        badgeImage.isHidden = true
+        badgeNameLabel.isHidden = true
     }
 }

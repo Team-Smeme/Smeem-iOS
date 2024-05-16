@@ -9,13 +9,14 @@ import UIKit
 import SnapKit
 import Combine
 
-final class MySummaryViewController: BaseViewController {
+final class MySummaryViewController: BaseViewController, BottomSheetPresentable {
     
     // MARK: Publisher
     
     private let mySummarySubject = PassthroughSubject<Void, Never>()
     private let myPlanSubject = PassthroughSubject<Void, Never>()
     private let myBadgeSubject = PassthroughSubject<Void, Never>()
+    private let badgeCellTapped = PassthroughSubject<Int, Never>()
     private var cancelBag = Set<AnyCancellable>()
     
     private var mySmeemDataSource: MySmeemCollectionViewDataSource!
@@ -175,12 +176,6 @@ final class MySummaryViewController: BaseViewController {
     
     // MARK: Life Cycle
     
-    override func viewWillAppear(_ animated: Bool) {
-        mySummarySubject.send(())
-        myPlanSubject.send(())
-        myBadgeSubject.send(())
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -188,18 +183,33 @@ final class MySummaryViewController: BaseViewController {
         registerCell()
         setDelegate()
         bind()
+//        
+//        mySummarySubject.send(())
+//        myPlanSubject.send(())
+//        myBadgeSubject.send(())
+//        bind()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        mySummarySubject.send(())
+        myPlanSubject.send(())
+        myBadgeSubject.send(())
     }
     
     // MARK: - Method
     
     private func bind() {
         backButton.tapPublisher
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 self?.navigationController?.popViewController(animated: true)
             }
             .store(in: &cancelBag)
         
         settingButton.tapPublisher
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 let authVC = SettingViewController()
                 self?.navigationController?.pushViewController(authVC, animated: true)
@@ -208,7 +218,8 @@ final class MySummaryViewController: BaseViewController {
         
         let input = MySummaryViewModel.Input(mySummarySubject: mySummarySubject,
                                              myPlanSubject: myPlanSubject,
-                                             myBadgeSubject: myBadgeSubject)
+                                             myBadgeSubject: myBadgeSubject,
+                                             badgeCellTapped: badgeCellTapped)
         let output = viewModel.transform(input: input)
         
         output.totalHasMyPlanResult
@@ -218,19 +229,20 @@ final class MySummaryViewController: BaseViewController {
                 self?.mySmeemDataSource = MySmeemCollectionViewDataSource(numberItems: response.mySummaryNumber,
                                                                           textItems: response.mySumamryText)
                 self?.mySmeemCollectionView.dataSource = self?.mySmeemDataSource
-                self?.mySmeemCollectionView.reloadData()
+//                self?.mySmeemCollectionView.reloadData()
                 
                 self?.myPlanFlowLayout = MyPlanCollectionViewLayout(cellCount: response.myPlan!.clearCount.count)
                 self?.myPlanDataSource = MyPlanCollectionViewDataSource(planNumber: response.myPlan!.clearedCount,
                                                                         totalNumber: response.myPlan!.clearCount)
+                self?.myPlanTitleLabel.text = response.myPlan?.plan
                 
                 self?.myPlanCollectionView.dataSource = self?.myPlanDataSource
                 self?.myPlanCollectionView.delegate = self?.myPlanFlowLayout
-                self?.myPlanCollectionView.reloadData()
+//                self?.myPlanCollectionView.reloadData()
                 
                 self?.myBadgeDataSource = MyBadgeCollectionViewDatasource(badgeData: response.myBadge)
                 self?.myBadgeCollectionView.dataSource = self?.myBadgeDataSource
-                self?.myBadgeCollectionView.reloadData()
+//                self?.myBadgeCollectionView.reloadData()
             }
             .store(in: &cancelBag)
         
@@ -248,6 +260,15 @@ final class MySummaryViewController: BaseViewController {
                 self?.myBadgeDataSource = MyBadgeCollectionViewDatasource(badgeData: response.myBadge)
                 self?.myBadgeCollectionView.dataSource = self?.myBadgeDataSource
                 self?.myBadgeCollectionView.reloadData()
+            }
+            .store(in: &cancelBag)
+        
+        output.badgeCellResult
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] response in
+                let badgeBottomSheetVC = BadgeBottomSheetViewController()
+                badgeBottomSheetVC.setData(data: response)
+                self?.presentBottomSheet(viewController: badgeBottomSheetVC)
             }
             .store(in: &cancelBag)
         
@@ -285,7 +306,6 @@ final class MySummaryViewController: BaseViewController {
         contentView.snp.makeConstraints {
             $0.edges.equalTo(summaryScrollerView.contentLayoutGuide)
             $0.width.equalTo(summaryScrollerView.frameLayoutGuide)
-            /// 기기별로 높이 어떻게 줄 건지...
             $0.height.equalTo(convertByWidthRatio(895))
         }
         
@@ -385,7 +405,13 @@ final class MySummaryViewController: BaseViewController {
     }
 }
 
-extension MySummaryViewController: UICollectionViewDelegateFlowLayout { }
+extension MySummaryViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if collectionView == self.myBadgeCollectionView {
+            self.badgeCellTapped.send(indexPath.item)
+        }
+    }
+}
 
 extension MySummaryViewController {
     
@@ -400,7 +426,6 @@ extension MySummaryViewController {
             let leadingTrailingInset = 36.0
             let itemSpacing = 16.0
             let cellCount = 3.0
-            print((UIScreen.main.bounds.width-(leadingTrailingInset+itemSpacing))/cellCount)
             return CGSize(width: (UIScreen.main.bounds.width-(leadingTrailingInset+itemSpacing))/cellCount,
                           height: (UIScreen.main.bounds.width-(leadingTrailingInset+itemSpacing))/cellCount)
         }

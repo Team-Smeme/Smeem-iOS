@@ -22,3 +22,20 @@ struct MySummaryBadgeResponse: Codable {
     let imageUrl: String
     let badgeAcquisitionRatio: Double
 }
+
+enum RatioType: Codable {
+    case Int
+    case Double
+}
+
+struct MySummaryBadgeAppData: Codable {
+    let badgeId: Int
+    let name: String
+    let type: String
+    let hasBadge: Bool
+    let remainingNumber: Int?
+    let contentForNonBadgeOwner: String?
+    let contentForBadgeOwner: String?
+    let imageUrl: String
+    let badgeAcquisitionRatio: String
+}
