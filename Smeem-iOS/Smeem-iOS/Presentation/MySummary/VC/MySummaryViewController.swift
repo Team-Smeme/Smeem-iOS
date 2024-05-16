@@ -79,7 +79,7 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
     private lazy var mySmeemCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         collectionView.showsVerticalScrollIndicator = false
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = .smeemWhite
         return collectionView
     }()
     
@@ -94,7 +94,7 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
     private let myPlanView: UIView = {
         let view = UIView()
         view.makeRoundCorner(cornerRadius: 15)
-        view.backgroundColor = .clear
+        view.backgroundColor = .smeemWhite
         view.layer.borderWidth = 1
         view.layer.borderColor = UIColor.gray100.cgColor
         view.isHidden = true
@@ -127,7 +127,7 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
     private let emptyView: UIView = {
         let view = UIView()
         view.makeRoundCorner(cornerRadius: 15)
-        view.backgroundColor = .clear
+        view.backgroundColor = .smeemWhite
         view.layer.borderWidth = 1
         view.layer.borderColor = UIColor.gray100.cgColor
         view.isHidden = true
@@ -170,7 +170,7 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
     private lazy var myBadgeCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         collectionView.showsVerticalScrollIndicator = false
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = .clear
         return collectionView
     }()
     
@@ -183,11 +183,6 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
         registerCell()
         setDelegate()
         bind()
-//        
-//        mySummarySubject.send(())
-//        myPlanSubject.send(())
-//        myBadgeSubject.send(())
-//        bind()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -196,6 +191,10 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
         mySummarySubject.send(())
         myPlanSubject.send(())
         myBadgeSubject.send(())
+    }
+    
+    override func setBackgroundColor() {
+        view.backgroundColor = .summaryBackground
     }
     
     // MARK: - Method
@@ -223,6 +222,7 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
         let output = viewModel.transform(input: input)
         
         output.totalHasMyPlanResult
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] response in
                 self?.emptyView.removeFromSuperview()
                 self?.myPlanView.isHidden = false
@@ -247,6 +247,7 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
             .store(in: &cancelBag)
         
         output.totalHasNotPlanResult
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] response in
                 self?.myPlanView.removeFromSuperview()
                 self?.myPlanCollectionView.removeFromSuperview()
@@ -264,6 +265,7 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
             .store(in: &cancelBag)
         
         output.badgeCellResult
+            .receive(on: DispatchQueue.main)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] response in
                 let badgeBottomSheetVC = BadgeBottomSheetViewController()
@@ -288,29 +290,19 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
     }
     
     private func setLayout() {
-        view.addSubview(summaryScrollerView)
+        view.addSubviews(naviView, summaryScrollerView)
+        naviView.addSubviews(backButton, summaryLabel, settingButton)
         summaryScrollerView.addSubview(contentView)
-        contentView.addSubviews(naviView, mySmeemLabel, mySmeemView,
+        contentView.addSubviews(mySmeemLabel, mySmeemView,
                                 myPlanLabel, myPlanView, emptyView,
                                 myBadgeLabel, myBadgeCollectionView)
-        naviView.addSubviews(backButton, summaryLabel, settingButton)
         mySmeemView.addSubview(mySmeemCollectionView)
         myPlanView.addSubviews(myPlanTitleLabel, myPlanDetailLabel, myPlanCollectionView)
         emptyView.addSubviews(emptyLabelStackView)
         emptyLabelStackView.addArrangedSubviews(emptyPlanLabel, planSettingLabel)
         
-        summaryScrollerView.snp.makeConstraints {
-            $0.edges.equalTo(view.safeAreaLayoutGuide)
-        }
-        
-        contentView.snp.makeConstraints {
-            $0.edges.equalTo(summaryScrollerView.contentLayoutGuide)
-            $0.width.equalTo(summaryScrollerView.frameLayoutGuide)
-            $0.height.equalTo(convertByWidthRatio(895))
-        }
-        
         naviView.snp.makeConstraints {
-            $0.top.leading.trailing.equalToSuperview()
+            $0.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             $0.height.equalTo(66)
         }
         
@@ -330,8 +322,19 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
             $0.height.width.equalTo(40)
         }
         
+        summaryScrollerView.snp.makeConstraints {
+            $0.top.equalTo(naviView.snp.bottom)
+            $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+        contentView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+            $0.width.equalTo(summaryScrollerView.frameLayoutGuide)
+            $0.height.equalTo(convertByWidthRatio(835))
+        }
+        
         mySmeemLabel.snp.makeConstraints {
-            $0.top.equalTo(naviView.snp.bottom).offset(18)
+            $0.top.equalToSuperview().inset(18)
             $0.leading.equalToSuperview().inset(26)
         }
         

@@ -232,6 +232,12 @@ final class SettingViewController: BaseViewController {
         contentView.snp.makeConstraints {
             $0.edges.equalTo(summaryScrollerView.contentLayoutGuide)
             $0.width.equalTo(summaryScrollerView.frameLayoutGuide)
+            $0.height.equalTo(convertByWidthRatio(895))
+        }
+        
+        contentView.snp.makeConstraints {
+            $0.edges.equalTo(summaryScrollerView.contentLayoutGuide)
+            $0.width.equalTo(summaryScrollerView.frameLayoutGuide)
         }
         
         backButton.snp.makeConstraints {

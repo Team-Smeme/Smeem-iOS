@@ -56,6 +56,10 @@ extension UIColor {
     static var popupBackground: UIColor {
         return UIColor(hex: "#171716", alpha: 0.3)
     }
+    
+    static var summaryBackground: UIColor {
+        return UIColor(hex: "#FAFAFA")
+    }
 }
 
 extension UIColor {

@@ -35,7 +35,8 @@ final class MyBadgeCollectionViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-
+        
+        backgroundColor = .smeemWhite
     }
     
     required init?(coder: NSCoder) {
