@@ -278,6 +278,11 @@ final class HomeViewController: BaseViewController {
     private func checkPopupView() {
         if !badgePopupData.isEmpty {
             let popupVC = BadgePopupViewController(popupBadge: badgePopupData)
+            popupVC.summarySubject
+                .sink { [weak self] _ in
+                    self?.navigationController?.pushViewController(MySummaryViewController(), animated: true)
+                }
+                .store(in: &cancelBag)
             popupVC.modalTransitionStyle = .crossDissolve
             popupVC.modalPresentationStyle = .overCurrentContext
             self.present(popupVC, animated: true)
