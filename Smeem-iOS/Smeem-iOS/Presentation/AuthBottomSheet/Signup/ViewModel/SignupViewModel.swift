@@ -19,6 +19,8 @@ final class SignupViewModel: ViewModel {
         let kakaoLoginTapped: PassthroughSubject<Void, Never>
         let appleLoginSubject: PassthroughSubject<String, Never>
         let dismissTapped: PassthroughSubject<Void, Never>
+        let userServiceSubject: PassthroughSubject<Void, Never>
+        let homeSubject: PassthroughSubject<Void, Never>
     }
     
     struct Output {
@@ -35,10 +37,8 @@ final class SignupViewModel: ViewModel {
     private let amplitudeSubject = PassthroughSubject<Void, Never>()
     private let loadingViewResult = PassthroughSubject<Bool, Never>()
     private let errorResult = PassthroughSubject<SmeemError, Never>()
-    private let trainingPlanRequestSubject = PassthroughSubject<TrainingRequestModel, Never>()
+    private let userServiceSubject = PassthroughSubject<Void, Never>()
     private var cancelBag = Set<AnyCancellable>()
-    
-    var trainingPlanRequest: TrainingPlanRequest?
     
     func transform(input: Input) -> Output {
         
@@ -96,10 +96,7 @@ final class SignupViewModel: ViewModel {
                             
                             if response.hasPlan == false || (response.hasPlan == true && response.isRegistered == false) {
                                 self.amplitudeSubject.send(())
-                                
-                                guard let request = self.trainingPlanRequest else { return }
-                                self.trainingPlanRequestSubject.send(TrainingRequestModel(plan: request,
-                                                                                          accessToken: response.accessToken))
+                                self.userServiceSubject.send(())
                             } else {
                                 // 계정이 있는 유저
                                 UserDefaultsManager.accessToken = response.accessToken
@@ -119,28 +116,7 @@ final class SignupViewModel: ViewModel {
             }
             .eraseToAnyPublisher()
         
-        let presentServiceResult = trainingPlanRequestSubject
-            .handleEvents(receiveSubscription: { _ in
-                self.loadingViewResult.send(true)
-            })
-            .flatMap { request -> AnyPublisher<Void, Never> in
-                return Future<Void, Never> { premise in
-                    self.provider.userPlanPathAPI(param: request.plan, accessToken: request.accessToken) { response in
-                        switch response {
-                        case .success(_):
-                            UserDefaultsManager.clientAccessToken = request.accessToken
-                            premise(.success(()))
-                        case .failure(let error):
-                            self.errorResult.send(error)
-                        }
-                    }
-                }
-                .handleEvents(receiveCompletion: { _ in
-                    self.loadingViewResult.send(false)
-                })
-                .eraseToAnyPublisher()
-            }
-            .eraseToAnyPublisher()
+        let userServiceResult = userServiceSubject.eraseToAnyPublisher()
         
         amplitudeSubject
             .sink { _ in
@@ -152,7 +128,7 @@ final class SignupViewModel: ViewModel {
         let errorResult = errorResult.eraseToAnyPublisher()
         
         return Output(presentHomeResult: presentHomeResult,
-                      presentServiceResult: presentServiceResult,
+                      presentServiceResult: userServiceResult,
                       loadingViewResult: loadingViewResult,
                       errorResult: errorResult)
     }

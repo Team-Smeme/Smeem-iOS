@@ -14,7 +14,7 @@ enum AlarmType {
     case alarmOn
 }
 
-final class TrainingAlarmViewController: BaseViewController {
+final class TrainingAlarmViewController: BaseViewController, BottomSheetPresentable {
     
     private let viewModel = TrainingAlarmViewModel(provider: OnboardingService())
     
@@ -26,6 +26,8 @@ final class TrainingAlarmViewController: BaseViewController {
     private let alarmDaySubject = PassthroughSubject<Set<String>, Never>()
     private let alarmButtonTapped = PassthroughSubject<AlarmType, Never>()
     private let nextFlowSubject = PassthroughSubject<Void, Never>()
+    private let userServiceSubject = PassthroughSubject<Void, Never>()
+    private let homeSubject = PassthroughSubject<Void, Never>()
     private let amplitudeSubject = PassthroughSubject<Void, Never>()
     
     // MARK: UI Properties
@@ -144,6 +146,8 @@ final class TrainingAlarmViewController: BaseViewController {
                                                  alarmDaySubject: alarmDaySubject,
                                                  alarmButtonTapped: alarmButtonTapped,
                                                  nextFlowSubject: nextFlowSubject,
+                                                 userServiceSubject: userServiceSubject,
+                                                 homeSubject: homeSubject,
                                                  amplitudeSubject: amplitudeSubject)
         let output = viewModel.transform(input: input)
         
@@ -163,18 +167,21 @@ final class TrainingAlarmViewController: BaseViewController {
         
         output.bottomSheetResult
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] request in
-                let signupBottomSheetVC = SignupBottomSheetViewController(request: request)
-                let navigationController = UINavigationController(rootViewController: signupBottomSheetVC)
-                navigationController.modalPresentationStyle = .overFullScreen
+            .sink { [weak self] _ in
+                let signupBottomSheetVC = SignupBottomSheetViewController()
+                self?.presentBottomSheet(viewController: signupBottomSheetVC, customHeightMultiplier: 0.31)
                 
-                let height = self!.view.frame.height
-                self?.present(navigationController, animated: false) {
-                    signupBottomSheetVC.bottomSheetView.frame.origin.y = height
-                    UIView.animate(withDuration: 0.3) {
-                        signupBottomSheetVC.bottomSheetView.frame.origin.y =  height-282
+                signupBottomSheetVC.userServiceSubject
+                    .sink { [weak self] _ in
+                        self?.userServiceSubject.send(())
                     }
-                }
+                    .store(in: &signupBottomSheetVC.cancelBag)
+                
+                signupBottomSheetVC.homeSubject
+                    .sink { [weak self] _ in
+                        self?.homeSubject.send(())
+                    }
+                    .store(in: &signupBottomSheetVC.cancelBag)
             }
             .store(in: &cancelBag)
         
@@ -186,6 +193,14 @@ final class TrainingAlarmViewController: BaseViewController {
             }
             .store(in: &cancelBag)
         
+        output.homeSubject
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                let homeVC = HomeViewController()
+                self?.changeRootViewController(homeVC)
+            }
+            .store(in: &cancelBag)
+            
         output.errorResult
             .receive(on: DispatchQueue.main)
             .sink { [weak self] error in

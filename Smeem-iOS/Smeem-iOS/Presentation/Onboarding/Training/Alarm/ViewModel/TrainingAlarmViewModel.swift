@@ -16,14 +16,17 @@ final class TrainingAlarmViewModel: ViewModel {
         let alarmDaySubject: PassthroughSubject<Set<String>, Never>
         let alarmButtonTapped: PassthroughSubject<AlarmType, Never>
         let nextFlowSubject: PassthroughSubject<Void, Never>
+        let userServiceSubject: PassthroughSubject<Void, Never>
+        let homeSubject: PassthroughSubject<Void, Never>
         let amplitudeSubject: PassthroughSubject<Void, Never>
     }
     
     struct Output {
         let buttonTypeResult: AnyPublisher<SmeemButtonType, Never>
         let alarmResult: AnyPublisher<Void, Never>
-        let bottomSheetResult: AnyPublisher<TrainingPlanRequest, Never>
+        let bottomSheetResult: AnyPublisher<Void, Never>
         let nicknameResult: AnyPublisher<Void, Never>
+        let homeSubject: AnyPublisher<Void, Never>
         let errorResult: AnyPublisher<SmeemError, Never>
         let loadingViewResult: AnyPublisher<Bool, Never>
     }
@@ -93,13 +96,11 @@ final class TrainingAlarmViewModel: ViewModel {
             }
             .store(in: &cancelBag)
         
-        let bottomSheetResult = bottomSheetSubject
-            .map { _ in
-                return self.trainingPlanRequest
-            }
-            .eraseToAnyPublisher()
+        let bottomSheetResult = bottomSheetSubject.eraseToAnyPublisher()
         
-        let nicknameResult = nicknameSubject
+        let userServiceSubject = input.userServiceSubject.eraseToAnyPublisher()
+        
+        let nicknameResult = Publishers.Merge(nicknameSubject, input.userServiceSubject)
             .handleEvents(receiveSubscription: { _ in
                 self.loadingViewSubject.send(true)
             })
@@ -124,6 +125,8 @@ final class TrainingAlarmViewModel: ViewModel {
             }
             .eraseToAnyPublisher()
         
+        let homeResult = input.homeSubject.eraseToAnyPublisher()
+        
         input.amplitudeSubject
             .sink { _ in
                 AmplitudeManager.shared.track(event: AmplitudeConstant.Onboarding.onboarding_alarm_view.event)
@@ -137,6 +140,7 @@ final class TrainingAlarmViewModel: ViewModel {
                       alarmResult: alarmResult,
                       bottomSheetResult: bottomSheetResult,
                       nicknameResult: nicknameResult,
+                      homeSubject: homeResult,
                       errorResult: errorResult,
                       loadingViewResult: loadingResult)
     }

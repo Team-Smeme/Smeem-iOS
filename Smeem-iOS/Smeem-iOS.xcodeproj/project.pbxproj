@@ -591,7 +591,7 @@
 				37CD0DB32A1DEE64001F03E7 /* Diaries */,
 				4AD923E52A0650A000FF5E27 /* Splash */,
 				4AF5076F2A10CBA2007C62B1 /* Onboarding */,
-				4AE4B5172A06BF4A00D45F87 /* BottomSheet */,
+				4AE4B5172A06BF4A00D45F87 /* AuthBottomSheet */,
 				6F62668A2A04E889000365CD /* Home */,
 				4AD04B3E2A19217B004B7A58 /* Correction */,
 				A3D7ECB82A26566F009857D6 /* MyPage */,
@@ -1636,14 +1636,14 @@
 			path = EditAlarm;
 			sourceTree = "<group>";
 		};
-		4AE4B5172A06BF4A00D45F87 /* BottomSheet */ = {
+		4AE4B5172A06BF4A00D45F87 /* AuthBottomSheet */ = {
 			isa = PBXGroup;
 			children = (
 				4A07F8AD2B7B58B1004185F2 /* Model */,
 				4A07F8A62B7B3E4A004185F2 /* Signup */,
 				4AB7C92C2B78B42C00845733 /* Login */,
 			);
-			path = BottomSheet;
+			path = AuthBottomSheet;
 			sourceTree = "<group>";
 		};
 		4AEB82962A4CB4F900C1114B /* BadgePopup */ = {
