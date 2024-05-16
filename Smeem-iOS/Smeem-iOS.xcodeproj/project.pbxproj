@@ -15,10 +15,10 @@
 		371107E52ACBEA69007A4AC2 /* DiaryViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371107E42ACBEA69007A4AC2 /* DiaryViewFactory.swift */; };
 		371107E72ACBED3C007A4AC2 /* DiaryViewConfigurationBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371107E62ACBED3C007A4AC2 /* DiaryViewConfigurationBuilder.swift */; };
 		371107E92ACC7E3A007A4AC2 /* DiaryLayoutConfigurations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371107E82ACC7E3A007A4AC2 /* DiaryLayoutConfigurations.swift */; };
-		371C69D32BE112AD000D745D /* BottomSheetPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371C69D22BE112AD000D745D /* BottomSheetPresentable.swift */; };
-		371C69D52BE11926000D745D /* BadgeBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371C69D42BE11926000D745D /* BadgeBottomSheetViewController.swift */; };
 		37144C512B88E949008565C4 /* DiaryViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37144C502B88E949008565C4 /* DiaryViewControllerFactory.swift */; };
 		37144C582B890923008565C4 /* DiaryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37144C572B890923008565C4 /* DiaryModel.swift */; };
+		371C69D32BE112AD000D745D /* BottomSheetPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371C69D22BE112AD000D745D /* BottomSheetPresentable.swift */; };
+		371C69D52BE11926000D745D /* BadgeBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371C69D42BE11926000D745D /* BadgeBottomSheetViewController.swift */; };
 		371E94162A87B83D0098280F /* NextButtonDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371E94152A87B83D0098280F /* NextButtonDelegate.swift */; };
 		371E94192A87DA960098280F /* EditHowGoalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371E94182A87DA960098280F /* EditHowGoalViewController.swift */; };
 		3728B8D32A2CFED300EF4CF8 /* ForeignDiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3728B8D22A2CFED300EF4CF8 /* ForeignDiaryViewController.swift */; };
@@ -247,10 +247,10 @@
 		371107E42ACBEA69007A4AC2 /* DiaryViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryViewFactory.swift; sourceTree = "<group>"; };
 		371107E62ACBED3C007A4AC2 /* DiaryViewConfigurationBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryViewConfigurationBuilder.swift; sourceTree = "<group>"; };
 		371107E82ACC7E3A007A4AC2 /* DiaryLayoutConfigurations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryLayoutConfigurations.swift; sourceTree = "<group>"; };
-		371C69D22BE112AD000D745D /* BottomSheetPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetPresentable.swift; sourceTree = "<group>"; };
-		371C69D42BE11926000D745D /* BadgeBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeBottomSheetViewController.swift; sourceTree = "<group>"; };
 		37144C502B88E949008565C4 /* DiaryViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryViewControllerFactory.swift; sourceTree = "<group>"; };
 		37144C572B890923008565C4 /* DiaryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryModel.swift; sourceTree = "<group>"; };
+		371C69D22BE112AD000D745D /* BottomSheetPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetPresentable.swift; sourceTree = "<group>"; };
+		371C69D42BE11926000D745D /* BadgeBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeBottomSheetViewController.swift; sourceTree = "<group>"; };
 		371E94152A87B83D0098280F /* NextButtonDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextButtonDelegate.swift; sourceTree = "<group>"; };
 		371E94182A87DA960098280F /* EditHowGoalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditHowGoalViewController.swift; sourceTree = "<group>"; };
 		3728B8D22A2CFED300EF4CF8 /* ForeignDiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForeignDiaryViewController.swift; sourceTree = "<group>"; };
@@ -517,15 +517,6 @@
 				371107E82ACC7E3A007A4AC2 /* DiaryLayoutConfigurations.swift */,
 			);
 			path = View;
-			sourceTree = "<group>";
-		};
-		371C69D12BE1126E000D745D /* BottomSheet */ = {
-			isa = PBXGroup;
-			children = (
-				371C69D22BE112AD000D745D /* BottomSheetPresentable.swift */,
-				371C69D42BE11926000D745D /* BadgeBottomSheetViewController.swift */,
-			);
-			path = BottomSheet;
 			sourceTree = "<group>";
 		};
 		37144C4F2B88E8F4008565C4 /* Model */ = {

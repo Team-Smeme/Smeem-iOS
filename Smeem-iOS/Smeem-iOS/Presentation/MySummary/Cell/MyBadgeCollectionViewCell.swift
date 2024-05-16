@@ -11,6 +11,12 @@ final class MyBadgeCollectionViewCell: UICollectionViewCell {
     
     // MARK: - UI Property
     
+    private let badgeLockImage: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = Constant.Image.btnLockBadge
+        return imageView
+    }()
+    
     private let badgeImage: UIImageView = {
         let imageView = UIImageView()
         imageView.image = Constant.Image.btnLockBadge
@@ -46,6 +52,14 @@ final class MyBadgeCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Layout
     
+    func setLayout() {
+        addSubview(badgeImage)
+        
+        badgeImage.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
+    }
+    
     func setBadgeLayout() {
         addSubviews(badgeImage, badgeNameLabel)
         
@@ -63,11 +77,8 @@ final class MyBadgeCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    func setLayout() {
-        addSubview(badgeImage)
-        
-        badgeImage.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
+    func setBadgeHidden() {
+        badgeImage.isHidden = true
+        badgeNameLabel.isHidden = true
     }
 }

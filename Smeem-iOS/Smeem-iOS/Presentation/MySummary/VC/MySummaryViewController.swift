@@ -176,14 +176,6 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
     
     // MARK: Life Cycle
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        mySummarySubject.send(())
-        myPlanSubject.send(())
-        myBadgeSubject.send(())
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -191,6 +183,19 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
         registerCell()
         setDelegate()
         bind()
+//        
+//        mySummarySubject.send(())
+//        myPlanSubject.send(())
+//        myBadgeSubject.send(())
+//        bind()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        mySummarySubject.send(())
+        myPlanSubject.send(())
+        myBadgeSubject.send(())
     }
     
     // MARK: - Method
@@ -224,19 +229,20 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
                 self?.mySmeemDataSource = MySmeemCollectionViewDataSource(numberItems: response.mySummaryNumber,
                                                                           textItems: response.mySumamryText)
                 self?.mySmeemCollectionView.dataSource = self?.mySmeemDataSource
-                self?.mySmeemCollectionView.reloadData()
+//                self?.mySmeemCollectionView.reloadData()
                 
                 self?.myPlanFlowLayout = MyPlanCollectionViewLayout(cellCount: response.myPlan!.clearCount.count)
                 self?.myPlanDataSource = MyPlanCollectionViewDataSource(planNumber: response.myPlan!.clearedCount,
                                                                         totalNumber: response.myPlan!.clearCount)
+                self?.myPlanTitleLabel.text = response.myPlan?.plan
                 
                 self?.myPlanCollectionView.dataSource = self?.myPlanDataSource
                 self?.myPlanCollectionView.delegate = self?.myPlanFlowLayout
-                self?.myPlanCollectionView.reloadData()
+//                self?.myPlanCollectionView.reloadData()
                 
                 self?.myBadgeDataSource = MyBadgeCollectionViewDatasource(badgeData: response.myBadge)
                 self?.myBadgeCollectionView.dataSource = self?.myBadgeDataSource
-                self?.myBadgeCollectionView.reloadData()
+//                self?.myBadgeCollectionView.reloadData()
             }
             .store(in: &cancelBag)
         
@@ -300,7 +306,6 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
         contentView.snp.makeConstraints {
             $0.edges.equalTo(summaryScrollerView.contentLayoutGuide)
             $0.width.equalTo(summaryScrollerView.frameLayoutGuide)
-            /// 기기별로 높이 어떻게 줄 건지...
             $0.height.equalTo(convertByWidthRatio(895))
         }
         
@@ -402,7 +407,9 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
 
 extension MySummaryViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.badgeCellTapped.send(indexPath.item)
+        if collectionView == self.myBadgeCollectionView {
+            self.badgeCellTapped.send(indexPath.item)
+        }
     }
 }
 
@@ -419,7 +426,6 @@ extension MySummaryViewController {
             let leadingTrailingInset = 36.0
             let itemSpacing = 16.0
             let cellCount = 3.0
-            print((UIScreen.main.bounds.width-(leadingTrailingInset+itemSpacing))/cellCount)
             return CGSize(width: (UIScreen.main.bounds.width-(leadingTrailingInset+itemSpacing))/cellCount,
                           height: (UIScreen.main.bounds.width-(leadingTrailingInset+itemSpacing))/cellCount)
         }

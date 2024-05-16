@@ -7,6 +7,7 @@
 
 import UIKit
 
+import Combine
 import SnapKit
 import Kingfisher
 
@@ -21,6 +22,8 @@ enum BadgeType {
 final class BadgeBottomSheetViewController: BaseViewController {
     
     // MARK: - Properties
+    
+    private var cancelBag = Set<AnyCancellable>()
     
     
     // MARK: - UI Properties
@@ -45,6 +48,15 @@ final class BadgeBottomSheetViewController: BaseViewController {
         super.viewDidLoad()
 
         setLayout()
+        bind()
+    }
+    
+    private func bind() {
+        dismissButton.tapPublisher
+            .sink { [weak self] _ in
+                self?.dismiss(animated: true)
+            }
+            .store(in: &cancelBag)
     }
     
     func setData(data: MySummaryBadgeAppData) {
