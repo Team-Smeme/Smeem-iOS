@@ -15,6 +15,7 @@ final class SplashViewController: BaseViewController {
     // MARK: Publisher
     
     private let checkUpdatePopup = PassthroughSubject<Void, Never>()
+    private let restartSubject = PassthroughSubject<Void, Never>()
     private var cancelBag = Set<AnyCancellable>()
     
     // MARK: UI Properties
@@ -40,7 +41,8 @@ final class SplashViewController: BaseViewController {
     }
     
     private func bind() {
-        let input = SplashViewModel.Input(checkUpdatePopup: checkUpdatePopup)
+        let input = SplashViewModel.Input(checkUpdatePopup: checkUpdatePopup,
+                                          restartSubject: restartSubject)
         let output = viewModel.transform(input: input)
         
         output.updatePopupResult
@@ -69,6 +71,7 @@ final class SplashViewController: BaseViewController {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] error in
                 self?.showToast(toastType: .smeemErrorToast(message: error))
+                self?.restartSubject.send(())
             }
             .store(in: &cancelBag)
         
