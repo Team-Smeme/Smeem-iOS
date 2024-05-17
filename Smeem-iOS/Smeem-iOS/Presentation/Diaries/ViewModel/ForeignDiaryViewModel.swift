@@ -26,7 +26,7 @@ final class ForeignDiaryViewModel: DiaryViewModel {
         let loadingViewResult: AnyPublisher<Bool, Never>
     }
     
-    private (set) var diaryPostedSubject = CurrentValueSubject<PostDiaryResponse?, Never>(nil)
+    private (set) var diaryPostedSubject = PassthroughSubject<PostDiaryResponse?, Never>()
     private let toolTipSubject = PassthroughSubject<Void, Never>()
     private let amplitudeSubject = PassthroughSubject<Void, Never>()
     private let loadingViewResult = PassthroughSubject<Bool, Never>()
@@ -63,7 +63,9 @@ final class ForeignDiaryViewModel: DiaryViewModel {
                         switch result {
                         case .success(let response):
                             self?.updateDiaryInfo(diaryID: response.diaryID, badgePopupContent: response.badges)
-                            self?.diaryPostedSubject.send(response)
+                            let homeVC = HomeViewController()
+                            homeVC.badgePopupData = response.badges
+//                            self?.diaryPostedSubject.send(response)
                             self?.amplitudeSubject.send()
                             promise(.success(()))
                         case .failure(let error):
