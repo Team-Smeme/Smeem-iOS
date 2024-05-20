@@ -20,16 +20,20 @@ final class MyBadgeCollectionViewDatasource: NSObject, UICollectionViewDataSourc
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(cellType: MyBadgeCollectionViewCell.self, indexPath: indexPath)
-
+        
+        // 획득한 뱃지일 경우
         if badgeData[indexPath.item].hasBadge {
+            let cell = collectionView.dequeueReusableCell(cellType: MyBadgeCollectionViewCell.self, indexPath: indexPath)
+            
             cell.setBadgeLayout()
             cell.setBadgeData(data: (badgeData[indexPath.item].name,
                                      badgeData[indexPath.item].imageUrl))
+            return cell
         } else {
+            let cell = collectionView.dequeueReusableCell(cellType: LockBadgeCollectionViewCell.self, indexPath: indexPath)
+            
             cell.setLayout()
+            return cell
         }
-        
-        return cell
     }
 }

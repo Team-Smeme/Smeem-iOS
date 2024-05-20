@@ -161,7 +161,8 @@ final class TrainingAlarmViewController: BaseViewController, BottomSheetPresenta
         output.alarmResult
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
-                self?.requestNotificationPermission()
+//                self?.requestNotificationPermission()
+                self?.requestTrackingAuthoriaztion()
             }
             .store(in: &cancelBag)
         
