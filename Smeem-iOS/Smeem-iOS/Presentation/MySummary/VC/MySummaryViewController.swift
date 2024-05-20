@@ -187,7 +187,7 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+
         mySummarySubject.send(())
         myPlanSubject.send(())
         myBadgeSubject.send(())
@@ -229,7 +229,7 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
                 self?.mySmeemDataSource = MySmeemCollectionViewDataSource(numberItems: response.mySummaryNumber,
                                                                           textItems: response.mySumamryText)
                 self?.mySmeemCollectionView.dataSource = self?.mySmeemDataSource
-//                self?.mySmeemCollectionView.reloadData()
+                self?.mySmeemCollectionView.reloadData()
                 
                 self?.myPlanFlowLayout = MyPlanCollectionViewLayout(cellCount: response.myPlan!.clearCount.count)
                 self?.myPlanDataSource = MyPlanCollectionViewDataSource(planNumber: response.myPlan!.clearedCount,
@@ -238,11 +238,11 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
                 
                 self?.myPlanCollectionView.dataSource = self?.myPlanDataSource
                 self?.myPlanCollectionView.delegate = self?.myPlanFlowLayout
-//                self?.myPlanCollectionView.reloadData()
+                self?.myPlanCollectionView.reloadData()
                 
                 self?.myBadgeDataSource = MyBadgeCollectionViewDatasource(badgeData: response.myBadge)
                 self?.myBadgeCollectionView.dataSource = self?.myBadgeDataSource
-//                self?.myBadgeCollectionView.reloadData()
+                self?.myBadgeCollectionView.reloadData()
             }
             .store(in: &cancelBag)
         
@@ -265,7 +265,6 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
             .store(in: &cancelBag)
         
         output.badgeCellResult
-            .receive(on: DispatchQueue.main)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] response in
                 let badgeBottomSheetVC = BadgeBottomSheetViewController()
@@ -398,8 +397,10 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
     
     private func registerCell() {
         mySmeemCollectionView.registerCell(cellType: MySmeemCollectionViewCell.self)
-        myPlanCollectionView.registerCell(cellType: MyPlanCollectionViewCell.self)
+        myPlanCollectionView.registerCell(cellType: MyPlanActiveCollectionViewCell.self)
+        myPlanCollectionView.registerCell(cellType: MyPlanDeactiveCollectionViewCell.self)
         myBadgeCollectionView.registerCell(cellType: MyBadgeCollectionViewCell.self)
+        myBadgeCollectionView.registerCell(cellType: LockBadgeCollectionViewCell.self)
     }
     
     private func setDelegate() {

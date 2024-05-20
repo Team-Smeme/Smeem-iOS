@@ -153,7 +153,7 @@ final class AuthManagementViewController: UIViewController {
     
     private func kakaoResignAPI() {
         UserApi.shared.unlink { (error) in
-            if let error = error {
+            if let _ = error {
                 self.showToast(toastType: .smeemErrorToast(message: .clientError, body: "카카오 에러입니다"))
             }
             else {
