@@ -21,14 +21,12 @@ final class StepTwoKoreanDiaryViewModel: DiaryViewModel {
     }
     
     struct Output {
-        let rightButtonAction: AnyPublisher<Void, Never>
+        let rightButtonAction: AnyPublisher<PostDiaryResponse?, Never>
         let hintButtonAction: AnyPublisher<Bool, Never>
         let postHintResult: AnyPublisher<String?, Never>
         let errorResult: AnyPublisher<SmeemError, Never>
         let loadingViewAction: AnyPublisher<Bool, Never>
     }
-    
-    private (set) var diaryPostedSubject = CurrentValueSubject<PostDiaryResponse?, Never>(nil)
     
     private let amplitudeSubject = PassthroughSubject<AmplitudeType, Never>()
     private let postHintResult = PassthroughSubject<String?, Never>()
@@ -53,8 +51,8 @@ final class StepTwoKoreanDiaryViewModel: DiaryViewModel {
             .handleEvents(receiveSubscription: { [weak self] _ in
                 self?.loadingViewResult.send(true)
             })
-            .flatMap { [weak self] _ -> AnyPublisher<Void, Never> in
-                return Future<Void, Never> { promise in
+            .flatMap { [weak self] _ -> AnyPublisher<PostDiaryResponse?, Never> in
+                return Future<PostDiaryResponse?, Never> { promise in
                     guard let inputText = self?.getDiaryText() else { return }
                     let topicID = SharedDiaryDataService.shared.topicID
                     
@@ -62,8 +60,7 @@ final class StepTwoKoreanDiaryViewModel: DiaryViewModel {
                         switch result {
                         case .success(let response):
                             self?.updateDiaryInfo(diaryID: response.diaryID, badgePopupContent: response.badges)
-                            self?.diaryPostedSubject.send(response)
-                            promise(.success(()))
+                            promise(.success(response))
                             self?.amplitudeSubject.send(.secStepComplete)
                         case .failure(let error):
                             self?.errorResult.send(error)

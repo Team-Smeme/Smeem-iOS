@@ -68,11 +68,12 @@ extension ForeignDiaryViewController {
         
         output.rightButtonAction
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] in
+            .sink { [weak self] response in
                 self?.rootView.inputTextView.resignFirstResponder()
                 
                 let homeVC = HomeViewController()
                 let rootVC = UINavigationController(rootViewController: homeVC)
+                homeVC.handlePostDiaryAPI(with: response)
                 homeVC.changeRootViewControllerAndPresent(rootVC)
             }
             .store(in: &cancelBag)
