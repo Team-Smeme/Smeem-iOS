@@ -15,7 +15,7 @@ final class EditAlarmViewController: BaseViewController {
     let toastSubject = PassthroughSubject<Void, Never>()
     var cancelBag = Set<AnyCancellable>()
     
-    var trainigDayData: String?
+    var trainigDayData = ""
     var trainingTimeData: (hour: Int, minute: Int)?
     var completeButtonData: Bool?
     
@@ -26,7 +26,6 @@ final class EditAlarmViewController: BaseViewController {
     // MARK: - UI Property
     
     private let naviView = UIView()
-    private let datePickerFooterView = DatePickerFooterView()
     
     private lazy var backButton: UIButton = {
         let button = UIButton()
@@ -78,7 +77,7 @@ final class EditAlarmViewController: BaseViewController {
     }
     
     @objc func completeButtonDidTap() {
-        editAlarmTimePatchAPI(alarmTime: EditAlarmTime(trainingTime: TrainingTime(day: trainigDayData!,
+        editAlarmTimePatchAPI(alarmTime: EditAlarmTime(trainingTime: TrainingTime(day: trainigDayData,
                                                                                   hour: trainingTimeData!.hour,
                                                                                   minute: trainingTimeData!.minute)))
     }
@@ -86,9 +85,11 @@ final class EditAlarmViewController: BaseViewController {
     // MARK: - Custom Method
     
     private func setData() {
+        let buttonType = dayIndexPathArray.isEmpty ? SmeemButtonType.notEnabled : SmeemButtonType.enabled
+        completeButton.changeButtonType(buttonType: buttonType)
         alarmCollectionView.selectedIndexPath = dayIndexPathArray
         alarmCollectionView.myPageTime = (trainingTimeData!.0, trainingTimeData!.1)
-        alarmCollectionView.selectedDayArray = Set(trainigDayData!.components(separatedBy: ","))
+        alarmCollectionView.selectedDayArray = Set(trainigDayData.components(separatedBy: ","))
     }
     
     private func setLayout() {
@@ -139,17 +140,19 @@ extension EditAlarmViewController: AlarmCollectionViewDelegate {
             hour = data.hour == "12" ? 24 : Int(data.hour)!
         }
         
-        var minute = data.minute == "00" ? 0 : 30
+        let minute = data.minute == "00" ? 0 : 30
         self.trainingTimeData = (hour, minute)
     }
     
     func alarmDayButtonDataSend(day: Set<String>) {
-        if day.isEmpty {
-            completeButton.changeButtonType(buttonType: .notEnabled)
-        } else {
-            self.trainigDayData = Array(day).joined(separator: ",")
-            completeButton.changeButtonType(buttonType: .enabled)
-        }
+        var day = day
+        day.remove("")
+        print("넌 뭐냐!", day)
+        let dayList = !day.isEmpty ? Array(day).joined(separator: ",") : ""
+        print("아 잠만", dayList)
+        self.trainigDayData = dayList
+        let buttonType = trainigDayData.isEmpty ? SmeemButtonType.notEnabled : SmeemButtonType.enabled
+        completeButton.changeButtonType(buttonType: buttonType)
     }
 }
 

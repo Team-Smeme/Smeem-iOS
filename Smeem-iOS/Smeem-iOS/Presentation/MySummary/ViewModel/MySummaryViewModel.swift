@@ -111,7 +111,7 @@ final class MySummaryViewModel: ViewModel {
 
         Publishers.CombineLatest3(mySummaryResult, myPlanResult, myBadgeResult)
             .sink { result in
-                if let planData = result.1.data {
+                if let _ = result.1.data {
                     var clearCountArray: [Int] = []
                     guard let planData = result.1.data else { return }
                     (1...planData.clearCount).forEach { number in

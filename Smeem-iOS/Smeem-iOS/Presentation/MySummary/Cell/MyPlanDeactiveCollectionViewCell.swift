@@ -1,5 +1,5 @@
 //
-//  MyPlanCollectionViewCell.swift
+//  MyPlanDeactiveCollectionViewCell.swift
 //  Smeem-iOS
 //
 //  Created by 황찬미 on 4/23/24.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class MyPlanCollectionViewCell: UICollectionViewCell {
+final class MyPlanDeactiveCollectionViewCell: UICollectionViewCell {
     
     private let borderLayer = CAShapeLayer()
     
@@ -27,12 +27,6 @@ final class MyPlanCollectionViewCell: UICollectionViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    func activateCell() {
-        self.layer.cornerRadius = self.layer.frame.size.width / 2
-        self.backgroundColor = .point
-        self.numberLabel.textColor = .smeemWhite
     }
     
     func deactivateCell() {

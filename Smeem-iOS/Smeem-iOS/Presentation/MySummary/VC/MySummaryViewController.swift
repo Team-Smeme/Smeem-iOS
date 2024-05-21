@@ -79,7 +79,7 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
     private lazy var mySmeemCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         collectionView.showsVerticalScrollIndicator = false
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = .smeemWhite
         return collectionView
     }()
     
@@ -94,7 +94,7 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
     private let myPlanView: UIView = {
         let view = UIView()
         view.makeRoundCorner(cornerRadius: 15)
-        view.backgroundColor = .clear
+        view.backgroundColor = .smeemWhite
         view.layer.borderWidth = 1
         view.layer.borderColor = UIColor.gray100.cgColor
         view.isHidden = true
@@ -127,7 +127,7 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
     private let emptyView: UIView = {
         let view = UIView()
         view.makeRoundCorner(cornerRadius: 15)
-        view.backgroundColor = .clear
+        view.backgroundColor = .smeemWhite
         view.layer.borderWidth = 1
         view.layer.borderColor = UIColor.gray100.cgColor
         view.isHidden = true
@@ -170,7 +170,7 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
     private lazy var myBadgeCollectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         collectionView.showsVerticalScrollIndicator = false
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = .clear
         return collectionView
     }()
     
@@ -183,19 +183,18 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
         registerCell()
         setDelegate()
         bind()
-//        
-//        mySummarySubject.send(())
-//        myPlanSubject.send(())
-//        myBadgeSubject.send(())
-//        bind()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+
         mySummarySubject.send(())
         myPlanSubject.send(())
         myBadgeSubject.send(())
+    }
+    
+    override func setBackgroundColor() {
+        view.backgroundColor = .summaryBackground
     }
     
     // MARK: - Method
@@ -223,13 +222,14 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
         let output = viewModel.transform(input: input)
         
         output.totalHasMyPlanResult
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] response in
                 self?.emptyView.removeFromSuperview()
                 self?.myPlanView.isHidden = false
                 self?.mySmeemDataSource = MySmeemCollectionViewDataSource(numberItems: response.mySummaryNumber,
                                                                           textItems: response.mySumamryText)
                 self?.mySmeemCollectionView.dataSource = self?.mySmeemDataSource
-//                self?.mySmeemCollectionView.reloadData()
+                self?.mySmeemCollectionView.reloadData()
                 
                 self?.myPlanFlowLayout = MyPlanCollectionViewLayout(cellCount: response.myPlan!.clearCount.count)
                 self?.myPlanDataSource = MyPlanCollectionViewDataSource(planNumber: response.myPlan!.clearedCount,
@@ -238,15 +238,16 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
                 
                 self?.myPlanCollectionView.dataSource = self?.myPlanDataSource
                 self?.myPlanCollectionView.delegate = self?.myPlanFlowLayout
-//                self?.myPlanCollectionView.reloadData()
+                self?.myPlanCollectionView.reloadData()
                 
                 self?.myBadgeDataSource = MyBadgeCollectionViewDatasource(badgeData: response.myBadge)
                 self?.myBadgeCollectionView.dataSource = self?.myBadgeDataSource
-//                self?.myBadgeCollectionView.reloadData()
+                self?.myBadgeCollectionView.reloadData()
             }
             .store(in: &cancelBag)
         
         output.totalHasNotPlanResult
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] response in
                 self?.myPlanView.removeFromSuperview()
                 self?.myPlanCollectionView.removeFromSuperview()
@@ -288,29 +289,19 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
     }
     
     private func setLayout() {
-        view.addSubview(summaryScrollerView)
+        view.addSubviews(naviView, summaryScrollerView)
+        naviView.addSubviews(backButton, summaryLabel, settingButton)
         summaryScrollerView.addSubview(contentView)
-        contentView.addSubviews(naviView, mySmeemLabel, mySmeemView,
+        contentView.addSubviews(mySmeemLabel, mySmeemView,
                                 myPlanLabel, myPlanView, emptyView,
                                 myBadgeLabel, myBadgeCollectionView)
-        naviView.addSubviews(backButton, summaryLabel, settingButton)
         mySmeemView.addSubview(mySmeemCollectionView)
         myPlanView.addSubviews(myPlanTitleLabel, myPlanDetailLabel, myPlanCollectionView)
         emptyView.addSubviews(emptyLabelStackView)
         emptyLabelStackView.addArrangedSubviews(emptyPlanLabel, planSettingLabel)
         
-        summaryScrollerView.snp.makeConstraints {
-            $0.edges.equalTo(view.safeAreaLayoutGuide)
-        }
-        
-        contentView.snp.makeConstraints {
-            $0.edges.equalTo(summaryScrollerView.contentLayoutGuide)
-            $0.width.equalTo(summaryScrollerView.frameLayoutGuide)
-            $0.height.equalTo(convertByWidthRatio(895))
-        }
-        
         naviView.snp.makeConstraints {
-            $0.top.leading.trailing.equalToSuperview()
+            $0.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             $0.height.equalTo(66)
         }
         
@@ -330,8 +321,19 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
             $0.height.width.equalTo(40)
         }
         
+        summaryScrollerView.snp.makeConstraints {
+            $0.top.equalTo(naviView.snp.bottom)
+            $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+        contentView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+            $0.width.equalTo(summaryScrollerView.frameLayoutGuide)
+            $0.height.equalTo(convertByWidthRatio(835))
+        }
+        
         mySmeemLabel.snp.makeConstraints {
-            $0.top.equalTo(naviView.snp.bottom).offset(18)
+            $0.top.equalToSuperview().inset(18)
             $0.leading.equalToSuperview().inset(26)
         }
         
@@ -395,8 +397,10 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
     
     private func registerCell() {
         mySmeemCollectionView.registerCell(cellType: MySmeemCollectionViewCell.self)
-        myPlanCollectionView.registerCell(cellType: MyPlanCollectionViewCell.self)
+        myPlanCollectionView.registerCell(cellType: MyPlanActiveCollectionViewCell.self)
+        myPlanCollectionView.registerCell(cellType: MyPlanDeactiveCollectionViewCell.self)
         myBadgeCollectionView.registerCell(cellType: MyBadgeCollectionViewCell.self)
+        myBadgeCollectionView.registerCell(cellType: LockBadgeCollectionViewCell.self)
     }
     
     private func setDelegate() {

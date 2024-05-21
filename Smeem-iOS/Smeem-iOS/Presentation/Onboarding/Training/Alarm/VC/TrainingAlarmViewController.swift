@@ -14,7 +14,7 @@ enum AlarmType {
     case alarmOn
 }
 
-final class TrainingAlarmViewController: BaseViewController {
+final class TrainingAlarmViewController: BaseViewController, BottomSheetPresentable {
     
     private let viewModel = TrainingAlarmViewModel(provider: OnboardingService())
     
@@ -26,6 +26,8 @@ final class TrainingAlarmViewController: BaseViewController {
     private let alarmDaySubject = PassthroughSubject<Set<String>, Never>()
     private let alarmButtonTapped = PassthroughSubject<AlarmType, Never>()
     private let nextFlowSubject = PassthroughSubject<Void, Never>()
+    private let userServiceSubject = PassthroughSubject<Void, Never>()
+    private let homeSubject = PassthroughSubject<Void, Never>()
     private let amplitudeSubject = PassthroughSubject<Void, Never>()
     
     // MARK: UI Properties
@@ -144,6 +146,8 @@ final class TrainingAlarmViewController: BaseViewController {
                                                  alarmDaySubject: alarmDaySubject,
                                                  alarmButtonTapped: alarmButtonTapped,
                                                  nextFlowSubject: nextFlowSubject,
+                                                 userServiceSubject: userServiceSubject,
+                                                 homeSubject: homeSubject,
                                                  amplitudeSubject: amplitudeSubject)
         let output = viewModel.transform(input: input)
         
@@ -163,18 +167,21 @@ final class TrainingAlarmViewController: BaseViewController {
         
         output.bottomSheetResult
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] request in
-                let signupBottomSheetVC = SignupBottomSheetViewController(request: request)
-                let navigationController = UINavigationController(rootViewController: signupBottomSheetVC)
-                navigationController.modalPresentationStyle = .overFullScreen
+            .sink { [weak self] _ in
+                let signupBottomSheetVC = SignupBottomSheetViewController()
+                self?.presentBottomSheet(viewController: signupBottomSheetVC, customHeightMultiplier: 0.31)
                 
-                let height = self!.view.frame.height
-                self?.present(navigationController, animated: false) {
-                    signupBottomSheetVC.bottomSheetView.frame.origin.y = height
-                    UIView.animate(withDuration: 0.3) {
-                        signupBottomSheetVC.bottomSheetView.frame.origin.y =  height-282
+                signupBottomSheetVC.userServiceSubject
+                    .sink { [weak self] _ in
+                        self?.userServiceSubject.send(())
                     }
-                }
+                    .store(in: &signupBottomSheetVC.cancelBag)
+                
+                signupBottomSheetVC.homeSubject
+                    .sink { [weak self] _ in
+                        self?.homeSubject.send(())
+                    }
+                    .store(in: &signupBottomSheetVC.cancelBag)
             }
             .store(in: &cancelBag)
         
@@ -186,6 +193,14 @@ final class TrainingAlarmViewController: BaseViewController {
             }
             .store(in: &cancelBag)
         
+        output.homeSubject
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                let homeVC = HomeViewController()
+                self?.changeRootViewController(homeVC)
+            }
+            .store(in: &cancelBag)
+            
         output.errorResult
             .receive(on: DispatchQueue.main)
             .sink { [weak self] error in
@@ -223,24 +238,25 @@ final class TrainingAlarmViewController: BaseViewController {
     }
     
     func requestTrackingAuthoriaztion() {
-        ATTrackingManager.requestTrackingAuthorization { status in
-            switch status {
-            case .authorized:
-                print("성공")
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            ATTrackingManager.requestTrackingAuthorization { status in
+                switch status {
+                case .authorized:
+                    print("성공")
+                    self.nextFlowSubject.send(())
+                case .denied:
+                    print("해당 앱 추적 권한 거부 또는 아이폰 설정 -> 개인정보보호 -> 추적 거부 상태")
+                        self.nextFlowSubject.send(())
+                case .notDetermined:
+                    print("승인 요청을 받기 전 상태값")
+                    self.nextFlowSubject.send(())
+                case .restricted:
+                    print("앱 추적 데이터 사용 권한이 제한된 경우")
+                    self.nextFlowSubject.send(())
+                default:
+                    print("에러 처리")
                     self.nextFlowSubject.send(())
                 }
-            case .denied:
-                print("해당 앱 추적 권한 거부 또는 아이폰 설정 -> 개인정보보호 -> 추적 거부 상태")
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    self.nextFlowSubject.send(())
-                }
-            case .notDetermined:
-                print("승인 요청을 받기 전 상태값")
-            case .restricted:
-                print("앱 추적 데이터 사용 권한이 제한된 경우")
-            default:
-                print("에러 처리")
             }
         }
     }

@@ -18,15 +18,14 @@ final class ForeignDiaryViewModel: DiaryViewModel {
     }
     
     struct Output {
-        let rightButtonAction: AnyPublisher<Void, Never>
+        let rightButtonAction: AnyPublisher<PostDiaryResponse?, Never>
         let randomTopicButtonAction: AnyPublisher<Void, Never>
         let refreshButtonAction: AnyPublisher<Void, Never>
         let toolTipAction: AnyPublisher<Void, Never>
         let toolTipResult: AnyPublisher<Void, Never>
         let loadingViewResult: AnyPublisher<Bool, Never>
     }
-    
-    private (set) var diaryPostedSubject = CurrentValueSubject<PostDiaryResponse?, Never>(nil)
+
     private let toolTipSubject = PassthroughSubject<Void, Never>()
     private let amplitudeSubject = PassthroughSubject<Void, Never>()
     private let loadingViewResult = PassthroughSubject<Bool, Never>()
@@ -50,12 +49,12 @@ final class ForeignDiaryViewModel: DiaryViewModel {
             .handleEvents(receiveSubscription: { [weak self] _ in
                 self?.loadingViewResult.send(true)
             })
-            .flatMap { [weak self] _ -> AnyPublisher<Void, Never> in
+            .flatMap { [weak self] _ -> AnyPublisher<PostDiaryResponse?, Never> in
                 if self?.isRandomTopicActive.value == false {
                     self?.updateTopicID(to: nil)
                 }
                 
-                return Future<Void, Never> { promise in
+                return Future<PostDiaryResponse?, Never> { promise in
                     guard let inputText = self?.getDiaryText() else { return }
                     let topicID = SharedDiaryDataService.shared.topicID
                     
@@ -63,9 +62,8 @@ final class ForeignDiaryViewModel: DiaryViewModel {
                         switch result {
                         case .success(let response):
                             self?.updateDiaryInfo(diaryID: response.diaryID, badgePopupContent: response.badges)
-                            self?.diaryPostedSubject.send(response)
                             self?.amplitudeSubject.send()
-                            promise(.success(()))
+                            promise(.success(response))
                         case .failure(let error):
                             self?.sendError(error)
                         }

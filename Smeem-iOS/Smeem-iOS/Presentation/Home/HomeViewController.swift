@@ -15,8 +15,6 @@ final class HomeViewController: BaseViewController {
     
     // MARK: - Property
     
-    private var foreignDiaryViewModel = ForeignDiaryViewModel(model: DiaryModel())
-    
     private let weekdayLabels = ["S", "M", "T", "W", "T", "F", "S"]
     private let gregorian = Calendar(identifier: .gregorian)
     private var homeDiaryDict = [String: HomeDiaryCustom]()
@@ -189,9 +187,10 @@ final class HomeViewController: BaseViewController {
         setLayout()
         setDelegate()
         setSwipe()
-        subscribe()
         
-        AmplitudeManager.shared.track(event: AmplitudeConstant.home.home_view.event)
+        DispatchQueue.global(qos: .background).async {
+            AmplitudeManager.shared.track(event: AmplitudeConstant.home.home_view.event)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -205,7 +204,9 @@ final class HomeViewController: BaseViewController {
     @objc func swipeEvent(_ swipe: UISwipeGestureRecognizer) {
         if (swipe.location(in: self.view).y < border.frame.origin.y + 20) {
             if swipe.direction == .down {
-                AmplitudeManager.shared.track(event: AmplitudeConstant.home.full_calendar_appear.event)
+                DispatchQueue.global(qos: .background).async {
+                    AmplitudeManager.shared.track(event: AmplitudeConstant.home.full_calendar_appear.event)
+                }
             }
             
             let topConstant: CGFloat = (swipe.direction == .up) ? 168 : 60
@@ -278,6 +279,11 @@ final class HomeViewController: BaseViewController {
     private func checkPopupView() {
         if !badgePopupData.isEmpty {
             let popupVC = BadgePopupViewController(popupBadge: badgePopupData)
+            popupVC.summarySubject
+                .sink { [weak self] _ in
+                    self?.navigationController?.pushViewController(MySummaryViewController(), animated: true)
+                }
+                .store(in: &cancelBag)
             popupVC.modalTransitionStyle = .crossDissolve
             popupVC.modalPresentationStyle = .overCurrentContext
             self.present(popupVC, animated: true)
@@ -297,15 +303,6 @@ final class HomeViewController: BaseViewController {
       DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
         completion()
       }
-    }
-    
-    private func subscribe() {
-        foreignDiaryViewModel.diaryPostedSubject
-            .compactMap { $0 }
-            .sink { [weak self] response in
-                self?.handlePostDiaryAPI(with: response)
-            }
-            .store(in: &cancelBag)
     }
     
     func handlePostDiaryAPI(with response: PostDiaryResponse?) {
