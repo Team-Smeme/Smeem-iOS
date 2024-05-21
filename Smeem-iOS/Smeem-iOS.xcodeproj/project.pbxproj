@@ -15,10 +15,10 @@
 		371107E52ACBEA69007A4AC2 /* DiaryViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371107E42ACBEA69007A4AC2 /* DiaryViewFactory.swift */; };
 		371107E72ACBED3C007A4AC2 /* DiaryViewConfigurationBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371107E62ACBED3C007A4AC2 /* DiaryViewConfigurationBuilder.swift */; };
 		371107E92ACC7E3A007A4AC2 /* DiaryLayoutConfigurations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371107E82ACC7E3A007A4AC2 /* DiaryLayoutConfigurations.swift */; };
-		371C69D32BE112AD000D745D /* BottomSheetPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371C69D22BE112AD000D745D /* BottomSheetPresentable.swift */; };
-		371C69D52BE11926000D745D /* BadgeBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371C69D42BE11926000D745D /* BadgeBottomSheetViewController.swift */; };
 		37144C512B88E949008565C4 /* DiaryViewControllerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37144C502B88E949008565C4 /* DiaryViewControllerFactory.swift */; };
 		37144C582B890923008565C4 /* DiaryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37144C572B890923008565C4 /* DiaryModel.swift */; };
+		371C69D32BE112AD000D745D /* BottomSheetPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371C69D22BE112AD000D745D /* BottomSheetPresentable.swift */; };
+		371C69D52BE11926000D745D /* BadgeBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371C69D42BE11926000D745D /* BadgeBottomSheetViewController.swift */; };
 		371E94162A87B83D0098280F /* NextButtonDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371E94152A87B83D0098280F /* NextButtonDelegate.swift */; };
 		371E94192A87DA960098280F /* EditHowGoalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371E94182A87DA960098280F /* EditHowGoalViewController.swift */; };
 		3728B8D32A2CFED300EF4CF8 /* ForeignDiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3728B8D22A2CFED300EF4CF8 /* ForeignDiaryViewController.swift */; };
@@ -129,6 +129,7 @@
 		4A9FAB482A4C3D1200C40D5A /* BadgeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9FAB432A4C3D1200C40D5A /* BadgeHeaderView.swift */; };
 		4A9FAB492A4C3D1200C40D5A /* DetailBadgeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9FAB442A4C3D1200C40D5A /* DetailBadgeCollectionViewCell.swift */; };
 		4AA1EEEA2A5873A00017FF97 /* Urbanist-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4AA1EEE92A5870690017FF97 /* Urbanist-SemiBold.otf */; };
+		4AA5E4B42BF2355300F308C8 /* MySummaryViewModel2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA5E4B32BF2355300F308C8 /* MySummaryViewModel2.swift */; };
 		4AA942C22A2767D000A552A0 /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 4AA942C12A2767D000A552A0 /* FSCalendar */; };
 		4AA942C52A2767D900A552A0 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4AA942C42A2767D900A552A0 /* SnapKit */; };
 		4AA942CD2A276A9F00A552A0 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 4AA942CC2A276A9F00A552A0 /* Moya */; };
@@ -145,7 +146,7 @@
 		4AB7C9322B78B45300845733 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB7C9312B78B45300845733 /* LoginViewModel.swift */; };
 		4ABCBCBA2BD6A6EE003138A8 /* MySummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABCBCB92BD6A6EE003138A8 /* MySummaryViewController.swift */; };
 		4ABCBCBE2BD784A0003138A8 /* MySmeemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABCBCBD2BD784A0003138A8 /* MySmeemCollectionViewCell.swift */; };
-		4ABCBCC02BD7C521003138A8 /* MyPlanCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABCBCBF2BD7C521003138A8 /* MyPlanCollectionViewCell.swift */; };
+		4ABCBCC02BD7C521003138A8 /* MyPlanActiveCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABCBCBF2BD7C521003138A8 /* MyPlanActiveCollectionViewCell.swift */; };
 		4ABCBCC22BD90481003138A8 /* MyBadgeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABCBCC12BD90481003138A8 /* MyBadgeCollectionViewCell.swift */; };
 		4ABCBCC52BDD3375003138A8 /* MySummaryEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABCBCC42BDD3375003138A8 /* MySummaryEndPoint.swift */; };
 		4ABCBCC72BDD3983003138A8 /* MySummaryServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABCBCC62BDD3983003138A8 /* MySummaryServiceProtocol.swift */; };
@@ -206,6 +207,8 @@
 		4AF58CE92A4820AA00305248 /* AuthNetworkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF58CE82A4820AA00305248 /* AuthNetworkModel.swift */; };
 		4AF78D9B2B84A1DC0098E1FA /* OnboardingServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF78D9A2B84A1DC0098E1FA /* OnboardingServiceTest.swift */; };
 		4AF78D9E2B84AB6A0098E1FA /* MockProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF78D9D2B84AB6A0098E1FA /* MockProvider.swift */; };
+		4AF7C22F2BFB797600E8C6CD /* LockBadgeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF7C22E2BFB797600E8C6CD /* LockBadgeCollectionViewCell.swift */; };
+		4AF7C2312BFB7A4F00E8C6CD /* MyPlanDeactiveCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF7C2302BFB7A4F00E8C6CD /* MyPlanDeactiveCollectionViewCell.swift */; };
 		4AFD7C292B600FED00FE7EFF /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AFD7C282B600FED00FE7EFF /* NetworkManager.swift */; };
 		6F294A3E2A26177B00856CC8 /* TrainingGoalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF507742A10CD4D007C62B1 /* TrainingGoalViewController.swift */; };
 		6F294A3F2A26177E00856CC8 /* TrainingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF507762A10CD96007C62B1 /* TrainingCollectionViewCell.swift */; };
@@ -246,10 +249,10 @@
 		371107E42ACBEA69007A4AC2 /* DiaryViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryViewFactory.swift; sourceTree = "<group>"; };
 		371107E62ACBED3C007A4AC2 /* DiaryViewConfigurationBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryViewConfigurationBuilder.swift; sourceTree = "<group>"; };
 		371107E82ACC7E3A007A4AC2 /* DiaryLayoutConfigurations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryLayoutConfigurations.swift; sourceTree = "<group>"; };
-		371C69D22BE112AD000D745D /* BottomSheetPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetPresentable.swift; sourceTree = "<group>"; };
-		371C69D42BE11926000D745D /* BadgeBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeBottomSheetViewController.swift; sourceTree = "<group>"; };
 		37144C502B88E949008565C4 /* DiaryViewControllerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryViewControllerFactory.swift; sourceTree = "<group>"; };
 		37144C572B890923008565C4 /* DiaryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryModel.swift; sourceTree = "<group>"; };
+		371C69D22BE112AD000D745D /* BottomSheetPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetPresentable.swift; sourceTree = "<group>"; };
+		371C69D42BE11926000D745D /* BadgeBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeBottomSheetViewController.swift; sourceTree = "<group>"; };
 		371E94152A87B83D0098280F /* NextButtonDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextButtonDelegate.swift; sourceTree = "<group>"; };
 		371E94182A87DA960098280F /* EditHowGoalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditHowGoalViewController.swift; sourceTree = "<group>"; };
 		3728B8D22A2CFED300EF4CF8 /* ForeignDiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForeignDiaryViewController.swift; sourceTree = "<group>"; };
@@ -368,6 +371,7 @@
 		4A9FAB432A4C3D1200C40D5A /* BadgeHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgeHeaderView.swift; sourceTree = "<group>"; };
 		4A9FAB442A4C3D1200C40D5A /* DetailBadgeCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailBadgeCollectionViewCell.swift; sourceTree = "<group>"; };
 		4AA1EEE92A5870690017FF97 /* Urbanist-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Urbanist-SemiBold.otf"; sourceTree = "<group>"; };
+		4AA5E4B32BF2355300F308C8 /* MySummaryViewModel2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySummaryViewModel2.swift; sourceTree = "<group>"; };
 		4AB7C9182B75F9B500845733 /* GesturePublisher+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GesturePublisher+.swift"; sourceTree = "<group>"; };
 		4AB7C91A2B7624CC00845733 /* ServiceAcceptAppData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAcceptAppData.swift; sourceTree = "<group>"; };
 		4AB7C9252B78914100845733 /* SplashViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewModel.swift; sourceTree = "<group>"; };
@@ -378,7 +382,7 @@
 		4AB9F5292AAA035300EBEE35 /* BaseResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseResponse.swift; sourceTree = "<group>"; };
 		4ABCBCB92BD6A6EE003138A8 /* MySummaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySummaryViewController.swift; sourceTree = "<group>"; };
 		4ABCBCBD2BD784A0003138A8 /* MySmeemCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySmeemCollectionViewCell.swift; sourceTree = "<group>"; };
-		4ABCBCBF2BD7C521003138A8 /* MyPlanCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPlanCollectionViewCell.swift; sourceTree = "<group>"; };
+		4ABCBCBF2BD7C521003138A8 /* MyPlanActiveCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPlanActiveCollectionViewCell.swift; sourceTree = "<group>"; };
 		4ABCBCC12BD90481003138A8 /* MyBadgeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyBadgeCollectionViewCell.swift; sourceTree = "<group>"; };
 		4ABCBCC42BDD3375003138A8 /* MySummaryEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySummaryEndPoint.swift; sourceTree = "<group>"; };
 		4ABCBCC62BDD3983003138A8 /* MySummaryServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySummaryServiceProtocol.swift; sourceTree = "<group>"; };
@@ -444,6 +448,8 @@
 		4AF58CE82A4820AA00305248 /* AuthNetworkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthNetworkModel.swift; sourceTree = "<group>"; };
 		4AF78D9A2B84A1DC0098E1FA /* OnboardingServiceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingServiceTest.swift; sourceTree = "<group>"; };
 		4AF78D9D2B84AB6A0098E1FA /* MockProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockProvider.swift; sourceTree = "<group>"; };
+		4AF7C22E2BFB797600E8C6CD /* LockBadgeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockBadgeCollectionViewCell.swift; sourceTree = "<group>"; };
+		4AF7C2302BFB7A4F00E8C6CD /* MyPlanDeactiveCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPlanDeactiveCollectionViewCell.swift; sourceTree = "<group>"; };
 		4AFD7C282B600FED00FE7EFF /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		6F294A472A27818200856CC8 /* HomeViewFloatingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewFloatingViewController.swift; sourceTree = "<group>"; };
 		6F31802E2A24D1DB00089870 /* CalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCell.swift; sourceTree = "<group>"; };
@@ -517,15 +523,6 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		371C69D12BE1126E000D745D /* BottomSheet */ = {
-			isa = PBXGroup;
-			children = (
-				371C69D22BE112AD000D745D /* BottomSheetPresentable.swift */,
-				371C69D42BE11926000D745D /* BadgeBottomSheetViewController.swift */,
-			);
-			path = BottomSheet;
-			sourceTree = "<group>";
-		};
 		37144C4F2B88E8F4008565C4 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -589,15 +586,16 @@
 		37A574B529FE204500312453 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				4AA5E4B52BF24CEB00F308C8 /* BadgeBottomSheet */,
 				4AC705A72BECE051003C5310 /* Edit */,
-				4AC705892BEA0BD3003C5310 /* Setting */,
 				4ABCBCB82BD6A6E3003138A8 /* MySummary */,
+				4AC705892BEA0BD3003C5310 /* Setting */,
 				4ADA41752A556185001C0285 /* LodingView */,
 				37DCA65E2A48030A00FF8F90 /* DetailDiary */,
 				37CD0DB32A1DEE64001F03E7 /* Diaries */,
 				4AD923E52A0650A000FF5E27 /* Splash */,
 				4AF5076F2A10CBA2007C62B1 /* Onboarding */,
-				4AE4B5172A06BF4A00D45F87 /* BottomSheet */,
+				4AE4B5172A06BF4A00D45F87 /* AuthBottomSheet */,
 				6F62668A2A04E889000365CD /* Home */,
 				4AD04B3E2A19217B004B7A58 /* Correction */,
 				A3D7ECB82A26566F009857D6 /* MyPage */,
@@ -629,7 +627,6 @@
 		37A574B729FE208A00312453 /* UIComponents */ = {
 			isa = PBXGroup;
 			children = (
-				371C69D12BE1126E000D745D /* BottomSheet */,
 				4A81C2952ACDAB0A0056E815 /* HowLearning */,
 				4A81C2942ACDAAF80056E815 /* PlanGoal */,
 				371107DB2ACAB4E3007A4AC2 /* Base */,
@@ -1206,6 +1203,15 @@
 			path = MyPage;
 			sourceTree = "<group>";
 		};
+		4AA5E4B52BF24CEB00F308C8 /* BadgeBottomSheet */ = {
+			isa = PBXGroup;
+			children = (
+				371C69D22BE112AD000D745D /* BottomSheetPresentable.swift */,
+				371C69D42BE11926000D745D /* BadgeBottomSheetViewController.swift */,
+			);
+			path = BadgeBottomSheet;
+			sourceTree = "<group>";
+		};
 		4AB7C91C2B7886D000845733 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -1351,6 +1357,7 @@
 			isa = PBXGroup;
 			children = (
 				4ABCBCCF2BDE9BA1003138A8 /* MySummaryViewModel.swift */,
+				4AA5E4B32BF2355300F308C8 /* MySummaryViewModel2.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1359,8 +1366,10 @@
 			isa = PBXGroup;
 			children = (
 				4ABCBCC12BD90481003138A8 /* MyBadgeCollectionViewCell.swift */,
-				4ABCBCBF2BD7C521003138A8 /* MyPlanCollectionViewCell.swift */,
+				4ABCBCBF2BD7C521003138A8 /* MyPlanActiveCollectionViewCell.swift */,
 				4ABCBCBD2BD784A0003138A8 /* MySmeemCollectionViewCell.swift */,
+				4AF7C22E2BFB797600E8C6CD /* LockBadgeCollectionViewCell.swift */,
+				4AF7C2302BFB7A4F00E8C6CD /* MyPlanDeactiveCollectionViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -1633,14 +1642,14 @@
 			path = EditAlarm;
 			sourceTree = "<group>";
 		};
-		4AE4B5172A06BF4A00D45F87 /* BottomSheet */ = {
+		4AE4B5172A06BF4A00D45F87 /* AuthBottomSheet */ = {
 			isa = PBXGroup;
 			children = (
 				4A07F8AD2B7B58B1004185F2 /* Model */,
 				4A07F8A62B7B3E4A004185F2 /* Signup */,
 				4AB7C92C2B78B42C00845733 /* Login */,
 			);
-			path = BottomSheet;
+			path = AuthBottomSheet;
 			sourceTree = "<group>";
 		};
 		4AEB82962A4CB4F900C1114B /* BadgePopup */ = {
@@ -1899,6 +1908,7 @@
 				4A454A882B691F850079D48D /* EditGoalViewController.swift in Sources */,
 				373E38592A2F889500DF96F0 /* DiaryDetailRandomSubjectView.swift in Sources */,
 				4AC705AE2BECF0D4003C5310 /* EditPlanViewModel.swift in Sources */,
+				4AF7C22F2BFB797600E8C6CD /* LockBadgeCollectionViewCell.swift in Sources */,
 				6F294A3E2A26177B00856CC8 /* TrainingGoalViewController.swift in Sources */,
 				4ABCBCCE2BDE95D0003138A8 /* MyPlanResponse.swift in Sources */,
 				4A9731D92BAAB70500DEC0C8 /* UpdateResponse.swift in Sources */,
@@ -1979,7 +1989,7 @@
 				4A3F2E9C2A0B4C7100F6AC60 /* AlarmCollectionView.swift in Sources */,
 				4A004D512B4ED783003C8936 /* TrainingWayResponse.swift in Sources */,
 				37DCA6602A48033400FF8F90 /* DetailDiaryViewController.swift in Sources */,
-				4ABCBCC02BD7C521003138A8 /* MyPlanCollectionViewCell.swift in Sources */,
+				4ABCBCC02BD7C521003138A8 /* MyPlanActiveCollectionViewCell.swift in Sources */,
 				4A0EA4572A01403E006CCE52 /* MoyaLoggingPlugin.swift in Sources */,
 				37035CF92AF2ADD2008EE521 /* DiaryViewModel.swift in Sources */,
 				4A004D5E2B4EE2B4003C8936 /* MyPageService.swift in Sources */,
@@ -2042,6 +2052,7 @@
 				374FAF812A2CACCF00237A1A /* DiaryViewController.swift in Sources */,
 				37DCA65A2A47598700FF8F90 /* RandomTopicService.swift in Sources */,
 				4AB7C9262B78914100845733 /* SplashViewModel.swift in Sources */,
+				4AF7C2312BFB7A4F00E8C6CD /* MyPlanDeactiveCollectionViewCell.swift in Sources */,
 				4A01235F2AAA2C1500E09646 /* SmeemLoadingView.swift in Sources */,
 				4A59EBA02B9367C2004D9823 /* BadgePopupViewModel.swift in Sources */,
 				4A004D542B4EE26E003C8936 /* AuthAPI.swift in Sources */,
@@ -2066,6 +2077,7 @@
 				3797891C2AAE11D400C61EF4 /* NavigationBarConfigurationBuilder.swift in Sources */,
 				4A3373F82A461ABC00EFE6C4 /* OnboardingService.swift in Sources */,
 				4A9731D72BAAB6E100DEC0C8 /* SplashServiceProtocol.swift in Sources */,
+				4AA5E4B42BF2355300F308C8 /* MySummaryViewModel2.swift in Sources */,
 				37A574E82A02424F00312453 /* RandomTopicView.swift in Sources */,
 				4ABCBCCA2BDD3E3D003138A8 /* MySummaryResponse.swift in Sources */,
 				4AC7059D2BEA2A8E003C5310 /* SettingEndPoint.swift in Sources */,

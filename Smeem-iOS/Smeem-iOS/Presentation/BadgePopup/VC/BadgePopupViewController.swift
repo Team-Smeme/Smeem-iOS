@@ -19,6 +19,7 @@ enum BadgeButtonType {
 final class BadgePopupViewController: UIViewController, SKStoreProductViewControllerDelegate {
     
     private let viewModel = BadgePopupViewModel()
+    let summarySubject = PassthroughSubject<Void, Never>()
     
     // MARK: Publisher
     
@@ -143,10 +144,8 @@ final class BadgePopupViewController: UIViewController, SKStoreProductViewContro
         
         output.moreBadgeListResult
             .sink { [weak self] _ in
-                let badgeListVC = BadgeListViewController()
-                badgeListVC.modalTransitionStyle = .crossDissolve
-                badgeListVC.modalPresentationStyle = .fullScreen
-                self?.present(badgeListVC, animated: true)
+                self?.dismiss(animated: true)
+                self?.summarySubject.send(())
             }
             .store(in: &cancelBag)
         

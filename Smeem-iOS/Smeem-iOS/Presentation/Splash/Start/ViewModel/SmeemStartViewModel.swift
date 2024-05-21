@@ -14,11 +14,14 @@ final class SmeemStartViewModel: ViewModel {
         let loginButtonTapped: PassthroughSubject<Void, Never>
         let startButtonTapped: PassthroughSubject<Void, Never>
         let amplitudeSubject: PassthroughSubject<Void, Never>
+        let trainingStartSubject: PassthroughSubject<Void, Never>
+        let userServiceSubject: PassthroughSubject<Void, Never>
     }
     
     struct Output {
         let loginButtonTapped: AnyPublisher<Void, Never>
-        let startButtonTapped: AnyPublisher<Void, Never>
+        let trainingStartResult: AnyPublisher<Void, Never>
+        let userServiceResult: AnyPublisher<Void, Never>
     }
     
     private var cancelBag = Set<AnyCancellable>()
@@ -42,8 +45,14 @@ final class SmeemStartViewModel: ViewModel {
             }
             .store(in: &cancelBag)
         
+        let trainingStartSubject = input.trainingStartSubject.eraseToAnyPublisher()
+        let trainingStartResult = Publishers.Merge(startButtonTapped, trainingStartSubject).eraseToAnyPublisher()
+        
+        let userServiceResult = input.userServiceSubject.eraseToAnyPublisher()
+        
         return Output(loginButtonTapped: loginButtonResult,
-                      startButtonTapped: startButtonTapped)
+                      trainingStartResult: trainingStartResult,
+                      userServiceResult: userServiceResult)
     }
     
 }

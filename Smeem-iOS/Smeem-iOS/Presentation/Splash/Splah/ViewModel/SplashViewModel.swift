@@ -14,6 +14,7 @@ final class SplashViewModel: ViewModel {
     
     struct Input {
         let checkUpdatePopup: PassthroughSubject<Void, Never>
+        let restartSubject: PassthroughSubject<Void, Never>
     }
     
     struct Output {
@@ -29,6 +30,7 @@ final class SplashViewModel: ViewModel {
     private let tokenCheckResult = PassthroughSubject<Void, Never>()
     private let homeStartResult = PassthroughSubject<Void, Never>()
     private let smeemStartResult = PassthroughSubject<Void, Never>()
+    private let restartSubject = PassthroughSubject<Void, Never>()
     private var cancelBag = Set<AnyCancellable>()
     
     private var provider: SplashServiceProtocol
@@ -42,7 +44,7 @@ final class SplashViewModel: ViewModel {
             .handleEvents(receiveSubscription: { _ in
                 self.loadingViewResult.send(true)
             })
-            .delay(for: 0.5, scheduler: DispatchQueue.global())
+            .delay(for: .seconds(0.5), scheduler: DispatchQueue.global())
             .flatMap { _ -> AnyPublisher<UpdateTextModel, Never> in
                 return Future<UpdateTextModel, Never> { promise in
                     self.provider.updateGetAPI { result in
@@ -107,10 +109,12 @@ final class SplashViewModel: ViewModel {
         let errorResult = errorResult.eraseToAnyPublisher()
         let smeemStartResult = smeemStartResult.eraseToAnyPublisher()
         let loadingViewResult = loadingViewResult.eraseToAnyPublisher()
+        let delayRestartSubject = input.restartSubject.delay(for: .seconds(1.5), scheduler: DispatchQueue.global())
+        let smeemStartMergeResult = Publishers.Merge(smeemStartResult, delayRestartSubject).eraseToAnyPublisher()
         
         return Output(updatePopupResult: updatePopupResult,
                       homeStartResult: homeStartResult,
-                      smeemStartResult: smeemStartResult,
+                      smeemStartResult: smeemStartMergeResult,
                       errorResult: errorResult,
                       loadingViewResult: loadingViewResult)
         

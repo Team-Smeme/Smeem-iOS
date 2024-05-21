@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>사용자의 데이터는 개인화된 광고 제공 목적으로 사용됩니다.</string>
 	<key>AMPLITUDE_APP_KEY</key>
 	<string>$(AMPLITUDE_APP_KEY)</string>
 	<key>CFBundleURLTypes</key>

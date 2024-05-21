@@ -22,12 +22,22 @@ final class MyPlanCollectionViewDataSource: NSObject, UICollectionViewDataSource
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(cellType: MyPlanCollectionViewCell.self,
-                                                      indexPath: indexPath)
-        
-        cell.setNumberData(text: String(totalNumber[indexPath.item]))
-        indexPath.item < planNumber ? cell.activateCell() : cell.deactivateCell()
-        
-        return cell
+        if indexPath.item < planNumber {
+            let cell = collectionView.dequeueReusableCell(cellType: MyPlanActiveCollectionViewCell.self,
+                                                          indexPath: indexPath)
+            
+            cell.setNumberData(text: String(totalNumber[indexPath.item]))
+            cell.activateCell()
+            
+            return cell
+        } else {
+            let cell = collectionView.dequeueReusableCell(cellType: MyPlanDeactiveCollectionViewCell.self,
+                                                          indexPath: indexPath)
+            
+            cell.setNumberData(text: String(totalNumber[indexPath.item]))
+            cell.deactivateCell()
+            
+            return cell
+        }
     }
 }

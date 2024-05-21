@@ -176,15 +176,16 @@ final class SettingViewController: BaseViewController {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] (indexPath, time) in
                 let editAlarmVC = EditAlarmViewController()
+                editAlarmVC.dayIndexPathArray = indexPath
+                editAlarmVC.trainigDayData = time.day
+                editAlarmVC.trainingTimeData = (time.hour, time.minute)
+                self?.navigationController?.pushViewController(editAlarmVC, animated: true)
+                
                 editAlarmVC.toastSubject
                     .sink { [weak self] _ in
                         self?.toastSubject.send(())
                     }
                     .store(in: &editAlarmVC.cancelBag)
-                editAlarmVC.dayIndexPathArray = indexPath
-                editAlarmVC.trainigDayData = time.day
-                editAlarmVC.trainingTimeData = (time.hour, time.minute)
-                self?.navigationController?.pushViewController(editAlarmVC, animated: true)
             }
             .store(in: &cancelBag)
         
@@ -226,6 +227,12 @@ final class SettingViewController: BaseViewController {
         summaryScrollerView.snp.makeConstraints {
             $0.top.equalTo(naviView.snp.bottom)
             $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
+        
+        contentView.snp.makeConstraints {
+            $0.edges.equalTo(summaryScrollerView.contentLayoutGuide)
+            $0.width.equalTo(summaryScrollerView.frameLayoutGuide)
+            $0.height.equalTo(convertByWidthRatio(895))
         }
         
         contentView.snp.makeConstraints {
