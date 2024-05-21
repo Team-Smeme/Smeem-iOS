@@ -161,8 +161,7 @@ final class TrainingAlarmViewController: BaseViewController, BottomSheetPresenta
         output.alarmResult
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
-//                self?.requestNotificationPermission()
-                self?.requestTrackingAuthoriaztion()
+                self?.requestNotificationPermission()
             }
             .store(in: &cancelBag)
         
@@ -239,24 +238,25 @@ final class TrainingAlarmViewController: BaseViewController, BottomSheetPresenta
     }
     
     func requestTrackingAuthoriaztion() {
-        ATTrackingManager.requestTrackingAuthorization { status in
-            switch status {
-            case .authorized:
-                print("성공")
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            ATTrackingManager.requestTrackingAuthorization { status in
+                switch status {
+                case .authorized:
+                    print("성공")
+                    self.nextFlowSubject.send(())
+                case .denied:
+                    print("해당 앱 추적 권한 거부 또는 아이폰 설정 -> 개인정보보호 -> 추적 거부 상태")
+                        self.nextFlowSubject.send(())
+                case .notDetermined:
+                    print("승인 요청을 받기 전 상태값")
+                    self.nextFlowSubject.send(())
+                case .restricted:
+                    print("앱 추적 데이터 사용 권한이 제한된 경우")
+                    self.nextFlowSubject.send(())
+                default:
+                    print("에러 처리")
                     self.nextFlowSubject.send(())
                 }
-            case .denied:
-                print("해당 앱 추적 권한 거부 또는 아이폰 설정 -> 개인정보보호 -> 추적 거부 상태")
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    self.nextFlowSubject.send(())
-                }
-            case .notDetermined:
-                print("승인 요청을 받기 전 상태값")
-            case .restricted:
-                print("앱 추적 데이터 사용 권한이 제한된 경우")
-            default:
-                print("에러 처리")
             }
         }
     }
