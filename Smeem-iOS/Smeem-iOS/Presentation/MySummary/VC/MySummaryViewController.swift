@@ -104,16 +104,9 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
     private let myPlanTitleLabel: UILabel = {
         let label = UILabel()
         label.text = "매일 일기 작성하기"
-        label.font = .s2
+        label.font = .b2
         label.textColor = .black
-        return label
-    }()
-    
-    private let myPlanDetailLabel: UILabel = {
-        let label = UILabel()
-        label.text = "유창한 비지니스 영어"
-        label.font = .c2
-        label.textColor = .black
+//        label.setContentHuggingPriority(.defaultLow, for: .horizontal)
         return label
     }()
     
@@ -121,6 +114,7 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         collectionView.showsVerticalScrollIndicator = false
         collectionView.backgroundColor = .white
+//        collectionView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         return collectionView
     }()
     
@@ -224,8 +218,10 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
         output.totalHasMyPlanResult
             .receive(on: DispatchQueue.main)
             .sink { [weak self] response in
-                self?.emptyView.removeFromSuperview()
                 self?.myPlanView.isHidden = false
+                self?.myPlanCollectionView.isHidden = false
+                self?.emptyView.isHidden = true
+                
                 self?.mySmeemDataSource = MySmeemCollectionViewDataSource(numberItems: response.mySummaryNumber,
                                                                           textItems: response.mySumamryText)
                 self?.mySmeemCollectionView.dataSource = self?.mySmeemDataSource
@@ -238,6 +234,7 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
                 
                 self?.myPlanCollectionView.dataSource = self?.myPlanDataSource
                 self?.myPlanCollectionView.delegate = self?.myPlanFlowLayout
+                self?.remakePlanLayout(number: response.myPlan?.clearCount.count)
                 self?.myPlanCollectionView.reloadData()
                 
                 self?.myBadgeDataSource = MyBadgeCollectionViewDatasource(badgeData: response.myBadge)
@@ -249,14 +246,16 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
         output.totalHasNotPlanResult
             .receive(on: DispatchQueue.main)
             .sink { [weak self] response in
-                self?.myPlanView.removeFromSuperview()
-                self?.myPlanCollectionView.removeFromSuperview()
+                self?.myPlanView.isHidden = true
+                self?.myPlanCollectionView.isHidden = true
                 self?.emptyView.isHidden = false
 
                 self?.mySmeemDataSource = MySmeemCollectionViewDataSource(numberItems: response.mySummaryNumber,
                                                                           textItems: response.mySumamryText)
                 self?.mySmeemCollectionView.dataSource = self?.mySmeemDataSource
                 self?.mySmeemCollectionView.reloadData()
+                
+                self?.remakePlanLayout(number: nil)
                 
                 self?.myBadgeDataSource = MyBadgeCollectionViewDatasource(badgeData: response.myBadge)
                 self?.myBadgeCollectionView.dataSource = self?.myBadgeDataSource
@@ -293,12 +292,10 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
         naviView.addSubviews(backButton, summaryLabel, settingButton)
         summaryScrollerView.addSubview(contentView)
         contentView.addSubviews(mySmeemLabel, mySmeemView,
-                                myPlanLabel, myPlanView, emptyView,
+                                myPlanLabel, myPlanView,
                                 myBadgeLabel, myBadgeCollectionView)
         mySmeemView.addSubview(mySmeemCollectionView)
-        myPlanView.addSubviews(myPlanTitleLabel, myPlanDetailLabel, myPlanCollectionView)
-        emptyView.addSubviews(emptyLabelStackView)
-        emptyLabelStackView.addArrangedSubviews(emptyPlanLabel, planSettingLabel)
+        myPlanView.addSubviews(myPlanTitleLabel, myPlanCollectionView)
         
         naviView.snp.makeConstraints {
             $0.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
@@ -355,7 +352,7 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
         myPlanView.snp.makeConstraints {
             $0.top.equalTo(myPlanLabel.snp.bottom).offset(12)
             $0.leading.trailing.equalToSuperview().inset(18)
-            $0.height.equalTo(120)
+            $0.height.equalTo(91)
         }
         
         myPlanTitleLabel.snp.makeConstraints {
@@ -363,29 +360,14 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
             $0.leading.equalToSuperview().inset(17)
         }
         
-        myPlanDetailLabel.snp.makeConstraints {
-            $0.top.equalTo(myPlanTitleLabel.snp.bottom).offset(4)
-            $0.leading.equalTo(myPlanTitleLabel)
-        }
-        
         myPlanCollectionView.snp.makeConstraints {
-            $0.top.equalTo(myPlanDetailLabel.snp.bottom).offset(22)
+            $0.top.equalTo(myPlanTitleLabel.snp.bottom).offset(16)
             $0.leading.trailing.equalToSuperview().inset(18)
             $0.bottom.equalToSuperview()
         }
         
-        emptyView.snp.makeConstraints {
-            $0.top.equalTo(myPlanLabel.snp.bottom).offset(12)
-            $0.leading.trailing.equalToSuperview().inset(18)
-            $0.height.equalTo(120)
-        }
-        
-        emptyLabelStackView.snp.makeConstraints {
-            $0.center.equalToSuperview()
-        }
-        
         myBadgeLabel.snp.makeConstraints {
-            $0.top.equalTo(myPlanLabel.snp.bottom).offset(178)
+            $0.top.equalTo(myPlanLabel.snp.bottom).offset(139)
             $0.leading.equalToSuperview().inset(26)
         }
         
@@ -406,6 +388,78 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
     private func setDelegate() {
         mySmeemCollectionView.delegate = self
         myBadgeCollectionView.delegate = self
+    }
+    
+    private func remakePlanLayout(number: Int?) {
+        switch number {
+            case nil:
+            contentView.addSubview(emptyView)
+            emptyView.addSubviews(emptyLabelStackView)
+            emptyLabelStackView.addArrangedSubviews(emptyPlanLabel, planSettingLabel)
+        
+            emptyView.snp.makeConstraints {
+                $0.top.equalTo(myPlanLabel.snp.bottom).offset(12)
+                $0.leading.trailing.equalToSuperview().inset(18)
+                $0.height.equalTo(120)
+            }
+        
+            emptyLabelStackView.snp.makeConstraints {
+                $0.center.equalToSuperview()
+            }
+            
+            myBadgeLabel.snp.updateConstraints {
+                $0.top.equalTo(myPlanLabel.snp.bottom).offset(178)
+            }
+            
+            case 1:
+            myPlanView.snp.updateConstraints {
+                $0.height.equalTo(56)
+            }
+            
+            myPlanCollectionView.snp.remakeConstraints {
+                $0.top.bottom.equalToSuperview().inset(18)
+                $0.trailing.equalToSuperview().inset(17)
+                $0.width.equalTo(20)
+            }
+            
+            myBadgeLabel.snp.updateConstraints {
+                $0.top.equalTo(myPlanLabel.snp.bottom).offset(104)
+            }
+            
+            case 3:
+            let widthRatio = (Constant.Screen.width-36)/3
+            
+            myPlanView.snp.updateConstraints {
+                $0.height.equalTo(56)
+            }
+            
+            myPlanCollectionView.snp.remakeConstraints {
+                $0.top.bottom.equalToSuperview().inset(18)
+                $0.trailing.equalToSuperview().inset(17)
+                $0.width.equalTo(widthRatio)
+            }
+            
+            myBadgeLabel.snp.updateConstraints {
+                $0.top.equalTo(myPlanLabel.snp.bottom).offset(104)
+            }
+            
+            case 5, 7:
+            myPlanView.snp.updateConstraints {
+                $0.height.equalTo(91)
+            }
+            
+            myPlanCollectionView.snp.remakeConstraints {
+                $0.top.equalTo(myPlanTitleLabel.snp.bottom).offset(16)
+                $0.leading.trailing.equalToSuperview().inset(18)
+                $0.bottom.equalToSuperview()
+            }
+            
+            myBadgeLabel.snp.updateConstraints {
+                $0.top.equalTo(myPlanLabel.snp.bottom).offset(139)
+            }
+            
+            default: break;
+        }
     }
 }
 
