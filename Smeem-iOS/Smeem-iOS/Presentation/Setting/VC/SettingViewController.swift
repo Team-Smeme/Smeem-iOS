@@ -204,7 +204,7 @@ final class SettingViewController: BaseViewController {
             .store(in: &cancelBag)
         
         self.toastSubject
-            .delay(for: .seconds(0.5), scheduler: DispatchQueue.main) // 3초 지연
+            .delay(for: .seconds(0.3), scheduler: DispatchQueue.main) // 3초 지연
             .sink { [weak self] _ in
                 self?.showToast(toastType: .smeemToast(bodyType: .changed))
             }

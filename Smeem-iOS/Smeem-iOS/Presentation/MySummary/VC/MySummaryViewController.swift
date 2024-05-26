@@ -36,6 +36,7 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
     
     private let contentView = UIView()
     private let naviView = UIView()
+    private let emptyContainerView = UIView()
     
     private let backButton: UIButton = {
         let button = UIButton()
@@ -106,7 +107,6 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
         label.text = "매일 일기 작성하기"
         label.font = .b2
         label.textColor = .black
-//        label.setContentHuggingPriority(.defaultLow, for: .horizontal)
         return label
     }()
     
@@ -114,7 +114,6 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
         collectionView.showsVerticalScrollIndicator = false
         collectionView.backgroundColor = .white
-//        collectionView.setContentHuggingPriority(.defaultHigh, for: .horizontal)
         return collectionView
     }()
     
@@ -209,6 +208,21 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
             }
             .store(in: &cancelBag)
         
+        emptyContainerView.gesturePublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                let editVC = EditPlanViewController()
+                editVC.toastSubject
+                    .sink { [weak self] _ in
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                            self?.showToast(toastType: .smeemToast(bodyType: .changed))
+                        }
+                    }
+                    .store(in: &editVC.cancelBag)
+                self?.navigationController?.pushViewController(editVC, animated: true)
+            }
+            .store(in: &cancelBag)
+        
         let input = MySummaryViewModel.Input(mySummarySubject: mySummarySubject,
                                              myPlanSubject: myPlanSubject,
                                              myBadgeSubject: myBadgeSubject,
@@ -292,10 +306,13 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
         naviView.addSubviews(backButton, summaryLabel, settingButton)
         summaryScrollerView.addSubview(contentView)
         contentView.addSubviews(mySmeemLabel, mySmeemView,
-                                myPlanLabel, myPlanView,
+                                myPlanLabel, myPlanView, emptyView,
                                 myBadgeLabel, myBadgeCollectionView)
         mySmeemView.addSubview(mySmeemCollectionView)
         myPlanView.addSubviews(myPlanTitleLabel, myPlanCollectionView)
+        emptyView.addSubviews(emptyContainerView)
+        emptyContainerView.addSubview(emptyLabelStackView)
+        emptyLabelStackView.addArrangedSubviews(emptyPlanLabel, planSettingLabel)
         
         naviView.snp.makeConstraints {
             $0.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
@@ -349,6 +366,21 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
             $0.leading.equalToSuperview().inset(26)
         }
         
+        emptyContainerView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+            $0.width.height.equalTo(emptyView)
+        }
+    
+        emptyView.snp.makeConstraints {
+            $0.top.equalTo(myPlanLabel.snp.bottom).offset(12)
+            $0.leading.trailing.equalToSuperview().inset(18)
+            $0.height.equalTo(120)
+        }
+    
+        emptyLabelStackView.snp.makeConstraints {
+            $0.center.equalToSuperview()
+        }
+        
         myPlanView.snp.makeConstraints {
             $0.top.equalTo(myPlanLabel.snp.bottom).offset(12)
             $0.leading.trailing.equalToSuperview().inset(18)
@@ -393,20 +425,6 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
     private func remakePlanLayout(number: Int?) {
         switch number {
             case nil:
-            contentView.addSubview(emptyView)
-            emptyView.addSubviews(emptyLabelStackView)
-            emptyLabelStackView.addArrangedSubviews(emptyPlanLabel, planSettingLabel)
-        
-            emptyView.snp.makeConstraints {
-                $0.top.equalTo(myPlanLabel.snp.bottom).offset(12)
-                $0.leading.trailing.equalToSuperview().inset(18)
-                $0.height.equalTo(120)
-            }
-        
-            emptyLabelStackView.snp.makeConstraints {
-                $0.center.equalToSuperview()
-            }
-            
             myBadgeLabel.snp.updateConstraints {
                 $0.top.equalTo(myPlanLabel.snp.bottom).offset(178)
             }
