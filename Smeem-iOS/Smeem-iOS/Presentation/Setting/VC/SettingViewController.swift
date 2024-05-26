@@ -232,12 +232,6 @@ final class SettingViewController: BaseViewController {
         contentView.snp.makeConstraints {
             $0.edges.equalTo(summaryScrollerView.contentLayoutGuide)
             $0.width.equalTo(summaryScrollerView.frameLayoutGuide)
-            $0.height.equalTo(convertByWidthRatio(895))
-        }
-        
-        contentView.snp.makeConstraints {
-            $0.edges.equalTo(summaryScrollerView.contentLayoutGuide)
-            $0.width.equalTo(summaryScrollerView.frameLayoutGuide)
         }
         
         backButton.snp.makeConstraints {
@@ -283,7 +277,7 @@ final class SettingViewController: BaseViewController {
         alarmCollectionView.snp.makeConstraints {
             $0.top.equalTo(alarmContainerView.snp.bottom).offset(convertByHeightRatio(10))
             $0.leading.trailing.equalToSuperview().inset(18)
-            $0.bottom.equalToSuperview().offset(-convertByHeightRatio(80))
+            $0.bottom.equalToSuperview().inset(convertByHeightRatio(80))
             $0.height.equalTo(convertByHeightRatio(133))
         }
         
