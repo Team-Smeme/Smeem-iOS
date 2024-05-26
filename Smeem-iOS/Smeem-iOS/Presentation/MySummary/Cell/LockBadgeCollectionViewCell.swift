@@ -22,7 +22,7 @@ final class LockBadgeCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        backgroundColor = .smeemWhite
+        backgroundColor = .clear
     }
     
     required init?(coder: NSCoder) {

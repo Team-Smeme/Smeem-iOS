@@ -36,7 +36,10 @@ final class MyBadgeCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        backgroundColor = .smeemWhite
+        self.backgroundColor = .smeemWhite
+        self.makeRoundCorner(cornerRadius: 10)
+        self.layer.borderWidth = 1.0
+        self.layer.borderColor = UIColor.gray100.cgColor
     }
     
     required init?(coder: NSCoder) {
