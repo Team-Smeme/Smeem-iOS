@@ -137,9 +137,14 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
     
     private let planSettingLabel: UILabel = {
         let label = UILabel()
-        label.text = "플랜 설정하러 가기"
         label.font = .c2
         label.textColor = .gray400
+        
+        let attributedString = NSMutableAttributedString(string: "플랜 설정하러 가기")
+        attributedString.addAttribute(.underlineStyle,
+                                      value: NSUnderlineStyle.single.rawValue,
+                                      range: NSRange(location: 0, length: attributedString.length))
+        label.attributedText = attributedString
         return label
     }()
     
