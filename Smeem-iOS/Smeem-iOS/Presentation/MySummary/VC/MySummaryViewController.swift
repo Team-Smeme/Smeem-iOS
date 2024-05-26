@@ -9,6 +9,11 @@ import UIKit
 import SnapKit
 import Combine
 
+enum SummaryAmplitudeType {
+    case viewDidLoad
+    case badge(String, Bool)
+}
+
 final class MySummaryViewController: BaseViewController, BottomSheetPresentable {
     
     // MARK: Publisher
@@ -17,6 +22,7 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
     private let myPlanSubject = PassthroughSubject<Void, Never>()
     private let myBadgeSubject = PassthroughSubject<Void, Never>()
     private let badgeCellTapped = PassthroughSubject<Int, Never>()
+    private let amplitudeSubject = PassthroughSubject<SummaryAmplitudeType, Never>()
     private var cancelBag = Set<AnyCancellable>()
     
     private var mySmeemDataSource: MySmeemCollectionViewDataSource!
@@ -181,6 +187,7 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
         registerCell()
         setDelegate()
         bind()
+        amplitudeSubject.send(.viewDidLoad)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -231,7 +238,8 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
         let input = MySummaryViewModel.Input(mySummarySubject: mySummarySubject,
                                              myPlanSubject: myPlanSubject,
                                              myBadgeSubject: myBadgeSubject,
-                                             badgeCellTapped: badgeCellTapped)
+                                             badgeCellTapped: badgeCellTapped,
+                                             amplitudeSubject: amplitudeSubject)
         let output = viewModel.transform(input: input)
         
         output.totalHasMyPlanResult
@@ -287,6 +295,7 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
             .sink { [weak self] response in
                 let badgeBottomSheetVC = BadgeBottomSheetViewController()
                 badgeBottomSheetVC.setData(data: response)
+                self?.amplitudeSubject.send(.badge(response.type, response.hasBadge))
                 self?.presentBottomSheet(viewController: badgeBottomSheetVC)
             }
             .store(in: &cancelBag)

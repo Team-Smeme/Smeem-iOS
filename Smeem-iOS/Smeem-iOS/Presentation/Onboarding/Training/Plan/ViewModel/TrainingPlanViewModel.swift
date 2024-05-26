@@ -14,6 +14,7 @@ final class TrainingPlanViewModel: ViewModel {
         let viewDidLoadSubject: PassthroughSubject<Void, Never>
         let cellTapped: PassthroughSubject<(Int, SmeemButtonType), Never>
         let nextButtonTapped: PassthroughSubject<Void, Never>
+        let amplitudeSubject: PassthroughSubject<Void, Never>
     }
     
     struct Output {
@@ -63,6 +64,12 @@ final class TrainingPlanViewModel: ViewModel {
                 return (self.target, self.planId)
             }
             .eraseToAnyPublisher()
+        
+        input.amplitudeSubject
+            .sink { _ in
+                AmplitudeManager.shared.track(event: AmplitudeConstant.Onboarding.onboarding_goal_view.event)
+            }
+            .store(in: &cancelbag)
         
         let loadingViewResult = loadingViewSubject.eraseToAnyPublisher()
         

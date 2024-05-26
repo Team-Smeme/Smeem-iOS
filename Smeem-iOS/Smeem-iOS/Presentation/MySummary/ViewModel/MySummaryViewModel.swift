@@ -20,6 +20,7 @@ final class MySummaryViewModel: ViewModel {
         let myPlanSubject: PassthroughSubject<Void, Never>
         let myBadgeSubject: PassthroughSubject<Void, Never>
         let badgeCellTapped: PassthroughSubject<Int, Never>
+        let amplitudeSubject: PassthroughSubject<SummaryAmplitudeType, Never>
     }
     
     struct Output {
@@ -162,6 +163,17 @@ final class MySummaryViewModel: ViewModel {
                 return String(ratio)
             }
         }
+        
+        input.amplitudeSubject
+            .sink { type in
+                switch type {
+                case .viewDidLoad:
+                    AmplitudeManager.shared.track(event: AmplitudeConstant.summary.achievement_view.event)
+                case .badge(let type, let hasBadge):
+                    AmplitudeManager.shared.track(event: AmplitudeConstant.summary.badge_bottom_sheet_view(type, hasBadge).event)
+                }
+            }
+            .store(in: &cancelBag)
         
         let totalHasMyPlanResult = totalHasMyPlanSubject.eraseToAnyPublisher()
         let totalHasNotPlanResult = totalHasNotPlanSubject.eraseToAnyPublisher()

@@ -17,6 +17,7 @@ final class TrainingPlanViewController: BaseViewController {
     private let viewDidLoadSubject = PassthroughSubject<Void, Never>()
     private let cellTapped = PassthroughSubject<(Int, SmeemButtonType), Never>()
     private let nextButtonTapped = PassthroughSubject<Void, Never>()
+    private let amplitudeSubject = PassthroughSubject<Void, Never>()
     private var cancelbag = Set<AnyCancellable>()
     
     private var trainingCollectionViewDatasource: TrainingCollectionViewDatasource!
@@ -119,7 +120,8 @@ final class TrainingPlanViewController: BaseViewController {
         
         let input = TrainingPlanViewModel.Input(viewDidLoadSubject: viewDidLoadSubject,
                                                 cellTapped: cellTapped,
-                                                nextButtonTapped: nextButtonTapped)
+                                                nextButtonTapped: nextButtonTapped,
+                                                amplitudeSubject: amplitudeSubject)
         let output = viewModel.transform(input: input)
         
         output.viewDidLoadResult
@@ -171,6 +173,7 @@ final class TrainingPlanViewController: BaseViewController {
     
     private func sendInput() {
         viewDidLoadSubject.send(())
+        amplitudeSubject.send(())
     }
 }
 
