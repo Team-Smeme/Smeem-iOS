@@ -253,25 +253,25 @@ final class SettingViewController: BaseViewController {
         nicknameContainerView.snp.makeConstraints {
             $0.top.equalTo(naviView.snp.bottom).offset(18)
             $0.leading.trailing.equalToSuperview().inset(18)
-            $0.height.equalTo(87)
+            $0.height.equalTo(convertByHeightRatio(87))
         }
         
         planContainerView.snp.makeConstraints {
             $0.top.equalTo(nicknameContainerView.snp.bottom).offset(28)
             $0.leading.trailing.equalToSuperview().inset(18)
-            $0.height.equalTo(87)
+            $0.height.equalTo(convertByHeightRatio(87))
         }
         
         languageContainerView.snp.makeConstraints {
             $0.top.equalTo(planContainerView.snp.bottom).offset(28)
             $0.leading.trailing.equalToSuperview().inset(18)
-            $0.height.equalTo(87)
+            $0.height.equalTo(convertByHeightRatio(87))
         }
         
         alarmContainerView.snp.makeConstraints {
             $0.top.equalTo(languageContainerView.snp.bottom).offset(28)
             $0.leading.trailing.equalToSuperview().inset(18)
-            $0.height.equalTo(87)
+            $0.height.equalTo(convertByHeightRatio(87))
         }
         
         alarmCollectionView.snp.makeConstraints {
