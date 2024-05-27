@@ -56,14 +56,6 @@ final class MyBadgeCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Layout
     
-    func setLayout() {
-        addSubview(badgeImage)
-        
-        badgeImage.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
-    }
-    
     func setBadgeLayout() {
         addSubviews(badgeImage, badgeNameLabel)
         
@@ -79,10 +71,5 @@ final class MyBadgeCollectionViewCell: UICollectionViewCell {
             $0.top.equalTo(badgeImage.snp.bottom).offset(3)
             $0.centerX.equalTo(badgeImage)
         }
-    }
-    
-    func setBadgeHidden() {
-        badgeImage.isHidden = true
-        badgeNameLabel.isHidden = true
     }
 }
