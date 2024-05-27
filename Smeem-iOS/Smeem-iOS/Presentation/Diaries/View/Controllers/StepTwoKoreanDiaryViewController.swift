@@ -21,13 +21,14 @@ final class StepTwoKoreanDiaryViewController: DiaryViewController<StepTwoKoreanD
     // MARK: - Properties
     
     private let viewFactory = DiaryViewFactory()
+    private var diaryText = ""
     
     // MARK: - Life Cycle
     
-    init(viewModel: StepTwoKoreanDiaryViewModel, text: String?) {
+    init(viewModel: StepTwoKoreanDiaryViewModel, text: String) {
         super.init(rootView: viewFactory.createStepTwoKoreanDiaryView(), viewModel: viewModel)
-        
-        rootView.configuration.layoutConfig?.updateHintViewText(with: text)
+        diaryText = text
+        rootView.configuration.layoutConfig?.updateHintViewText(with: diaryText)
     }
     
     required init?(coder: NSCoder) {
@@ -72,11 +73,11 @@ extension StepTwoKoreanDiaryViewController {
         
         output.hintButtonAction
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                guard let isHintShowed = self?.viewModel.getIsHintShowed()
-                else { return }
-                
+            .sink { [weak self] isHintShowed in
                 self?.rootView.bottomView.updateHintButtonImage(isHintShowed)
+                if isHintShowed == false {
+                    self?.rootView.configuration.layoutConfig?.updateHintViewText(with: self?.diaryText)
+                }
             }
             .store(in: &cancelBag)
         
