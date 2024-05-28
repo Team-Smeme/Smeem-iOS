@@ -67,7 +67,7 @@ final class TrainingPlanViewModel: ViewModel {
         
         input.amplitudeSubject
             .sink { _ in
-                AmplitudeManager.shared.track(event: AmplitudeConstant.Onboarding.onboarding_goal_view.event)
+                AmplitudeManager.shared.track(event: AmplitudeConstant.Onboarding.onboarding_plan_view.event)
             }
             .store(in: &cancelbag)
         
