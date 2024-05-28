@@ -111,14 +111,6 @@ final class StepTwoKoreanDiaryViewModel: DiaryViewModel {
     }
 }
 
-// MARK: - Extensions
-
-extension StepTwoKoreanDiaryViewModel {
-    func getIsHintShowed() -> Bool {
-        return isHintShowed
-    }
-}
-
 // MARK: - Network
 
 extension StepTwoKoreanDiaryViewModel {
