@@ -15,6 +15,8 @@ final class HomeViewController: BaseViewController {
     
     // MARK: - Property
     
+    private let diaryViewControllerFactory = DiaryViewControllerFactory(diaryViewFactory: DiaryViewFactory())
+    
     private let weekdayLabels = ["S", "M", "T", "W", "T", "F", "S"]
     private let gregorian = Calendar(identifier: .gregorian)
     private var homeDiaryDict = [String: HomeDiaryCustom]()
@@ -282,6 +284,16 @@ final class HomeViewController: BaseViewController {
             popupVC.summarySubject
                 .sink { [weak self] _ in
                     self?.navigationController?.pushViewController(MySummaryViewController(), animated: true)
+                }
+                .store(in: &cancelBag)
+            
+            popupVC.firstDiarySubject
+                .sink { [weak self] _ in
+                    let nextVC = self?.diaryViewControllerFactory.makeStepOneKoreanDiaryViewController()
+                    let navigationController = UINavigationController(rootViewController: nextVC!)
+                    navigationController.modalTransitionStyle = .coverVertical
+                    navigationController.modalPresentationStyle = .fullScreen
+                    self?.present(navigationController, animated: true)
                 }
                 .store(in: &cancelBag)
             popupVC.modalTransitionStyle = .crossDissolve

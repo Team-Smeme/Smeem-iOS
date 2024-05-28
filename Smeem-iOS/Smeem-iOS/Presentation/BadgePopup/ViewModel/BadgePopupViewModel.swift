@@ -21,11 +21,13 @@ final class BadgePopupViewModel: ViewModel {
         let viewWillAppearResult: AnyPublisher<[PopupBadge], Never>
         let cancelButtonResult: AnyPublisher<Void, Never>
         let moreBadgeListResult: AnyPublisher<Void, Never>
+        let firstDiaryResult: AnyPublisher<Void, Never>
         let reviewPopupResult: AnyPublisher<Void, Never>
     }
     
     private let cancelButtonSubject = PassthroughSubject<Void, Never>()
     private let moreBadgeListSubject = PassthroughSubject<Void, Never>()
+    private let firstDiarySubject = PassthroughSubject<Void, Never>()
     private let reviewPopupSubject = PassthroughSubject<Void, Never>()
     private var cancelBag = Set<AnyCancellable>()
     
@@ -49,7 +51,7 @@ final class BadgePopupViewModel: ViewModel {
                     self.cancelButtonSubject.send(())
                 } else if buttonType == .more && badgeType == "EVENT" {
                     AmplitudeManager.shared.track(event: AmplitudeConstant.badge.welcome_more_click.event)
-                    self.moreBadgeListSubject.send(())
+                    self.firstDiarySubject.send(())
                 } else if buttonType == .more && badgeType != "EVENT" {
                     AmplitudeManager.shared.track(event: AmplitudeConstant.badge.badge_more_click(badgeType).event)
                     self.moreBadgeListSubject.send(())
@@ -59,11 +61,13 @@ final class BadgePopupViewModel: ViewModel {
         
         let cancelButtonResult = cancelButtonSubject.eraseToAnyPublisher()
         let moreBadgeListResult = moreBadgeListSubject.eraseToAnyPublisher()
+        let firstDiaryResult = firstDiarySubject.eraseToAnyPublisher()
         let reviewPopupResult = reviewPopupSubject.eraseToAnyPublisher()
         
         return Output(viewWillAppearResult: viewWillAppearResult,
                       cancelButtonResult: cancelButtonResult,
                       moreBadgeListResult: moreBadgeListResult,
+                      firstDiaryResult: firstDiaryResult,
                       reviewPopupResult: reviewPopupResult)
     }
 }
