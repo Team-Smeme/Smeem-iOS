@@ -157,6 +157,7 @@ extension BadgeBottomSheetViewController {
         label.font = font
         label.textColor = textColor
         label.numberOfLines = 0
+        label.textAlignment = .center
         return label
     }
     
