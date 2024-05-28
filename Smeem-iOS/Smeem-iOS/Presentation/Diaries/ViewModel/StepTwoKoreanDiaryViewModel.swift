@@ -36,7 +36,7 @@ final class StepTwoKoreanDiaryViewModel: DiaryViewModel {
     private var cancelBag = Set<AnyCancellable>()
     
     private var hintText = String()
-    private var translatedText = String()
+    private var translatedText: String = ""
     private var isHintShowed = Bool()
     
     func transform(input: Input) -> Output {
@@ -77,11 +77,12 @@ final class StepTwoKoreanDiaryViewModel: DiaryViewModel {
         let hintButtonAction = input.hintButtonTapped
             .map { [weak self] _ -> Bool in
                 self?.isHintShowed.toggle()
-                if self?.translatedText.isEmpty == true {
+                if self?.translatedText == "" {
                     self?.postDeepLApi(diaryText: self?.hintText ?? "")
                 }
 
                 self?.amplitudeSubject.send(.hintClick)
+                self?.translatedText = ""
                 return self?.isHintShowed ?? false
             }
             .eraseToAnyPublisher()
