@@ -156,6 +156,7 @@ extension BadgeBottomSheetViewController {
         let label = UILabel()
         label.font = font
         label.textColor = textColor
+        label.numberOfLines = 0
         return label
     }
     
