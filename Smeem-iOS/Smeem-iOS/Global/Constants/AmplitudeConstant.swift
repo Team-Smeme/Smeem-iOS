@@ -17,6 +17,7 @@ enum AmplitudeConstant {
     enum Onboarding {
         case first_view
         case onboarding_goal_view
+        case onboarding_plan_view
         case onboarding_alarm_view
         case onboarding_later_click
         case signup_success
@@ -29,6 +30,8 @@ enum AmplitudeConstant {
                 return BaseEvent(eventType: "first_view", eventProperties: nil)
             case .onboarding_goal_view:
                 return BaseEvent(eventType: "onboarding_goal_view", eventProperties: nil)
+            case .onboarding_plan_view:
+                return BaseEvent(eventType: "onboarding_plan_view", eventProperties: nil)
             case .onboarding_alarm_view:
                 return BaseEvent(eventType: "onboarding_alarm_view", eventProperties: nil)
             case .onboarding_later_click:
@@ -124,6 +127,21 @@ enum AmplitudeConstant {
         
         var event: BaseEvent {
             return BaseEvent(eventType: "mypage_view", eventProperties: nil)
+        }
+    }
+    
+    enum summary {
+        case achievement_view
+        case badge_bottom_sheet_view(String, Bool)
+        
+        var event: BaseEvent {
+            switch self {
+            case .achievement_view:
+                return BaseEvent(eventType: "achievement_view", eventProperties: nil)
+            case .badge_bottom_sheet_view(let type, let hasBadge):
+                return BaseEvent(eventType: "badge_bottom_sheet_view", eventProperties: ["BadgeType":type,
+                                                                                         "hasBadge":hasBadge])
+            }
         }
     }
 }

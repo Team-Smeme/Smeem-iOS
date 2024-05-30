@@ -11,19 +11,22 @@ import Combine
 final class TrainingAlarmViewModel: ViewModel {
     
     struct Input {
-        let viewWillAppearSubject: PassthroughSubject<Void, Never>
+        let viewDidLoadSubject: PassthroughSubject<Void, Never>
         let alarmTimeSubject: PassthroughSubject<AlarmTimeAppData, Never>
         let alarmDaySubject: PassthroughSubject<Set<String>, Never>
         let alarmButtonTapped: PassthroughSubject<AlarmType, Never>
         let nextFlowSubject: PassthroughSubject<Void, Never>
+        let userServiceSubject: PassthroughSubject<Void, Never>
+        let homeSubject: PassthroughSubject<Void, Never>
         let amplitudeSubject: PassthroughSubject<Void, Never>
     }
     
     struct Output {
         let buttonTypeResult: AnyPublisher<SmeemButtonType, Never>
         let alarmResult: AnyPublisher<Void, Never>
-        let bottomSheetResult: AnyPublisher<TrainingPlanRequest, Never>
+        let bottomSheetResult: AnyPublisher<Void, Never>
         let nicknameResult: AnyPublisher<Void, Never>
+        let homeSubject: AnyPublisher<Void, Never>
         let errorResult: AnyPublisher<SmeemError, Never>
         let loadingViewResult: AnyPublisher<Bool, Never>
     }
@@ -35,11 +38,13 @@ final class TrainingAlarmViewModel: ViewModel {
     private let loadingViewSubject = PassthroughSubject<Bool, Never>()
     
     var target = ""
+    var planId = 1
     var trainingPlanRequest = TrainingPlanRequest(target: "DEVELOP",
                                                   trainingTime: TrainingTime(day: "MON,TUE,WED,THU,FRI",
                                                                              hour: 22,
                                                                              minute: 0),
-                                                  hasAlarm: true)
+                                                  hasAlarm: true,
+                                                  planId: 1)
     var authType = AuthType.signup
     private var provider: OnboardingServiceProtocol
     
@@ -48,10 +53,11 @@ final class TrainingAlarmViewModel: ViewModel {
     }
     
     func transform(input: Input) -> Output {
-        input.viewWillAppearSubject
+        input.viewDidLoadSubject
             .sink { _ in
                 self.authType = UserDefaultsManager.clientAuthType == self.authType.rawValue ? .signup : .login
                 self.trainingPlanRequest.target = self.target
+                self.trainingPlanRequest.planId = self.planId
             }
             .store(in: &cancelBag)
             
@@ -90,13 +96,11 @@ final class TrainingAlarmViewModel: ViewModel {
             }
             .store(in: &cancelBag)
         
-        let bottomSheetResult = bottomSheetSubject
-            .map { _ in
-                return self.trainingPlanRequest
-            }
-            .eraseToAnyPublisher()
+        let bottomSheetResult = bottomSheetSubject.eraseToAnyPublisher()
         
-        let nicknameResult = nicknameSubject
+        let userServiceSubject = input.userServiceSubject.eraseToAnyPublisher()
+        
+        let nicknameResult = Publishers.Merge(nicknameSubject, input.userServiceSubject)
             .handleEvents(receiveSubscription: { _ in
                 self.loadingViewSubject.send(true)
             })
@@ -107,7 +111,7 @@ final class TrainingAlarmViewModel: ViewModel {
                                                   accessToken: UserDefaultsManager.clientAccessToken) { result in
                         
                         switch result {
-                        case .success(let response):
+                        case .success(_):
                             promise(.success(()))
                         case .failure(let error):
                             self.errorSubject.send(error)
@@ -120,6 +124,8 @@ final class TrainingAlarmViewModel: ViewModel {
                 .eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()
+        
+        let homeResult = input.homeSubject.eraseToAnyPublisher()
         
         input.amplitudeSubject
             .sink { _ in
@@ -134,6 +140,7 @@ final class TrainingAlarmViewModel: ViewModel {
                       alarmResult: alarmResult,
                       bottomSheetResult: bottomSheetResult,
                       nicknameResult: nicknameResult,
+                      homeSubject: homeResult,
                       errorResult: errorResult,
                       loadingViewResult: loadingResult)
     }

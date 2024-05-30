@@ -18,7 +18,7 @@ final class TrainingGoalViewModel: ViewModel {
     }
 
     struct Output {
-        let viewWillappearResult: AnyPublisher<[Goal], Never>
+        let viewDidLoadResult: AnyPublisher<[Goal], Never>
         let cellResult: AnyPublisher<SmeemButtonType, Never>
         let nextButtonResult: AnyPublisher<String, Never>
         let errorResult: AnyPublisher<SmeemError, Never>
@@ -77,7 +77,7 @@ final class TrainingGoalViewModel: ViewModel {
         let errorResult = errorSubject.eraseToAnyPublisher()
         let loadingViewResult = loadingViewSubject.eraseToAnyPublisher()
         
-        return Output(viewWillappearResult: viewDidLoadSubject,
+        return Output(viewDidLoadResult: viewDidLoadSubject,
                       cellResult: cellResult,
                       nextButtonResult: nextButtonResult,
                       errorResult: errorResult,

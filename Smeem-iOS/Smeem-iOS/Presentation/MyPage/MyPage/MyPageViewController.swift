@@ -242,7 +242,6 @@ final class MyPageViewController: BaseViewController {
     
     @objc func editButtonDidTap(_ sender: UIButton) {
         let editVC = EditNicknameViewController()
-        editVC.editNicknameDelegate = self
         editVC.nickName = userInfo.username
         self.navigationController?.pushViewController(editVC, animated: true)
     }
@@ -271,7 +270,6 @@ final class MyPageViewController: BaseViewController {
     
     @objc func alarmEditButtonDidTap() {
         let alarmEditVC = EditAlarmViewController()
-        alarmEditVC.editAlarmDelegate = self
         alarmEditVC.dayIndexPathArray = indexPathArray
         alarmEditVC.trainigDayData = userInfo.trainingTime.day
         alarmEditVC.trainingTimeData = (userInfo.trainingTime.hour, userInfo.trainingTime.minute)
@@ -485,14 +483,6 @@ final class MyPageViewController: BaseViewController {
             $0.edges.equalTo(alarmCollectionView)
             $0.width.height.equalTo(alarmCollectionView)
         }
-    }
-}
-
-// MARK: - EditNicknameDelegate
-
-extension MyPageViewController: EditMypageDelegate {
-    func editMyPageData() {
-        toastMessageFlag = true
     }
 }
 

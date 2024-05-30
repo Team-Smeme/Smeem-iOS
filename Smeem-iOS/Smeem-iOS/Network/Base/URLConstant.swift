@@ -22,6 +22,7 @@ enum URLConstant {
     // MARK: Onboarding
     
     static let trainingGoalsURL = "/goals"
+    static let trainingPlanURL = "/plans"
     static let userURL = "/members"
     static let userTrainingInfo = "/members/plan"
     static let checkNickname = "/members/nickname/check"
@@ -29,11 +30,21 @@ enum URLConstant {
     // MARK: - MyPage
     
     static let badgesListURL = "/members/badges"
-    static let myPageURL = "/members/me"
+    static let settingURL = "/members/me"
+    
+    // MARK: - MySummary
+    
+    static let mySummaryURL = "/members/performance/summary"
+    static let myPlanURL = "/members/plan"
+    static let myBadgeURL = "/members/badges"
     
     // MARK: - Diary
     
     static let diaryURL = "/diaries"
+    
+    // MARK: - Home
+    
+    static let visitURL = "/members/visit"
     
     // MARK: - Correction
     

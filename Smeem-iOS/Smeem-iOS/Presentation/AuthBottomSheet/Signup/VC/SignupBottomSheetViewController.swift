@@ -1,8 +1,8 @@
 //
-//  LoginBottomSheetViewController.swift
+//  SignupBottomSheetViewController.swift
 //  Smeem-iOS
 //
-//  Created by 황찬미 on 2023/05/06.
+//  Created by 황찬미 on 2/13/24.
 //
 
 import UIKit
@@ -11,9 +11,9 @@ import Combine
 import SnapKit
 import AuthenticationServices
 
-final class LoginBottomSheetViewController: UIViewController {
+final class SignupBottomSheetViewController: UIViewController {
     
-    private let viewModel = LoginViewModel()
+    private let viewModel = SignupViewModel()
     
     // MARK: Publisher
     
@@ -21,15 +21,12 @@ final class LoginBottomSheetViewController: UIViewController {
     private let appleLoginTapped = PassthroughSubject<Void, Never>()
     private let appleLoginSubject = PassthroughSubject<String, Never>()
     private let dismissTapped = PassthroughSubject<Void, Never>()
-    private var cancelBag = Set<AnyCancellable>()
+    var cancelBag = Set<AnyCancellable>()
+    
+    let userServiceSubject = PassthroughSubject<Void, Never>()
+    let homeSubject = PassthroughSubject<Void, Never>()
     
     // MARK: UI Properties
-    
-    private lazy var dimmedView: UIView = {
-        let view = UIView()
-        view.layer.backgroundColor = UIColor(red: 0.09, green: 0.09, blue: 0.086, alpha: 0.65).cgColor
-        return view
-    }()
     
     var bottomSheetView: UIView = {
         let view = UIView()
@@ -40,7 +37,7 @@ final class LoginBottomSheetViewController: UIViewController {
     
     private let bottomSheetLabel: UILabel = {
         let label = UILabel()
-        label.text = "로그인"
+        label.text = "회원가입"
         label.textColor = .black
         label.font = .h3
         return label
@@ -78,14 +75,14 @@ final class LoginBottomSheetViewController: UIViewController {
     
     private func bind() {
         kakaoLoginButton.tapPublisher
-            .sink { _ in
-                self.kakaoLoginTapped.send(())
+            .sink { [weak self] _ in
+                self?.kakaoLoginTapped.send(())
             }
             .store(in: &cancelBag)
         
         appleLoginButton.tapPublisher
             .receive(on: DispatchQueue.main)
-            .sink { _ in
+            .sink { [weak self] _ in
                 let appleIDProvider = ASAuthorizationAppleIDProvider()
                 let request = appleIDProvider.createRequest()
                 request.requestedScopes = []
@@ -100,50 +97,30 @@ final class LoginBottomSheetViewController: UIViewController {
         dismissButton.tapPublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
-                UIView.animate(withDuration: 0.3, animations: {
-                    self?.bottomSheetView.frame.origin.y = (self?.view.frame.height)!
-                }) { _ in
-                    self?.dismiss(animated: false, completion: nil)
-                }
+                self?.dismiss(animated: true)
             }
             .store(in: &cancelBag)
         
-        dimmedView.gesturePublisher
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                UIView.animate(withDuration: 0.3, animations: {
-                    self?.bottomSheetView.frame.origin.y = (self?.view.frame.height)!
-                }) { _ in
-                    self?.dismiss(animated: false, completion: nil)
-                }
-            }
-            .store(in: &cancelBag)
-        
-        let input = LoginViewModel.Input(kakaoLoginTapped: kakaoLoginTapped,
-                                         appleLoginSubject: appleLoginSubject,
-                                         dismissTapped: dismissTapped)
+        let input = SignupViewModel.Input(kakaoLoginTapped: kakaoLoginTapped,
+                                          appleLoginSubject: appleLoginSubject,
+                                          dismissTapped: dismissTapped,
+                                          userServiceSubject: userServiceSubject,
+                                          homeSubject: homeSubject)
         let output = viewModel.transform(input: input)
         
         output.presentHomeResult
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] in
-                self?.changeRootViewController(HomeViewController())
-            }
-            .store(in: &cancelBag)
-        
-        output.presentTrainingResult
-            .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
-                let trainingVC = TrainingGoalViewController()
-                self?.navigationController?.pushViewController(trainingVC, animated: true)
+                self?.dismiss(animated: true)
+                self?.homeSubject.send(())
             }
             .store(in: &cancelBag)
         
         output.presentServiceResult
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
-                let nicknameVC = UserNicknameViewController()
-                self?.navigationController?.pushViewController(nicknameVC, animated: true)
+                self?.dismiss(animated: true)
+                self?.userServiceSubject.send(())
             }
             .store(in: &cancelBag)
         
@@ -169,7 +146,7 @@ final class LoginBottomSheetViewController: UIViewController {
 
 // MARK: - Apple Login
 
-extension LoginBottomSheetViewController: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
+extension SignupBottomSheetViewController: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
         self.view.window!
     }
@@ -199,19 +176,9 @@ extension LoginBottomSheetViewController: ASAuthorizationControllerDelegate, ASA
 
 // MARK: - Layout
 
-extension LoginBottomSheetViewController {
+extension SignupBottomSheetViewController {
     private func setLayout() {
-        view.addSubviews(dimmedView, bottomSheetView)
-        bottomSheetView.addSubviews(bottomSheetLabel, dismissButton, kakaoLoginButton, appleLoginButton)
-        
-        dimmedView.snp.makeConstraints {
-            $0.top.leading.trailing.bottom.equalToSuperview()
-        }
-        
-        bottomSheetView.snp.makeConstraints {
-            $0.height.equalTo(282)
-            $0.leading.trailing.bottom.equalToSuperview()
-        }
+        view.addSubviews(bottomSheetLabel, dismissButton, kakaoLoginButton, appleLoginButton)
         
         dismissButton.snp.makeConstraints {
             $0.top.equalToSuperview().inset(10)
@@ -235,3 +202,4 @@ extension LoginBottomSheetViewController {
         }
     }
 }
+

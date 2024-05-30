@@ -19,6 +19,8 @@ enum BadgeButtonType {
 final class BadgePopupViewController: UIViewController, SKStoreProductViewControllerDelegate {
     
     private let viewModel = BadgePopupViewModel()
+    let summarySubject = PassthroughSubject<Void, Never>()
+    let firstDiarySubject = PassthroughSubject<Void, Never>()
     
     // MARK: Publisher
     
@@ -72,7 +74,7 @@ final class BadgePopupViewController: UIViewController, SKStoreProductViewContro
         return button
     }()
     
-    private lazy var presentBadgeListButton: SmeemButton = {
+    private let presentBadgeListButton: SmeemButton = {
         let button = SmeemButton(buttonType: .enabled, text: "배지 모두보기")
         button.titleLabel?.font = .c2
         return button
@@ -95,6 +97,10 @@ final class BadgePopupViewController: UIViewController, SKStoreProductViewContro
     init(popupBadge: [PopupBadge]) {
         super.init(nibName: nil, bundle: nil)
         self.viewModel.popupBadge = popupBadge
+        
+        if popupBadge[0].type == "EVENT" {
+            presentBadgeListButton.setTitle("첫 일기 쓰러가기", for: .normal)
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -143,10 +149,15 @@ final class BadgePopupViewController: UIViewController, SKStoreProductViewContro
         
         output.moreBadgeListResult
             .sink { [weak self] _ in
-                let badgeListVC = BadgeListViewController()
-                badgeListVC.modalTransitionStyle = .crossDissolve
-                badgeListVC.modalPresentationStyle = .fullScreen
-                self?.present(badgeListVC, animated: true)
+                self?.dismiss(animated: true)
+                self?.summarySubject.send(())
+            }
+            .store(in: &cancelBag)
+        
+        output.firstDiaryResult
+            .sink { [weak self] _ in
+                self?.dismiss(animated: true)
+                self?.firstDiarySubject.send(())
             }
             .store(in: &cancelBag)
         

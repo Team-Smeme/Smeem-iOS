@@ -25,19 +25,6 @@ extension UIViewController {
         view.endEditing(true)
     }
     
-    /// 키보드의 높이에 따라 해당 customView 위치를 변경해 주는 메서드(SE 기기대응 포함)
-    func handleKeyboardChanged(notification: Notification, customView: UIView, isActive: Bool) {
-        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-            let keyboardRectangle = keyboardFrame.cgRectValue
-            let keyboardHeight = keyboardRectangle.height
-            let safeAreaHeight = self.view.safeAreaInsets.bottom
-            
-            UIView.animate(withDuration: 1) {
-                customView.transform = UIScreen.main.hasNotch ? (isActive ? CGAffineTransform(translationX: 0, y: -(keyboardHeight - safeAreaHeight)) : .identity) : (isActive ? CGAffineTransform(translationX: 0, y: -keyboardHeight) : .identity)
-            }
-        }
-    }
-    
     func getDeviceWidth() -> CGFloat {
         return UIScreen.main.bounds.width
     }
@@ -113,10 +100,9 @@ extension UIViewController {
         changeRootViewController(smeemStartVC)
     }
     
-    func showToast(toastType: ToastViewType, keyboardHeight: CGFloat = 0, delay: TimeInterval = 1) {
+    func showToast(toastType: ToastViewType, hasKeyboard: Bool = false, height: CGFloat = 0.0, delay: TimeInterval = 1) {
         let toastView = SmeemToastView(type: toastType)
-        let offKeyboardOffset = convertByHeightRatio(54)
-        toastView.show(in: self.view, hasKeyboard: false)
+        toastView.show(in: self.view, hasKeyboard: hasKeyboard, height: height)
         toastView.hide(after: delay)
     }
     

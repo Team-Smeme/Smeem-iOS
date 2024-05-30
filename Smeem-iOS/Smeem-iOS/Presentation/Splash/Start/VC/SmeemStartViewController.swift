@@ -10,7 +10,7 @@ import Combine
 
 import SnapKit
 
-final class SmeemStartViewController: BaseViewController {
+final class SmeemStartViewController: BaseViewController, BottomSheetPresentable {
     
     private let viewModel = SmeemStartViewModel()
     
@@ -19,6 +19,8 @@ final class SmeemStartViewController: BaseViewController {
     private let loginButtonTapped = PassthroughSubject<Void, Never>()
     private let startButtonTapped = PassthroughSubject<Void, Never>()
     private let amplitudeSubject = PassthroughSubject<Void, Never>()
+    private let trainingStartSubject = PassthroughSubject<Void, Never>()
+    private let userServiceSubject = PassthroughSubject<Void, Never>()
     private var cancelBag = Set<AnyCancellable>()
     
     // MARK: UI Properties
@@ -93,29 +95,43 @@ final class SmeemStartViewController: BaseViewController {
         
         let input = SmeemStartViewModel.Input(loginButtonTapped: loginButtonTapped,
                                               startButtonTapped: startButtonTapped,
-                                              amplitudeSubject: amplitudeSubject)
+                                              amplitudeSubject: amplitudeSubject,
+                                              trainingStartSubject: trainingStartSubject,
+                                              userServiceSubject: userServiceSubject)
         let output = viewModel.transform(input: input)
         
         output.loginButtonTapped
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 let loginBottomSheetVC = LoginBottomSheetViewController()
-                let navigationController = UINavigationController(rootViewController: loginBottomSheetVC)
-                navigationController.modalPresentationStyle = .overFullScreen
+                self?.presentBottomSheet(viewController: loginBottomSheetVC, customHeightMultiplier: 0.31)
                 
-                self?.present(navigationController, animated: false) {
-                    loginBottomSheetVC.bottomSheetView.frame.origin.y = self?.view.frame.height ?? 0
-                    UIView.animate(withDuration: 0.3) {
-                        loginBottomSheetVC.bottomSheetView.frame.origin.y = self!.view.frame.height-282
+                loginBottomSheetVC.trainingSubject
+                    .sink { [weak self] _ in
+                        self?.trainingStartSubject.send(())
                     }
-                }
+                    .store(in: &loginBottomSheetVC.cancelBag)
+                
+                loginBottomSheetVC.userServiceSubject
+                    .sink { [weak self] _ in
+                        self?.userServiceSubject.send(())
+                    }
+                    .store(in: &loginBottomSheetVC.cancelBag)
             }
             .store(in: &cancelBag)
         
-        output.startButtonTapped
+        output.trainingStartResult
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 let trainingGoalsVC = TrainingGoalViewController()
+                self?.navigationController?.pushViewController(trainingGoalsVC, animated: true)
+            }
+            .store(in: &cancelBag)
+        
+        output.userServiceResult
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                let trainingGoalsVC = UserNicknameViewController()
                 self?.navigationController?.pushViewController(trainingGoalsVC, animated: true)
             }
             .store(in: &cancelBag)

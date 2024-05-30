@@ -19,7 +19,7 @@ final class TrainingGoalViewController: BaseViewController {
     
     // MARK: - Subject
     
-    private let viewWillAppearSubject = PassthroughSubject<Void, Never>()
+    private let viewDidLoadSubject = PassthroughSubject<Void, Never>()
     private let amplitudeSubject = PassthroughSubject<Void, Never>()
     private let cellTapped = PassthroughSubject<(String, SmeemButtonType), Never>()
     private let nextButtonTapped = PassthroughSubject<Void, Never>()
@@ -92,11 +92,7 @@ final class TrainingGoalViewController: BaseViewController {
         setLayout()
         setDelegate()
         bind()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        viewWillAppearSubject.send(())
-        amplitudeSubject.send(())
+        sendInput()
     }
     
     // MARK: Methods
@@ -108,13 +104,13 @@ final class TrainingGoalViewController: BaseViewController {
             }
             .store(in: &cancelbag)
         
-        let input = TrainingGoalViewModel.Input(viewDidLoadSubject: viewWillAppearSubject,
+        let input = TrainingGoalViewModel.Input(viewDidLoadSubject: viewDidLoadSubject,
                                                 cellTapped: cellTapped,
                                                 nextButtonTapped: nextButtonTapped,
                                                 amplitudeSubject: amplitudeSubject)
         let output = viewModel.transform(input: input)
         
-        output.viewWillappearResult
+        output.viewDidLoadResult
             .receive(on: DispatchQueue.main)
             .sink { [weak self] response in
                 self?.trainingGoalCollectionView.planGoalArray = response
@@ -132,8 +128,8 @@ final class TrainingGoalViewController: BaseViewController {
         output.nextButtonResult
             .receive(on: DispatchQueue.main)
             .sink { [weak self] target in
-                let howOnboardingVC = TrainingWayViewController(target: target)
-                self?.navigationController?.pushViewController(howOnboardingVC, animated: true)
+                let trainingPlanVC = TrainingPlanViewController(target: target)
+                self?.navigationController?.pushViewController(trainingPlanVC, animated: true)
             }
             .store(in: &cancelbag)
         
@@ -154,6 +150,11 @@ final class TrainingGoalViewController: BaseViewController {
     
     private func setDelegate() {
         trainingGoalCollectionView.trainingDelegate = self
+    }
+    
+    private func sendInput() {
+        viewDidLoadSubject.send(())
+        amplitudeSubject.send(())
     }
 }
 

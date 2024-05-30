@@ -24,7 +24,7 @@ extension MyPageService: BaseTargetType {
     var path: String {
         switch self {
         case .myPageInfo:
-            return URLConstant.myPageURL
+            return URLConstant.settingURL
         case .editNickname:
             return URLConstant.userURL
         case .badgeList:

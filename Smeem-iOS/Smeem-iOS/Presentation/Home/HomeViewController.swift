@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 import FSCalendar
 import SnapKit
@@ -13,6 +14,8 @@ import SnapKit
 final class HomeViewController: BaseViewController {
     
     // MARK: - Property
+    
+    private let diaryViewControllerFactory = DiaryViewControllerFactory(diaryViewFactory: DiaryViewFactory())
     
     private let weekdayLabels = ["S", "M", "T", "W", "T", "F", "S"]
     private let gregorian = Calendar(identifier: .gregorian)
@@ -23,13 +26,15 @@ final class HomeViewController: BaseViewController {
     var badgePopupData = [PopupBadge]()
     var isKeyboardVisible: Bool = false
     var keyboardHeight: CGFloat = 0.0
-    var toastMessageFlag = false {
+    private var toastMessageFlag = false {
         didSet {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 self.loadToastMessage()
             }
         }
     }
+    
+    private var cancelBag = Set<AnyCancellable>()
     
     // MARK: - UI Property
     
@@ -185,12 +190,15 @@ final class HomeViewController: BaseViewController {
         setDelegate()
         setSwipe()
         
-        AmplitudeManager.shared.track(event: AmplitudeConstant.home.home_view.event)
+        DispatchQueue.global(qos: .background).async {
+            AmplitudeManager.shared.track(event: AmplitudeConstant.home.home_view.event)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         homeDiaryWithAPI(start: Date().startOfMonth().addingDate(addValue: -7), end: Date().endOfMonth().addingDate(addValue: 7))
         checkPopupView()
+        visitPatchAPI()
     }
     
     // MARK: - @objc
@@ -198,7 +206,9 @@ final class HomeViewController: BaseViewController {
     @objc func swipeEvent(_ swipe: UISwipeGestureRecognizer) {
         if (swipe.location(in: self.view).y < border.frame.origin.y + 20) {
             if swipe.direction == .down {
-                AmplitudeManager.shared.track(event: AmplitudeConstant.home.full_calendar_appear.event)
+                DispatchQueue.global(qos: .background).async {
+                    AmplitudeManager.shared.track(event: AmplitudeConstant.home.full_calendar_appear.event)
+                }
             }
             
             let topConstant: CGFloat = (swipe.direction == .up) ? 168 : 60
@@ -222,7 +232,7 @@ final class HomeViewController: BaseViewController {
     }
     
     @objc func myPageButtonDidTap(_ sender: UIButton) {
-        let myPageVC = MyPageViewController()
+        let myPageVC = MySummaryViewController()
         self.navigationController?.pushViewController(myPageVC, animated: true)
     }
     
@@ -271,6 +281,21 @@ final class HomeViewController: BaseViewController {
     private func checkPopupView() {
         if !badgePopupData.isEmpty {
             let popupVC = BadgePopupViewController(popupBadge: badgePopupData)
+            popupVC.summarySubject
+                .sink { [weak self] _ in
+                    self?.navigationController?.pushViewController(MySummaryViewController(), animated: true)
+                }
+                .store(in: &cancelBag)
+            
+            popupVC.firstDiarySubject
+                .sink { [weak self] _ in
+                    let nextVC = self?.diaryViewControllerFactory.makeStepOneKoreanDiaryViewController()
+                    let navigationController = UINavigationController(rootViewController: nextVC!)
+                    navigationController.modalTransitionStyle = .coverVertical
+                    navigationController.modalPresentationStyle = .fullScreen
+                    self?.present(navigationController, animated: true)
+                }
+                .store(in: &cancelBag)
             popupVC.modalTransitionStyle = .crossDissolve
             popupVC.modalPresentationStyle = .overCurrentContext
             self.present(popupVC, animated: true)
@@ -290,6 +315,11 @@ final class HomeViewController: BaseViewController {
       DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
         completion()
       }
+    }
+    
+    func handlePostDiaryAPI(with response: PostDiaryResponse?) {
+        toastMessageFlag = true
+        badgePopupData = response?.badges ?? []
     }
     
     // MARK: - Layout
@@ -526,6 +556,21 @@ extension HomeViewController {
             }
             
             SmeemLoadingView.hideLoading()
+        }
+    }
+    
+    func visitPatchAPI() {
+        SmeemLoadingView.showLoading()
+        
+        HomeAPI.shared.visitPatchAPI { result in
+            
+            switch result {
+            case .success(_):
+                SmeemLoadingView.hideLoading()
+            case .failure(let error):
+                self.showToast(toastType: .smeemErrorToast(message: error))
+                SmeemLoadingView.hideLoading()
+            }
         }
     }
 }
