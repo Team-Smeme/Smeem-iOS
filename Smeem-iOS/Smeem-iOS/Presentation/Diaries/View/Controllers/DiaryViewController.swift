@@ -8,6 +8,7 @@
 import UIKit
 import Combine
 
+
 // MARK: - DiaryViewController
 
 class DiaryViewController<ViewModelType: DiaryViewModel>: BaseViewController {
@@ -15,6 +16,7 @@ class DiaryViewController<ViewModelType: DiaryViewModel>: BaseViewController {
     // MARK: - Subjects
     
     private (set) var amplitudeSubject = PassthroughSubject<Void, Never>()
+    private let keyboardHeightSubject = PassthroughSubject<CGFloat, Never>()
     
     private var cancelBag = Set<AnyCancellable>()
     
@@ -64,8 +66,17 @@ class DiaryViewController<ViewModelType: DiaryViewModel>: BaseViewController {
 
 extension DiaryViewController {
     private func bind() {
+        NotificationCenter.default.publisher(for: UIResponder.keyboardWillShowNotification)
+            .compactMap { $0.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue }
+            .map { $0.cgRectValue.height }
+            .sink { [weak self] keyboardHeight in
+                self?.keyboardHeightSubject.send(keyboardHeight)
+            }
+            .store(in: &cancellables)
+        
         let input = DiaryViewModel.Input(textDidChangeSubject: rootView.inputTextView.textViewHandler!.textDidChangeSubject,
-                                         viewTypeSubject: rootView.viewTypeSubject)
+                                         viewTypeSubject: rootView.viewTypeSubject,
+                                         keyboardHeightSubject: keyboardHeightSubject)
         let output = viewModel.transform(input: input)
         
         output.textValidationResult

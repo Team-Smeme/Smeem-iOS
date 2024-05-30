@@ -89,6 +89,7 @@ final class PlanContainerView: UIView {
     
     func hasPlanData(data: String) {
         detailLabel.text = data
+        detailLabel.textColor = .black
         editDetailButton.setTitle("수정하기", for: .normal)
         
         editDetailButton.snp.makeConstraints {
@@ -99,7 +100,6 @@ final class PlanContainerView: UIView {
     
     func hasNotPlanData() {
         detailLabel.text = "아직 플랜이 없어요!"
-        detailLabel.font = .b4
         detailLabel.textColor = .gray500
         editDetailButton.setTitle("플랜 설정하기", for: .normal)
         

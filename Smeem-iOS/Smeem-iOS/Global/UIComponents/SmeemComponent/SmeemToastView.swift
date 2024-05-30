@@ -209,13 +209,13 @@ final class SmeemToastView: UIView {
 }
 
 extension SmeemToastView {
-    func show(in view: UIView, animated: Bool = true, hasKeyboard: Bool) {
+    func show(in view: UIView, animated: Bool = true, hasKeyboard: Bool, height: CGFloat = 0.0) {
         view.addSubview(self)
         
         snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             if hasKeyboard {
-                make.bottom.equalTo(view.keyboardLayoutGuide.snp.top).offset(-73)
+                make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-(height+40))
             } else {
                 make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-20)
             }

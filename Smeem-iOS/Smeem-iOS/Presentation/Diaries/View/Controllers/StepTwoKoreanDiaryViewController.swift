@@ -87,5 +87,12 @@ extension StepTwoKoreanDiaryViewController {
                 self?.rootView.configuration.layoutConfig?.updateHintViewText(with: text)
             }
             .store(in: &cancelBag)
+        
+        output.toastValidationResult
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] height in
+                self?.showToast(toastType: .smeemToast(bodyType: .regEx), hasKeyboard: true, height: height)
+            }
+            .store(in: &cancelBag)
     }
 }

@@ -9,10 +9,13 @@
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
+			<key>CFBundleURLName</key>
+			<string>smeemSplash</string>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
+				<string>smeem</string>
 				<string>kakao$(NATIVE_APP_KEY)</string>
 			</array>
 		</dict>

@@ -9,6 +9,11 @@ import UIKit
 import SnapKit
 import Combine
 
+enum SummaryAmplitudeType {
+    case viewDidLoad
+    case badge(String, Bool)
+}
+
 final class MySummaryViewController: BaseViewController, BottomSheetPresentable {
     
     // MARK: Publisher
@@ -17,6 +22,7 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
     private let myPlanSubject = PassthroughSubject<Void, Never>()
     private let myBadgeSubject = PassthroughSubject<Void, Never>()
     private let badgeCellTapped = PassthroughSubject<Int, Never>()
+    private let amplitudeSubject = PassthroughSubject<SummaryAmplitudeType, Never>()
     private var cancelBag = Set<AnyCancellable>()
     
     private var mySmeemDataSource: MySmeemCollectionViewDataSource!
@@ -36,6 +42,7 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
     
     private let contentView = UIView()
     private let naviView = UIView()
+    private let emptyContainerView = UIView()
     
     private let backButton: UIButton = {
         let button = UIButton()
@@ -104,15 +111,7 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
     private let myPlanTitleLabel: UILabel = {
         let label = UILabel()
         label.text = "매일 일기 작성하기"
-        label.font = .s2
-        label.textColor = .black
-        return label
-    }()
-    
-    private let myPlanDetailLabel: UILabel = {
-        let label = UILabel()
-        label.text = "유창한 비지니스 영어"
-        label.font = .c2
+        label.font = .b2
         label.textColor = .black
         return label
     }()
@@ -144,9 +143,14 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
     
     private let planSettingLabel: UILabel = {
         let label = UILabel()
-        label.text = "플랜 설정하러 가기"
         label.font = .c2
         label.textColor = .gray400
+        
+        let attributedString = NSMutableAttributedString(string: "플랜 설정하러 가기")
+        attributedString.addAttribute(.underlineStyle,
+                                      value: NSUnderlineStyle.single.rawValue,
+                                      range: NSRange(location: 0, length: attributedString.length))
+        label.attributedText = attributedString
         return label
     }()
     
@@ -183,6 +187,7 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
         registerCell()
         setDelegate()
         bind()
+        amplitudeSubject.send(.viewDidLoad)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -215,17 +220,35 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
             }
             .store(in: &cancelBag)
         
+        emptyContainerView.gesturePublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                let editVC = EditPlanViewController()
+                editVC.toastSubject
+                    .sink { [weak self] _ in
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                            self?.showToast(toastType: .smeemToast(bodyType: .changed))
+                        }
+                    }
+                    .store(in: &editVC.cancelBag)
+                self?.navigationController?.pushViewController(editVC, animated: true)
+            }
+            .store(in: &cancelBag)
+        
         let input = MySummaryViewModel.Input(mySummarySubject: mySummarySubject,
                                              myPlanSubject: myPlanSubject,
                                              myBadgeSubject: myBadgeSubject,
-                                             badgeCellTapped: badgeCellTapped)
+                                             badgeCellTapped: badgeCellTapped,
+                                             amplitudeSubject: amplitudeSubject)
         let output = viewModel.transform(input: input)
         
         output.totalHasMyPlanResult
             .receive(on: DispatchQueue.main)
             .sink { [weak self] response in
-                self?.emptyView.removeFromSuperview()
                 self?.myPlanView.isHidden = false
+                self?.myPlanCollectionView.isHidden = false
+                self?.emptyView.isHidden = true
+                
                 self?.mySmeemDataSource = MySmeemCollectionViewDataSource(numberItems: response.mySummaryNumber,
                                                                           textItems: response.mySumamryText)
                 self?.mySmeemCollectionView.dataSource = self?.mySmeemDataSource
@@ -238,6 +261,7 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
                 
                 self?.myPlanCollectionView.dataSource = self?.myPlanDataSource
                 self?.myPlanCollectionView.delegate = self?.myPlanFlowLayout
+                self?.remakePlanLayout(number: response.myPlan?.clearCount.count)
                 self?.myPlanCollectionView.reloadData()
                 
                 self?.myBadgeDataSource = MyBadgeCollectionViewDatasource(badgeData: response.myBadge)
@@ -249,14 +273,16 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
         output.totalHasNotPlanResult
             .receive(on: DispatchQueue.main)
             .sink { [weak self] response in
-                self?.myPlanView.removeFromSuperview()
-                self?.myPlanCollectionView.removeFromSuperview()
+                self?.myPlanView.isHidden = true
+                self?.myPlanCollectionView.isHidden = true
                 self?.emptyView.isHidden = false
 
                 self?.mySmeemDataSource = MySmeemCollectionViewDataSource(numberItems: response.mySummaryNumber,
                                                                           textItems: response.mySumamryText)
                 self?.mySmeemCollectionView.dataSource = self?.mySmeemDataSource
                 self?.mySmeemCollectionView.reloadData()
+                
+                self?.remakePlanLayout(number: nil)
                 
                 self?.myBadgeDataSource = MyBadgeCollectionViewDatasource(badgeData: response.myBadge)
                 self?.myBadgeCollectionView.dataSource = self?.myBadgeDataSource
@@ -269,6 +295,7 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
             .sink { [weak self] response in
                 let badgeBottomSheetVC = BadgeBottomSheetViewController()
                 badgeBottomSheetVC.setData(data: response)
+                self?.amplitudeSubject.send(.badge(response.type, response.hasBadge))
                 self?.presentBottomSheet(viewController: badgeBottomSheetVC)
             }
             .store(in: &cancelBag)
@@ -296,8 +323,9 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
                                 myPlanLabel, myPlanView, emptyView,
                                 myBadgeLabel, myBadgeCollectionView)
         mySmeemView.addSubview(mySmeemCollectionView)
-        myPlanView.addSubviews(myPlanTitleLabel, myPlanDetailLabel, myPlanCollectionView)
-        emptyView.addSubviews(emptyLabelStackView)
+        myPlanView.addSubviews(myPlanTitleLabel, myPlanCollectionView)
+        emptyView.addSubviews(emptyContainerView)
+        emptyContainerView.addSubview(emptyLabelStackView)
         emptyLabelStackView.addArrangedSubviews(emptyPlanLabel, planSettingLabel)
         
         naviView.snp.makeConstraints {
@@ -352,10 +380,25 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
             $0.leading.equalToSuperview().inset(26)
         }
         
-        myPlanView.snp.makeConstraints {
+        emptyContainerView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+            $0.width.height.equalTo(emptyView)
+        }
+    
+        emptyView.snp.makeConstraints {
             $0.top.equalTo(myPlanLabel.snp.bottom).offset(12)
             $0.leading.trailing.equalToSuperview().inset(18)
             $0.height.equalTo(120)
+        }
+    
+        emptyLabelStackView.snp.makeConstraints {
+            $0.center.equalToSuperview()
+        }
+        
+        myPlanView.snp.makeConstraints {
+            $0.top.equalTo(myPlanLabel.snp.bottom).offset(12)
+            $0.leading.trailing.equalToSuperview().inset(18)
+            $0.height.equalTo(91)
         }
         
         myPlanTitleLabel.snp.makeConstraints {
@@ -363,29 +406,14 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
             $0.leading.equalToSuperview().inset(17)
         }
         
-        myPlanDetailLabel.snp.makeConstraints {
-            $0.top.equalTo(myPlanTitleLabel.snp.bottom).offset(4)
-            $0.leading.equalTo(myPlanTitleLabel)
-        }
-        
         myPlanCollectionView.snp.makeConstraints {
-            $0.top.equalTo(myPlanDetailLabel.snp.bottom).offset(22)
+            $0.top.equalTo(myPlanTitleLabel.snp.bottom).offset(16)
             $0.leading.trailing.equalToSuperview().inset(18)
             $0.bottom.equalToSuperview()
         }
         
-        emptyView.snp.makeConstraints {
-            $0.top.equalTo(myPlanLabel.snp.bottom).offset(12)
-            $0.leading.trailing.equalToSuperview().inset(18)
-            $0.height.equalTo(120)
-        }
-        
-        emptyLabelStackView.snp.makeConstraints {
-            $0.center.equalToSuperview()
-        }
-        
         myBadgeLabel.snp.makeConstraints {
-            $0.top.equalTo(myPlanLabel.snp.bottom).offset(178)
+            $0.top.equalTo(myPlanLabel.snp.bottom).offset(139)
             $0.leading.equalToSuperview().inset(26)
         }
         
@@ -406,6 +434,64 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
     private func setDelegate() {
         mySmeemCollectionView.delegate = self
         myBadgeCollectionView.delegate = self
+    }
+    
+    private func remakePlanLayout(number: Int?) {
+        switch number {
+            case nil:
+            myBadgeLabel.snp.updateConstraints {
+                $0.top.equalTo(myPlanLabel.snp.bottom).offset(178)
+            }
+            
+            case 1:
+            myPlanView.snp.updateConstraints {
+                $0.height.equalTo(56)
+            }
+            
+            myPlanCollectionView.snp.remakeConstraints {
+                $0.top.bottom.equalToSuperview().inset(18)
+                $0.trailing.equalToSuperview().inset(17)
+                $0.width.equalTo(20)
+            }
+            
+            myBadgeLabel.snp.updateConstraints {
+                $0.top.equalTo(myPlanLabel.snp.bottom).offset(104)
+            }
+            
+            case 3:
+            let widthRatio = (Constant.Screen.width-36)/3
+            
+            myPlanView.snp.updateConstraints {
+                $0.height.equalTo(56)
+            }
+            
+            myPlanCollectionView.snp.remakeConstraints {
+                $0.top.bottom.equalToSuperview().inset(18)
+                $0.trailing.equalToSuperview().inset(17)
+                $0.width.equalTo(widthRatio)
+            }
+            
+            myBadgeLabel.snp.updateConstraints {
+                $0.top.equalTo(myPlanLabel.snp.bottom).offset(104)
+            }
+            
+            case 5, 7:
+            myPlanView.snp.updateConstraints {
+                $0.height.equalTo(91)
+            }
+            
+            myPlanCollectionView.snp.remakeConstraints {
+                $0.top.equalTo(myPlanTitleLabel.snp.bottom).offset(16)
+                $0.leading.trailing.equalToSuperview().inset(18)
+                $0.bottom.equalToSuperview()
+            }
+            
+            myBadgeLabel.snp.updateConstraints {
+                $0.top.equalTo(myPlanLabel.snp.bottom).offset(139)
+            }
+            
+            default: break;
+        }
     }
 }
 

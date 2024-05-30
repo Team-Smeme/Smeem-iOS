@@ -36,7 +36,10 @@ final class MyBadgeCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        backgroundColor = .smeemWhite
+        self.backgroundColor = .smeemWhite
+        self.makeRoundCorner(cornerRadius: 10)
+        self.layer.borderWidth = 1.0
+        self.layer.borderColor = UIColor.gray100.cgColor
     }
     
     required init?(coder: NSCoder) {
@@ -53,14 +56,6 @@ final class MyBadgeCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Layout
     
-    func setLayout() {
-        addSubview(badgeImage)
-        
-        badgeImage.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
-    }
-    
     func setBadgeLayout() {
         addSubviews(badgeImage, badgeNameLabel)
         
@@ -76,10 +71,5 @@ final class MyBadgeCollectionViewCell: UICollectionViewCell {
             $0.top.equalTo(badgeImage.snp.bottom).offset(3)
             $0.centerX.equalTo(badgeImage)
         }
-    }
-    
-    func setBadgeHidden() {
-        badgeImage.isHidden = true
-        badgeNameLabel.isHidden = true
     }
 }

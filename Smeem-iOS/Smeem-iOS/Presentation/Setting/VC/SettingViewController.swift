@@ -204,7 +204,7 @@ final class SettingViewController: BaseViewController {
             .store(in: &cancelBag)
         
         self.toastSubject
-            .delay(for: .seconds(0.5), scheduler: DispatchQueue.main) // 3초 지연
+            .delay(for: .seconds(0.3), scheduler: DispatchQueue.main) // 3초 지연
             .sink { [weak self] _ in
                 self?.showToast(toastType: .smeemToast(bodyType: .changed))
             }
@@ -232,12 +232,6 @@ final class SettingViewController: BaseViewController {
         contentView.snp.makeConstraints {
             $0.edges.equalTo(summaryScrollerView.contentLayoutGuide)
             $0.width.equalTo(summaryScrollerView.frameLayoutGuide)
-            $0.height.equalTo(convertByWidthRatio(895))
-        }
-        
-        contentView.snp.makeConstraints {
-            $0.edges.equalTo(summaryScrollerView.contentLayoutGuide)
-            $0.width.equalTo(summaryScrollerView.frameLayoutGuide)
         }
         
         backButton.snp.makeConstraints {
@@ -259,31 +253,31 @@ final class SettingViewController: BaseViewController {
         nicknameContainerView.snp.makeConstraints {
             $0.top.equalTo(naviView.snp.bottom).offset(18)
             $0.leading.trailing.equalToSuperview().inset(18)
-            $0.height.equalTo(87)
+            $0.height.equalTo(convertByHeightRatio(87))
         }
         
         planContainerView.snp.makeConstraints {
             $0.top.equalTo(nicknameContainerView.snp.bottom).offset(28)
             $0.leading.trailing.equalToSuperview().inset(18)
-            $0.height.equalTo(87)
+            $0.height.equalTo(convertByHeightRatio(87))
         }
         
         languageContainerView.snp.makeConstraints {
             $0.top.equalTo(planContainerView.snp.bottom).offset(28)
             $0.leading.trailing.equalToSuperview().inset(18)
-            $0.height.equalTo(87)
+            $0.height.equalTo(convertByHeightRatio(87))
         }
         
         alarmContainerView.snp.makeConstraints {
             $0.top.equalTo(languageContainerView.snp.bottom).offset(28)
             $0.leading.trailing.equalToSuperview().inset(18)
-            $0.height.equalTo(87)
+            $0.height.equalTo(convertByHeightRatio(87))
         }
         
         alarmCollectionView.snp.makeConstraints {
             $0.top.equalTo(alarmContainerView.snp.bottom).offset(convertByHeightRatio(10))
             $0.leading.trailing.equalToSuperview().inset(18)
-            $0.bottom.equalToSuperview().offset(-convertByHeightRatio(80))
+            $0.bottom.equalToSuperview().inset(convertByHeightRatio(80))
             $0.height.equalTo(convertByHeightRatio(133))
         }
         

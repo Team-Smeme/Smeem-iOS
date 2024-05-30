@@ -103,7 +103,7 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         if let _ = userInfo["aps"] as? Dictionary<String, Any> {
             guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
             guard let window = windowScene.windows.first  else { return }
-            let rootViewController = UINavigationController(rootViewController: HomeViewController())
+            let rootViewController = UINavigationController(rootViewController: SplashViewController())
             
             window.rootViewController = rootViewController
             window.makeKeyAndVisible()
