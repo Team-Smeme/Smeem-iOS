@@ -23,10 +23,12 @@ final class ForeignDiaryViewModel: DiaryViewModel {
         let refreshButtonAction: AnyPublisher<Void, Never>
         let toolTipAction: AnyPublisher<Void, Never>
         let toolTipResult: AnyPublisher<Void, Never>
+        let toastValidationResult: AnyPublisher<CGFloat, Never>
         let loadingViewResult: AnyPublisher<Bool, Never>
     }
 
     private let toolTipSubject = PassthroughSubject<Void, Never>()
+    private let toastValidationSubject = PassthroughSubject<CGFloat, Never>()
     private let amplitudeSubject = PassthroughSubject<Void, Never>()
     private let loadingViewResult = PassthroughSubject<Bool, Never>()
     
@@ -45,7 +47,14 @@ final class ForeignDiaryViewModel: DiaryViewModel {
             .store(in: &cancelBag)
         
         let rightButtonAction = input.rightButtonTapped
-            .filter { [weak self] in self?.textValidationState.value == true }
+            .filter { [weak self] in
+                if self?.textValidationState.value == true {
+                    return true
+                } else {
+                    self?.toastValidationSubject.send((self?.keyboardHeight) ?? 336.0)
+                    return false
+                }
+            }
             .handleEvents(receiveSubscription: { [weak self] _ in
                 self?.loadingViewResult.send(true)
             })
@@ -100,6 +109,7 @@ final class ForeignDiaryViewModel: DiaryViewModel {
         
         let toolTipAction = input.toolTipTapped
             .map {
+                let kheight = self.keyboardHeight
                 UserDefaultsManager.shouldShowToolTip = false
             }
             .eraseToAnyPublisher()
@@ -115,12 +125,14 @@ final class ForeignDiaryViewModel: DiaryViewModel {
             .store(in: &cancelBag)
         
         let loadingViewResult = loadingViewResult.eraseToAnyPublisher()
+        let toastValidationResult = toastValidationSubject.eraseToAnyPublisher()
         
         return Output(rightButtonAction: rightButtonAction,
                       randomTopicButtonAction: randomTopicButtonAction,
                       refreshButtonAction: refreshButtonAction,
                       toolTipAction: toolTipAction,
                       toolTipResult: toolTipResult,
+                      toastValidationResult: toastValidationResult,
                       loadingViewResult: loadingViewResult)
     }
 }

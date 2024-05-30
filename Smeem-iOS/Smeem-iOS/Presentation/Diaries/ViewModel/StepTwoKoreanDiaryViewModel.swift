@@ -24,12 +24,14 @@ final class StepTwoKoreanDiaryViewModel: DiaryViewModel {
         let rightButtonAction: AnyPublisher<PostDiaryResponse?, Never>
         let hintButtonAction: AnyPublisher<Bool, Never>
         let postHintResult: AnyPublisher<String?, Never>
+        let toastValidationResult: AnyPublisher<CGFloat, Never>
         let errorResult: AnyPublisher<SmeemError, Never>
         let loadingViewAction: AnyPublisher<Bool, Never>
     }
     
     private let amplitudeSubject = PassthroughSubject<AmplitudeType, Never>()
     private let postHintResult = PassthroughSubject<String?, Never>()
+    private let toastValidationSubject = PassthroughSubject<CGFloat, Never>()
     private let loadingViewResult = PassthroughSubject<Bool, Never>()
     private let errorResult = PassthroughSubject<SmeemError, Never>()
     
@@ -47,7 +49,14 @@ final class StepTwoKoreanDiaryViewModel: DiaryViewModel {
             .store(in: &cancelBag)
         
         let rightButtonAction = input.rightButtonTapped
-            .filter { [weak self] in self?.textValidationState.value == true }
+            .filter { [weak self] in
+                if self?.textValidationState.value == true {
+                    return true
+                } else {
+                    self?.toastValidationSubject.send((self?.keyboardHeight) ?? 336.0)
+                    return false
+                }
+            }
             .handleEvents(receiveSubscription: { [weak self] _ in
                 self?.loadingViewResult.send(true)
             })
@@ -103,10 +112,12 @@ final class StepTwoKoreanDiaryViewModel: DiaryViewModel {
         
         let errorResult = errorResult.eraseToAnyPublisher()
         let loadingViewResult = loadingViewResult.eraseToAnyPublisher()
+        let toastValidationResult = toastValidationSubject.eraseToAnyPublisher()
         
         return Output(rightButtonAction: rightButtonAction,
                       hintButtonAction: hintButtonAction,
                       postHintResult: postHintResult,
+                      toastValidationResult: toastValidationResult,
                       errorResult: errorResult,
                       loadingViewAction: loadingViewResult)
     }

@@ -14,6 +14,7 @@ class DiaryViewModel: ViewModel {
     struct Input {
         let textDidChangeSubject: CurrentValueSubject<String?, Never>
         let viewTypeSubject: CurrentValueSubject<DiaryViewType?, Never>
+        let keyboardHeightSubject: PassthroughSubject<CGFloat, Never>
     }
     
     struct Output {
@@ -31,6 +32,7 @@ class DiaryViewModel: ViewModel {
     private var cancelBag = Set<AnyCancellable>()
     
     private var diaryText: String? = nil
+    var keyboardHeight: CGFloat = 0.0
     
     private (set) var model: DiaryModel
     
@@ -51,6 +53,12 @@ class DiaryViewModel: ViewModel {
                 
                 self?.textValidationState.send(isValid)
                 self?.diaryText = text
+            }
+            .store(in: &cancelBag)
+        
+        input.keyboardHeightSubject
+            .sink { [weak self] height in
+                self?.keyboardHeight = height
             }
             .store(in: &cancelBag)
         
