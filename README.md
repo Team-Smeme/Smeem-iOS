@@ -24,7 +24,11 @@
 - iOS 15.0 +
 - Xcode 15.0
 
-## ✔️ 사용 라이브러리
+<br/>
+
+## ✔️ 사용 기술 & 라이브러리
+- UIKit
+- Combine
 - Moya
 - Firebase
 - KakaoOpenSDK
