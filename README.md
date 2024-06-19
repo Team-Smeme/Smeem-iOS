@@ -12,7 +12,7 @@
 
 ## 🧑‍💻 팀원 소개 (Team)
 
-| https://github.com/cchanmi | https://github.com/joonBaek12 |
+| [황찬미](https://github.com/cchanmi) | [백준](https://github.com/joonBaek12) |
 | --- | --- |
 | <img width="250" alt="image" src="https://github.com/Team-Smeme/Smeem-iOS/assets/86944161/44830ea7-faac-4dcd-a778-0c49d3eb7c7a" /> | <img width="250" alt="image" src="https://github.com/Team-Smeme/Smeem-iOS/assets/86944161/0e0cfcb6-d4d7-41f7-9eb0-7f516480939c" /> |
 | iOS Lead Developer | iOS Developer |
