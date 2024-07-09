@@ -179,6 +179,8 @@ final class HomeViewController: BaseViewController {
         return addDiaryButton
     }()
     
+    private let bannerView = CustomBannerView()
+    
     // MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -327,7 +329,7 @@ final class HomeViewController: BaseViewController {
     private func setLayout() {
         hiddenNavigationBar()
         
-        view.addSubviews(calendar, myPageButton, indicator, border, diaryThumbnail, emptyView, floatingView, addDiaryButton, myPageBackView)
+        view.addSubviews(calendar, myPageButton, indicator, border, diaryThumbnail, emptyView, floatingView, addDiaryButton, myPageBackView, bannerView)
         diaryThumbnail.addSubviews(diaryDate, fullViewButtonText, fullViewButtonSymbol, diaryText)
         emptyView.addSubviews(emptyPaddingView, emptySymbol, emptyText)
         floatingView.addSubviews(waitingLabel, adviceLabel, xButton)
@@ -444,6 +446,13 @@ final class HomeViewController: BaseViewController {
             $0.centerX.equalToSuperview()
             $0.width.equalTo(convertByWidthRatio(339))
             $0.height.equalTo(convertByHeightRatio(60))
+        }
+        
+        bannerView.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.leading.trailing.equalTo(addDiaryButton)
+            make.bottom.equalTo(addDiaryButton.snp.top).offset(-10)
+            make.height.equalTo(88)
         }
     }
 }

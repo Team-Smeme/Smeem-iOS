@@ -24,6 +24,7 @@
 		3728B8D32A2CFED300EF4CF8 /* ForeignDiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3728B8D22A2CFED300EF4CF8 /* ForeignDiaryViewController.swift */; };
 		3728B8D52A2CFF2C00EF4CF8 /* StepOneKoreanDiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3728B8D42A2CFF2C00EF4CF8 /* StepOneKoreanDiaryViewController.swift */; };
 		3728B8D72A2CFF3A00EF4CF8 /* StepTwoKoreanDiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3728B8D62A2CFF3A00EF4CF8 /* StepTwoKoreanDiaryViewController.swift */; };
+		373A7F552C3D78CC00CF554C /* CustomBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373A7F542C3D78CC00CF554C /* CustomBannerView.swift */; };
 		373E38592A2F889500DF96F0 /* DiaryDetailRandomSubjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373E38582A2F889500DF96F0 /* DiaryDetailRandomSubjectView.swift */; };
 		374F828C2AC327A200C128B9 /* SmeemTextViewHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374F828B2AC327A200C128B9 /* SmeemTextViewHandler.swift */; };
 		374F828E2AC5DFFE00C128B9 /* DiaryBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374F828D2AC5DFFE00C128B9 /* DiaryBottomView.swift */; };
@@ -258,6 +259,7 @@
 		3728B8D22A2CFED300EF4CF8 /* ForeignDiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForeignDiaryViewController.swift; sourceTree = "<group>"; };
 		3728B8D42A2CFF2C00EF4CF8 /* StepOneKoreanDiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepOneKoreanDiaryViewController.swift; sourceTree = "<group>"; };
 		3728B8D62A2CFF3A00EF4CF8 /* StepTwoKoreanDiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepTwoKoreanDiaryViewController.swift; sourceTree = "<group>"; };
+		373A7F542C3D78CC00CF554C /* CustomBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBannerView.swift; sourceTree = "<group>"; };
 		373E38582A2F889500DF96F0 /* DiaryDetailRandomSubjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryDetailRandomSubjectView.swift; sourceTree = "<group>"; };
 		37499E3C2BD0C3A100BA6FAF /* SharedDiaryDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedDiaryDataService.swift; sourceTree = "<group>"; };
 		374F828B2AC327A200C128B9 /* SmeemTextViewHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmeemTextViewHandler.swift; sourceTree = "<group>"; };
@@ -633,6 +635,7 @@
 				4A1EE9552A4DFB86007BFEF3 /* SmeemComponent */,
 				4A1EE9532A4DFB42007BFEF3 /* Diary */,
 				4A3F2E952A0ABB9C00F6AC60 /* Alarm */,
+				373A7F542C3D78CC00CF554C /* CustomBannerView.swift */,
 			);
 			path = UIComponents;
 			sourceTree = "<group>";
@@ -2027,6 +2030,7 @@
 				4ABCBCDC2BE2484B003138A8 /* MyPlanAppData.swift in Sources */,
 				3728B8D72A2CFF3A00EF4CF8 /* StepTwoKoreanDiaryViewController.swift in Sources */,
 				4A07F8A82B7B3E5E004185F2 /* SignupBottomSheetViewController.swift in Sources */,
+				373A7F552C3D78CC00CF554C /* CustomBannerView.swift in Sources */,
 				4ABCBCC52BDD3375003138A8 /* MySummaryEndPoint.swift in Sources */,
 				4A454A832B6666FF0079D48D /* TrainingGoalViewModel.swift in Sources */,
 				37DCA66E2A484D3100FF8F90 /* PostDiaryResponse.swift in Sources */,
