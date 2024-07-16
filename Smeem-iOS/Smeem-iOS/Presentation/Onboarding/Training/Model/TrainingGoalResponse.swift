@@ -12,5 +12,6 @@ struct TrainingGoalResponse: Codable {
 }
 
 struct Goal: Codable, Equatable {
-    let goalType, name: String
+    let goalType: String?
+    let name: String
 }

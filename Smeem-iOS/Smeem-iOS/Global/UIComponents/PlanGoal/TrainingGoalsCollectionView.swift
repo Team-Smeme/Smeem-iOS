@@ -16,11 +16,17 @@ protocol TrainingDataSendDelegate {
     func sendTargetData(targetString: String, buttonType: SmeemButtonType)
 }
 
+protocol ResignSummaryDataSendDelegate {
+    func sendTargetData(summaryInt: Int)
+}
+
+
 final class TrainingGoalsCollectionView: BaseCollectionView {
     
     // MARK: Properties
     
     var trainingDelegate: TrainingDataSendDelegate?
+    var resignSummaryDelegate: ResignSummaryDataSendDelegate?
 
     private var selectedTarget = ""
     private var selectedIndex = -1
@@ -90,8 +96,12 @@ extension TrainingGoalsCollectionView: UICollectionViewDelegate {
         cell.selctedCell()
         
         selectedIndex = indexPath.item
-        selectedTarget = planGoalArray[indexPath.item].goalType
+        if let goalType = planGoalArray[indexPath.item].goalType {
+            selectedTarget = goalType
+        }
+        
         trainingDelegate?.sendTargetData(targetString: selectedTarget, buttonType: .enabled)
+        resignSummaryDelegate?.sendTargetData(summaryInt: indexPath.item)
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
