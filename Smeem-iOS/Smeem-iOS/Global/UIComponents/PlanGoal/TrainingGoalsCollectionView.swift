@@ -7,9 +7,10 @@
 
 import UIKit
 
-enum TrainingGoalsType {
+enum TrainingGoalsType: Equatable {
     case onboarding
     case myPage(targetIndex: Int)
+    case resign
 }
 
 protocol TrainingDataSendDelegate {
@@ -30,6 +31,7 @@ final class TrainingGoalsCollectionView: BaseCollectionView {
 
     private var selectedTarget = ""
     private var selectedIndex = -1
+    private var cellType = TrainingGoalsType.resign
     var planGoalArray = [Goal]()
     
     // MARK: UI Properties
@@ -38,6 +40,7 @@ final class TrainingGoalsCollectionView: BaseCollectionView {
     
     init(planGoalType: TrainingGoalsType) {
         super.init(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        self.cellType = planGoalType
         checkTargetString(planGoalType: planGoalType)
         registerCell()
         setDelegate()
@@ -119,6 +122,6 @@ extension TrainingGoalsCollectionView: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 12
+        return self.cellType == .resign ? 5 : 12
     }
 }

@@ -53,6 +53,7 @@ final class ResignSummaryViewController: BaseViewController {
                      """
         label.font = .b3
         label.textColor = .smeemBlack
+        label.numberOfLines = 0
         return label
     }()
     
@@ -65,7 +66,7 @@ final class ResignSummaryViewController: BaseViewController {
         return stackView
     }()
     
-    private lazy var trainingGoalCollectionView = TrainingGoalsCollectionView(planGoalType: .onboarding)
+    private lazy var trainingGoalCollectionView = TrainingGoalsCollectionView(planGoalType: .resign)
     
     private let summaryLabel: UILabel = {
         let label = UILabel()
