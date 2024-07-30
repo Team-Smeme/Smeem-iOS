@@ -17,6 +17,7 @@ final class ResignSummaryViewController: BaseViewController {
     private let nextButtonTapped = PassthroughSubject<Void, Never>()
     private let keyboardSubject = PassthroughSubject<KeyboardType, Never>()
     private let keyboardHeightSubject = PassthroughSubject<KeyboardInfo, Never>()
+    private let summaryTextSubject = PassthroughSubject<String, Never>()
     private var cancelBag = Set<AnyCancellable>()
     
     private let viewModel = ResignSummaryViewModel()
@@ -142,7 +143,8 @@ final class ResignSummaryViewController: BaseViewController {
                                                                             cellTapped: cellTapped,
                                                                             buttonTapped: nextButtonTapped,
                                                                             keyboardSubject: keyboardSubject,
-                                                                            keyboardHeightSubject: keyboardHeightSubject))
+                                                                            keyboardHeightSubject: keyboardHeightSubject,
+                                                                            summaryTextSubject: summaryTextSubject))
         output.viewWillAppearResult
             .sink { array in
                 self.trainingGoalCollectionView.planGoalArray = array
@@ -272,5 +274,9 @@ extension ResignSummaryViewController: UITextViewDelegate {
             textView.text = "계정 삭제 사유를 적어주세요."
             textView.textColor = .lightGray
         }
+    }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        self.summaryTextSubject.send((textView.text))
     }
 }

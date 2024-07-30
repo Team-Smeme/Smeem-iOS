@@ -33,6 +33,7 @@ final class ResignSummaryViewModel: ViewModel {
         let buttonTapped: PassthroughSubject<Void, Never>
         let keyboardSubject: PassthroughSubject<KeyboardType, Never>
         let keyboardHeightSubject: PassthroughSubject<KeyboardInfo, Never>
+        let summaryTextSubject: PassthroughSubject<String, Never>
     }
     
     struct Output {
@@ -50,6 +51,7 @@ final class ResignSummaryViewModel: ViewModel {
     private var keyboardHeight = 0.0
     private var cancelBag = Set<AnyCancellable>()
     private var totalViewHeight: CGFloat = 0.0
+    private var summaryText = ""
     
     func transform(input: Input) -> Output {
         let viewWillAppearResult = input.viewWillAppearSubject
@@ -73,7 +75,7 @@ final class ResignSummaryViewModel: ViewModel {
         
         cellIndexSubject
             .sink { index -> Void in
-                if index == 4 { self.notEnabledButtonResult.send(.notEnabled) }
+                if index == 4 && self.summaryText == "" { self.notEnabledButtonResult.send(.notEnabled) }
                 else { self.enabledButtonResult.send(.enabled) }
             }
             .store(in: &cancelBag)
@@ -84,6 +86,15 @@ final class ResignSummaryViewModel: ViewModel {
                 return info.type == .up ? self.totalViewHeight-info.keyboardHeight! : self.totalViewHeight
             }
             .eraseToAnyPublisher()
+        
+        input.summaryTextSubject
+            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines )}
+            .filter { !$0.isEmpty }
+            .sink { text -> Void in
+                self.summaryText = text
+                text.isEmpty ? self.notEnabledButtonResult.send(.notEnabled) : self.enabledButtonResult.send(.enabled)
+            }
+            .store(in: &cancelBag)
             
         return Output(viewWillAppearResult: viewWillAppearResult,
                       cellResult: cellResult,
