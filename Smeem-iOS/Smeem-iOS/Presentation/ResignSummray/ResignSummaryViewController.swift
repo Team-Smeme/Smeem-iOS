@@ -8,7 +8,7 @@
 import UIKit
 import Combine
 
-final class ResignSummaryViewController: BaseViewController, UITextViewDelegate {
+final class ResignSummaryViewController: BaseViewController {
     
     // MARK: Publisher
     
@@ -247,5 +247,30 @@ final class ResignSummaryViewController: BaseViewController, UITextViewDelegate 
 extension ResignSummaryViewController: ResignSummaryDataSendDelegate {
     func sendTargetData(summaryInt: Int) {
         self.cellTapped.send(summaryInt)
+    }
+}
+
+extension ResignSummaryViewController: UITextViewDelegate {
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.text == "계정 삭제 사유를 적어주세요." {
+            textView.text = nil
+            textView.textColor = .black
+        }
+        
+        let selectedLastIndexPath = IndexPath(item: 4, section: 0)
+        trainingGoalCollectionView.selectItem(at: selectedLastIndexPath, animated: true, scrollPosition: [])
+        trainingGoalCollectionView.collectionView(trainingGoalCollectionView,
+                                                  didSelectItemAt: selectedLastIndexPath)
+        let deSelectedIndexPath = (0...3).map { IndexPath(item: $0, section: 0) }
+        deSelectedIndexPath.forEach { indexPath in trainingGoalCollectionView.collectionView(trainingGoalCollectionView,
+                                                                                             didDeselectItemAt: indexPath) }
+        self.cellTapped.send(4)
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            textView.text = "계정 삭제 사유를 적어주세요."
+            textView.textColor = .lightGray
+        }
     }
 }
