@@ -8,6 +8,8 @@
 import UIKit
 import Combine
 
+import SnapKit
+
 final class SettingViewController: BaseViewController {
     
     private let viewWillAppearSubject = PassthroughSubject<Void, Never>()
@@ -22,6 +24,7 @@ final class SettingViewController: BaseViewController {
     private let summaryScrollerView: UIScrollView = {
         let scrollerView = UIScrollView()
         scrollerView.showsVerticalScrollIndicator = false
+        scrollerView.isScrollEnabled = true
         return scrollerView
     }()
     
@@ -48,12 +51,14 @@ final class SettingViewController: BaseViewController {
         return button
     }()
     
-    private let planContainerView = PlanContainerView()
     private let nicknameContainerView = NicknameContainerView()
+    private let planContainerView = PlanContainerView()
     private let languageContainerView = LanguageContainerView()
     private let alarmContainerView = AlarmContainerView()
     private let alarmCollectionContainerView = UIView()
     private let alarmCollectionView = AlarmCollectionView()
+    private let separationLine = SeparationLine(height: .thin)
+    private let sendFeedbackView = SendFeedbackView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -215,8 +220,13 @@ final class SettingViewController: BaseViewController {
         view.addSubviews(naviView, summaryScrollerView)
         naviView.addSubviews(backButton, summaryLabel, moreButton)
         summaryScrollerView.addSubview(contentView)
-        contentView.addSubviews(planContainerView, nicknameContainerView,
-                                languageContainerView, alarmContainerView, alarmCollectionView)
+        contentView.addSubviews(nicknameContainerView,
+                                planContainerView,
+                                languageContainerView,
+                                alarmContainerView,
+                                alarmCollectionView,
+                                separationLine,
+                                sendFeedbackView)
         alarmCollectionView.addSubview(alarmCollectionContainerView)
         
         naviView.snp.makeConstraints {
@@ -226,12 +236,15 @@ final class SettingViewController: BaseViewController {
         
         summaryScrollerView.snp.makeConstraints {
             $0.top.equalTo(naviView.snp.bottom)
-            $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
+            $0.leading.trailing.bottom.equalToSuperview()
         }
         
         contentView.snp.makeConstraints {
-            $0.edges.equalTo(summaryScrollerView.contentLayoutGuide)
-            $0.width.equalTo(summaryScrollerView.frameLayoutGuide)
+            $0.width.equalToSuperview()
+            $0.top.bottom.equalToSuperview()
+            
+            // 왜 edges로 하면 안됨?
+//            $0.edges.equalToSuperview()
         }
         
         backButton.snp.makeConstraints {
@@ -253,37 +266,49 @@ final class SettingViewController: BaseViewController {
         nicknameContainerView.snp.makeConstraints {
             $0.top.equalTo(naviView.snp.bottom).offset(18)
             $0.leading.trailing.equalToSuperview().inset(18)
-            $0.height.equalTo(convertByHeightRatio(87))
+            $0.height.equalTo(87)
         }
         
         planContainerView.snp.makeConstraints {
             $0.top.equalTo(nicknameContainerView.snp.bottom).offset(28)
             $0.leading.trailing.equalToSuperview().inset(18)
-            $0.height.equalTo(convertByHeightRatio(87))
+            $0.height.equalTo(87)
         }
         
         languageContainerView.snp.makeConstraints {
             $0.top.equalTo(planContainerView.snp.bottom).offset(28)
             $0.leading.trailing.equalToSuperview().inset(18)
-            $0.height.equalTo(convertByHeightRatio(87))
+            $0.height.equalTo(87)
         }
         
         alarmContainerView.snp.makeConstraints {
             $0.top.equalTo(languageContainerView.snp.bottom).offset(28)
             $0.leading.trailing.equalToSuperview().inset(18)
-            $0.height.equalTo(convertByHeightRatio(87))
+            $0.height.equalTo(87)
         }
         
         alarmCollectionView.snp.makeConstraints {
             $0.top.equalTo(alarmContainerView.snp.bottom).offset(convertByHeightRatio(10))
             $0.leading.trailing.equalToSuperview().inset(18)
-            $0.bottom.equalToSuperview().inset(convertByHeightRatio(80))
-            $0.height.equalTo(convertByHeightRatio(133))
+            $0.height.equalTo(133)
         }
         
         alarmCollectionContainerView.snp.makeConstraints {
             $0.edges.equalToSuperview()
             $0.width.height.equalTo(alarmCollectionView)
+        }
+        
+        separationLine.snp.remakeConstraints {
+            $0.top.equalTo(alarmCollectionView.snp.bottom).offset(28)
+            $0.height.equalTo(1)
+            $0.leading.trailing.equalTo(nicknameContainerView)
+        }
+        
+        sendFeedbackView.snp.makeConstraints {
+            $0.top.equalTo(separationLine.snp.bottom).offset(28)
+            $0.leading.trailing.equalTo(alarmContainerView)
+            $0.height.equalTo(88)
+            $0.bottom.equalToSuperview()
         }
     }
 }
