@@ -6,20 +6,20 @@
 //
 
 import UIKit
+import Combine
 
 import SnapKit
 
 final class CustomBannerView: BaseView {
     
-    private let cancelAction = UIAction { _ in
-        
-    }
+    private (set) var closeButtonTapped = PassthroughSubject<Void, Never>()
+    private var cancelBag = Set<AnyCancellable>()
     
-    private let headerLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = .s1
         label.textColor = .smeemBlack
-        label.text = "스밈에 의견 남기고 선물 받아가세요!"
+//        label.text = "헤더레이블"
         return label
     }()
     
@@ -27,12 +27,12 @@ final class CustomBannerView: BaseView {
         let label = UILabel()
         label.font = .c3
         label.textColor = .smeemBlack
-        label.text = "자유롭게 의견을 나눠주실 분들을 모시고 있어요."
+//        label.text = "바디레이블"
         return label
     }()
     
     private lazy var closeButton: UIButton = {
-        let button = UIButton(primaryAction: cancelAction)
+        let button = UIButton()
         button.setImage(Constant.Image.icnCancelGrey, for: .normal)
         button.tintColor = .gray200
         return button
@@ -43,6 +43,7 @@ final class CustomBannerView: BaseView {
         
         setUI()
         setLayout()
+        subscribeButtonEvent()
     }
     
     required init?(coder: NSCoder) {
@@ -57,22 +58,36 @@ final class CustomBannerView: BaseView {
 
 extension CustomBannerView {
     private func setLayout() {
-        addSubviews(headerLabel, bodyLabel, closeButton)
+        addSubviews(titleLabel, bodyLabel, closeButton)
         
-        headerLabel.snp.makeConstraints { make in
+        titleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(22)
             make.leading.equalToSuperview().offset(18)
         }
         
         bodyLabel.snp.makeConstraints { make in
-            make.top.equalTo(headerLabel.snp.bottom).offset(4)
-            make.leading.equalTo(headerLabel)
+            make.top.equalTo(titleLabel.snp.bottom).offset(4)
+            make.leading.equalTo(titleLabel)
         }
         
         closeButton.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.trailing.equalToSuperview()
             make.size.equalTo(40)
+        }
+    }
+    
+    private func subscribeButtonEvent() {
+        closeButton.tapPublisher.sink { [weak self] in
+            self?.closeButtonTapped.send()
+        }
+        .store(in: &cancelBag)
+    }
+    
+    func setLabelText(with title: String, body: String) {
+        DispatchQueue.main.async {[weak self] in
+            self?.titleLabel.text = title
+            self?.bodyLabel.text = body
         }
     }
 }

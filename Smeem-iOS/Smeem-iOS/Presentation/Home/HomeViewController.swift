@@ -8,6 +8,7 @@
 import UIKit
 import Combine
 
+import FirebaseRemoteConfig
 import FSCalendar
 import SnapKit
 
@@ -17,6 +18,10 @@ final class HomeViewController: BaseViewController {
     
     private let diaryViewControllerFactory = DiaryViewControllerFactory(diaryViewFactory: DiaryViewFactory())
     
+    private let remoteConfig = RemoteConfig.remoteConfig()
+    private var isBannerShowen = true
+    private lazy var isDiaryTextEmpty = self.diaryText.text?.isEmpty ?? true
+    private let settings = RemoteConfigSettings()
     private let weekdayLabels = ["S", "M", "T", "W", "T", "F", "S"]
     private let gregorian = Calendar(identifier: .gregorian)
     private var homeDiaryDict = [String: HomeDiaryCustom]()
@@ -87,7 +92,7 @@ final class HomeViewController: BaseViewController {
         diaryDate.font = .s3
         return diaryDate
     }()
- 
+    
     private let diaryText: UILabel = {
         let diaryText = UILabel()
         diaryText.textColor = .smeemBlack
@@ -188,6 +193,7 @@ final class HomeViewController: BaseViewController {
         
         configureBottomLayout(date: currentDate)
         setBackgroundColor()
+        fetchRemoteConfig()
         setLayout()
         setDelegate()
         setSwipe()
@@ -195,6 +201,12 @@ final class HomeViewController: BaseViewController {
         DispatchQueue.global(qos: .background).async {
             AmplitudeManager.shared.track(event: AmplitudeConstant.home.home_view.event)
         }
+        
+        bannerView.closeButtonTapped.sink { [weak self] in
+            self?.bannerView.removeFromSuperview()
+            UserDefaultsManager.hasBannerClosed = true
+        }
+        .store(in: &cancelBag)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -314,9 +326,9 @@ final class HomeViewController: BaseViewController {
     }
     
     private func getSomeData(completion: @escaping () -> ()) {
-      DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-        completion()
-      }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            completion()
+        }
     }
     
     func handlePostDiaryAPI(with response: PostDiaryResponse?) {
@@ -324,12 +336,41 @@ final class HomeViewController: BaseViewController {
         badgePopupData = response?.badges ?? []
     }
     
+    func fetchRemoteConfig() {
+        remoteConfig.fetch() { (status, error) -> Void in
+            if status == .success {
+                self.remoteConfig.activate() { (changed, error) in
+                    let bannerContent = self.remoteConfig["banner_content"].stringValue
+                    let bannerEventPath = self.remoteConfig["banner_event_path"].stringValue
+                    let bannerTitle = self.remoteConfig["banner_title"].stringValue
+                    var bannerVersion = self.remoteConfig["banner_version"].numberValue
+                    let isBannerEnabled = self.remoteConfig["is_banner_enabled"].boolValue
+                    let isExternalEvent = self.remoteConfig["is_external_event"].boolValue
+                    
+                    UserDefaultsManager.currentBannerVersion = Int(truncating: bannerVersion)
+                    
+                    let currentBannerVersion = UserDefaultsManager.currentBannerVersion
+                    
+                    bannerVersion = 9
+                    
+                    if bannerVersion.intValue > currentBannerVersion {
+                        UserDefaultsManager.hasBannerClosed = false
+                    }
+                    
+                    self.bannerView.setLabelText(with: bannerTitle ?? "", body: bannerContent ?? "")
+                }
+            } else {
+                print("Error: \(error?.localizedDescription ?? "No error available.")")
+            }
+        }
+    }
+    
     // MARK: - Layout
     
     private func setLayout() {
         hiddenNavigationBar()
         
-        view.addSubviews(calendar, myPageButton, indicator, border, diaryThumbnail, emptyView, floatingView, addDiaryButton, myPageBackView, bannerView)
+        view.addSubviews(calendar, myPageButton, indicator, border, diaryThumbnail, emptyView, floatingView, addDiaryButton, myPageBackView)
         diaryThumbnail.addSubviews(diaryDate, fullViewButtonText, fullViewButtonSymbol, diaryText)
         emptyView.addSubviews(emptyPaddingView, emptySymbol, emptyText)
         floatingView.addSubviews(waitingLabel, adviceLabel, xButton)
@@ -448,11 +489,19 @@ final class HomeViewController: BaseViewController {
             $0.height.equalTo(convertByHeightRatio(60))
         }
         
-        bannerView.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.leading.trailing.equalTo(addDiaryButton)
-            make.bottom.equalTo(addDiaryButton.snp.top).offset(-10)
-            make.height.equalTo(88)
+        if !UserDefaultsManager.hasBannerClosed {
+            view.addSubview(bannerView)
+            bannerView.snp.makeConstraints { make in
+                make.centerX.equalToSuperview()
+                make.leading.trailing.equalTo(addDiaryButton)
+                if addDiaryButton.isHidden {
+                    make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(16)
+                } else {
+                    make.bottom.equalTo(addDiaryButton.snp.top).offset(-10)
+                }
+                
+                make.height.equalTo(88)
+            }
         }
     }
 }
@@ -516,7 +565,7 @@ extension HomeViewController: FSCalendarDelegateAppearance {
         configureSelectedUI()
         configureBottomLayout(date: date)
     }
-
+    
     /// 달력의 선택된 셀 배경 디자인 변경
     private func configureSelectedUI() {
         calendar.visibleCells().forEach { (cell) in
