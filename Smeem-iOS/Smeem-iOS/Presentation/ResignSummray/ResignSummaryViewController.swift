@@ -185,7 +185,7 @@ final class ResignSummaryViewController: BaseViewController {
         output.keyboardResult
             .sink { [weak self] keyboardValue in
                 UIView.animate(withDuration : 0.3) {
-                    self?.view.frame.origin.y = keyboardValue
+                    self?.view.transform = CGAffineTransform(translationX: 0, y: keyboardValue)
                 }
             }
             .store(in: &cancelBag)
@@ -232,6 +232,7 @@ final class ResignSummaryViewController: BaseViewController {
         trainingGoalCollectionView.snp.makeConstraints {
             $0.top.equalTo(resignStackView.snp.bottom).offset(12)
             $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(convertByHeightRatio(320))
         }
         
         summaryLabel.snp.makeConstraints {
@@ -242,7 +243,6 @@ final class ResignSummaryViewController: BaseViewController {
         summaryTextView.snp.makeConstraints {
             $0.top.equalTo(summaryLabel.snp.bottom).offset(22)
             $0.leading.trailing.equalToSuperview().inset(18)
-            $0.height.equalTo(84)
         }
         
         resignButton.snp.makeConstraints {
