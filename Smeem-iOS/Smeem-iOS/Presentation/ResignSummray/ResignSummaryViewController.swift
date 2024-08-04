@@ -14,13 +14,13 @@ final class ResignSummaryViewController: BaseViewController {
     
     private let viewWillAppearSubject = PassthroughSubject<Void, Never>()
     private let cellTapped = PassthroughSubject<Int, Never>()
-    private let nextButtonTapped = PassthroughSubject<Void, Never>()
+    private let resignButtonTapped = PassthroughSubject<Void, Never>()
     private let keyboardSubject = PassthroughSubject<KeyboardType, Never>()
     private let keyboardHeightSubject = PassthroughSubject<KeyboardInfo, Never>()
     private let summaryTextSubject = PassthroughSubject<String, Never>()
     private var cancelBag = Set<AnyCancellable>()
     
-    private let viewModel = ResignSummaryViewModel()
+    private let viewModel = ResignSummaryViewModel(provider: AuthService())
     
     // MARK: UI Properties
     
@@ -117,13 +117,8 @@ final class ResignSummaryViewController: BaseViewController {
     // MARK: - Method
     
     private func bind() {
-        NotificationCenter.default.publisher(for: UITextView.textDidBeginEditingNotification, object: summaryTextView)
-            .sink { _ in
-//                self.keyboardSubject.send(.up)
-            }
-            .store(in: &cancelBag)
         
-        NotificationCenter.default.publisher(for: UITextView.textDidEndEditingNotification, object: summaryTextView)
+        NotificationCenter.default.publisher(for: UIResponder.keyboardWillHideNotification)
             .sink { [weak self] _ in
                 self?.keyboardHeightSubject.send(KeyboardInfo(type: .down, keyboardHeight: nil, viewHeight: nil))
             }
@@ -139,9 +134,31 @@ final class ResignSummaryViewController: BaseViewController {
             }
             .store(in: &cancelBag)
         
+        resignButton.tapPublisher
+            .handleEvents(receiveOutput: {[weak self] _ in
+                self?.summaryTextView.resignFirstResponder()
+            })
+            .sink { [weak self] _ in
+                let alert = UIAlertController(title: "계정을 삭제하시겠습니까?", message: "이전에 작성했던 일기는 모두 사라집니다.", preferredStyle: .alert)
+                let cancel = UIAlertAction(title: "취소", style: .cancel) { _ in }
+                let delete = UIAlertAction(title: "삭제", style: .destructive) { _ in
+                    self?.resignButtonTapped.send(())
+                }
+                alert.addAction(cancel)
+                alert.addAction(delete)
+                self?.present(alert, animated: true, completion: nil)
+            }
+            .store(in: &cancelBag)
+        
+        backButton.tapPublisher
+            .sink { [weak self] _ in
+                self?.navigationController?.popViewController(animated: true)
+            }
+            .store(in: &cancelBag)
+        
         let output = viewModel.transform(input: ResignSummaryViewModel.Input(viewWillAppearSubject: viewWillAppearSubject,
                                                                             cellTapped: cellTapped,
-                                                                            buttonTapped: nextButtonTapped,
+                                                                            buttonTapped: resignButtonTapped,
                                                                             keyboardSubject: keyboardSubject,
                                                                             keyboardHeightSubject: keyboardHeightSubject,
                                                                             summaryTextSubject: summaryTextSubject))
@@ -151,18 +168,6 @@ final class ResignSummaryViewController: BaseViewController {
                 self.trainingGoalCollectionView.reloadData()
             }
             .store(in: &cancelBag)
-        
-        output.cellResult
-            .sink { [weak self] string in
-                print(string)
-            }
-            .store(in: &cancelBag)
-        
-//        output.buttonResult
-//            .sink { [weak self] type in
-//                self?.resignButton.changeButtonType(buttonType: type)
-//            }
-//            .store(in: &cancelBag)
         
         output.enabledButtonResult
             .sink { [weak self] type in
@@ -177,14 +182,17 @@ final class ResignSummaryViewController: BaseViewController {
             }
             .store(in: &cancelBag)
         
-        let viewY = self.view.safeAreaLayoutGuide.snp.height
-        print(viewY)
-        
         output.keyboardResult
             .sink { [weak self] keyboardValue in
                 UIView.animate(withDuration : 0.3) {
                     self?.view.frame.origin.y = keyboardValue
                 }
+            }
+            .store(in: &cancelBag)
+        
+        output.resignResult
+            .sink { [weak self] _ in
+                self?.changeRootViewController(SplashViewController())
             }
             .store(in: &cancelBag)
     }

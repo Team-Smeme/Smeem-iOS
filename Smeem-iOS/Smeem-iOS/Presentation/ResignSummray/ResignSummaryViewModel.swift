@@ -8,6 +8,8 @@
 import Foundation
 import Combine
 
+import KakaoSDKUser
+
 struct KeyboardInfo {
     let type: KeyboardType
     let keyboardHeight: CGFloat?
@@ -21,11 +23,23 @@ enum KeyboardType {
 
 final class ResignSummaryViewModel: ViewModel {
     
+    var provider: AuthServiceProtocol!
+    
+    init(provider: AuthServiceProtocol) {
+        self.provider = provider
+    }
+    
     private let summaryData: [Goal] = [Goal(goalType: nil, name: "이용이 어렵고 서비스가 불안정해요."),
                                        Goal(goalType: nil, name: "일기 작성을 도와주는 기능이 부족해요."),
                                        Goal(goalType: nil, name: "일기 쓰기가 귀찮아요."),
                                        Goal(goalType: nil, name: "다른 앱이 더 사용하기 편해요."),
                                        Goal(goalType: nil, name: "기타 의견")]
+    private let summaryTypeDic: [Int:String] = [0: "INSTABILITY",
+                                                1: "LACK",
+                                                2: "BOTHER",
+                                                3: "COMPARISON",
+                                                4: "ETC"]
+    private var summaryType: String? = nil
     
     struct Input {
         let viewWillAppearSubject: PassthroughSubject<Void, Never>
@@ -38,20 +52,23 @@ final class ResignSummaryViewModel: ViewModel {
     
     struct Output {
         let viewWillAppearResult: AnyPublisher<[Goal], Never>
-        let cellResult: AnyPublisher<String, Never>
         let buttonResult: AnyPublisher<SmeemButtonType, Never>
         let keyboardResult: AnyPublisher<CGFloat, Never>
         let enabledButtonResult: PassthroughSubject<SmeemButtonType, Never>
         let notEnabledButtonResult: PassthroughSubject<SmeemButtonType, Never>
+        let errorResult: AnyPublisher<SmeemError, Never>
+        let resignResult: AnyPublisher<Void, Never>
     }
     
     private let cellIndexSubject = PassthroughSubject<Int, Never>()
     private let enabledButtonResult = PassthroughSubject<SmeemButtonType, Never>()
     private let notEnabledButtonResult = PassthroughSubject<SmeemButtonType, Never>()
+    private let resignSubject = PassthroughSubject<Void, Never>()
+    private let errorSubject = PassthroughSubject<SmeemError, Never>()
     private var keyboardHeight = 0.0
     private var cancelBag = Set<AnyCancellable>()
     private var totalViewHeight: CGFloat = 0.0
-    private var summaryText = ""
+    private var summaryText: String? = ""
     
     func transform(input: Input) -> Output {
         let viewWillAppearResult = input.viewWillAppearSubject
@@ -60,12 +77,12 @@ final class ResignSummaryViewModel: ViewModel {
             }
             .eraseToAnyPublisher()
         
-        let cellResult = input.cellTapped
-            .map { index -> String in
+        input.cellTapped
+            .sink { index in
+                self.summaryType = self.summaryTypeDic[index]!
                 self.cellIndexSubject.send(index)
-                return self.summaryData[index].name
             }
-            .eraseToAnyPublisher()
+            .store(in: &cancelBag)
         
         let buttonResult = cellIndexSubject
             .map { index -> SmeemButtonType in
@@ -88,19 +105,72 @@ final class ResignSummaryViewModel: ViewModel {
             .eraseToAnyPublisher()
         
         input.summaryTextSubject
-            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines )}
-            .filter { !$0.isEmpty }
+            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines ) }
             .sink { text -> Void in
                 self.summaryText = text
-                text.isEmpty ? self.notEnabledButtonResult.send(.notEnabled) : self.enabledButtonResult.send(.enabled)
+                if text.isEmpty {
+                    self.notEnabledButtonResult.send(.notEnabled)
+                } else {
+                    self.enabledButtonResult.send(.enabled)
+                }
             }
             .store(in: &cancelBag)
+        
+        func kakaoResignAPI() {
+            UserApi.shared.unlink { (error) in
+                if let _ = error {
+                    self.errorSubject.send(.clientError)
+                }
+                else {
+                    print("unlink() success.")
+                    self.resignSubject.send(())
+                }
+            }
+            
+            self.resignSubject.send(())
+        }
+        
+        input.buttonTapped
+            .sink { _ in
+                if UserDefaultsManager.hasKakaoToken! {
+                    kakaoResignAPI()
+                } else {
+                    self.resignSubject.send(())
+                }
+            }
+            .store(in: &cancelBag)
+        
+        let resignResult = resignSubject
+            .flatMap { _ -> AnyPublisher<Void, Never> in
+                return Future<Void, Never> { promise in
+                    self.provider.resignAPI(request: ResignRequest(withdrawType: self.summaryType!,
+                                                                   reason: self.summaryText)) { result in
+                        switch result {
+                        case .success(_):
+                            UserDefaultsManager.accessToken = ""
+                            UserDefaultsManager.refreshToken = ""
+                            UserDefaultsManager.clientAccessToken = ""
+                            UserDefaultsManager.clientRefreshToken = ""
+                            UserDefaultsManager.hasKakaoToken = nil
+                            promise(.success(()))
+                        case .failure(let error):
+                            self.errorSubject.send(error)
+                    promise(.success(()))
+                        }
+                    }
+                }
+                .eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
+        
+        let errorResult = errorSubject.eraseToAnyPublisher()
             
         return Output(viewWillAppearResult: viewWillAppearResult,
-                      cellResult: cellResult,
                       buttonResult: buttonResult,
                       keyboardResult: keyboardResult,
                       enabledButtonResult: enabledButtonResult,
-                      notEnabledButtonResult: notEnabledButtonResult)
+                      notEnabledButtonResult: notEnabledButtonResult,
+                      errorResult: errorResult,
+                      resignResult: resignResult)
     }
 }
