@@ -86,7 +86,7 @@ final class SignupViewModel: ViewModel {
             }
             .flatMap { type -> AnyPublisher<Void, Never> in
                 return Future<Void, Never> { promise in
-                    AuthAPI.shared.loginAPI(param: LoginRequest(social: type,
+                    AuthService.shared.loginAPI(param: LoginRequest(social: type,
                                                                 fcmToken: UserDefaultsManager.fcmToken)) { result in
                         switch result {
                         case .success(let response):

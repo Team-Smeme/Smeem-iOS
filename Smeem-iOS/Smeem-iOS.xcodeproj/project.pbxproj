@@ -73,8 +73,8 @@
 		37EB69E62A4B3BC400075E4E /* DataBindProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EB69E52A4B3BC400075E4E /* DataBindProtocol.swift */; };
 		4A004D4F2B4ED760003C8936 /* TrainingGoalResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A004D4E2B4ED760003C8936 /* TrainingGoalResponse.swift */; };
 		4A004D512B4ED783003C8936 /* TrainingWayResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A004D502B4ED783003C8936 /* TrainingWayResponse.swift */; };
-		4A004D542B4EE26E003C8936 /* AuthAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A004D532B4EE26E003C8936 /* AuthAPI.swift */; };
-		4A004D562B4EE277003C8936 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A004D552B4EE277003C8936 /* AuthService.swift */; };
+		4A004D542B4EE26E003C8936 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A004D532B4EE26E003C8936 /* AuthService.swift */; };
+		4A004D562B4EE277003C8936 /* AuthEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A004D552B4EE277003C8936 /* AuthEndPoint.swift */; };
 		4A004D592B4EE28D003C8936 /* PushTestAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A004D582B4EE28D003C8936 /* PushTestAPI.swift */; };
 		4A004D5B2B4EE29A003C8936 /* PushTestService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A004D5A2B4EE29A003C8936 /* PushTestService.swift */; };
 		4A004D5E2B4EE2B4003C8936 /* MyPageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A004D5D2B4EE2B4003C8936 /* MyPageService.swift */; };
@@ -112,6 +112,8 @@
 		4A6630392A51E04600D19CC9 /* PatchDiaryRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6630382A51E04600D19CC9 /* PatchDiaryRequest.swift */; };
 		4A7F22252B8241DC0011DECF /* TrainingAlarmViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A07F8E22B821539004185F2 /* TrainingAlarmViewModelTest.swift */; };
 		4A81C2972ACDAB2C0056E815 /* TrainingGoalsCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A81C2962ACDAB2C0056E815 /* TrainingGoalsCollectionView.swift */; };
+		4A86D65E2C5910FF002C0617 /* ResignRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A86D65D2C5910FF002C0617 /* ResignRequest.swift */; };
+		4A86D6602C591409002C0617 /* AuthServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A86D65F2C591409002C0617 /* AuthServiceProtocol.swift */; };
 		4A8FFA5029C9E1FD00FB76C0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8FFA4F29C9E1FD00FB76C0 /* AppDelegate.swift */; };
 		4A8FFA5229C9E1FD00FB76C0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8FFA5129C9E1FD00FB76C0 /* SceneDelegate.swift */; };
 		4A8FFA5929C9E1FE00FB76C0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A8FFA5829C9E1FE00FB76C0 /* Assets.xcassets */; };
@@ -309,8 +311,8 @@
 		37EB69E52A4B3BC400075E4E /* DataBindProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataBindProtocol.swift; sourceTree = "<group>"; };
 		4A004D4E2B4ED760003C8936 /* TrainingGoalResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingGoalResponse.swift; sourceTree = "<group>"; };
 		4A004D502B4ED783003C8936 /* TrainingWayResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingWayResponse.swift; sourceTree = "<group>"; };
-		4A004D532B4EE26E003C8936 /* AuthAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthAPI.swift; sourceTree = "<group>"; };
-		4A004D552B4EE277003C8936 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		4A004D532B4EE26E003C8936 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		4A004D552B4EE277003C8936 /* AuthEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthEndPoint.swift; sourceTree = "<group>"; };
 		4A004D582B4EE28D003C8936 /* PushTestAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushTestAPI.swift; sourceTree = "<group>"; };
 		4A004D5A2B4EE29A003C8936 /* PushTestService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushTestService.swift; sourceTree = "<group>"; };
 		4A004D5D2B4EE2B4003C8936 /* MyPageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageService.swift; sourceTree = "<group>"; };
@@ -354,6 +356,8 @@
 		4A81C2962ACDAB2C0056E815 /* TrainingGoalsCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingGoalsCollectionView.swift; sourceTree = "<group>"; };
 		4A8275D22A1513120083A4AB /* ServiceAcceptViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAcceptViewController.swift; sourceTree = "<group>"; };
 		4A8275D42A1519550083A4AB /* ServiceAcceptCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAcceptCollectionViewCell.swift; sourceTree = "<group>"; };
+		4A86D65D2C5910FF002C0617 /* ResignRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResignRequest.swift; sourceTree = "<group>"; };
+		4A86D65F2C591409002C0617 /* AuthServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthServiceProtocol.swift; sourceTree = "<group>"; };
 		4A8FFA4C29C9E1FD00FB76C0 /* Smeem-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Smeem-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A8FFA4F29C9E1FD00FB76C0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4A8FFA5129C9E1FD00FB76C0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -801,8 +805,10 @@
 		4A004D522B4EE262003C8936 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
-				4A004D532B4EE26E003C8936 /* AuthAPI.swift */,
-				4A004D552B4EE277003C8936 /* AuthService.swift */,
+				4A004D532B4EE26E003C8936 /* AuthService.swift */,
+				4A004D552B4EE277003C8936 /* AuthEndPoint.swift */,
+				4A86D65D2C5910FF002C0617 /* ResignRequest.swift */,
+				4A86D65F2C591409002C0617 /* AuthServiceProtocol.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -1914,7 +1920,7 @@
 				371E94162A87B83D0098280F /* NextButtonDelegate.swift in Sources */,
 				4AC00EE62AD432F2009230DA /* BaseCollectionView.swift in Sources */,
 				4AC00EF02AD52F4C009230DA /* TrainingAlarmViewController.swift in Sources */,
-				4A004D562B4EE277003C8936 /* AuthService.swift in Sources */,
+				4A004D562B4EE277003C8936 /* AuthEndPoint.swift in Sources */,
 				37144C512B88E949008565C4 /* DiaryViewControllerFactory.swift in Sources */,
 				37DCA6742A484D5900FF8F90 /* PostDiaryAPI.swift in Sources */,
 				4ABCBCE72BE25E51003138A8 /* TrainingPlanResponse.swift in Sources */,
@@ -1981,6 +1987,7 @@
 				6F31802F2A24D1DB00089870 /* CalendarCell.swift in Sources */,
 				6FE1298A2A4982DA005536C4 /* HomeAPI.swift in Sources */,
 				374F828E2AC5DFFE00C128B9 /* DiaryBottomView.swift in Sources */,
+				4A86D6602C591409002C0617 /* AuthServiceProtocol.swift in Sources */,
 				4AC707B92B74D5CD00B1D791 /* ServiceAcceptViewModel.swift in Sources */,
 				4A3F2E972A0ABBAA00F6AC60 /* AlarmCollectionViewCell.swift in Sources */,
 				379789032AAC705B00C61EF4 /* NavigationBarActionDelegate.swift in Sources */,
@@ -2070,7 +2077,7 @@
 				4AF7C2312BFB7A4F00E8C6CD /* MyPlanDeactiveCollectionViewCell.swift in Sources */,
 				4A01235F2AAA2C1500E09646 /* SmeemLoadingView.swift in Sources */,
 				4A59EBA02B9367C2004D9823 /* BadgePopupViewModel.swift in Sources */,
-				4A004D542B4EE26E003C8936 /* AuthAPI.swift in Sources */,
+				4A004D542B4EE26E003C8936 /* AuthService.swift in Sources */,
 				4A81C2972ACDAB2C0056E815 /* TrainingGoalsCollectionView.swift in Sources */,
 				371107E52ACBEA69007A4AC2 /* DiaryViewFactory.swift in Sources */,
 				6F294A442A26179900856CC8 /* ServiceAcceptCollectionViewCell.swift in Sources */,
@@ -2078,6 +2085,7 @@
 				378E461C2B5516F200D2A473 /* DeepLService.swift in Sources */,
 				4A004D4F2B4ED760003C8936 /* TrainingGoalResponse.swift in Sources */,
 				4AC705A42BEA2C99003C5310 /* SettingResponse.swift in Sources */,
+				4A86D65E2C5910FF002C0617 /* ResignRequest.swift in Sources */,
 				6F294A3F2A26177E00856CC8 /* TrainingCollectionViewCell.swift in Sources */,
 				6F294A3F2A26177E00856CC8 /* TrainingCollectionViewCell.swift in Sources */,
 				4ABCBCD62BDFC6BD003138A8 /* MySmeemCollectionViewDataSource.swift in Sources */,
