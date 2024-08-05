@@ -21,14 +21,9 @@ final class SettingViewController: BaseViewController {
     private let toastSubject = PassthroughSubject<Void, Never>()
     private let viewModel = SettingViewModel(provider: SettingService())
     
-    private let summaryScrollerView: UIScrollView = {
-        let scrollerView = UIScrollView()
-        scrollerView.showsVerticalScrollIndicator = false
-        scrollerView.isScrollEnabled = true
-        return scrollerView
-    }()
-    
+    private let summaryScrollerView = UIScrollView()
     private let contentView = UIView()
+    
     private let naviView = UIView()
     
     private let backButton: UIButton = {
@@ -234,19 +229,6 @@ final class SettingViewController: BaseViewController {
             $0.height.equalTo(66)
         }
         
-        summaryScrollerView.snp.makeConstraints {
-            $0.top.equalTo(naviView.snp.bottom)
-            $0.leading.trailing.bottom.equalToSuperview()
-        }
-        
-        contentView.snp.makeConstraints {
-            $0.width.equalToSuperview()
-            $0.top.bottom.equalToSuperview()
-            
-            // 왜 edges로 하면 안됨?
-//            $0.edges.equalToSuperview()
-        }
-        
         backButton.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.leading.equalToSuperview().inset(10)
@@ -263,8 +245,20 @@ final class SettingViewController: BaseViewController {
             $0.height.width.equalTo(40)
         }
         
+        // MARK: - summaryScrollerView
+        
+        summaryScrollerView.snp.makeConstraints {
+            $0.top.equalTo(naviView.snp.bottom)
+            $0.leading.trailing.bottom.equalToSuperview()
+        }
+        
+        contentView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+            $0.leading.centerX.equalToSuperview()
+        }
+        
         nicknameContainerView.snp.makeConstraints {
-            $0.top.equalTo(naviView.snp.bottom).offset(18)
+            $0.top.equalToSuperview().offset(18)
             $0.leading.trailing.equalToSuperview().inset(18)
             $0.height.equalTo(87)
         }
@@ -295,7 +289,6 @@ final class SettingViewController: BaseViewController {
         
         alarmCollectionContainerView.snp.makeConstraints {
             $0.edges.equalToSuperview()
-            $0.width.height.equalTo(alarmCollectionView)
         }
         
         separationLine.snp.remakeConstraints {
