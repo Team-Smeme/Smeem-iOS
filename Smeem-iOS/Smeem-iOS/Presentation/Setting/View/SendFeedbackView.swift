@@ -8,15 +8,18 @@
 import UIKit
 import Combine
 
+import SnapKit
+
 final class SendFeedbackView: UIView {
     
-    private (set) var goToButtonTapped = PassthroughSubject<Void, Never>()
+    private (set) var directButtonTapped = PassthroughSubject<Void, Never>()
     private var cancelBag = Set<AnyCancellable>()
     
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = .s1
         label.textColor = .smeemBlack
+        label.text = "의견 보내기"
         return label
     }()
     
@@ -33,21 +36,22 @@ final class SendFeedbackView: UIView {
         let label = UILabel()
         label.font = .b4
         label.textColor = .smeemBlack
+        label.text = "스밈에 대한 의견을 남겨주세요 :)"
         return label
     }()
     
-    private let editDetailButton: UIButton = {
-        let label = UIButton()
-        label.titleLabel?.font = .c3
-        label.setTitleColor(.point, for: .normal)
-        return label
+    private let directButton: UIButton = {
+        let button = UIButton()
+        button.titleLabel?.font = .c3
+        button.setTitleColor(.point, for: .normal)
+        button.setTitle("바로가기", for: .normal)
+        return button
     }()
     
     init() {
         super.init(frame: .zero)
         
         setLayout()
-        setLabel()
         bind()
     }
     
@@ -56,16 +60,16 @@ final class SendFeedbackView: UIView {
     }
     
     private func bind() {
-        editDetailButton.tapPublisher
+        directButton.tapPublisher
             .sink { [weak self] _ in
-                self?.goToButtonTapped.send(())
+                self?.directButtonTapped.send(())
             }
             .store(in: &cancelBag)
     }
     
     private func setLayout() {
         addSubviews(titleLabel, containerView)
-        containerView.addSubviews(detailLabel, editDetailButton)
+        containerView.addSubviews(detailLabel, directButton)
         
         titleLabel.snp.makeConstraints {
             $0.top.leading.equalToSuperview()
@@ -81,32 +85,13 @@ final class SendFeedbackView: UIView {
             $0.centerY.equalToSuperview()
             $0.leading.equalToSuperview().offset(convertByWidthRatio(20))
         }
-    }
-    
-    private func setLabel() {
-        titleLabel.text = "의견 보내기"
-    }
-    
-    func hasPlanData(data: String) {
-        detailLabel.text = data
-        detailLabel.textColor = .black
-        editDetailButton.setTitle("바로가기", for: .normal)
         
-        editDetailButton.snp.makeConstraints {
-            $0.top.trailing.bottom.equalToSuperview()
+        directButton.snp.makeConstraints {
+            $0.centerY.equalToSuperview()
+            $0.trailing.equalToSuperview()
             $0.width.equalTo(89)
+            $0.height.equalTo(54)
         }
     }
-    
-//    func hasNotPlanData() {
-//        detailLabel.text = "아직 플랜이 없어요!"
-//        detailLabel.textColor = .gray500
-//        editDetailButton.setTitle("플랜 설정하기", for: .normal)
-//        
-//        editDetailButton.snp.makeConstraints {
-//            $0.top.trailing.bottom.equalToSuperview()
-//            $0.width.equalTo(117)
-//        }
-//    }
 }
 

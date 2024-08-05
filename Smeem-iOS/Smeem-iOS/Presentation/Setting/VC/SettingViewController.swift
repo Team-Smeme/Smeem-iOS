@@ -106,6 +106,17 @@ final class SettingViewController: BaseViewController {
             }
             .store(in: &cancelBag)
         
+        sendFeedbackView.directButtonTapped
+            .sink { _ in
+                guard let url = URL(string: "https://walla.my/survey/2SAyT8aWPKjqaL4cZ5vm") else { return }
+                UIApplication.shared.open(url, options: [:]) { success in
+                    if !success {
+                        //에러토스트
+                    }
+                }
+            }
+            .store(in: &cancelBag)
+        
         let output = viewModel.transform(input: SettingViewModel.Input(viewWillAppearSubject: viewWillAppearSubject,
                                                                        alarmToggleSubject: alarmToggleTapped,
                                                                        nicknameButtonTapped: nicknameButtonTapped,
@@ -296,6 +307,8 @@ final class SettingViewController: BaseViewController {
             $0.height.equalTo(1)
             $0.leading.trailing.equalTo(nicknameContainerView)
         }
+        
+        separationLine.backgroundColor = .gray100
         
         sendFeedbackView.snp.makeConstraints {
             $0.top.equalTo(separationLine.snp.bottom).offset(28)
