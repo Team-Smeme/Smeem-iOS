@@ -12,7 +12,7 @@ struct SettingResponse: Codable {
     let detail, targetLang: String
     let hasPushAlarm: Bool
     let trainingTime: TrainingTime
-    let badge: Badge
+    let badge: Badge?
     let trainingPlan: Plans?
 }
 

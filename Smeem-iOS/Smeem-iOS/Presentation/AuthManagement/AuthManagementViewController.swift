@@ -116,20 +116,8 @@ final class AuthManagementViewController: UIViewController {
     }
     
     @objc func resignButtonDidTap() {
-        let alert = UIAlertController(title: "계정을 삭제하시겠습니까?", message: "이전에 작성했던 일기는 모두 사라집니다.", preferredStyle: .alert)
-        let cancel = UIAlertAction(title: "취소", style: .cancel) { _ in
-            // 로그아웃 로직
-        }
-        let delete = UIAlertAction(title: "삭제", style: .destructive) { _ in
-            if UserDefaultsManager.hasKakaoToken! {
-                self.kakaoResignAPI()
-            } else {
-                self.resignAPI()
-            }
-        }
-        alert.addAction(cancel)
-        alert.addAction(delete)
-        self.present(alert, animated: true, completion: nil)
+        let resignVC = ResignSummaryViewController()
+        self.navigationController?.pushViewController(resignVC, animated: true)
     }
     
     @objc func infomationButtonDidTap() {
@@ -150,19 +138,6 @@ final class AuthManagementViewController: UIViewController {
     
     
     // MARK: - Custom Method
-    
-    private func kakaoResignAPI() {
-        UserApi.shared.unlink { (error) in
-            if let _ = error {
-                self.showToast(toastType: .smeemErrorToast(message: .clientError, body: "카카오 에러입니다"))
-            }
-            else {
-                print("unlink() success.")
-                // 스밈 회원 탈퇴 API 호출
-                self.resignAPI()
-            }
-        }
-    }
     
     private func setBackgroundColor() {
         view.backgroundColor = .white
@@ -224,31 +199,10 @@ final class AuthManagementViewController: UIViewController {
 }
 
 extension AuthManagementViewController {
-    private func resignAPI() {
-        SmeemLoadingView.showLoading()
-        
-        AuthAPI.shared.resignAPI() { result in
-            switch result {
-            case .success(_):
-                UserDefaultsManager.accessToken = ""
-                UserDefaultsManager.refreshToken = ""
-                UserDefaultsManager.clientAccessToken = ""
-                UserDefaultsManager.clientRefreshToken = ""
-                UserDefaultsManager.hasKakaoToken = nil
-                
-                self.changeRootViewController(SplashViewController())
-            case .failure(let error):
-                self.showToast(toastType: .smeemErrorToast(message: error))
-            }
-            
-            SmeemLoadingView.hideLoading()
-        }
-    }
-    
     private func logoutAPI() {
         SmeemLoadingView.showLoading()
         
-        AuthAPI.shared.logoutAPI() { result in
+        AuthService.shared.logoutAPI() { result in
             
             switch result {
             case .success(_):

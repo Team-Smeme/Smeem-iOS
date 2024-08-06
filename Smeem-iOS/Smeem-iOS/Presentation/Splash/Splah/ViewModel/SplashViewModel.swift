@@ -78,7 +78,7 @@ final class SplashViewModel: ViewModel {
             })
             .flatMap { _ -> AnyPublisher<Void, Never> in
                 return Future<Void, Never> { promise in
-                    AuthAPI.shared.reLoginAPI() { result in
+                    AuthService.shared.reLoginAPI() { result in
                         switch result {
                         case .success(let response):
                             
