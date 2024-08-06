@@ -17,6 +17,7 @@ final class SettingViewController: BaseViewController {
     private let planButtonTapped = PassthroughSubject<Void, Never>()
     private let alarmToggleTapped = PassthroughSubject<Void, Never>()
     private let alarmButtnTapped = PassthroughSubject<Void, Never>()
+    private let errorSubject = PassthroughSubject<SmeemError, Never>()
     private var cancelBag = Set<AnyCancellable>()
     private let toastSubject = PassthroughSubject<Void, Never>()
     private let viewModel = SettingViewModel(provider: SettingService())
@@ -110,10 +111,11 @@ final class SettingViewController: BaseViewController {
             .sink { _ in
                 guard let url = URL(string: "https://walla.my/survey/2SAyT8aWPKjqaL4cZ5vm") else { return }
                 UIApplication.shared.open(url, options: [:]) { success in
-                    if !success {
-                        //에러토스트
+                    if success {
+                        self.errorSubject.send(.clientError)
                     }
                 }
+                
             }
             .store(in: &cancelBag)
         
@@ -121,7 +123,8 @@ final class SettingViewController: BaseViewController {
                                                                        alarmToggleSubject: alarmToggleTapped,
                                                                        nicknameButtonTapped: nicknameButtonTapped,
                                                                        planButtonTapped: planButtonTapped,
-                                                                       alarmButtonTapped: alarmButtnTapped))
+                                                                       alarmButtonTapped: alarmButtnTapped,
+                                                                       errorSubject: errorSubject))
         output.hasPlanResult
             .receive(on: DispatchQueue.main)
             .sink { [weak self] response in

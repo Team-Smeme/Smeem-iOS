@@ -26,6 +26,7 @@ final class SettingViewModel: ViewModel {
         let nicknameButtonTapped: PassthroughSubject<Void, Never>
         let planButtonTapped: PassthroughSubject<Void, Never>
         let alarmButtonTapped: PassthroughSubject<Void, Never>
+        let errorSubject: PassthroughSubject<SmeemError, Never>
     }
     
     struct Output {
@@ -148,6 +149,8 @@ final class SettingViewModel: ViewModel {
         
         let loadingViewResult = loadingViewSubject.eraseToAnyPublisher()
         let errorResult = errorSubject.eraseToAnyPublisher()
+        let inputErrorResult = input.errorSubject.eraseToAnyPublisher()
+        let totalError = Publishers.Merge(errorResult, inputErrorResult).eraseToAnyPublisher()
         
         return Output(alarmToggleResult: pushButtonResult,
                       hasPlanResult: hasPlanResult,
@@ -156,6 +159,6 @@ final class SettingViewModel: ViewModel {
                       planButtonResult: planButtonResult,
                       alarmButtonResult: alarmButtonResult,
                       loadingViewResult: loadingViewResult,
-                      errorResult: errorResult)
+                      errorResult: totalError)
     }
 }
