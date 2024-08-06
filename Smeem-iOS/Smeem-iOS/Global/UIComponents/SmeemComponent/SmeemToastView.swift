@@ -81,6 +81,15 @@ final class SmeemToastView: UIView {
         return imageView
     }()
     
+    private let labelStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.distribution = .fill
+        stackView.spacing = 3
+        stackView.alignment = .leading
+        return stackView
+    }()
+    
     private let headLabel: UILabel = {
         let label = UILabel()
         label.font = .c1
@@ -169,7 +178,8 @@ final class SmeemToastView: UIView {
     }
     
     private func setToastViewLayout() {
-        addSubviews(cautionImage, headLabel, bodyLabel)
+        addSubviews(cautionImage, labelStackView)
+        labelStackView.addArrangedSubviews(headLabel, bodyLabel)
         
         switch type {
         case .smeemToast:
@@ -184,14 +194,9 @@ final class SmeemToastView: UIView {
                 make.width.height.equalTo(22)
             }
             
-            headLabel.snp.makeConstraints { make in
-                make.top.equalToSuperview().offset(14)
+            labelStackView.snp.makeConstraints { make in
                 make.leading.equalTo(cautionImage.snp.trailing).offset(14)
-            }
-            
-            bodyLabel.snp.makeConstraints { make in
-                make.top.equalTo(headLabel.snp.bottom).offset(3)
-                make.leading.equalTo(headLabel)
+                make.centerY.equalTo(cautionImage)
             }
         }
         
@@ -202,7 +207,7 @@ final class SmeemToastView: UIView {
             if case .smeemToast = type {
                 make.height.equalTo(convertByHeightRatio(50))
             } else {
-                make.height.equalTo(convertByHeightRatio(70))
+                make.height.equalTo(convertByWidthRatio(70))
             }
         }
     }

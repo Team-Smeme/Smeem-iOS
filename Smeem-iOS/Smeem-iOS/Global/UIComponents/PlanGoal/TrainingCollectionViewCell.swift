@@ -47,7 +47,7 @@ final class TrainingCollectionViewCell: UICollectionViewCell {
     }
     
     func selctedCell() {
-        goalLabel.font = .b1
+        goalLabel.font = .b3
         goalLabel.textColor = .point
         layer.borderColor = UIColor.point.cgColor
         checkImageView.image = Constant.Image.icnCheckActive
