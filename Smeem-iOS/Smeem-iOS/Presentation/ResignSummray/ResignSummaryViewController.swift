@@ -274,7 +274,6 @@ extension ResignSummaryViewController: UITextViewDelegate {
         let deSelectedIndexPath = (0...3).map { IndexPath(item: $0, section: 0) }
         deSelectedIndexPath.forEach { indexPath in trainingGoalCollectionView.collectionView(trainingGoalCollectionView,
                                                                                              didDeselectItemAt: indexPath) }
-        self.cellTapped.send(4)
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {

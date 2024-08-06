@@ -52,7 +52,6 @@ final class ResignSummaryViewModel: ViewModel {
     
     struct Output {
         let viewWillAppearResult: AnyPublisher<[Goal], Never>
-        let buttonResult: AnyPublisher<SmeemButtonType, Never>
         let keyboardResult: AnyPublisher<CGFloat, Never>
         let enabledButtonResult: PassthroughSubject<SmeemButtonType, Never>
         let notEnabledButtonResult: PassthroughSubject<SmeemButtonType, Never>
@@ -83,12 +82,6 @@ final class ResignSummaryViewModel: ViewModel {
                 self.cellIndexSubject.send(index)
             }
             .store(in: &cancelBag)
-        
-        let buttonResult = cellIndexSubject
-            .map { index -> SmeemButtonType in
-                return index == 4 ? .notEnabled : .enabled
-            }
-            .eraseToAnyPublisher()
         
         cellIndexSubject
             .sink { index -> Void in
@@ -155,7 +148,6 @@ final class ResignSummaryViewModel: ViewModel {
                             promise(.success(()))
                         case .failure(let error):
                             self.errorSubject.send(error)
-                    promise(.success(()))
                         }
                     }
                 }
@@ -166,7 +158,6 @@ final class ResignSummaryViewModel: ViewModel {
         let errorResult = errorSubject.eraseToAnyPublisher()
             
         return Output(viewWillAppearResult: viewWillAppearResult,
-                      buttonResult: buttonResult,
                       keyboardResult: keyboardResult,
                       enabledButtonResult: enabledButtonResult,
                       notEnabledButtonResult: notEnabledButtonResult,
