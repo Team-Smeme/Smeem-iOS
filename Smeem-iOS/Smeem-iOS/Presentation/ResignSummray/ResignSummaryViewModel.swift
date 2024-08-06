@@ -21,6 +21,11 @@ enum KeyboardType {
     case down
 }
 
+enum ResignAmplitudeType {
+    case deleteIdTry
+    case deleteIdComplete
+}
+
 final class ResignSummaryViewModel: ViewModel {
     
     var provider: AuthServiceProtocol!
@@ -64,6 +69,7 @@ final class ResignSummaryViewModel: ViewModel {
     private let notEnabledButtonResult = PassthroughSubject<SmeemButtonType, Never>()
     private let resignSubject = PassthroughSubject<Void, Never>()
     private let errorSubject = PassthroughSubject<SmeemError, Never>()
+    private let amplitudeSubject = PassthroughSubject<ResignAmplitudeType, Never>()
     private var keyboardHeight = 0.0
     private var cancelBag = Set<AnyCancellable>()
     private var totalViewHeight: CGFloat = 0.0
@@ -75,6 +81,16 @@ final class ResignSummaryViewModel: ViewModel {
                 return self.summaryData
             }
             .eraseToAnyPublisher()
+        
+        amplitudeSubject.sink { type in
+            switch type {
+            case .deleteIdTry:
+                AmplitudeManager.shared.track(event: AmplitudeConstant.myPage.delete_id_try.event)
+            case .deleteIdComplete:
+                AmplitudeManager.shared.track(event: AmplitudeConstant.myPage.delete_id_done.event)
+            }
+        }
+        .store(in: &cancelBag)
         
         input.cellTapped
             .sink { index in
@@ -138,6 +154,7 @@ final class ResignSummaryViewModel: ViewModel {
                 return Future<Void, Never> { promise in
                     self.provider.resignAPI(request: ResignRequest(withdrawType: self.summaryType!,
                                                                    reason: self.summaryText)) { result in
+                        self.amplitudeSubject.send(.deleteIdTry)
                         switch result {
                         case .success(_):
                             UserDefaultsManager.accessToken = ""
@@ -145,6 +162,7 @@ final class ResignSummaryViewModel: ViewModel {
                             UserDefaultsManager.clientAccessToken = ""
                             UserDefaultsManager.clientRefreshToken = ""
                             UserDefaultsManager.hasKakaoToken = nil
+                            self.amplitudeSubject.send(.deleteIdComplete)
                             promise(.success(()))
                         case .failure(let error):
                             self.errorSubject.send(error)

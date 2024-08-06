@@ -20,6 +20,7 @@ final class HomeViewController: BaseViewController {
     
     private let remoteConfig = RemoteConfig.remoteConfig()
     private var isBannerShowen = true
+    private var bannerEventPath: String?
     private lazy var isDiaryTextEmpty = self.diaryText.text?.isEmpty ?? true
     private let settings = RemoteConfigSettings()
     private let weekdayLabels = ["S", "M", "T", "W", "T", "F", "S"]
@@ -184,7 +185,7 @@ final class HomeViewController: BaseViewController {
     }()
     
     private lazy var bannerView: CustomBannerView = {
-        let tapGuesture = UITapGestureRecognizer(target: self, action: #selector(directSurvey))
+        let tapGuesture = UITapGestureRecognizer(target: self, action: #selector(handleSurvey))
         
         let view = CustomBannerView()
         view.addGestureRecognizer(tapGuesture)
@@ -218,6 +219,7 @@ final class HomeViewController: BaseViewController {
         bannerView.closeButtonTapped.sink { [weak self] in
             self?.bannerView.removeFromSuperview()
             UserDefaultsManager.hasBannerClosed = true
+            AmplitudeManager.shared.track(event: AmplitudeConstant.home.bannerX(property: "survey").event)
         }
         .store(in: &cancelBag)
         
@@ -284,9 +286,10 @@ final class HomeViewController: BaseViewController {
         
     }
     
-    @objc func directSurvey() {
-        guard let url = URL(string: "https://walla.my/survey/2SAyT8aWPKjqaL4cZ5vm") else { return }
-        UIApplication.shared.open(url, options: [:])
+    @objc func handleSurvey() {
+        guard let path = URL(string: bannerEventPath ?? "") else { return }
+        UIApplication.shared.open(path, options: [:])
+        AmplitudeManager.shared.track(event: AmplitudeConstant.home.bannerClick(property: "survey").event)
     }
     
     // MARK: - Custom Method
@@ -363,6 +366,7 @@ final class HomeViewController: BaseViewController {
                     let bannerContent = self.remoteConfig["banner_content"].stringValue
                     let bannerTitle = self.remoteConfig["banner_title"].stringValue
                     let bannerVersion = self.remoteConfig["banner_version"].numberValue
+                    self.bannerEventPath = self.remoteConfig["banner_event_path"].stringValue
                     
                     UserDefaultsManager.currentBannerVersion = Int(truncating: bannerVersion)
                     
