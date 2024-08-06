@@ -213,13 +213,13 @@ final class HomeViewController: BaseViewController {
         setSwipe()
         
         DispatchQueue.global(qos: .background).async {
-            AmplitudeConstant.home.bannerClick(survey: "Completed").event
+            AmplitudeConstant.home.home_view.event
         }
         
         bannerView.closeButtonTapped.sink { [weak self] in
             self?.bannerView.removeFromSuperview()
             UserDefaultsManager.hasBannerClosed = true
-            AmplitudeManager.shared.track(event: AmplitudeConstant.home.bannerX(survey: nil).event)
+            AmplitudeManager.shared.track(event: AmplitudeConstant.home.bannerX(survey: "survey").event)
         }
         .store(in: &cancelBag)
         
@@ -230,6 +230,7 @@ final class HomeViewController: BaseViewController {
         homeDiaryWithAPI(start: Date().startOfMonth().addingDate(addValue: -7), end: Date().endOfMonth().addingDate(addValue: 7))
         checkPopupView()
         visitPatchAPI()
+        configureBannerLayout()
     }
     
     // MARK: - @objc
@@ -368,13 +369,23 @@ final class HomeViewController: BaseViewController {
                     let bannerVersion = self.remoteConfig["banner_version"].numberValue
                     self.bannerEventPath = self.remoteConfig["banner_event_path"].stringValue
                     
-                    UserDefaultsManager.currentBannerVersion = Int(truncating: bannerVersion)
-                    
+//                    UserDefaultsManager.currentBannerVersion = 0
                     let currentBannerVersion = UserDefaultsManager.currentBannerVersion
                     
                     if bannerVersion.intValue > currentBannerVersion {
                         UserDefaultsManager.hasBannerClosed = false
                     }
+                    
+                    if !UserDefaultsManager.hasBannerClosed {
+                        DispatchQueue.main.async {
+                            self.bottomStackView.insertArrangedSubview(self.bannerView, at: 0)
+                            self.bannerView.snp.makeConstraints {
+                                $0.height.equalTo(88)
+                            }
+                        }
+                    }
+                    
+                    UserDefaultsManager.currentBannerVersion = Int(truncating: bannerVersion)
                     
                     self.bannerView.setLabelText(with: bannerTitle ?? "", body: bannerContent ?? "")
                 }
@@ -506,20 +517,16 @@ final class HomeViewController: BaseViewController {
             $0.leading.trailing.equalToSuperview().inset(18)
         }
         
-        if !UserDefaultsManager.hasBannerClosed {
-            bottomStackView.addArrangedSubview(bannerView)
-            bannerView.snp.makeConstraints {
-                $0.top.leading.trailing.equalToSuperview()
-                $0.height.equalTo(88)
-            }
-        }
-        
-        bottomStackView.addArrangedSubviews(addDiaryButton)
+        bottomStackView.addArrangedSubview(addDiaryButton)
         
         addDiaryButton.snp.makeConstraints {
             $0.width.equalTo(convertByWidthRatio(339))
             $0.height.equalTo(convertByHeightRatio(60))
         }
+    }
+    
+    func configureBannerLayout() {
+
     }
 }
 
