@@ -303,6 +303,7 @@ final class SettingViewController: BaseViewController {
         
         alarmCollectionContainerView.snp.makeConstraints {
             $0.edges.equalToSuperview()
+            $0.width.height.equalToSuperview()
         }
         
         separationLine.snp.remakeConstraints {
