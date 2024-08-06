@@ -49,8 +49,8 @@ enum AmplitudeConstant {
     enum home {
         case home_view
         case full_calendar_appear
-        case bannerClick(property: String?)
-        case bannerX(property: String?)
+        case bannerClick(survey: String?)
+        case bannerX(survey: String?)
         
         var event: BaseEvent {
             switch self {
@@ -58,11 +58,15 @@ enum AmplitudeConstant {
                 return BaseEvent(eventType: "home_view", eventProperties: nil)
             case .full_calendar_appear:
                 return BaseEvent(eventType: "full_calendar_appear", eventProperties: nil)
-            case .bannerClick(let property):
-                return BaseEvent(eventType: "banner_click", eventProperties: property)
-            case .bannerX(let property):
-                return BaseEvent(eventType: "banner_x", eventProperties: property)
+            case .bannerClick(let survey):
+                return BaseEvent(eventType: "banner_click", eventProperties: surveyProperties(survey))
+            case .bannerX(let survey):
+                return BaseEvent(eventType: "banner_x", eventProperties: surveyProperties(survey))
             }
+        }
+        
+        private func surveyProperties(_ survey: String?) -> [String: Any]? {
+            survey.map { ["survey": $0] }
         }
     }
     

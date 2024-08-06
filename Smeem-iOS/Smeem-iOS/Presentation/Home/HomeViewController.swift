@@ -213,13 +213,13 @@ final class HomeViewController: BaseViewController {
         setSwipe()
         
         DispatchQueue.global(qos: .background).async {
-            AmplitudeManager.shared.track(event: AmplitudeConstant.home.home_view.event)
+            AmplitudeConstant.home.bannerClick(survey: "Completed").event
         }
         
         bannerView.closeButtonTapped.sink { [weak self] in
             self?.bannerView.removeFromSuperview()
             UserDefaultsManager.hasBannerClosed = true
-            AmplitudeManager.shared.track(event: AmplitudeConstant.home.bannerX(property: "survey").event)
+            AmplitudeManager.shared.track(event: AmplitudeConstant.home.bannerX(survey: nil).event)
         }
         .store(in: &cancelBag)
         
@@ -289,7 +289,7 @@ final class HomeViewController: BaseViewController {
     @objc func handleSurvey() {
         guard let path = URL(string: bannerEventPath ?? "") else { return }
         UIApplication.shared.open(path, options: [:])
-        AmplitudeManager.shared.track(event: AmplitudeConstant.home.bannerClick(property: "survey").event)
+        AmplitudeManager.shared.track(event: AmplitudeConstant.home.bannerClick(survey: "survey").event)
     }
     
     // MARK: - Custom Method
