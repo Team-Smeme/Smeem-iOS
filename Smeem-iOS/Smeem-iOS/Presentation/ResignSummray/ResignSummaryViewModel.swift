@@ -135,8 +135,6 @@ final class ResignSummaryViewModel: ViewModel {
                     self.resignSubject.send(())
                 }
             }
-            
-            self.resignSubject.send(())
         }
         
         input.buttonTapped
