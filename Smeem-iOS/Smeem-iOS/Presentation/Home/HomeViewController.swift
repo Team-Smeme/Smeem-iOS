@@ -183,7 +183,13 @@ final class HomeViewController: BaseViewController {
         return addDiaryButton
     }()
     
-    private let bannerView = CustomBannerView()
+    private lazy var bannerView: CustomBannerView = {
+        let tapGuesture = UITapGestureRecognizer(target: self, action: #selector(directSurvey))
+        
+        let view = CustomBannerView()
+        view.addGestureRecognizer(tapGuesture)
+        return view
+    }()
     
     private let bottomStackView: UIStackView = {
         let stackView = UIStackView()
@@ -278,6 +284,11 @@ final class HomeViewController: BaseViewController {
         
     }
     
+    @objc func directSurvey() {
+        guard let url = URL(string: "https://walla.my/survey/2SAyT8aWPKjqaL4cZ5vm") else { return }
+        UIApplication.shared.open(url, options: [:])
+    }
+    
     // MARK: - Custom Method
     
     private func setDelegate() {
@@ -350,11 +361,8 @@ final class HomeViewController: BaseViewController {
             if status == .success {
                 self.remoteConfig.activate() { (changed, error) in
                     let bannerContent = self.remoteConfig["banner_content"].stringValue
-                    let bannerEventPath = self.remoteConfig["banner_event_path"].stringValue
                     let bannerTitle = self.remoteConfig["banner_title"].stringValue
                     let bannerVersion = self.remoteConfig["banner_version"].numberValue
-                    let isBannerEnabled = self.remoteConfig["is_banner_enabled"].boolValue
-                    let isExternalEvent = self.remoteConfig["is_external_event"].boolValue
                     
                     UserDefaultsManager.currentBannerVersion = Int(truncating: bannerVersion)
                     
