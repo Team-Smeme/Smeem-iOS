@@ -8,7 +8,7 @@
 import Foundation
 import Moya
 
-public class AuthService: AuthServiceProtocol {
+final class AuthService: AuthServiceProtocol {
     
     static let shared = AuthService()
     private let authProvider = MoyaProvider<AuthEndPoint>(plugins: [MoyaLoggingPlugin()])

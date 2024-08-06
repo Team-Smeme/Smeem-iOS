@@ -21,7 +21,6 @@ protocol ResignSummaryDataSendDelegate {
     func sendTargetData(summaryInt: Int)
 }
 
-
 final class TrainingGoalsCollectionView: BaseCollectionView {
     
     // MARK: Properties

@@ -139,19 +139,6 @@ final class AuthManagementViewController: UIViewController {
     
     // MARK: - Custom Method
     
-    private func kakaoResignAPI() {
-        UserApi.shared.unlink { (error) in
-            if let _ = error {
-                self.showToast(toastType: .smeemErrorToast(message: .clientError, body: "카카오 에러입니다"))
-            }
-            else {
-                print("unlink() success.")
-                // 스밈 회원 탈퇴 API 호출
-                self.resignAPI()
-            }
-        }
-    }
-    
     private func setBackgroundColor() {
         view.backgroundColor = .white
     }
@@ -212,27 +199,6 @@ final class AuthManagementViewController: UIViewController {
 }
 
 extension AuthManagementViewController {
-    private func resignAPI() {
-//        SmeemLoadingView.showLoading()
-//        
-//        AuthService.shared.resignAPI() { result in
-//            switch result {
-//            case .success(_):
-//                UserDefaultsManager.accessToken = ""
-//                UserDefaultsManager.refreshToken = ""
-//                UserDefaultsManager.clientAccessToken = ""
-//                UserDefaultsManager.clientRefreshToken = ""
-//                UserDefaultsManager.hasKakaoToken = nil
-//                
-//                self.changeRootViewController(SplashViewController())
-//            case .failure(let error):
-//                self.showToast(toastType: .smeemErrorToast(message: error))
-//            }
-//            
-//            SmeemLoadingView.hideLoading()
-//        }
-    }
-    
     private func logoutAPI() {
         SmeemLoadingView.showLoading()
         
