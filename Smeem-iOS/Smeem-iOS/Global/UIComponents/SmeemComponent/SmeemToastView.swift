@@ -103,6 +103,12 @@ final class SmeemToastView: UIView {
         return label
     }()
     
+    private let detailLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .smeemWhite
+        return label
+    }()
+    
     // MARK: - Life Cycle
     
     init(type: ToastViewType) {
@@ -138,6 +144,7 @@ final class SmeemToastView: UIView {
     }
     
     private func setLineHeight() {
+        detailLabel.setTextWithLineHeight(lineHeight: 14)
         headLabel.setTextWithLineHeight(lineHeight: 21)
         bodyLabel.setTextWithLineHeight(lineHeight: 14)
     }
@@ -148,6 +155,7 @@ final class SmeemToastView: UIView {
         let (headText, bodyText) = type.displayText
         headLabel.text = headText
         bodyLabel.text = bodyText
+        detailLabel.text = bodyText
         
         func lineHeight(for type: ToastViewType) -> CGFloat {
             switch type {
@@ -162,6 +170,7 @@ final class SmeemToastView: UIView {
         case .smeemToast:
             backgroundColor = .toastBackground
             bodyLabel.font = .c2
+            detailLabel.font = .c2
             
         case .smeemErrorToast:
             backgroundColor = .smeemBlack
@@ -173,19 +182,21 @@ final class SmeemToastView: UIView {
         bodyLabel.text = bodyText
         bodyLabel.setTextWithLineHeight(lineHeight: determinedLineHeight)
         
+        detailLabel.text = bodyText
+        detailLabel.setTextWithLineHeight(lineHeight: determinedLineHeight)
+        
         clipsToBounds = true
         layer.cornerRadius = 6
     }
     
     private func setToastViewLayout() {
-        addSubviews(cautionImage, labelStackView)
-        labelStackView.addArrangedSubviews(headLabel, bodyLabel)
+        addSubviews(cautionImage,headLabel, bodyLabel, detailLabel)
         
         switch type {
         case .smeemToast:
-            bodyLabel.snp.makeConstraints { make in
+            detailLabel.snp.makeConstraints { make in
                 make.centerY.equalToSuperview()
-                make.leading.equalToSuperview().offset(convertByWidthRatio(16))
+                make.leading.equalToSuperview().inset(convertByWidthRatio(16))
             }
         case .smeemErrorToast:
             cautionImage.snp.makeConstraints { make in
@@ -194,9 +205,14 @@ final class SmeemToastView: UIView {
                 make.width.height.equalTo(22)
             }
             
-            labelStackView.snp.makeConstraints { make in
+            headLabel.snp.makeConstraints { make in
+                make.top.equalToSuperview().inset(14)
                 make.leading.equalTo(cautionImage.snp.trailing).offset(14)
-                make.centerY.equalTo(cautionImage)
+            }
+            
+            bodyLabel.snp.makeConstraints { make in
+                make.top.equalTo(headLabel.snp.bottom).offset(3)
+                make.leading.equalTo(headLabel)
             }
         }
         
@@ -205,9 +221,9 @@ final class SmeemToastView: UIView {
             make.width.equalTo(convertByWidthRatio(339))
             
             if case .smeemToast = type {
-                make.height.equalTo(convertByHeightRatio(50))
+                make.height.equalTo(50)
             } else {
-                make.height.equalTo(convertByWidthRatio(70))
+                make.height.equalTo(70)
             }
         }
     }
