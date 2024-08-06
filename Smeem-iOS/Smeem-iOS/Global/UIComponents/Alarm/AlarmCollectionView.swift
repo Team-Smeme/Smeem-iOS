@@ -70,6 +70,7 @@ final class AlarmCollectionView: UICollectionView {
         setCellRegister()
         setViewRegister()
         setLayerUI()
+        self.isScrollEnabled = false
     }
     
     required init?(coder: NSCoder) {

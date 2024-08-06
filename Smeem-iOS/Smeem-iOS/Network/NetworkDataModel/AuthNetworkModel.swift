@@ -29,5 +29,5 @@ extension LoginResponse {
 
 struct ReLoginResponse: Codable {
     let accessToken: String
-    let refreshToken: String
+    let refreshToken: String?
 }

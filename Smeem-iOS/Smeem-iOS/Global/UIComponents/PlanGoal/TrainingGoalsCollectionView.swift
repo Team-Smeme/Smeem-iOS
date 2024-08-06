@@ -7,13 +7,18 @@
 
 import UIKit
 
-enum TrainingGoalsType {
+enum TrainingGoalsType: Equatable {
     case onboarding
     case myPage(targetIndex: Int)
+    case resign
 }
 
 protocol TrainingDataSendDelegate {
     func sendTargetData(targetString: String, buttonType: SmeemButtonType)
+}
+
+protocol ResignSummaryDataSendDelegate {
+    func sendTargetData(summaryInt: Int)
 }
 
 final class TrainingGoalsCollectionView: BaseCollectionView {
@@ -21,9 +26,11 @@ final class TrainingGoalsCollectionView: BaseCollectionView {
     // MARK: Properties
     
     var trainingDelegate: TrainingDataSendDelegate?
+    var resignSummaryDelegate: ResignSummaryDataSendDelegate?
 
     private var selectedTarget = ""
     private var selectedIndex = -1
+    private var cellType = TrainingGoalsType.resign
     var planGoalArray = [Goal]()
     
     // MARK: UI Properties
@@ -32,6 +39,7 @@ final class TrainingGoalsCollectionView: BaseCollectionView {
     
     init(planGoalType: TrainingGoalsType) {
         super.init(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        self.cellType = planGoalType
         checkTargetString(planGoalType: planGoalType)
         registerCell()
         setDelegate()
@@ -90,8 +98,12 @@ extension TrainingGoalsCollectionView: UICollectionViewDelegate {
         cell.selctedCell()
         
         selectedIndex = indexPath.item
-        selectedTarget = planGoalArray[indexPath.item].goalType
+        if let goalType = planGoalArray[indexPath.item].goalType {
+            selectedTarget = goalType
+        }
+        
         trainingDelegate?.sendTargetData(targetString: selectedTarget, buttonType: .enabled)
+        resignSummaryDelegate?.sendTargetData(summaryInt: indexPath.item)
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
@@ -109,6 +121,6 @@ extension TrainingGoalsCollectionView: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 12
+        return self.cellType == .resign ? 5 : 12
     }
 }
