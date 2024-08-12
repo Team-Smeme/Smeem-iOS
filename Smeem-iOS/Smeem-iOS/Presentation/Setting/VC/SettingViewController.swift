@@ -111,7 +111,7 @@ final class SettingViewController: BaseViewController {
             .sink { _ in
                 guard let url = URL(string: "https://walla.my/survey/2SAyT8aWPKjqaL4cZ5vm") else { return }
                 UIApplication.shared.open(url, options: [:]) { success in
-                    if success {
+                    if !success {
                         self.errorSubject.send(.clientError)
                     }
                 }
@@ -303,6 +303,7 @@ final class SettingViewController: BaseViewController {
         
         alarmCollectionContainerView.snp.makeConstraints {
             $0.edges.equalToSuperview()
+            $0.width.height.equalToSuperview()
         }
         
         separationLine.snp.remakeConstraints {

@@ -20,6 +20,7 @@ final class HomeViewController: BaseViewController {
     
     private let remoteConfig = RemoteConfig.remoteConfig()
     private var isBannerShowen = true
+    private var bannerEventPath: String?
     private lazy var isDiaryTextEmpty = self.diaryText.text?.isEmpty ?? true
     private let settings = RemoteConfigSettings()
     private let weekdayLabels = ["S", "M", "T", "W", "T", "F", "S"]
@@ -183,7 +184,13 @@ final class HomeViewController: BaseViewController {
         return addDiaryButton
     }()
     
-    private let bannerView = CustomBannerView()
+    private lazy var bannerView: CustomBannerView = {
+        let tapGuesture = UITapGestureRecognizer(target: self, action: #selector(handleSurvey))
+        
+        let view = CustomBannerView()
+        view.addGestureRecognizer(tapGuesture)
+        return view
+    }()
     
     private let bottomStackView: UIStackView = {
         let stackView = UIStackView()
@@ -206,12 +213,13 @@ final class HomeViewController: BaseViewController {
         setSwipe()
         
         DispatchQueue.global(qos: .background).async {
-            AmplitudeManager.shared.track(event: AmplitudeConstant.home.home_view.event)
+            AmplitudeConstant.home.home_view.event
         }
         
         bannerView.closeButtonTapped.sink { [weak self] in
             self?.bannerView.removeFromSuperview()
             UserDefaultsManager.hasBannerClosed = true
+            AmplitudeManager.shared.track(event: AmplitudeConstant.home.bannerX(survey: "survey").event)
         }
         .store(in: &cancelBag)
         
@@ -222,6 +230,7 @@ final class HomeViewController: BaseViewController {
         homeDiaryWithAPI(start: Date().startOfMonth().addingDate(addValue: -7), end: Date().endOfMonth().addingDate(addValue: 7))
         checkPopupView()
         visitPatchAPI()
+        configureBannerLayout()
     }
     
     // MARK: - @objc
@@ -276,6 +285,12 @@ final class HomeViewController: BaseViewController {
     
     @objc func notificationPushShowPage() {
         
+    }
+    
+    @objc func handleSurvey() {
+        guard let path = URL(string: bannerEventPath ?? "") else { return }
+        UIApplication.shared.open(path, options: [:])
+        AmplitudeManager.shared.track(event: AmplitudeConstant.home.bannerClick(survey: "survey").event)
     }
     
     // MARK: - Custom Method
@@ -350,19 +365,27 @@ final class HomeViewController: BaseViewController {
             if status == .success {
                 self.remoteConfig.activate() { (changed, error) in
                     let bannerContent = self.remoteConfig["banner_content"].stringValue
-                    let bannerEventPath = self.remoteConfig["banner_event_path"].stringValue
                     let bannerTitle = self.remoteConfig["banner_title"].stringValue
                     let bannerVersion = self.remoteConfig["banner_version"].numberValue
-                    let isBannerEnabled = self.remoteConfig["is_banner_enabled"].boolValue
-                    let isExternalEvent = self.remoteConfig["is_external_event"].boolValue
+                    self.bannerEventPath = self.remoteConfig["banner_event_path"].stringValue
                     
-                    UserDefaultsManager.currentBannerVersion = Int(truncating: bannerVersion)
-                    
+//                    UserDefaultsManager.currentBannerVersion = 0
                     let currentBannerVersion = UserDefaultsManager.currentBannerVersion
                     
                     if bannerVersion.intValue > currentBannerVersion {
                         UserDefaultsManager.hasBannerClosed = false
                     }
+                    
+                    if !UserDefaultsManager.hasBannerClosed {
+                        DispatchQueue.main.async {
+                            self.bottomStackView.insertArrangedSubview(self.bannerView, at: 0)
+                            self.bannerView.snp.makeConstraints {
+                                $0.height.equalTo(88)
+                            }
+                        }
+                    }
+                    
+                    UserDefaultsManager.currentBannerVersion = Int(truncating: bannerVersion)
                     
                     self.bannerView.setLabelText(with: bannerTitle ?? "", body: bannerContent ?? "")
                 }
@@ -494,20 +517,16 @@ final class HomeViewController: BaseViewController {
             $0.leading.trailing.equalToSuperview().inset(18)
         }
         
-        if !UserDefaultsManager.hasBannerClosed {
-            bottomStackView.addArrangedSubview(bannerView)
-            bannerView.snp.makeConstraints {
-                $0.top.leading.trailing.equalToSuperview()
-                $0.height.equalTo(88)
-            }
-        }
-        
-        bottomStackView.addArrangedSubviews(addDiaryButton)
+        bottomStackView.addArrangedSubview(addDiaryButton)
         
         addDiaryButton.snp.makeConstraints {
             $0.width.equalTo(convertByWidthRatio(339))
             $0.height.equalTo(convertByHeightRatio(60))
         }
+    }
+    
+    func configureBannerLayout() {
+
     }
 }
 
