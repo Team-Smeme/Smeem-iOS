@@ -37,6 +37,7 @@ final class MySummaryViewModel: ViewModel {
     private let loadingViewSubject = PassthroughSubject<Bool, Never>()
     private let totalHasMyPlanSubject = PassthroughSubject<TotalMySummaryResponse, Never>()
     private let totalHasNotPlanSubject = PassthroughSubject<TotalMySummaryResponse, Never>()
+    private let amplitudeSubject = PassthroughSubject<SummaryAmplitudeType, Never>()
     
     init(provider: MySummaryServiceProtocol) {
         self.provider = provider

@@ -58,4 +58,16 @@ struct UserDefaultsManager {
         get { return UserDefaults.standard.bool(forKey: "tipView")}
         set { UserDefaults.standard.set(newValue, forKey: "tipView")}
     }
+    
+    // MARK: - RemoteConfig
+    
+    static var currentBannerVersion: Int {
+        get { return UserDefaults.standard.integer(forKey: "bannerVersion")}
+        set { UserDefaults.standard.set(newValue, forKey: "bannerVersion")}
+    }
+    
+    static var hasBannerClosed: Bool {
+        get { return UserDefaults.standard.bool(forKey: "hasBannerClosed")}
+        set { UserDefaults.standard.set(newValue, forKey: "hasBannerClosed")}
+    }
 }

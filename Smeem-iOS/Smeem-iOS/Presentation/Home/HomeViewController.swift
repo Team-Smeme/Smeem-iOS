@@ -8,6 +8,7 @@
 import UIKit
 import Combine
 
+import FirebaseRemoteConfig
 import FSCalendar
 import SnapKit
 
@@ -17,6 +18,11 @@ final class HomeViewController: BaseViewController {
     
     private let diaryViewControllerFactory = DiaryViewControllerFactory(diaryViewFactory: DiaryViewFactory())
     
+    private let remoteConfig = RemoteConfig.remoteConfig()
+    private var isBannerShowen = true
+    private var bannerEventPath: String?
+    private lazy var isDiaryTextEmpty = self.diaryText.text?.isEmpty ?? true
+    private let settings = RemoteConfigSettings()
     private let weekdayLabels = ["S", "M", "T", "W", "T", "F", "S"]
     private let gregorian = Calendar(identifier: .gregorian)
     private var homeDiaryDict = [String: HomeDiaryCustom]()
@@ -87,7 +93,7 @@ final class HomeViewController: BaseViewController {
         diaryDate.font = .s3
         return diaryDate
     }()
- 
+    
     private let diaryText: UILabel = {
         let diaryText = UILabel()
         diaryText.textColor = .smeemBlack
@@ -173,10 +179,25 @@ final class HomeViewController: BaseViewController {
         return view
     }()
     
-    private lazy var addDiaryButton: SmeemButton = {
+    private let addDiaryButton: SmeemButton = {
         let addDiaryButton = SmeemButton(buttonType: .enabled, text: "일기 작성하기")
-        addDiaryButton.addTarget(self, action: #selector(self.addDiaryButtonDidTap(_:)), for: .touchUpInside)
         return addDiaryButton
+    }()
+    
+    private lazy var bannerView: CustomBannerView = {
+        let tapGuesture = UITapGestureRecognizer(target: self, action: #selector(handleSurvey))
+        
+        let view = CustomBannerView()
+        view.addGestureRecognizer(tapGuesture)
+        return view
+    }()
+    
+    private let bottomStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.spacing = 16
+        stackView.distribution = .equalSpacing
+        return stackView
     }()
     
     // MARK: - Life Cycle
@@ -186,19 +207,30 @@ final class HomeViewController: BaseViewController {
         
         configureBottomLayout(date: currentDate)
         setBackgroundColor()
+        fetchRemoteConfig()
         setLayout()
         setDelegate()
         setSwipe()
         
         DispatchQueue.global(qos: .background).async {
-            AmplitudeManager.shared.track(event: AmplitudeConstant.home.home_view.event)
+            AmplitudeConstant.home.home_view.event
         }
+        
+        bannerView.closeButtonTapped.sink { [weak self] in
+            self?.bannerView.removeFromSuperview()
+            UserDefaultsManager.hasBannerClosed = true
+            AmplitudeManager.shared.track(event: AmplitudeConstant.home.bannerX(survey: "survey").event)
+        }
+        .store(in: &cancelBag)
+        
+        addDiaryButton.addTarget(self, action: #selector(self.addDiaryButtonDidTap(_:)), for: .touchUpInside)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         homeDiaryWithAPI(start: Date().startOfMonth().addingDate(addValue: -7), end: Date().endOfMonth().addingDate(addValue: 7))
         checkPopupView()
         visitPatchAPI()
+        configureBannerLayout()
     }
     
     // MARK: - @objc
@@ -253,6 +285,12 @@ final class HomeViewController: BaseViewController {
     
     @objc func notificationPushShowPage() {
         
+    }
+    
+    @objc func handleSurvey() {
+        guard let path = URL(string: bannerEventPath ?? "") else { return }
+        UIApplication.shared.open(path, options: [:])
+        AmplitudeManager.shared.track(event: AmplitudeConstant.home.bannerClick(survey: "survey").event)
     }
     
     // MARK: - Custom Method
@@ -312,9 +350,9 @@ final class HomeViewController: BaseViewController {
     }
     
     private func getSomeData(completion: @escaping () -> ()) {
-      DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-        completion()
-      }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            completion()
+        }
     }
     
     func handlePostDiaryAPI(with response: PostDiaryResponse?) {
@@ -322,12 +360,47 @@ final class HomeViewController: BaseViewController {
         badgePopupData = response?.badges ?? []
     }
     
+    func fetchRemoteConfig() {
+        remoteConfig.fetch() { (status, error) -> Void in
+            if status == .success {
+                self.remoteConfig.activate() { (changed, error) in
+                    let bannerContent = self.remoteConfig["banner_content"].stringValue
+                    let bannerTitle = self.remoteConfig["banner_title"].stringValue
+                    let bannerVersion = self.remoteConfig["banner_version"].numberValue
+                    self.bannerEventPath = self.remoteConfig["banner_event_path"].stringValue
+                    
+//                    UserDefaultsManager.currentBannerVersion = 0
+                    let currentBannerVersion = UserDefaultsManager.currentBannerVersion
+                    
+                    if bannerVersion.intValue > currentBannerVersion {
+                        UserDefaultsManager.hasBannerClosed = false
+                    }
+                    
+                    if !UserDefaultsManager.hasBannerClosed {
+                        DispatchQueue.main.async {
+                            self.bottomStackView.insertArrangedSubview(self.bannerView, at: 0)
+                            self.bannerView.snp.makeConstraints {
+                                $0.height.equalTo(88)
+                            }
+                        }
+                    }
+                    
+                    UserDefaultsManager.currentBannerVersion = Int(truncating: bannerVersion)
+                    
+                    self.bannerView.setLabelText(with: bannerTitle ?? "", body: bannerContent ?? "")
+                }
+            } else {
+                print("Error: \(error?.localizedDescription ?? "No error available.")")
+            }
+        }
+    }
+    
     // MARK: - Layout
     
     private func setLayout() {
         hiddenNavigationBar()
         
-        view.addSubviews(calendar, myPageButton, indicator, border, diaryThumbnail, emptyView, floatingView, addDiaryButton, myPageBackView)
+        view.addSubviews(calendar, myPageButton, indicator, border, diaryThumbnail, emptyView, floatingView, myPageBackView, bottomStackView)
         diaryThumbnail.addSubviews(diaryDate, fullViewButtonText, fullViewButtonSymbol, diaryText)
         emptyView.addSubviews(emptyPaddingView, emptySymbol, emptyText)
         floatingView.addSubviews(waitingLabel, adviceLabel, xButton)
@@ -439,12 +512,21 @@ final class HomeViewController: BaseViewController {
             $0.width.height.equalTo(convertByWidthRatio(40))
         }
         
+        bottomStackView.snp.makeConstraints {
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-16)
+            $0.leading.trailing.equalToSuperview().inset(18)
+        }
+        
+        bottomStackView.addArrangedSubview(addDiaryButton)
+        
         addDiaryButton.snp.makeConstraints {
-            $0.bottom.equalToSuperview().inset(convertByHeightRatio(50))
-            $0.centerX.equalToSuperview()
             $0.width.equalTo(convertByWidthRatio(339))
             $0.height.equalTo(convertByHeightRatio(60))
         }
+    }
+    
+    func configureBannerLayout() {
+
     }
 }
 
@@ -507,7 +589,7 @@ extension HomeViewController: FSCalendarDelegateAppearance {
         configureSelectedUI()
         configureBottomLayout(date: date)
     }
-
+    
     /// 달력의 선택된 셀 배경 디자인 변경
     private func configureSelectedUI() {
         calendar.visibleCells().forEach { (cell) in
@@ -522,7 +604,8 @@ extension HomeViewController: FSCalendarDelegateAppearance {
         let isHavingTodayDiary = writtenDaysStringList.contains(date.toString("yyyy-MM-dd"))
         diaryThumbnail.isHidden = !isHavingTodayDiary
         emptyView.isHidden = isHavingTodayDiary
-        addDiaryButton.isHidden = (gregorian.isDateInToday(date) && !isHavingTodayDiary) ? false : true
+        addDiaryButton.isHidden = !(gregorian.isDateInToday(date) && !isHavingTodayDiary)
+        
         if (!floatingView.isHidden) {
             floatingView.snp.updateConstraints {
                 $0.bottom.equalToSuperview().offset(-convertByHeightRatio(addDiaryButton.isHidden ? 50 : 120))

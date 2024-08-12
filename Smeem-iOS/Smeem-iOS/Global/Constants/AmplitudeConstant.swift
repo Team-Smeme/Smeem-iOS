@@ -44,12 +44,13 @@ enum AmplitudeConstant {
                 return BaseEvent(eventType: "welcome_more_click", eventProperties: nil)
             }
         }
-        
     }
     
     enum home {
         case home_view
         case full_calendar_appear
+        case bannerClick(survey: String?)
+        case bannerX(survey: String?)
         
         var event: BaseEvent {
             switch self {
@@ -57,8 +58,15 @@ enum AmplitudeConstant {
                 return BaseEvent(eventType: "home_view", eventProperties: nil)
             case .full_calendar_appear:
                 return BaseEvent(eventType: "full_calendar_appear", eventProperties: nil)
-                
+            case .bannerClick(let survey):
+                return BaseEvent(eventType: "banner_click", eventProperties: surveyProperties(survey))
+            case .bannerX(let survey):
+                return BaseEvent(eventType: "banner_x", eventProperties: surveyProperties(survey))
             }
+        }
+        
+        private func surveyProperties(_ survey: String?) -> [String: Any]? {
+            survey.map { ["survey": $0] }
         }
     }
     
@@ -124,9 +132,18 @@ enum AmplitudeConstant {
     
     enum myPage {
         case mypage_view
+        case delete_id_try
+        case delete_id_done
         
         var event: BaseEvent {
-            return BaseEvent(eventType: "mypage_view", eventProperties: nil)
+            switch self {
+            case .mypage_view:
+                return BaseEvent(eventType: "mypage_view", eventProperties: nil)
+            case .delete_id_try:
+                return BaseEvent(eventType: "delete_id_try", eventProperties: nil)
+            case .delete_id_done:
+                return BaseEvent(eventType: "delete_id_done", eventProperties: nil)
+            }
         }
     }
     

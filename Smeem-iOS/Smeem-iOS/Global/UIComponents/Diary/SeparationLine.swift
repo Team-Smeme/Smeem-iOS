@@ -69,7 +69,7 @@ extension SeparationLine {
     }
 }
 
-// MARK: - Extension:
+// MARK: - Extension
 
 extension SeparationLine {
     static func createThickLine() -> UIView {

@@ -24,10 +24,15 @@
 		3728B8D32A2CFED300EF4CF8 /* ForeignDiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3728B8D22A2CFED300EF4CF8 /* ForeignDiaryViewController.swift */; };
 		3728B8D52A2CFF2C00EF4CF8 /* StepOneKoreanDiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3728B8D42A2CFF2C00EF4CF8 /* StepOneKoreanDiaryViewController.swift */; };
 		3728B8D72A2CFF3A00EF4CF8 /* StepTwoKoreanDiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3728B8D62A2CFF3A00EF4CF8 /* StepTwoKoreanDiaryViewController.swift */; };
+		373A7F552C3D78CC00CF554C /* CustomBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373A7F542C3D78CC00CF554C /* CustomBannerView.swift */; };
 		373E38592A2F889500DF96F0 /* DiaryDetailRandomSubjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373E38582A2F889500DF96F0 /* DiaryDetailRandomSubjectView.swift */; };
 		374F828C2AC327A200C128B9 /* SmeemTextViewHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374F828B2AC327A200C128B9 /* SmeemTextViewHandler.swift */; };
 		374F828E2AC5DFFE00C128B9 /* DiaryBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374F828D2AC5DFFE00C128B9 /* DiaryBottomView.swift */; };
 		374FAF812A2CACCF00237A1A /* DiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374FAF802A2CACCF00237A1A /* DiaryViewController.swift */; };
+		375B62872C590D0D00DA8E30 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 375B62862C590D0D00DA8E30 /* FirebaseAnalytics */; };
+		375B62892C590D0D00DA8E30 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 375B62882C590D0D00DA8E30 /* FirebaseCrashlytics */; };
+		375B628B2C590D0D00DA8E30 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 375B628A2C590D0D00DA8E30 /* FirebaseMessaging */; };
+		375B628D2C590D0D00DA8E30 /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 375B628C2C590D0D00DA8E30 /* FirebaseRemoteConfig */; };
 		3761116C2A278D0E0095EC5A /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3761116B2A278D0E0095EC5A /* String+.swift */; };
 		3785072F2BD1480C004CC922 /* SharedDiaryDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37499E3C2BD0C3A100BA6FAF /* SharedDiaryDataService.swift */; };
 		378B20EE2BA0A01600604935 /* ForeignDiaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378B20ED2BA0A01600604935 /* ForeignDiaryViewModel.swift */; };
@@ -59,6 +64,7 @@
 		37ADCC022B0289AD00E474AA /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ADCC012B0289AD00E474AA /* Observable.swift */; };
 		37B360AA2AC2A4680006C8ED /* SmeemTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B360A92AC2A4680006C8ED /* SmeemTextView.swift */; };
 		37BCADF22BC3FFBF006EF960 /* DetailDiaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BCADF12BC3FFBF006EF960 /* DetailDiaryViewModel.swift */; };
+		37BDC9872C4FEA940075F68A /* SendFeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BDC9862C4FEA940075F68A /* SendFeedbackView.swift */; };
 		37DCA6572A47574300FF8F90 /* RandomTopicAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DCA6562A47574300FF8F90 /* RandomTopicAPI.swift */; };
 		37DCA65A2A47598700FF8F90 /* RandomTopicService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DCA6592A47598700FF8F90 /* RandomTopicService.swift */; };
 		37DCA65D2A475B5100FF8F90 /* RandomTopicResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DCA65C2A475B5100FF8F90 /* RandomTopicResponse.swift */; };
@@ -73,8 +79,8 @@
 		37EB69E62A4B3BC400075E4E /* DataBindProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37EB69E52A4B3BC400075E4E /* DataBindProtocol.swift */; };
 		4A004D4F2B4ED760003C8936 /* TrainingGoalResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A004D4E2B4ED760003C8936 /* TrainingGoalResponse.swift */; };
 		4A004D512B4ED783003C8936 /* TrainingWayResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A004D502B4ED783003C8936 /* TrainingWayResponse.swift */; };
-		4A004D542B4EE26E003C8936 /* AuthAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A004D532B4EE26E003C8936 /* AuthAPI.swift */; };
-		4A004D562B4EE277003C8936 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A004D552B4EE277003C8936 /* AuthService.swift */; };
+		4A004D542B4EE26E003C8936 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A004D532B4EE26E003C8936 /* AuthService.swift */; };
+		4A004D562B4EE277003C8936 /* AuthEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A004D552B4EE277003C8936 /* AuthEndPoint.swift */; };
 		4A004D592B4EE28D003C8936 /* PushTestAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A004D582B4EE28D003C8936 /* PushTestAPI.swift */; };
 		4A004D5B2B4EE29A003C8936 /* PushTestService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A004D5A2B4EE29A003C8936 /* PushTestService.swift */; };
 		4A004D5E2B4EE2B4003C8936 /* MyPageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A004D5D2B4EE2B4003C8936 /* MyPageService.swift */; };
@@ -94,6 +100,7 @@
 		4A0EE6042B9301E900158899 /* OnboardingServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0EE6032B9301E900158899 /* OnboardingServiceProtocol.swift */; };
 		4A10A3A82AB8AA5800C145E9 /* System.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A10A3A72AB8AA5800C145E9 /* System.swift */; };
 		4A1882FA2A8BBD0D0088F590 /* SmeemStartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD923E62A0650B600FF5E27 /* SmeemStartViewController.swift */; };
+		4A2AEE702C3D78E70000CBCB /* ResignSummaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A2AEE6F2C3D78E70000CBCB /* ResignSummaryViewModel.swift */; };
 		4A3373F52A45BF6600EFE6C4 /* OnboardingEndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3373F42A45BF6600EFE6C4 /* OnboardingEndPoint.swift */; };
 		4A3373F82A461ABC00EFE6C4 /* OnboardingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3373F72A461ABC00EFE6C4 /* OnboardingService.swift */; };
 		4A3774842A42E6EA00357DD1 /* ConfigConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3774832A42E6EA00357DD1 /* ConfigConstant.swift */; };
@@ -111,6 +118,8 @@
 		4A6630392A51E04600D19CC9 /* PatchDiaryRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6630382A51E04600D19CC9 /* PatchDiaryRequest.swift */; };
 		4A7F22252B8241DC0011DECF /* TrainingAlarmViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A07F8E22B821539004185F2 /* TrainingAlarmViewModelTest.swift */; };
 		4A81C2972ACDAB2C0056E815 /* TrainingGoalsCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A81C2962ACDAB2C0056E815 /* TrainingGoalsCollectionView.swift */; };
+		4A86D65E2C5910FF002C0617 /* ResignRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A86D65D2C5910FF002C0617 /* ResignRequest.swift */; };
+		4A86D6602C591409002C0617 /* AuthServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A86D65F2C591409002C0617 /* AuthServiceProtocol.swift */; };
 		4A8FFA5029C9E1FD00FB76C0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8FFA4F29C9E1FD00FB76C0 /* AppDelegate.swift */; };
 		4A8FFA5229C9E1FD00FB76C0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8FFA5129C9E1FD00FB76C0 /* SceneDelegate.swift */; };
 		4A8FFA5929C9E1FE00FB76C0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A8FFA5829C9E1FE00FB76C0 /* Assets.xcassets */; };
@@ -130,11 +139,10 @@
 		4A9FAB492A4C3D1200C40D5A /* DetailBadgeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9FAB442A4C3D1200C40D5A /* DetailBadgeCollectionViewCell.swift */; };
 		4AA1EEEA2A5873A00017FF97 /* Urbanist-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4AA1EEE92A5870690017FF97 /* Urbanist-SemiBold.otf */; };
 		4AA5E4B42BF2355300F308C8 /* MySummaryViewModel2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA5E4B32BF2355300F308C8 /* MySummaryViewModel2.swift */; };
+		4AA6FEE92C3ABDB500E588E9 /* ResignSummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA6FEE82C3ABDB500E588E9 /* ResignSummaryViewController.swift */; };
 		4AA942C22A2767D000A552A0 /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 4AA942C12A2767D000A552A0 /* FSCalendar */; };
 		4AA942C52A2767D900A552A0 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4AA942C42A2767D900A552A0 /* SnapKit */; };
 		4AA942CD2A276A9F00A552A0 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 4AA942CC2A276A9F00A552A0 /* Moya */; };
-		4AA942D02A276AFF00A552A0 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 4AA942CF2A276AFF00A552A0 /* FirebaseAnalyticsWithoutAdIdSupport */; };
-		4AA942D22A276AFF00A552A0 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 4AA942D12A276AFF00A552A0 /* FirebaseMessaging */; };
 		4AA942D52A276C7900A552A0 /* KakaoSDKAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 4AA942D42A276C7900A552A0 /* KakaoSDKAuth */; };
 		4AA942D72A276C7900A552A0 /* KakaoSDKCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 4AA942D62A276C7900A552A0 /* KakaoSDKCommon */; };
 		4AA942D92A276C7900A552A0 /* KakaoSDKUser in Frameworks */ = {isa = PBXBuildFile; productRef = 4AA942D82A276C7900A552A0 /* KakaoSDKUser */; };
@@ -258,6 +266,7 @@
 		3728B8D22A2CFED300EF4CF8 /* ForeignDiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForeignDiaryViewController.swift; sourceTree = "<group>"; };
 		3728B8D42A2CFF2C00EF4CF8 /* StepOneKoreanDiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepOneKoreanDiaryViewController.swift; sourceTree = "<group>"; };
 		3728B8D62A2CFF3A00EF4CF8 /* StepTwoKoreanDiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepTwoKoreanDiaryViewController.swift; sourceTree = "<group>"; };
+		373A7F542C3D78CC00CF554C /* CustomBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBannerView.swift; sourceTree = "<group>"; };
 		373E38582A2F889500DF96F0 /* DiaryDetailRandomSubjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryDetailRandomSubjectView.swift; sourceTree = "<group>"; };
 		37499E3C2BD0C3A100BA6FAF /* SharedDiaryDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedDiaryDataService.swift; sourceTree = "<group>"; };
 		374F828B2AC327A200C128B9 /* SmeemTextViewHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmeemTextViewHandler.swift; sourceTree = "<group>"; };
@@ -293,6 +302,7 @@
 		37ADCC012B0289AD00E474AA /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		37B360A92AC2A4680006C8ED /* SmeemTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmeemTextView.swift; sourceTree = "<group>"; };
 		37BCADF12BC3FFBF006EF960 /* DetailDiaryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailDiaryViewModel.swift; sourceTree = "<group>"; };
+		37BDC9862C4FEA940075F68A /* SendFeedbackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendFeedbackView.swift; sourceTree = "<group>"; };
 		37DCA6562A47574300FF8F90 /* RandomTopicAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomTopicAPI.swift; sourceTree = "<group>"; };
 		37DCA6592A47598700FF8F90 /* RandomTopicService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomTopicService.swift; sourceTree = "<group>"; };
 		37DCA65C2A475B5100FF8F90 /* RandomTopicResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomTopicResponse.swift; sourceTree = "<group>"; };
@@ -307,8 +317,8 @@
 		37EB69E52A4B3BC400075E4E /* DataBindProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataBindProtocol.swift; sourceTree = "<group>"; };
 		4A004D4E2B4ED760003C8936 /* TrainingGoalResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingGoalResponse.swift; sourceTree = "<group>"; };
 		4A004D502B4ED783003C8936 /* TrainingWayResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingWayResponse.swift; sourceTree = "<group>"; };
-		4A004D532B4EE26E003C8936 /* AuthAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthAPI.swift; sourceTree = "<group>"; };
-		4A004D552B4EE277003C8936 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		4A004D532B4EE26E003C8936 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		4A004D552B4EE277003C8936 /* AuthEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthEndPoint.swift; sourceTree = "<group>"; };
 		4A004D582B4EE28D003C8936 /* PushTestAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushTestAPI.swift; sourceTree = "<group>"; };
 		4A004D5A2B4EE29A003C8936 /* PushTestService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushTestService.swift; sourceTree = "<group>"; };
 		4A004D5D2B4EE2B4003C8936 /* MyPageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageService.swift; sourceTree = "<group>"; };
@@ -331,6 +341,7 @@
 		4A13B7582A13D37000F4FB1E /* UserNickNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNickNameViewController.swift; sourceTree = "<group>"; };
 		4A23621B2AFA8682005E4C58 /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
 		4A23621C2AFA868D005E4C58 /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
+		4A2AEE6F2C3D78E70000CBCB /* ResignSummaryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResignSummaryViewModel.swift; sourceTree = "<group>"; };
 		4A3373F42A45BF6600EFE6C4 /* OnboardingEndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingEndPoint.swift; sourceTree = "<group>"; };
 		4A3373F72A461ABC00EFE6C4 /* OnboardingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingService.swift; sourceTree = "<group>"; };
 		4A3774832A42E6EA00357DD1 /* ConfigConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigConstant.swift; sourceTree = "<group>"; };
@@ -351,6 +362,8 @@
 		4A81C2962ACDAB2C0056E815 /* TrainingGoalsCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingGoalsCollectionView.swift; sourceTree = "<group>"; };
 		4A8275D22A1513120083A4AB /* ServiceAcceptViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAcceptViewController.swift; sourceTree = "<group>"; };
 		4A8275D42A1519550083A4AB /* ServiceAcceptCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAcceptCollectionViewCell.swift; sourceTree = "<group>"; };
+		4A86D65D2C5910FF002C0617 /* ResignRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResignRequest.swift; sourceTree = "<group>"; };
+		4A86D65F2C591409002C0617 /* AuthServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthServiceProtocol.swift; sourceTree = "<group>"; };
 		4A8FFA4C29C9E1FD00FB76C0 /* Smeem-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Smeem-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A8FFA4F29C9E1FD00FB76C0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4A8FFA5129C9E1FD00FB76C0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -372,6 +385,7 @@
 		4A9FAB442A4C3D1200C40D5A /* DetailBadgeCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailBadgeCollectionViewCell.swift; sourceTree = "<group>"; };
 		4AA1EEE92A5870690017FF97 /* Urbanist-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Urbanist-SemiBold.otf"; sourceTree = "<group>"; };
 		4AA5E4B32BF2355300F308C8 /* MySummaryViewModel2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySummaryViewModel2.swift; sourceTree = "<group>"; };
+		4AA6FEE82C3ABDB500E588E9 /* ResignSummaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResignSummaryViewController.swift; sourceTree = "<group>"; };
 		4AB7C9182B75F9B500845733 /* GesturePublisher+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GesturePublisher+.swift"; sourceTree = "<group>"; };
 		4AB7C91A2B7624CC00845733 /* ServiceAcceptAppData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceAcceptAppData.swift; sourceTree = "<group>"; };
 		4AB7C9252B78914100845733 /* SplashViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewModel.swift; sourceTree = "<group>"; };
@@ -475,16 +489,18 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4AA942D22A276AFF00A552A0 /* FirebaseMessaging in Frameworks */,
 				4AA942D72A276C7900A552A0 /* KakaoSDKCommon in Frameworks */,
 				4AA942C22A2767D000A552A0 /* FSCalendar in Frameworks */,
 				A301B0A22A30720F006BE0BA /* Kingfisher in Frameworks */,
+				375B628D2C590D0D00DA8E30 /* FirebaseRemoteConfig in Frameworks */,
 				4AA942CD2A276A9F00A552A0 /* Moya in Frameworks */,
 				4AA942D92A276C7900A552A0 /* KakaoSDKUser in Frameworks */,
-				4AA942D02A276AFF00A552A0 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 				4AA942C52A2767D900A552A0 /* SnapKit in Frameworks */,
 				4A08480C2B554513008327C7 /* AmplitudeSwift in Frameworks */,
+				375B62892C590D0D00DA8E30 /* FirebaseCrashlytics in Frameworks */,
 				4AA942D52A276C7900A552A0 /* KakaoSDKAuth in Frameworks */,
+				375B628B2C590D0D00DA8E30 /* FirebaseMessaging in Frameworks */,
+				375B62872C590D0D00DA8E30 /* FirebaseAnalytics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -586,6 +602,8 @@
 		37A574B529FE204500312453 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				4AC047232A8FCA9700EBDC0E /* AuthManagement */,
+				4AA6FEE72C3ABD7C00E588E9 /* ResignSummray */,
 				4AA5E4B52BF24CEB00F308C8 /* BadgeBottomSheet */,
 				4AC705A72BECE051003C5310 /* Edit */,
 				4ABCBCB82BD6A6E3003138A8 /* MySummary */,
@@ -633,6 +651,7 @@
 				4A1EE9552A4DFB86007BFEF3 /* SmeemComponent */,
 				4A1EE9532A4DFB42007BFEF3 /* Diary */,
 				4A3F2E952A0ABB9C00F6AC60 /* Alarm */,
+				373A7F542C3D78CC00CF554C /* CustomBannerView.swift */,
 			);
 			path = UIComponents;
 			sourceTree = "<group>";
@@ -795,8 +814,10 @@
 		4A004D522B4EE262003C8936 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
-				4A004D532B4EE26E003C8936 /* AuthAPI.swift */,
-				4A004D552B4EE277003C8936 /* AuthService.swift */,
+				4A004D532B4EE26E003C8936 /* AuthService.swift */,
+				4A004D552B4EE277003C8936 /* AuthEndPoint.swift */,
+				4A86D65D2C5910FF002C0617 /* ResignRequest.swift */,
+				4A86D65F2C591409002C0617 /* AuthServiceProtocol.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -1212,6 +1233,15 @@
 			path = BadgeBottomSheet;
 			sourceTree = "<group>";
 		};
+		4AA6FEE72C3ABD7C00E588E9 /* ResignSummray */ = {
+			isa = PBXGroup;
+			children = (
+				4AA6FEE82C3ABDB500E588E9 /* ResignSummaryViewController.swift */,
+				4A2AEE6F2C3D78E70000CBCB /* ResignSummaryViewModel.swift */,
+			);
+			path = ResignSummray;
+			sourceTree = "<group>";
+		};
 		4AB7C91C2B7886D000845733 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -1521,6 +1551,7 @@
 				4AC705902BEA1E49003C5310 /* PlanContainerView.swift */,
 				4AC705922BEA1E52003C5310 /* LanguageContainerView.swift */,
 				4AC705942BEA1E58003C5310 /* AlarmContainerView.swift */,
+				37BDC9862C4FEA940075F68A /* SendFeedbackView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1738,7 +1769,6 @@
 		A3D7ECB82A26566F009857D6 /* MyPage */ = {
 			isa = PBXGroup;
 			children = (
-				4AC047232A8FCA9700EBDC0E /* AuthManagement */,
 				4A9FAB4B2A4C3D4A00C40D5A /* MyPage */,
 				4A9FAB4A2A4C3D3D00C40D5A /* EditNickname */,
 				4ADCA2D42A9272D6002904EB /* EditAlarm */,
@@ -1787,13 +1817,15 @@
 				4AA942C12A2767D000A552A0 /* FSCalendar */,
 				4AA942C42A2767D900A552A0 /* SnapKit */,
 				4AA942CC2A276A9F00A552A0 /* Moya */,
-				4AA942CF2A276AFF00A552A0 /* FirebaseAnalyticsWithoutAdIdSupport */,
-				4AA942D12A276AFF00A552A0 /* FirebaseMessaging */,
 				4AA942D42A276C7900A552A0 /* KakaoSDKAuth */,
 				4AA942D62A276C7900A552A0 /* KakaoSDKCommon */,
 				4AA942D82A276C7900A552A0 /* KakaoSDKUser */,
 				A301B0A12A30720F006BE0BA /* Kingfisher */,
 				4A08480B2B554513008327C7 /* AmplitudeSwift */,
+				375B62862C590D0D00DA8E30 /* FirebaseAnalytics */,
+				375B62882C590D0D00DA8E30 /* FirebaseCrashlytics */,
+				375B628A2C590D0D00DA8E30 /* FirebaseMessaging */,
+				375B628C2C590D0D00DA8E30 /* FirebaseRemoteConfig */,
 			);
 			productName = "Smeem-iOS";
 			productReference = 4A8FFA4C29C9E1FD00FB76C0 /* Smeem-iOS.app */;
@@ -1834,10 +1866,10 @@
 				4AA942C02A2767D000A552A0 /* XCRemoteSwiftPackageReference "FSCalendar" */,
 				4AA942C32A2767D900A552A0 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				4AA942CB2A276A9F00A552A0 /* XCRemoteSwiftPackageReference "Moya" */,
-				4AA942CE2A276AFF00A552A0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				4AA942D32A276C7900A552A0 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
 				A301B0A02A30720F006BE0BA /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				4A08480A2B554513008327C7 /* XCRemoteSwiftPackageReference "Amplitude-Swift" */,
+				375B62852C590D0D00DA8E30 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 4A8FFA4D29C9E1FD00FB76C0 /* Products */;
 			projectDirPath = "";
@@ -1894,12 +1926,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4AA6FEE92C3ABDB500E588E9 /* ResignSummaryViewController.swift in Sources */,
 				371107E32ACABDB3007A4AC2 /* DiaryView.swift in Sources */,
 				4AC00ED72AD2E6E0009230DA /* TrainingStepView.swift in Sources */,
 				371E94162A87B83D0098280F /* NextButtonDelegate.swift in Sources */,
 				4AC00EE62AD432F2009230DA /* BaseCollectionView.swift in Sources */,
 				4AC00EF02AD52F4C009230DA /* TrainingAlarmViewController.swift in Sources */,
-				4A004D562B4EE277003C8936 /* AuthService.swift in Sources */,
+				4A004D562B4EE277003C8936 /* AuthEndPoint.swift in Sources */,
 				37144C512B88E949008565C4 /* DiaryViewControllerFactory.swift in Sources */,
 				37DCA6742A484D5900FF8F90 /* PostDiaryAPI.swift in Sources */,
 				4ABCBCE72BE25E51003138A8 /* TrainingPlanResponse.swift in Sources */,
@@ -1918,6 +1951,7 @@
 				4AF58CE92A4820AA00305248 /* AuthNetworkModel.swift in Sources */,
 				378E461F2B551A6F00D2A473 /* DeepLResponse.swift in Sources */,
 				3761116C2A278D0E0095EC5A /* String+.swift in Sources */,
+				37BDC9872C4FEA940075F68A /* SendFeedbackView.swift in Sources */,
 				4A07F8AC2B7B3E7F004185F2 /* SignupViewModel.swift in Sources */,
 				4AB7C91B2B7624CC00845733 /* ServiceAcceptAppData.swift in Sources */,
 				4AC707B42B73D2D400B1D791 /* UserNicknameViewModel.swift in Sources */,
@@ -1966,6 +2000,7 @@
 				6F31802F2A24D1DB00089870 /* CalendarCell.swift in Sources */,
 				6FE1298A2A4982DA005536C4 /* HomeAPI.swift in Sources */,
 				374F828E2AC5DFFE00C128B9 /* DiaryBottomView.swift in Sources */,
+				4A86D6602C591409002C0617 /* AuthServiceProtocol.swift in Sources */,
 				4AC707B92B74D5CD00B1D791 /* ServiceAcceptViewModel.swift in Sources */,
 				4A3F2E972A0ABBAA00F6AC60 /* AlarmCollectionViewCell.swift in Sources */,
 				379789032AAC705B00C61EF4 /* NavigationBarActionDelegate.swift in Sources */,
@@ -2027,6 +2062,7 @@
 				4ABCBCDC2BE2484B003138A8 /* MyPlanAppData.swift in Sources */,
 				3728B8D72A2CFF3A00EF4CF8 /* StepTwoKoreanDiaryViewController.swift in Sources */,
 				4A07F8A82B7B3E5E004185F2 /* SignupBottomSheetViewController.swift in Sources */,
+				373A7F552C3D78CC00CF554C /* CustomBannerView.swift in Sources */,
 				4ABCBCC52BDD3375003138A8 /* MySummaryEndPoint.swift in Sources */,
 				4A454A832B6666FF0079D48D /* TrainingGoalViewModel.swift in Sources */,
 				37DCA66E2A484D3100FF8F90 /* PostDiaryResponse.swift in Sources */,
@@ -2055,7 +2091,7 @@
 				4AF7C2312BFB7A4F00E8C6CD /* MyPlanDeactiveCollectionViewCell.swift in Sources */,
 				4A01235F2AAA2C1500E09646 /* SmeemLoadingView.swift in Sources */,
 				4A59EBA02B9367C2004D9823 /* BadgePopupViewModel.swift in Sources */,
-				4A004D542B4EE26E003C8936 /* AuthAPI.swift in Sources */,
+				4A004D542B4EE26E003C8936 /* AuthService.swift in Sources */,
 				4A81C2972ACDAB2C0056E815 /* TrainingGoalsCollectionView.swift in Sources */,
 				371107E52ACBEA69007A4AC2 /* DiaryViewFactory.swift in Sources */,
 				6F294A442A26179900856CC8 /* ServiceAcceptCollectionViewCell.swift in Sources */,
@@ -2063,6 +2099,7 @@
 				378E461C2B5516F200D2A473 /* DeepLService.swift in Sources */,
 				4A004D4F2B4ED760003C8936 /* TrainingGoalResponse.swift in Sources */,
 				4AC705A42BEA2C99003C5310 /* SettingResponse.swift in Sources */,
+				4A86D65E2C5910FF002C0617 /* ResignRequest.swift in Sources */,
 				6F294A3F2A26177E00856CC8 /* TrainingCollectionViewCell.swift in Sources */,
 				6F294A3F2A26177E00856CC8 /* TrainingCollectionViewCell.swift in Sources */,
 				4ABCBCD62BDFC6BD003138A8 /* MySmeemCollectionViewDataSource.swift in Sources */,
@@ -2072,6 +2109,7 @@
 				4A4FEB012B721956001BBDF3 /* Combine+.swift in Sources */,
 				37BCADF22BC3FFBF006EF960 /* DetailDiaryViewModel.swift in Sources */,
 				374F828C2AC327A200C128B9 /* SmeemTextViewHandler.swift in Sources */,
+				4A2AEE702C3D78E70000CBCB /* ResignSummaryViewModel.swift in Sources */,
 				4A8FFA5229C9E1FD00FB76C0 /* SceneDelegate.swift in Sources */,
 				37ADCC022B0289AD00E474AA /* Observable.swift in Sources */,
 				3797891C2AAE11D400C61EF4 /* NavigationBarConfigurationBuilder.swift in Sources */,
@@ -2296,7 +2334,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 20240530;
+				CURRENT_PROJECT_VERSION = 20240811;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = K8LLWYQWXD;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -2313,7 +2351,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.2;
+				MARKETING_VERSION = 2.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "Team.Smeem-dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2354,7 +2392,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.2;
+				MARKETING_VERSION = 2.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "Team.Smeem-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2401,6 +2439,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		375B62852C590D0D00DA8E30 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.29.0;
+			};
+		};
 		4A08480A2B554513008327C7 /* XCRemoteSwiftPackageReference "Amplitude-Swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/amplitude/Amplitude-Swift";
@@ -2433,14 +2479,6 @@
 				kind = branch;
 			};
 		};
-		4AA942CE2A276AFF00A552A0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
 		4AA942D32A276C7900A552A0 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/kakao/kakao-ios-sdk";
@@ -2460,6 +2498,26 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		375B62862C590D0D00DA8E30 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 375B62852C590D0D00DA8E30 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		375B62882C590D0D00DA8E30 /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 375B62852C590D0D00DA8E30 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
+		};
+		375B628A2C590D0D00DA8E30 /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 375B62852C590D0D00DA8E30 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
+		};
+		375B628C2C590D0D00DA8E30 /* FirebaseRemoteConfig */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 375B62852C590D0D00DA8E30 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseRemoteConfig;
+		};
 		4A08480B2B554513008327C7 /* AmplitudeSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 4A08480A2B554513008327C7 /* XCRemoteSwiftPackageReference "Amplitude-Swift" */;
@@ -2479,16 +2537,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4AA942CB2A276A9F00A552A0 /* XCRemoteSwiftPackageReference "Moya" */;
 			productName = Moya;
-		};
-		4AA942CF2A276AFF00A552A0 /* FirebaseAnalyticsWithoutAdIdSupport */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4AA942CE2A276AFF00A552A0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAnalyticsWithoutAdIdSupport;
-		};
-		4AA942D12A276AFF00A552A0 /* FirebaseMessaging */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4AA942CE2A276AFF00A552A0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseMessaging;
 		};
 		4AA942D42A276C7900A552A0 /* KakaoSDKAuth */ = {
 			isa = XCSwiftPackageProductDependency;
