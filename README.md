@@ -279,3 +279,44 @@ output.errorResult
 ![img](https://github.com/user-attachments/assets/23a9e49d-7603-4ed7-b775-8c7dea0c43aa)
 
 만약 에러가 발생한다면 위와 같이 토스트 메시지를 통해 유저에게 재접속을 요청하게 되고, 유저에게 보다 더 친절한 UI를 제공하도록 개선할 수 있었습니다.
+
+<br/>
+
+### 2) 토큰 만료 플로우 개선 경험
+운영 서비스에서 앱 시작 전 스플래시 화면에서 에러가 발생하여 사용자들이 앱에 진입할 수 없는 문제가 발생했습니다. 해당 오류는 모든 유저한테서 공통적으로 발생하는 에러는 아니었기 때문에 원인 파악이 쉽지 않았습니다.
+
+![img (1)](https://github.com/user-attachments/assets/71c21263-41b7-42ed-bad2-52a3f63a4024)
+
+유저가 스플래시 뷰에서 다음 화면으로 넘어가지 못하고 앱이 멈추는 현상은 크리티컬한 현상이었기 때문에, 원인을 찾고자 팀원들에게 스플래시 화면에서 호출되고 있는 API response들의 문서를 요청하였습니다.
+
+![image](https://github.com/user-attachments/assets/16e37ac8-c8c9-4ff5-825a-1f56016a987d)
+
+서버에서 보내 줄 수 있는 에러 응답 문서화를 보다가 401일 경우, 토큰이 만료되었을 에러 케이스를 발견할 수 있었고 현재 상황의 원인일 것이라고 생각했습니다.
+
+Smeem 서비스는 소셜로그인을 통해 로그인을 성공한 유저일 경우, 서버로부터 access, refresh 토큰을 응답값으로 받게 됩니다. 모든 API 통신은 access를 헤더에 담아 요청을 해 왔으며, access의 만료 시간이 짧다는 점을 감안하여서 스플래시 화면 진입시 서버로부터 토큰을 재발급 받는 API를 호출하도록 구현해 놓았습니다.
+access와 다르게 refresh는 만료 시간이 더 길었으며, 스플래시 화면 진입 시 refresh 토큰을 통해 access를 재발급받고, 기존 access 토큰을 재발급받은 토큰으로 갱신해 주는 로직으로 구현이 되어 있었습니다.
+
+사진으로 표현하자면 이러한 플로우였습니다.
+
+![image](https://github.com/user-attachments/assets/22d6a836-be05-4dc8-b457-2e4ed43f818a)
+
+출처 : https://www.rfc-editor.org/rfc/rfc6749.html
+
+하지만 여기서 간과한 점은 refresh가 만료되었을 경우의 처리를 놓쳤다는 것이었습니다. Smeem 프로젝트는 access는 2시간, refresh는 2주로 만료 시간이 정해져 있었고, 2주가 지난 시점부터 refresh 토큰이 만료되었을 때, 토큰 재발급이 불가능해지고 그로인해 서버에서 401 토큰 만료 에러를 던져 주게 되는데 그에 따른 예외 처리가 제대로 되어 있지 않았습니다. 또한 앱을 다운로드한 후 2주 동안 앱이 진입하지 않았다가 이후에 앱에 진입한 특정 유저들에게서만 발생하는 에러였다는 결론에 도달했습니다.
+
+초반 설계의 중요성을 깨달았고, 토큰이 왜 access, refresh 두 개로 나뉘어져 있는지 만료가 되었을 때 클라이언트 개발자로서 어떠한 역할을 해 주어야 하는지 등 의문을 더 많이 가지고 접근했으면 방지할 수 있었을 에러였던 것 같아서 아쉬움을 느꼈습니다.
+
+해당 문제는 refresh 토큰까지 만료되었을 경우, 사용자는 다시 새로운 토큰을 발급 받아야 하기 때문에 사용자를 시작 화면으로 보내 주는 플로우를 추가하여 해결할 수 있었습니다.
+기존 코드에서는 에러 발생 시, 토스트 메시지만 띄워 주고 그대로 앱이 멈췄지만, restartSubject라는 publisher를 추가하여서 에러 발생시 시작 화면으로 보내 주는 플로우를 추가했습니다.
+
+```swift
+output.errorResult
+    .receive(on: DispatchQueue.main)
+    .sink { [weak self] error in
+        self?.showToast(toastType: .smeemErrorToast(message: error))
+        self?.restartSubject.send(())
+    }
+    .store(in: &cancelBag)
+````
+
+![img (2)](https://github.com/user-attachments/assets/d34ce6b8-9dac-45a3-ad54-79b1ddfd4cc3)
