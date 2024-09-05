@@ -221,3 +221,61 @@ resignButton.tapPublisher
 그로인해 Alert 창이 뜨고 사라져도 responder의 권한이 다시 textView로 넘어가지 않게 되었습니다.
 
 ![Simulator Screen Recording - iPhone 13 mini-16 - 2024-08-04 at 17 49 42](https://github.com/user-attachments/assets/704a8280-309c-44e3-b97b-2d76ee7dedbe)
+<br/>
+
+## ✨ 운영 중 서비스 개선 경험
+### 1) 운영 서비스에서 에러 발생 시 앱 멈춰 버리는 현상 개선
+운영 서비스에서 에러가 발생했을 때, 그에 따른 에러 핸들링이 제대로 구축되어 있지 않아서 서비스가 그대로 묵묵부담으로 멈춰 버리는 현상이 발생했었습니다. 팀 내에서 앱이 멈춰버리는 현상을 유저에게 노출시켜서는 안된다는 의견이 나왔고, 의논 끝에 세 가지 에러 상황을 정의해 두고 해당 케이스에 맞는 토스트 메시지를 보여 주고 재시도를 요청하는 기능을 추가하게 되었습니다.
+
+Smeem 서비스가 정의 내린 에러 상황은 세 가지입니다.
+- 시스템 에러 (클라이언트 에러)
+- 데이터 에러 (서버 에러)
+- 네트워크 연결 실패 (유저 에러)
+
+서버에서 내려오는 statusCode를 통해 세 가지 에러 상황을 분기해 주는 메서드를 구현했습니다.
+```swift
+final class NetworkManager {
+    static func statusCodeErrorHandling(statusCode: Int) throws {
+        switch statusCode {
+        case 400..<500:
+            throw SmeemError.clientError
+        case 500...:
+            throw SmeemError.serverError
+        default:
+            return
+        }
+    }
+}
+````
+
+서버 통신 후,매핑이 잘못되는 상황에는 client error, 서버 통신 자체는 성공했지만 서버에서 에러가 발생했을 경우 catch문으로 error를, case .failure은 서버 통신, 실패 유무를 떠나서 네트워크 연결 자체가 안 되어 있는 상황이기 때문에 서비스 요구사항에 맞게 .userError 타입을 보내도록 구현했습니다.
+```swift
+case .success(let response):
+    do {
+        try NetworkManager.statusCodeErrorHandling(statusCode: response.statusCode)
+        guard let data = try? response.map(GeneralResponse<MySummaryResponse>.self).data else {
+            throw SmeemError.clientError
+        }
+        completion(.success(data))
+    } catch let error {
+        guard let error = error as? SmeemError else { return }
+        completion(.failure(error))
+    }
+case .failure(_):
+    completion(.failure(.userError))
+}
+````
+ViewModel에서 서버 통신 후, 에러가 발생했을 경우 errorSubject로 값을 흘려보내 주고, View에서는 errorSubject를 관찰하고 있다가 어떤 에러인지 알 필요 없이 그저 전달받은 에러 타입을 토스트 메시지로 띄워 주는 행위에만 집중할 수 있도록 View와 ViewModel의 역할을 분리하여 구현했습니다.
+```swift
+output.errorResult
+    .receive(on: DispatchQueue.main)
+    .sink { [weak self] error in
+        self?.showToast(toastType: .smeemErrorToast(message: error))
+    }
+    .store(in: &cancelBag)
+````
+<br/>
+
+![img](https://github.com/user-attachments/assets/23a9e49d-7603-4ed7-b775-8c7dea0c43aa)
+
+만약 에러가 발생한다면 위와 같이 토스트 메시지를 통해 유저에게 재접속을 요청하게 되고, 유저에게 보다 더 친절한 UI를 제공하도록 개선할 수 있었습니다.
