@@ -138,3 +138,86 @@ final class MySmeemCollectionViewDataSource: NSObject, UICollectionViewDataSourc
     }
 }
 ````
+<br/>
+
+### 2) TextView Responder 권한이 남아 있어 Keyboard 감지 Notification이 중복 호출 되는 이슈
+TextView 클릭시 키보드가 활성화 및 비활성화 되면서 키보드 높이 만큼 화면을 이동시켜야 했고, 탈퇴버튼 클릭시 키보드를 감지하는 notification이 중복 호출되면서 두 배 이상의 키보드 높이 크기가 이동되는 버그가 발생했습니다.
+
+![Simulator Screen Recording - iPhone 13 mini-16 - 2024-08-04 at 13 58 23](https://github.com/user-attachments/assets/41c67ec5-8acd-4d26-a126-b7886c5e7c73)
+
+break point를 찍어 보았을 때, 키보드가 사라지는 걸 감지하는 notification, 올라오는 걸 감지하는 notification가 여러 번 호출되는 것을 알 수 있었습니다.
+textView에 대한 responder 권한은 becomeFirstResponder, resignFirstResponder 메서드를 통해 제어하고 있었는데, 이 과정에서 문제가 발생했다고 판단했습니다.
+```swift
+output.notEnabledButtonResult
+    .sink { [weak self] type in
+        self?.resignButton.changeButtonType(buttonType: type)
+        self?.summaryTextView.becomeFirstResponder()
+    }
+    .store(in: &cancelBag)
+````
+
+### TextView에 Responder 권한이 계속해서 남아 있었던 상태
+원인은 TextView 활성화시 becomeFirstResponder 메서드를 호출하여 TextView에 Responder 권한을 준 상태지만, 이후 Responder 권한을 해지하는 코드를 작성해 주지 않은 것이었습니다.
+resignResponder 메서드를 호출하지 않아도 버튼 클릭시 키보드가 자동으로 내려갔기 때문에 놓쳤던 부분이었고, 그렇다면 왜 키보드가 자동으로 비활성화 되었는지에 대해 고민했습니다.
+
+이유는 버튼 클릭시 차례대로
+1. UIAlertController 팝업이 불러와지고
+2. Alert 버튼 클릭 후, 삭제 API가 호출이 되면서 초기 화면으로 보내는 과정에서 UIApplication 객체에 접근하기 때문이었습니다.
+
+즉, TextView의 Responder 권한이 UIAlert과 UIApplication으로 잠시 넘어가는 것이었습니다.
+
+```swift
+// alert 창이 뜨는 버튼 액션
+resignButton.tapPublisher
+    .sink { [weak self] _ in
+        print("탈퇴 버튼 클릭!")
+        
+        let alert = UIAlertController(title: "계정을 삭제하시겠습니까?", message: "이전에 작성했던 일기는 모두 사라집니다.", preferredStyle: .alert)
+        let cancel = UIAlertAction(title: "취소", style: .cancel) { _ in }
+        let delete = UIAlertAction(title: "삭제", style: .destructive) { _ in
+            self?.resignButtonTapped.send(())
+        }
+        alert.addAction(cancel)
+        alert.addAction(delete)
+        self?.present(alert, animated: true, completion: nil)
+    }
+    .store(in: &cancelBag)
+````
+```swift
+// 탈퇴 성공 후, 초기 화면으로 보내는 과정에서 UIApplication 객체에 접근
+func changeRootViewController(_ viewController: UIViewController) {
+    guard let window = UIApplication.shared.windows.first else { return }
+    UIView.transition(with: window, duration: 0.5, options: .transitionCrossDissolve, animations: {
+        let rootVC = UINavigationController(rootViewController: viewController)
+        window.rootViewController = rootVC
+    })
+}
+````
+탈퇴 버튼 클릭시, UIAlertController가 표시되면서 TextView가 가지고 있던 first responder 소유권을 포기하게 됩니다. 그로인해 resign 코드를 추가해 주지 않아도 자연스럽게 키보드가 비활성화되는 모습을 볼 수 있지만, Alert 버튼을 클릭 후에 Alert창이 사라질 때, TextView에게 다시 first responder 소유권이 돌아가기 때문에 키보드가 다시 활성화되는 것을 알 수 있었습니다. 또한, API 통신 후 홈 화면으로 루트 뷰를 바꿔 주는 과정에서 UIApplication 객체에 접근하는 코드로인해 TextView의 first responder 소유권이 다시금 빼앗기게 되면서 또 다시 키보드가 비활성화되는 과정을 겪는 것을 알게 되었습니다.
+
+사실상 UI적으로만 TextView가 잠시 내려간다는 것이고, Responder를 resign을 하지는 않았기 때문에 다른 이벤트 처리를 끝내고 나면 다시금 TextView로 Responder 소유권이 돌아온다는 것을 알 수 있었고, 그로인해 계속해서 키보드가 활성화되는 notification이 중첩되어 호출되는 것을 알 수 있었습니다.
+
+### 해결하기 위해서는 alert 창이 뜨기 전에 직접 TextView의 Responder 권한을 해지해 주기
+```swift
+resignButton.tapPublisher
+    .handleEvents(receiveOutput: {[weak self] _ in
+        self?.summaryTextView.resignFirstResponder()
+    })
+    .sink { [weak self] _ in
+        print("탈퇴 버튼 클릭!")
+        
+        let alert = UIAlertController(title: "계정을 삭제하시겠습니까?", message: "이전에 작성했던 일기는 모두 사라집니다.", preferredStyle: .alert)
+        let cancel = UIAlertAction(title: "취소", style: .cancel) { _ in }
+        let delete = UIAlertAction(title: "삭제", style: .destructive) { _ in
+            self?.resignButtonTapped.send(())
+        }
+        alert.addAction(cancel)
+        alert.addAction(delete)
+        self?.present(alert, animated: true, completion: nil)
+    }
+    .store(in: &cancelBag)
+````
+탈퇴하기 버튼이 tap 되었을 때, 해당 이벤트를 감지하고 결과를 받기 전에 handlerEvents operator를 사용하여 textView의 소유권을 직접 resign 해 주는 코드를 추가하였습니다.
+그로인해 Alert 창이 뜨고 사라져도 responder의 권한이 다시 textView로 넘어가지 않게 되었습니다.
+
+![Simulator Screen Recording - iPhone 13 mini-16 - 2024-08-04 at 17 49 42](https://github.com/user-attachments/assets/704a8280-309c-44e3-b97b-2d76ee7dedbe)
