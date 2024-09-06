@@ -10,6 +10,12 @@
 
 <br/>
 
+## 프로젝트 기간
+- **[Smeem Trouble Shooting 보러 가기](#🚀-Trouble-Shooting)** <br>
+- **[Smeem 운영 서비스 개선 경험 보러 가기](#✨-운영-중-서비스-개선-경험)** <br>
+- **[Smeem Test Code](#💡-Test-Code)** <br>
+- **[Smeem 프로젝트 소개](#⭐️-프로젝트-소개)** <br>
+
 ## 🧑‍💻 팀원 소개 (Team)
 
 | [황찬미](https://github.com/cchanmi) | [백준](https://github.com/joonBaek12) |
@@ -20,55 +26,7 @@
 
 <br/>
 
-## ⚒️ 개발 환경
-- iOS 15.0 +
-- Xcode 15.0
-
-<br/>
-
-## ✔️ 사용 기술 & 라이브러리
-- UIKit
-- Combine
-- Moya
-- Firebase
-- KakaoOpenSDK
-- Kingfisher
-- Snapkit
-
-<br/>
-
-## 🗂️ Skills
-
-### MVVM Pattern
-
-<img width="632" alt="스크린샷 2024-04-11 오후 8 39 12" src="https://github.com/Team-Smeme/Smeem-iOS/assets/86944161/13946768-5b6b-4273-959b-a0af4835c581">
-
-- MVVM 패턴으로 UI와 비지니스 로직을 분리합니다.
-- ViewModel의 Input과 Output 구조를 통해 데이터 흐름을 이해하기 쉽습니다.
-
-<br/>
-
-### Combine
-
-- Combine Framework를 사용하여 반응형 프로그래밍을 구현합니다.
-- 비동기 작업들을 집중화하고 코드를 직관적으로 관리합니다.
-
-<br/>
-
-### Unit Test Code
-
-- 기능 개발 후, 테스트 코드를 작성하여 code coverage 80% 이상을 목표로 합니다.
-
-<br/>
-
-### DesignSystem & Custom UI
-
-- 프로젝트 시작 전 DesignSystem 환경을 구축하여 상수화된 컬러, 폰트, 이미지에 편하게 접근합니다.
-- 여러 화면에서 공통적으로 사용되는 UI들을 별도로 Custom Class로 정의하여서 코드의 재사용성을 높였습니다.
-
-<br/>
-
-## 🚀 Trouble Shooting
+# 🚀 Trouble Shooting
 ### 1) UIKit+Combine 환경에서 CollectionView 바인딩 문제
 ViewModel로부터 관찰한 데이터를 sink 클로저 안에서 CollectionView에 바인딩을 해야 했습니다.
 ```swift
@@ -223,7 +181,7 @@ resignButton.tapPublisher
 ![Simulator Screen Recording - iPhone 13 mini-16 - 2024-08-04 at 17 49 42](https://github.com/user-attachments/assets/704a8280-309c-44e3-b97b-2d76ee7dedbe)
 <br/>
 
-## ✨ 운영 중 서비스 개선 경험
+# ✨ 운영 중 서비스 개선 경험
 ### 1) 운영 서비스에서 에러 발생 시 앱 멈춰 버리는 현상 개선
 운영 서비스에서 에러가 발생했을 때, 그에 따른 에러 핸들링이 제대로 구축되어 있지 않아서 서비스가 그대로 묵묵부담으로 멈춰 버리는 현상이 발생했었습니다. 팀 내에서 앱이 멈춰버리는 현상을 유저에게 노출시켜서는 안된다는 의견이 나왔고, 의논 끝에 세 가지 에러 상황을 정의해 두고 해당 케이스에 맞는 토스트 메시지를 보여 주고 재시도를 요청하는 기능을 추가하게 되었습니다.
 
@@ -323,7 +281,7 @@ output.errorResult
 
 <br/>
 
-## Test Code
+# 💡 Test Code
 ### Test Code 목표
 - Code Coverage 80% 이상 목표
 <img width="1102" alt="스크린샷 2024-09-06 오후 2 16 50" src="https://github.com/user-attachments/assets/ef299274-5d56-4d7d-aa1b-feb823d08f35">
@@ -398,3 +356,54 @@ func test_공백포함열글자_잘처리하는지() {
 }
 ````
 
+<br/>
+
+# ⭐️ 프로젝트 소개
+
+## ⚒️ 개발 환경
+- iOS 15.0 +
+- Xcode 15.0
+
+<br/>
+
+## ✔️ 사용 기술 & 라이브러리
+- UIKit
+- Combine
+- Moya
+- Firebase
+- KakaoOpenSDK
+- Kingfisher
+- Snapkit
+
+<br/>
+
+## 🗂️ Skills
+
+### MVVM Pattern
+
+<img width="632" alt="스크린샷 2024-04-11 오후 8 39 12" src="https://github.com/Team-Smeme/Smeem-iOS/assets/86944161/13946768-5b6b-4273-959b-a0af4835c581">
+
+- MVVM 패턴으로 UI와 비지니스 로직을 분리합니다.
+- ViewModel의 Input과 Output 구조를 통해 데이터 흐름을 이해하기 쉽습니다.
+
+<br/>
+
+### Combine
+
+- Combine Framework를 사용하여 반응형 프로그래밍을 구현합니다.
+- 비동기 작업들을 집중화하고 코드를 직관적으로 관리합니다.
+
+<br/>
+
+### Unit Test Code
+
+- 기능 개발 후, 테스트 코드를 작성하여 code coverage 80% 이상을 목표로 합니다.
+
+<br/>
+
+### DesignSystem & Custom UI
+
+- 프로젝트 시작 전 DesignSystem 환경을 구축하여 상수화된 컬러, 폰트, 이미지에 편하게 접근합니다.
+- 여러 화면에서 공통적으로 사용되는 UI들을 별도로 Custom Class로 정의하여서 코드의 재사용성을 높였습니다.
+
+<br/>
