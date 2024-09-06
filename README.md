@@ -16,6 +16,8 @@
 - **[Smeem Test Code](#-test-code)** <br>
 - **[Smeem 프로젝트 소개](#-프로젝트-소개)** <br>
 
+<br/>
+
 ## 🧑‍💻 팀원 소개 (Team)
 
 | [황찬미](https://github.com/cchanmi) | [백준](https://github.com/joonBaek12) |
