@@ -320,3 +320,81 @@ output.errorResult
 ````
 
 ![img (2)](https://github.com/user-attachments/assets/d34ce6b8-9dac-45a3-ad54-79b1ddfd4cc3)
+
+<br/>
+
+## Test Code
+### Test Code 목표
+- Code Coverage 80% 이상 목표
+<img width="1102" alt="스크린샷 2024-09-06 오후 2 16 50" src="https://github.com/user-attachments/assets/ef299274-5d56-4d7d-aa1b-feb823d08f35">
+<img width="1100" alt="스크린샷 2024-09-06 오후 2 17 33" src="https://github.com/user-attachments/assets/636a73bf-32ae-4534-8f57-c6c59547981c">
+<img width="1104" alt="스크린샷 2024-09-06 오후 2 17 58" src="https://github.com/user-attachments/assets/4c8f37ea-e053-47bc-85bb-a7e9653fa72b">
+
+<br/>
+
+- Smeem Test Code 원칙
+1) 각각의 Endpoint는 typealias를 사용하여 TargetEndPoint라는 네이밍으로 통일
+2) 전역으로 사용할 객체를 정의해 두고, setUpWithError() 메서드에서 초기화
+3) 메서드 네이밍은 test_테스트할행동_결과 ex) test_닉네임중복검사API_성공했을때
+4) Given, When, Then 주석 사용
+
+<br/>
+
+Smeem에서는 총 2가지 경우를 Test 했습니다.
+1) 네트워크 통신이 일어나는 Service Test
+2) ViewModel 로직 검증 Test
+
+### Moya를 이용한 Network Test Code
+관련 PR: https://github.com/Team-Smeme/Smeem-iOS/pull/177
+
+서버 통신시 Mock 객체를 이용하기 위해 서버 통신을 요청하는 provider 객체를 기존 싱글톤 패턴에서 의존성주입으로 리팩토링하였습니다.
+
+```swift
+var provider: MoyaProvider<OnboardingEndPoint>!
+
+init(provider: MoyaProvider<OnboardingEndPoint> = MoyaProvider<OnboardingEndPoint>()) {
+    self.provider = provider
+}
+````
+
+Moya BaseTarget의 프로퍼티인 sampleData에 원하는 형식의 JSON 데이터를 입력하고, Moya에서 제공하는 stub closure를 사용하여 서버 통신에 성공한 경우, statuscode 400, 500인 경우를 테스트했습니다.
+
+```swift
+func makeProvider() -> MoyaProvider<TargetEndPoint> {
+    let endpointClosure = { (target: TargetEndPoint) -> Endpoint in
+        return Endpoint(url: target.path,
+                        sampleResponseClosure: { .networkResponse(200, target.sampleData) },
+                        method: target.method,
+                        task: target.task,
+                        httpHeaderFields: target.headers)
+    }
+    return MoyaProvider<TargetEndPoint>(endpointClosure: endpointClosure,
+                                        stubClosure: MoyaProvider.immediatelyStub)
+}
+````
+
+### ViewModel Test
+원하는 Input이 들어갔을 때, 그에 맞는 Output을 도출하는지에 대한 ViewModel 로직 테스트를 진행했습니다. ViewModel에서 일어나는 서버 통신 또한, ServiceProtocol 타입을 초기화시에 주입해 주어서 테스트 환경에서 Mock으로 도입하여 진행하였습니다.
+
+```swift
+func test_공백포함열글자_잘처리하는지() {
+    // Given
+    let value = " 공백포함   10글자넘었을때   "
+    
+    // When
+    var outputResult: SmeemButtonType!
+    let expectedResult = SmeemButtonType.notEnabled
+    
+    output.textFieldResult
+        .sink { type in
+            outputResult = type
+        }
+        .store(in: &cancelBag)
+    
+    input.textFieldSubject.send(value)
+    
+    // Then
+    XCTAssertEqual(outputResult, expectedResult)
+}
+````
+
