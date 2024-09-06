@@ -11,10 +11,10 @@
 <br/>
 
 ## 프로젝트 기간
-- **[Smeem Trouble Shooting 보러 가기](#🚀-Trouble-Shooting)** <br>
-- **[Smeem 운영 서비스 개선 경험 보러 가기](#✨-운영-중-서비스-개선-경험)** <br>
-- **[Smeem Test Code](#💡-Test-Code)** <br>
-- **[Smeem 프로젝트 소개](#⭐️-프로젝트-소개)** <br>
+- **[Smeem Trouble Shooting 보러 가기](#🚀Trouble-Shooting)** <br>
+- **[Smeem 운영 서비스 개선 경험 보러 가기](#✨운영-중-서비스-개선-경험)** <br>
+- **[Smeem Test Code](#💡Test-Code)** <br>
+- **[Smeem 프로젝트 소개](#⭐️프로젝트-소개)** <br>
 
 ## 🧑‍💻 팀원 소개 (Team)
 
