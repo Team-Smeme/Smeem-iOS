@@ -1,4 +1,4 @@
-# Smeem iOS
+# 누적 다운로드 수 500+, 영어 일기 서비스 Smeem 🧡
 
 <img width="908" alt="image" src="https://github.com/Team-Smeme/Smeme-server-renewal/assets/55437339/d375dc1c-abb0-4e2e-a6e5-aad074913114">
 
@@ -11,8 +11,14 @@
 <br/>
 
 ## 프로젝트 기간
-- **[Smeem Trouble Shooting 보러 가기](#-trouble-shooting)** <br>
-- **[Smeem 운영 서비스 개선 경험 보러 가기](#-운영-중-서비스-개선-경험)** <br>
+- **2023.09 ~ ing 1년째 운영 중** <br>
+- **2023.05 ~ 2023.09 개발 기간** <br>
+
+<br/>
+
+## Smeem 이야기 보러 가기
+- **[Smeem Trouble Shooting](#-trouble-shooting)** <br>
+- **[Smeem 운영 서비스 개선 경험](#-운영-중-서비스-개선-경험)** <br>
 - **[Smeem Test Code](#-test-code)** <br>
 - **[Smeem 프로젝트 소개](#-프로젝트-소개)** <br>
 
