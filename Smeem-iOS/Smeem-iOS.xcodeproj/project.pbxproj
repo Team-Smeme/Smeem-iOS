@@ -25,6 +25,7 @@
 		3728B8D52A2CFF2C00EF4CF8 /* StepOneKoreanDiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3728B8D42A2CFF2C00EF4CF8 /* StepOneKoreanDiaryViewController.swift */; };
 		3728B8D72A2CFF3A00EF4CF8 /* StepTwoKoreanDiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3728B8D62A2CFF3A00EF4CF8 /* StepTwoKoreanDiaryViewController.swift */; };
 		373A7F552C3D78CC00CF554C /* CustomBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373A7F542C3D78CC00CF554C /* CustomBannerView.swift */; };
+		373D29932CBFE17B00A559A3 /* View+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373D29922CBFE17B00A559A3 /* View+.swift */; };
 		373E38592A2F889500DF96F0 /* DiaryDetailRandomSubjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373E38582A2F889500DF96F0 /* DiaryDetailRandomSubjectView.swift */; };
 		374F828C2AC327A200C128B9 /* SmeemTextViewHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374F828B2AC327A200C128B9 /* SmeemTextViewHandler.swift */; };
 		374F828E2AC5DFFE00C128B9 /* DiaryBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374F828D2AC5DFFE00C128B9 /* DiaryBottomView.swift */; };
@@ -267,6 +268,7 @@
 		3728B8D42A2CFF2C00EF4CF8 /* StepOneKoreanDiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepOneKoreanDiaryViewController.swift; sourceTree = "<group>"; };
 		3728B8D62A2CFF3A00EF4CF8 /* StepTwoKoreanDiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepTwoKoreanDiaryViewController.swift; sourceTree = "<group>"; };
 		373A7F542C3D78CC00CF554C /* CustomBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBannerView.swift; sourceTree = "<group>"; };
+		373D29922CBFE17B00A559A3 /* View+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+.swift"; sourceTree = "<group>"; };
 		373E38582A2F889500DF96F0 /* DiaryDetailRandomSubjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryDetailRandomSubjectView.swift; sourceTree = "<group>"; };
 		37499E3C2BD0C3A100BA6FAF /* SharedDiaryDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedDiaryDataService.swift; sourceTree = "<group>"; };
 		374F828B2AC327A200C128B9 /* SmeemTextViewHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmeemTextViewHandler.swift; sourceTree = "<group>"; };
@@ -556,6 +558,14 @@
 			path = EditGoal;
 			sourceTree = "<group>";
 		};
+		373D29912CBFE16B00A559A3 /* SwiftUI */ = {
+			isa = PBXGroup;
+			children = (
+				373D29922CBFE17B00A559A3 /* View+.swift */,
+			);
+			path = SwiftUI;
+			sourceTree = "<group>";
+		};
 		378E46182B5516A900D2A473 /* DeepL */ = {
 			isa = PBXGroup;
 			children = (
@@ -625,6 +635,7 @@
 		37A574B629FE207C00312453 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				373D29912CBFE16B00A559A3 /* SwiftUI */,
 				37A574C729FF6F1C00312453 /* UIView+.swift */,
 				37A574C929FF980F00312453 /* UIStackView+.swift */,
 				3761116B2A278D0E0095EC5A /* String+.swift */,
@@ -2050,6 +2061,7 @@
 				4AC7058F2BEA1E40003C5310 /* NicknameContainerView.swift in Sources */,
 				4ABCBCDA2BE22733003138A8 /* MyPlanCollectionViewLayout.swift in Sources */,
 				3728B8D32A2CFED300EF4CF8 /* ForeignDiaryViewController.swift in Sources */,
+				373D29932CBFE17B00A559A3 /* View+.swift in Sources */,
 				4ABE3FD12A811F8400D1D22E /* SplashViewController.swift in Sources */,
 				4A9FAB492A4C3D1200C40D5A /* DetailBadgeCollectionViewCell.swift in Sources */,
 				4ABCBCD02BDE9BA1003138A8 /* MySummaryViewModel.swift in Sources */,
