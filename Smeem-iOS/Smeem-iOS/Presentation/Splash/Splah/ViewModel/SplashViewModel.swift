@@ -15,6 +15,7 @@ final class SplashViewModel: ViewModel {
     struct Input {
         let checkUpdatePopup: PassthroughSubject<Void, Never>
         let restartSubject: PassthroughSubject<Void, Never>
+        let amplitudeSubject: PassthroughSubject<SplashAmplitudeType, Never>
     }
     
     struct Output {
@@ -86,8 +87,8 @@ final class SplashViewModel: ViewModel {
                                 if let accessToken = response.data?.accessToken {
                                     UserDefaultsManager.accessToken = accessToken
                                 }
-                                if let refresToken = response.data?.accessToken {
-                                    UserDefaultsManager.refreshToken = refresToken
+                                if let refreshToken = response.data?.refreshToken {
+                                    UserDefaultsManager.refreshToken = refreshToken
                                 }
                                 promise(.success(()))
                             // 토큰 만료
@@ -105,6 +106,16 @@ final class SplashViewModel: ViewModel {
                 .eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()
+        
+        input.amplitudeSubject
+            .sink { type in
+                if type == .updateView {
+                    AmplitudeManager.shared.track(event: AmplitudeConstant.Splash.update_view.event)
+                } else if type == .updateClick {
+                    AmplitudeManager.shared.track(event: AmplitudeConstant.Splash.update_click.event)
+                }
+            }
+            .store(in: &cancelBag)
         
         let errorResult = errorResult.eraseToAnyPublisher()
         let smeemStartResult = smeemStartResult.eraseToAnyPublisher()

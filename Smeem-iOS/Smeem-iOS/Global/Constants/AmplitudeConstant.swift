@@ -14,6 +14,20 @@ struct AmplitudeManager {
 
 enum AmplitudeConstant {
     
+    enum Splash {
+        case update_view
+        case update_click
+        
+        var event: BaseEvent {
+            switch self {
+            case .update_view:
+                BaseEvent(eventType: "update_view", eventProperties: nil)
+            case .update_click:
+                BaseEvent(eventType: "update_click", eventProperties: nil)
+            }
+        }
+    }
+    
     enum Onboarding {
         case first_view
         case onboarding_goal_view

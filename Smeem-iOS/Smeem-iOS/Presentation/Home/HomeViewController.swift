@@ -211,9 +211,10 @@ final class HomeViewController: BaseViewController {
         setLayout()
         setDelegate()
         setSwipe()
+        visitPatchAPI()
         
         DispatchQueue.global(qos: .background).async {
-            AmplitudeConstant.home.home_view.event
+            AmplitudeManager.shared.track(event: AmplitudeConstant.home.home_view.event)
         }
         
         bannerView.closeButtonTapped.sink { [weak self] in
@@ -229,8 +230,6 @@ final class HomeViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         homeDiaryWithAPI(start: Date().startOfMonth().addingDate(addValue: -7), end: Date().endOfMonth().addingDate(addValue: 7))
         checkPopupView()
-        visitPatchAPI()
-        configureBannerLayout()
     }
     
     // MARK: - @objc
@@ -369,7 +368,6 @@ final class HomeViewController: BaseViewController {
                     let bannerVersion = self.remoteConfig["banner_version"].numberValue
                     self.bannerEventPath = self.remoteConfig["banner_event_path"].stringValue
                     
-//                    UserDefaultsManager.currentBannerVersion = 0
                     let currentBannerVersion = UserDefaultsManager.currentBannerVersion
                     
                     if bannerVersion.intValue > currentBannerVersion {
@@ -523,10 +521,6 @@ final class HomeViewController: BaseViewController {
             $0.width.equalTo(convertByWidthRatio(339))
             $0.height.equalTo(convertByHeightRatio(60))
         }
-    }
-    
-    func configureBannerLayout() {
-
     }
 }
 

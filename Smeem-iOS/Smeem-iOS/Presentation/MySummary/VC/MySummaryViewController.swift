@@ -188,14 +188,15 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
         setDelegate()
         bind()
         amplitudeSubject.send(.viewDidLoad)
+        
+        mySummarySubject.send(())
+        myBadgeSubject.send(())
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
-        mySummarySubject.send(())
+        
         myPlanSubject.send(())
-        myBadgeSubject.send(())
     }
     
     override func setBackgroundColor() {

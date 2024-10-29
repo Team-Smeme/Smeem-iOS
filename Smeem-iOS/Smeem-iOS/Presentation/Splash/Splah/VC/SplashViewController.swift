@@ -8,9 +8,15 @@
 import UIKit
 import Combine
 
+enum SplashAmplitudeType {
+    case updateView
+    case updateClick
+}
+
 final class SplashViewController: BaseViewController {
     
     private let viewModel = SplashViewModel(provider: SplashService())
+    private let amplitudeSubject = PassthroughSubject<SplashAmplitudeType, Never>()
     
     // MARK: Publisher
     
@@ -42,7 +48,8 @@ final class SplashViewController: BaseViewController {
     
     private func bind() {
         let input = SplashViewModel.Input(checkUpdatePopup: checkUpdatePopup,
-                                          restartSubject: restartSubject)
+                                          restartSubject: restartSubject,
+                                          amplitudeSubject: amplitudeSubject)
         let output = viewModel.transform(input: input)
         
         output.updatePopupResult
@@ -90,7 +97,10 @@ final class SplashViewController: BaseViewController {
                                             message: model.content,
                                             preferredStyle: UIAlertController.Style.alert)
         
+        self.amplitudeSubject.send(.updateView)
+        
         let update = UIAlertAction(title: "업데이트", style: UIAlertAction.Style.default) { (_) in
+            self.amplitudeSubject.send(.updateClick)
             System().openAppStore()
             
             /// 0.5 delay 준 버전
