@@ -18,3 +18,7 @@ struct CorrentionsData: Codable {
     let before: String
     let after: String
 }
+
+extension DetailDiaryResponse {
+    static let empty = DetailDiaryResponse(diaryId: 0, topic: "", content: "", createdAt: "", username: "")
+}

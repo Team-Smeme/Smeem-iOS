@@ -90,7 +90,6 @@
 		4A004D5E2B4EE2B4003C8936 /* MyPageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A004D5D2B4EE2B4003C8936 /* MyPageService.swift */; };
 		4A004D602B4EE2BD003C8936 /* MyPageAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A004D5F2B4EE2BD003C8936 /* MyPageAPI.swift */; };
 		4A01235F2AAA2C1500E09646 /* SmeemLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A01235E2AAA2C1500E09646 /* SmeemLoadingView.swift */; };
-		4A01A2D72CE8D2E400A9B0AA /* CoachingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A01A2D62CE8D2E400A9B0AA /* CoachingView.swift */; };
 		4A07F8A82B7B3E5E004185F2 /* SignupBottomSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A07F8A72B7B3E5E004185F2 /* SignupBottomSheetViewController.swift */; };
 		4A07F8AC2B7B3E7F004185F2 /* SignupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A07F8AB2B7B3E7F004185F2 /* SignupViewModel.swift */; };
 		4A07F8AF2B7B58B7004185F2 /* AuthModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A07F8AE2B7B58B7004185F2 /* AuthModel.swift */; };
@@ -219,6 +218,7 @@
 		4ADCA2D62A9272E9002904EB /* EditAlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADCA2D52A9272E9002904EB /* EditAlarmViewController.swift */; };
 		4AE35E9E2A7FE8CE00465FD5 /* UICollectionViewCell+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE35E9D2A7FE8CE00465FD5 /* UICollectionViewCell+.swift */; };
 		4AEB82952A4CB4F200C1114B /* BadgePopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEB82942A4CB4F100C1114B /* BadgePopupViewController.swift */; };
+		4AF050EB2CEA300F0055BC3F /* MoyaProvier+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF050EA2CEA300F0055BC3F /* MoyaProvier+.swift */; };
 		4AF58CE92A4820AA00305248 /* AuthNetworkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF58CE82A4820AA00305248 /* AuthNetworkModel.swift */; };
 		4AF78D9B2B84A1DC0098E1FA /* OnboardingServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF78D9A2B84A1DC0098E1FA /* OnboardingServiceTest.swift */; };
 		4AF78D9E2B84AB6A0098E1FA /* MockProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF78D9D2B84AB6A0098E1FA /* MockProvider.swift */; };
@@ -335,7 +335,6 @@
 		4A004D5D2B4EE2B4003C8936 /* MyPageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageService.swift; sourceTree = "<group>"; };
 		4A004D5F2B4EE2BD003C8936 /* MyPageAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageAPI.swift; sourceTree = "<group>"; };
 		4A01235E2AAA2C1500E09646 /* SmeemLoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmeemLoadingView.swift; sourceTree = "<group>"; };
-		4A01A2D62CE8D2E400A9B0AA /* CoachingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoachingView.swift; sourceTree = "<group>"; };
 		4A07F8A72B7B3E5E004185F2 /* SignupBottomSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupBottomSheetViewController.swift; sourceTree = "<group>"; };
 		4A07F8AB2B7B3E7F004185F2 /* SignupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewModel.swift; sourceTree = "<group>"; };
 		4A07F8AE2B7B58B7004185F2 /* AuthModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthModel.swift; sourceTree = "<group>"; };
@@ -471,6 +470,7 @@
 		4AE35E9D2A7FE8CE00465FD5 /* UICollectionViewCell+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewCell+.swift"; sourceTree = "<group>"; };
 		4AEB82942A4CB4F100C1114B /* BadgePopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgePopupViewController.swift; sourceTree = "<group>"; };
 		4AEFD4C92A1392DF00DAB2BD /* TrainingWayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingWayView.swift; sourceTree = "<group>"; };
+		4AF050EA2CEA300F0055BC3F /* MoyaProvier+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MoyaProvier+.swift"; sourceTree = "<group>"; };
 		4AF507742A10CD4D007C62B1 /* TrainingGoalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingGoalViewController.swift; sourceTree = "<group>"; };
 		4AF507762A10CD96007C62B1 /* TrainingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingCollectionViewCell.swift; sourceTree = "<group>"; };
 		4AF58CE82A4820AA00305248 /* AuthNetworkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthNetworkModel.swift; sourceTree = "<group>"; };
@@ -490,6 +490,12 @@
 		6FE1298F2A49A5A6005536C4 /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
 		A3D7ECB62A26566A009857D6 /* EditNicknameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNicknameViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		4AF050CE2CE9DE010055BC3F /* Coaching */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Coaching; sourceTree = "<group>"; };
+		4AF050D72CEA01E20055BC3F /* DiaryComplete */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = DiaryComplete; sourceTree = "<group>"; };
+		4AF050D82CEA01EA0055BC3F /* Coaching */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Coaching; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		4A07F8D52B821523004185F2 /* Frameworks */ = {
@@ -624,7 +630,8 @@
 		37A574B529FE204500312453 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				4A01A2D62CE8D2E400A9B0AA /* CoachingView.swift */,
+				4AF050D82CEA01EA0055BC3F /* Coaching */,
+				4AF050D72CEA01E20055BC3F /* DiaryComplete */,
 				4AC047232A8FCA9700EBDC0E /* AuthManagement */,
 				4AA6FEE72C3ABD7C00E588E9 /* ResignSummray */,
 				4AA5E4B52BF24CEB00F308C8 /* BadgeBottomSheet */,
@@ -662,6 +669,7 @@
 				4AC00ECB2AD1C143009230DA /* UICollectionView+.swift */,
 				4A4FEB002B721956001BBDF3 /* Combine+.swift */,
 				4AB7C9182B75F9B500845733 /* GesturePublisher+.swift */,
+				4AF050EA2CEA300F0055BC3F /* MoyaProvier+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -946,6 +954,7 @@
 		4A0EA45A2A014111006CCE52 /* API */ = {
 			isa = PBXGroup;
 			children = (
+				4AF050CE2CE9DE010055BC3F /* Coaching */,
 				4AC7059B2BEA2A82003C5310 /* Setting */,
 				4ABCBCC32BDD3364003138A8 /* MySummary */,
 				4A9731D12BAAB55000DEC0C8 /* Splash */,
@@ -1841,6 +1850,11 @@
 			);
 			dependencies = (
 			);
+			fileSystemSynchronizedGroups = (
+				4AF050CE2CE9DE010055BC3F /* Coaching */,
+				4AF050D72CEA01E20055BC3F /* DiaryComplete */,
+				4AF050D82CEA01EA0055BC3F /* Coaching */,
+			);
 			name = "Smeem-iOS";
 			packageProductDependencies = (
 				4AA942C12A2767D000A552A0 /* FSCalendar */,
@@ -1997,6 +2011,7 @@
 				6F294A482A27818200856CC8 /* HomeViewFloatingViewController.swift in Sources */,
 				37A574C529FF6EA800312453 /* FontLiterals.swift in Sources */,
 				4ABCBCC22BD90481003138A8 /* MyBadgeCollectionViewCell.swift in Sources */,
+				4AF050EB2CEA300F0055BC3F /* MoyaProvier+.swift in Sources */,
 				378B20F02BA0A02400604935 /* StepOneKoreanDiaryViewModel.swift in Sources */,
 				4AB7C92B2B78A8D900845733 /* SmeemStartViewModel.swift in Sources */,
 				4A004D5B2B4EE29A003C8936 /* PushTestService.swift in Sources */,
@@ -2004,7 +2019,6 @@
 				4AC00EF32AD56C4C009230DA /* SmeemTextButton.swift in Sources */,
 				37DCA65D2A475B5100FF8F90 /* RandomTopicResponse.swift in Sources */,
 				4ABCBCCC2BDE8E44003138A8 /* MySummaryService.swift in Sources */,
-				4A01A2D72CE8D2E400A9B0AA /* CoachingView.swift in Sources */,
 				371107DA2AC99099007A4AC2 /* KeyboardFollowingLayoutHandler.swift in Sources */,
 				4A9FAB452A4C3D1200C40D5A /* BadgeListViewController.swift in Sources */,
 				4ABCBCE52BE25D82003138A8 /* TrainingPlanViewController.swift in Sources */,

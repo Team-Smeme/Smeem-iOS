@@ -11,24 +11,25 @@ final class DetailDiaryAPI {
     static let shared = DetailDiaryAPI()
     private let detailDiaryProvider = MoyaProvider<DetailDiaryService>(plugins:[MoyaLoggingPlugin()])
     
-    func getDetailDiary(diaryID: Int,
-                        completion: @escaping (Result<DetailDiaryResponse, SmeemError>) -> ()) {
-        detailDiaryProvider.request(.detailDiary(diaryID: diaryID)) { result in
-            switch result {
-            case .success(let response):
-                do {
-                    try NetworkManager.statusCodeErrorHandling(statusCode: response.statusCode)
-                    guard let data = try? response.map(GeneralResponse<DetailDiaryResponse>.self).data else {
-                        throw SmeemError.clientError
-                    }
-                    completion(.success(data))
-                } catch {
-                    guard let error = error as? SmeemError else { return }
-                    completion(.failure(error))
+    func getDetailDiary(diaryID: Int) async throws -> DetailDiaryResponse {
+        let result = await detailDiaryProvider.request(.deleteDiary(diaryID: diaryID))
+        switch result {
+        case .success(let response):
+            do {
+                try NetworkManager.statusCodeErrorHandling(statusCode: response.statusCode)
+                guard let data = try? response.map(GeneralResponse<DetailDiaryResponse>.self).data else {
+                    throw SmeemError.clientError
                 }
-            case .failure(_):
-                completion(.failure(.userError))
+                return data
+            } catch let error {
+                if let smeemError = error as? SmeemError {
+                    throw smeemError
+                } else {
+                    throw SmeemError.unknwnError
+                }
             }
+        case .failure(_):
+            throw SmeemError.userError
         }
     }
     

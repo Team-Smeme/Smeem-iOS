@@ -148,23 +148,22 @@ extension DetailDiaryViewController {
 extension DetailDiaryViewController {
     
     func detailDiaryWithAPI(diaryID: Int) {
-        SmeemLoadingView.showLoading()
-        
-        DetailDiaryAPI.shared.getDetailDiary(diaryID: diaryId) { result in
+        Task {
+            SmeemLoadingView.showLoading()
             
-            switch result {
-            case .success(let response):
-                self.isRandomTopic = response.topic
-                self.diaryContent = response.content
-                self.dateCreated = response.createdAt
-                self.userName = response.username
+            do {
+                let detailDiaryResponse = try await DetailDiaryAPI.shared.getDetailDiary(diaryID: diaryId)
+                self.isRandomTopic = detailDiaryResponse.topic
+                self.diaryContent = detailDiaryResponse.content
+                self.dateCreated = detailDiaryResponse.createdAt
+                self.userName = detailDiaryResponse.username
                 self.setData()
                 self.setScrollerViewType()
-            case .failure(let error):
-                self.showToast(toastType: .smeemErrorToast(message: error))
+            } catch let error {
+                self.showToast(toastType: .smeemErrorToast(message: error as! SmeemError))
             }
-            
             SmeemLoadingView.hideLoading()
+            
         }
     }
     

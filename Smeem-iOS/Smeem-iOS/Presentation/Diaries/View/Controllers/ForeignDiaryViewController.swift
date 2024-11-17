@@ -7,6 +7,7 @@
 
 import UIKit
 import Combine
+import SwiftUI
 
 // MARK: - ForeignDiaryViewController
 
@@ -70,11 +71,9 @@ extension ForeignDiaryViewController {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] response in
                 self?.rootView.inputTextView.resignFirstResponder()
-                
-                let homeVC = HomeViewController()
-                let rootVC = UINavigationController(rootViewController: homeVC)
-                homeVC.handlePostDiaryAPI(with: response)
-                homeVC.changeRootViewControllerAndPresent(rootVC)
+                let diaryInformantionView = DiaryCompleteView(diaryId: response?.diaryID ?? 0)
+                let hostingController = UIHostingController(rootView: diaryInformantionView)
+                self?.navigationController?.pushViewController(hostingController, animated: true)
             }
             .store(in: &cancelBag)
         
