@@ -20,9 +20,11 @@ struct SwiftUINavigationView: View {
             })
             .padding(.leading, 10)
             
-            CustomSegmentedControl(selectedIndex: $selectedIndex, options: options)
-                .frame(height: 32)
-                .padding(65)
+//            CustomSegmentedControl(selectedIndex: $selectedIndex, options: options)
+//                .frame(height: 32)
+//                .padding(65)
+            
+            Spacer()
             
             Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/,
                    label: {

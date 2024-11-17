@@ -35,7 +35,7 @@ struct SegmentButton: View {
         Button(action: action) {
             Text(title)
                 .padding(.vertical, 8)
-                .padding(.horizontal, 16)
+                .padding(.horizontal, 11)
                 .frame(maxWidth: .infinity)
                 .background(backgroundColor)
                 .foregroundColor(foregroundColor)

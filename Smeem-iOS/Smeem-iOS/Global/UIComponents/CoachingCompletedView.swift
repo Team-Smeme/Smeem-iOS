@@ -12,7 +12,7 @@ struct CoachingCompletedView: View {
         
         SwiftUINavigationView()
         
-        VStack() {
+        VStack(spacing: 16) {
             Text(MockData.headerText)
               .font(Font.custom("Pretendard", size: 16))
             // Colors 상수 등록 필요
@@ -25,7 +25,6 @@ struct CoachingCompletedView: View {
                   .foregroundColor(Color(UIColor.gray400))
                   .lineSpacing(0.375)
             }
-            .frame(height: screenHeight * 0.32)
             
             Spacer()
         }
