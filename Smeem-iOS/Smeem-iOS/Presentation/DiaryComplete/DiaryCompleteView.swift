@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct DiaryCompleteView: View {
-    var diaryId: Int
+    var diaryResponse: PostDiaryResponse
     @State private var detailDiaryResponse = DetailDiaryResponse.empty
     @State private var errorMessage: SmeemError?
     
@@ -17,7 +17,9 @@ struct DiaryCompleteView: View {
             Spacer()
             
             Button(action: {
-                changeRootViewController(HomeViewController())
+                let homeVC = HomeViewController()
+                homeVC.handlePostDiaryAPI(with: diaryResponse)
+                changeRootViewController(homeVC)
             },
                    label: {
                 Text("닫기")
@@ -56,7 +58,7 @@ struct DiaryCompleteView: View {
         DiaryInformationView(diaryInformation: $detailDiaryResponse)
             .onAppear {
                 //                showToast(toastType: .smeemToast(bodyType: .completed))
-                diaryDetailAPI(diaryId: diaryId)
+                diaryDetailAPI(diaryId: diaryResponse.diaryID)
             }
         
         Spacer()
@@ -75,5 +77,5 @@ struct DiaryCompleteView: View {
 }
 
 #Preview {
-    DiaryCompleteView(diaryId: 0)
+    DiaryCompleteView(diaryResponse: PostDiaryResponse.empty)
 }

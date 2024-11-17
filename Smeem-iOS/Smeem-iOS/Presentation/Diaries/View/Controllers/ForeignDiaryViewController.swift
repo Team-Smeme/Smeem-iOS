@@ -71,7 +71,7 @@ extension ForeignDiaryViewController {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] response in
                 self?.rootView.inputTextView.resignFirstResponder()
-                let diaryInformantionView = DiaryCompleteView(diaryId: response?.diaryID ?? 0)
+                let diaryInformantionView = DiaryCompleteView(diaryResponse: response)
                 let hostingController = UIHostingController(rootView: diaryInformantionView)
                 self?.navigationController?.pushViewController(hostingController, animated: true)
             }

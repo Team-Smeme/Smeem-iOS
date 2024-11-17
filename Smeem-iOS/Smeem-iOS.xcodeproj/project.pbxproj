@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -219,6 +219,7 @@
 		4AE35E9E2A7FE8CE00465FD5 /* UICollectionViewCell+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE35E9D2A7FE8CE00465FD5 /* UICollectionViewCell+.swift */; };
 		4AEB82952A4CB4F200C1114B /* BadgePopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEB82942A4CB4F100C1114B /* BadgePopupViewController.swift */; };
 		4AF050EB2CEA300F0055BC3F /* MoyaProvier+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF050EA2CEA300F0055BC3F /* MoyaProvier+.swift */; };
+		4AF050FB2CEA60F80055BC3F /* smeemLoading.json in Resources */ = {isa = PBXBuildFile; fileRef = 4AF050FA2CEA60F80055BC3F /* smeemLoading.json */; };
 		4AF58CE92A4820AA00305248 /* AuthNetworkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF58CE82A4820AA00305248 /* AuthNetworkModel.swift */; };
 		4AF78D9B2B84A1DC0098E1FA /* OnboardingServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF78D9A2B84A1DC0098E1FA /* OnboardingServiceTest.swift */; };
 		4AF78D9E2B84AB6A0098E1FA /* MockProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF78D9D2B84AB6A0098E1FA /* MockProvider.swift */; };
@@ -471,6 +472,7 @@
 		4AEB82942A4CB4F100C1114B /* BadgePopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgePopupViewController.swift; sourceTree = "<group>"; };
 		4AEFD4C92A1392DF00DAB2BD /* TrainingWayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingWayView.swift; sourceTree = "<group>"; };
 		4AF050EA2CEA300F0055BC3F /* MoyaProvier+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MoyaProvier+.swift"; sourceTree = "<group>"; };
+		4AF050FA2CEA60F80055BC3F /* smeemLoading.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = smeemLoading.json; sourceTree = "<group>"; };
 		4AF507742A10CD4D007C62B1 /* TrainingGoalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingGoalViewController.swift; sourceTree = "<group>"; };
 		4AF507762A10CD96007C62B1 /* TrainingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingCollectionViewCell.swift; sourceTree = "<group>"; };
 		4AF58CE82A4820AA00305248 /* AuthNetworkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthNetworkModel.swift; sourceTree = "<group>"; };
@@ -705,6 +707,7 @@
 		37A574B929FE209F00312453 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				4AF050FA2CEA60F80055BC3F /* smeemLoading.json */,
 				37A574C629FF6EC000312453 /* Fonts */,
 				4A8FFA5829C9E1FE00FB76C0 /* Assets.xcassets */,
 			);
@@ -1944,6 +1947,7 @@
 				37A574D929FF9FFF00312453 /* Pretendard-SemiBold.otf in Resources */,
 				37A574DA29FF9FFF00312453 /* Pretendard-Regular.otf in Resources */,
 				4A8FFA5929C9E1FE00FB76C0 /* Assets.xcassets in Resources */,
+				4AF050FB2CEA60F80055BC3F /* smeemLoading.json in Resources */,
 				37A574DC29FF9FFF00312453 /* Pretendard-Bold.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

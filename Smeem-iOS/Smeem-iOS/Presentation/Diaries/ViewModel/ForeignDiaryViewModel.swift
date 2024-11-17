@@ -18,7 +18,7 @@ final class ForeignDiaryViewModel: DiaryViewModel {
     }
     
     struct Output {
-        let rightButtonAction: AnyPublisher<PostDiaryResponse?, Never>
+        let rightButtonAction: AnyPublisher<PostDiaryResponse, Never>
         let randomTopicButtonAction: AnyPublisher<Void, Never>
         let refreshButtonAction: AnyPublisher<Void, Never>
         let toolTipAction: AnyPublisher<Void, Never>
@@ -58,12 +58,12 @@ final class ForeignDiaryViewModel: DiaryViewModel {
             .handleEvents(receiveSubscription: { [weak self] _ in
                 self?.loadingViewResult.send(true)
             })
-            .flatMap { [weak self] _ -> AnyPublisher<PostDiaryResponse?, Never> in
+            .flatMap { [weak self] _ -> AnyPublisher<PostDiaryResponse, Never> in
                 if self?.isRandomTopicActive.value == false {
                     self?.updateTopicID(to: nil)
                 }
                 
-                return Future<PostDiaryResponse?, Never> { promise in
+                return Future<PostDiaryResponse, Never> { promise in
                     guard let inputText = self?.getDiaryText() else { return }
                     let topicID = SharedDiaryDataService.shared.topicID
                     

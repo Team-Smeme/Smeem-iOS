@@ -19,6 +19,10 @@ struct PostDiaryResponse: Codable {
     }
 }
 
+extension PostDiaryResponse {
+    static let empty = PostDiaryResponse(diaryID: 0, badges: [PopupBadge(name: "", imageUrl: "", type: "")])
+}
+
 // MARK: - Badge
 
 struct PopupBadge: Codable {
