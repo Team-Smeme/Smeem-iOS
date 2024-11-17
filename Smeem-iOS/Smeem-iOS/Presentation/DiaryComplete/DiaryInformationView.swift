@@ -13,9 +13,12 @@ struct DiaryInformationView: View {
     
     var body: some View {
         VStack(spacing: 24) {
-            Text(diaryInformation.content)
-                .font(Font.custom("Pretendard", size: 16))
-                .lineSpacing(24 - fontHeight)
+            HStack {
+                Text(diaryInformation.content)
+                    .font(Font.custom("Pretendard", size: 16))
+                    .lineSpacing(24 - fontHeight)
+                Spacer()
+            }
             
             HStack {
                 Spacer()

@@ -12,7 +12,7 @@ final class DetailDiaryAPI {
     private let detailDiaryProvider = MoyaProvider<DetailDiaryService>(plugins:[MoyaLoggingPlugin()])
     
     func getDetailDiary(diaryID: Int) async throws -> DetailDiaryResponse {
-        let result = await detailDiaryProvider.request(.deleteDiary(diaryID: diaryID))
+        let result = await detailDiaryProvider.request(.detailDiary(diaryID: diaryID))
         switch result {
         case .success(let response):
             do {

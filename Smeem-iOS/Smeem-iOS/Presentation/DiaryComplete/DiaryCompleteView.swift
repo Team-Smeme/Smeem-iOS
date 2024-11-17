@@ -16,7 +16,9 @@ struct DiaryCompleteView: View {
         HStack() {
             Spacer()
             
-            Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/,
+            Button(action: {
+                changeRootViewController(HomeViewController())
+            },
                    label: {
                 Text("닫기")
                     .tint(.black)
@@ -53,6 +55,7 @@ struct DiaryCompleteView: View {
         
         DiaryInformationView(diaryInformation: $detailDiaryResponse)
             .onAppear {
+                //                showToast(toastType: .smeemToast(bodyType: .completed))
                 diaryDetailAPI(diaryId: diaryId)
             }
         
@@ -64,8 +67,8 @@ struct DiaryCompleteView: View {
             do {
                 let response = try await DetailDiaryAPI.shared.getDetailDiary(diaryID: diaryId)
                 detailDiaryResponse = response
-            } catch let error as SmeemError {
-                errorMessage = error
+            } catch let _ as SmeemError {
+                //                showToast(toastType: .smeemErrorToast(message: error))
             }
         }
     }
