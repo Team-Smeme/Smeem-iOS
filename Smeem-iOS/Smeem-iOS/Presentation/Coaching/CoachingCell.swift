@@ -1,5 +1,5 @@
 //
-//  CoachingView.swift
+//  CoachingCell.swift
 //  Smeem-iOS
 //
 //  Created by 황찬미 on 11/16/24.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CoachingView: View {
+struct CoachingCell: View {
     
     var body: some View {
         
@@ -40,5 +40,5 @@ struct CoachingView: View {
 }
 
 #Preview {
-    CoachingView()
+    CoachingCell()
 }

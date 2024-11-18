@@ -8,6 +8,7 @@
 import UIKit
 import Combine
 import SwiftUI
+import ComposableArchitecture
 
 // MARK: - ForeignDiaryViewController
 
@@ -71,7 +72,10 @@ extension ForeignDiaryViewController {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] response in
                 self?.rootView.inputTextView.resignFirstResponder()
-                let diaryInformantionView = DiaryCompleteView(diaryResponse: response)
+                let diaryInformantionView = CoachingView(store: Store(
+                    initialState: CoachingStore.State(postDiarayResponse: response),
+                    reducer: { CoachingStore() })
+                )
                 let hostingController = UIHostingController(rootView: diaryInformantionView)
                 self?.navigationController?.pushViewController(hostingController, animated: true)
             }

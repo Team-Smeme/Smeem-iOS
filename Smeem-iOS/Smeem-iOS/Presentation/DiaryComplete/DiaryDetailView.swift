@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct DiaryInformationView: View {
+struct DiaryDetailView: View {
     @Binding var diaryInformation: DetailDiaryResponse
     let fontHeight = UIFont(name: "Pretendard", size: 16)!.lineHeight
     

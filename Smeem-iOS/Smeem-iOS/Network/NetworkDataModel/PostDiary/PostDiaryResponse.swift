@@ -9,13 +9,17 @@ import Foundation
 
 // MARK: - PostDiaryResponse
 
-struct PostDiaryResponse: Codable {
+struct PostDiaryResponse: Codable, Equatable {
     let diaryID: Int
     let badges: [PopupBadge]
 
     enum CodingKeys: String, CodingKey {
         case diaryID = "diaryId"
         case badges
+    }
+    
+    static func == (lhs: PostDiaryResponse, rhs: PostDiaryResponse) -> Bool {
+        return lhs.diaryID == rhs.diaryID
     }
 }
 

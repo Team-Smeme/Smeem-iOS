@@ -152,7 +152,7 @@ extension DetailDiaryViewController {
             SmeemLoadingView.showLoading()
             
             do {
-                let detailDiaryResponse = try await DetailDiaryAPI.shared.getDetailDiary(diaryID: diaryId)
+                let detailDiaryResponse = try await DetailDiaryService.shared.getDetailDiary(diaryID: diaryId)
                 self.isRandomTopic = detailDiaryResponse.topic
                 self.diaryContent = detailDiaryResponse.content
                 self.dateCreated = detailDiaryResponse.createdAt
@@ -170,7 +170,7 @@ extension DetailDiaryViewController {
     func deleteDiaryWithAPI(diaryID: Int) {
         SmeemLoadingView.showLoading()
         
-        DetailDiaryAPI.shared.deleteDiary(diaryID: diaryId) { result in
+        DetailDiaryService.shared.deleteDiary(diaryID: diaryId) { result in
             
             switch result {
             case .success(_):
