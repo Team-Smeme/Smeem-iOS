@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import ComposableArchitecture
 import Dependencies
 
 final class CoachingStore: Store, ObservableObject {
@@ -51,7 +52,7 @@ final class CoachingStore: Store, ObservableObject {
             Task {
                 do {
                     state.hiddenIndex += 1
-                    state.coachingResponse = CoachingsResponse.empty
+                    state.coachingResponse = try await coachingService.coachingPostAPI(diaryID: ID)
                     state.hiddenIndex += 1
                 } catch _ {
 //                    state.toastMessage = "일단 에러"

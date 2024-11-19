@@ -119,6 +119,7 @@
 		4A4FEB012B721956001BBDF3 /* Combine+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4FEB002B721956001BBDF3 /* Combine+.swift */; };
 		4A4FEB092B728144001BBDF3 /* TrainingWayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4FEB082B728144001BBDF3 /* TrainingWayViewModel.swift */; };
 		4A4FEB0C2B7289E7001BBDF3 /* TrainingWayAppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4FEB0B2B7289E7001BBDF3 /* TrainingWayAppData.swift */; };
+		4A5456612CECC6BC00CB67CF /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 4A5456602CECC6BC00CB67CF /* ComposableArchitecture */; };
 		4A59EBA02B9367C2004D9823 /* BadgePopupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A59EB9F2B9367C2004D9823 /* BadgePopupViewModel.swift */; };
 		4A6527952CEBB25F000191C3 /* LottieUI in Frameworks */ = {isa = PBXBuildFile; productRef = 4A6527942CEBB25F000191C3 /* LottieUI */; };
 		4A6630362A51B0AD00D19CC9 /* EditDiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6630352A51B0AD00D19CC9 /* EditDiaryViewController.swift */; };
@@ -147,7 +148,6 @@
 		4AA1EEEA2A5873A00017FF97 /* Urbanist-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4AA1EEE92A5870690017FF97 /* Urbanist-SemiBold.otf */; };
 		4AA5E4B42BF2355300F308C8 /* MySummaryViewModel2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA5E4B32BF2355300F308C8 /* MySummaryViewModel2.swift */; };
 		4AA6FEE92C3ABDB500E588E9 /* ResignSummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA6FEE82C3ABDB500E588E9 /* ResignSummaryViewController.swift */; };
-		4AA88F5B2CEB56DA00C59C6A /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 4AA88F5A2CEB56DA00C59C6A /* ComposableArchitecture */; };
 		4AA942C22A2767D000A552A0 /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 4AA942C12A2767D000A552A0 /* FSCalendar */; };
 		4AA942C52A2767D900A552A0 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 4AA942C42A2767D900A552A0 /* SnapKit */; };
 		4AA942CD2A276A9F00A552A0 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 4AA942CC2A276A9F00A552A0 /* Moya */; };
@@ -515,6 +515,7 @@
 			files = (
 				4AA942D72A276C7900A552A0 /* KakaoSDKCommon in Frameworks */,
 				4AA942C22A2767D000A552A0 /* FSCalendar in Frameworks */,
+				4A5456612CECC6BC00CB67CF /* ComposableArchitecture in Frameworks */,
 				A301B0A22A30720F006BE0BA /* Kingfisher in Frameworks */,
 				375B628D2C590D0D00DA8E30 /* FirebaseRemoteConfig in Frameworks */,
 				4AA942CD2A276A9F00A552A0 /* Moya in Frameworks */,
@@ -524,7 +525,6 @@
 				375B62892C590D0D00DA8E30 /* FirebaseCrashlytics in Frameworks */,
 				4AA942D52A276C7900A552A0 /* KakaoSDKAuth in Frameworks */,
 				375B628B2C590D0D00DA8E30 /* FirebaseMessaging in Frameworks */,
-				4AA88F5B2CEB56DA00C59C6A /* ComposableArchitecture in Frameworks */,
 				375B62872C590D0D00DA8E30 /* FirebaseAnalytics in Frameworks */,
 				4A6527952CEBB25F000191C3 /* LottieUI in Frameworks */,
 			);
@@ -1876,8 +1876,8 @@
 				375B62882C590D0D00DA8E30 /* FirebaseCrashlytics */,
 				375B628A2C590D0D00DA8E30 /* FirebaseMessaging */,
 				375B628C2C590D0D00DA8E30 /* FirebaseRemoteConfig */,
-				4AA88F5A2CEB56DA00C59C6A /* ComposableArchitecture */,
 				4A6527942CEBB25F000191C3 /* LottieUI */,
+				4A5456602CECC6BC00CB67CF /* ComposableArchitecture */,
 			);
 			productName = "Smeem-iOS";
 			productReference = 4A8FFA4C29C9E1FD00FB76C0 /* Smeem-iOS.app */;
@@ -1922,8 +1922,8 @@
 				A301B0A02A30720F006BE0BA /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				4A08480A2B554513008327C7 /* XCRemoteSwiftPackageReference "Amplitude-Swift" */,
 				375B62852C590D0D00DA8E30 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
-				4AA88F592CEB56DA00C59C6A /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 				4A6527932CEBB25F000191C3 /* XCRemoteSwiftPackageReference "LottieUI" */,
+				4A54565F2CECC6BC00CB67CF /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 			);
 			productRefGroup = 4A8FFA4D29C9E1FD00FB76C0 /* Products */;
 			projectDirPath = "";
@@ -2413,7 +2413,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.4;
+				MARKETING_VERSION = 2.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "Team.Smeem-dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2454,7 +2454,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.4;
+				MARKETING_VERSION = 2.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = "Team.Smeem-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2517,20 +2517,20 @@
 				kind = branch;
 			};
 		};
+		4A54565F2CECC6BC00CB67CF /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.16.1;
+			};
+		};
 		4A6527932CEBB25F000191C3 /* XCRemoteSwiftPackageReference "LottieUI" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/tfmart/LottieUI";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.3.1;
-			};
-		};
-		4AA88F592CEB56DA00C59C6A /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.16.1;
 			};
 		};
 		4AA942C02A2767D000A552A0 /* XCRemoteSwiftPackageReference "FSCalendar" */ = {
@@ -2601,15 +2601,15 @@
 			package = 4A08480A2B554513008327C7 /* XCRemoteSwiftPackageReference "Amplitude-Swift" */;
 			productName = AmplitudeSwift;
 		};
+		4A5456602CECC6BC00CB67CF /* ComposableArchitecture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4A54565F2CECC6BC00CB67CF /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = ComposableArchitecture;
+		};
 		4A6527942CEBB25F000191C3 /* LottieUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 4A6527932CEBB25F000191C3 /* XCRemoteSwiftPackageReference "LottieUI" */;
 			productName = LottieUI;
-		};
-		4AA88F5A2CEB56DA00C59C6A /* ComposableArchitecture */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4AA88F592CEB56DA00C59C6A /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
-			productName = ComposableArchitecture;
 		};
 		4AA942C12A2767D000A552A0 /* FSCalendar */ = {
 			isa = XCSwiftPackageProductDependency;
