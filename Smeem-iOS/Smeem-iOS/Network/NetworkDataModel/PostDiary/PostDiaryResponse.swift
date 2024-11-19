@@ -9,7 +9,7 @@ import Foundation
 
 // MARK: - PostDiaryResponse
 
-struct PostDiaryResponse: Codable {
+struct PostDiaryResponse: Codable, Equatable {
     let diaryID: Int
     let badges: [PopupBadge]
 
@@ -17,6 +17,14 @@ struct PostDiaryResponse: Codable {
         case diaryID = "diaryId"
         case badges
     }
+    
+    static func == (lhs: PostDiaryResponse, rhs: PostDiaryResponse) -> Bool {
+        return lhs.diaryID == rhs.diaryID
+    }
+}
+
+extension PostDiaryResponse {
+    static let empty = PostDiaryResponse(diaryID: 0, badges: [PopupBadge(name: "", imageUrl: "", type: "")])
 }
 
 // MARK: - Badge

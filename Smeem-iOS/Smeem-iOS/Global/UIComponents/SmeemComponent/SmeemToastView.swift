@@ -53,6 +53,7 @@ enum SmeemError: Error {
     case userError
     case clientError
     case serverError
+    case unknwnError
     
     var displayText: String {
         switch self {
@@ -62,6 +63,8 @@ enum SmeemError: Error {
             return "죄송합니다, 시스템 오류가 발생했어요 :("
         case .serverError:
             return "데이터를 불러올 수 없어요 :("
+        case .unknwnError:
+            return "문제가 발생했어요. 다시 접속해 주세요. :("
         }
     }
 }
