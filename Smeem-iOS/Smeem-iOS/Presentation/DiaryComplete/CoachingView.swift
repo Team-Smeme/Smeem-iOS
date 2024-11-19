@@ -6,20 +6,21 @@
 //
 
 import SwiftUI
-import ComposableArchitecture
+import LottieUI
 
 struct CoachingView: View {
     
-    let store: StoreOf<CoachingStore>
+    @StateObject var store: CoachingStore
     
     var body: some View {
-        WithViewStore(store, observe: {$0}) { viewStore in
+        
+        if store.state.hiddenIndex != 1 {
             HStack() {
                 Spacer()
                 
                 Button(action: {
                     let homeVC = HomeViewController()
-                    homeVC.handlePostDiaryAPI(with: viewStore.state.postDiarayResponse)
+                    homeVC.handlePostDiaryAPI(with: store.state.diaryResponse)
                     changeRootViewController(homeVC)
                 },
                        label: {
@@ -29,8 +30,13 @@ struct CoachingView: View {
                 .padding(.trailing, 18)
             }
             .frame(height: 66)
-            
-            Button(action: {}) {
+        }
+        
+        // MARK: 일기 작성 완료 화면
+        if store.state.hiddenIndex == 0 {
+            Button(action: {
+                store.send(action: .coachingButton(diaryID: store.state.diaryResponse.diaryID))
+            }) {
                 HStack {
                     Image("icnCrownMono")
                         .frame(width: 24, height: 24)
@@ -56,20 +62,37 @@ struct CoachingView: View {
             .background(Color(UIColor.point))
             .cornerRadius(5)
             
-            DiaryDetailView(diaryInformation: viewStore.binding(
-                get: { $0.detailDiaryResponse },
-                send: { .setDetailDiary(response: $0)}
-            )
-        )
-        .onAppear {
-            viewStore.send(.getDetailDiary(diaryID: viewStore.state.postDiarayResponse.diaryID))
-        }
+            DiaryDetailView(diaryInformation: $store.state.detailDiaryResponse)
+                .onAppear {
+                    store.send(action: .detailDiaryAPI(diaryID: store.state.diaryResponse.diaryID))
+                }
             
             Spacer()
+            
+        // MARK: 로티 화면
+        } else if store.state.hiddenIndex == 1 {
+            VStack {
+                LottieView("smeemLoading")
+                    .loopMode(.loop)
+                    .frame(width: screenWidth, height: 164, alignment: .center)
+                
+                Text("AI 코치가 내 일기를 분석하고 있어요\n잠시만 기다려주세요")
+                    .font(Font.custom("Pretendard", size: 16))
+                    .multilineTextAlignment(.center)
+                    .foregroundColor(.black)
+            }
+            
+        // MARK: 첨삭 화면
+        } else {
+            CoachingCompleteView(diaryText: $store.state.detailDiaryResponse.content,
+                                 coachingResponse: $store.state.coachingResponse)
         }
+        
+//        SmeemErrorToastView(type: $store.state.toastMessage)
+        SmemeToastView(type: $store.state.toastMessgaea)
     }
 }
 
 #Preview {
-    CoachingView(store: Store(initialState: CoachingStore.State(postDiarayResponse: PostDiaryResponse.empty), reducer: { CoachingStore() }))
+    CoachingView(store: CoachingStore(diaryResponse: PostDiaryResponse.empty))
 }

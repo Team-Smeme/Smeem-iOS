@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct CoachingExplanationView: View {
+    @Binding var coachingResponse: CoachingResponse
+    
     var body: some View {
         HStack() {
             
@@ -19,7 +21,7 @@ struct CoachingExplanationView: View {
                         .cornerRadius(3)
                 }
                 
-                Text("현재완료 시제인 have went는 과거 시제인 went로 바꾸는 것이 맞습니다. yesterday와 함께 사용할 때는 단순 과거 시제를 사용해야 합니다.")
+                Text(coachingResponse.reason)
                     .font(Font.custom("Pretendard", size: 14).weight(.regular))
                     .foregroundStyle(.black)
                     .padding(12)
@@ -31,6 +33,6 @@ struct CoachingExplanationView: View {
     }
 }
 
-#Preview {
-    CoachingExplanationView()
-}
+//#Preview {
+//    CoachingExplanationView()
+//}

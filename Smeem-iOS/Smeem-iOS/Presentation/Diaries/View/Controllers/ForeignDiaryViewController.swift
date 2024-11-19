@@ -72,10 +72,8 @@ extension ForeignDiaryViewController {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] response in
                 self?.rootView.inputTextView.resignFirstResponder()
-                let diaryInformantionView = CoachingView(store: Store(
-                    initialState: CoachingStore.State(postDiarayResponse: response),
-                    reducer: { CoachingStore() })
-                )
+                
+                let diaryInformantionView = CoachingView(store: CoachingStore(diaryResponse: response))
                 let hostingController = UIHostingController(rootView: diaryInformantionView)
                 self?.navigationController?.pushViewController(hostingController, animated: true)
             }

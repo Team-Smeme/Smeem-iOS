@@ -8,7 +8,7 @@
 struct DetailDiaryResponse: Codable, Equatable {
     let diaryId: Int
     let topic: String
-    let content: String
+    var content: String
     let createdAt: String
     let username: String
     
