@@ -13,6 +13,8 @@ jobs:
   build:
 
     runs-on: macos-latest
+    env:
+      XC_CONFIGURATION: ${{ 'DEBUG_CONFIG' }}
 
     steps:
     - uses: actions/checkout@v4
