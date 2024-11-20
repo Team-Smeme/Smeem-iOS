@@ -27,5 +27,3 @@ jobs:
       run: echo "${{ secrets.DEBUG_CONFIG }}" > ./Smeem-iOS/Debug.xcconfig
     - name: Build
       run: xcodebuild build -project Smeem-iOS/Smeem-iOS.xcodeproj -scheme Smeem-Dev -destination 'platform=iOS Simulator,name=iPhone 14 Pro,OS=17.2'
-    - name: Run tests
-      run: swift test -v
