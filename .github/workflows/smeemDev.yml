@@ -21,6 +21,6 @@ jobs:
     - name: List available devices
       run: xcrun simctl list devices
     - name: Build
-      run: xcodebuild clean test -project Smeem-iOS/Smeem-iOS.xcodeproj -scheme Smeem-iOS -destination 'platform=iOS Simulator,name=iPhone 13 Mini,OS=17.2'
+      run: xcodebuild clean test -project Smeem-iOS/Smeem-iOS.xcodeproj -scheme Smeem-Dev -destination 'platform=iOS Simulator,name=iPhone 13 Mini,OS=17.2'
     - name: Run tests
       run: swift test -v
