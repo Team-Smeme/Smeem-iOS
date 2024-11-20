@@ -14,7 +14,7 @@ jobs:
 
     env:
       XC_WORKSPACE: ${{ 'Smeem-iOS/Smeem-iOS.xcodeproj' }}
-      XC_SCHEME: ${{ 'Smeem-iOS' }}
+      XC_SCHEME: ${{ 'Smeem-Release' }}
       XC_ARCHIVE: ${{ 'Smeem-iOS.xcarchive' }}
       XC_EXPORT_PATH: ${{ './artifacts' }}
 
