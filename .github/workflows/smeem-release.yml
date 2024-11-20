@@ -14,8 +14,9 @@ jobs:
 
     env:
       XC_WORKSPACE: ${{ 'Smeem-iOS/Smeem-iOS.xcodeproj' }}
-      XC_SCHEME: ${{ 'Smeem-Release' }}
+      XC_SCHEME: ${{ 'Smeem-iOS' }}
       XC_ARCHIVE: ${{ 'Smeem-iOS.xcarchive' }}
+      XC_EXPORT_PATH: ${{ './artifacts' }}
 
       # certificate 
       ENCRYPTED_CERT_FILE_PATH: ${{ '.github/secrets/smeem_distribution.p12.gpg' }}
