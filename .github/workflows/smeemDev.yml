@@ -24,7 +24,7 @@ jobs:
       run: xcodebuild -resolvePackageDependencies
       working-directory: ./Smeem-iOS
     - name: Create Debug.xcconfig
-      run: echo "${{ secrets.DEBUG_CONFIG }}" > Debug.xcconfig
+      run: echo "${{ secrets.DEBUG_CONFIG }}" > ./Smeem-iOS/Debug.xcconfig
     - name: Build
       run: xcodebuild build -project Smeem-iOS/Smeem-iOS.xcodeproj -scheme Smeem-Dev -destination 'platform=iOS Simulator,name=iPhone 14 Pro,OS=17.2'
     - name: Run tests
