@@ -119,8 +119,8 @@
 		4A4FEB012B721956001BBDF3 /* Combine+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4FEB002B721956001BBDF3 /* Combine+.swift */; };
 		4A4FEB092B728144001BBDF3 /* TrainingWayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4FEB082B728144001BBDF3 /* TrainingWayViewModel.swift */; };
 		4A4FEB0C2B7289E7001BBDF3 /* TrainingWayAppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A4FEB0B2B7289E7001BBDF3 /* TrainingWayAppData.swift */; };
-		4A5456612CECC6BC00CB67CF /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 4A5456602CECC6BC00CB67CF /* ComposableArchitecture */; };
 		4A59EBA02B9367C2004D9823 /* BadgePopupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A59EB9F2B9367C2004D9823 /* BadgePopupViewModel.swift */; };
+		4A64752E2CEDE03E00EE2210 /* TrainingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A64752D2CEDE03E00EE2210 /* TrainingCollectionViewCell.swift */; };
 		4A6527952CEBB25F000191C3 /* LottieUI in Frameworks */ = {isa = PBXBuildFile; productRef = 4A6527942CEBB25F000191C3 /* LottieUI */; };
 		4A6630362A51B0AD00D19CC9 /* EditDiaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6630352A51B0AD00D19CC9 /* EditDiaryViewController.swift */; };
 		4A6630392A51E04600D19CC9 /* PatchDiaryRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6630382A51E04600D19CC9 /* PatchDiaryRequest.swift */; };
@@ -229,7 +229,6 @@
 		4AF7C2312BFB7A4F00E8C6CD /* MyPlanDeactiveCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF7C2302BFB7A4F00E8C6CD /* MyPlanDeactiveCollectionViewCell.swift */; };
 		4AFD7C292B600FED00FE7EFF /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AFD7C282B600FED00FE7EFF /* NetworkManager.swift */; };
 		6F294A3E2A26177B00856CC8 /* TrainingGoalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF507742A10CD4D007C62B1 /* TrainingGoalViewController.swift */; };
-		6F294A3F2A26177E00856CC8 /* TrainingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF507762A10CD96007C62B1 /* TrainingCollectionViewCell.swift */; };
 		6F294A422A26178C00856CC8 /* UserNickNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A13B7582A13D37000F4FB1E /* UserNickNameViewController.swift */; };
 		6F294A432A26179700856CC8 /* ServiceAcceptViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8275D22A1513120083A4AB /* ServiceAcceptViewController.swift */; };
 		6F294A442A26179900856CC8 /* ServiceAcceptCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8275D42A1519550083A4AB /* ServiceAcceptCollectionViewCell.swift */; };
@@ -372,6 +371,7 @@
 		4A4FEB082B728144001BBDF3 /* TrainingWayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingWayViewModel.swift; sourceTree = "<group>"; };
 		4A4FEB0B2B7289E7001BBDF3 /* TrainingWayAppData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingWayAppData.swift; sourceTree = "<group>"; };
 		4A59EB9F2B9367C2004D9823 /* BadgePopupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgePopupViewModel.swift; sourceTree = "<group>"; };
+		4A64752D2CEDE03E00EE2210 /* TrainingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingCollectionViewCell.swift; sourceTree = "<group>"; };
 		4A6630352A51B0AD00D19CC9 /* EditDiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditDiaryViewController.swift; sourceTree = "<group>"; };
 		4A6630382A51E04600D19CC9 /* PatchDiaryRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatchDiaryRequest.swift; sourceTree = "<group>"; };
 		4A7F22262B8241FD0011DECF /* Smeem-Dev.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Smeem-Dev.xctestplan"; sourceTree = "<group>"; };
@@ -476,7 +476,6 @@
 		4AF050EA2CEA300F0055BC3F /* MoyaProvier+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MoyaProvier+.swift"; sourceTree = "<group>"; };
 		4AF050FA2CEA60F80055BC3F /* smeemLoading.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = smeemLoading.json; sourceTree = "<group>"; };
 		4AF507742A10CD4D007C62B1 /* TrainingGoalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingGoalViewController.swift; sourceTree = "<group>"; };
-		4AF507762A10CD96007C62B1 /* TrainingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingCollectionViewCell.swift; sourceTree = "<group>"; };
 		4AF58CE82A4820AA00305248 /* AuthNetworkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthNetworkModel.swift; sourceTree = "<group>"; };
 		4AF78D9A2B84A1DC0098E1FA /* OnboardingServiceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingServiceTest.swift; sourceTree = "<group>"; };
 		4AF78D9D2B84AB6A0098E1FA /* MockProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockProvider.swift; sourceTree = "<group>"; };
@@ -515,7 +514,6 @@
 			files = (
 				4AA942D72A276C7900A552A0 /* KakaoSDKCommon in Frameworks */,
 				4AA942C22A2767D000A552A0 /* FSCalendar in Frameworks */,
-				4A5456612CECC6BC00CB67CF /* ComposableArchitecture in Frameworks */,
 				A301B0A22A30720F006BE0BA /* Kingfisher in Frameworks */,
 				375B628D2C590D0D00DA8E30 /* FirebaseRemoteConfig in Frameworks */,
 				4AA942CD2A276A9F00A552A0 /* Moya in Frameworks */,
@@ -1145,7 +1143,7 @@
 			isa = PBXGroup;
 			children = (
 				4A81C2962ACDAB2C0056E815 /* TrainingGoalsCollectionView.swift */,
-				4AF507762A10CD96007C62B1 /* TrainingCollectionViewCell.swift */,
+				4A64752D2CEDE03E00EE2210 /* TrainingCollectionViewCell.swift */,
 			);
 			path = PlanGoal;
 			sourceTree = "<group>";
@@ -1877,7 +1875,6 @@
 				375B628A2C590D0D00DA8E30 /* FirebaseMessaging */,
 				375B628C2C590D0D00DA8E30 /* FirebaseRemoteConfig */,
 				4A6527942CEBB25F000191C3 /* LottieUI */,
-				4A5456602CECC6BC00CB67CF /* ComposableArchitecture */,
 			);
 			productName = "Smeem-iOS";
 			productReference = 4A8FFA4C29C9E1FD00FB76C0 /* Smeem-iOS.app */;
@@ -1923,7 +1920,6 @@
 				4A08480A2B554513008327C7 /* XCRemoteSwiftPackageReference "Amplitude-Swift" */,
 				375B62852C590D0D00DA8E30 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				4A6527932CEBB25F000191C3 /* XCRemoteSwiftPackageReference "LottieUI" */,
-				4A54565F2CECC6BC00CB67CF /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 			);
 			productRefGroup = 4A8FFA4D29C9E1FD00FB76C0 /* Products */;
 			projectDirPath = "";
@@ -2140,6 +2136,7 @@
 				378B20F22BA0A03000604935 /* StepTwoKoreanDiaryViewModel.swift in Sources */,
 				37DCA6692A480A8E00FF8F90 /* DetailDiaryService.swift in Sources */,
 				37A574C129FF6E9100312453 /* ColorLiterals.swift in Sources */,
+				4A64752E2CEDE03E00EE2210 /* TrainingCollectionViewCell.swift in Sources */,
 				371107E92ACC7E3A007A4AC2 /* DiaryLayoutConfigurations.swift in Sources */,
 				4AB7C9322B78B45300845733 /* LoginViewModel.swift in Sources */,
 				37A574CA29FF980F00312453 /* UIStackView+.swift in Sources */,
@@ -2161,8 +2158,6 @@
 				4A004D4F2B4ED760003C8936 /* TrainingGoalResponse.swift in Sources */,
 				4AC705A42BEA2C99003C5310 /* SettingResponse.swift in Sources */,
 				4A86D65E2C5910FF002C0617 /* ResignRequest.swift in Sources */,
-				6F294A3F2A26177E00856CC8 /* TrainingCollectionViewCell.swift in Sources */,
-				6F294A3F2A26177E00856CC8 /* TrainingCollectionViewCell.swift in Sources */,
 				4ABCBCD62BDFC6BD003138A8 /* MySmeemCollectionViewDataSource.swift in Sources */,
 				4A0EE6042B9301E900158899 /* OnboardingServiceProtocol.swift in Sources */,
 				37A574E62A02178D00312453 /* SmeemToastView.swift in Sources */,
@@ -2226,7 +2221,7 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 14.2;
 				MARKETING_VERSION = 1.0;
@@ -2517,14 +2512,6 @@
 				kind = branch;
 			};
 		};
-		4A54565F2CECC6BC00CB67CF /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.16.1;
-			};
-		};
 		4A6527932CEBB25F000191C3 /* XCRemoteSwiftPackageReference "LottieUI" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/tfmart/LottieUI";
@@ -2600,11 +2587,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4A08480A2B554513008327C7 /* XCRemoteSwiftPackageReference "Amplitude-Swift" */;
 			productName = AmplitudeSwift;
-		};
-		4A5456602CECC6BC00CB67CF /* ComposableArchitecture */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4A54565F2CECC6BC00CB67CF /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
-			productName = ComposableArchitecture;
 		};
 		4A6527942CEBB25F000191C3 /* LottieUI */ = {
 			isa = XCSwiftPackageProductDependency;
