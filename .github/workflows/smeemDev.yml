@@ -16,6 +16,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+    - name: Set Xcode version
+      run: sudo xcode-select -switch /Applications/Xcode_16.app
     - name: Build
       run: xcodebuild clean test -project Smeem-iOS/Smeem-iOS.xcodeproj -scheme Smeem-iOS -destination 'platform=iOS Simulator,name=iPhone 13 Mini,OS=17.0'
     - name: Run tests
