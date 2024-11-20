@@ -24,6 +24,6 @@ jobs:
       run: xcodebuild -resolvePackageDependencies
       working-directory: ./Smeem-iOS
     - name: Build
-      run: xcodebuild build -project Smeem-iOS/Smeem-iOS.xcodeproj -scheme Smeem-Dev -destination 'platform=iOS Simulator,name=iPhone 14 Pro,OS=17.2'
+      run: xcodebuild build -project Smeem-iOS/Smeem-iOS.xcodeproj -scheme Smeem-iOS -destination 'platform=iOS Simulator,name=iPhone 14 Pro,OS=17.2'
     - name: Run tests
       run: swift test -v
