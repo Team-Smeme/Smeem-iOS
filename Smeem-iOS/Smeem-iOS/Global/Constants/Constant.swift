@@ -83,5 +83,7 @@ extension Constant {
         static let icnToolTip = UIImage(named: "icnToolTip")
         
         static let splashImage = UIImage(named: "splash")
+        
+        static let icnCrownMono = UIImage(named: "icnCrownMono")
     }
 }

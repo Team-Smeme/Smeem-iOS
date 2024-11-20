@@ -1,4 +1,5 @@
 {
+  "originHash" : "9d858f40dd7a61bdc0a1489eabd5a1c5c58c18dffa177fa257d8398005170f6d",
   "pins" : [
     {
       "identity" : "abseil-cpp-binary",
@@ -145,6 +146,24 @@
       }
     },
     {
+      "identity" : "lottie-spm",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/airbnb/lottie-spm.git",
+      "state" : {
+        "revision" : "b842598f1295f3ffa1475b1580672d1fe5b83580",
+        "version" : "4.5.0"
+      }
+    },
+    {
+      "identity" : "lottieui",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/tfmart/LottieUI",
+      "state" : {
+        "revision" : "dd5b2f16213f89ab996a55fc2f51b56236da4bbe",
+        "version" : "1.3.3"
+      }
+    },
+    {
       "identity" : "moya",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Moya/Moya.git",
@@ -208,5 +227,5 @@
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }

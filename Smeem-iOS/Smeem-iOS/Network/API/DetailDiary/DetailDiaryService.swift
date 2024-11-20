@@ -1,5 +1,5 @@
 //
-//  DetailDiaryService.swift
+//  DetailDiaryAPI.swift
 //  Smeem-iOS
 //
 //  Created by Joon Baek on 2023/06/25.
@@ -7,34 +7,33 @@
 
 import Moya
 
-enum DetailDiaryService {
-    case detailDiary(diaryID: Int)
-    case deleteDiary(diaryID: Int)
-}
-
-extension DetailDiaryService: BaseTargetType {
-    var path: String {
-        switch self {
-        case .detailDiary(let diaryID), .deleteDiary(let diaryID):
-            return URLConstant.diaryURL + "/\(diaryID)"
+final class DetailDiaryService {
+    static let shared = DetailDiaryService()
+    private let detailDiaryProvider = MoyaProvider<DetailDiaryEndPoint>(plugins:[MoyaLoggingPlugin()])
+    
+    func getDetailDiary(diaryID: Int) async throws -> DetailDiaryResponse {
+        let result: DetailDiaryResponse = try await detailDiaryProvider.request(.detailDiary(diaryID: diaryID))
+        return result
+    }
+    
+    func deleteDiary(diaryID: Int,
+                     completion: @escaping (Result<GeneralResponse<NilType>, SmeemError>) -> ()) {
+        detailDiaryProvider.request(.deleteDiary(diaryID: diaryID)) { result in
+            switch result {
+            case .success(let response):
+                do {
+                    try NetworkManager.statusCodeErrorHandling(statusCode: response.statusCode)
+                    guard let data = try? response.map(GeneralResponse<NilType>.self) else {
+                        throw SmeemError.clientError
+                    }
+                    completion(.success(data))
+                } catch {
+                    guard let error = error as? SmeemError else { return }
+                    completion(.failure(error))
+                }
+            case .failure(_):
+                completion(.failure(.userError))
+            }
         }
-    }
-    
-    var method: Moya.Method {
-        switch self {
-        case .detailDiary:
-            return .get
-        case .deleteDiary:
-            return .delete
-        }
-    }
-    
-    var task: Moya.Task {
-       return .requestPlain
-    }
-    
-    var headers: [String : String]? {
-        return ["Content-Type": "application/json",
-                "Authorization": "Bearer " + UserDefaultsManager.accessToken]
     }
 }

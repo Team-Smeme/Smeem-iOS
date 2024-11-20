@@ -1,0 +1,40 @@
+//
+//  DetailDiaryService.swift
+//  Smeem-iOS
+//
+//  Created by Joon Baek on 2023/06/25.
+//
+
+import Moya
+
+enum DetailDiaryEndPoint {
+    case detailDiary(diaryID: Int)
+    case deleteDiary(diaryID: Int)
+}
+
+extension DetailDiaryEndPoint: BaseTargetType {
+    var path: String {
+        switch self {
+        case .detailDiary(let diaryID), .deleteDiary(let diaryID):
+            return URLConstant.diaryURL + "/\(diaryID)"
+        }
+    }
+    
+    var method: Moya.Method {
+        switch self {
+        case .detailDiary:
+            return .get
+        case .deleteDiary:
+            return .delete
+        }
+    }
+    
+    var task: Moya.Task {
+       return .requestPlain
+    }
+    
+    var headers: [String : String]? {
+        return ["Content-Type": "application/json",
+                "Authorization": "Bearer " + UserDefaultsManager.accessToken]
+    }
+}
