@@ -70,7 +70,7 @@ jobs:
     - name: Archive app
       run: |
         mkdir artifacts
-        xcodebuild archive -project Smeem-iOS/Smeem-iOS.xcodeproj -scheme Smeem-Release -destination 'platform=iOS Simulator,name=iPhone 14 Pro,OS=17.2'
+        xcodebuild archive -project Smeem-iOS/Smeem-iOS.xcodeproj -scheme Smeem-Release -destination 'platform=iOS Simulator,name=iPhone 15,OS=17.2'
     - name: Export app
       run: xcodebuild -exportArchive -archivePath "$XC_ARCHIVE_PATH" -exportOptionsPlist .github/ExportOptions.plist -exportPath "$XC_EXPORT_PATH"
     - name: Upload app to TestFlight
