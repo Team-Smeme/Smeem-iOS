@@ -67,12 +67,6 @@ jobs:
         UUID=`/usr/libexec/PlistBuddy -c 'Print :UUID' /dev/stdin <<< $(security cms -D -i ./$PROVISION)`
         cp "./$PROVISION" "$HOME/Library/MobileDevice/Provisioning Profiles/$UUID.mobileprovision"
         done
-    - name: Check if archive exists
-      run: |
-        if [ ! -d "$XC_ARCHIVE_PATH" ]; then
-          echo "Archive not found at $XC_ARCHIVE_PATH"
-          exit 1
-        fi
     - name: Archive app
       run: |
         mkdir artifacts
