@@ -16,7 +16,7 @@ jobs:
       XC_WORKSPACE: ${{ 'Smeem-iOS/Smeem-iOS.xcodeproj' }}
       XC_SCHEME: ${{ 'Smeem-Release' }}
       XC_ARCHIVE_PATH: ${{ './Smeem-iOS.xcarchive' }}
-      XC_EXPORT_PATH: ${{ './artifacts' }}
+      XC_EXPORT_PATH: ${{ './artifacts/' }}
 
       # certificate 
       ENCRYPTED_CERT_FILE_PATH: ${{ '.github/secrets/smeem_distribution.p12.gpg' }}
@@ -68,7 +68,9 @@ jobs:
         cp "./$PROVISION" "$HOME/Library/MobileDevice/Provisioning Profiles/$UUID.mobileprovision"
         done
     - name: Archive app
-      run: xcodebuild archive -project Smeem-iOS/Smeem-iOS.xcodeproj -scheme Smeem-Release -destination 'platform=iOS Simulator,name=iPhone 14 Pro,OS=17.2'
+      run: |
+        mkdir artifacts
+        xcodebuild archive -project Smeem-iOS/Smeem-iOS.xcodeproj -scheme Smeem-Release -destination 'platform=iOS Simulator,name=iPhone 14 Pro,OS=17.2'
     - name: Export app
       run: xcodebuild -exportArchive -archivePath "$XC_ARCHIVE_PATH" -exportOptionsPlist .github/ExportOptions.plist -exportPath "$XC_EXPORT_PATH"
     - name: Upload app to TestFlight
@@ -78,3 +80,8 @@ jobs:
         issuer-id: ${{ secrets.APPSTORE_ISSUER_ID }}
         api-key-id: ${{ secrets.APPSTORE_API_KEY_ID }}
         api-private-key: ${{ secrets.APPSTORE_API_PRIVATE_KEY }}
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: Artifacts
+        path: ./artifacts
