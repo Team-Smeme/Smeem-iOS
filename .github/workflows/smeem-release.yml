@@ -68,9 +68,9 @@ jobs:
         cp "./$PROVISION" "$HOME/Library/MobileDevice/Provisioning Profiles/$UUID.mobileprovision"
         done
     - name: Archive app
-      run: xcodebuild build -project Smeem-iOS/Smeem-iOS.xcodeproj -scheme Smeem-Release -destination 'platform=iOS Simulator,name=iPhone 14 Pro,OS=17.2'
+      run: xcodebuild archive -project Smeem-iOS/Smeem-iOS.xcodeproj -scheme Smeem-Release -destination 'platform=iOS Simulator,name=iPhone 14 Pro,OS=17.2'
     - name: Export app
-      run: xcodebuild -exportArchive -archivePath Smeem-iOS.xcarchive -exportOptionsPlist .github/ExportOptions.plist -exportPath "$XC_EXPORT_PATH"
+      run: xcodebuild -exportArchive -archivePath "$XC_ARCHIVE_PATH" -exportOptionsPlist .github/ExportOptions.plist -exportPath "$XC_EXPORT_PATH"
     - name: Upload app to TestFlight
       uses: apple-actions/upload-testflight-build@v1
       with:
