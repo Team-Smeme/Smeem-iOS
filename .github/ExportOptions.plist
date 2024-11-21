@@ -16,6 +16,13 @@
 	<true/>
 	<key>teamID</key>
 	<string>K8LLWYQWXD</string>
+	<key>provisioningProfiles</key>
+	<dict>
+		<key>Team.Smeem-iOS</key>
+		<string>smeem_release</string>
+	</dict>
+	<key>signingCertificate</key>
+	<string>Apple Distribution</string>
 	<key>testFlightInternalTestingOnly</key>
 	<false/>
 	<key>uploadSymbols</key>
