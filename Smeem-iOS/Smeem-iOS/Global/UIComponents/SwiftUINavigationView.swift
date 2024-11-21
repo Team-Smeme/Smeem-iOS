@@ -14,14 +14,15 @@ enum NavigationbarType {
 
 struct SwiftUINavigationView: View {
     let navigationbarType: NavigationbarType
+    @Binding var selectedIndex: Int
     
-    @State private var selectedIndex = 0
     let options = ["코칭 OFF", "코칭 ON"]
     
     var body: some View {
-        HStack() {
-            Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/,
-                   label: {
+        HStack {
+            Button(action: {
+                // 뒤로가기 액션
+            }, label: {
                 Image("icnBack")
                     .imageScale(.large)
             })
@@ -35,17 +36,20 @@ struct SwiftUINavigationView: View {
             
             Spacer()
             
-            Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/,
-                   label: {
+            Button(action: {
+                // 닫기 버튼 액션
+            }, label: {
                 Text("닫기")
                     .tint(.black)
             })
             .padding(.trailing, 18)
         }
-        .frame(height: 66)
+        .frame(height: screenHeight * (66 / screenHeight))
     }
 }
 
 #Preview {
-    SwiftUINavigationView(navigationbarType: .diaryDetails)
+    @State var defaultIndex = 0
+    
+    SwiftUINavigationView(navigationbarType: .diaryDetails, selectedIndex: $defaultIndex)
 }

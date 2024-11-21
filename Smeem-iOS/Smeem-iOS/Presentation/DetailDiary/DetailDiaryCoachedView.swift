@@ -18,59 +18,66 @@ struct DetailDiaryCoachedView: View {
     @Binding var diaryText: String
     @Binding var coachingResponse: CoachingsResponse
     @State var currentIndex = 0
+    @State private var selectedIndex = 0
     
     var attributedText: AttributedString {
         generateAttributedText(sentences: MockData.sentences)
     }
     
     var body: some View {
-        SwiftUINavigationView(navigationbarType: .diaryDetails)
-        
-        VStack(spacing: screenWidth * (16/screenWidth)) {
+        VStack(spacing: screenWidth * (16 / screenWidth)) {
+            // 네비게이션 바 포함
+            SwiftUINavigationView(navigationbarType: .diaryDetails, selectedIndex: $selectedIndex)
+            
+            // 본문 내용
             ScrollView {
                 Text(attributedText)
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
-            .frame(height: screenHeight * (314/screenHeight))
+            .frame(height: screenHeight * (314 / screenHeight))
+            .padding(.horizontal, screenWidth * (16 / screenWidth))
             
-            Spacer()
-        }
-        .padding(.horizontal, screenWidth * (16/screenWidth))
-        
-        HStack {
-            Spacer()
-            VStack(alignment: .trailing) {
-                Text("2023년 3월 27일 4:18PM")
-                HStack {
-                    Text("유진이")
-                }
-            }
-            .font(Font(UIFont.c3))
-            .foregroundColor(Color(UIColor.gray400))
-        }
-        .padding(.horizontal, screenWidth * (16 / screenWidth))
-        
-        VStack(spacing: 20) {
-            Rectangle()
-                .frame(height: screenHeight * (8/screenHeight))
-                .foregroundStyle(Color(UIColor.gray100))
-            
-            TabView(selection: $currentIndex) {
-                ForEach(coachingResponse.corrections.indices, id: \.self) { item in
-                    ScrollView {
-                        VStack(spacing: screenWidth * (8/screenWidth)) {
-                            CoachingComparisonView(coachingResponse: $coachingResponse.corrections[item])
-                            
-                            CoachingExplanationView(coachingResponse: $coachingResponse.corrections[item])
-                        }
+            HStack {
+                Spacer()
+                VStack(alignment: .trailing) {
+                    Text("2023년 3월 27일 4:18PM")
+                    HStack {
+                        Text("유진이")
                     }
                 }
+                .font(Font(UIFont.c3))
+                .foregroundColor(Color(UIColor.gray400))
             }
-            .frame(width: screenWidth, height: screenHeight * (326/screenHeight), alignment: .top)
-            .tabViewStyle(.page(indexDisplayMode: .never))
+            .padding(.horizontal, screenWidth * (16 / screenWidth))
             
-            PageControl(currentPage: $currentIndex,
-                        coachingResponse: $coachingResponse)
+            // "코칭 ON"일 때만 표시
+            if selectedIndex == 1 { // "코칭 ON"이 선택된 경우
+                VStack(spacing: screenHeight * (20 / screenHeight)) {
+                    Rectangle()
+                        .frame(height: screenHeight * (8 / screenHeight))
+                        .foregroundStyle(Color(UIColor.gray100))
+                    
+                    TabView(selection: $currentIndex) {
+                        ForEach(coachingResponse.corrections.indices, id: \.self) { item in
+                            ScrollView {
+                                VStack(spacing: screenWidth * (8 / screenWidth)) {
+                                    CoachingComparisonView(coachingResponse: $coachingResponse.corrections[item])
+                                    
+                                    CoachingExplanationView(coachingResponse: $coachingResponse.corrections[item])
+                                }
+                            }
+                        }
+                    }
+                    .frame(width: screenWidth, height: screenHeight * (286 / screenHeight), alignment: .top)
+                    .tabViewStyle(.page(indexDisplayMode: .never))
+                    .padding(.horizontal, screenWidth * (16 / screenWidth))
+                    
+                    PageControl(currentPage: $currentIndex,
+                                coachingResponse: $coachingResponse)
+                }
+            } else {
+                Spacer(minLength: screenHeight * (342/screenHeight))
+            }
         }
     }
 }
