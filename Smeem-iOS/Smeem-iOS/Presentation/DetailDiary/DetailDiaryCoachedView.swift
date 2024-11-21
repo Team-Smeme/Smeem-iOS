@@ -14,22 +14,84 @@ struct SentenceData: Identifiable {
 }
 
 struct DetailDiaryCoachedView: View {
+    
+    @Binding var diaryText: String
+    @Binding var coachingResponse: CoachingsResponse
+    @State var currentIndex = 0
+    
     var attributedText: AttributedString {
+        generateAttributedText(sentences: MockData.sentences)
+    }
+    
+    var body: some View {
+        SwiftUINavigationView(navigationbarType: .diaryDetails)
+        
+        VStack(spacing: screenWidth * (16/screenWidth)) {
+            ScrollView {
+                Text(attributedText)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
+            .frame(height: screenHeight * (314/screenHeight))
+            
+            Spacer()
+        }
+        .padding(.horizontal, screenWidth * (16/screenWidth))
+        
+        HStack {
+            Spacer()
+            VStack(alignment: .trailing) {
+                Text("2023년 3월 27일 4:18PM")
+                HStack {
+                    Text("유진이")
+                }
+            }
+            .font(Font(UIFont.c3))
+            .foregroundColor(Color(UIColor.gray400))
+        }
+        .padding(.horizontal, screenWidth * (16 / screenWidth))
+        
+        VStack(spacing: 20) {
+            Rectangle()
+                .frame(height: screenHeight * (8/screenHeight))
+                .foregroundStyle(Color(UIColor.gray100))
+            
+            TabView(selection: $currentIndex) {
+                ForEach(coachingResponse.corrections.indices, id: \.self) { item in
+                    ScrollView {
+                        VStack(spacing: screenWidth * (8/screenWidth)) {
+                            CoachingComparisonView(coachingResponse: $coachingResponse.corrections[item])
+                            
+                            CoachingExplanationView(coachingResponse: $coachingResponse.corrections[item])
+                        }
+                    }
+                }
+            }
+            .frame(width: screenWidth, height: screenHeight * (326/screenHeight), alignment: .top)
+            .tabViewStyle(.page(indexDisplayMode: .never))
+            
+            PageControl(currentPage: $currentIndex,
+                        coachingResponse: $coachingResponse)
+        }
+    }
+}
+
+extension DetailDiaryCoachedView {
+    private func generateAttributedText(sentences: [SentenceData]) -> AttributedString {
         var result = AttributedString("")
         
-        for (index, sentence) in MockData.sentences.enumerated() {
+        for (index, sentence) in sentences.enumerated() {
             var attributedSentence = AttributedString(sentence.text)
             
             // 개별 문장 스타일 지정
             attributedSentence.foregroundColor = sentence.isCorrect ? UIColor.gray400 : UIColor.smeemWhite
             attributedSentence.backgroundColor = sentence.isCorrect ? nil : UIColor.point
-            attributedSentence.font = .custom("Pretendard", size: 16)
+            attributedSentence.font = Font(UIFont.b4)
             
             // 문장 추가
             result += attributedSentence
             
             // 마지막 문장이 아니면 공백 추가
-            if index < MockData.sentences.count - 1 {
+            if index < sentences.count - 1 {
                 result += AttributedString(" ")
             }
         }
@@ -37,36 +99,12 @@ struct DetailDiaryCoachedView: View {
         return result
     }
     
-    var body: some View {
-        SwiftUINavigationView()
-        
-        VStack(spacing: 16) {
-            Text(MockData.headerText)
-                .font(Font.custom("Pretendard", size: 16))
-                .foregroundColor(Color(UIColor.smeemBlack))
-                .frame(maxWidth: .infinity, alignment: .leading)
-            
-            ScrollView {
-                Text(attributedText)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-            }
-            .frame(height: screenHeight * 0.32)
-            
-            Spacer()
-        }
-        .padding(.horizontal, screenWidth * 0.048)
-    }
-}
-
-extension DetailDiaryCoachedView {
     struct MockData {
-        static let headerText = "일기를 잘 작성하셨어요! \n내용이 명확하고 흥미로웠습니다.\n이제 몇 가지 문법적 오류를 수정해 볼까요?"
-        
         static let sentences: [SentenceData] = [
             SentenceData(text: "I watched Avatar with my boyfriend at Hongdae CGV.", isCorrect: true),
             SentenceData(text: "I should have skimmed the previous season what they were saying and the universe(??).", isCorrect: false),
             SentenceData(text: "What I was annoyed then was 두팔 didn't know that as me.", isCorrect: true),
-            SentenceData(text: "I think 두팔 who is my boyfriend should study before wathcing….", isCorrect: true),
+            SentenceData(text: "I think 두팔 who is my boyfriend should study before watching….", isCorrect: true),
             SentenceData(text: "but Avatar2 is amazing movie I think.", isCorrect: true),
             SentenceData(text: "In my personal opinion", isCorrect: true)
         ]
@@ -75,5 +113,8 @@ extension DetailDiaryCoachedView {
 
 @available(iOS 17, *)
 #Preview {
-    DetailDiaryCoachedView()
+    @State var diaryText = "I watched Avatar with my boyfriend at Hongdae CGV. I should have skimmed the previous season   what they were saying and the universe(??). What I was annoyed then was 두팔 didn’t know that as me. I think 두팔 who is my boyfriend should study before wathcing…. but Avatar2 is amazing movie I think. In my personal opinion, the jjin main character "
+    @State var coachingResponse = CoachingsResponse.empty
+    
+    DetailDiaryCoachedView(diaryText: $diaryText, coachingResponse: $coachingResponse)
 }

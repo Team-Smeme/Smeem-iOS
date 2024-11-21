@@ -7,7 +7,14 @@
 
 import SwiftUI
 
+enum NavigationbarType {
+    case coachingCompleted
+    case diaryDetails
+}
+
 struct SwiftUINavigationView: View {
+    let navigationbarType: NavigationbarType
+    
     @State private var selectedIndex = 0
     let options = ["코칭 OFF", "코칭 ON"]
     
@@ -20,9 +27,11 @@ struct SwiftUINavigationView: View {
             })
             .padding(.leading, 10)
             
-//            CustomSegmentedControl(selectedIndex: $selectedIndex, options: options)
-//                .frame(height: 32)
-//                .padding(65)
+            if navigationbarType == .diaryDetails {
+                CustomSegmentedControl(selectedIndex: $selectedIndex, options: options)
+                    .frame(height: 32)
+                    .padding(65)
+            }
             
             Spacer()
             
@@ -38,5 +47,5 @@ struct SwiftUINavigationView: View {
 }
 
 #Preview {
-    SwiftUINavigationView()
+    SwiftUINavigationView(navigationbarType: .diaryDetails)
 }
