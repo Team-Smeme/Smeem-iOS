@@ -65,6 +65,7 @@
 		37A574E62A02178D00312453 /* SmeemToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574E52A02178D00312453 /* SmeemToastView.swift */; };
 		37A574E82A02424F00312453 /* RandomTopicView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A574E72A02424F00312453 /* RandomTopicView.swift */; };
 		37ADCC022B0289AD00E474AA /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37ADCC012B0289AD00E474AA /* Observable.swift */; };
+		37B123B62CEEE58E00ED973A /* DetailDiaryCoachedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B123B52CEEE58E00ED973A /* DetailDiaryCoachedView.swift */; };
 		37B360AA2AC2A4680006C8ED /* SmeemTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B360A92AC2A4680006C8ED /* SmeemTextView.swift */; };
 		37BB09BB2CBF8BA800A3B28A /* CoachingCompletedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BB09BA2CBF8BA800A3B28A /* CoachingCompletedView.swift */; };
 		37BCADF22BC3FFBF006EF960 /* DetailDiaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BCADF12BC3FFBF006EF960 /* DetailDiaryViewModel.swift */; };
@@ -313,6 +314,7 @@
 		37A574E52A02178D00312453 /* SmeemToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmeemToastView.swift; sourceTree = "<group>"; };
 		37A574E72A02424F00312453 /* RandomTopicView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomTopicView.swift; sourceTree = "<group>"; };
 		37ADCC012B0289AD00E474AA /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
+		37B123B52CEEE58E00ED973A /* DetailDiaryCoachedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailDiaryCoachedView.swift; sourceTree = "<group>"; };
 		37B360A92AC2A4680006C8ED /* SmeemTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmeemTextView.swift; sourceTree = "<group>"; };
 		37BB09BA2CBF8BA800A3B28A /* CoachingCompletedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoachingCompletedView.swift; sourceTree = "<group>"; };
 		37BCADF12BC3FFBF006EF960 /* DetailDiaryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailDiaryViewModel.swift; sourceTree = "<group>"; };
@@ -806,6 +808,7 @@
 			children = (
 				37DCA65F2A48033400FF8F90 /* DetailDiaryViewController.swift */,
 				37BCADF12BC3FFBF006EF960 /* DetailDiaryViewModel.swift */,
+				37B123B52CEEE58E00ED973A /* DetailDiaryCoachedView.swift */,
 			);
 			path = DetailDiary;
 			sourceTree = "<group>";
@@ -2032,6 +2035,7 @@
 				37DCA65D2A475B5100FF8F90 /* RandomTopicResponse.swift in Sources */,
 				4ABCBCCC2BDE8E44003138A8 /* MySummaryService.swift in Sources */,
 				371107DA2AC99099007A4AC2 /* KeyboardFollowingLayoutHandler.swift in Sources */,
+				37B123B62CEEE58E00ED973A /* DetailDiaryCoachedView.swift in Sources */,
 				4A9FAB452A4C3D1200C40D5A /* BadgeListViewController.swift in Sources */,
 				4ABCBCE52BE25D82003138A8 /* TrainingPlanViewController.swift in Sources */,
 				4AB7C9192B75F9B500845733 /* GesturePublisher+.swift in Sources */,
