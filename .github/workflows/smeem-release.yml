@@ -15,7 +15,7 @@ jobs:
     env:
       XC_WORKSPACE: ${{ 'Smeem-iOS/Smeem-iOS.xcodeproj' }}
       XC_SCHEME: ${{ 'Smeem-Release' }}
-      XC_ARCHIVE: ${{ 'Smeem-iOS.xcarchive' }}
+      XC_ARCHIVE_PATH: ${{ './Smeem-iOS.xcarchive' }}
       XC_EXPORT_PATH: ${{ './artifacts' }}
 
       # certificate 
@@ -70,7 +70,7 @@ jobs:
     - name: Archive app
       run: xcodebuild build -project Smeem-iOS/Smeem-iOS.xcodeproj -scheme Smeem-Release -destination 'platform=iOS Simulator,name=iPhone 14 Pro,OS=17.2'
     - name: Export app
-      run: xcodebuild -exportArchive -archivePath $XC_ARCHIVE -exportOptionsPlist .github/ExportOptions.plist -exportPath . -allowProvisioningUpdates
+      run: xcodebuild -exportArchive -archivePath $XC_ARCHIVE_PATH -exportOptionsPlist .github/ExportOptions.plist -exportPath "$XC_EXPORT_PATH"
     - name: Upload app to TestFlight
       uses: apple-actions/upload-testflight-build@v1
       with:
