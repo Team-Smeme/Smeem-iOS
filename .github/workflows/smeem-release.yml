@@ -76,7 +76,7 @@ jobs:
         -archivePath "$XC_ARCHIVE_PATH" \
         -exportOptionsPlist .github/ExportOptions.plist \
         -exportPath "$XC_EXPORT_PATH" \
-        -apiKey ${{ secrets.APPSTORE_API_PRIVATE_KEY }}
+        -apiKey ./keys/AuthKey_${{ secrets.APPSTORE_API_KEY_ID }}.p8 \
         -allowProvisioningUpdates
     - name: Upload Artifact
       uses: actions/upload-artifact@v3
