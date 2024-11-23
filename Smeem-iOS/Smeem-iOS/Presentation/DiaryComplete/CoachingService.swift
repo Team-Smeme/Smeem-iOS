@@ -20,19 +20,3 @@
 //    static var liveValue: CoachingService = CoachingServiceLive()
 //}
 //
-//protocol CoachingService {
-//    func coachingPostAPI(diaryID: Int) async throws -> CoachingsResponse
-//    func detailDiaryAPI(diaryID: Int) async throws -> DetailDiaryResponse
-//}
-//
-//final class CoachingServiceLive: CoachingService {
-//    func coachingPostAPI(diaryID: Int) async throws -> CoachingsResponse {
-//        let result: CoachingsResponse = try await ServiceNetwork.shared.request(CoachingEndPoint.coaching(diaryId: diaryID))
-//        return result
-//    }
-//    
-//    func detailDiaryAPI(diaryID: Int) async throws -> DetailDiaryResponse {
-//        let result: DetailDiaryResponse = try await ServiceNetwork.shared.request(DetailDiaryEndPoint.detailDiary(diaryID: diaryID))
-//        return result
-//    }
-//}

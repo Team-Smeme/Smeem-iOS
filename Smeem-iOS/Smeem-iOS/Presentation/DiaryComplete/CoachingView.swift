@@ -93,6 +93,6 @@ struct CoachingView: View {
     }
 }
 
-#Preview {
-    CoachingView(store: CoachingStore(diaryResponse: PostDiaryResponse.empty))
-}
+//#Preview {
+//    CoachingView(store: CoachingStore(diaryResponse: PostDiaryResponse.empty))
+//}

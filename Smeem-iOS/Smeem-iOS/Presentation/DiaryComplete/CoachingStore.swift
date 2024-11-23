@@ -6,18 +6,17 @@
 //
 
 import Foundation
-//import ComposableArchitecture
-//import Dependencies
 
 final class CoachingStore: Store, ObservableObject {
     
+    var service: CoachingServiceProtocol
     @Published var state: State
     
-    init(diaryResponse: PostDiaryResponse) {
+    init(service: CoachingServiceProtocol,
+         diaryResponse: PostDiaryResponse) {
+        self.service = service
         self.state = State(diaryResponse: diaryResponse)
     }
-    
-//    @Dependency(\.coachingService) var coachingService
     
     enum Action {
 //        case toastMeesage
@@ -43,7 +42,7 @@ final class CoachingStore: Store, ObservableObject {
         case .detailDiaryAPI(let ID):
             Task {
                 do {
-//                    state.detailDiaryResponse = try await coachingService.detailDiaryAPI(diaryID: ID)
+                    state.detailDiaryResponse = try await service.detailDiaryAPI(diaryID: ID)
                 } catch _ {
 //                    state.toastMessage = "일단 에러"
                 }
@@ -52,7 +51,7 @@ final class CoachingStore: Store, ObservableObject {
             Task {
                 do {
                     state.hiddenIndex += 1
-//                    state.coachingResponse = try await coachingService.coachingPostAPI(diaryID: ID)
+                    state.coachingResponse = try await service.coachingPostAPI(diaryID: ID)
                     state.hiddenIndex += 1
                 } catch _ {
 //                    state.toastMessage = "일단 에러"
