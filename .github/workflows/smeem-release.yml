@@ -78,7 +78,7 @@ jobs:
         -exportPath "$XC_EXPORT_PATH" \
         -authenticationKeyIssuerID ${{ secrets.APPSTORE_ISSUER_ID }} \
         -authenticationKeyID ${{ secrets.APPSTORE_API_KEY_ID }} \
-        -authenticationKeyPath ./keys/AuthKey_${{ secrets.APPSTORE_API_KEY_ID }}.p8
+        -authenticationKeyPath './keys/AuthKey_${{ secrets.APPSTORE_API_KEY_ID }}.p8' \
         -allowProvisioningUpdates
     - name: Upload Artifact
       uses: actions/upload-artifact@v3
