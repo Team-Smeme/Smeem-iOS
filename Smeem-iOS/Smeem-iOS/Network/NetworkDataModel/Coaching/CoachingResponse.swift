@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct CoachingsResponse: Codable {
+struct CoachingsResponse: Codable, Equatable {
     var corrections: [CoachingResponse]
 }
 
@@ -22,7 +22,7 @@ extension CoachingsResponse {
                                                                                                                            is_corrected: true)])
 }
 
-struct CoachingResponse: Codable {
+struct CoachingResponse: Codable, Equatable {
     let original_sentence: String
     let corrected_sentence: String
     let reason: String

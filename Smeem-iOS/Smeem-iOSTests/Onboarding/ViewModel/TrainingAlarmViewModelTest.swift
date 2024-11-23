@@ -22,12 +22,14 @@ final class TrainingAlarmViewModelTest: XCTestCase {
         self.provider = OnboardingServiceMock()
         self.viewModel = TrainingAlarmViewModel(provider: provider)
         self.cancelBag = Set<AnyCancellable>()
-        
-        self.input = TrainingAlarmViewModel.Input(viewWillAppearSubject: PassthroughSubject<Void, Never>(),
+
+        self.input = TrainingAlarmViewModel.Input(viewDidLoadSubject: PassthroughSubject<Void, Never>(),
                                                   alarmTimeSubject: PassthroughSubject<AlarmTimeAppData, Never>(),
                                                   alarmDaySubject: PassthroughSubject<Set<String>, Never>(),
                                                   alarmButtonTapped: PassthroughSubject<AlarmType, Never>(),
                                                   nextFlowSubject: PassthroughSubject<Void, Never>(),
+                                                  userServiceSubject: PassthroughSubject<Void, Never>(),
+                                                  homeSubject: PassthroughSubject<Void, Never>(),
                                                   amplitudeSubject: PassthroughSubject<Void, Never>())
         self.output = viewModel.transform(input: input)
     }
