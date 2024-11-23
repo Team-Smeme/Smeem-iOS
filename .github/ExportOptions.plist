@@ -13,9 +13,9 @@
  	<key>provisioningProfiles</key>
  	<dict>
   	 <key>Team.Smeem-dev</key>
-  	 <string>smeem_debug</string>
+  	 <string>smeem debug</string>
   	 <key>Team.Smeem-iOS</key>
-  	 <string>Smeem_release</string>
+  	 <string>Smeem release</string>
  	</dict>
 	<key>signingStyle</key>
 	<string>automatic</string>
