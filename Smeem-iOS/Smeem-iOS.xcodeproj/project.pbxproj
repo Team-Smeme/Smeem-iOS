@@ -2426,12 +2426,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Smeem-iOS/Smeem-iOS.entitlements";
-				CODE_SIGN_IDENTITY = "Apple Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "Apple Distribution: YuJi Lee (K8LLWYQWXD)";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 20241030;
 				DEVELOPMENT_TEAM = K8LLWYQWXD;
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = K8LLWYQWXD;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Smeem-iOS/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = smeem;
@@ -2449,8 +2447,7 @@
 				MARKETING_VERSION = 2.0.4;
 				PRODUCT_BUNDLE_IDENTIFIER = "Team.Smeem-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "smeem release";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "smeem release";
+				PROVISIONING_PROFILE_SPECIFIER = smeem_release;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
