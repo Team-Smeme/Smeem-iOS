@@ -7,22 +7,12 @@
 
 import SwiftUI
 
-struct SentenceData: Identifiable {
-    let id = UUID()
-    let text: String
-    let isCorrect: Bool
-}
-
 struct DetailDiaryCoachedView: View {
     
     @Binding var diaryText: String
     @Binding var coachingResponse: CoachingsResponse
     @State var currentIndex = 0
     @State private var selectedIndex = 0
-    
-    var attributedText: AttributedString {
-        generateAttributedText()
-    }
     
     var body: some View {
         VStack(spacing: screenWidth * (16 / screenWidth)) {
@@ -31,7 +21,12 @@ struct DetailDiaryCoachedView: View {
             
             // 본문 내용
             ScrollView {
-                Text(attributedText)
+                Text(diaryText)
+                    .modifier(HighlightModifier(
+                        diaryText: diaryText,
+                        corrections: coachingResponse.corrections,
+                        highlightIndex: selectedIndex != 0 ? currentIndex : -1
+                    ))
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
             .frame(height: screenHeight * (314 / screenHeight))
@@ -54,39 +49,19 @@ struct DetailDiaryCoachedView: View {
             // "코칭 ON"일 때만 표시
             if selectedIndex == 1 {
                 VStack {
-                CoachingContentView(currentIndex: $currentIndex, coachingResponse: $coachingResponse)
+                    CoachingContentView(currentIndex: $currentIndex, coachingResponse: $coachingResponse)
                 }
             } else {
-                Spacer(minLength: screenHeight * (342/screenHeight))
+                Spacer(minLength: screenHeight * (342 / screenHeight))
             }
         }
-    }
-}
-
-extension DetailDiaryCoachedView {
-    func generateAttributedText() -> AttributedString {
-        var attributedText = AttributedString(diaryText)
-        let corrections = coachingResponse.corrections
-
-        // 강조 조건을 하나의 변수로 묶기
-        let shouldHighlightIndex = selectedIndex != 0 ? currentIndex : -1
-
-        for (index, correction) in corrections.enumerated() {
-            if index == shouldHighlightIndex {
-                if let range = attributedText.range(of: correction.original_sentence) {
-                    attributedText[range].backgroundColor = Color(UIColor.point)
-                    attributedText[range].foregroundColor = Color(UIColor.smeemWhite)
-                }
-            }
-        }
-        return attributedText
     }
 }
 
 @available(iOS 17, *)
 #Preview {
     @State var diaryText = "I watched Avatar with my boyfriend at Hongdae CGV. I should have skimmed the previous season - Avatar1.. I really couldn’t get what they weere saying and the universe(??). What I was annoyed then was 두팔 didn’t know that as me. I think 두팔 who is my boyfriend should study before wathcing…. but Avatar2 is amazing movie I think. In my personal opinion, the jjin main character of Avatar2 is not Sully, but his son."
-
+    
     @State var coachingResponse = CoachingsResponse.sample
     
     DetailDiaryCoachedView(diaryText: $diaryText, coachingResponse: $coachingResponse)

@@ -38,6 +38,7 @@
 		375B628D2C590D0D00DA8E30 /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 375B628C2C590D0D00DA8E30 /* FirebaseRemoteConfig */; };
 		3761116C2A278D0E0095EC5A /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3761116B2A278D0E0095EC5A /* String+.swift */; };
 		377B3BEE2CF6036C0086E0BC /* FloatingButtonsSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377B3BED2CF6036C0086E0BC /* FloatingButtonsSwiftUIView.swift */; };
+		377B3BF02CF613710086E0BC /* HighlightModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377B3BEF2CF613710086E0BC /* HighlightModifier.swift */; };
 		3785072F2BD1480C004CC922 /* SharedDiaryDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37499E3C2BD0C3A100BA6FAF /* SharedDiaryDataService.swift */; };
 		378B20EE2BA0A01600604935 /* ForeignDiaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378B20ED2BA0A01600604935 /* ForeignDiaryViewModel.swift */; };
 		378B20F02BA0A02400604935 /* StepOneKoreanDiaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378B20EF2BA0A02400604935 /* StepOneKoreanDiaryViewModel.swift */; };
@@ -290,6 +291,7 @@
 		374FAF802A2CACCF00237A1A /* DiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryViewController.swift; sourceTree = "<group>"; };
 		3761116B2A278D0E0095EC5A /* String+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		377B3BED2CF6036C0086E0BC /* FloatingButtonsSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingButtonsSwiftUIView.swift; sourceTree = "<group>"; };
+		377B3BEF2CF613710086E0BC /* HighlightModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightModifier.swift; sourceTree = "<group>"; };
 		378B20ED2BA0A01600604935 /* ForeignDiaryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForeignDiaryViewModel.swift; sourceTree = "<group>"; };
 		378B20EF2BA0A02400604935 /* StepOneKoreanDiaryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepOneKoreanDiaryViewModel.swift; sourceTree = "<group>"; };
 		378B20F12BA0A03000604935 /* StepTwoKoreanDiaryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepTwoKoreanDiaryViewModel.swift; sourceTree = "<group>"; };
@@ -635,6 +637,7 @@
 				37A574B929FE209F00312453 /* Resources */,
 				4AC4B82B2A2F9F5300E147AA /* Constants */,
 				37EB69E42A4B3B6B00075E4E /* Protocols */,
+				377B3BEF2CF613710086E0BC /* HighlightModifier.swift */,
 			);
 			path = Global;
 			sourceTree = "<group>";
@@ -2053,6 +2056,7 @@
 				4A9E10E42A43468600295D07 /* BaseTargetType.swift in Sources */,
 				4A4FEB092B728144001BBDF3 /* TrainingWayViewModel.swift in Sources */,
 				37A574C329FF6E9C00312453 /* Constant.swift in Sources */,
+				377B3BF02CF613710086E0BC /* HighlightModifier.swift in Sources */,
 				4AC1D6832B4ED38200D39A98 /* OnboardingModel.swift in Sources */,
 				4AC00EEB2AD4527A009230DA /* TrainingWayViewController.swift in Sources */,
 				4AC705932BEA1E52003C5310 /* LanguageContainerView.swift in Sources */,
