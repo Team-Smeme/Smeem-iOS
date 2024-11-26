@@ -85,14 +85,14 @@ struct CoachingView: View {
         // MARK: 첨삭 화면
         } else {
             CoachingCompleteView(diaryText: $store.state.detailDiaryResponse.content,
-                                 coachingResponse: $store.state.coachingResponse)
+                                 coachingAppData: $store.state.coachingAppData)
         }
         
-//        SmeemErrorToastView(type: $store.state.toastMessage)
+        // MARK: 첫 진입시 토스트뷰 실행
         SmemeToastView(type: $store.state.toastMessgaea)
     }
 }
 
-//#Preview {
-//    CoachingView(store: CoachingStore(diaryResponse: PostDiaryResponse.empty))
-//}
+#Preview {
+    CoachingView(store: CoachingStore(service: CoachingService(), diaryResponse: PostDiaryResponse.empty))
+}

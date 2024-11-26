@@ -7,6 +7,11 @@
 
 import Foundation
 
+struct CoachingAppData {
+    var corrections: CoachingsResponse
+    var correctResultText: String
+}
+
 final class CoachingStore: Store, ObservableObject {
     
     var service: CoachingServiceProtocol
@@ -19,15 +24,14 @@ final class CoachingStore: Store, ObservableObject {
     }
     
     enum Action {
-//        case toastMeesage
         case detailDiaryAPI(diaryID: Int)
-//        case backButton
         case coachingButton(diaryID: Int)
     }
     
     struct State {
         var detailDiaryResponse = DetailDiaryResponse.empty
-        var coachingResponse = CoachingsResponse.empty
+        var coachingAppData = CoachingAppData(corrections: CoachingsResponse.empty,
+                                               correctResultText: "첨삭 중이에요")
         var toastMessage: SmeemError? = SmeemError.clientError
         var toastMessgaea: SmeemToast? = .completed
         
@@ -36,7 +40,6 @@ final class CoachingStore: Store, ObservableObject {
         var hiddenIndex: Int = 0
     }
     
-    @MainActor
     func send(action: Action) {
         switch action {
         case .detailDiaryAPI(let ID):
@@ -51,12 +54,27 @@ final class CoachingStore: Store, ObservableObject {
             Task {
                 do {
                     state.hiddenIndex += 1
-                    state.coachingResponse = try await service.coachingPostAPI(diaryID: ID)
+                    let coachingResponse = try await service.coachingPostAPI(diaryID: ID)
+                    state.coachingAppData = CoachingAppData(corrections: coachingResponse,
+                                                             correctResultText: correctTextResult(coachingResponse.corrections.count))
                     state.hiddenIndex += 1
                 } catch _ {
 //                    state.toastMessage = "일단 에러"
                 }
             }
+        }
+    }
+    
+    func correctTextResult(_ count: Int) -> String {
+        switch count {
+        case 0:
+            return "완벽한 일기예요! 문장이 자연스럽고 오류가 없어요"
+        case 1:
+            return "잘 작성했어요! 작은 부분만 다듬으면 완벽해요"
+        case 2...:
+            return "대단해요! 몇가지 피드백을 준비해봤어요."
+        default:
+            return "대단해요! 몇가지 피드백을 준비해봤어요."
         }
     }
 }
