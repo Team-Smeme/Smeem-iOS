@@ -442,16 +442,6 @@
 		A3D7ECB62A26566A009857D6 /* EditNicknameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNicknameViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		4AB349BB2CF23CF60047C484 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				CoachingService.swift,
-			);
-			target = 4A8FFA4B29C9E1FD00FB76C0 /* Smeem-iOS */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		4AB3494D2CF229D10047C484 /* UIViewConponent */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = UIViewConponent; sourceTree = "<group>"; };
 		4AB3494E2CF22A070047C484 /* Global */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Global; sourceTree = "<group>"; };
@@ -464,7 +454,7 @@
 		4AB349BA2CF23B770047C484 /* Coaching */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Coaching; sourceTree = "<group>"; };
 		4AB349BC2CF23D210047C484 /* Coaching */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Coaching; sourceTree = "<group>"; };
 		4AF050CE2CE9DE010055BC3F /* Coaching */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Coaching; sourceTree = "<group>"; };
-		4AF050D72CEA01E20055BC3F /* DiaryComplete */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (4AB349BB2CF23CF60047C484 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = DiaryComplete; sourceTree = "<group>"; };
+		4AF050D72CEA01E20055BC3F /* DiaryComplete */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = DiaryComplete; sourceTree = "<group>"; };
 		4AF050D82CEA01EA0055BC3F /* Coaching */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Coaching; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
