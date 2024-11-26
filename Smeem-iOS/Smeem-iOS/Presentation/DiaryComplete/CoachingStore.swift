@@ -38,6 +38,8 @@ final class CoachingStore: Store, ObservableObject {
         var diaryResponse: PostDiaryResponse
         
         var hiddenIndex: Int = 0
+        var isEnabled: Bool = true
+        var isLoadingView: Bool = true
     }
     
     func send(action: Action) {
@@ -46,6 +48,7 @@ final class CoachingStore: Store, ObservableObject {
             Task {
                 do {
                     state.detailDiaryResponse = try await service.detailDiaryAPI(diaryID: ID)
+                    state.isEnabled = state.detailDiaryResponse.correctionMaxCount-state.detailDiaryResponse.correctionCount == 0 ? false : true
                 } catch let error {
                     let error = error as? SmeemError
                     state.toastErrorMessage = error
