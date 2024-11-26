@@ -16,40 +16,25 @@ struct DetailDiaryCoachedView: View {
     
     var body: some View {
         VStack(spacing: screenWidth * (16 / screenWidth)) {
-            // 네비게이션 바
-            SwiftUINavigationView(navigationbarType: .diaryDetails, selectedIndex: $selectedIndex)
+            SwiftUINavigationView(navigationbarType: .diaryDetails,
+                                  selectedIndex: $selectedIndex)
             
-            // 본문 내용
-            ScrollView {
-                Text(diaryText)
-                    .modifier(HighlightModifier(
-                        diaryText: diaryText,
-                        corrections: coachingResponse.corrections,
-                        highlightIndex: selectedIndex != 0 ? currentIndex : -1
-                    ))
-                    .frame(maxWidth: .infinity, alignment: .leading)
-            }
-            .frame(height: screenHeight * (314 / screenHeight))
-            .padding(.horizontal, screenWidth * (16 / screenWidth))
-            .foregroundColor(Color(UIColor.gray400))
-            
-            HStack {
-                Spacer()
-                VStack(alignment: .trailing) {
-                    Text("2023년 3월 27일 4:18PM")
-                    HStack {
-                        Text("유진이")
-                    }
-                }
-                .font(Font(UIFont.c3))
-                .foregroundColor(Color(UIColor.gray400))
-            }
-            .padding(.horizontal, screenWidth * (16 / screenWidth))
+            ScrollableDiaryView(
+                diaryText: diaryText,
+                corrections: coachingResponse.corrections,
+                currentIndex: currentIndex,
+                selectedIndex: selectedIndex,
+                screenHeight: screenHeight,
+                screenWidth: screenWidth,
+                dateText: "2023년 3월 27일 4:18PM",
+                authorText: "유진이"
+            )
             
             // "코칭 ON"일 때만 표시
             if selectedIndex == 1 {
                 VStack {
-                    CoachingContentView(currentIndex: $currentIndex, coachingResponse: $coachingResponse)
+                    CoachingContentView(currentIndex: $currentIndex,
+                                        coachingResponse: $coachingResponse)
                 }
             } else {
                 Spacer(minLength: screenHeight * (342 / screenHeight))
