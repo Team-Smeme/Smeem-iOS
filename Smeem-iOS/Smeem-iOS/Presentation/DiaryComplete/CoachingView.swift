@@ -89,7 +89,8 @@ struct CoachingView: View {
         }
         
         // MARK: 첫 진입시 토스트뷰 실행
-        SmemeToastView(type: $store.state.toastMessgaea)
+        SmemeToastView(type: $store.state.toastMessage)
+        SmeemErrorToastView(type: $store.state.toastErrorMessage)
     }
 }
 

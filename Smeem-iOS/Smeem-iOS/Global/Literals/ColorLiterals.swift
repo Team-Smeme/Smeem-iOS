@@ -57,6 +57,11 @@ extension UIColor {
         return UIColor(hex: "#171716", alpha: 0.3)
     }
     
+    /// 400, 500 토스트
+    static var errorToastBackground: UIColor {
+        return UIColor(hex: "#171716")
+    }
+    
     static var summaryBackground: UIColor {
         return UIColor(hex: "#FAFAFA")
     }

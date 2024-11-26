@@ -32,8 +32,8 @@ final class CoachingStore: Store, ObservableObject {
         var detailDiaryResponse = DetailDiaryResponse.empty
         var coachingAppData = CoachingAppData(corrections: CoachingsResponse.empty,
                                                correctResultText: "첨삭 중이에요")
-        var toastMessage: SmeemError? = SmeemError.clientError
-        var toastMessgaea: SmeemToast? = .completed
+        var toastErrorMessage: SmeemError? = nil
+        var toastMessage: SmeemToast? = .completed
         
         var diaryResponse: PostDiaryResponse
         
@@ -46,8 +46,9 @@ final class CoachingStore: Store, ObservableObject {
             Task {
                 do {
                     state.detailDiaryResponse = try await service.detailDiaryAPI(diaryID: ID)
-                } catch _ {
-//                    state.toastMessage = "일단 에러"
+                } catch let error {
+                    let error = error as? SmeemError
+                    state.toastErrorMessage = error
                 }
             }
         case .coachingButton(let ID):
@@ -58,8 +59,10 @@ final class CoachingStore: Store, ObservableObject {
                     state.coachingAppData = CoachingAppData(corrections: coachingResponse,
                                                              correctResultText: correctTextResult(coachingResponse.corrections.count))
                     state.hiddenIndex += 1
-                } catch _ {
-//                    state.toastMessage = "일단 에러"
+                } catch let error {
+                    let error = error as? SmeemError
+                    state.toastErrorMessage = error
+                    state.hiddenIndex = 0
                 }
             }
         }
