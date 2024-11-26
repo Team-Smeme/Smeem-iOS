@@ -37,6 +37,7 @@
 		375B628B2C590D0D00DA8E30 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 375B628A2C590D0D00DA8E30 /* FirebaseMessaging */; };
 		375B628D2C590D0D00DA8E30 /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 375B628C2C590D0D00DA8E30 /* FirebaseRemoteConfig */; };
 		3761116C2A278D0E0095EC5A /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3761116B2A278D0E0095EC5A /* String+.swift */; };
+		377B3BEE2CF6036C0086E0BC /* FloatingButtonsSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377B3BED2CF6036C0086E0BC /* FloatingButtonsSwiftUIView.swift */; };
 		3785072F2BD1480C004CC922 /* SharedDiaryDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37499E3C2BD0C3A100BA6FAF /* SharedDiaryDataService.swift */; };
 		378B20EE2BA0A01600604935 /* ForeignDiaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378B20ED2BA0A01600604935 /* ForeignDiaryViewModel.swift */; };
 		378B20F02BA0A02400604935 /* StepOneKoreanDiaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378B20EF2BA0A02400604935 /* StepOneKoreanDiaryViewModel.swift */; };
@@ -288,6 +289,7 @@
 		374F828D2AC5DFFE00C128B9 /* DiaryBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryBottomView.swift; sourceTree = "<group>"; };
 		374FAF802A2CACCF00237A1A /* DiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryViewController.swift; sourceTree = "<group>"; };
 		3761116B2A278D0E0095EC5A /* String+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
+		377B3BED2CF6036C0086E0BC /* FloatingButtonsSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingButtonsSwiftUIView.swift; sourceTree = "<group>"; };
 		378B20ED2BA0A01600604935 /* ForeignDiaryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForeignDiaryViewModel.swift; sourceTree = "<group>"; };
 		378B20EF2BA0A02400604935 /* StepOneKoreanDiaryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepOneKoreanDiaryViewModel.swift; sourceTree = "<group>"; };
 		378B20F12BA0A03000604935 /* StepTwoKoreanDiaryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepTwoKoreanDiaryViewModel.swift; sourceTree = "<group>"; };
@@ -700,6 +702,7 @@
 				4A4050EB2CE8C54400E84EDE /* CoachingExplanationView.swift */,
 				4A1F2AE62CD4A15B0055587F /* CoachingComparisonView.swift */,
 				37CA11182CEF32F5006341D3 /* CoachingContentView.swift */,
+				377B3BED2CF6036C0086E0BC /* FloatingButtonsSwiftUIView.swift */,
 			);
 			path = UIComponents;
 			sourceTree = "<group>";
@@ -2152,6 +2155,7 @@
 				4AB7C9322B78B45300845733 /* LoginViewModel.swift in Sources */,
 				37A574CA29FF980F00312453 /* UIStackView+.swift in Sources */,
 				6F294A422A26178C00856CC8 /* UserNickNameViewController.swift in Sources */,
+				377B3BEE2CF6036C0086E0BC /* FloatingButtonsSwiftUIView.swift in Sources */,
 				4A4050EC2CE8C54400E84EDE /* CoachingExplanationView.swift in Sources */,
 				4AC047252A8FCAE100EBDC0E /* AuthManagementViewController.swift in Sources */,
 				374FAF812A2CACCF00237A1A /* DiaryViewController.swift in Sources */,
