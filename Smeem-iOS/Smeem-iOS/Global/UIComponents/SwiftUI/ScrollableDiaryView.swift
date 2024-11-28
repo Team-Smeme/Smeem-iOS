@@ -12,39 +12,51 @@ struct ScrollableDiaryView: View {
     let corrections: [CoachingResponse]
     let currentIndex: Int
     let selectedIndex: Int
-    let screenHeight: CGFloat
-    let screenWidth: CGFloat
     let dateText: String
     let authorText: String
-    
+
+    @State private var contentHeight: CGFloat = 0
+
     var body: some View {
         VStack(spacing: 0) {
-            // 일기 본문
+            // 본문 내용
             ScrollView {
-                Text(diaryText)
-                    .modifier(HighlightModifier(
-                        diaryText: diaryText,
-                        corrections: corrections,
-                        highlightIndex: selectedIndex != 0 ? currentIndex : -1
-                    ))
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    
-            }
-            .frame(height: screenHeight * (314 / screenHeight))
-            
-            // 작성 날짜, 작성자
-            HStack {
-                Spacer()
-                VStack(alignment: .trailing) {
-                    Text(dateText)
+                VStack(alignment: .leading, spacing: screenWidth * 0.02) {
+                    // 텍스트 내용
+                    Text(diaryText)
+                        .modifier(HighlightModifier(
+                            diaryText: diaryText,
+                            corrections: corrections,
+                            highlightIndex: selectedIndex != 0 ? currentIndex : -1
+                        ))
+                        .padding(.horizontal, screenHeight * (18 / screenHeight))
+                        .padding(.bottom, screenHeight * (16 / screenHeight))
+                        .foregroundColor(Color(UIColor.gray400))
+                        .background( // 콘텐츠 크기를 측정하기 위한 백그라운드
+                            GeometryReader { geometry in
+                                Color.clear
+                                    .onAppear {
+                                        contentHeight = geometry.size.height
+                                    }
+                            }
+                        )
+
+                    // Footer (작성 날짜, 작성자)
                     HStack {
-                        Text(authorText)
+                        Spacer()
+                        VStack(alignment: .trailing, spacing: screenWidth * (4 / screenWidth)) {
+                            Text(dateText)
+                            Text(authorText)
+                        }
+                        .font(Font(UIFont.c3))
+                        .foregroundColor(Color(UIColor.gray400))
                     }
+                    .padding(.horizontal, screenWidth * (18 / screenWidth))
                 }
-                .font(Font(UIFont.c3))
+                .padding(.bottom, screenHeight * (16 / screenHeight))
             }
+            .frame(maxHeight: contentHeight + screenHeight * (100 / screenHeight)) // 텍스트 높이에 따른 동적 변경
         }
-        .foregroundColor(Color(UIColor.gray400))
-        .padding(.horizontal, screenWidth * (16 / screenWidth))
     }
 }
+

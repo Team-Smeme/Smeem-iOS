@@ -24,18 +24,15 @@ struct DetailDiaryCoachedView: View {
                 corrections: coachingResponse.corrections,
                 currentIndex: currentIndex,
                 selectedIndex: selectedIndex,
-                screenHeight: screenHeight,
-                screenWidth: screenWidth,
                 dateText: "2023년 3월 27일 4:18PM",
                 authorText: "유진이"
             )
             
             // "코칭 ON"일 때만 표시
             if selectedIndex == 1 {
-                VStack {
-                    CoachingContentView(currentIndex: $currentIndex,
-                                        coachingResponse: $coachingResponse)
-                }
+                Spacer()
+                CoachingContentView(currentIndex: $currentIndex,
+                                    coachingResponse: $coachingResponse)
             } else {
                 Spacer(minLength: screenHeight * (342 / screenHeight))
             }
