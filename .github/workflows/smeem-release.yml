@@ -1,0 +1,87 @@
+# This workflow will build a Swift project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-swift
+
+name: smeem-release
+
+on:
+  push:
+    branches: [ "release" ]
+
+jobs:
+  build:
+
+    runs-on: macos-latest
+
+    env:
+      XC_WORKSPACE: ${{ 'Smeem-iOS/Smeem-iOS.xcodeproj' }}
+      XC_SCHEME: ${{ 'Smeem-Release' }}
+      XC_ARCHIVE_PATH: ${{ './Smeem-iOS.xcarchive' }}
+      XC_EXPORT_PATH: ${{ './artifacts' }}
+
+      # certificate 
+      ENCRYPTED_CERT_FILE_PATH: ${{ '.github/secrets/smeem_distribution.p12.gpg' }}
+      DECRYPTED_CERT_FILE_PATH: ${{ '.github/secrets/smeem_distribution.p12' }}
+      CERT_ENCRYPTION_KEY: ${{ secrets.CERTS_ENCRYPTION_PWD }} # gpg로 파일 암호화할 때 사용한 암호
+
+      # provisioning
+      ENCRYPTED_PROVISION_FILE_PATH: ${{ '.github/secrets/smeem_release.mobileprovision.gpg' }}
+      DECRYPTED_PROVISION_FILE_PATH: ${{ '.github/secrets/smeem_release.mobileprovision' }}
+      PROVISIONING_ENCRYPTION_KEY: ${{ secrets.PROVISION_ENCRYPTION_PWD }} # gpg로 파일 암호화할 때 사용한 암호
+
+      CERT_EXPORT_KEY: ${{ secrets.CERT_EXPORT_PWD }}
+
+      KEYCHAIN: ${{ 'test.keychain' }}
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set Xcode version
+      run: sudo xcode-select -switch /Applications/Xcode_16.app
+    - name: List available devices
+      run: xcrun simctl list devices
+    - name: Resolve Dependencies
+      run: xcodebuild -resolvePackageDependencies
+      working-directory: ./Smeem-iOS
+    - name: Configure Keychain 
+      # 키체인 초기화 - 임시 키체인 생성
+      run: |
+        security create-keychain -p "" "$KEYCHAIN"
+        security list-keychains -s "$KEYCHAIN"
+        security default-keychain -s "$KEYCHAIN"
+        security unlock-keychain -p "" "$KEYCHAIN"
+        security set-keychain-settings
+    - name: Create Release.xcconfig
+      run: echo "${{ secrets.RELEASE_CONFIG }}" > ./Smeem-iOS/Release.xcconfig
+    - name : Configure Code Signing
+      run: |
+        # certificate 복호화
+        gpg -d -o "$DECRYPTED_CERT_FILE_PATH" --pinentry-mode=loopback --passphrase "$CERT_ENCRYPTION_KEY" "$ENCRYPTED_CERT_FILE_PATH"
+        # provisioning 복호화
+        gpg -d -o "$DECRYPTED_PROVISION_FILE_PATH" --pinentry-mode=loopback --passphrase "$PROVISIONING_ENCRYPTION_KEY" "$ENCRYPTED_PROVISION_FILE_PATH"  
+        security import "$DECRYPTED_CERT_FILE_PATH" -k "$KEYCHAIN" -P "$CERT_EXPORT_KEY" -A
+        security set-key-partition-list -S apple-tool:,apple: -s -k "" "$KEYCHAIN"
+        mkdir -p "$HOME/Library/MobileDevice/Provisioning Profiles"
+        echo `ls .github/secrets/*.mobileprovision`
+
+        for PROVISION in `ls .github/secrets/*.mobileprovision`
+        do
+        UUID=`/usr/libexec/PlistBuddy -c 'Print :UUID' /dev/stdin <<< $(security cms -D -i ./$PROVISION)`
+        cp "./$PROVISION" "$HOME/Library/MobileDevice/Provisioning Profiles/$UUID.mobileprovision"
+        done
+    - name: Archive app
+      run: |
+        mkdir artifacts
+        xcodebuild archive -project Smeem-iOS/Smeem-iOS.xcodeproj -scheme Smeem-Release -destination 'platform=iOS Simulator,name=iPhone 15,OS=17.2' -archivePath "$XC_ARCHIVE_PATH"
+    - name: Export app
+      run: xcodebuild -exportArchive -archivePath "$XC_ARCHIVE_PATH" -exportOptionsPlist .github/ExportOptions.plist -exportPath "$XC_EXPORT_PATH" -allowProvisioningUpdates
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: Artifacts
+        path: ./artifacts
+    - name: Upload app to TestFlight
+      uses: apple-actions/upload-testflight-build@v1
+      with:
+        app-path: './artifacts/Smeem-iOS.ipa'
+        issuer-id: ${{ secrets.APPSTORE_ISSUER_ID }}
+        api-key-id: ${{ secrets.APPSTORE_API_KEY_ID }}
+        api-private-key: ${{ secrets.APPSTORE_API_PRIVATE_KEY }}

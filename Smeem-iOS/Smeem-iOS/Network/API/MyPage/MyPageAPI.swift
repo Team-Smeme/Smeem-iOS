@@ -12,26 +12,6 @@ final class MyPageAPI {
     static let shared = MyPageAPI()
     private let myPageProvider = MoyaProvider<MyPageService>(plugins: [MoyaLoggingPlugin()])
     
-    func myPageInfo(completion: @escaping (Result<MyPageResponse, SmeemError>) -> ()) {
-        myPageProvider.request(.myPageInfo) { result in
-            switch result {
-            case .success(let response):
-                do {
-                    try NetworkManager.statusCodeErrorHandling(statusCode: response.statusCode)
-                    guard let data = try? response.map(GeneralResponse<MyPageResponse>.self).data else {
-                        throw SmeemError.clientError
-                    }
-                    completion(.success(data))
-                } catch {
-                    guard let error = error as? SmeemError else { return }
-                    completion(.failure(error))
-                }
-            case .failure(_):
-                completion(.failure(.userError))
-            }
-        }
-    }
-    
     func changeMyNickName(request: EditNicknameRequest,
                           completion: @escaping (Result<ServiceAcceptResponse, SmeemError>) -> ()) {
         myPageProvider.request(.editNickname(param: request)) { result in
