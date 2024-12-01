@@ -15,7 +15,7 @@ struct DetailDiaryCoachedView: View {
     @State private var selectedIndex = 0
     
     var body: some View {
-        VStack(spacing: screenWidth * (16 / screenWidth)) {
+        VStack(spacing: 16.scaledByWidth()) {
             SwiftUINavigationView(navigationbarType: .diaryDetails,
                                   selectedIndex: $selectedIndex)
             
@@ -34,7 +34,7 @@ struct DetailDiaryCoachedView: View {
                 CoachingContentView(currentIndex: $currentIndex,
                                     coachingResponse: $coachingResponse)
             } else {
-                Spacer(minLength: screenHeight * (342 / screenHeight))
+                Spacer(minLength: 342.scaledByHeight())
             }
         }
     }

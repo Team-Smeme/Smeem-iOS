@@ -29,8 +29,8 @@ struct ScrollableDiaryView: View {
                             corrections: corrections,
                             highlightIndex: selectedIndex != 0 ? currentIndex : -1
                         ))
-                        .padding(.horizontal, screenHeight * (18 / screenHeight))
-                        .padding(.bottom, screenHeight * (16 / screenHeight))
+                        .padding(.horizontal, 18.scaledByHeight())
+                        .padding(.bottom, 16.scaledByHeight())
                         .foregroundColor(Color(UIColor.gray400))
                         .background( // 콘텐츠 크기를 측정하기 위한 백그라운드
                             GeometryReader { geometry in
@@ -44,18 +44,18 @@ struct ScrollableDiaryView: View {
                     // Footer (작성 날짜, 작성자)
                     HStack {
                         Spacer()
-                        VStack(alignment: .trailing, spacing: screenWidth * (4 / screenWidth)) {
+                        VStack(alignment: .trailing, spacing: 4.scaledByWidth()) {
                             Text(dateText)
                             Text(authorText)
                         }
                         .font(Font(UIFont.c3))
                         .foregroundColor(Color(UIColor.gray400))
                     }
-                    .padding(.horizontal, screenWidth * (18 / screenWidth))
+                    .padding(.horizontal, 18.scaledByWidth())
                 }
-                .padding(.bottom, screenHeight * (16 / screenHeight))
+                .padding(.bottom, 16.scaledByHeight())
             }
-            .frame(maxHeight: contentHeight + screenHeight * (100 / screenHeight)) // 텍스트 높이에 따른 동적 변경
+            .frame(maxHeight: contentHeight + 100.scaledByHeight()) // 텍스트 높이에 따른 동적 변경
         }
     }
 }

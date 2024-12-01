@@ -12,15 +12,15 @@ struct CoachingContentView: View {
     @Binding var coachingResponse: CoachingsResponse
     
     var body: some View {
-        VStack(spacing: screenHeight * (20 / screenHeight)) {
+        VStack(spacing: 20.scaledByHeight()) {
             Rectangle()
-                .frame(height: screenHeight * (8 / screenHeight))
+                .frame(height: 8.scaledByHeight())
                 .foregroundStyle(Color(UIColor.gray100))
             
             TabView(selection: $currentIndex) {
                 ForEach(coachingResponse.corrections.indices, id: \.self) { item in
                     ScrollView {
-                        VStack(spacing: screenWidth * (8 / screenWidth)) {
+                        VStack(spacing: 8.scaledByHeight()) {
                             CoachingComparisonView(coachingResponse: $coachingResponse.corrections[item])
                             
                             CoachingExplanationView(coachingResponse: $coachingResponse.corrections[item])
@@ -30,7 +30,7 @@ struct CoachingContentView: View {
             }
             .frame(width: screenWidth, height: screenHeight * (286 / screenHeight), alignment: .top)
             .tabViewStyle(.page(indexDisplayMode: .never))
-            .padding(.horizontal, screenWidth * (16 / screenWidth))
+            .padding(.horizontal, 16.scaledByWidth())
             
             PageControl(currentPage: $currentIndex,
                         coachingResponse: $coachingResponse)

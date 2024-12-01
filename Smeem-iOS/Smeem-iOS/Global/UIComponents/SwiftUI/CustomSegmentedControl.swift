@@ -34,8 +34,8 @@ struct SegmentButton: View {
     var body: some View {
         Button(action: action) {
             Text(title)
-                .padding(.vertical, 8)
-                .padding(.horizontal, 11)
+                .padding(.vertical, 8.scaledByHeight())
+                .padding(.horizontal, 11.scaledByWidth())
                 .frame(maxWidth: .infinity)
                 .background(backgroundColor)
                 .foregroundColor(foregroundColor)
@@ -56,19 +56,13 @@ struct SegmentButton: View {
     }
 }
 
-struct PreviewWrapper: View {
-    @State private var selectedIndex = 0
-    let options = ["코칭 OFF", "코칭 ON"]
-    
-    var body: some View {
-        CustomSegmentedControl(selectedIndex: $selectedIndex, options: options)
-            .frame(height: 40)
-            .padding(117)
-    }
-}
-
 @available(iOS 17.0, *)
 #Preview {
-    PreviewWrapper()
+    @State var selectedIndex = 0
+    let options = ["코칭 OFF", "코칭 ON"]
+    
+    CustomSegmentedControl(selectedIndex: $selectedIndex, options: options)
+        .frame(height: 32.scaledByHeight())
+        .padding(117.scaledByWidth())
 }
 

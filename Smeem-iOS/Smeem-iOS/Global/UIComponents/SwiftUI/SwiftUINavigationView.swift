@@ -14,10 +14,10 @@ enum NavigationbarType {
 
 struct SwiftUINavigationView: View {
     let navigationbarType: NavigationbarType
+    let options = ["코칭 OFF", "코칭 ON"]
+    
     @State private var showFloatingView = false
     @Binding var selectedIndex: Int
-    
-    let options = ["코칭 OFF", "코칭 ON"]
     
     var body: some View {
         HStack {
@@ -29,16 +29,17 @@ struct SwiftUINavigationView: View {
                     Image("icnBack")
                         .imageScale(.large)
                 })
-                .padding(.leading, 10 / screenWidth)
+                .padding(.leading, 12.scaledByWidth())
             } else {
-                Spacer().frame(width: 30 / screenWidth)
+                Spacer().frame(width: 30.scaledByWidth())
             }
             
             // 중앙 콘텐츠 (CustomSegmentedControl)
             if navigationbarType == .diaryDetails {
                 CustomSegmentedControl(selectedIndex: $selectedIndex, options: options)
-                    .frame(height: 32 / screenHeight)
-                    .padding(65)
+                    .frame(height: 32.scaledByHeight())
+                    .padding(.leading, 65.scaledByWidth())
+                    .padding(.trailing, 59.scaledByWidth())
             }
             
             Spacer()
@@ -50,7 +51,7 @@ struct SwiftUINavigationView: View {
                 }, label: {
                     Image("icnMore")
                 })
-                .padding(.trailing, 18 / screenWidth)
+                .padding(.trailing, 18.scaledByWidth())
                 .fullScreenCover(isPresented: $showFloatingView) {
                     FloatingButtonsSwiftUIView()
                 }
@@ -61,10 +62,10 @@ struct SwiftUINavigationView: View {
                     Text("닫기")
                         .tint(.black)
                 })
-                .padding(.trailing, 18 / screenWidth)
+                .padding(.trailing, 18.scaledByWidth())
             }
         }
-        .frame(height: screenHeight * (66 / screenHeight))
+        .frame(height: 54.scaledByHeight())
     }
 }
 
