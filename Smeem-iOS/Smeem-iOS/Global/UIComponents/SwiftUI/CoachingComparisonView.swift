@@ -31,7 +31,7 @@ struct CoachingComparisonView: View {
                     textHeight = value
                 }
                 
-                Text(coachingResponse.original_sentence)
+                Text(coachingResponse.originalSentence)
                     .font(Font.custom("Pretendard", size: 14)).fontWeight(.regular)
                     .frame(maxWidth: .infinity, alignment: .topLeading)
             }
@@ -49,7 +49,7 @@ struct CoachingComparisonView: View {
                         .foregroundColor(Color(UIColor.point))
                 }
                 
-                Text(coachingResponse.corrected_sentence)
+                Text(coachingResponse.correctedSentence)
                     .font(Font.custom("Pretendard", size: 14)).fontWeight(.medium)
                     .foregroundColor(Color(UIColor.point))
                     .frame(maxWidth: .infinity, alignment: .topLeading)

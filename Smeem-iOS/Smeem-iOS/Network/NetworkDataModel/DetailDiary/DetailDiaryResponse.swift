@@ -23,5 +23,5 @@ struct CorrentionsData: Codable {
 }
 
 extension DetailDiaryResponse {
-    static let empty = DetailDiaryResponse(diaryId: 0, topic: "", content: "", createdAt: "", username: "", corrections: [CoachingResponse(original_sentence: "", corrected_sentence: "", reason: "", is_corrected: true)], correctionCount: 3, correctionMaxCount: 3)
+    static let empty = DetailDiaryResponse(diaryId: 0, topic: "", content: "", createdAt: "", username: "", corrections: [CoachingResponse(originalSentence: "", correctedSentence: "", reason: "", isCorrected: true)], correctionCount: 3, correctionMaxCount: 3)
 }
