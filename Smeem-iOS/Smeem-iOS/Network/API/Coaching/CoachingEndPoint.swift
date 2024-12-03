@@ -42,3 +42,28 @@ extension CoachingEndPoint: BaseTargetType {
         }
     }
 }
+
+extension CoachingEndPoint {
+    var sampleData: Data {
+        switch self {
+        case .coaching:
+            return Data(
+                """
+                {
+                    "success": true,
+                    "message": "학습 코칭 성공",
+                    "data": {
+                        "corrections": [
+                            {
+                                "original_sentence": "original text",
+                                "corrected_sentence": "corrected text",
+                                "reason": "수정된 문구입니다.",
+                                "is_corrected": true
+                            }
+                        ]
+                    }
+                }
+                """.utf8)
+        }
+    }
+}

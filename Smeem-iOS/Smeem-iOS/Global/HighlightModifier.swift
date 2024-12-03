@@ -34,7 +34,7 @@ struct HighlightModifier: ViewModifier {
         var attributedText = AttributedString(diaryText)
         
         for (index, correction) in corrections.enumerated() {
-            if index == highlightIndex, let range = attributedText.range(of: correction.original_sentence) {
+            if index == highlightIndex, let range = attributedText.range(of: correction.originalSentence) {
                 attributedText[range].backgroundColor = Color(UIColor.point)
                 attributedText[range].foregroundColor = Color(UIColor.smeemWhite)
             }

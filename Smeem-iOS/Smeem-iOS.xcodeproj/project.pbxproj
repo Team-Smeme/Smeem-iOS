@@ -470,6 +470,8 @@
 		4AB349522CF22AD30047C484 /* Auth */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Auth; sourceTree = "<group>"; };
 		4AB349532CF22AD90047C484 /* Badge */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Badge; sourceTree = "<group>"; };
 		4AB349562CF22BFF0047C484 /* EditUser */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = EditUser; sourceTree = "<group>"; };
+		4AB349BA2CF23B770047C484 /* Coaching */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Coaching; sourceTree = "<group>"; };
+		4AB349BC2CF23D210047C484 /* Coaching */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Coaching; sourceTree = "<group>"; };
 		4AF050CE2CE9DE010055BC3F /* Coaching */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Coaching; sourceTree = "<group>"; };
 		4AF050D72CEA01E20055BC3F /* DiaryComplete */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = DiaryComplete; sourceTree = "<group>"; };
 		4AF050D82CEA01EA0055BC3F /* Coaching */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Coaching; sourceTree = "<group>"; };
@@ -909,6 +911,7 @@
 		4A07F8D92B821523004185F2 /* Smeem-iOSTests */ = {
 			isa = PBXGroup;
 			children = (
+				4AB349BC2CF23D210047C484 /* Coaching */,
 				4AF78D9C2B84AB5D0098E1FA /* Base */,
 				4A07F8E12B821529004185F2 /* Onboarding */,
 			);
@@ -961,6 +964,7 @@
 		4A0EA45C2A014126006CCE52 /* NetworkDataModel */ = {
 			isa = PBXGroup;
 			children = (
+				4AB349BA2CF23B770047C484 /* Coaching */,
 				4AB349562CF22BFF0047C484 /* EditUser */,
 				4AB349532CF22AD90047C484 /* Badge */,
 				4AB349522CF22AD30047C484 /* Auth */,
@@ -1726,6 +1730,9 @@
 			dependencies = (
 				4A07F8DD2B821523004185F2 /* PBXTargetDependency */,
 			);
+			fileSystemSynchronizedGroups = (
+				4AB349BC2CF23D210047C484 /* Coaching */,
+			);
 			name = "Smeem-iOSTests";
 			productName = "Smeem-iOSTests";
 			productReference = 4A07F8D82B821523004185F2 /* Smeem-iOSTests.xctest */;
@@ -1753,6 +1760,7 @@
 				4AB349522CF22AD30047C484 /* Auth */,
 				4AB349532CF22AD90047C484 /* Badge */,
 				4AB349562CF22BFF0047C484 /* EditUser */,
+				4AB349BA2CF23B770047C484 /* Coaching */,
 				4AF050CE2CE9DE010055BC3F /* Coaching */,
 				4AF050D72CEA01E20055BC3F /* DiaryComplete */,
 				4AF050D82CEA01EA0055BC3F /* Coaching */,

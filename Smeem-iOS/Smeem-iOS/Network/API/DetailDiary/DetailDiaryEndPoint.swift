@@ -6,6 +6,7 @@
 //
 
 import Moya
+import Foundation
 
 enum DetailDiaryEndPoint {
     case detailDiary(diaryID: Int)
@@ -36,5 +37,29 @@ extension DetailDiaryEndPoint: BaseTargetType {
     var headers: [String : String]? {
         return ["Content-Type": "application/json",
                 "Authorization": "Bearer " + UserDefaultsManager.accessToken]
+    }
+}
+
+extension DetailDiaryEndPoint {
+    var sampleData: Data {
+        switch self {
+        case .detailDiary:
+            return Data(
+                """
+                {
+                    "success": true,
+                    "message": "학습 상세 조회",
+                    "data": {
+                            "diaryId": 0,
+                            "topic": "주제",
+                            "content": "일기 내용입니다",
+                            "createdAt": "2024년 5월 18일",
+                            "username": "찬미"
+                    }
+                }
+                """.utf8)
+        case .deleteDiary:
+            return Data()
+        }
     }
 }
