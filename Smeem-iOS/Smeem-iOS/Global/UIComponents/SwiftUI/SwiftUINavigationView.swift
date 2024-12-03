@@ -10,6 +10,7 @@ import SwiftUI
 enum NavigationbarType {
     case coachingCompleted
     case diaryDetails
+    case hasEdited
 }
 
 struct SwiftUINavigationView: View {
@@ -19,12 +20,14 @@ struct SwiftUINavigationView: View {
     @State private var showFloatingView = false
     @Binding var selectedIndex: Int
     
+    @Environment(\.dismiss) private var dismiss
+    
     var body: some View {
         HStack {
             // 뒤로가기 버튼
             if navigationbarType == .diaryDetails {
                 Button(action: {
-                    // 뒤로가기 액션
+                    dismiss() // 화면 pop
                 }, label: {
                     Image("icnBack")
                         .imageScale(.large)
@@ -72,5 +75,7 @@ struct SwiftUINavigationView: View {
 #Preview {
     @State var defaultIndex = 0
     
-    SwiftUINavigationView(navigationbarType: .diaryDetails, selectedIndex: $defaultIndex)
+    NavigationView {
+        SwiftUINavigationView(navigationbarType: .diaryDetails, selectedIndex: $defaultIndex)
+    }
 }
