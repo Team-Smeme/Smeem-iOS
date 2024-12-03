@@ -5,6 +5,7 @@
 //  Created by 임주민 on 2023/05/05.
 //
 
+import SwiftUI
 import UIKit
 import Combine
 
@@ -253,9 +254,23 @@ final class HomeViewController: BaseViewController {
     }
     
     @objc func fullViewButtonDidTap(_ gesture: UITapGestureRecognizer) {
-        let detailDiaryVC = DetailDiaryViewController()
-        detailDiaryVC.diaryId = homeDiaryDict[currentDate.toString("yyyy-MM-dd")]?.diaryId ?? 0
-        self.navigationController?.pushViewController(detailDiaryVC, animated: true)
+//        let detailDiaryVC = DetailDiaryViewController()
+//        detailDiaryVC.diaryId = homeDiaryDict[currentDate.toString("yyyy-MM-dd")]?.diaryId ?? 0
+//        self.navigationController?.pushViewController(detailDiaryVC, animated: true)
+        
+        let diaryID = homeDiaryDict[currentDate.toString("yyyy-MM-dd")]?.diaryId ?? 0
+        
+        @State var defaultIndex = 0
+        
+        let detailDiaryVC = DetailDiaryCoachedView(diaryID: .constant(diaryID))
+        let hostingController = UIHostingController(rootView: detailDiaryVC)
+        
+        addChild(hostingController)
+        hostingController.view.frame = view.bounds
+        view.addSubview(hostingController.view)
+        hostingController.didMove(toParent: self)
+        
+        self.navigationController?.pushViewController(hostingController, animated: true)
     }
     
     @objc func floatingViewDidTap(_ gesture: UITapGestureRecognizer) {

@@ -9,8 +9,9 @@ import SwiftUI
 
 struct CoachingContentView: View {
     @Binding var currentIndex: Int
-    @Binding var coachingResponse: CoachingsResponse
-    
+    @Binding var coachingsResponse: CoachingsResponse
+    @Binding var coachingResponse: [CoachingResponse] 
+
     var body: some View {
         VStack(spacing: 20.scaledByHeight()) {
             Rectangle()
@@ -18,12 +19,11 @@ struct CoachingContentView: View {
                 .foregroundStyle(Color(UIColor.gray100))
             
             TabView(selection: $currentIndex) {
-                ForEach(coachingResponse.corrections.indices, id: \.self) { item in
+                ForEach(coachingResponse.indices, id: \.self) { item in
                     ScrollView {
                         VStack(spacing: 8.scaledByHeight()) {
-                            CoachingComparisonView(coachingResponse: $coachingResponse.corrections[item])
-                            
-                            CoachingExplanationView(coachingResponse: $coachingResponse.corrections[item])
+                            CoachingComparisonView(coachingResponse: $coachingResponse[item])
+                            CoachingExplanationView(coachingResponse: $coachingResponse[item])
                         }
                     }
                 }
@@ -32,14 +32,15 @@ struct CoachingContentView: View {
             .tabViewStyle(.page(indexDisplayMode: .never))
             .padding(.horizontal, 16.scaledByWidth())
             
-            PageControl(currentPage: $currentIndex,
-                        coachingResponse: $coachingResponse)
+            PageControl(currentPage: $currentIndex, coachingsResponse: $coachingsResponse)
         }
     }
 }
 
+
 #Preview {
     @State var defaultIndex: Int = 0
-    @State var coachingResponse = CoachingsResponse.empty
-    CoachingContentView(currentIndex: $defaultIndex, coachingResponse: $coachingResponse)
+    @State var coachingsResponse = CoachingsResponse.empty
+    @State var coachingResponse = CoachingsResponse.empty.corrections
+    CoachingContentView(currentIndex: $defaultIndex, coachingsResponse: $coachingsResponse, coachingResponse: $coachingResponse)
 }

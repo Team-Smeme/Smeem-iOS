@@ -45,7 +45,7 @@ struct FloatingButtonsSwiftUIView: View {
                         .background(Color.gray.opacity(0.5))
                     
                     Button(action: {
-                        print("삭제하기 버튼 액션")
+                        
                     }) {
                         Text("삭제하기")
                             .font(.headline)

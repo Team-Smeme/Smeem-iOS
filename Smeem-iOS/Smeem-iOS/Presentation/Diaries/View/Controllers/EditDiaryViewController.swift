@@ -193,3 +193,8 @@ extension EditDiaryViewController: UITextViewDelegate {
         return viewController.diaryTextView.text.getArrayAfterRegex(regex: "[a-zA-z]").count > 0
     }
 }
+
+@available(iOS 17, *)
+#Preview {
+    EditDiaryViewController()
+}

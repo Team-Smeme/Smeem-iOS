@@ -56,7 +56,7 @@ struct CoachingCompleteView: View {
                 .tabViewStyle(.page(indexDisplayMode: .never))
                 
                 PageControl(currentPage: $currentIndex,
-                            coachingResponse: $coachingResponse)
+                            coachingsResponse: $coachingResponse)
             }
         }
     }
@@ -64,11 +64,11 @@ struct CoachingCompleteView: View {
 
 struct PageControl: View {
     @Binding var currentPage: Int
-    @Binding var coachingResponse: CoachingsResponse
+    @Binding var coachingsResponse: CoachingsResponse
     
     var body: some View {
         HStack(spacing: 8) {
-            ForEach(coachingResponse.corrections.indices, id: \.self) { pagingIndex in
+            ForEach(coachingsResponse.corrections.indices, id: \.self) { pagingIndex in
                 let isCurrentPage = currentPage == pagingIndex
                 
                 Capsule()

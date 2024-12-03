@@ -5,46 +5,87 @@
 //  Created by Joon Baek on 11/21/24.
 //
 
+import Combine
 import SwiftUI
 
 struct DetailDiaryCoachedView: View {
+    @State private var coachingsResponse = CoachingsResponse(corrections: [])
+    @State private var response: DetailDiaryResponse?
+    @State private var isLoading = false
+    @State private var error: SmeemError?
     
-    @Binding var diaryText: String
-    @Binding var coachingResponse: CoachingsResponse
+    @Binding var diaryID: Int?
     @State var currentIndex = 0
     @State private var selectedIndex = 0
+    @State private var navigationbarType: NavigationbarType = .diaryDetails
+    
+    private let detailDiaryService = DetailDiaryService.shared
     
     var body: some View {
         VStack(spacing: 16.scaledByWidth()) {
-            SwiftUINavigationView(navigationbarType: .diaryDetails,
+            SwiftUINavigationView(navigationbarType: navigationbarType,
                                   selectedIndex: $selectedIndex)
             
-            ScrollableDiaryView(
-                diaryText: diaryText,
-                corrections: coachingResponse.corrections,
-                currentIndex: currentIndex,
-                selectedIndex: selectedIndex,
-                dateText: "2023년 3월 27일 4:18PM",
-                authorText: "유진이"
-            )
+            if let response = response {
+                ScrollableDiaryView(
+                    diaryText: response.content,
+                    corrections: response.corrections,
+                    currentIndex: currentIndex,
+                    selectedIndex: selectedIndex,
+                    dateText: response.createdAt,
+                    authorText: response.username
+                )
+            } else {
+                if isLoading {
+                    ProgressView("Loading...")
+                } else if let error = error {
+                    Text("Error: \(error.localizedDescription)")
+                }
+            }
             
             // "코칭 ON"일 때만 표시
             if selectedIndex == 1 {
                 Spacer()
-                CoachingContentView(currentIndex: $currentIndex,
-                                    coachingResponse: $coachingResponse)
+                CoachingContentView(
+                    currentIndex: $currentIndex,
+                    coachingsResponse: $coachingsResponse,
+                    coachingResponse: $coachingsResponse.corrections
+                )
             } else {
                 Spacer(minLength: 342.scaledByHeight())
             }
+        }
+        .onAppear {
+            Task {
+                await fetchCoachingData(diaryID: diaryID ?? 0)
+            }
+        }
+    }
+    
+    @MainActor
+    private func fetchCoachingData(diaryID: Int) async {
+        isLoading = true
+        do {
+            let response = try await detailDiaryService.getDetailDiary(diaryID: diaryID)
+            self.response = response
+            
+            // CoachingsResponse로 변환
+            let corrections = response.corrections ?? []
+            self.coachingsResponse = CoachingsResponse(corrections: corrections)
+            
+            if corrections.isEmpty {
+                navigationbarType = .unCoached
+            }
+            
+            isLoading = false
+        } catch {
+            isLoading = false
+            self.error = error as? SmeemError
         }
     }
 }
 
 @available(iOS 17, *)
 #Preview {
-    @State var diaryText = "I watched Avatar with my boyfriend at Hongdae CGV. I should have skimmed the previous season - Avatar1.. I really couldn’t get what they weere saying and the universe(??). What I was annoyed then was 두팔 didn’t know that as me. I think 두팔 who is my boyfriend should study before wathcing…. but Avatar2 is amazing movie I think. In my personal opinion, the jjin main character of Avatar2 is not Sully, but his son."
-    
-    @State var coachingResponse = CoachingsResponse.sample
-    
-    DetailDiaryCoachedView(diaryText: $diaryText, coachingResponse: $coachingResponse)
+    DetailDiaryCoachedView(diaryID: .constant(0))
 }
