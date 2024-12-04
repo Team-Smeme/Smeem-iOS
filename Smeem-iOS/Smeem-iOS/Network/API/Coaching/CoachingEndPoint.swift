@@ -55,10 +55,10 @@ extension CoachingEndPoint {
                     "data": {
                         "corrections": [
                             {
-                                "original_sentence": "original text",
-                                "corrected_sentence": "corrected text",
+                                "originalSentence": "original text",
+                                "correctedSentence": "corrected text",
                                 "reason": "수정된 문구입니다.",
-                                "is_corrected": true
+                                "isCorrected": true
                             }
                         ]
                     }

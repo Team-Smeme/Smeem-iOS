@@ -7,7 +7,11 @@
 
 import Foundation
 
-struct CoachingsResponse: Codable {
+struct CoachingsResponse: Codable, Equatable {
+    static func == (lhs: CoachingsResponse, rhs: CoachingsResponse) -> Bool {
+        return lhs.corrections == rhs.corrections
+    }
+    
     var corrections: [CoachingResponse]
 }
 
@@ -44,7 +48,7 @@ extension CoachingsResponse {
     )
 }
 
-struct CoachingResponse: Codable {
+struct CoachingResponse: Codable, Equatable {
     let originalSentence: String
     let correctedSentence: String
     let reason: String

@@ -5,7 +5,7 @@
 //  Created by Joon Baek on 2023/06/25.
 //
 
-struct DetailDiaryResponse: Codable {
+struct DetailDiaryResponse: Codable, Equatable {
     let diaryId: Int
     let topic: String
     var content: String

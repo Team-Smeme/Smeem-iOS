@@ -39,10 +39,10 @@ final class CoachingServiceTest: XCTestCase {
 
 extension CoachingServiceTest {
     var coachingModel: CoachingsResponse {
-        return CoachingsResponse(corrections: [CoachingResponse(original_sentence: "original text",
-                                                                corrected_sentence: "corrected text",
+        return CoachingsResponse(corrections: [CoachingResponse(originalSentence: "original text",
+                                                                correctedSentence: "corrected text",
                                                                 reason: "수정된 문구입니다.",
-                                                                is_corrected: true)])
+                                                                isCorrected: true)])
     }
     
     var detailDiaryResponse: DetailDiaryResponse {
@@ -50,7 +50,13 @@ extension CoachingServiceTest {
                                    topic: "주제",
                                    content: "일기 내용입니다",
                                    createdAt: "2024년 5월 18일",
-                                   username: "찬미")
+                                   username: "찬미",
+                                   corrections: [CoachingResponse(originalSentence: "original text",
+                                                                  correctedSentence: "corrected text",
+                                                                  reason: "수정된 문구입니다.",
+                                                                  isCorrected: true)],
+                                   correctionCount: 0,
+                                   correctionMaxCount: 1)
     }
 }
 

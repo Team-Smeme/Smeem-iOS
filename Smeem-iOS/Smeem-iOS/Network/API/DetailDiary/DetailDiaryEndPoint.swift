@@ -54,7 +54,17 @@ extension DetailDiaryEndPoint {
                             "topic": "주제",
                             "content": "일기 내용입니다",
                             "createdAt": "2024년 5월 18일",
-                            "username": "찬미"
+                            "username": "찬미",
+                            "corrections": [
+                                        {
+                                            "originalSentence": "original text",
+                                            "correctedSentence": "corrected text",
+                                            "reason": "수정된 문구입니다.",
+                                            "isCorrected": true
+                                        }
+                                   ],
+                            "correctionCount": 0,
+                            "correctionMaxCount": 1
                     }
                 }
                 """.utf8)
