@@ -17,14 +17,14 @@ struct CoachingCompleteView: View {
         
         VStack(spacing: 15) {
             VStack(spacing: 16) {
-                Text(coachingAppData.correctResultText)
-                    .font(Font.custom("Pretendard", size: 16))
-                    .foregroundColor(Color(UIColor.smeemBlack))
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                
                 ScrollView {
                     HStack {
                         Text(diaryText)
+                            .modifier(HighlightModifier(
+                                diaryText: diaryText,
+                                corrections: coachingAppData.corrections,
+                                highlightIndex: currentIndex
+                            ))
                             .font(Font.custom("Pretendard", size: 16))
                             .foregroundColor(Color(UIColor.gray400))
                             .lineSpacing(0.375)
@@ -42,12 +42,12 @@ struct CoachingCompleteView: View {
                     .frame(height: 8)
                     .foregroundStyle(Color(UIColor.gray100))
                 TabView(selection: $currentIndex) {
-                    ForEach(coachingAppData.corrections.corrections.indices, id: \.self) { item in
+                    ForEach(coachingAppData.corrections.indices, id: \.self) { item in
                         ScrollView {
                             VStack(spacing: 8) {
-                                CoachingComparisonView(coachingResponse: $coachingAppData.corrections.corrections[item])
+                                CoachingComparisonView(coachingResponse: $coachingAppData.corrections[item])
                                 
-                                CoachingExplanationView(coachingResponse: $coachingAppData.corrections.corrections[item])
+                                CoachingExplanationView(coachingResponse: $coachingAppData.corrections[item])
                             }
                         }
                     }
@@ -64,11 +64,11 @@ struct CoachingCompleteView: View {
 
 struct PageControl: View {
     @Binding var currentPage: Int
-    @Binding var coachingResponse: CoachingsResponse
+    @Binding var coachingResponse: [CoachingResponse]
     
     var body: some View {
         HStack(spacing: 8) {
-            ForEach(coachingResponse.corrections.indices, id: \.self) { pagingIndex in
+            ForEach(coachingResponse.indices, id: \.self) { pagingIndex in
                 let isCurrentPage = currentPage == pagingIndex
                 
                 Capsule()
@@ -82,7 +82,7 @@ struct PageControl: View {
 
 #Preview {
     @State var diaryText = "I watched Avatar with my boyfriend at Hongdae CGV. I should have skimmed the previous season   what they were saying and the universe(??). What I was annoyed then was 두팔 didn’t know that as me. I think 두팔 who is my boyfriend should study before wathcing…. but Avatar2 is amazing movie I think. In my personal opinion, the jjin main character "
-    @State var coachingResponse = CoachingAppData(corrections: CoachingsResponse.empty, correctResultText: "테스트")
+    @State var coachingResponse = CoachingAppData(corrections: CoachingsResponse.sample.corrections, correctResultText: "테스트")
     
     CoachingCompleteView(diaryText: $diaryText, coachingAppData: $coachingResponse)
 }

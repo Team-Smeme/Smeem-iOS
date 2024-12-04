@@ -8,7 +8,7 @@
 import Foundation
 
 struct CoachingAppData {
-    var corrections: CoachingsResponse
+    var corrections: [CoachingResponse]
     var correctResultText: String
 }
 
@@ -30,8 +30,8 @@ final class CoachingStore: Store, ObservableObject {
     
     struct State {
         var detailDiaryResponse = DetailDiaryResponse.empty
-        var coachingAppData = CoachingAppData(corrections: CoachingsResponse.empty,
-                                               correctResultText: "첨삭 중이에요")
+        var coachingAppData = CoachingAppData(corrections: CoachingsResponse.sample.corrections,
+                                              correctResultText: "첨삭 중이에요")
         var toastErrorMessage: SmeemError? = nil
         var toastMessage: SmeemToast? = .completed
         
@@ -59,8 +59,8 @@ final class CoachingStore: Store, ObservableObject {
                 do {
                     state.hiddenIndex += 1
                     let coachingResponse = try await service.coachingPostAPI(diaryID: ID)
-                    state.coachingAppData = CoachingAppData(corrections: coachingResponse,
-                                                             correctResultText: correctTextResult(coachingResponse.corrections.count))
+                    state.coachingAppData = CoachingAppData(corrections: coachingResponse.corrections,
+                                                            correctResultText: correctTextResult(coachingResponse.corrections.count))
                     state.hiddenIndex += 1
                 } catch let error {
                     let error = error as? SmeemError
