@@ -9,6 +9,10 @@ import Combine
 import SwiftUI
 
 struct DetailDiaryCoachedView: View {
+    
+    @StateObject private var navigationViewModel = NavigationViewModel()
+    @State private var cancelBag = Set<AnyCancellable>()
+    
     @State private var coachingsResponse = CoachingsResponse(corrections: [])
     @State private var response: DetailDiaryResponse?
     @State private var isLoading = false
@@ -16,15 +20,29 @@ struct DetailDiaryCoachedView: View {
     
     @Binding var diaryID: Int?
     @State var currentIndex = 0
+    @State private var isShowingFullScreen = false
     @State private var selectedIndex = 0
     @State private var navigationbarType: NavigationbarType = .diaryDetails
+    
+    @Environment(\.dismiss) private var dismiss
     
     private let detailDiaryService = DetailDiaryService.shared
     
     var body: some View {
         VStack(spacing: 16.scaledByWidth()) {
-            SwiftUINavigationView(navigationbarType: navigationbarType,
-                                  selectedIndex: $selectedIndex)
+            SwiftUINavigationView(viewModel: navigationViewModel,
+                                  selectedIndex: $selectedIndex,
+                                  navigationbarType: navigationbarType
+            )
+            .fullScreenCover(isPresented: $isShowingFullScreen) {
+                FloatingButtonsSwiftUIView()
+            }
+            .onReceive(navigationViewModel.leftButtonTapped) {
+                dismiss()
+            }
+            .onReceive(navigationViewModel.rightButtonTapped) {
+                isShowingFullScreen = true
+            }
             
             if let response = response {
                 ScrollableDiaryView(

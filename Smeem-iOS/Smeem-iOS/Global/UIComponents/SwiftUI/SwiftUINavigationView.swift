@@ -5,6 +5,7 @@
 //  Created by Joon Baek on 2024/10/18.
 //
 
+import Combine
 import SwiftUI
 
 enum NavigationbarType {
@@ -13,21 +14,27 @@ enum NavigationbarType {
     case unCoached
 }
 
+final class NavigationViewModel: ObservableObject {
+    let leftButtonTapped = PassthroughSubject<Void, Never>()
+    let rightButtonTapped = PassthroughSubject<Void, Never>()
+}
+
 struct SwiftUINavigationView: View {
-    let navigationbarType: NavigationbarType
-    let options = ["코칭 OFF", "코칭 ON"]
+
+    @ObservedObject var viewModel: NavigationViewModel
     
     @State private var showFloatingView = false
     @Binding var selectedIndex: Int
     
-    @Environment(\.dismiss) private var dismiss
+    let navigationbarType: NavigationbarType
+    let options = ["코칭 OFF", "코칭 ON"]
     
     var body: some View {
         HStack {
             // 뒤로가기 버튼
             if navigationbarType == .diaryDetails || navigationbarType == .unCoached {
                 Button(action: {
-                    dismiss()
+                    viewModel.leftButtonTapped.send()
                 }, label: {
                     Image("icnBack")
                         .imageScale(.large)
@@ -60,7 +67,7 @@ struct SwiftUINavigationView: View {
                 }
             } else {
                 Button(action: {
-                    // 다른 버튼 액션
+                    viewModel.rightButtonTapped.send()
                 }, label: {
                     Text("닫기")
                         .tint(.black)
@@ -76,6 +83,6 @@ struct SwiftUINavigationView: View {
     @State var defaultIndex = 0
     
     NavigationView {
-        SwiftUINavigationView(navigationbarType: .unCoached, selectedIndex: $defaultIndex)
+        SwiftUINavigationView(viewModel: NavigationViewModel(), selectedIndex: $defaultIndex, navigationbarType: .unCoached)
     }
 }
