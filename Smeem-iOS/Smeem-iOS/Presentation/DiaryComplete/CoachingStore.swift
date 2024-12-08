@@ -49,9 +49,11 @@ final class CoachingStore: Store, ObservableObject {
                 do {
                     state.detailDiaryResponse = try await service.detailDiaryAPI(diaryID: ID)
                     state.isEnabled = state.detailDiaryResponse.correctionMaxCount-state.detailDiaryResponse.correctionCount == 0 ? false : true
+                    state.isLoadingView = false
                 } catch let error {
                     let error = error as? SmeemError
                     state.toastErrorMessage = error
+                    state.isLoadingView = false
                 }
             }
         case .coachingButton(let ID):

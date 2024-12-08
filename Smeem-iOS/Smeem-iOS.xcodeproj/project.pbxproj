@@ -574,6 +574,7 @@
 		373D29912CBFE16B00A559A3 /* SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
+				377B3BEF2CF613710086E0BC /* HighlightModifier.swift */,
 				373D29922CBFE17B00A559A3 /* View+.swift */,
 			);
 			path = SwiftUI;
@@ -618,7 +619,6 @@
 				37A574B929FE209F00312453 /* Resources */,
 				4AC4B82B2A2F9F5300E147AA /* Constants */,
 				37EB69E42A4B3B6B00075E4E /* Protocols */,
-				377B3BEF2CF613710086E0BC /* HighlightModifier.swift */,
 			);
 			path = Global;
 			sourceTree = "<group>";
