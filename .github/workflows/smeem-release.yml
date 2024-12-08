@@ -85,3 +85,15 @@ jobs:
         issuer-id: ${{ secrets.APPSTORE_ISSUER_ID }}
         api-key-id: ${{ secrets.APPSTORE_API_KEY_ID }}
         api-private-key: ${{ secrets.APPSTORE_API_PRIVATE_KEY }}
+    - name: Send Discord Notification on Success
+      if: success()  # 배포가 성공했을 때만 실행
+      run: |
+        curl -H "Content-Type: application/json" -X POST -d '{
+          "content": "🚀 Smeem 배포가 성공적으로 완료되었습니다! 🎉"
+        }' ${{ secrets.DISCORD_WEBHOOK_URL_RELEASE }}
+    - name: Send Discord Notification on Failure
+      if: failure()  # 배포가 실패했을 때만 실행
+      run: |
+        curl -H "Content-Type: application/json" -X POST -d '{
+          "content": "❌ Smeem 배포에 실패했습니다. 확인이 필요합니다."
+        }' ${{ secrets.DISCORD_WEBHOOK_URL_RELEASE }}
