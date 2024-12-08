@@ -24,3 +24,13 @@ struct SmemeLoadingView: View {
         .allowsHitTesting(true) // 로딩 중 터치 차단
     }
 }
+
+struct SmemeEmptyView: View {
+    
+    var body: some View {
+        ZStack {
+            Color.white.ignoresSafeArea()
+        }
+        .animation(.easeInOut(duration: 0.5), value: true) // 0.5초 뒤에 서서히 사라짐
+    }
+}

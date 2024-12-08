@@ -97,12 +97,13 @@ struct CoachingView: View {
             .overlay(alignment: .center) {
                 // MARK: 최상단바에 로딩뷰
                 if store.state.isLoadingView {
+                    SmemeEmptyView()
                     SmemeLoadingView()
                 }
             }
             .onAppear() {
                 store.send(action: .detailDiaryAPI(diaryID: store.state.diaryResponse.diaryID))
-        }
+                }
     }
 }
 
