@@ -72,7 +72,7 @@ extension ForeignDiaryViewController {
             .sink { [weak self] response in
                 self?.rootView.inputTextView.resignFirstResponder()
                 
-                let diaryInformantionView = CoachingView(store: CoachingStore(diaryResponse: response))
+                let diaryInformantionView = CoachingView(store: CoachingStore(service: CoachingService(), diaryResponse: response))
                 let hostingController = UIHostingController(rootView: diaryInformantionView)
                 self?.navigationController?.pushViewController(hostingController, animated: true)
             }

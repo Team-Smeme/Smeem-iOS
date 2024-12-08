@@ -17,7 +17,6 @@ struct CoachingView: View {
         if store.state.hiddenIndex != 1 {
             HStack() {
                 Spacer()
-                
                 Button(action: {
                     let homeVC = HomeViewController()
                     homeVC.handlePostDiaryAPI(with: store.state.diaryResponse)
@@ -35,7 +34,9 @@ struct CoachingView: View {
         // MARK: 일기 작성 완료 화면
         if store.state.hiddenIndex == 0 {
             Button(action: {
-                store.send(action: .coachingButton(diaryID: store.state.diaryResponse.diaryID))
+                if store.state.isEnabled {
+                    store.send(action: .coachingButton(diaryID: store.state.diaryResponse.diaryID))
+                }
             }) {
                 HStack {
                     Image("icnCrownMono")
@@ -46,20 +47,23 @@ struct CoachingView: View {
                         .foregroundColor(.white)
                 }
             }
+            .disabled(!store.state.isEnabled)
             .frame(width: screenWidth-32, height: 48, alignment: .center)
-            .background(
-                LinearGradient(
-                    stops: [
-                        Gradient.Stop(color: Color(red: 1, green: 0, blue: 0.02).opacity(0.2), location: 0.00),
-                        Gradient.Stop(color: .white.opacity(0.2), location: 0.28),
-                        Gradient.Stop(color: .white.opacity(0.2), location: 0.83),
-                        Gradient.Stop(color: Color(red: 1, green: 0, blue: 0.02).opacity(0.2), location: 1.00),
-                    ],
-                    startPoint: UnitPoint(x: 0.15, y: -1.24),
-                    endPoint: UnitPoint(x: 0.72, y: 3.4)
-                )
-            )
-            .background(Color(UIColor.point))
+            .background {
+                if store.state.isEnabled {
+                    LinearGradient(
+                        stops: [
+                            Gradient.Stop(color: Color(red: 1, green: 0, blue: 0.02).opacity(0.2), location: 0.00),
+                            Gradient.Stop(color: .white.opacity(0.2), location: 0.28),
+                            Gradient.Stop(color: .white.opacity(0.2), location: 0.83),
+                            Gradient.Stop(color: Color(red: 1, green: 0, blue: 0.02).opacity(0.2), location: 1.00),
+                        ],
+                        startPoint: UnitPoint(x: 0.15, y: -1.24),
+                        endPoint: UnitPoint(x: 0.72, y: 3.4)
+                    )
+                }
+            }
+            .background(store.state.isEnabled ? Color(UIColor.point) : Color(UIColor.gray400))
             .cornerRadius(5)
             
             DiaryDetailView(diaryInformation: $store.state.detailDiaryResponse)
@@ -85,14 +89,15 @@ struct CoachingView: View {
         // MARK: 첨삭 화면
         } else {
             CoachingCompleteView(diaryText: $store.state.detailDiaryResponse.content,
-                                 coachingResponse: $store.state.coachingResponse)
+                                 coachingAppData: $store.state.coachingAppData)
         }
         
-//        SmeemErrorToastView(type: $store.state.toastMessage)
-        SmemeToastView(type: $store.state.toastMessgaea)
+        // MARK: 첫 진입시 토스트뷰 실행
+        SmemeToastView(type: $store.state.toastMessage)
+        SmeemErrorToastView(type: $store.state.toastErrorMessage)
     }
 }
 
 #Preview {
-    CoachingView(store: CoachingStore(diaryResponse: PostDiaryResponse.empty))
+    CoachingView(store: CoachingStore(service: CoachingService(), diaryResponse: PostDiaryResponse.empty))
 }

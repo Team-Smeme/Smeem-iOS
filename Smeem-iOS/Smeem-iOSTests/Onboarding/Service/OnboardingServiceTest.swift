@@ -48,7 +48,7 @@ final class OnboardingServiceTest: XCTestCase, MockProviderProtocol {
                                                               trainingTime: TrainingTime(day: "AM",
                                                                                          hour: 22,
                                                                                          minute: 0),
-                                                              hasAlarm: true),
+                                                       hasAlarm: true, planId: 2),
                                    accessToken: "access Token") { result in
             switch result {
             case .success(let response):
