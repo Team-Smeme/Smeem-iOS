@@ -103,7 +103,7 @@ struct CoachingView: View {
             }
             .onAppear() {
                 store.send(action: .detailDiaryAPI(diaryID: store.state.diaryResponse.diaryID))
-                }
+            }
     }
 }
 
