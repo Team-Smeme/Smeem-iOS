@@ -446,27 +446,12 @@
 		A3D7ECB62A26566A009857D6 /* EditNicknameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNicknameViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		370BD0B62CFB660C009560DB /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				CoachingComparisonView.swift,
-				CoachingCompletedView.swift,
-				CoachingExplanationView.swift,
-				CustomSegmentedControl.swift,
-				SwiftUINavigationView.swift,
-			);
-			target = 4A8FFA4B29C9E1FD00FB76C0 /* Smeem-iOS */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		377B3BF12CF618B90086E0BC /* SwiftUI */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = SwiftUI; sourceTree = "<group>"; };
 		4A17370E2D05C02E00B772C3 /* Toast */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Toast; sourceTree = "<group>"; };
 		4A17370F2D05C03600B772C3 /* LoadingView */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = LoadingView; sourceTree = "<group>"; };
 		4A1737152D05C06E00B772C3 /* Components */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Components; sourceTree = "<group>"; };
 		4A1737192D05C07100B772C3 /* Store */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Store; sourceTree = "<group>"; };
-		4AB3494D2CF229D10047C484 /* UIViewConponent */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (370BD0B62CFB660C009560DB /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = UIViewConponent; sourceTree = "<group>"; };
 		4AB3494E2CF22A070047C484 /* Global */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Global; sourceTree = "<group>"; };
 		4AB3494F2CF22A250047C484 /* Button */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Button; sourceTree = "<group>"; };
 		4AB349502CF22A2E0047C484 /* TextView */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = TextView; sourceTree = "<group>"; };
@@ -678,7 +663,6 @@
 			isa = PBXGroup;
 			children = (
 				377B3BF12CF618B90086E0BC /* SwiftUI */,
-				4AB3494D2CF229D10047C484 /* UIViewConponent */,
 				371107DB2ACAB4E3007A4AC2 /* Base */,
 				4A1EE9552A4DFB86007BFEF3 /* SmeemComponent */,
 			);
@@ -1762,7 +1746,6 @@
 				4A17370F2D05C03600B772C3 /* LoadingView */,
 				4A1737152D05C06E00B772C3 /* Components */,
 				4A1737192D05C07100B772C3 /* Store */,
-				4AB3494D2CF229D10047C484 /* UIViewConponent */,
 				4AB3494E2CF22A070047C484 /* Global */,
 				4AB3494F2CF22A250047C484 /* Button */,
 				4AB349502CF22A2E0047C484 /* TextView */,
