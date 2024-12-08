@@ -31,8 +31,8 @@ struct DetailDiaryCoachedView: View {
             // "코칭 ON"일 때만 표시
             if selectedIndex == 1 {
                 Spacer()
-                CoachingContentView(currentIndex: $currentIndex,
-                                    coachingResponse: $coachingResponse)
+//                CoachingContentView(currentIndex: $currentIndex,
+//                                    coachingResponse: $coachingResponse)
             } else {
                 Spacer(minLength: screenHeight * (342 / screenHeight))
             }
