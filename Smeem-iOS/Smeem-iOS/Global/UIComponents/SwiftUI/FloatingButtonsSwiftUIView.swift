@@ -5,9 +5,17 @@
 //  Created by Joon Baek on 11/26/24.
 //
 
+import Combine
 import SwiftUI
 
+final class FloatingButtonsViewModel: ObservableObject {
+    private(set) var editButtonTapped = PassthroughSubject<Void, Never>()
+    private(set) var deleteButtonTapped = PassthroughSubject<Void, Never>()
+}
+
 struct FloatingButtonsSwiftUIView: View {
+    @ObservedObject var viewModel: FloatingButtonsViewModel
+    
     @Environment(\.dismiss) var dismiss
     @State private var showAlert = false
     
@@ -34,9 +42,11 @@ struct FloatingButtonsSwiftUIView: View {
                     }
                     .alert("수정시 모든 코칭 내용이 사라집니다. 그래도 수정하시겠습니까?",
                            isPresented: $showAlert) {
-                        Button("취소", role: .cancel) { dismiss() }
-                        Button("확인", role: .destructive) {
-                            print("수정 확인 버튼 액션")
+                        Button("취소") {
+                            dismiss()
+                        }
+                        Button("확인") {
+                            viewModel.editButtonTapped.send()
                         }
                     }
                     
@@ -45,7 +55,7 @@ struct FloatingButtonsSwiftUIView: View {
                         .background(Color.gray.opacity(0.5))
                     
                     Button(action: {
-                        
+                        viewModel.deleteButtonTapped.send()
                     }) {
                         Text("삭제하기")
                             .font(.headline)
@@ -78,5 +88,5 @@ struct FloatingButtonsSwiftUIView: View {
 }
 
 #Preview {
-    FloatingButtonsSwiftUIView()
+    FloatingButtonsSwiftUIView(viewModel: FloatingButtonsViewModel())
 }

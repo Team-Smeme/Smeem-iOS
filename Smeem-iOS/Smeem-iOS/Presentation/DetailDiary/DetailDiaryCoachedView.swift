@@ -7,6 +7,7 @@
 
 import Combine
 import SwiftUI
+import UIKit
 
 struct DetailDiaryCoachedView: View {
     
@@ -19,8 +20,10 @@ struct DetailDiaryCoachedView: View {
     @State private var error: SmeemError?
     
     @Binding var diaryID: Int?
+    @State var diaryContent = ""
+    @State var randomTopic = ""
     @State var currentIndex = 0
-    @State private var isShowingFullScreen = false
+    @State private var isShowingFloatingButtons = false
     @State private var selectedIndex = 0
     @State private var navigationbarType: NavigationbarType = .diaryDetails
     
@@ -30,18 +33,29 @@ struct DetailDiaryCoachedView: View {
     
     var body: some View {
         VStack(spacing: 16.scaledByWidth()) {
-            SwiftUINavigationView(viewModel: navigationViewModel,
+            SwiftUINavigationView(navigationViewModel: navigationViewModel,
                                   selectedIndex: $selectedIndex,
                                   navigationbarType: navigationbarType
             )
-            .fullScreenCover(isPresented: $isShowingFullScreen) {
-                FloatingButtonsSwiftUIView()
-            }
             .onReceive(navigationViewModel.leftButtonTapped) {
                 dismiss()
             }
             .onReceive(navigationViewModel.rightButtonTapped) {
-                isShowingFullScreen = true
+                isShowingFloatingButtons = true
+                print("눌림?")
+            }
+            .confirmationDialog("", isPresented: $isShowingFloatingButtons) {
+                Button("수정하기", role: .none) {
+                    showEditConfirmation()
+                }
+                
+                Button("삭제하기", role: .destructive) {
+//                    performDelete()
+                }
+                
+                Button("취소", role: .cancel) {
+                    isShowingFloatingButtons = false
+                }
             }
             
             if let response = response {
@@ -75,9 +89,33 @@ struct DetailDiaryCoachedView: View {
         }
         .onAppear {
             Task {
-                await fetchCoachingData(diaryID: diaryID ?? 0)
+                                await fetchCoachingData(diaryID: diaryID ?? 0)
             }
         }
+    }
+    
+    private func showEditConfirmation() {
+            let alert = UIAlertController(
+                title: "수정 확인",
+                message: "수정시 모든 코칭 내용이 사라집니다. 그래도 수정하시겠습니까?",
+                preferredStyle: .alert
+            )
+            
+            alert.addAction(UIAlertAction(title: "취소", style: .cancel))
+            alert.addAction(UIAlertAction(title: "확인", style: .default) { _ in
+                navigateToEditDiary()
+            })
+            
+            UIApplication.shared.windows.first?.rootViewController?.present(alert, animated: true)
+        }
+    
+    private func navigateToEditDiary() {
+        let editVC = EditDiaryViewController()
+        editVC.diaryID = self.diaryID ?? 0
+        editVC.randomContent = self.randomTopic
+        editVC.diaryTextView.text = self.diaryContent
+        editVC.randomSubjectView.setData(contentText: self.randomTopic)
+        self.pushToUIKitView(editVC)
     }
     
     @MainActor
@@ -86,8 +124,9 @@ struct DetailDiaryCoachedView: View {
         do {
             let response = try await detailDiaryService.getDetailDiary(diaryID: diaryID)
             self.response = response
+            self.diaryContent = response.content
+            self.randomTopic = response.topic
             
-            // CoachingsResponse로 변환
             let corrections = response.corrections ?? []
             self.coachingsResponse = CoachingsResponse(corrections: corrections)
             

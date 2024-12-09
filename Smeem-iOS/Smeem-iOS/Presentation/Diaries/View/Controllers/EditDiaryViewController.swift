@@ -48,7 +48,7 @@ final class EditDiaryViewController: BaseViewController {
     
     lazy var diaryTextView: UITextView = {
         let textView = UITextView()
-        textView.text = "dafd???"
+        textView.text = "목데이터"
         textView.configureDiaryTextView(topInset: 20)
         textView.configureAttributedText()
         textView.delegate = self

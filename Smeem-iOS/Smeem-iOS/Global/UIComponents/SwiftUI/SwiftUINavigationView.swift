@@ -21,9 +21,7 @@ final class NavigationViewModel: ObservableObject {
 
 struct SwiftUINavigationView: View {
 
-    @ObservedObject var viewModel: NavigationViewModel
-    
-    @State private var showFloatingView = false
+    @ObservedObject var navigationViewModel: NavigationViewModel
     @Binding var selectedIndex: Int
     
     let navigationbarType: NavigationbarType
@@ -34,7 +32,7 @@ struct SwiftUINavigationView: View {
             // 뒤로가기 버튼
             if navigationbarType == .diaryDetails || navigationbarType == .unCoached {
                 Button(action: {
-                    viewModel.leftButtonTapped.send()
+                    navigationViewModel.leftButtonTapped.send()
                 }, label: {
                     Image("icnBack")
                         .imageScale(.large)
@@ -57,17 +55,14 @@ struct SwiftUINavigationView: View {
             // 오른쪽 버튼
             if navigationbarType == .diaryDetails || navigationbarType == .unCoached {
                 Button(action: {
-                    showFloatingView = true
+                    navigationViewModel.rightButtonTapped.send()
                 }, label: {
                     Image("icnMore")
                 })
                 .padding(.trailing, 18.scaledByWidth())
-                .fullScreenCover(isPresented: $showFloatingView) {
-                    FloatingButtonsSwiftUIView()
-                }
             } else {
                 Button(action: {
-                    viewModel.rightButtonTapped.send()
+                    navigationViewModel.rightButtonTapped.send()
                 }, label: {
                     Text("닫기")
                         .tint(.black)
@@ -83,6 +78,6 @@ struct SwiftUINavigationView: View {
     @State var defaultIndex = 0
     
     NavigationView {
-        SwiftUINavigationView(viewModel: NavigationViewModel(), selectedIndex: $defaultIndex, navigationbarType: .unCoached)
+        SwiftUINavigationView(navigationViewModel: NavigationViewModel(), selectedIndex: $defaultIndex, navigationbarType: .unCoached)
     }
 }
