@@ -456,6 +456,8 @@
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		377B3BF12CF618B90086E0BC /* SwiftUI */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = SwiftUI; sourceTree = "<group>"; };
+		4A17370E2D05C02E00B772C3 /* Toast */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Toast; sourceTree = "<group>"; };
+		4A17370F2D05C03600B772C3 /* LoadingView */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = LoadingView; sourceTree = "<group>"; };
 		4AB3494E2CF22A070047C484 /* Global */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Global; sourceTree = "<group>"; };
 		4AB3494F2CF22A250047C484 /* Button */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Button; sourceTree = "<group>"; };
 		4AB349502CF22A2E0047C484 /* TextView */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = TextView; sourceTree = "<group>"; };
@@ -1763,6 +1765,8 @@
 			);
 			fileSystemSynchronizedGroups = (
 				377B3BF12CF618B90086E0BC /* SwiftUI */,
+				4A17370E2D05C02E00B772C3 /* Toast */,
+				4A17370F2D05C03600B772C3 /* LoadingView */,
 				4AB3494E2CF22A070047C484 /* Global */,
 				4AB3494F2CF22A250047C484 /* Button */,
 				4AB349502CF22A2E0047C484 /* TextView */,
