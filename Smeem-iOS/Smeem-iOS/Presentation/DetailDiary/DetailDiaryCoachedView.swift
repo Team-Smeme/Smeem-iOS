@@ -17,6 +17,7 @@ struct DetailDiaryCoachedView: View {
     @State private var coachingsResponse = CoachingsResponse(corrections: [])
     @State private var response: DetailDiaryResponse?
     @State private var isLoading = false
+    @State private var onError = false
     @State private var error: SmeemError?
     
     @Binding var diaryID: Int?
@@ -27,6 +28,8 @@ struct DetailDiaryCoachedView: View {
     @State private var selectedIndex = 0
     @State private var navigationbarType: NavigationbarType = .diaryDetails
     
+    @State private var toastErrorMessage: SmeemError? = nil
+    var toastMessage: SmeemToast? = .completed
     @Environment(\.dismiss) private var dismiss
     
     private let detailDiaryService = DetailDiaryService.shared
@@ -95,6 +98,19 @@ struct DetailDiaryCoachedView: View {
                 await fetchCoachingData(diaryID: diaryID ?? 0)
             }
         }
+        .overlay {
+            if isLoading {
+                SmemeEmptyView()
+                SmemeLoadingView()
+            }
+            
+            if onError {
+                SmeemErrorToastView(type: $toastErrorMessage)
+                    .onDisappear {
+                        onError = false
+                    }
+            }
+        }
     }
     
     private func showEditConfirmation() {
@@ -141,6 +157,7 @@ struct DetailDiaryCoachedView: View {
         } catch {
             isLoading = false
             self.error = error as? SmeemError
+            self.onError = true
         }
     }
     
@@ -154,10 +171,9 @@ struct DetailDiaryCoachedView: View {
                 let homeVC = HomeViewController()
                 self.changeRootViewControllerAndPresent(homeVC)
             case .failure(let error):
-                //Toast message
-            break
+                toastErrorMessage = error
+                break
             }
-            
             SmeemLoadingView.hideLoading()
         }
     }

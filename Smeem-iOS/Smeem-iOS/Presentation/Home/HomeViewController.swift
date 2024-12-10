@@ -253,11 +253,7 @@ final class HomeViewController: BaseViewController {
         }
     }
     
-    @objc func fullViewButtonDidTap(_ gesture: UITapGestureRecognizer) {
-//        let detailDiaryVC = DetailDiaryViewController()
-//        detailDiaryVC.diaryId = homeDiaryDict[currentDate.toString("yyyy-MM-dd")]?.diaryId ?? 0
-//        self.navigationController?.pushViewController(detailDiaryVC, animated: true)
-        
+    @objc func fullViewButtonDidTap(_ gesture: UITapGestureRecognizer) {        
         let diaryID = homeDiaryDict[currentDate.toString("yyyy-MM-dd")]?.diaryId ?? 0
         
         @State var defaultIndex = 0
