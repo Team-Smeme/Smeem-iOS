@@ -450,8 +450,6 @@
 		377B3BF12CF618B90086E0BC /* SwiftUI */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = SwiftUI; sourceTree = "<group>"; };
 		4A17370E2D05C02E00B772C3 /* Toast */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Toast; sourceTree = "<group>"; };
 		4A17370F2D05C03600B772C3 /* LoadingView */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = LoadingView; sourceTree = "<group>"; };
-		4A1737152D05C06E00B772C3 /* Components */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Components; sourceTree = "<group>"; };
-		4A1737192D05C07100B772C3 /* Store */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Store; sourceTree = "<group>"; };
 		4AB3494E2CF22A070047C484 /* Global */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Global; sourceTree = "<group>"; };
 		4AB3494F2CF22A250047C484 /* Button */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Button; sourceTree = "<group>"; };
 		4AB349502CF22A2E0047C484 /* TextView */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = TextView; sourceTree = "<group>"; };
@@ -615,8 +613,6 @@
 			isa = PBXGroup;
 			children = (
 				4AF050D82CEA01EA0055BC3F /* Coaching */,
-				4A1737192D05C07100B772C3 /* Store */,
-				4A1737152D05C06E00B772C3 /* Components */,
 				4AC047232A8FCA9700EBDC0E /* AuthManagement */,
 				4AA6FEE72C3ABD7C00E588E9 /* ResignSummray */,
 				4AA5E4B52BF24CEB00F308C8 /* BadgeBottomSheet */,
@@ -1744,8 +1740,6 @@
 				377B3BF12CF618B90086E0BC /* SwiftUI */,
 				4A17370E2D05C02E00B772C3 /* Toast */,
 				4A17370F2D05C03600B772C3 /* LoadingView */,
-				4A1737152D05C06E00B772C3 /* Components */,
-				4A1737192D05C07100B772C3 /* Store */,
 				4AB3494E2CF22A070047C484 /* Global */,
 				4AB3494F2CF22A250047C484 /* Button */,
 				4AB349502CF22A2E0047C484 /* TextView */,

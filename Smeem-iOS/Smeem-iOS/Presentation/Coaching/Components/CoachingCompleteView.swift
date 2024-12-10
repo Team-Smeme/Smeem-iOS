@@ -9,7 +9,6 @@ import SwiftUI
 
 struct CoachingCompleteView: View {
     
-    @Binding var diaryText: String
     @Binding var coachingAppData: CoachingAppData
     @State var currentIndex = 0
     
@@ -21,16 +20,16 @@ struct CoachingCompleteView: View {
                     VStack(spacing: 16) {
                         HStack {
                             Text(coachingAppData.correctResultText)
-                                .font(Font.custom("Pretendard", size: 16))
+                                .font(Font.custom("Pretendard", size: 16)).fontWeight(.regular)
                                 .foregroundColor(Color(UIColor.black))
                                 .lineSpacing(0.375)
                             Spacer()
                         }
                         
                         HStack {
-                            Text(diaryText)
+                            Text(coachingAppData.diaryText)
                                 .modifier(HighlightModifier(
-                                    diaryText: diaryText,
+                                    diaryText: coachingAppData.diaryText,
                                     corrections: coachingAppData.corrections,
                                     highlightIndex: currentIndex
                                 ))
@@ -45,7 +44,6 @@ struct CoachingCompleteView: View {
                 
                 Spacer()
             }
-            .padding(.top)
             .padding(.horizontal, screenWidth * 0.048)
             
             VStack(spacing: 20) {
@@ -91,9 +89,11 @@ struct PageControl: View {
     }
 }
 
-#Preview {
-    @State var diaryText = "I watched Avatar with my boyfriend at Hongdae CGV. I should have skimmed the previous season   what they were saying and the universe(??). What I was annoyed then was 두팔 didn’t know that as me. I think 두팔 who is my boyfriend should study before wathcing…. but Avatar2 is amazing movie I think. In my personal opinion, the jjin main character "
-    @State var coachingResponse = CoachingAppData(corrections: CoachingsResponse.sample.corrections, correctResultText: "테스트")
-    
-    CoachingCompleteView(diaryText: $diaryText, coachingAppData: $coachingResponse)
-}
+//#Preview {
+//    @State var diaryText = "I watched Avatar with my boyfriend at Hongdae CGV. I should have skimmed the previous season   what they were saying and the universe(??). What I was annoyed then was 두팔 didn’t know that as me. I think 두팔 who is my boyfriend should study before wathcing…. but Avatar2 is amazing movie I think. In my personal opinion, the jjin main character "
+//    @State var coachingResponse = CoachingAppData(diaryText: "",
+//                                                  corrections: CoachingsResponse.sample.corrections,
+//                                                  correctResultText: "테스트")
+//    
+//    CoachingCompleteView(coachingAppData: coachingResponse, currentIndex: 0)
+//}

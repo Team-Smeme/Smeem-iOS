@@ -8,6 +8,7 @@
 import Foundation
 
 struct CoachingAppData {
+    var diaryText: String
     var corrections: [CoachingResponse]
     var correctResultText: String
 }
@@ -30,7 +31,8 @@ final class CoachingStore: Store, ObservableObject {
     
     struct State {
         var detailDiaryResponse = DetailDiaryResponse.empty
-        var coachingAppData = CoachingAppData(corrections: CoachingsResponse.sample.corrections,
+        var coachingAppData = CoachingAppData(diaryText: "",
+                                              corrections: CoachingsResponse.sample.corrections,
                                               correctResultText: "첨삭 중이에요")
         var toastErrorMessage: SmeemError? = nil
         var toastMessage: SmeemToast? = .completed
@@ -61,7 +63,8 @@ final class CoachingStore: Store, ObservableObject {
                 do {
                     state.hiddenIndex += 1
                     let coachingResponse = try await service.coachingPostAPI(diaryID: ID)
-                    state.coachingAppData = CoachingAppData(corrections: coachingResponse.corrections,
+                    state.coachingAppData = CoachingAppData(diaryText: combineCorrectionText(coachingResponse.corrections),
+                                                            corrections: filiterCorrection(coachingResponse.corrections),
                                                             correctResultText: correctTextResult(coachingResponse.corrections.count))
                     state.hiddenIndex += 1
                 } catch let error {
@@ -71,6 +74,14 @@ final class CoachingStore: Store, ObservableObject {
                 }
             }
         }
+    }
+    
+    func combineCorrectionText(_ response: [CoachingResponse]) -> String {
+        return response.map{ $0.originalSentence }.joined(separator: " ")
+    }
+    
+    func filiterCorrection(_ response: [CoachingResponse]) -> [CoachingResponse] {
+        return response.filter { $0.isCorrected }.prefix(10).map{$0}
     }
     
     func correctTextResult(_ count: Int) -> String {

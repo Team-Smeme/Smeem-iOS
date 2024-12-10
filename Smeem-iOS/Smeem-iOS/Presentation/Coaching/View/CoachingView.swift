@@ -86,8 +86,7 @@ struct CoachingView: View {
                     
                     // MARK: 첨삭 화면
                 } else {
-                    CoachingCompleteView(diaryText: $store.state.detailDiaryResponse.content,
-                                         coachingAppData: $store.state.coachingAppData)
+                    CoachingCompleteView(coachingAppData: $store.state.coachingAppData)
                 }
                 
                 // MARK: 첫 진입시 토스트뷰 실행
