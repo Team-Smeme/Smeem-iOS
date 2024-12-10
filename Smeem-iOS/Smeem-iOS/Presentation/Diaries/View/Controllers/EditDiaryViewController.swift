@@ -169,7 +169,7 @@ extension EditDiaryViewController {
     func patchDiaryAPI() {
         PostDiaryAPI.shared.patchDiary(param: PatchDiaryRequest(content: diaryTextView.text), diaryID: diaryID) { response in
             DispatchQueue.main.async {
-                self.navigationController?.popViewController(animated: true)
+                self.changeRootViewControllerAndPresent(HomeViewController())
             }
         }
     }

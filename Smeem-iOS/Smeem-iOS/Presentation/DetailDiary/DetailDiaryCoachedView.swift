@@ -15,9 +15,7 @@ struct DetailDiaryCoachedView: View {
     @State private var cancelBag = Set<AnyCancellable>()
     
     @State private var coachingsResponse = CoachingsResponse(corrections: [])
-//    @State private var coachingsResponse = CoachingsResponse.sample
     @State private var response: DetailDiaryResponse?
-//    @State private var response:DetailDiaryResponse? = DetailDiaryResponse.empty
     @State private var isLoading = false
     @State private var error: SmeemError?
     
