@@ -5,71 +5,79 @@
 //  Created by Joon Baek on 2024/10/18.
 //
 
+import Combine
 import SwiftUI
 
 enum NavigationbarType {
     case coachingCompleted
     case diaryDetails
+    case unCoached
+}
+
+final class NavigationViewModel: ObservableObject {
+    let leftButtonTapped = PassthroughSubject<Void, Never>()
+    let rightButtonTapped = PassthroughSubject<Void, Never>()
 }
 
 struct SwiftUINavigationView: View {
-    let navigationbarType: NavigationbarType
-    @State private var showFloatingView = false
+
+    @ObservedObject var navigationViewModel: NavigationViewModel
     @Binding var selectedIndex: Int
     
+    let navigationbarType: NavigationbarType
     let options = ["코칭 OFF", "코칭 ON"]
     
     var body: some View {
         HStack {
             // 뒤로가기 버튼
-            if navigationbarType == .diaryDetails {
+            if navigationbarType == .diaryDetails || navigationbarType == .unCoached {
                 Button(action: {
-                    // 뒤로가기 액션
+                    navigationViewModel.leftButtonTapped.send()
                 }, label: {
                     Image("icnBack")
                         .imageScale(.large)
                 })
-                .padding(.leading, 10 / screenWidth)
+                .padding(.leading, 12.scaledByWidth())
             } else {
-                Spacer().frame(width: 30 / screenWidth)
+                Spacer().frame(width: 30.scaledByWidth())
             }
             
             // 중앙 콘텐츠 (CustomSegmentedControl)
             if navigationbarType == .diaryDetails {
                 CustomSegmentedControl(selectedIndex: $selectedIndex, options: options)
-                    .frame(height: 32 / screenHeight)
-                    .padding(65)
+                    .frame(height: 32.scaledByHeight())
+                    .padding(.leading, 65.scaledByWidth())
+                    .padding(.trailing, 59.scaledByWidth())
             }
             
             Spacer()
             
             // 오른쪽 버튼
-            if navigationbarType == .diaryDetails {
+            if navigationbarType == .diaryDetails || navigationbarType == .unCoached {
                 Button(action: {
-                    showFloatingView = true
+                    navigationViewModel.rightButtonTapped.send()
                 }, label: {
                     Image("icnMore")
                 })
-                .padding(.trailing, 18 / screenWidth)
-                .fullScreenCover(isPresented: $showFloatingView) {
-                    FloatingButtonsSwiftUIView()
-                }
+                .padding(.trailing, 18.scaledByWidth())
             } else {
                 Button(action: {
-                    // 다른 버튼 액션
+                    navigationViewModel.rightButtonTapped.send()
                 }, label: {
                     Text("닫기")
                         .tint(.black)
                 })
-                .padding(.trailing, 18 / screenWidth)
+                .padding(.trailing, 18.scaledByWidth())
             }
         }
-        .frame(height: screenHeight * (66 / screenHeight))
+        .frame(height: 54.scaledByHeight())
     }
 }
 
 #Preview {
     @State var defaultIndex = 0
     
-    SwiftUINavigationView(navigationbarType: .diaryDetails, selectedIndex: $defaultIndex)
+    NavigationView {
+        SwiftUINavigationView(navigationViewModel: NavigationViewModel(), selectedIndex: $defaultIndex, navigationbarType: .unCoached)
+    }
 }
