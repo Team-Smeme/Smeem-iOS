@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-import SwiftUI
-
 struct CoachingComparisonView: View {
     @Binding var coachingResponse: CoachingResponse
     
