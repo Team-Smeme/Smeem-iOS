@@ -131,15 +131,24 @@ enum AmplitudeConstant {
     }
     
     enum diaryDetail {
+        case toggle_click(String)
         case mydiary_click
-        case mydiary_edit
+        case mydiary_view(Bool)
+        case mydiary_edit(Bool)
+        case mydiary_edit_complete_click(Bool)
         
         var event: BaseEvent {
             switch self {
+            case .toggle_click(let toggle):
+                return BaseEvent(eventType: "toggle_click", eventProperties: ["toggle": toggle])
             case .mydiary_click:
                 return BaseEvent(eventType: "mydiary_click", eventProperties: nil)
-            case .mydiary_edit:
-                return BaseEvent(eventType: "mydiary_edit", eventProperties: nil)
+            case .mydiary_view(let hasCoaching):
+                return BaseEvent(eventType: "mydiary_view", eventProperties: ["has_coaching": hasCoaching])
+            case .mydiary_edit(let hasCoaching):
+                return BaseEvent(eventType: "mydiary_edit", eventProperties: ["has_coaching": hasCoaching])
+            case .mydiary_edit_complete_click(let hasCoaching):
+                return BaseEvent(eventType: "mydiary_edit_complete_click", eventProperties: ["has_coaching": hasCoaching])
             }
         }
     }
@@ -164,6 +173,24 @@ enum AmplitudeConstant {
     enum summary {
         case achievement_view
         case badge_bottom_sheet_view(String, Bool)
+        
+        var event: BaseEvent {
+            switch self {
+            case .achievement_view:
+                return BaseEvent(eventType: "achievement_view", eventProperties: nil)
+            case .badge_bottom_sheet_view(let type, let hasBadge):
+                return BaseEvent(eventType: "badge_bottom_sheet_view", eventProperties: ["BadgeType":type,
+                                                                                         "hasBadge":hasBadge])
+            }
+        }
+    }
+    
+    enum coaching {
+        case coaching_try_click
+        case coaching_exit_click
+        case coaching_load_view
+        case coaching_result_view
+        case coaching_feedback_view
         
         var event: BaseEvent {
             switch self {
