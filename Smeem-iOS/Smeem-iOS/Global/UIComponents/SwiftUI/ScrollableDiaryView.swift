@@ -31,7 +31,7 @@ struct ScrollableDiaryView: View {
                         ))
                         .padding(.horizontal, 18.scaledByHeight())
                         .padding(.bottom, 16.scaledByHeight())
-                        .foregroundColor(Color(UIColor.gray400))
+                        .foregroundColor(selectedIndex == 0 ? Color(UIColor.smeemBlack) : Color(UIColor.gray400))
                         .background( // 콘텐츠 크기를 측정하기 위한 백그라운드
                             GeometryReader { geometry in
                                 Color.clear

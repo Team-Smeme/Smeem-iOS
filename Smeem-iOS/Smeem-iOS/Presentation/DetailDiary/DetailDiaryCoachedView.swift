@@ -14,8 +14,10 @@ struct DetailDiaryCoachedView: View {
     @StateObject private var navigationViewModel = NavigationViewModel()
     @State private var cancelBag = Set<AnyCancellable>()
     
-    @State private var coachingsResponse = CoachingsResponse(corrections: [])
-    @State private var response: DetailDiaryResponse?
+//    @State private var coachingsResponse = CoachingsResponse(corrections: [])
+    @State private var coachingsResponse = CoachingsResponse.sample
+//    @State private var response: DetailDiaryResponse?
+    @State private var response:DetailDiaryResponse? = DetailDiaryResponse.empty
     @State private var isLoading = false
     @State private var error: SmeemError?
     
@@ -92,7 +94,7 @@ struct DetailDiaryCoachedView: View {
         }
         .onAppear {
             Task {
-                await fetchCoachingData(diaryID: diaryID ?? 0)
+//                await fetchCoachingData(diaryID: diaryID ?? 0)
             }
         }
     }
@@ -152,7 +154,6 @@ struct DetailDiaryCoachedView: View {
             switch result {
             case .success(_):
                 let homeVC = HomeViewController()
-//                let rootVC = UINavigationController(rootViewController: homeVC)
                 self.changeRootViewControllerAndPresent(homeVC)
             case .failure(let error):
                 //Toast message
