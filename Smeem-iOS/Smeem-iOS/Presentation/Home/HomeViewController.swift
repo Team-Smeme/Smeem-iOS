@@ -370,7 +370,6 @@ final class HomeViewController: BaseViewController {
     }
     
     func handlePostDiaryAPI(with response: PostDiaryResponse?) {
-        toastMessageFlag = true
         badgePopupData = response?.badges ?? []
     }
     

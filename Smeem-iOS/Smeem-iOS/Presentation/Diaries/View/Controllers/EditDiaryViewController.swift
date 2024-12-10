@@ -194,7 +194,7 @@ extension EditDiaryViewController: UITextViewDelegate {
     }
 }
 
-@available(iOS 17, *)
-#Preview {
-    EditDiaryViewController()
-}
+//@available(iOS 17, *)
+//#Preview {
+//    EditDiaryViewController()
+//}

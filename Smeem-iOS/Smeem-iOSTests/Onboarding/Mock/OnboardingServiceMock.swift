@@ -11,6 +11,11 @@ import Foundation
 
 final class OnboardingServiceMock: OnboardingServiceProtocol {
     
+    func trainingPlanGETAPI(completion: @escaping (Result<[Smeem_iOS.Plans], Smeem_iOS.SmeemError>) -> ()) {
+        completion(.success([Plans(id: 0, content: "첫번째")]))
+    }
+    
+    
     func trainingGoalGetAPI(completion: @escaping (Result<[Smeem_iOS.Goal], Smeem_iOS.SmeemError>) -> ()) {
         completion(.success([Goal(goalType: "test", name: "안녕")]))
     }

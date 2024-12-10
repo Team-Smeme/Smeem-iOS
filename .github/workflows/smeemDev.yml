@@ -18,12 +18,26 @@ jobs:
     - uses: actions/checkout@v4
     - name: Set Xcode version
       run: sudo xcode-select -switch /Applications/Xcode_16.app
-    - name: List available devices
-      run: xcrun simctl list devices
     - name: Resolve Dependencies
       run: xcodebuild -resolvePackageDependencies
       working-directory: ./Smeem-iOS
     - name: Create Debug.xcconfig
       run: echo "${{ secrets.DEBUG_CONFIG }}" > ./Smeem-iOS/Debug.xcconfig
     - name: Build
-      run: xcodebuild build -project Smeem-iOS/Smeem-iOS.xcodeproj -scheme Smeem-Dev -destination 'platform=iOS Simulator,name=iPhone 15,OS=17.2'
+      run: xcodebuild clean test -project Smeem-iOS/Smeem-iOS.xcodeproj -scheme Smeem-Dev -destination 'platform=iOS Simulator,name=iPhone 15,OS=17.2' -quiet
+
+      # 성공 시 Discord 알림
+    - name: Notify Discord on success
+      if: success()
+      run: |
+        curl -H "Content-Type: application/json" \
+          -d '{"username": "GitHub Actions", "content": "✅ Build succeeded for branch `${{ github.ref_name }}`."}' \
+          ${{ secrets.DISCORD_WEBHOOK_URL_DEV }}
+
+    # # 실패 시 Discord 알림
+    - name: Notify Discord on failure
+      if: failure()
+      run: |
+        curl -H "Content-Type: application/json" \
+          -d '{"username": "GitHub Actions", "content": "❌ Build failed for branch `${{ github.ref_name }}`. Check logs for details."}' \
+          ${{ secrets.DISCORD_WEBHOOK_URL_DEV }}

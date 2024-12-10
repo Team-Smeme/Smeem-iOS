@@ -12,6 +12,7 @@ protocol Store {
     associatedtype State
     
     var state: State { get }
+    
     @MainActor
     func send(action: Action)
 }
