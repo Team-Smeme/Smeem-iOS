@@ -8,9 +8,18 @@
 import Foundation
 
 struct CoachingAppData {
+    var currentIndex: Int
     var diaryText: String
     var corrections: [CoachingResponse]
     var correctResultText: String
+}
+
+enum CoachingAmplitude {
+    case coachingButtonTapped(Bool)
+    case exitButtonTapped(Bool)
+    case coachingLoading
+    case coachingResult
+    case coachingSwipe(Int)
 }
 
 final class CoachingStore: Store, ObservableObject {
@@ -27,11 +36,13 @@ final class CoachingStore: Store, ObservableObject {
     enum Action {
         case detailDiaryAPI(diaryID: Int)
         case coachingButton(diaryID: Int)
+        case amplitudeInput(type: CoachingAmplitude)
     }
     
     struct State {
         var detailDiaryResponse = DetailDiaryResponse.empty
-        var coachingAppData = CoachingAppData(diaryText: "",
+        var coachingAppData = CoachingAppData(currentIndex: 0,
+                                              diaryText: "",
                                               corrections: CoachingsResponse.sample.corrections,
                                               correctResultText: "첨삭 중이에요")
         var toastErrorMessage: SmeemError? = nil
@@ -63,7 +74,8 @@ final class CoachingStore: Store, ObservableObject {
                 do {
                     state.hiddenIndex += 1
                     let coachingResponse = try await service.coachingPostAPI(diaryID: ID)
-                    state.coachingAppData = CoachingAppData(diaryText: combineCorrectionText(coachingResponse.corrections),
+                    state.coachingAppData = CoachingAppData(currentIndex: 0,
+                                                            diaryText: combineCorrectionText(coachingResponse.corrections),
                                                             corrections: filiterCorrection(coachingResponse.corrections),
                                                             correctResultText: correctTextResult(coachingResponse.corrections.count))
                     state.hiddenIndex += 1
@@ -72,6 +84,19 @@ final class CoachingStore: Store, ObservableObject {
                     state.toastErrorMessage = error
                     state.hiddenIndex = 0
                 }
+            }
+        case .amplitudeInput(let type):
+            switch type {
+            case .coachingButtonTapped(let isActive):
+                AmplitudeManager.shared.track(event: AmplitudeConstant.coaching.coaching_try_click(isActive).event)
+            case .exitButtonTapped(let isActive):
+                AmplitudeManager.shared.track(event: AmplitudeConstant.coaching.coaching_exit_click(isActive).event)
+            case .coachingLoading:
+                AmplitudeManager.shared.track(event: AmplitudeConstant.coaching.coaching_load_view.event)
+            case .coachingResult:
+                AmplitudeManager.shared.track(event: AmplitudeConstant.coaching.coaching_result_view.event)
+            case .coachingSwipe(let index):
+                AmplitudeManager.shared.track(event: AmplitudeConstant.coaching.coaching_feedback_view(index+1).event)
             }
         }
     }

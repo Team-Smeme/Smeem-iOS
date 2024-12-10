@@ -10,7 +10,6 @@ import SwiftUI
 struct CoachingCompleteView: View {
     
     @Binding var coachingAppData: CoachingAppData
-    @State var currentIndex = 0
     
     var body: some View {
         
@@ -31,7 +30,7 @@ struct CoachingCompleteView: View {
                                 .modifier(HighlightModifier(
                                     diaryText: coachingAppData.diaryText,
                                     corrections: coachingAppData.corrections,
-                                    highlightIndex: currentIndex
+                                    highlightIndex: coachingAppData.currentIndex
                                 ))
                                 .font(Font.custom("Pretendard", size: 16))
                                 .foregroundColor(Color(UIColor.gray400))
@@ -50,7 +49,7 @@ struct CoachingCompleteView: View {
                 Rectangle()
                     .frame(height: 8)
                     .foregroundStyle(Color(UIColor.gray100))
-                TabView(selection: $currentIndex) {
+                TabView(selection: $coachingAppData.currentIndex) {
                     ForEach(coachingAppData.corrections.indices, id: \.self) { item in
                         ScrollView {
                             VStack(spacing: 8) {
@@ -64,7 +63,7 @@ struct CoachingCompleteView: View {
                 .frame(width: screenWidth, height: screenHeight * (326/screenHeight), alignment: .top)
                 .tabViewStyle(.page(indexDisplayMode: .never))
                 
-                PageControl(currentPage: $currentIndex,
+                PageControl(currentPage: $coachingAppData.currentIndex,
                             coachingResponse: $coachingAppData.corrections)
             }
         }
