@@ -87,8 +87,6 @@ struct DetailDiaryCoachedView: View {
             } else {
                 if isLoading {
                     ProgressView("Loading...")
-                } else if let error = error {
-                    Text("Error: \(error.localizedDescription)")
                 }
             }
             
@@ -116,10 +114,17 @@ struct DetailDiaryCoachedView: View {
             }
             
             if onError {
-                SmeemErrorToastView(type: $toastErrorMessage)
-                    .onDisappear {
-                        onError = false
+                ZStack {
+                    Color.clear
+                    VStack {
+                        Spacer()
+                        SmeemErrorToastView(type: $toastErrorMessage)
+                            .padding(.bottom, 20.scaledByHeight())
                     }
+                }
+                .onDisappear {
+                    onError = false
+                }
             }
         }
     }
