@@ -42,15 +42,18 @@ struct DetailDiaryCoachedView: View {
             }
             .onReceive(navigationViewModel.rightButtonTapped) {
                 isShowingFloatingButtons = true
-                print("눌림?")
             }
             .confirmationDialog("", isPresented: $isShowingFloatingButtons) {
                 Button("수정하기", role: .none) {
-                    showEditConfirmation()
+                    if navigationbarType == .diaryDetails {
+                        showEditConfirmation()
+                    } else {
+                        navigateToEditDiary()
+                    }
                 }
                 
                 Button("삭제하기", role: .destructive) {
-//                    performDelete()
+                    deleteDiaryWithAPI(diaryID: diaryID ?? 0)
                 }
                 
                 Button("취소", role: .cancel) {
@@ -89,25 +92,25 @@ struct DetailDiaryCoachedView: View {
         }
         .onAppear {
             Task {
-                                await fetchCoachingData(diaryID: diaryID ?? 0)
+                await fetchCoachingData(diaryID: diaryID ?? 0)
             }
         }
     }
     
     private func showEditConfirmation() {
-            let alert = UIAlertController(
-                title: "수정 확인",
-                message: "수정시 모든 코칭 내용이 사라집니다. 그래도 수정하시겠습니까?",
-                preferredStyle: .alert
-            )
-            
-            alert.addAction(UIAlertAction(title: "취소", style: .cancel))
-            alert.addAction(UIAlertAction(title: "확인", style: .default) { _ in
-                navigateToEditDiary()
-            })
-            
-            UIApplication.shared.windows.first?.rootViewController?.present(alert, animated: true)
-        }
+        let alert = UIAlertController(
+            title: "수정 확인",
+            message: "수정시 모든 코칭 내용이 사라집니다. 그래도 수정하시겠습니까?",
+            preferredStyle: .alert
+        )
+        
+        alert.addAction(UIAlertAction(title: "취소", style: .cancel))
+        alert.addAction(UIAlertAction(title: "확인", style: .default) { _ in
+            navigateToEditDiary()
+        })
+        
+        UIApplication.shared.windows.first?.rootViewController?.present(alert, animated: true)
+    }
     
     private func navigateToEditDiary() {
         let editVC = EditDiaryViewController()
@@ -138,6 +141,25 @@ struct DetailDiaryCoachedView: View {
         } catch {
             isLoading = false
             self.error = error as? SmeemError
+        }
+    }
+    
+    func deleteDiaryWithAPI(diaryID: Int) {
+        SmeemLoadingView.showLoading()
+        
+        detailDiaryService.deleteDiary(diaryID: diaryID) { result in
+            
+            switch result {
+            case .success(_):
+                let homeVC = HomeViewController()
+//                let rootVC = UINavigationController(rootViewController: homeVC)
+                self.changeRootViewControllerAndPresent(homeVC)
+            case .failure(let error):
+                //Toast message
+            break
+            }
+            
+            SmeemLoadingView.hideLoading()
         }
     }
 }
