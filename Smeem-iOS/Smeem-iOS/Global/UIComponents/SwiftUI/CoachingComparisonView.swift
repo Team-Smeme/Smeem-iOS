@@ -7,28 +7,28 @@
 
 import SwiftUI
 
+import SwiftUI
+
 struct CoachingComparisonView: View {
     @Binding var coachingResponse: CoachingResponse
-    @State private var textHeight: CGFloat = 0 // Text의 높이를 저장할 변수
     
     var body: some View {
         VStack(spacing: 20) {
             VStack(alignment: .leading, spacing: 8) {
-                HStack {
-                    Rectangle()
-                        .frame(width: 2, height: textHeight)
-                        .foregroundStyle(Color(UIColor.black))
+                HStack(spacing: 8) {
+                    
+                    GeometryReader { geomerty in
+                        Rectangle()
+                            .frame(height: geomerty.size.height)
+                            .foregroundStyle(Color(UIColor.black))
+                    }
+                    .frame(width: 2)
                     
                     Text("나의 일기")
                         .font(Font.custom("Pretendard", size: 16).weight(.medium))
                         .foregroundColor(Color(UIColor.black))
-                        .background(GeometryReader { geometry in
-                            Color.clear
-                                .preference(key: TextHeightPreferenceKey.self, value: geometry.size.height)
-                        })
-                }
-                .onPreferenceChange(TextHeightPreferenceKey.self) { value in
-                    textHeight = value
+                    
+                    Spacer()
                 }
                 
                 Text(coachingResponse.originalSentence)
@@ -39,14 +39,19 @@ struct CoachingComparisonView: View {
             .padding(.trailing, 18)
             
             VStack(alignment: .leading, spacing: 8) {
-                HStack {
-                    Rectangle()
-                        .frame(width: 2, height: textHeight)
-                        .foregroundStyle(Color(UIColor.point))
+                HStack(spacing: 8) {
+                    GeometryReader { geomerty in
+                        Rectangle()
+                            .frame(height: geomerty.size.height)
+                            .foregroundStyle(Color(UIColor.point))
+                    }
+                    .frame(width: 2)
                     
                     Text("고친 문장")
                         .font(Font.custom("Pretendard", size: 16).weight(.medium))
                         .foregroundColor(Color(UIColor.point))
+                    
+                    Spacer()
                 }
                 
                 Text(coachingResponse.correctedSentence)
@@ -59,14 +64,3 @@ struct CoachingComparisonView: View {
         }
     }
 }
-
-struct TextHeightPreferenceKey: PreferenceKey {
-    static var defaultValue: CGFloat = 0
-    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
-        value = nextValue()
-    }
-}
-
-//#Preview {
-//    CoachingComparisonView()
-//}

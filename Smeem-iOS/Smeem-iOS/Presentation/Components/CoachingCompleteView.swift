@@ -18,23 +18,34 @@ struct CoachingCompleteView: View {
         VStack(spacing: 15) {
             VStack(spacing: 16) {
                 ScrollView {
-                    HStack {
-                        Text(diaryText)
-                            .modifier(HighlightModifier(
-                                diaryText: diaryText,
-                                corrections: coachingAppData.corrections,
-                                highlightIndex: currentIndex
-                            ))
-                            .font(Font.custom("Pretendard", size: 16))
-                            .foregroundColor(Color(UIColor.gray400))
-                            .lineSpacing(0.375)
+                    VStack(spacing: 16) {
+                        HStack {
+                            Text(coachingAppData.correctResultText)
+                                .font(Font.custom("Pretendard", size: 16))
+                                .foregroundColor(Color(UIColor.black))
+                                .lineSpacing(0.375)
+                            Spacer()
+                        }
                         
-                        Spacer()
+                        HStack {
+                            Text(diaryText)
+                                .modifier(HighlightModifier(
+                                    diaryText: diaryText,
+                                    corrections: coachingAppData.corrections,
+                                    highlightIndex: currentIndex
+                                ))
+                                .font(Font.custom("Pretendard", size: 16))
+                                .foregroundColor(Color(UIColor.gray400))
+                                .lineSpacing(0.375)
+                            
+                            Spacer()
+                        }
                     }
                 }
                 
                 Spacer()
             }
+            .padding(.top)
             .padding(.horizontal, screenWidth * 0.048)
             
             VStack(spacing: 20) {
