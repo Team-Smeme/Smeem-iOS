@@ -186,19 +186,24 @@ enum AmplitudeConstant {
     }
     
     enum coaching {
-        case coaching_try_click
-        case coaching_exit_click
+        case coaching_try_click(Bool)
+        case coaching_exit_click(Bool)
         case coaching_load_view
         case coaching_result_view
-        case coaching_feedback_view
+        case coaching_feedback_view(Int)
         
         var event: BaseEvent {
             switch self {
-            case .achievement_view:
-                return BaseEvent(eventType: "achievement_view", eventProperties: nil)
-            case .badge_bottom_sheet_view(let type, let hasBadge):
-                return BaseEvent(eventType: "badge_bottom_sheet_view", eventProperties: ["BadgeType":type,
-                                                                                         "hasBadge":hasBadge])
+            case .coaching_try_click(let isActive):
+                return BaseEvent(eventType: "coaching_try_click", eventProperties: ["active": isActive])
+            case .coaching_exit_click(let isActive):
+                return BaseEvent(eventType: "coaching_exit_click", eventProperties: ["active": isActive])
+            case .coaching_load_view:
+                return BaseEvent(eventType: "coaching_load_view", eventProperties: nil)
+            case .coaching_result_view:
+                return BaseEvent(eventType: "coaching_result_view", eventProperties: nil)
+            case .coaching_feedback_view(let index):
+                return BaseEvent(eventType: "badge_bottom_sheet_view", eventProperties: ["Index": index])
             }
         }
     }
