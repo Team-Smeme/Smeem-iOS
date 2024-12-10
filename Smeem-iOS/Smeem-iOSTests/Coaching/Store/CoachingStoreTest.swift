@@ -67,4 +67,23 @@ final class CoachingStoreTest: XCTestCase {
         // Then
         XCTAssertEqual(outputResult, expectedResult)
     }
+    
+    func test_원문일기_잘조합해주는지() {
+        // Given
+        var filterResult = [CoachingResponse]()
+        for i in 1...3 {
+            filterResult.append(CoachingResponse(originalSentence: "안녕",
+                                                 correctedSentence: "",
+                                                 reason: "",
+                                                 isCorrected: false))
+        }
+        
+        var expectedResult = "안녕 안녕 안녕"
+        
+        // When
+        let outputResult = sut.combineCorrectionText(filterResult)
+        
+        // Then
+        XCTAssertEqual(outputResult, expectedResult)
+    }
 }
