@@ -21,7 +21,7 @@ struct CoachingCompleteView: View {
                     VStack(spacing: 16) {
                         HStack {
                             Text(coachingAppData.correctResultText)
-                                .font(Font.custom("Pretendard", size: 16))
+                                .font(Font.custom("Pretendard", size: 16)).fontWeight(.regular)
                                 .foregroundColor(Color(UIColor.black))
                                 .lineSpacing(0.375)
                             Spacer()
@@ -45,7 +45,6 @@ struct CoachingCompleteView: View {
                 
                 Spacer()
             }
-            .padding(.top)
             .padding(.horizontal, screenWidth * 0.048)
             
             VStack(spacing: 20) {
