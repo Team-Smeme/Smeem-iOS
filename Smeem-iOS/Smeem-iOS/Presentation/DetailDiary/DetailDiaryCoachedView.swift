@@ -49,7 +49,18 @@ struct DetailDiaryCoachedView: View {
             .confirmationDialog("", isPresented: $isShowingFloatingButtons) {
                 Button("수정하기", role: .none) {
                     if navigationbarType == .diaryDetails {
-                        showEditConfirmation()
+                        showEditConfirmation(
+                            title: "수정 확인",
+                            message: "수정시 모든 코칭 내용이 사라집니다. 그래도 수정하시겠습니까?",
+                            firstActionTitle: "취소",
+                            secondActionTitle: "확인",
+                            firstActionHandler: {
+                                dismiss()
+                            },
+                            secondActionHandler: {
+                                navigateToEditDiary()
+                            }
+                        )
                     } else {
                         navigateToEditDiary()
                     }
@@ -111,21 +122,6 @@ struct DetailDiaryCoachedView: View {
                     }
             }
         }
-    }
-    
-    private func showEditConfirmation() {
-        let alert = UIAlertController(
-            title: "수정 확인",
-            message: "수정시 모든 코칭 내용이 사라집니다. 그래도 수정하시겠습니까?",
-            preferredStyle: .alert
-        )
-        
-        alert.addAction(UIAlertAction(title: "취소", style: .cancel))
-        alert.addAction(UIAlertAction(title: "확인", style: .default) { _ in
-            navigateToEditDiary()
-        })
-        
-        UIApplication.shared.windows.first?.rootViewController?.present(alert, animated: true)
     }
     
     private func navigateToEditDiary() {

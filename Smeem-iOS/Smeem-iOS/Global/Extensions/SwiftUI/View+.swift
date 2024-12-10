@@ -20,6 +20,33 @@ extension View {
         return screenSize.width
     }
     
+    func showEditConfirmation(
+        title: String,
+        message: String,
+        firstActionTitle: String,
+        secondActionTitle: String,
+        firstActionHandler: (() -> Void)? = nil,
+        secondActionHandler: (() -> Void)? = nil
+    ) {
+        let alert = UIAlertController(
+            title: title,
+            message: message,
+            preferredStyle: .alert
+        )
+        
+        alert.addAction(UIAlertAction(title: firstActionTitle, style: .cancel) { _ in
+            firstActionHandler?()
+        })
+        
+        alert.addAction(UIAlertAction(title: secondActionTitle, style: .default) { _ in
+            secondActionHandler?()
+        })
+        
+        if let topViewController = UIApplication.shared.windows.first(where: { $0.isKeyWindow })?.rootViewController {
+            topViewController.present(alert, animated: true)
+        }
+    }
+    
     func changeRootViewController(_ viewController: UIViewController) {
         guard let window = UIApplication.shared.windows.first else { return }
         UIView.transition(with: window, duration: 0.5, options: .transitionCrossDissolve, animations: {
