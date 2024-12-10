@@ -61,7 +61,7 @@ final class CoachingStore: Store, ObservableObject {
                 do {
                     state.hiddenIndex += 1
                     let coachingResponse = try await service.coachingPostAPI(diaryID: ID)
-                    state.coachingAppData = CoachingAppData(corrections: coachingResponse.corrections,
+                    state.coachingAppData = CoachingAppData(corrections: filiterCorrection(coachingResponse.corrections),
                                                             correctResultText: correctTextResult(coachingResponse.corrections.count))
                     state.hiddenIndex += 1
                 } catch let error {
@@ -71,6 +71,10 @@ final class CoachingStore: Store, ObservableObject {
                 }
             }
         }
+    }
+    
+    func filiterCorrection(_ response: [CoachingResponse]) -> [CoachingResponse] {
+        return response.filter { $0.isCorrected }
     }
     
     func correctTextResult(_ count: Int) -> String {
