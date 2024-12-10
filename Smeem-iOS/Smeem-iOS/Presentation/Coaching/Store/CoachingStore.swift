@@ -74,7 +74,7 @@ final class CoachingStore: Store, ObservableObject {
     }
     
     func filiterCorrection(_ response: [CoachingResponse]) -> [CoachingResponse] {
-        return response.filter { $0.isCorrected }
+        return response.filter { $0.isCorrected }.prefix(10).map{$0}
     }
     
     func correctTextResult(_ count: Int) -> String {
