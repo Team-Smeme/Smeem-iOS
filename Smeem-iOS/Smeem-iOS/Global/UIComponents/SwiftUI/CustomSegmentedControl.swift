@@ -43,11 +43,13 @@ struct SegmentButton: View {
         Button(action: action) {
             Text(title)
                 .padding(.vertical, 8.scaledByHeight())
-                .padding(.horizontal, 11.scaledByWidth())
+                .padding(.horizontal, 10.scaledByWidth())
                 .frame(maxWidth: .infinity)
                 .background(backgroundColor)
                 .foregroundColor(foregroundColor)
                 .font(Font(UIFont.c5))
+//                .lineLimit(1)
+//                .minimumScaleFactor(0.9)
                 .overlay(
                     Group {
                         if isSelected && isFirstButton {
