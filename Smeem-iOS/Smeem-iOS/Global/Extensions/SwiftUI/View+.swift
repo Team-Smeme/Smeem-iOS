@@ -81,7 +81,8 @@ extension View {
         if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
            let window = windowScene.windows.first {
             
-            window.rootViewController = viewControllerToPresent
+            let navigationController = UINavigationController(rootViewController: viewControllerToPresent)
+            window.rootViewController = navigationController
             
             UIView.transition(with: window,
                               duration: 0.5,

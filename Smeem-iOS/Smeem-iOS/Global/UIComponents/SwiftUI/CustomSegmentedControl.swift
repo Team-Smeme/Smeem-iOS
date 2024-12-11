@@ -23,12 +23,11 @@ struct CustomSegmentedControl: View {
                 )
             }
         }
-        .background(Color.gray.opacity(0.2))
+//        .background(Color.gray.opacity(0.2))
         .cornerRadius(6)
     }
     
     private func isCoachingOn(_ index: Int) -> Bool {
-        // "코칭 ON"일 때만 selected 상태로 처리
         return options[index] == "코칭 ON" && selectedIndex == index
     }
 }
@@ -51,12 +50,10 @@ struct SegmentButton: View {
                 .font(Font(UIFont.c5))
                 .overlay(
                     Group {
-                        // 'isSelected'일 때만 'isFirstButton'에 오버레이 추가
                         if isSelected && isFirstButton {
                             CustomStrokeShape(includeLeadingCorners: false)
                                 .stroke(Color(UIColor.gray500), lineWidth: 1)
                         } else if !isSelected {
-                            // 'isSelected'가 아닐 때는 모든 버튼에 대해 모서리 처리
                             CustomStrokeShape(
                                 includeLeadingCorners: isFirstButton,
                                 includeTrailingCorners: isLastButton
