@@ -10,6 +10,9 @@ import SwiftUI
 import UIKit
 
 struct DetailDiaryCoachedView: View {
+    
+    // MARK: - Properties
+    
     @StateObject private var navigationViewModel = NavigationViewModel()
     @State private var cancelBag = Set<AnyCancellable>()
     
@@ -33,8 +36,10 @@ struct DetailDiaryCoachedView: View {
     
     private let detailDiaryService = DetailDiaryService.shared
     
+    // MARK: - Body
+    
     var body: some View {
-        VStack(spacing: 16.scaledByWidth()) {
+        VStack(spacing: 0) {
             SwiftUINavigationView(navigationViewModel: navigationViewModel,
                                   selectedIndex: $selectedIndex,
                                   navigationbarType: navigationbarType
@@ -74,6 +79,12 @@ struct DetailDiaryCoachedView: View {
                 }
             }
             
+            if let topic = response?.topic {
+                if topic != "" {
+                    RandomTopicViewSwiftUI(contentText: response?.topic)
+                }
+            }
+            
             if let response = response {
                 ScrollableDiaryView(
                     diaryText: response.content,
@@ -102,7 +113,7 @@ struct DetailDiaryCoachedView: View {
                             corrections: $filteredCorrections
                         )
                     } else {
-                        Spacer(minLength: 342.scaledByHeight())
+                        Spacer()
                     }
         }
         .onAppear {
