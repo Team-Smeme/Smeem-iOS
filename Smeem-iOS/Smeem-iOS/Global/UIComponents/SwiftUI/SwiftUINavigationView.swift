@@ -35,19 +35,18 @@ struct SwiftUINavigationView: View {
                     navigationViewModel.leftButtonTapped.send()
                 }, label: {
                     Image("icnBack")
-                        .imageScale(.large)
                 })
                 .padding(.leading, 12.scaledByWidth())
             } else {
                 Spacer().frame(width: 30.scaledByWidth())
             }
             
-            // 중앙 콘텐츠 (CustomSegmentedControl)
+            // CustomSegmentedControl
             if navigationbarType == .diaryDetails {
                 CustomSegmentedControl(selectedIndex: $selectedIndex, options: options)
                     .frame(height: 32.scaledByHeight())
-                    .padding(.leading, 65.scaledByWidth())
-                    .padding(.trailing, 59.scaledByWidth())
+                    .padding(.leading, 64.scaledByWidth())
+                    .padding(.trailing, 58.scaledByWidth())
             }
             
             Spacer()
@@ -78,6 +77,6 @@ struct SwiftUINavigationView: View {
     @State var defaultIndex = 0
     
     NavigationView {
-        SwiftUINavigationView(navigationViewModel: NavigationViewModel(), selectedIndex: $defaultIndex, navigationbarType: .unCoached)
+        SwiftUINavigationView(navigationViewModel: NavigationViewModel(), selectedIndex: $defaultIndex, navigationbarType: .diaryDetails)
     }
 }
