@@ -16,19 +16,14 @@ struct CustomSegmentedControl: View {
             ForEach(options.indices, id: \.self) { index in
                 SegmentButton(
                     title: options[index],
-                    isSelected: isCoachingOn(index),
+                    isSelected: selectedIndex == index,
                     isFirstButton: index == 0,
                     isLastButton: index == options.count - 1,
                     action: { selectedIndex = index }
                 )
             }
         }
-//        .background(Color.gray.opacity(0.2))
         .cornerRadius(6)
-    }
-    
-    private func isCoachingOn(_ index: Int) -> Bool {
-        return options[index] == "코칭 ON" && selectedIndex == index
     }
 }
 
@@ -48,12 +43,14 @@ struct SegmentButton: View {
                 .background(backgroundColor)
                 .foregroundColor(foregroundColor)
                 .font(Font(UIFont.c5))
-//                .lineLimit(1)
                 .minimumScaleFactor(0.9)
                 .overlay(
                     Group {
                         if isSelected && isFirstButton {
-                            CustomStrokeShape(includeLeadingCorners: false)
+                            CustomStrokeShape(
+                                includeLeadingCorners: isFirstButton,
+                                includeTrailingCorners: isLastButton
+                            )
                                 .stroke(Color(UIColor.gray500), lineWidth: 1)
                         } else if !isSelected {
                             CustomStrokeShape(
@@ -68,15 +65,16 @@ struct SegmentButton: View {
     }
     
     private var backgroundColor: Color {
-        isSelected ? Color(UIColor.point) : isFirstButton ? Color(UIColor.gray100) : Color(UIColor.white)
+        // 왼쪽 버튼 논리
+        if isFirstButton {
+            return isSelected ? Color(UIColor.gray100) : Color(UIColor.white)
+        }
+        // 오른쪽 버튼 논리
+        return isSelected ? Color(UIColor.point) : Color(UIColor.white)
     }
     
     private var foregroundColor: Color {
-        isSelected ? Color(UIColor.smeemWhite) : Color(UIColor.gray500)
-    }
-    
-    private var isCoachingOn: Bool {
-        title == "코칭 ON"
+        isSelected ? isFirstButton ? Color(UIColor.gray500): Color(UIColor.smeemWhite) : Color(UIColor.gray500)
     }
 }
 
