@@ -11,10 +11,11 @@ import UIKit
 
 struct DetailDiaryCoachedView: View {
     
+    // MARK: - Properties
+    
     @StateObject private var navigationViewModel = NavigationViewModel()
     @State private var cancelBag = Set<AnyCancellable>()
     
-    @State private var coachingsResponse = CoachingsResponse(corrections: [])
     @State private var response: DetailDiaryResponse?
     @State private var isLoading = false
     @State private var onError = false
@@ -24,6 +25,7 @@ struct DetailDiaryCoachedView: View {
     @State var diaryContent = ""
     @State var randomTopic = ""
     @State var currentIndex = 0
+    @State private var filteredCorrections: [CoachingResponse] = []
     @State private var isShowingFloatingButtons = false
     @State private var selectedIndex = 0
     @State private var navigationbarType: NavigationbarType = .diaryDetails
@@ -34,8 +36,10 @@ struct DetailDiaryCoachedView: View {
     
     private let detailDiaryService = DetailDiaryService.shared
     
+    // MARK: - Body
+    
     var body: some View {
-        VStack(spacing: 16.scaledByWidth()) {
+        VStack(spacing: 0) {
             SwiftUINavigationView(navigationViewModel: navigationViewModel,
                                   selectedIndex: $selectedIndex,
                                   navigationbarType: navigationbarType
@@ -54,9 +58,7 @@ struct DetailDiaryCoachedView: View {
                             message: "수정시 모든 코칭 내용이 사라집니다. 그래도 수정하시겠습니까?",
                             firstActionTitle: "취소",
                             secondActionTitle: "확인",
-                            firstActionHandler: {
-                                dismiss()
-                            },
+                            firstActionHandler: { },
                             secondActionHandler: {
                                 navigateToEditDiary()
                             }
@@ -75,10 +77,16 @@ struct DetailDiaryCoachedView: View {
                 }
             }
             
+            if let topic = response?.topic {
+                if topic != "" {
+                    RandomTopicViewSwiftUI(contentText: response?.topic)
+                }
+            }
+            
             if let response = response {
                 ScrollableDiaryView(
                     diaryText: response.content,
-                    corrections: response.corrections,
+                    corrections: filteredCorrections,
                     currentIndex: currentIndex,
                     selectedIndex: selectedIndex,
                     dateText: response.createdAt,
@@ -86,21 +94,25 @@ struct DetailDiaryCoachedView: View {
                 )
             } else {
                 if isLoading {
-                    ProgressView("Loading...")
+                    SmemeEmptyView()
+                    SmemeLoadingView()
                 }
             }
             
             // "코칭 ON"일 때만 표시
             if selectedIndex == 1 {
-                Spacer()
-                CoachingContentView(
-                    currentIndex: $currentIndex,
-                    coachingsResponse: $coachingsResponse,
-                    coachingResponse: $coachingsResponse.corrections
-                )
-            } else {
-                Spacer(minLength: 342.scaledByHeight())
-            }
+                        Spacer()
+                        CoachingContentView(
+                            currentIndex: $currentIndex,
+                            detailDiaryResponse: Binding(
+                                get: { self.response ?? .empty },
+                                set: { _ in }
+                            ),
+                            corrections: $filteredCorrections
+                        )
+                    } else {
+                        Spacer()
+                    }
         }
         .onAppear {
             Task {
@@ -128,6 +140,14 @@ struct DetailDiaryCoachedView: View {
             }
         }
     }
+}
+
+// MARK: - Extension
+
+extension DetailDiaryCoachedView {
+    func filterCorrection(_ response: DetailDiaryResponse) -> [CoachingResponse] {
+        return response.corrections.filter { $0.isCorrected }.prefix(10).map{$0}
+    }
     
     private func navigateToEditDiary() {
         let editVC = EditDiaryViewController()
@@ -147,10 +167,9 @@ struct DetailDiaryCoachedView: View {
             self.diaryContent = response.content
             self.randomTopic = response.topic
             
-            let corrections = response.corrections ?? []
-            self.coachingsResponse = CoachingsResponse(corrections: corrections)
+            self.filteredCorrections = filterCorrection(response)
             
-            if corrections.isEmpty {
+            if filteredCorrections.isEmpty {
                 navigationbarType = .unCoached
             }
             

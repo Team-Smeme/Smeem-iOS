@@ -33,7 +33,9 @@ struct CoachingCompleteView: View {
                                     highlightIndex: coachingAppData.currentIndex
                                 ))
                                 .font(Font.custom("Pretendard", size: 16))
-                                .foregroundColor(Color(UIColor.gray400))
+                                .foregroundColor(coachingAppData.corrections.isEmpty
+                                                 ? Color(UIColor.black)
+                                                 : Color(UIColor.gray400))
                                 .lineSpacing(0.375)
                             
                             Spacer()
@@ -45,26 +47,29 @@ struct CoachingCompleteView: View {
             }
             .padding(.horizontal, screenWidth * 0.048)
             
-            VStack(spacing: 20) {
-                Rectangle()
-                    .frame(height: 8)
-                    .foregroundStyle(Color(UIColor.gray100))
+            // 코칭 일기가 있을 때만 보여짐.
+            if !coachingAppData.corrections.isEmpty {
+                VStack(spacing: 20) {
+                    Rectangle()
+                        .frame(height: 8)
+                        .foregroundStyle(Color(UIColor.gray100))
                 TabView(selection: $coachingAppData.currentIndex) {
-                    ForEach(coachingAppData.corrections.indices, id: \.self) { item in
-                        ScrollView {
-                            VStack(spacing: 8) {
-                                CoachingComparisonView(coachingResponse: $coachingAppData.corrections[item])
-                                
-                                CoachingExplanationView(coachingResponse: $coachingAppData.corrections[item])
+                        ForEach(coachingAppData.corrections.indices, id: \.self) { item in
+                            ScrollView {
+                                VStack(spacing: 8) {
+                                    CoachingComparisonView(coachingResponse: $coachingAppData.corrections[item])
+                                    
+                                    CoachingExplanationView(coachingResponse: $coachingAppData.corrections[item])
+                                }
                             }
                         }
                     }
+                    .frame(width: screenWidth, height: screenHeight * (326/screenHeight), alignment: .top)
+                    .tabViewStyle(.page(indexDisplayMode: .never))
+                    
+                    PageControl(currentPage: $coachingAppData.currentIndex,
+                                coachingResponse: $coachingAppData.corrections)
                 }
-                .frame(width: screenWidth, height: screenHeight * (326/screenHeight), alignment: .top)
-                .tabViewStyle(.page(indexDisplayMode: .never))
-                
-                PageControl(currentPage: $coachingAppData.currentIndex,
-                            coachingResponse: $coachingAppData.corrections)
             }
         }
     }

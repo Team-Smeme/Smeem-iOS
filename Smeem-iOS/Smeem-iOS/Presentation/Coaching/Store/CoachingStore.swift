@@ -76,8 +76,8 @@ final class CoachingStore: Store, ObservableObject {
                     let coachingResponse = try await service.coachingPostAPI(diaryID: ID)
                     state.coachingAppData = CoachingAppData(currentIndex: 0,
                                                             diaryText: combineCorrectionText(coachingResponse.corrections),
-                                                            corrections: filiterCorrection(coachingResponse.corrections),
-                                                            correctResultText: correctTextResult(coachingResponse.corrections.count))
+                                                            corrections: filiterCorrection(coachingResponse.corrections) ?? [],
+                                                            correctResultText: correctTextResult(filiterCorrection(coachingResponse.corrections) ?? []))
                     state.hiddenIndex += 1
                 } catch let error {
                     let error = error as? SmeemError
@@ -105,12 +105,12 @@ final class CoachingStore: Store, ObservableObject {
         return response.map{ $0.originalSentence }.joined(separator: " ")
     }
     
-    func filiterCorrection(_ response: [CoachingResponse]) -> [CoachingResponse] {
+    func filiterCorrection(_ response: [CoachingResponse]) -> [CoachingResponse]? {
         return response.filter { $0.isCorrected }.prefix(10).map{$0}
     }
     
-    func correctTextResult(_ count: Int) -> String {
-        switch count {
+    func correctTextResult(_ response: [CoachingResponse]) -> String {
+        switch response.count {
         case 0:
             return "완벽한 일기예요!👍\n문장이 자연스럽고 오류가 없어요"
         case 1:
@@ -118,7 +118,7 @@ final class CoachingStore: Store, ObservableObject {
         case 2...:
             return "대단해요!🥳🎉\n몇 가지 피드백을 준비해 봤어요."
         default:
-            return "대단해요!🥳🎉\n몇 가지 피드백을 준비해 봤어요."
+            return "완벽한 일기예요!👍\n문장이 자연스럽고 오류가 없어요"
         }
     }
 }
