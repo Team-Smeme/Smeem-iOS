@@ -52,7 +52,6 @@ final class SplashViewModel: ViewModel {
                         switch result {
                         case .success(let response):
                             if self.checkVersion(client: self.appVersion,
-                                                 now: response.iosVersion.version,
                                                  force: response.iosVersion.forceVersion) {
                                 
                                 promise(.success(UpdateTextModel(title: response.title,
@@ -133,24 +132,8 @@ final class SplashViewModel: ViewModel {
 }
 
 extension SplashViewModel {
-    func checkVersion(client: String, now: String, force: String) -> Bool {
+    func checkVersion(client: String, force: String) -> Bool {
         let clientVersion = client.split(separator: ".").map{$0}
-        let nowVersion = now.split(separator: ".").map{$0}
-        let forceVersion = force.split(separator: ".").map{$0}
-        
-        // force가 크고 현재 앱 버전이랑 now랑 다를 때 -> 강업
-        if forceVersion[0] > clientVersion[0] && clientVersion != nowVersion {
-            return true
-        } else {
-        // force가 크고, 현재 앱 버전이랑 now랑 같을 때 -> 강업하고 온 유저
-        // force가 안 큼 -> 강업할 필요 없는 상태
-            return false
-        }
-    }
-    
-    func checkVersion2(client: String, now: String, force: String) -> Bool {
-        let clientVersion = client.split(separator: ".").map{$0}
-        let nowVersion = now.split(separator: ".").map{$0}
         let forceVersion = force.split(separator: ".").map{$0}
         
         // x 버전이 더 크면 강제 업데이트
@@ -165,5 +148,21 @@ extension SplashViewModel {
         }
         return false
     }
+    
+    func checkVersion2(client: String, now: String, force: String) -> Bool {
+        let clientVersion = client.split(separator: ".").map{$0}
+        let nowVersion = now.split(separator: ".").map{$0}
+        let forceVersion = force.split(separator: ".").map{$0}
+        
+        // force가 크고 현재 앱 버전이랑 now랑 다를 때 -> 강업
+        if forceVersion[0] > clientVersion[0] && clientVersion != nowVersion {
+            return true
+        } else {
+        // force가 크고, 현재 앱 버전이랑 now랑 같을 때 -> 강업하고 온 유저
+        // force가 안 큼 -> 강업할 필요 없는 상태
+            return false
+        }
+    }
+    
 }
     
