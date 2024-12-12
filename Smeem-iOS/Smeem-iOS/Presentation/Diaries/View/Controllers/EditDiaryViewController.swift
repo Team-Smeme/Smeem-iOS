@@ -15,6 +15,7 @@ final class EditDiaryViewController: BaseViewController {
 
     var diaryID = Int()
     var randomContent = String()
+    var hasCoached = Bool()
     
     // MARK: - UI Property
     
@@ -48,7 +49,7 @@ final class EditDiaryViewController: BaseViewController {
     
     lazy var diaryTextView: UITextView = {
         let textView = UITextView()
-        textView.text = "dafd???"
+        textView.text = "목데이터"
         textView.configureDiaryTextView(topInset: 20)
         textView.configureAttributedText()
         textView.delegate = self
@@ -169,7 +170,8 @@ extension EditDiaryViewController {
     func patchDiaryAPI() {
         PostDiaryAPI.shared.patchDiary(param: PatchDiaryRequest(content: diaryTextView.text), diaryID: diaryID) { response in
             DispatchQueue.main.async {
-                self.navigationController?.popViewController(animated: true)
+                AmplitudeConstant.diaryDetail.mydiary_edit_complete_click(self.hasCoached).event
+                self.changeRootViewControllerAndPresent(HomeViewController())
             }
         }
     }
@@ -193,3 +195,8 @@ extension EditDiaryViewController: UITextViewDelegate {
         return viewController.diaryTextView.text.getArrayAfterRegex(regex: "[a-zA-z]").count > 0
     }
 }
+
+//@available(iOS 17, *)
+//#Preview {
+//    EditDiaryViewController()
+//}

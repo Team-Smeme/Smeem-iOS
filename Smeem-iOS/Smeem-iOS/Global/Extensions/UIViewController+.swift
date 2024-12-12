@@ -74,8 +74,13 @@ extension UIViewController {
     
     func changeRootViewControllerAndPresent(_ viewControllerToPresent: UIViewController) {
         if let window = UIApplication.shared.windows.first {
-            window.rootViewController = viewControllerToPresent
-            UIView.transition(with: window, duration: 0.5, options: .transitionCrossDissolve, animations: nil)
+            let navigationController = UINavigationController(rootViewController: viewControllerToPresent)
+            window.rootViewController = navigationController
+            
+            UIView.transition(with: window,
+                              duration: 0.5,
+                              options: .transitionCrossDissolve,
+                              animations: nil)
         } else {
             viewControllerToPresent.modalPresentationStyle = .overFullScreen
             self.present(viewControllerToPresent, animated: true, completion: nil)

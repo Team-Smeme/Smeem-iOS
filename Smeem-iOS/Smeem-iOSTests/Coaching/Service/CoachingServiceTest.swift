@@ -51,6 +51,7 @@ extension CoachingServiceTest {
                                    content: "일기 내용입니다",
                                    createdAt: "2024년 5월 18일",
                                    username: "찬미",
+                                   isUpdated: true,
                                    corrections: [CoachingResponse(originalSentence: "original text",
                                                                   correctedSentence: "corrected text",
                                                                   reason: "수정된 문구입니다.",

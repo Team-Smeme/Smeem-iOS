@@ -10,7 +10,7 @@ import Combine
 
 final class SplashViewModel: ViewModel {
     
-    private let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
+    let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
     
     struct Input {
         let checkUpdatePopup: PassthroughSubject<Void, Never>
@@ -52,7 +52,6 @@ final class SplashViewModel: ViewModel {
                         switch result {
                         case .success(let response):
                             if self.checkVersion(client: self.appVersion,
-                                                 now: response.iosVersion.version,
                                                  force: response.iosVersion.forceVersion) {
                                 
                                 promise(.success(UpdateTextModel(title: response.title,
@@ -133,7 +132,24 @@ final class SplashViewModel: ViewModel {
 }
 
 extension SplashViewModel {
-    func checkVersion(client: String, now: String, force: String) -> Bool {
+    func checkVersion(client: String, force: String) -> Bool {
+        let clientVersion = client.split(separator: ".").map{$0}
+        let forceVersion = force.split(separator: ".").map{$0}
+        
+        // x 버전이 더 크면 강제 업데이트
+        if forceVersion[0] > clientVersion[0] {
+            return true
+        // x 버전이 같고, y 버전이 더 크면 강제 업데이트
+        } else if forceVersion[0] == clientVersion[0] && forceVersion[1] > clientVersion[1] {
+            return true
+        // x, y 버전이 같고, z버전이 더 크면 강제 업데이트
+        } else if (forceVersion[0] == clientVersion[0] && forceVersion[1] > clientVersion[1]) && forceVersion[2] > clientVersion[2] {
+            return true
+        }
+        return false
+    }
+    
+    func checkVersion2(client: String, now: String, force: String) -> Bool {
         let clientVersion = client.split(separator: ".").map{$0}
         let nowVersion = now.split(separator: ".").map{$0}
         let forceVersion = force.split(separator: ".").map{$0}
@@ -147,5 +163,6 @@ extension SplashViewModel {
             return false
         }
     }
+    
 }
     
