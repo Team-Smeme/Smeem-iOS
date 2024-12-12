@@ -58,9 +58,7 @@ struct DetailDiaryCoachedView: View {
                             message: "수정시 모든 코칭 내용이 사라집니다. 그래도 수정하시겠습니까?",
                             firstActionTitle: "취소",
                             secondActionTitle: "확인",
-                            firstActionHandler: {
-                                dismiss()
-                            },
+                            firstActionHandler: { },
                             secondActionHandler: {
                                 navigateToEditDiary()
                             }

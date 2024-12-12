@@ -35,7 +35,12 @@ extension View {
         )
         
         alert.addAction(UIAlertAction(title: firstActionTitle, style: .cancel) { _ in
-            firstActionHandler?()
+            // 현재 presenting view controller를 찾아서 dismiss
+            if let presentedViewController = UIApplication.shared.windows.first?.rootViewController?.presentedViewController {
+                presentedViewController.dismiss(animated: true) {
+                    firstActionHandler?()
+                }
+            }
         })
         
         alert.addAction(UIAlertAction(title: secondActionTitle, style: .default) { _ in
