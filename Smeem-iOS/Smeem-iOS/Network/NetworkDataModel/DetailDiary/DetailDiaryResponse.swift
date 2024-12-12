@@ -21,12 +21,6 @@ struct DetailDiaryResponse: Codable, Equatable {
     }
 }
 
-//struct CorrentionsData: Codable {
-//    let correntionId: Int
-//    let before: String
-//    let after: String
-//}
-
 extension DetailDiaryResponse {
     static let empty = DetailDiaryResponse(diaryId: 0, topic: "", content: "테스트임?", createdAt: "그래", username: "그래", isUpdated: true, corrections: [CoachingResponse(originalSentence: "I have went to the park yesterdayI have went to the park yesterdayI have went to the park yesterdayI have went to the park yesterday",
                                                                                                                                                                      correctedSentence: "I went to the park yesterdayI went to the park yesterdayI went to the park yesterdayI went to the park yesterdayI went to the park yesterday",
@@ -37,17 +31,3 @@ extension DetailDiaryResponse {
                                                                                                                                                                      reason: "이러 이러한 이유로 이건 맞습니다",
                                                                                                                                                                      isCorrected: true)], correctionCount: 0, correctionMaxCount: 0)
 }
-
-//struct CoachingResponse: Codable, Equatable {
-//    let originalSentence: String
-//    let correctedSentence: String
-//    let reason: String
-//    let isCorrected: Bool
-//
-//    enum CodingKeys: String, CodingKey {
-//        case originalSentence = "originalSentence"
-//        case correctedSentence = "correctedSentence"
-//        case reason
-//        case isCorrected = "isCorrected"
-//    }
-//}
