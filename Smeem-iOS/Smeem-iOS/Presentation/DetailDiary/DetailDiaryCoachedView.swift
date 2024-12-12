@@ -52,6 +52,7 @@ struct DetailDiaryCoachedView: View {
             }
             .onReceive(navigationViewModel.rightButtonTapped) {
                 isShowingFloatingButtons = true
+                AmplitudeManager.shared.track(event: AmplitudeConstant.diaryDetail.mydiary_edit(hasCorrections).event)
             }
             .confirmationDialog("", isPresented: $isShowingFloatingButtons) {
                 Button("수정하기", role: .none) {
@@ -69,9 +70,6 @@ struct DetailDiaryCoachedView: View {
                     } else {
                         navigateToEditDiary()
                     }
-                }
-                .onTapGesture {
-                    AmplitudeManager.shared.track(event: AmplitudeConstant.diaryDetail.mydiary_edit(hasCorrections).event)
                 }
                 
                 Button("삭제하기", role: .destructive) {
@@ -121,7 +119,7 @@ struct DetailDiaryCoachedView: View {
                     }
         }
         .onAppear {
-            AmplitudeManager.shared.track(event: AmplitudeConstant.diaryDetail.mydiary_view(hasCorrections).event)
+            AmplitudeManager.shared.track(event: AmplitudeConstant.diaryDetail.mydiary_click.event)
             Task {
                 await fetchCoachingData(diaryID: diaryID ?? 0)
             }
@@ -171,7 +169,7 @@ extension DetailDiaryCoachedView {
     }
     
     private func convertSelectedIndexToString(_ index: Int) -> String {
-        return index == 0 ? "코칭 OFF" : "코칭 ON"
+        return index == 0 ? "on" : "off"
     }
     
     @MainActor
@@ -198,7 +196,7 @@ extension DetailDiaryCoachedView {
     }
     
     func deleteDiaryWithAPI(diaryID: Int) {
-        SmeemLoadingView.showLoading()
+        isLoading = true
         
         detailDiaryService.deleteDiary(diaryID: diaryID) { result in
             
@@ -210,7 +208,7 @@ extension DetailDiaryCoachedView {
                 toastErrorMessage = error
                 break
             }
-            SmeemLoadingView.hideLoading()
+            isLoading = false
         }
     }
 }
