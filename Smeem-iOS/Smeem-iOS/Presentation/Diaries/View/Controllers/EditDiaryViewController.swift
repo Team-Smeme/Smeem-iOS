@@ -170,7 +170,7 @@ extension EditDiaryViewController {
     func patchDiaryAPI() {
         PostDiaryAPI.shared.patchDiary(param: PatchDiaryRequest(content: diaryTextView.text), diaryID: diaryID) { response in
             DispatchQueue.main.async {
-                AmplitudeConstant.diaryDetail.mydiary_edit_complete_click(self.hasCoached).event
+                AmplitudeManager.shared.track(event: AmplitudeConstant.diaryDetail.mydiary_edit_complete_click(self.hasCoached).event)
                 self.changeRootViewControllerAndPresent(HomeViewController())
             }
         }

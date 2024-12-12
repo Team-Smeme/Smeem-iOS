@@ -119,7 +119,7 @@ struct DetailDiaryCoachedView: View {
                     }
         }
         .onAppear {
-            AmplitudeManager.shared.track(event: AmplitudeConstant.diaryDetail.mydiary_click.event)
+            AmplitudeManager.shared.track(event: AmplitudeConstant.diaryDetail.mydiary_click(hasCorrections).event)
             Task {
                 await fetchCoachingData(diaryID: diaryID ?? 0)
             }
@@ -199,7 +199,6 @@ extension DetailDiaryCoachedView {
         isLoading = true
         
         detailDiaryService.deleteDiary(diaryID: diaryID) { result in
-            
             switch result {
             case .success(_):
                 let homeVC = HomeViewController()

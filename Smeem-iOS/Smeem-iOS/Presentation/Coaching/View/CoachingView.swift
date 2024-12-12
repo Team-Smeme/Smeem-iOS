@@ -19,7 +19,10 @@ struct CoachingView: View {
                     HStack() {
                         Spacer()
                         Button(action: {
-                            store.send(action: .amplitudeInput(type: .exitButtonTapped(store.state.isEnabled)))
+                            // MARK: 코칭 받기 전에 닫기 버튼 클릭시 amplitude
+                            if store.state.hiddenIndex == 0 {
+                                store.send(action: .amplitudeInput(type: .exitButtonTapped(store.state.isEnabled)))
+                            }
                             let homeVC = HomeViewController()
                             homeVC.handlePostDiaryAPI(with: store.state.diaryResponse)
                             changeRootViewController(homeVC)
@@ -83,7 +86,7 @@ struct CoachingView: View {
                                 store.send(action: .amplitudeInput(type: .coachingLoading))
                              }
                         
-                        Text("AI 코치가 내 일기를 분석하고 있어요\n잠시만 기다려주세요")
+                        Text("AI 코치가 내 일기를 분석하고 있어요.\n잠시만 기다려주세요.")
                             .font(Font.custom("Pretendard", size: 16))
                             .multilineTextAlignment(.center)
                             .foregroundColor(.black)
@@ -94,7 +97,7 @@ struct CoachingView: View {
                     CoachingCompleteView(coachingAppData: $store.state.coachingAppData)
                         .onAppear {
                             store.send(action: .amplitudeInput(type: .coachingResult))
-                            store.send(action: .amplitudeInput(type: .coachingSwipe(1)))
+                            store.send(action: .amplitudeInput(type: .coachingSwipe(0)))
                         }
                         .onChange(of: store.state.coachingAppData.currentIndex) { index in
                             store.send(action: .amplitudeInput(type: .coachingSwipe(index)))
