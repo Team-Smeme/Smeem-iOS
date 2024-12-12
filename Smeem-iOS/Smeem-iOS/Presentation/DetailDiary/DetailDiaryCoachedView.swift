@@ -32,6 +32,9 @@ struct DetailDiaryCoachedView: View {
     
     @State private var toastErrorMessage: SmeemError? = nil
     var toastMessage: SmeemToast? = .completed
+    var hasCorrections: Bool {
+        return !(response?.corrections.isEmpty ?? true)
+    }
     @Environment(\.dismiss) private var dismiss
     
     private let detailDiaryService = DetailDiaryService.shared
@@ -66,6 +69,9 @@ struct DetailDiaryCoachedView: View {
                     } else {
                         navigateToEditDiary()
                     }
+                }
+                .onTapGesture {
+                    AmplitudeManager.shared.track(event: AmplitudeConstant.diaryDetail.mydiary_edit(hasCorrections).event)
                 }
                 
                 Button("삭제하기", role: .destructive) {
@@ -115,9 +121,14 @@ struct DetailDiaryCoachedView: View {
                     }
         }
         .onAppear {
+            AmplitudeManager.shared.track(event: AmplitudeConstant.diaryDetail.mydiary_view(hasCorrections).event)
             Task {
                 await fetchCoachingData(diaryID: diaryID ?? 0)
             }
+        }
+        .onChange(of: selectedIndex) { newValue in
+            AmplitudeManager.shared.track(event: AmplitudeConstant.diaryDetail.toggle_click(convertSelectedIndexToString(newValue)).event
+            )
         }
         .overlay {
             if isLoading {
@@ -154,8 +165,13 @@ extension DetailDiaryCoachedView {
         editVC.diaryID = self.diaryID ?? 0
         editVC.randomContent = self.randomTopic
         editVC.diaryTextView.text = self.diaryContent
+        editVC.hasCoached = self.hasCorrections
         editVC.randomSubjectView.setData(contentText: self.randomTopic)
         self.pushToUIKitView(editVC)
+    }
+    
+    private func convertSelectedIndexToString(_ index: Int) -> String {
+        return index == 0 ? "코칭 OFF" : "코칭 ON"
     }
     
     @MainActor

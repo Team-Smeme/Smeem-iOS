@@ -59,7 +59,7 @@ final class CoachingStoreTest: XCTestCase {
                                                    isCorrected: false))
         }
         
-        var expectedResult = [CoachingResponse]()
+        let expectedResult = [CoachingResponse]()
         
         // When
         let outputResult = sut.filiterCorrection(filterResult)
@@ -71,14 +71,14 @@ final class CoachingStoreTest: XCTestCase {
     func test_원문일기_잘조합해주는지() {
         // Given
         var filterResult = [CoachingResponse]()
-        for i in 1...3 {
-            filterResult.append(CoachingResponse(originalSentence: "안녕",
+        for _ in 1...3 {
+            filterResult.append(CoachingResponse(originalSentence: "테스트",
                                                  correctedSentence: "",
                                                  reason: "",
                                                  isCorrected: false))
         }
         
-        var expectedResult = "안녕 안녕 안녕"
+        let expectedResult = "테스트 테스트 테스트"
         
         // When
         let outputResult = sut.combineCorrectionText(filterResult)

@@ -49,7 +49,7 @@ struct SegmentButton: View {
                 .foregroundColor(foregroundColor)
                 .font(Font(UIFont.c5))
 //                .lineLimit(1)
-//                .minimumScaleFactor(0.9)
+                .minimumScaleFactor(0.9)
                 .overlay(
                     Group {
                         if isSelected && isFirstButton {

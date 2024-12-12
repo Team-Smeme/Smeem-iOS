@@ -19,6 +19,7 @@ struct CoachingView: View {
                     HStack() {
                         Spacer()
                         Button(action: {
+                            store.send(action: .amplitudeInput(type: .exitButtonTapped(store.state.isEnabled)))
                             let homeVC = HomeViewController()
                             homeVC.handlePostDiaryAPI(with: store.state.diaryResponse)
                             changeRootViewController(homeVC)
@@ -37,6 +38,7 @@ struct CoachingView: View {
                     Button(action: {
                         if store.state.isEnabled {
                             store.send(action: .coachingButton(diaryID: store.state.diaryResponse.diaryID))
+                            store.send(action: .amplitudeInput(type: .coachingButtonTapped(store.state.isEnabled)))
                         }
                     }) {
                         HStack {
@@ -77,6 +79,9 @@ struct CoachingView: View {
                         LottieView("smeemLoading")
                             .loopMode(.loop)
                             .frame(width: screenWidth, height: 164, alignment: .center)
+                            .onAppear {
+                                store.send(action: .amplitudeInput(type: .coachingLoading))
+                             }
                         
                         Text("AI 코치가 내 일기를 분석하고 있어요\n잠시만 기다려주세요")
                             .font(Font.custom("Pretendard", size: 16))
@@ -87,6 +92,13 @@ struct CoachingView: View {
                     // MARK: 첨삭 화면
                 } else {
                     CoachingCompleteView(coachingAppData: $store.state.coachingAppData)
+                        .onAppear {
+                            store.send(action: .amplitudeInput(type: .coachingResult))
+                            store.send(action: .amplitudeInput(type: .coachingSwipe(1)))
+                        }
+                        .onChange(of: store.state.coachingAppData.currentIndex) { index in
+                            store.send(action: .amplitudeInput(type: .coachingSwipe(index)))
+                        }
                 }
                 
                 // MARK: 첫 진입시 토스트뷰 실행

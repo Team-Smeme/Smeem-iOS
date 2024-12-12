@@ -17,7 +17,6 @@
 		370BD0B32CFB65BE009560DB /* RandomTopicView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370BD0AA2CFB65BE009560DB /* RandomTopicView.swift */; };
 		370BD0B42CFB65BE009560DB /* AlarmCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370BD0A32CFB65BE009560DB /* AlarmCollectionViewCell.swift */; };
 		370BD0B52CFB65BE009560DB /* AlarmDefaultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370BD0A42CFB65BE009560DB /* AlarmDefaultModel.swift */; };
-		370BD0B82CFBF50C009560DB /* Double+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370BD0B72CFBF50C009560DB /* Double+.swift */; };
 		371107DA2AC99099007A4AC2 /* KeyboardFollowingLayoutHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371107D92AC99099007A4AC2 /* KeyboardFollowingLayoutHandler.swift */; };
 		371107DD2ACAB571007A4AC2 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371107DC2ACAB571007A4AC2 /* BaseView.swift */; };
 		371107DF2ACAB709007A4AC2 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 371107DE2ACAB709007A4AC2 /* BaseViewController.swift */; };
@@ -40,6 +39,8 @@
 		375B628B2C590D0D00DA8E30 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 375B628A2C590D0D00DA8E30 /* FirebaseMessaging */; };
 		375B628D2C590D0D00DA8E30 /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 375B628C2C590D0D00DA8E30 /* FirebaseRemoteConfig */; };
 		3761116C2A278D0E0095EC5A /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3761116B2A278D0E0095EC5A /* String+.swift */; };
+		376947892D0894A2006A46B1 /* Double+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376947882D0894A2006A46B1 /* Double+.swift */; };
+		377B3BF02CF613710086E0BC /* HighlightModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 377B3BEF2CF613710086E0BC /* HighlightModifier.swift */; };
 		3785072F2BD1480C004CC922 /* SharedDiaryDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37499E3C2BD0C3A100BA6FAF /* SharedDiaryDataService.swift */; };
 		378B20EE2BA0A01600604935 /* ForeignDiaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378B20ED2BA0A01600604935 /* ForeignDiaryViewModel.swift */; };
 		378B20F02BA0A02400604935 /* StepOneKoreanDiaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378B20EF2BA0A02400604935 /* StepOneKoreanDiaryViewModel.swift */; };
@@ -67,10 +68,6 @@
 		37B123B62CEEE58E00ED973A /* DetailDiaryCoachedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37B123B52CEEE58E00ED973A /* DetailDiaryCoachedView.swift */; };
 		37BCADF22BC3FFBF006EF960 /* DetailDiaryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BCADF12BC3FFBF006EF960 /* DetailDiaryViewModel.swift */; };
 		37BDC9872C4FEA940075F68A /* SendFeedbackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BDC9862C4FEA940075F68A /* SendFeedbackView.swift */; };
-		37BF485B2D08676A0013669A /* HighlightModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BF485A2D08676A0013669A /* HighlightModifier.swift */; };
-		37BF485E2D0867DC0013669A /* CoachingResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BF485C2D0867DC0013669A /* CoachingResponse.swift */; };
-		37BF48742D086A6C0013669A /* SmemeLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BF48722D086A6C0013669A /* SmemeLoadingView.swift */; };
-		37BF48772D086A8B0013669A /* SmemeToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BF48752D086A8B0013669A /* SmemeToastView.swift */; };
 		37DCA6572A47574300FF8F90 /* RandomTopicAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DCA6562A47574300FF8F90 /* RandomTopicAPI.swift */; };
 		37DCA65A2A47598700FF8F90 /* RandomTopicService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DCA6592A47598700FF8F90 /* RandomTopicService.swift */; };
 		37DCA65D2A475B5100FF8F90 /* RandomTopicResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37DCA65C2A475B5100FF8F90 /* RandomTopicResponse.swift */; };
@@ -248,7 +245,6 @@
 		370BD0A92CFB65BE009560DB /* DiaryScrollerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryScrollerView.swift; sourceTree = "<group>"; };
 		370BD0AA2CFB65BE009560DB /* RandomTopicView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomTopicView.swift; sourceTree = "<group>"; };
 		370BD0AB2CFB65BE009560DB /* SeparationLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeparationLine.swift; sourceTree = "<group>"; };
-		370BD0B72CFBF50C009560DB /* Double+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+.swift"; sourceTree = "<group>"; };
 		371107D92AC99099007A4AC2 /* KeyboardFollowingLayoutHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardFollowingLayoutHandler.swift; sourceTree = "<group>"; };
 		371107DC2ACAB571007A4AC2 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		371107DE2ACAB709007A4AC2 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
@@ -268,6 +264,8 @@
 		374F828B2AC327A200C128B9 /* SmeemTextViewHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmeemTextViewHandler.swift; sourceTree = "<group>"; };
 		374FAF802A2CACCF00237A1A /* DiaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryViewController.swift; sourceTree = "<group>"; };
 		3761116B2A278D0E0095EC5A /* String+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
+		376947882D0894A2006A46B1 /* Double+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+.swift"; sourceTree = "<group>"; };
+		377B3BEF2CF613710086E0BC /* HighlightModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightModifier.swift; sourceTree = "<group>"; };
 		378B20ED2BA0A01600604935 /* ForeignDiaryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForeignDiaryViewModel.swift; sourceTree = "<group>"; };
 		378B20EF2BA0A02400604935 /* StepOneKoreanDiaryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepOneKoreanDiaryViewModel.swift; sourceTree = "<group>"; };
 		378B20F12BA0A03000604935 /* StepTwoKoreanDiaryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepTwoKoreanDiaryViewModel.swift; sourceTree = "<group>"; };
@@ -294,10 +292,6 @@
 		37B123B52CEEE58E00ED973A /* DetailDiaryCoachedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailDiaryCoachedView.swift; sourceTree = "<group>"; };
 		37BCADF12BC3FFBF006EF960 /* DetailDiaryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailDiaryViewModel.swift; sourceTree = "<group>"; };
 		37BDC9862C4FEA940075F68A /* SendFeedbackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendFeedbackView.swift; sourceTree = "<group>"; };
-		37BF485A2D08676A0013669A /* HighlightModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightModifier.swift; sourceTree = "<group>"; };
-		37BF485C2D0867DC0013669A /* CoachingResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoachingResponse.swift; sourceTree = "<group>"; };
-		37BF48722D086A6C0013669A /* SmemeLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmemeLoadingView.swift; sourceTree = "<group>"; };
-		37BF48752D086A8B0013669A /* SmemeToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmemeToastView.swift; sourceTree = "<group>"; };
 		37DCA6562A47574300FF8F90 /* RandomTopicAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomTopicAPI.swift; sourceTree = "<group>"; };
 		37DCA6592A47598700FF8F90 /* RandomTopicService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomTopicService.swift; sourceTree = "<group>"; };
 		37DCA65C2A475B5100FF8F90 /* RandomTopicResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RandomTopicResponse.swift; sourceTree = "<group>"; };
@@ -465,6 +459,8 @@
 		4AB349522CF22AD30047C484 /* Auth */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Auth; sourceTree = "<group>"; };
 		4AB349532CF22AD90047C484 /* Badge */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Badge; sourceTree = "<group>"; };
 		4AB349562CF22BFF0047C484 /* EditUser */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = EditUser; sourceTree = "<group>"; };
+		4AB349BA2CF23B770047C484 /* Coaching */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Coaching; sourceTree = "<group>"; };
+		4AB349BC2CF23D210047C484 /* Coaching */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Coaching; sourceTree = "<group>"; };
 		4AF050CE2CE9DE010055BC3F /* Coaching */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Coaching; sourceTree = "<group>"; };
 		4AF050D82CEA01EA0055BC3F /* Coaching */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Coaching; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -566,8 +562,8 @@
 		373D29912CBFE16B00A559A3 /* SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
+				377B3BEF2CF613710086E0BC /* HighlightModifier.swift */,
 				373D29922CBFE17B00A559A3 /* View+.swift */,
-				37BF485A2D08676A0013669A /* HighlightModifier.swift */,
 			);
 			path = SwiftUI;
 			sourceTree = "<group>";
@@ -657,7 +653,7 @@
 				4A4FEB002B721956001BBDF3 /* Combine+.swift */,
 				4AB7C9182B75F9B500845733 /* GesturePublisher+.swift */,
 				4AF050EA2CEA300F0055BC3F /* MoyaProvier+.swift */,
-				370BD0B72CFBF50C009560DB /* Double+.swift */,
+				376947882D0894A2006A46B1 /* Double+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -745,30 +741,6 @@
 				4A6630352A51B0AD00D19CC9 /* EditDiaryViewController.swift */,
 			);
 			path = Controllers;
-			sourceTree = "<group>";
-		};
-		37BF485D2D0867DC0013669A /* Coaching */ = {
-			isa = PBXGroup;
-			children = (
-				37BF485C2D0867DC0013669A /* CoachingResponse.swift */,
-			);
-			path = Coaching;
-			sourceTree = "<group>";
-		};
-		37BF48732D086A6C0013669A /* LoadingView */ = {
-			isa = PBXGroup;
-			children = (
-				37BF48722D086A6C0013669A /* SmemeLoadingView.swift */,
-			);
-			path = LoadingView;
-			sourceTree = "<group>";
-		};
-		37BF48762D086A8B0013669A /* Toast */ = {
-			isa = PBXGroup;
-			children = (
-				37BF48752D086A8B0013669A /* SmemeToastView.swift */,
-			);
-			path = Toast;
 			sourceTree = "<group>";
 		};
 		37CD0DB32A1DEE64001F03E7 /* Diaries */ = {
@@ -926,6 +898,7 @@
 		4A07F8D92B821523004185F2 /* Smeem-iOSTests */ = {
 			isa = PBXGroup;
 			children = (
+				4AB349BC2CF23D210047C484 /* Coaching */,
 				4AF78D9C2B84AB5D0098E1FA /* Base */,
 				4A07F8E12B821529004185F2 /* Onboarding */,
 			);
@@ -978,7 +951,7 @@
 		4A0EA45C2A014126006CCE52 /* NetworkDataModel */ = {
 			isa = PBXGroup;
 			children = (
-				37BF485D2D0867DC0013669A /* Coaching */,
+				4AB349BA2CF23B770047C484 /* Coaching */,
 				4AB349562CF22BFF0047C484 /* EditUser */,
 				4AB349532CF22AD90047C484 /* Badge */,
 				4AB349522CF22AD30047C484 /* Auth */,
@@ -1032,9 +1005,9 @@
 		4A1EE9552A4DFB86007BFEF3 /* SmeemComponent */ = {
 			isa = PBXGroup;
 			children = (
-				37BF48732D086A6C0013669A /* LoadingView */,
+				4A17370F2D05C03600B772C3 /* LoadingView */,
+				4A17370E2D05C02E00B772C3 /* Toast */,
 				4AB349502CF22A2E0047C484 /* TextView */,
-				37BF48762D086A8B0013669A /* Toast */,
 				4AB3494F2CF22A250047C484 /* Button */,
 				4AB3494E2CF22A070047C484 /* Global */,
 				379789012AAB9B1900C61EF4 /* NavigationBar */,
@@ -1746,6 +1719,9 @@
 			dependencies = (
 				4A07F8DD2B821523004185F2 /* PBXTargetDependency */,
 			);
+			fileSystemSynchronizedGroups = (
+				4AB349BC2CF23D210047C484 /* Coaching */,
+			);
 			name = "Smeem-iOSTests";
 			productName = "Smeem-iOSTests";
 			productReference = 4A07F8D82B821523004185F2 /* Smeem-iOSTests.xctest */;
@@ -1774,6 +1750,7 @@
 				4AB349522CF22AD30047C484 /* Auth */,
 				4AB349532CF22AD90047C484 /* Badge */,
 				4AB349562CF22BFF0047C484 /* EditUser */,
+				4AB349BA2CF23B770047C484 /* Coaching */,
 				4AF050CE2CE9DE010055BC3F /* Coaching */,
 				4AF050D82CEA01EA0055BC3F /* Coaching */,
 			);
@@ -1907,6 +1884,7 @@
 				4AC705AE2BECF0D4003C5310 /* EditPlanViewModel.swift in Sources */,
 				4AF7C22F2BFB797600E8C6CD /* LockBadgeCollectionViewCell.swift in Sources */,
 				6F294A3E2A26177B00856CC8 /* TrainingGoalViewController.swift in Sources */,
+				376947892D0894A2006A46B1 /* Double+.swift in Sources */,
 				4ABCBCCE2BDE95D0003138A8 /* MyPlanResponse.swift in Sources */,
 				4A9731D92BAAB70500DEC0C8 /* UpdateResponse.swift in Sources */,
 				4ABCBCEC2BE261B0003138A8 /* TrainingCollectionViewDatasource.swift in Sources */,
@@ -1930,7 +1908,6 @@
 				370BD0B32CFB65BE009560DB /* RandomTopicView.swift in Sources */,
 				370BD0B42CFB65BE009560DB /* AlarmCollectionViewCell.swift in Sources */,
 				370BD0B52CFB65BE009560DB /* AlarmDefaultModel.swift in Sources */,
-				37BF48742D086A6C0013669A /* SmemeLoadingView.swift in Sources */,
 				4AB7C9302B78B44500845733 /* LoginBottomSheetViewController.swift in Sources */,
 				4A08480E2B555FD0008327C7 /* AmplitudeConstant.swift in Sources */,
 				4A3774842A42E6EA00357DD1 /* ConfigConstant.swift in Sources */,
@@ -1946,7 +1923,6 @@
 				4A004D5B2B4EE29A003C8936 /* PushTestService.swift in Sources */,
 				379789052AAC706800C61EF4 /* SmeemNavigationFactory.swift in Sources */,
 				37DCA65D2A475B5100FF8F90 /* RandomTopicResponse.swift in Sources */,
-				370BD0B82CFBF50C009560DB /* Double+.swift in Sources */,
 				4ABCBCCC2BDE8E44003138A8 /* MySummaryService.swift in Sources */,
 				371107DA2AC99099007A4AC2 /* KeyboardFollowingLayoutHandler.swift in Sources */,
 				37B123B62CEEE58E00ED973A /* DetailDiaryCoachedView.swift in Sources */,
@@ -1954,10 +1930,10 @@
 				4ABCBCE52BE25D82003138A8 /* TrainingPlanViewController.swift in Sources */,
 				4AB7C9192B75F9B500845733 /* GesturePublisher+.swift in Sources */,
 				37A574CC29FF990E00312453 /* UIViewController+.swift in Sources */,
-				37BF485B2D08676A0013669A /* HighlightModifier.swift in Sources */,
 				4ABCBCEA2BE26079003138A8 /* TrainingPlanViewModel.swift in Sources */,
 				4A9E10E42A43468600295D07 /* BaseTargetType.swift in Sources */,
 				37A574C329FF6E9C00312453 /* Constant.swift in Sources */,
+				377B3BF02CF613710086E0BC /* HighlightModifier.swift in Sources */,
 				4AC1D6832B4ED38200D39A98 /* OnboardingModel.swift in Sources */,
 				4AC705932BEA1E52003C5310 /* LanguageContainerView.swift in Sources */,
 				4A004D602B4EE2BD003C8936 /* MyPageAPI.swift in Sources */,
@@ -2008,7 +1984,6 @@
 				4ADA41772A556209001C0285 /* LoadingView.swift in Sources */,
 				4ADCA2D62A9272E9002904EB /* EditAlarmViewController.swift in Sources */,
 				4A004D592B4EE28D003C8936 /* PushTestAPI.swift in Sources */,
-				37BF48772D086A8B0013669A /* SmemeToastView.swift in Sources */,
 				6F294A432A26179700856CC8 /* ServiceAcceptViewController.swift in Sources */,
 				4AD04B402A1921AE004B7A58 /* CorrectionViewController.swift in Sources */,
 				4A1882FA2A8BBD0D0088F590 /* SmeemStartViewController.swift in Sources */,
@@ -2050,7 +2025,6 @@
 				6F294A422A26178C00856CC8 /* UserNickNameViewController.swift in Sources */,
 				4AC047252A8FCAE100EBDC0E /* AuthManagementViewController.swift in Sources */,
 				374FAF812A2CACCF00237A1A /* DiaryViewController.swift in Sources */,
-				37BF485E2D0867DC0013669A /* CoachingResponse.swift in Sources */,
 				37DCA65A2A47598700FF8F90 /* RandomTopicService.swift in Sources */,
 				4AB7C9262B78914100845733 /* SplashViewModel.swift in Sources */,
 				4AF7C2312BFB7A4F00E8C6CD /* MyPlanDeactiveCollectionViewCell.swift in Sources */,
@@ -2287,7 +2261,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Smeem-iOS/Smeem-iOS.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20240811;
+				CURRENT_PROJECT_VERSION = 20241203;
 				DEVELOPMENT_TEAM = K8LLWYQWXD;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Smeem-iOS/Info.plist";
@@ -2303,7 +2277,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.3;
+				MARKETING_VERSION = 3.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "Team.Smeem-dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2325,7 +2299,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Smeem-iOS/Smeem-iOS.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Distribution: YuJi Lee (K8LLWYQWXD)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 20241031;
+				CURRENT_PROJECT_VERSION = 2024121201;
 				DEVELOPMENT_TEAM = K8LLWYQWXD;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Smeem-iOS/Info.plist";
@@ -2341,7 +2315,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.3;
+				MARKETING_VERSION = 3.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "Team.Smeem-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = smeem_release;
