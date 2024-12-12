@@ -10,7 +10,7 @@ import Combine
 
 final class SplashViewModel: ViewModel {
     
-    private let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
+    let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
     
     struct Input {
         let checkUpdatePopup: PassthroughSubject<Void, Never>
