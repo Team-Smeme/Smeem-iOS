@@ -50,6 +50,23 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneWillEnterForeground(_ scene: UIScene) {
         // Called as the scene transitions from the background to the foreground.
         // Use this method to undo the changes made on entering the background.
+        
+        // MARK: Token Check
+        AuthService.shared.reLoginAPI() { result in
+            switch result {
+            case .success(let response):
+                if let accessToken = response.data?.accessToken {
+                    UserDefaultsManager.accessToken = accessToken
+                }
+                if let refreshToken = response.data?.refreshToken {
+                    UserDefaultsManager.refreshToken = refreshToken
+                }
+            case .failure(let error):
+                // 실패하면 에러 토스트 후, 홈으로 보내야 하는데...
+                print(error, "에러 발생")
+            }
+        }
+        
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {
