@@ -62,8 +62,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     UserDefaultsManager.refreshToken = refreshToken
                 }
             case .failure(let error):
-                // 실패하면 에러 토스트 후, 홈으로 보내야 하는데...
-                print(error, "에러 발생")
+                if error != .tokenError {
+                    if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                       let delegate = scene.delegate as? SceneDelegate,
+                       let window = delegate.window {
+                        // 홈 화면으로 전환
+                        let homeViewController = SplashViewController() // 실제 홈 VC로 변경
+                        let navigationController = UINavigationController(rootViewController: homeViewController)
+                        window.rootViewController = navigationController
+                        window.makeKeyAndVisible()
+                    } else {
+                        print("아니면 여기")
+                    }
+                }
             }
         }
         
