@@ -42,111 +42,122 @@ struct DetailDiaryCoachedView: View {
     // MARK: - Body
     
     var body: some View {
-        VStack(spacing: 0) {
-            SwiftUINavigationView(navigationViewModel: navigationViewModel,
-                                  selectedIndex: $selectedIndex,
-                                  navigationbarType: navigationbarType
-            )
-            .onReceive(navigationViewModel.leftButtonTapped) {
-                dismiss()
-            }
-            .onReceive(navigationViewModel.rightButtonTapped) {
-                isShowingFloatingButtons = true
-                AmplitudeManager.shared.track(event: AmplitudeConstant.diaryDetail.mydiary_edit(hasCorrections).event)
-            }
-            .confirmationDialog("", isPresented: $isShowingFloatingButtons) {
-                Button("수정하기", role: .none) {
-                    if navigationbarType == .diaryDetails {
-                        showEditConfirmation(
-                            title: "수정 확인",
-                            message: "수정시 모든 코칭 내용이 사라집니다. 그래도 수정하시겠습니까?",
-                            firstActionTitle: "취소",
-                            secondActionTitle: "확인",
-                            firstActionHandler: { },
-                            secondActionHandler: {
-                                navigateToEditDiary()
-                            }
-                        )
-                    } else {
-                        navigateToEditDiary()
+        ZStack {
+            Color.white.ignoresSafeArea()
+            VStack(spacing: 0) {
+                SwiftUINavigationView(navigationViewModel: navigationViewModel,
+                                      selectedIndex: $selectedIndex,
+                                      navigationbarType: navigationbarType
+                )
+                .onReceive(navigationViewModel.leftButtonTapped) {
+                    dismiss()
+                }
+                .onReceive(navigationViewModel.rightButtonTapped) {
+                    isShowingFloatingButtons = true
+                    AmplitudeManager.shared.track(event: AmplitudeConstant.diaryDetail.mydiary_edit(hasCorrections).event)
+                }
+                .confirmationDialog("", isPresented: $isShowingFloatingButtons) {
+                    Button("수정하기", role: .none) {
+                        if navigationbarType == .diaryDetails {
+                            showEditConfirmation(
+                                title: "수정 확인",
+                                message: "수정시 모든 코칭 내용이 사라집니다. 그래도 수정하시겠습니까?",
+                                firstActionTitle: "취소",
+                                secondActionTitle: "확인",
+                                firstActionHandler: { },
+                                secondActionHandler: {
+                                    navigateToEditDiary()
+                                }
+                            )
+                        } else {
+                            navigateToEditDiary()
+                        }
+                    }
+                    
+                    Button("삭제하기", role: .destructive) {
+                        deleteDiaryWithAPI(diaryID: diaryID ?? 0)
+                    }
+                    
+                    Button("취소", role: .cancel) {
+                        isShowingFloatingButtons = false
                     }
                 }
                 
-                Button("삭제하기", role: .destructive) {
-                    deleteDiaryWithAPI(diaryID: diaryID ?? 0)
+                if let topic = response?.topic {
+                    if topic != "" {
+                        RandomTopicViewSwiftUI(contentText: response?.topic)
+                    }
                 }
                 
-                Button("취소", role: .cancel) {
-                    isShowingFloatingButtons = false
+                if let response = response {
+                    ScrollableDiaryView(
+                        diaryText: response.content,
+                        corrections: filteredCorrections,
+                        currentIndex: currentIndex,
+                        selectedIndex: selectedIndex,
+                        dateText: response.createdAt,
+                        authorText: response.username
+                    )
+                } else {
+                    if isLoading {
+                        SmemeEmptyView()
+                        SmemeLoadingView()
+                    }
+                }
+                
+                // "코칭 ON"일 때만 표시
+                if selectedIndex == 1 {
+                    Spacer()
+                    CoachingContentView(
+                        currentIndex: $currentIndex,
+                        detailDiaryResponse: Binding(
+                            get: { self.response ?? .empty },
+                            set: { _ in }
+                        ),
+                        corrections: $filteredCorrections
+                    )
+                } else {
+                    Spacer()
                 }
             }
-            
-            if let topic = response?.topic {
-                if topic != "" {
-                    RandomTopicViewSwiftUI(contentText: response?.topic)
+            .onAppear {
+                AmplitudeManager.shared.track(event: AmplitudeConstant.diaryDetail.mydiary_click(true).event)
+                Task {
+                    await fetchCoachingData(diaryID: diaryID ?? 0)
                 }
             }
-            
-            if let response = response {
-                ScrollableDiaryView(
-                    diaryText: response.content,
-                    corrections: filteredCorrections,
-                    currentIndex: currentIndex,
-                    selectedIndex: selectedIndex,
-                    dateText: response.createdAt,
-                    authorText: response.username
+            .onChange(of: selectedIndex) { newValue in
+                AmplitudeManager.shared.track(event: AmplitudeConstant.diaryDetail.toggle_click(convertSelectedIndexToString(newValue)).event
                 )
-            } else {
+            }
+            .overlay {
                 if isLoading {
                     SmemeEmptyView()
                     SmemeLoadingView()
                 }
-            }
-            
-            // "코칭 ON"일 때만 표시
-            if selectedIndex == 1 {
-                        Spacer()
-                        CoachingContentView(
-                            currentIndex: $currentIndex,
-                            detailDiaryResponse: Binding(
-                                get: { self.response ?? .empty },
-                                set: { _ in }
-                            ),
-                            corrections: $filteredCorrections
-                        )
-                    } else {
-                        Spacer()
+                
+                if onError {
+                    ZStack {
+                        Color.clear
+                        VStack {
+                            Spacer()
+                            SmeemErrorToastView(type: $toastErrorMessage)
+                                .padding(.bottom, 20.scaledByHeight())
+                        }
                     }
-        }
-        .onAppear {
-            AmplitudeManager.shared.track(event: AmplitudeConstant.diaryDetail.mydiary_click.event)
-            Task {
-                await fetchCoachingData(diaryID: diaryID ?? 0)
+                    .onDisappear {
+                        onError = false
+                    }
+                }
             }
-        }
-        .onChange(of: selectedIndex) { newValue in
-            AmplitudeManager.shared.track(event: AmplitudeConstant.diaryDetail.toggle_click(convertSelectedIndexToString(newValue)).event
+            .gesture(
+                DragGesture()
+                    .onEnded { value in
+                        if value.translation.width > 50 {
+                            dismiss()
+                        }
+                    }
             )
-        }
-        .overlay {
-            if isLoading {
-                SmemeEmptyView()
-                SmemeLoadingView()
-            }
-            
-            if onError {
-                ZStack {
-                    Color.clear
-                    VStack {
-                        Spacer()
-                        SmeemErrorToastView(type: $toastErrorMessage)
-                            .padding(.bottom, 20.scaledByHeight())
-                    }
-                }
-                .onDisappear {
-                    onError = false
-                }
-            }
         }
     }
 }
@@ -199,14 +210,12 @@ extension DetailDiaryCoachedView {
         isLoading = true
         
         detailDiaryService.deleteDiary(diaryID: diaryID) { result in
-            
             switch result {
             case .success(_):
                 let homeVC = HomeViewController()
                 self.changeRootViewControllerAndPresent(homeVC)
             case .failure(let error):
                 toastErrorMessage = error
-                break
             }
             isLoading = false
         }

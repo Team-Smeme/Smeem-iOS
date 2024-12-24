@@ -43,8 +43,6 @@ final class DetailDiaryViewController: BaseViewController {
         setLayout()
         swipeRecognizer()
         bind()
-        
-        AmplitudeManager.shared.track(event: AmplitudeConstant.diaryDetail.mydiary_click.event)
     }
     
     override func viewWillAppear(_ animated: Bool) {

@@ -36,8 +36,6 @@ jobs:
     - uses: actions/checkout@v4
     - name: Set Xcode version
       run: sudo xcode-select -switch /Applications/Xcode_16.app
-    - name: List available devices
-      run: xcrun simctl list devices
     - name: Resolve Dependencies
       run: xcodebuild -resolvePackageDependencies
       working-directory: ./Smeem-iOS
@@ -70,7 +68,7 @@ jobs:
     - name: Archive app
       run: |
         mkdir artifacts
-        xcodebuild archive -project Smeem-iOS/Smeem-iOS.xcodeproj -scheme Smeem-Release -destination 'platform=iOS Simulator,name=iPhone 15,OS=17.2' -archivePath "$XC_ARCHIVE_PATH"
+        xcodebuild archive -project Smeem-iOS/Smeem-iOS.xcodeproj -scheme Smeem-Release -destination 'platform=iOS Simulator,name=iPhone 15,OS=17.2' -archivePath "$XC_ARCHIVE_PATH" -quiet
     - name: Export app
       run: xcodebuild -exportArchive -archivePath "$XC_ARCHIVE_PATH" -exportOptionsPlist .github/ExportOptions.plist -exportPath "$XC_EXPORT_PATH" -allowProvisioningUpdates
     - name: Upload Artifact
@@ -85,3 +83,15 @@ jobs:
         issuer-id: ${{ secrets.APPSTORE_ISSUER_ID }}
         api-key-id: ${{ secrets.APPSTORE_API_KEY_ID }}
         api-private-key: ${{ secrets.APPSTORE_API_PRIVATE_KEY }}
+    - name: Send Discord Notification on Success
+      if: success()  # 배포가 성공했을 때만 실행
+      run: |
+        curl -H "Content-Type: application/json" -X POST -d '{
+          "content": "🚀 Smeem 배포가 성공적으로 완료되었습니다! 🎉"
+        }' ${{ secrets.DISCORD_WEBHOOK_URL_RELEASE }}
+    - name: Send Discord Notification on Failure
+      if: failure()  # 배포가 실패했을 때만 실행
+      run: |
+        curl -H "Content-Type: application/json" -X POST -d '{
+          "content": "❌ Smeem 배포에 실패했습니다. 확인이 필요합니다."
+        }' ${{ secrets.DISCORD_WEBHOOK_URL_RELEASE }}
