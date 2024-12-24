@@ -10,7 +10,7 @@ import Foundation
 final class NetworkManager {
     static func statusCodeErrorHandling(statusCode: Int) throws {
         switch statusCode {
-        case 400, 402...500:
+        case 400, 402..<500:
             throw SmeemError.clientError
         case 401:
             throw SmeemError.tokenError
