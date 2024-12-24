@@ -107,21 +107,21 @@ struct DetailDiaryCoachedView: View {
                 
                 // "코칭 ON"일 때만 표시
                 if selectedIndex == 1 {
-                            Spacer()
-                            CoachingContentView(
-                                currentIndex: $currentIndex,
-                                detailDiaryResponse: Binding(
-                                    get: { self.response ?? .empty },
-                                    set: { _ in }
-                                ),
-                                corrections: $filteredCorrections
-                            )
-                        } else {
-                            Spacer()
-                        }
+                    Spacer()
+                    CoachingContentView(
+                        currentIndex: $currentIndex,
+                        detailDiaryResponse: Binding(
+                            get: { self.response ?? .empty },
+                            set: { _ in }
+                        ),
+                        corrections: $filteredCorrections
+                    )
+                } else {
+                    Spacer()
+                }
             }
             .onAppear {
-                AmplitudeManager.shared.track(event: AmplitudeConstant.diaryDetail.mydiary_click.event)
+                AmplitudeManager.shared.track(event: AmplitudeConstant.diaryDetail.mydiary_click(true).event)
                 Task {
                     await fetchCoachingData(diaryID: diaryID ?? 0)
                 }
@@ -150,15 +150,15 @@ struct DetailDiaryCoachedView: View {
                     }
                 }
             }
-        }
-        .gesture(
-            DragGesture()
-                .onEnded { value in
-                    if value.translation.width > 50 {
-                        dismiss()
+            .gesture(
+                DragGesture()
+                    .onEnded { value in
+                        if value.translation.width > 50 {
+                            dismiss()
+                        }
                     }
-                }
-        )
+            )
+        }
     }
 }
 
@@ -210,7 +210,6 @@ extension DetailDiaryCoachedView {
         isLoading = true
         
         detailDiaryService.deleteDiary(diaryID: diaryID) { result in
-            
             switch result {
             case .success(_):
                 let homeVC = HomeViewController()

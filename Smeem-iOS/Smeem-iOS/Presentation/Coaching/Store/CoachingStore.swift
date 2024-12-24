@@ -112,13 +112,13 @@ final class CoachingStore: Store, ObservableObject {
     func correctTextResult(_ response: [CoachingResponse]) -> String {
         switch response.count {
         case 0:
-            return "완벽한 일기예요!👍\n문장이 자연스럽고 오류가 없어요"
+            return "완벽한 일기예요!👍\n문장이 자연스럽고 오류가 없어요."
         case 1:
-            return "잘 작성했어요!🙌\n작은 부분만 다듬으면 완벽해요"
+            return "잘 작성했어요!🙌\n작은 부분만 다듬으면 완벽해요."
         case 2...:
             return "대단해요!🥳🎉\n몇 가지 피드백을 준비해 봤어요."
         default:
-            return "완벽한 일기예요!👍\n문장이 자연스럽고 오류가 없어요"
+            return "완벽한 일기예요!👍\n문장이 자연스럽고 오류가 없어요."
         }
     }
 }

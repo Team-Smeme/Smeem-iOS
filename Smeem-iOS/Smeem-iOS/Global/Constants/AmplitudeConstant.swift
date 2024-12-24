@@ -132,8 +132,7 @@ enum AmplitudeConstant {
     
     enum diaryDetail {
         case toggle_click(String)
-        case mydiary_click
-        case mydiary_view(Bool)
+        case mydiary_click(Bool)
         case mydiary_edit(Bool)
         case mydiary_edit_complete_click(Bool)
         
@@ -141,10 +140,8 @@ enum AmplitudeConstant {
             switch self {
             case .toggle_click(let toggle):
                 return BaseEvent(eventType: "toggle_click", eventProperties: ["toggle": toggle])
-            case .mydiary_click:
-                return BaseEvent(eventType: "mydiary_click", eventProperties: nil)
-            case .mydiary_view(let hasCoaching):
-                return BaseEvent(eventType: "mydiary_view", eventProperties: ["has_coaching": hasCoaching])
+            case .mydiary_click(let hasCoaching):
+                return BaseEvent(eventType: "mydiary_click", eventProperties: ["has_coaching": hasCoaching])
             case .mydiary_edit(let hasCoaching):
                 return BaseEvent(eventType: "mydiary_edit", eventProperties: ["has_coaching": hasCoaching])
             case .mydiary_edit_complete_click(let hasCoaching):
@@ -203,7 +200,7 @@ enum AmplitudeConstant {
             case .coaching_result_view:
                 return BaseEvent(eventType: "coaching_result_view", eventProperties: nil)
             case .coaching_feedback_view(let index):
-                return BaseEvent(eventType: "badge_bottom_sheet_view", eventProperties: ["Index": index])
+                return BaseEvent(eventType: "coaching_feedback_view", eventProperties: ["Index": index])
             }
         }
     }
