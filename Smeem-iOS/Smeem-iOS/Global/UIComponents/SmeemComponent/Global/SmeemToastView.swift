@@ -67,7 +67,7 @@ enum SmeemError: Error {
         case .unknwnError:
             return "문제가 발생했어요. 다시 접속해 주세요. :("
         case .tokenError:
-            return "문제가 발생했어요. 다시 로그인해 주세요. :("
+            return "다시 로그인해 주세요. :("
         }
     }
 }
