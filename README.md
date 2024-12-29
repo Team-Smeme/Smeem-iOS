@@ -1,4 +1,4 @@
-# 누적 다운로드 수 500+, 영어 일기 서비스 Smeem 🧡
+# 누적 다운로드 수 800+, 영어 일기 서비스 Smeem 🧡
 
 <img width="908" alt="image" src="https://github.com/Team-Smeme/Smeme-server-renewal/assets/55437339/d375dc1c-abb0-4e2e-a6e5-aad074913114">
 
