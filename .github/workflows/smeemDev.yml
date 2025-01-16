@@ -19,7 +19,7 @@ jobs:
     - name: xcode path
       run: xcode-select -p
     - name: Set Xcode version
-      run: sudo xcode-select -switch /Applications/Xcode_16.app
+      run: sudo xcode-select -switch /Applications/Xcode_2.app
     - name: Resolve Dependencies
       run: xcodebuild -resolvePackageDependencies
       working-directory: ./Smeem-iOS
