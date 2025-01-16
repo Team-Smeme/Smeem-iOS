@@ -16,9 +16,11 @@ jobs:
     
     steps:
     - uses: actions/checkout@v4
+    - name: List Xcode installations
+      run: sudo ls -1 /Applications | grep "Xcode"
     - name: xcode path
       run: xcode-select -p
-    - name: Set Xcode version
+    - name: Select Xcode 16
       run: sudo xcode-select -switch /Applications/Xcode_2.app/Contents/Developer
     - name: Resolve Dependencies
       run: xcodebuild -resolvePackageDependencies
