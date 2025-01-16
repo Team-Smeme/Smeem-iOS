@@ -157,7 +157,7 @@ extension SplashViewModel {
         // x 버전이 더 크면 강제 업데이트
         if forceVersion[0] > clientVersion[0] {
             return true
-        // x 버전이 같고, y 버전이 더 크면 강제 업데이트
+        // x 버전이 같고, y 버전 또한 더 크면 강제 업데이트
         } else if forceVersion[0] == clientVersion[0] && forceVersion[1] > clientVersion[1] {
             return true
         // x 버전이 같고, y 버전이 클 때, z버전이 더 크면 강제 업데이트
