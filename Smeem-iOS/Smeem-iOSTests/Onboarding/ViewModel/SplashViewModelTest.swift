@@ -72,10 +72,21 @@ final class SplashViewModelTest: XCTestCase {
     
     func test_서버로부터_3_2_0_값이내려올때_강제업데이트팝업잘뜨는지() {
         // Given
-        let result = self.viewModel.checkVersion(client: self.beforeAppVersion, force: "3.2.0")
+        let result = self.viewModel.checkVersion(client: self.beforeAppVersion, force: self.forceVersion)
         
         // When
         let expectedResult = true
+        
+        // Then
+        XCTAssertEqual(result, expectedResult)
+    }
+    
+    func test_서버로부터_3_2_0_값이내려올때_강업잘됐는지() {
+        // Given
+        let result = self.viewModel.checkVersion(client: self.afterAppVersion, force: self.forceVersion)
+        
+        // When
+        let expectedResult = false
         
         // Then
         XCTAssertEqual(result, expectedResult)
