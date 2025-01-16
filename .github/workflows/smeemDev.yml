@@ -16,12 +16,19 @@ jobs:
     
     steps:
     - uses: actions/checkout@v4
-    - name: List Xcode installations
-      run: sudo ls -1 /Applications | grep "Xcode"
+    - name: Uninstall existing Xcode
+        run: |
+          sudo rm -rf /Applications/Xcode15.4.app
+          sudo rm -rf /Applications/Xcode_2.app
+          sudo xcode-select --reset
+      - name: Install Xcode 16
+        run: |
+          curl -O https://download.developer.apple.com/Developer_Tools/Xcode_16/Xcode_16.xip
+          xip --expand Xcode_16.xip
+          sudo mv Xcode.app /Applications/Xcode_16.app
+          sudo xcode-select -s /Applications/Xcode_16.app/Contents/Developer
     - name: xcode path
       run: xcode-select -p
-    - name: Select Xcode 16
-      run: sudo xcode-select -switch /Applications/Xcode_2.app/Contents/Developer
     - name: Resolve Dependencies
       run: xcodebuild -resolvePackageDependencies
       working-directory: ./Smeem-iOS
