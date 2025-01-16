@@ -13,10 +13,8 @@ jobs:
   build:
 
     runs-on: macos-latest
+    
     steps:
-    - uses: maxim-lobanov/setup-xcode@v2
-      with:
-        xcode-version: "16"
     - uses: actions/checkout@v4
     - name: xcode path
       run: xcode-select -p
