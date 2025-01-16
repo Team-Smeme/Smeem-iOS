@@ -16,8 +16,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+    - name: xcode path
+      run: xcode-select -p
     - name: Set Xcode version
-      run: sudo xcode-select -switch /Applications/Xcode_16.app/Contents/Developer
+      run: sudo xcode-select -switch /Applications/Xcode_16.app
     - name: Resolve Dependencies
       run: xcodebuild -resolvePackageDependencies
       working-directory: ./Smeem-iOS
