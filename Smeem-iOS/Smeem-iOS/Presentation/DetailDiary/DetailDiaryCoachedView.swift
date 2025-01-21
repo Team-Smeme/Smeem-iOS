@@ -42,8 +42,6 @@ struct DetailDiaryCoachedView: View {
     // MARK: - Body
     
     var body: some View {
-        ZStack {
-            Color.white.ignoresSafeArea()
             VStack(spacing: 0) {
                 SwiftUINavigationView(navigationViewModel: navigationViewModel,
                                       selectedIndex: $selectedIndex,
@@ -98,12 +96,35 @@ struct DetailDiaryCoachedView: View {
                         dateText: response.createdAt,
                         authorText: response.username
                     )
+                    .gesture(
+                        DragGesture()
+                            .onEnded { value in
+                                if value.translation.width > 50 {
+                                    dismiss()
+                                }
+                            }
+                    )
                 } else {
                     if isLoading {
                         SmemeEmptyView()
                         SmemeLoadingView()
                     }
                 }
+                
+                GeometryReader { geomerty in
+                    Rectangle()
+                        .frame(height: geomerty.size.height)
+                        .foregroundStyle(Color(UIColor.white))
+                        .opacity(0.1)
+                        .gesture(
+                            DragGesture()
+                                .onEnded { value in
+                                    if value.translation.width > 50 {
+                                        dismiss()
+                                    }
+                                }
+                        )}
+                        .frame(width: screenWidth)
                 
                 // "코칭 ON"일 때만 표시
                 if selectedIndex == 1 {
@@ -149,15 +170,6 @@ struct DetailDiaryCoachedView: View {
                         onError = false
                     }
                 }
-            }
-            .gesture(
-                DragGesture()
-                    .onEnded { value in
-                        if value.translation.width > 50 {
-                            dismiss()
-                        }
-                    }
-            )
         }
     }
 }
