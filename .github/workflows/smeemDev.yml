@@ -13,11 +13,23 @@ jobs:
   build:
 
     runs-on: macos-latest
-
+    
     steps:
     - uses: actions/checkout@v4
+    - name: Uninstall existing Xcode
+      run: |
+          sudo rm -rf /Applications/Xcode15.4.app
+          sudo xcode-select --reset
+    - name: soft update list
+      run: softwareupdate --list
+    - name: xcode install
+      run: xcode-select --install
+    - name: xcode path
+      run: xcode-select -p
     - name: Set Xcode version
       run: sudo xcode-select -switch /Applications/Xcode_16.app
+    - name: Resolve Dependencies
+      run: xcodebuild -resolvePackageDependencies
     - name: Resolve Dependencies
       run: xcodebuild -resolvePackageDependencies
       working-directory: ./Smeem-iOS
