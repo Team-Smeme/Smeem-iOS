@@ -1,7 +1,4 @@
-# This workflow will build a Swift project
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-swift
-
-name: Swift
+name: Swift CI
 
 on:
   pull_request:
@@ -9,24 +6,40 @@ on:
 
 jobs:
   build:
-
-    runs-on: macos-14
+    runs-on: macos-14  # 최신 macOS 환경 사용 (Xcode 16 포함 가능성 높음)
 
     steps:
     - uses: actions/checkout@v4
-    - name: Check Xcode version
+
+    - name: List available Xcode versions
+      run: ls /Applications | grep Xcode  # 현재 설치된 Xcode 버전 목록 출력
+
+    - name: Set Xcode version to 16
+      run: sudo xcode-select -switch /Applications/Xcode_16.app || echo "⚠️ Xcode 16 not found"
+
+    - name: Verify Xcode version
       run: xcodebuild -version
-    - name: Set Xcode version
-      run: sudo xcode-select -switch /Applications/Xcode.app
+
+    # Xcode 16이 없을 경우, 설치 (선택적)
+    - name: Install Xcode 16 (if not found)
+      if: failure()  # Xcode 변경 실패 시 실행
+      run: |
+        brew tap homebrew/cask
+        brew install --cask xcodes
+        xcodes install 16.0
+        sudo xcode-select -switch /Applications/Xcode_16.app
+
     - name: Resolve Dependencies
       run: xcodebuild -resolvePackageDependencies
       working-directory: ./Smeem-iOS
+
     - name: Create Debug.xcconfig
       run: echo "${{ secrets.DEBUG_CONFIG }}" > ./Smeem-iOS/Debug.xcconfig
-    - name: Build
+
+    - name: Build and Test
       run: xcodebuild clean test -project Smeem-iOS/Smeem-iOS.xcodeproj -scheme Smeem-Dev -destination 'platform=iOS Simulator,name=iPhone 15,OS=17.2'
 
-      # 성공 시 Discord 알림
+    # 성공 시 Discord 알림
     - name: Notify Discord on success
       if: success()
       run: |
@@ -34,14 +47,10 @@ jobs:
           -d '{"username": "GitHub Actions", "content": "✅ Build succeeded for branch `${{ github.ref_name }}`."}' \
           ${{ secrets.DISCORD_WEBHOOK_URL_DEV }}
 
-    # # 실패 시 Discord 알림
+    # 실패 시 Discord 알림
     - name: Notify Discord on failure
       if: failure()
       run: |
         curl -H "Content-Type: application/json" \
           -d '{"username": "GitHub Actions", "content": "❌ Build failed for branch `${{ github.ref_name }}`. Check logs for details."}' \
           ${{ secrets.DISCORD_WEBHOOK_URL_DEV }}
-
-
-
-
