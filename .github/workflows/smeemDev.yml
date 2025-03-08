@@ -10,7 +10,7 @@ on:
 jobs:
   build:
 
-    runs-on: macos-latest
+    runs-on: macos-14
 
     steps:
     - uses: actions/checkout@v4
@@ -41,6 +41,7 @@ jobs:
         curl -H "Content-Type: application/json" \
           -d '{"username": "GitHub Actions", "content": "❌ Build failed for branch `${{ github.ref_name }}`. Check logs for details."}' \
           ${{ secrets.DISCORD_WEBHOOK_URL_DEV }}
+
 
 
 
