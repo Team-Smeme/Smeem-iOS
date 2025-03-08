@@ -4,7 +4,7 @@
 name: Swift
 
 on:
-  push:
+  pull_request:
     branches: [ "develop" ]
 
 jobs:
@@ -22,7 +22,7 @@ jobs:
     - name: Create Debug.xcconfig
       run: echo "${{ secrets.DEBUG_CONFIG }}" > ./Smeem-iOS/Debug.xcconfig
     - name: Build
-      run: xcodebuild clean test -project Smeem-iOS/Smeem-iOS.xcodeproj -scheme Smeem-Dev -destination 'platform=iOS Simulator,name=iPhone 14 Pro,OS=17.2'
+      run: xcodebuild clean test -project Smeem-iOS/Smeem-iOS.xcodeproj -scheme Smeem-Dev -destination 'platform=iOS Simulator,name=iPhone 15,OS=17.2'
 
       # 성공 시 Discord 알림
     - name: Notify Discord on success
@@ -39,4 +39,5 @@ jobs:
         curl -H "Content-Type: application/json" \
           -d '{"username": "GitHub Actions", "content": "❌ Build failed for branch `${{ github.ref_name }}`. Check logs for details."}' \
           ${{ secrets.DISCORD_WEBHOOK_URL_DEV }}
+
 
