@@ -6,37 +6,23 @@ name: Swift
 on:
   push:
     branches: [ "develop" ]
-  pull_request:
-    branches: [ "develop" ]
 
 jobs:
   build:
 
     runs-on: macos-latest
-    
+
     steps:
     - uses: actions/checkout@v4
-    - name: Uninstall existing Xcode
-      run: |
-          sudo rm -rf /Applications/Xcode15.4.app
-          sudo xcode-select --reset
-    - name: soft update list
-      run: softwareupdate --list
-    - name: xcode install
-      run: xcode-select --install
-    - name: xcode path
-      run: xcode-select -p
     - name: Set Xcode version
       run: sudo xcode-select -switch /Applications/Xcode_16.app
-    - name: Resolve Dependencies
-      run: xcodebuild -resolvePackageDependencies
     - name: Resolve Dependencies
       run: xcodebuild -resolvePackageDependencies
       working-directory: ./Smeem-iOS
     - name: Create Debug.xcconfig
       run: echo "${{ secrets.DEBUG_CONFIG }}" > ./Smeem-iOS/Debug.xcconfig
     - name: Build
-      run: xcodebuild clean test -project Smeem-iOS/Smeem-iOS.xcodeproj -scheme Smeem-Dev -destination 'platform=iOS Simulator,name=iPhone 15,OS=17.2' -quiet
+      run: xcodebuild clean test -project Smeem-iOS/Smeem-iOS.xcodeproj -scheme Smeem-Dev -destination 'platform=iOS Simulator,name=iPhone 14 Pro,OS=17.2'
 
       # 성공 시 Discord 알림
     - name: Notify Discord on success
@@ -53,3 +39,4 @@ jobs:
         curl -H "Content-Type: application/json" \
           -d '{"username": "GitHub Actions", "content": "❌ Build failed for branch `${{ github.ref_name }}`. Check logs for details."}' \
           ${{ secrets.DISCORD_WEBHOOK_URL_DEV }}
+
