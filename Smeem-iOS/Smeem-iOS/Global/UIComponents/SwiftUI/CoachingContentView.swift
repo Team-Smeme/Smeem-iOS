@@ -28,12 +28,12 @@ struct CoachingContentView: View {
                     }
                 }
             }
-            .frame(width: screenWidth, height: screenHeight * (286 / screenHeight), alignment: .top)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
             .tabViewStyle(.page(indexDisplayMode: .never))
-            .padding(.horizontal, 16.scaledByWidth())
             
             PageControl(currentPage: $currentIndex, coachingResponse: $corrections)
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
 

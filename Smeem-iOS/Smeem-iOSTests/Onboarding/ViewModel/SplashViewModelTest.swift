@@ -22,8 +22,8 @@ final class SplashViewModelTest: XCTestCase {
         self.mockService = SplashServiceMock()
         self.viewModel = SplashViewModel(provider: mockService)
         self.beforeAppVersion = "3.1.0"
-        self.afterAppVersion = "3.2.0"
-        self.forceVersion = "3.2.0"
+        self.afterAppVersion = "4.0.0"
+        self.forceVersion = "4.0.0"
     }
     
     func test_강제업데이트안한유저_정확한데이터_return하는지() {
@@ -50,7 +50,7 @@ final class SplashViewModelTest: XCTestCase {
     
     func test_첫업데이트로직유저_강제업데이트팝업잘뜨는지() {
         // Given
-        let result = self.viewModel.checkVersion2(client: "2.0.3", now: "2.0.4", force: self.forceVersion)
+        let result = self.viewModel.checkVersion2(client: "3.1.0", now: "2.0.4", force: self.forceVersion)
         
         // When
         let expectedResult = true
@@ -72,10 +72,21 @@ final class SplashViewModelTest: XCTestCase {
     
     func test_서버로부터_3_2_0_값이내려올때_강제업데이트팝업잘뜨는지() {
         // Given
-        let result = self.viewModel.checkVersion(client: self.beforeAppVersion, force: "3.2.0")
+        let result = self.viewModel.checkVersion(client: self.beforeAppVersion, force: self.forceVersion)
         
         // When
         let expectedResult = true
+        
+        // Then
+        XCTAssertEqual(result, expectedResult)
+    }
+    
+    func test_서버로부터_3_2_0_값이내려올때_강업잘됐는지() {
+        // Given
+        let result = self.viewModel.checkVersion(client: self.afterAppVersion, force: self.forceVersion)
+        
+        // When
+        let expectedResult = false
         
         // Then
         XCTAssertEqual(result, expectedResult)

@@ -37,13 +37,10 @@ struct SegmentButton: View {
     var body: some View {
         Button(action: action) {
             Text(title)
-                .padding(.vertical, 8.scaledByHeight())
-                .padding(.horizontal, 10.scaledByWidth())
-                .frame(maxWidth: .infinity)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(backgroundColor)
                 .foregroundColor(foregroundColor)
                 .font(Font(UIFont.c5))
-                .minimumScaleFactor(0.9)
                 .overlay(
                     Group {
                         if isSelected && isFirstButton {
@@ -62,6 +59,7 @@ struct SegmentButton: View {
                     }
                 )
         }
+        .frame(width: 70, height: 32)
     }
     
     private var backgroundColor: Color {

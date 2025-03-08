@@ -20,6 +20,8 @@ jobs:
       run: |
           sudo rm -rf /Applications/Xcode15.4.app
           sudo xcode-select --reset
+    - name: soft update list
+      run: softwareupdate --list
     - name: xcode install
       run: xcode-select --install
     - name: xcode path
