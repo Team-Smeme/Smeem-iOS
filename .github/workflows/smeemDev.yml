@@ -14,8 +14,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+    - name: Check Xcode version
+      run: xcodebuild -version
     - name: Set Xcode version
-      run: sudo xcode-select -switch /Applications/Xcode_16.app
+      run: sudo xcode-select -switch /Applications/Xcode.app
     - name: Resolve Dependencies
       run: xcodebuild -resolvePackageDependencies
       working-directory: ./Smeem-iOS
@@ -39,5 +41,6 @@ jobs:
         curl -H "Content-Type: application/json" \
           -d '{"username": "GitHub Actions", "content": "❌ Build failed for branch `${{ github.ref_name }}`. Check logs for details."}' \
           ${{ secrets.DISCORD_WEBHOOK_URL_DEV }}
+
 
 
