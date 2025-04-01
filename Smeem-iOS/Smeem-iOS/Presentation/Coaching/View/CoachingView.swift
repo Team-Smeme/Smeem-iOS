@@ -10,6 +10,7 @@ import LottieUI
 
 struct CoachingView: View {
     
+    @State private var showSurvery = false
     @StateObject var store: CoachingStore
     
     var body: some View {
@@ -23,9 +24,15 @@ struct CoachingView: View {
                             if store.state.hiddenIndex == 0 {
                                 store.send(action: .amplitudeInput(type: .exitButtonTapped(store.state.isEnabled)))
                             }
-                            let homeVC = HomeViewController()
-                            homeVC.handlePostDiaryAPI(with: store.state.diaryResponse)
-                            changeRootViewController(homeVC)
+                            
+                            if store.state.surveyData == nil {
+                                let homeVC = HomeViewController()
+                                // 토스트 아무값
+                                homeVC.handlePostDiaryAPI(with: store.state.diaryResponse, toastType: .changed)
+                                changeRootViewController(homeVC)
+                            } else {
+                                self.showSurvery = true
+                            }
                         },
                                label: {
                             Text("닫기")
@@ -107,6 +114,11 @@ struct CoachingView: View {
                 // MARK: 첫 진입시 토스트뷰 실행
                 SmemeToastView(type: $store.state.toastMessage)
                 SmeemErrorToastView(type: $store.state.toastErrorMessage)
+            }
+            .fullScreenCover(isPresented: $showSurvery) {
+                SurveryView(survey: SurveryModel(diaryResponse: store.state.diaryResponse,
+                                                 userName: store.state.surveyData?.userName ?? "",
+                                                 coachingCount: store.state.surveyData?.cocahingCount ?? 0))
             }
             .overlay(alignment: .center) {
                 // MARK: 최상단바에 로딩뷰
