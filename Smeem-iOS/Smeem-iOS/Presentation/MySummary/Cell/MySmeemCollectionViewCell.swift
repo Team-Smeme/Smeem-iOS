@@ -11,7 +11,7 @@ final class MySmeemCollectionViewCell: UICollectionViewCell {
     
     private let numberLabel: UILabel = {
         let label = UILabel()
-        label.font = .s2
+        label.font = .s3
         label.textColor = .smeemBlack
         return label
     }()

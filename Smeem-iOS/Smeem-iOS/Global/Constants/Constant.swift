@@ -19,7 +19,7 @@ extension Constant {
     
     enum Layout {
         static let navigationBarHeight: CGFloat = 66
-        static let bottomViewHeight: CGFloat = 87
+        static let bottomViewHeight: CGFloat = 48
     }
     
     enum Image {
@@ -85,5 +85,7 @@ extension Constant {
         static let splashImage = UIImage(named: "splash")
         
         static let icnCrownMono = UIImage(named: "icnCrownMono")
+        
+        static let icnStepImage = UIImage(named: "stepImage")
     }
 }

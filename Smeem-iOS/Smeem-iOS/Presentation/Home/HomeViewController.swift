@@ -315,7 +315,7 @@ final class HomeViewController: BaseViewController {
     private func setData() {
         diaryText.text = homeDiaryDict[currentDate.toString("yyyy-MM-dd")]?.content
         diaryDate.text = homeDiaryDict[currentDate.toString("yyyy-MM-dd")]?.createdTime.formatted("h : mm a")
-        diaryText.setTextWithLineHeight(lineHeight: 22)
+        diaryText.setTextWithLineHeight(lineHeight: 24)
         diaryText.lineBreakMode = .byTruncatingTail
     }
     

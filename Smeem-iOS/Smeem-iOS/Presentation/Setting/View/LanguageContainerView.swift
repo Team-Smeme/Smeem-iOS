@@ -12,7 +12,7 @@ final class LanguageContainerView: UIView {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "학습 언어"
-        label.font = .s1
+        label.font = .b3
         label.textColor = .smeemBlack
         return label
     }()

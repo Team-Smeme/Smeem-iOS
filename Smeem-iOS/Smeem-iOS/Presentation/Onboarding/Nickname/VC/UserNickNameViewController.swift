@@ -167,16 +167,16 @@ extension UserNicknameViewController {
         
         titleNicknameLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(convertByHeightRatio(120))
-            $0.leading.equalToSuperview().inset(convertByHeightRatio(26))
+            $0.leading.equalToSuperview().inset(convertByHeightRatio(18))
         }
         
         detailNicknameLabel.snp.makeConstraints {
             $0.top.equalTo(titleNicknameLabel.snp.bottom).offset(convertByHeightRatio(6))
-            $0.leading.equalToSuperview().inset(convertByHeightRatio(26))
+            $0.leading.equalToSuperview().inset(convertByHeightRatio(18))
         }
         
         nicknameTextField.snp.makeConstraints {
-            $0.top.equalTo(detailNicknameLabel.snp.bottom).offset(convertByHeightRatio(28))
+            $0.top.equalTo(detailNicknameLabel.snp.bottom).offset(convertByHeightRatio(24))
             $0.leading.trailing.equalToSuperview().inset(convertByHeightRatio(26))
             $0.height.equalTo(convertByHeightRatio(60))
         }

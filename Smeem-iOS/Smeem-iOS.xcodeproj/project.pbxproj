@@ -440,6 +440,7 @@
 		377B3BF12CF618B90086E0BC /* SwiftUI */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = SwiftUI; sourceTree = "<group>"; };
 		4A17370E2D05C02E00B772C3 /* Toast */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Toast; sourceTree = "<group>"; };
 		4A17370F2D05C03600B772C3 /* LoadingView */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = LoadingView; sourceTree = "<group>"; };
+		4A9AF4B02DA4044100CB687A /* StepView */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = StepView; sourceTree = "<group>"; };
 		4AAB0E352D7C53170059EC4A /* CoachingSurvey */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = CoachingSurvey; sourceTree = "<group>"; };
 		4AB3494E2CF22A070047C484 /* Global */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Global; sourceTree = "<group>"; };
 		4AB3494F2CF22A250047C484 /* Button */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Button; sourceTree = "<group>"; };
@@ -996,6 +997,7 @@
 		4A1EE9552A4DFB86007BFEF3 /* SmeemComponent */ = {
 			isa = PBXGroup;
 			children = (
+				4A9AF4B02DA4044100CB687A /* StepView */,
 				4A17370F2D05C03600B772C3 /* LoadingView */,
 				4A17370E2D05C02E00B772C3 /* Toast */,
 				4AB349502CF22A2E0047C484 /* TextView */,
@@ -1697,6 +1699,7 @@
 				377B3BF12CF618B90086E0BC /* SwiftUI */,
 				4A17370E2D05C02E00B772C3 /* Toast */,
 				4A17370F2D05C03600B772C3 /* LoadingView */,
+				4A9AF4B02DA4044100CB687A /* StepView */,
 				4AAB0E352D7C53170059EC4A /* CoachingSurvey */,
 				4AB3494E2CF22A070047C484 /* Global */,
 				4AB3494F2CF22A250047C484 /* Button */,
@@ -2212,7 +2215,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 20241203;
+				CURRENT_PROJECT_VERSION = 20250408;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = K8LLWYQWXD;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -2229,7 +2232,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 4.0.1;
+				MARKETING_VERSION = 4.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "Team.Smeem-dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2270,7 +2273,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 4.0.1;
+				MARKETING_VERSION = 4.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "Team.Smeem-iOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

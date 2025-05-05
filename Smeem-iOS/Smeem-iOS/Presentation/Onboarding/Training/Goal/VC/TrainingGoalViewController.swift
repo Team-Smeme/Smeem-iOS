@@ -174,7 +174,7 @@ extension TrainingGoalViewController {
         trainingLabelStackView.addArrangedSubviews(titleLearningLabel, detailLearningLabel)
         
         nowStepOneLabel.snp.makeConstraints {
-            $0.leading.equalToSuperview().inset(26)
+            $0.leading.equalToSuperview().inset(18)
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(36)
         }
         
@@ -189,12 +189,12 @@ extension TrainingGoalViewController {
         }
         
         trainingLabelStackView.snp.makeConstraints {
-            $0.leading.equalToSuperview().inset(26)
+            $0.leading.equalToSuperview().inset(18)
             $0.top.equalTo(totalStepLabel.snp.bottom).offset(19)
         }
         
         trainingGoalCollectionView.snp.makeConstraints {
-            $0.top.equalTo(trainingLabelStackView.snp.bottom).offset(28)
+            $0.top.equalTo(trainingLabelStackView.snp.bottom).offset(24)
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalTo(nextButton.snp.bottom).offset(80)
         }

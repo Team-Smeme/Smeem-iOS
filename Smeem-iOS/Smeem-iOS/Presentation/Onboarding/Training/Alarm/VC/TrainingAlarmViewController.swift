@@ -283,7 +283,7 @@ extension TrainingAlarmViewController {
         timeSettingLabelStackView.addArrangedSubviews(titleTimeSettingLabel, deatilTimeSettingLabel)
         
         nowStepOneLabel.snp.makeConstraints {
-            $0.leading.equalToSuperview().inset(convertByHeightRatio(26))
+            $0.leading.equalToSuperview().inset(convertByHeightRatio(18))
             $0.top.equalTo(view.safeAreaLayoutGuide).inset(convertByHeightRatio(36))
         }
         
@@ -298,12 +298,12 @@ extension TrainingAlarmViewController {
         }
         
         timeSettingLabelStackView.snp.makeConstraints {
-            $0.leading.equalToSuperview().inset(convertByHeightRatio(26))
+            $0.leading.equalToSuperview().inset(convertByHeightRatio(18))
             $0.top.equalTo(totalStepLabel.snp.bottom).offset(convertByHeightRatio(19))
         }
         
         alarmCollectionView.snp.makeConstraints {
-            $0.top.equalTo(timeSettingLabelStackView.snp.bottom).offset(28)
+            $0.top.equalTo(timeSettingLabelStackView.snp.bottom).offset(24)
             $0.leading.trailing.equalToSuperview().inset(18)
             $0.centerX.equalToSuperview()
             $0.height.equalTo(convertByHeightRatio(133))

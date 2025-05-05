@@ -17,7 +17,7 @@ final class SendFeedbackView: UIView {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = .s1
+        label.font = .b3
         label.textColor = .smeemBlack
         label.text = "의견 보내기"
         return label
@@ -42,7 +42,7 @@ final class SendFeedbackView: UIView {
     
     private let directButton: UIButton = {
         let button = UIButton()
-        button.titleLabel?.font = .c3
+        button.titleLabel?.font = .c2
         button.setTitleColor(.point, for: .normal)
         button.setTitle("바로가기", for: .normal)
         return button

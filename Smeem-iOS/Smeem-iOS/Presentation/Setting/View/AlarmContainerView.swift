@@ -16,7 +16,7 @@ final class AlarmContainerView: UIView {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "학습 알림"
-        label.font = .s1
+        label.font = .b3
         label.textColor = .smeemBlack
         return label
     }()

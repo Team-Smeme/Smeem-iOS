@@ -69,7 +69,7 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
     private let mySmeemLabel: UILabel = {
         let label = UILabel()
         label.text = "나의 스밈"
-        label.font = .s1
+        label.font = .b2
         label.textColor = .black
         return label
     }()
@@ -93,7 +93,7 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
     private let myPlanLabel: UILabel = {
         let label = UILabel()
         label.text = "나의 플랜"
-        label.font = .s1
+        label.font = .b2
         label.textColor = .black
         return label
     }()
@@ -111,7 +111,7 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
     private let myPlanTitleLabel: UILabel = {
         let label = UILabel()
         label.text = "매일 일기 작성하기"
-        label.font = .b2
+        label.font = .b3
         label.textColor = .black
         return label
     }()
@@ -166,7 +166,7 @@ final class MySummaryViewController: BaseViewController, BottomSheetPresentable 
     private let myBadgeLabel: UILabel = {
         let label = UILabel()
         label.text = "나의 배지"
-        label.font = .s1
+        label.font = .b2
         label.textColor = .black
         return label
     }()
