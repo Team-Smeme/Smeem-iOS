@@ -33,13 +33,6 @@ final class HomeViewController: BaseViewController {
     var badgePopupData = [PopupBadge]()
     var isKeyboardVisible: Bool = false
     var keyboardHeight: CGFloat = 0.0
-    private var toastMessageFlag = false {
-        didSet {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                self.loadToastMessage()
-            }
-        }
-    }
     
     private var cancelBag = Set<AnyCancellable>()
     
@@ -322,7 +315,7 @@ final class HomeViewController: BaseViewController {
     private func setData() {
         diaryText.text = homeDiaryDict[currentDate.toString("yyyy-MM-dd")]?.content
         diaryDate.text = homeDiaryDict[currentDate.toString("yyyy-MM-dd")]?.createdTime.formatted("h : mm a")
-        diaryText.setTextWithLineHeight(lineHeight: 22)
+        diaryText.setTextWithLineHeight(lineHeight: 24)
         diaryText.lineBreakMode = .byTruncatingTail
     }
     
@@ -351,10 +344,6 @@ final class HomeViewController: BaseViewController {
         badgePopupData = []
     }
     
-    private func loadToastMessage() {
-        showToast(toastType: .smeemToast(bodyType: .completed))
-    }
-    
     private func pushShowPage() {
         NotificationCenter.default.addObserver(self, selector: #selector(notificationPushShowPage), name: NSNotification.Name("goToHome"), object: nil)
     }
@@ -365,8 +354,18 @@ final class HomeViewController: BaseViewController {
         }
     }
     
-    func handlePostDiaryAPI(with response: PostDiaryResponse?) {
+    func handlePostDiaryAPI(with response: PostDiaryResponse?, toastType: SmeemToast) {
         badgePopupData = response?.badges ?? []
+        
+        if toastType == .completed {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+                self?.showToast(toastType: .smeemToast(bodyType: .completed))
+            }
+        } else if toastType == .survey {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+                self?.showToast(toastType: .smeemToast(bodyType: .survey))
+            }
+        }
     }
     
     func fetchRemoteConfig() {

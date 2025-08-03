@@ -318,7 +318,7 @@ final class SettingViewController: BaseViewController {
             $0.top.equalTo(separationLine.snp.bottom).offset(28)
             $0.leading.trailing.equalTo(alarmContainerView)
             $0.height.equalTo(convertByHeightRatio(88))
-            $0.bottom.equalToSuperview()
+            $0.bottom.equalToSuperview().inset(52)
         }
     }
 }

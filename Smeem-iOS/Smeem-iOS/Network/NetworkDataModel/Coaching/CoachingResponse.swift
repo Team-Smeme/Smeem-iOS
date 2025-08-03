@@ -13,6 +13,8 @@ struct CoachingsResponse: Codable, Equatable {
     }
     
     var corrections: [CoachingResponse]
+    let username: String?
+    let totalCount: Int?
 }
 
 extension CoachingsResponse {
@@ -23,7 +25,7 @@ extension CoachingsResponse {
                                                        CoachingResponse(originalSentence: "I have went to the park yesterdayI have went to the park yesterdayI have went럼뉴름ㄴ람ㄴㄹ 마넝롬나ㅣㅓㅇㄹ ㅗㅁ나ㅓㅇ롬나어롬나어롬나러ㅗㅁ나러 ㅗㄴ마러ㅗㅁ너ㅏ롬 ㄴ라ㅓ ㅗㄴㅁ라 왜 갑자 I have went to the park yesterdayI have went to the park yesterdayI have went to the park yesterdayI have went to the park yesterdayI have went to the park yesterday",
                                                                         correctedSentence: "I went to the park yesterdayI went to the park yesterdayI went to the park yesterday",
                                                                         reason: "이러 이러한 이유로 이건 맞습니다",
-                                                                        isCorrected: true)])
+                                                                        isCorrected: true)], username: "", totalCount: 0)
     static let sample = CoachingsResponse(
         corrections: [
             CoachingResponse(
@@ -44,7 +46,7 @@ extension CoachingsResponse {
                 reason: "'jjin'은 'real'로 대체하였고, 'Avatar2'를 'Avatar 2'로 띄어쓰기 처리하였습니다.",
                 isCorrected: true
             )
-        ]
+        ], username: "", totalCount: 0
     )
 }
 

@@ -31,7 +31,7 @@ final class SignupBottomSheetViewController: UIViewController {
     var bottomSheetView: UIView = {
         let view = UIView()
         view.backgroundColor = .smeemWhite
-        view.makeSelectedRoundCorners(cornerRadius: 30, maskedCorners: [.layerMinXMinYCorner, .layerMaxXMinYCorner])
+        view.makeSelectedRoundCorners(cornerRadius: 10, maskedCorners: [.layerMinXMinYCorner, .layerMaxXMinYCorner])
         return view
     }()
     

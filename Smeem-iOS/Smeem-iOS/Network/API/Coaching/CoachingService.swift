@@ -9,7 +9,7 @@ import Foundation
 import Moya
 
 final class CoachingService: CoachingServiceProtocol {
-    
+
     var coachingProvider: MoyaProvider<CoachingEndPoint>!
     var detailDiaryProvider: MoyaProvider<DetailDiaryEndPoint>
     

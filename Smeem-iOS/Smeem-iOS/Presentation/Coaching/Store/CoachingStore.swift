@@ -7,6 +7,11 @@
 
 import Foundation
 
+struct SurveryData {
+    let userName: String?
+    let cocahingCount: Int?
+}
+
 struct CoachingAppData {
     var currentIndex: Int
     var diaryText: String
@@ -45,6 +50,7 @@ final class CoachingStore: Store, ObservableObject {
                                               diaryText: "",
                                               corrections: CoachingsResponse.sample.corrections,
                                               correctResultText: "첨삭 중이에요")
+        var surveyData: SurveryData? = nil
         var toastErrorMessage: SmeemError? = nil
         var toastMessage: SmeemToast? = .completed
         
@@ -74,6 +80,7 @@ final class CoachingStore: Store, ObservableObject {
                 do {
                     state.hiddenIndex += 1
                     let coachingResponse = try await service.coachingPostAPI(diaryID: ID)
+                    self.state.surveyData = SurveryData(userName: coachingResponse.username, cocahingCount: coachingResponse.totalCount)
                     state.coachingAppData = CoachingAppData(currentIndex: 0,
                                                             diaryText: combineCorrectionText(coachingResponse.corrections),
                                                             corrections: filiterCorrection(coachingResponse.corrections) ?? [],

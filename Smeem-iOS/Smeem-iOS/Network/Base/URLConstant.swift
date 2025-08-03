@@ -42,6 +42,10 @@ enum URLConstant {
     
     static let diaryURL = "/diaries"
     
+    // MARK: - Coaching
+    
+    static let survey = "/survey/coaching"
+    
     // MARK: - Home
     
     static let visitURL = "/members/visit"

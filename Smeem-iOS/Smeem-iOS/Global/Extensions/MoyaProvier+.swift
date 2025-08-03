@@ -7,6 +7,7 @@
 
 import Foundation
 import Moya
+import Combine
 
 extension MoyaProvider {
     func request<T: Decodable>(_ target: Target) async throws -> T {
@@ -17,6 +18,28 @@ extension MoyaProvider {
                     do {
                         try NetworkManager.statusCodeErrorHandling(statusCode: response.statusCode)
                         if let data = try response.map(GeneralResponse<T>.self).data {
+                            continuation.resume(returning: data)
+                        } else {
+                            continuation.resume(throwing: SmeemError.clientError)
+                        }
+                    } catch {
+                        continuation.resume(throwing: SmeemError.clientError)
+                    }
+                case .failure(let error):
+                    continuation.resume(throwing: error)
+                }
+            }
+        }
+    }
+    
+    func requestNilType(_ target: Target) async throws -> GeneralResponse<NilType> {
+        try await withCheckedThrowingContinuation { continuation in
+            self.request(target) { result in
+                switch result {
+                case .success(let response):
+                    do {
+                        try NetworkManager.statusCodeErrorHandling(statusCode: response.statusCode)
+                        if let data = try? response.map(GeneralResponse<NilType>.self) {
                             continuation.resume(returning: data)
                         } else {
                             continuation.resume(throwing: SmeemError.clientError)

@@ -43,6 +43,7 @@ enum SmeemToast: String {
     case changed = "변경 완료"
     case edited = "첨삭 완료"
     case serverError = "로그인에 실패했어요. 다시 시도해 주세요."
+    case survey = "소중한 피드백 감사드립니다."
     
     var displayText: String {
         return self.rawValue

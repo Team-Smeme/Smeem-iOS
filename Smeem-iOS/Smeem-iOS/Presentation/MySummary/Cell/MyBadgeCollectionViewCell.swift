@@ -26,7 +26,7 @@ final class MyBadgeCollectionViewCell: UICollectionViewCell {
     private let badgeNameLabel: UILabel = {
         let label = UILabel()
         label.text = "잠만"
-        label.font = .c6
+        label.font = .c3
         label.textColor = .smeemBlack
         return label
     }()

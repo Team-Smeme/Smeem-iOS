@@ -263,16 +263,16 @@ extension ServiceAcceptViewController {
         
         titleServiceLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(120)
-            $0.leading.equalToSuperview().inset(26)
+            $0.leading.equalToSuperview().inset(18)
         }
         
         detailServiceLabel.snp.makeConstraints {
             $0.top.equalTo(titleServiceLabel.snp.bottom).offset(6)
-            $0.leading.equalToSuperview().inset(26)
+            $0.leading.equalToSuperview().inset(18)
         }
         
         totalAcceptView.snp.makeConstraints {
-            $0.top.equalTo(detailServiceLabel.snp.bottom).offset(28)
+            $0.top.equalTo(detailServiceLabel.snp.bottom).offset(24)
             $0.trailing.leading.equalToSuperview().inset(18)
             $0.height.equalTo(60)
         }

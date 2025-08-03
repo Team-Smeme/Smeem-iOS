@@ -15,7 +15,7 @@ final class NicknameContainerView: UIView {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = .s1
+        label.font = .b3
         label.textColor = .smeemBlack
         return label
     }()
@@ -38,7 +38,7 @@ final class NicknameContainerView: UIView {
     
     private let editDetailButton: UIButton = {
         let label = UIButton()
-        label.titleLabel?.font = .c3
+        label.titleLabel?.font = .c2
         label.setTitleColor(.point, for: .normal)
         return label
     }()

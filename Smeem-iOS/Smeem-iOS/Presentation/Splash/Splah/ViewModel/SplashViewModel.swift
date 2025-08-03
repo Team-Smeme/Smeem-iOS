@@ -143,8 +143,6 @@ extension SplashViewModel {
         } else if forceVersion[0] == clientVersion[0] && forceVersion[1] > clientVersion[1] {
             return true
         // x, y 버전이 같고, z버전이 더 크면 강제 업데이트
-        } else if (forceVersion[0] == clientVersion[0] && forceVersion[1] == clientVersion[1]) && forceVersion[2] > clientVersion[2] {
-            return true
         }
         return false
     }
