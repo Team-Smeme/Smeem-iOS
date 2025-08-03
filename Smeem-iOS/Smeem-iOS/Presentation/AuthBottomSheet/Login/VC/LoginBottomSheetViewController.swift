@@ -108,7 +108,7 @@ final class LoginBottomSheetViewController: UIViewController {
         output.presentHomeResult
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in
-                self?.changeRootViewController(HomeViewController())
+                self?.changeRootViewController(HomeTabBarController())
             }
             .store(in: &cancelBag)
         

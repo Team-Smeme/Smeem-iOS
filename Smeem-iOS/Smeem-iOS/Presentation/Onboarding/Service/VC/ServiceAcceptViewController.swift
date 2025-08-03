@@ -143,8 +143,8 @@ final class ServiceAcceptViewController: BaseViewController {
         output.completeButtonResult
             .receive(on: DispatchQueue.main)
             .sink { [weak self] badges in
-                let homeVC = HomeViewController()
-                homeVC.badgePopupData = badges
+                let homeVC = HomeTabBarController()
+                homeVC.homeVC.badgePopupData = badges
                 self?.changeRootViewController(homeVC)
             }
             .store(in: &cancelBag)

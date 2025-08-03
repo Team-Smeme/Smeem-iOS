@@ -91,6 +91,7 @@ extension UIViewController {
         guard let window = UIApplication.shared.windows.first else { return }
         UIView.transition(with: window, duration: 0.5, options: .transitionCrossDissolve, animations: {
             let rootVC = UINavigationController(rootViewController: viewController)
+            viewController.navigationController?.isNavigationBarHidden = true
             window.rootViewController = rootVC
         })
     }

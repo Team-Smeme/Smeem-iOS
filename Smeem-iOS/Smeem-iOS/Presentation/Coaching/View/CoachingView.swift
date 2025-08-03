@@ -26,9 +26,9 @@ struct CoachingView: View {
                             }
                             
                             if store.state.surveyData == nil {
-                                let homeVC = HomeViewController()
+                                let homeVC = HomeTabBarController()
                                 // 토스트 아무값
-                                homeVC.handlePostDiaryAPI(with: store.state.diaryResponse, toastType: .changed)
+                                homeVC.homeVC.handlePostDiaryAPI(with: store.state.diaryResponse, toastType: .changed)
                                 changeRootViewController(homeVC)
                             } else {
                                 self.showSurvery = true

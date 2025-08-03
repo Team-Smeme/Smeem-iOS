@@ -224,7 +224,7 @@ extension DetailDiaryCoachedView {
         detailDiaryService.deleteDiary(diaryID: diaryID) { result in
             switch result {
             case .success(_):
-                let homeVC = HomeViewController()
+                let homeVC = HomeTabBarController()
                 self.changeRootViewControllerAndPresent(homeVC)
             case .failure(let error):
                 toastErrorMessage = error

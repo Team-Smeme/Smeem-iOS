@@ -58,9 +58,9 @@ struct SurveryView: View {
                     Spacer()
                     
                     Button {
-                        let homeVC = HomeViewController()
+                        let homeVC = HomeTabBarController()
                         // 토스트 아무값
-                        homeVC.handlePostDiaryAPI(with: survey.diaryResponse, toastType: .changed)
+                        homeVC.homeVC.handlePostDiaryAPI(with: survey.diaryResponse, toastType: .changed)
                         changeRootViewController(homeVC)
                     } label: {
                         Text("닫기")
@@ -152,8 +152,8 @@ struct SurveryView: View {
                             
                             _ = try await SurveryService.shared.surveyPostAPI(request: request)
                             
-                            let homeVC = HomeViewController()
-                            homeVC.handlePostDiaryAPI(with: survey.diaryResponse, toastType: .survey)
+                            let homeVC = HomeTabBarController()
+                            homeVC.homeVC.handlePostDiaryAPI(with: survey.diaryResponse, toastType: .survey)
                             changeRootViewController(homeVC)
                             
                             print("Survey submitted successfully!")

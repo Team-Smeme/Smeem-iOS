@@ -196,7 +196,7 @@ final class TrainingAlarmViewController: BaseViewController, BottomSheetPresenta
         output.homeSubject
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
-                let homeVC = HomeViewController()
+                let homeVC = HomeTabBarController()
                 self?.changeRootViewController(homeVC)
             }
             .store(in: &cancelBag)

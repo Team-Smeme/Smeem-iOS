@@ -70,7 +70,7 @@ final class SplashViewController: BaseViewController {
         output.homeStartResult
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
-                self?.changeRootViewController(HomeViewController())
+                self?.changeRootViewController(HomeTabBarController())
             }
             .store(in: &cancelBag)
         
