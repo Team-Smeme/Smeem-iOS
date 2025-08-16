@@ -192,7 +192,6 @@
 		4AC707BB2B74DE3E00B1D791 /* ServiceAcceptCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC707BA2B74DE3E00B1D791 /* ServiceAcceptCollectionView.swift */; };
 		4AC9489829ED800800489C2B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4AC9489729ED800800489C2B /* GoogleService-Info.plist */; };
 		4AD04B3D2A190E9A004B7A58 /* UITextView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD04B3C2A190E9A004B7A58 /* UITextView+.swift */; };
-		4AD211A52E4F892F001345E1 /* WaterfallGrid in Frameworks */ = {isa = PBXBuildFile; productRef = 4AD211A42E4F892F001345E1 /* WaterfallGrid */; };
 		4ADA41772A556209001C0285 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADA41762A556209001C0285 /* LoadingView.swift */; };
 		4ADCA2D62A9272E9002904EB /* EditAlarmViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADCA2D52A9272E9002904EB /* EditAlarmViewController.swift */; };
 		4AE35E9E2A7FE8CE00465FD5 /* UICollectionViewCell+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE35E9D2A7FE8CE00465FD5 /* UICollectionViewCell+.swift */; };
@@ -477,7 +476,6 @@
 				A301B0A22A30720F006BE0BA /* Kingfisher in Frameworks */,
 				375B628D2C590D0D00DA8E30 /* FirebaseRemoteConfig in Frameworks */,
 				4AA942CD2A276A9F00A552A0 /* Moya in Frameworks */,
-				4AD211A52E4F892F001345E1 /* WaterfallGrid in Frameworks */,
 				4AA942D92A276C7900A552A0 /* KakaoSDKUser in Frameworks */,
 				4AA942C52A2767D900A552A0 /* SnapKit in Frameworks */,
 				4A08480C2B554513008327C7 /* AmplitudeSwift in Frameworks */,
@@ -1739,7 +1737,6 @@
 				375B628A2C590D0D00DA8E30 /* FirebaseMessaging */,
 				375B628C2C590D0D00DA8E30 /* FirebaseRemoteConfig */,
 				4A6527942CEBB25F000191C3 /* LottieUI */,
-				4AD211A42E4F892F001345E1 /* WaterfallGrid */,
 			);
 			productName = "Smeem-iOS";
 			productReference = 4A8FFA4C29C9E1FD00FB76C0 /* Smeem-iOS.app */;
@@ -1785,7 +1782,6 @@
 				4A08480A2B554513008327C7 /* XCRemoteSwiftPackageReference "Amplitude-Swift" */,
 				375B62852C590D0D00DA8E30 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				4A6527932CEBB25F000191C3 /* XCRemoteSwiftPackageReference "LottieUI" */,
-				4AD211A32E4F88C7001345E1 /* XCRemoteSwiftPackageReference "WaterfallGrid" */,
 			);
 			productRefGroup = 4A8FFA4D29C9E1FD00FB76C0 /* Products */;
 			projectDirPath = "";
@@ -2389,14 +2385,6 @@
 				kind = branch;
 			};
 		};
-		4AD211A32E4F88C7001345E1 /* XCRemoteSwiftPackageReference "WaterfallGrid" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/paololeonardi/WaterfallGrid";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.1.0;
-			};
-		};
 		A301B0A02A30720F006BE0BA /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher";
@@ -2467,11 +2455,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4AA942D32A276C7900A552A0 /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */;
 			productName = KakaoSDKUser;
-		};
-		4AD211A42E4F892F001345E1 /* WaterfallGrid */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 4AD211A32E4F88C7001345E1 /* XCRemoteSwiftPackageReference "WaterfallGrid" */;
-			productName = WaterfallGrid;
 		};
 		A301B0A12A30720F006BE0BA /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
