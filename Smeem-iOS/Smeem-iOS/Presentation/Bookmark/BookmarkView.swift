@@ -31,11 +31,7 @@ struct BookmarkView: View {
                             ForEach(leftColumnItems) { item in
                                 NavigationLink {
                                     BookmarkDetailView(
-                                        imageURL: item.thumbnailImageUrl,
-                                        instagramURL: "https://www.instagram.com",
-                                        title: item.expression,
-                                        subtitle: item.description,
-                                        examples: []
+                                        id: item.id
                                     )
                                 } label: {
                                     BookmarkCardView(bookmark: item)
@@ -48,11 +44,7 @@ struct BookmarkView: View {
                             ForEach(rightColumnItems) { item in
                                 NavigationLink {
                                     BookmarkDetailView(
-                                        imageURL: item.thumbnailImageUrl,
-                                        instagramURL: "https://www.instagram.com",
-                                        title: item.expression,
-                                        subtitle: item.description,
-                                        examples: []
+                                        id: item.id
                                     )
                                 } label: {
                                     BookmarkCardView(bookmark: item)

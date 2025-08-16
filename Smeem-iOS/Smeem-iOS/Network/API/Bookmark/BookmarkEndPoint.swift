@@ -26,7 +26,7 @@ extension BookmarkEndPoint: BaseTargetType {
         case .bookmarkPatch(let id):
             return URLConstant.bookmarks + "/\(id)"
         case .bookmarkDetail(let id):
-            return URLConstant.bookmarks + "/\(id)"
+            return URLConstant.bookmarkDetail + "/\(id)"
         }
     }
     
