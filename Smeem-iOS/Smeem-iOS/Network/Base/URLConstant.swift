@@ -71,4 +71,8 @@ enum URLConstant {
     // MARK: - Push
     
     static let pushTestURL = "/test/alarm"
+    
+    // MARK: - bookmark
+    static let bookmarks = "/bookmarks"
+    static let bookmarkDetail = "/bookmarks/detail"
 }
