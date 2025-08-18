@@ -26,12 +26,12 @@ struct BookmarkRequest: Codable {
 }
 
 struct BookmarkDetailResponse: Codable {
-    let thumbnailImageUrl: String
-    let scrapedUrl: String
-    let expression: String
-    let translatedExpression: String
-    let description: String
-    let scrapType: String
+    var thumbnailImageUrl: String
+    var scrapedUrl: String
+    var expression: String
+    var translatedExpression: String
+    var description: String
+    var scrapType: String?
 }
 
 struct BookmarkSuccess: Codable {
@@ -45,7 +45,7 @@ struct ScrapContent: Codable {
     let thumbnail: String
     let url: String
     let description: String
-    let scrapType: String
+    let scrapType: String?
 }
 
 struct BookmarkPatchRequest: Codable {
