@@ -4,6 +4,7 @@ struct BookmarkView: View {
     
     @State var model = BookmarkModel(bookmarks: [])
     let service = BookmarkService()
+    @State private var refreshTrigger = false
     
     init() {
         // UITabBar 배경 불투명하게 유지
@@ -31,7 +32,10 @@ struct BookmarkView: View {
                             ForEach(leftColumnItems) { item in
                                 NavigationLink {
                                     BookmarkDetailView(
-                                        id: item.id
+                                        id: item.id,
+                                        onDeleted: {
+                                            refreshTrigger.toggle()
+                                        }
                                     )
                                 } label: {
                                     BookmarkCardView(bookmark: item)
@@ -44,8 +48,11 @@ struct BookmarkView: View {
                             ForEach(rightColumnItems) { item in
                                 NavigationLink {
                                     BookmarkDetailView(
-                                        id: item.id
-                                    )
+                                            id: item.id,
+                                            onDeleted: {
+                                                refreshTrigger.toggle()
+                                            }
+                                        )
                                 } label: {
                                     BookmarkCardView(bookmark: item)
                                 }
@@ -61,6 +68,15 @@ struct BookmarkView: View {
             .toolbar(.hidden, for: .navigationBar)
         }
         .onAppear {
+            Task {
+                do {
+                    self.model = try await service.bookmarkGetAPI()
+                } catch {
+                    print("bookmarkAPI 오류")
+                }
+            }
+        }
+        .onChange(of: refreshTrigger) { _ in
             Task {
                 do {
                     self.model = try await service.bookmarkGetAPI()
