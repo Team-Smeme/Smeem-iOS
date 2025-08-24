@@ -11,12 +11,21 @@ struct BookmarkDetailView: View {
     
     let service = BookmarkService()
     @State var model: BookmarkDetailResponse?
+    @State private var showDiaryVC = false
+    @State private var showActionSheet = false
+    @State private var showDeleteAlert = false
     let bookmarkId: Int
+    let url: String?
     @Environment(\.dismiss) private var dismiss
+    @State var bookmarkCount = 0
+    var onDeleted: (() -> Void)?
+    @State var isPresented = false
     
     // Navigation Bar background 적용
-    init(id: Int) {
+    init(id: Int, url: String? = nil, onDeleted: (() -> Void)? = nil) {
         self.bookmarkId = id
+        self.url = url
+        self.onDeleted = onDeleted
         
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()
@@ -104,11 +113,11 @@ struct BookmarkDetailView: View {
                         .stroke(Color(red: 0.87, green: 0.87, blue: 0.87), lineWidth: 1)
                     )
                     
-                    
                     // 예문 리스트
                     VStack(alignment: .leading, spacing: 16) {
                         Text(self.trimText(self.model?.description ?? ""))
                             .font(Font.custom("Pretendard", size: 15).weight(.regular))
+                        
                     }
                     .padding(.top, 8)
                     .padding(.horizontal, 18)
@@ -122,6 +131,7 @@ struct BookmarkDetailView: View {
                 
                 Button(action: {
                     print("이 표현 써보기 클릭")
+                    self.isPresented.toggle()
                 }) {
                     HStack(spacing: 4) {
                         Image(systemName: "plus")
@@ -135,6 +145,11 @@ struct BookmarkDetailView: View {
                     .background(Color.black)
                     .cornerRadius(50)
                 }
+                .fullScreenCover(isPresented: $isPresented) {
+                    BookmarkDiaryView(
+                        expression: self.model?.expression ?? "",
+                        translatedExpression: self.model?.translatedExpression ?? "")
+                        }
                 .padding(.horizontal, 18)
                 .padding(.bottom, 21) // 안전 영역 고려
                 .background(
@@ -169,18 +184,58 @@ struct BookmarkDetailView: View {
             
             // 오른쪽 버튼
             ToolbarItem(placement: .navigationBarTrailing) {
-                Button(action: {
-                    print("오른쪽 버튼 클릭")
-                }) {
+                Button {
+                    showActionSheet = true
+                } label: {
                     Image(systemName: "ellipsis")
                         .foregroundColor(.black)
                 }
+                .confirmationDialog("작업 선택", isPresented: $showActionSheet, titleVisibility: .hidden) {
+                                Button("수정하기") {
+                                    // 수정 동작
+                                    print("수정하기 선택됨")
+                                }
+                                Button("삭제하기", role: .destructive) {
+                                    // 삭제 전 확인 alert 띄우기
+                                    showDeleteAlert = true
+                                }
+                                Button("취소", role: .cancel) { }
+                            }
+                            .alert("해당 북마크를 삭제할까요?", isPresented: $showDeleteAlert) {
+                                Button("취소", role: .cancel) { }
+                                Button("확인", role: .destructive) {
+                                    Task {
+                                        do {
+                                            let _ = try await service.deleteBookmarkAPI(bookmarkId: self.bookmarkId)
+                                            onDeleted?()
+                                            dismiss()
+                                        } catch {
+                                            print("bookmark delete 실패")
+                                        }
+                                    }
+                                }
+                            }
             }
         }
         .onAppear {
             Task {
                 do {
-                    self.model = try await service.bookmarkDetailAPI(bookmarkID: self.bookmarkId)
+                    if self.bookmarkId != 0 {
+                        self.model = try await service.bookmarkDetailAPI(bookmarkID: self.bookmarkId)
+                    } else {
+                        // 여기서는 url을 통신한다.
+                        guard let url = self.url else { return }
+                        let response = try await service.bookmarkPostAPI(request: BookmarkRequest(url: url))
+                        
+                        self.model = BookmarkDetailResponse(
+                            thumbnailImageUrl: response.scrapContent.thumbnail,
+                            scrapedUrl: response.scrapContent.url,
+                            expression: response.expression,
+                            translatedExpression: response.translatedExpression,
+                            description: self.trimText(response.scrapContent.description))
+
+                        self.bookmarkCount = response.scrapedCountPerDay
+                    }
                 } catch {
                     print("bookmarkAPI 오류")
                 }
@@ -195,6 +250,8 @@ struct BookmarkDetailView: View {
         }
         return ""
     }
+    
+    
 }
 
 // 예문 모델
