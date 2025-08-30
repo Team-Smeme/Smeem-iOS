@@ -25,67 +25,98 @@ struct BookmarkView: View {
                         .font(.title)
                         .bold()
                         .padding(.horizontal)
-                    
-                    // Pinterest Grid
-                    HStack(alignment: .top, spacing: 16) {
-                        LazyVStack(spacing: 16) {
-                            ForEach(leftColumnItems) { item in
-                                NavigationLink {
-                                    BookmarkDetailView(
-                                        id: item.id,
-                                        onDeleted: {
-                                            refreshTrigger.toggle()
-                                        }
-                                    )
-                                } label: {
-                                    BookmarkCardView(bookmark: item)
-                                }
-                                .buttonStyle(.plain)
+                    // 북마크 없을 때 empty
+                    if model.bookmarks.isEmpty {
+                        VStack(spacing: 12) {
+                            Image("iconExclamation")
+                                .font(.system(size: 32))
+                                .foregroundColor(.gray)
+                            
+                            Text("아직 저장한 북마크가 없어요.")
+                                .font(.body)
+                                .foregroundColor(.gray)
+                            
+                            Text("인스타그램에서 공유 버튼을 눌러\n북마크를 저장해보세요!")
+                                .font(.subheadline)
+                                .multilineTextAlignment(.center)
+                                .foregroundColor(.gray)
+                            
+                            Button(action: {
+                                openInstagram()
+                            }) {
+                                Text("인스타그램 열기")
+                                    .font(.body)
+                                    .padding(.horizontal, 16)
+                                    .padding(.vertical, 8)
+                                    .background(Color(.systemGray6))
+                                    .cornerRadius(8)
                             }
                         }
+                        .frame(maxWidth: .infinity, minHeight: 400) // 중앙 정렬을 위한 height
+                        .padding(.top, 100)
                         
-                        LazyVStack(spacing: 16) {
-                            ForEach(rightColumnItems) { item in
-                                NavigationLink {
-                                    BookmarkDetailView(
+                    } else {
+                        // Pinterest Grid
+                        HStack(alignment: .top, spacing: 16) {
+                            LazyVStack(spacing: 16) {
+                                ForEach(leftColumnItems) { item in
+                                    NavigationLink {
+                                        BookmarkDetailView(
                                             id: item.id,
                                             onDeleted: {
                                                 refreshTrigger.toggle()
                                             }
                                         )
-                                } label: {
-                                    BookmarkCardView(bookmark: item)
+                                    } label: {
+                                        BookmarkCardView(bookmark: item)
+                                    }
+                                    .buttonStyle(.plain)
                                 }
-                                .buttonStyle(.plain)
+                            }
+                            
+                            LazyVStack(spacing: 16) {
+                                ForEach(rightColumnItems) { item in
+                                    NavigationLink {
+                                        BookmarkDetailView(
+                                            id: item.id,
+                                            onDeleted: {
+                                                refreshTrigger.toggle()
+                                            }
+                                        )
+                                    } label: {
+                                        BookmarkCardView(bookmark: item)
+                                    }
+                                    .buttonStyle(.plain)
+                                }
                             }
                         }
+                        .padding(.horizontal)
                     }
-                    .padding(.horizontal)
                 }
-                .padding(.top)
-                .padding(.bottom, 49)
-            }
-            .toolbar(.hidden, for: .navigationBar)
-        }
-        .onAppear {
-            Task {
-                do {
-                    self.model = try await service.bookmarkGetAPI()
-                } catch {
-                    print("bookmarkAPI 오류")
+                        .padding(.top)
+                        .padding(.bottom, 49)
                 }
+                .toolbar(.hidden, for: .navigationBar)
             }
-        }
-        .onChange(of: refreshTrigger) { _ in
-            Task {
-                do {
-                    self.model = try await service.bookmarkGetAPI()
-                } catch {
-                    print("bookmarkAPI 오류")
+            .onAppear {
+                Task {
+                    do {
+                        self.model = try await service.bookmarkGetAPI()
+                    } catch {
+                        print("bookmarkAPI 오류")
+                    }
                 }
             }
+            .onChange(of: refreshTrigger) { _ in
+                Task {
+                    do {
+                        self.model = try await service.bookmarkGetAPI()
+                    } catch {
+                        print("bookmarkAPI 오류")
+                    }
+                }
+            }
         }
-    }
     
     // MARK: - Pinterest 컬럼 분배
     private var leftColumnItems: [Bookmarks] {
@@ -113,6 +144,15 @@ struct BookmarkView: View {
             }
         }
         return (left, right)
+    }
+    
+    private func openInstagram() {
+        if let url = URL(string: "instagram://app"),
+           UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url)
+        } else if let url = URL(string: "https://instagram.com") {
+            UIApplication.shared.open(url)
+        }
     }
 }
 
@@ -178,3 +218,5 @@ struct BookmarkCardView: View {
         }
     }
 }
+
+

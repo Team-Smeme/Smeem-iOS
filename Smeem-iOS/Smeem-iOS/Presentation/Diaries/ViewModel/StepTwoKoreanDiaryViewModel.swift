@@ -65,7 +65,7 @@ final class StepTwoKoreanDiaryViewModel: DiaryViewModel {
                     guard let inputText = self?.getDiaryText() else { return }
                     let topicID = SharedDiaryDataService.shared.topicID
                     
-                    PostDiaryAPI.shared.postDiary(param: PostDiaryRequest(content: inputText, topicId: topicID)) { result in
+                    PostDiaryAPI.shared.postDiary(param: PostDiaryRequest(content: inputText, topicId: topicID, engKorExpression: nil)) { result in
                         switch result {
                         case .success(let response):
                             self?.updateDiaryInfo(diaryID: response.diaryID, badgePopupContent: response.badges)
