@@ -51,10 +51,11 @@ final class HomeViewFloatingViewController: UIViewController {
         return koreanButton
     }()
     
-    private lazy var floatingButton: SmeemButton = {
-        let floatingButton = SmeemButton(buttonType: .enabled, text: "취소")
-        floatingButton.addTarget(self, action: #selector(self.floatingButtonDidTap(_:)), for: .touchUpInside)
-        return floatingButton
+    private lazy var floatingButton: UIButton = {
+        let myPageButton = UIButton()
+        myPageButton.setImage(Constant.Image.cancelButton, for: .normal)
+        myPageButton.addTarget(self, action: #selector(self.floatingButtonDidTap(_:)), for: .touchUpInside)
+        return myPageButton
     }()
     
     private lazy var dimView: UIView = {
@@ -119,18 +120,20 @@ final class HomeViewFloatingViewController: UIViewController {
             $0.top.trailing.bottom.leading.equalToSuperview()
         }
         
+        let tabBarHeight = tabBarController?.tabBar.frame.height ?? 49  // 기본값 49
+        let bottomInset = view.safeAreaInsets.bottom > 0 ? view.safeAreaInsets.bottom : 34 // 홈 인디케이터 대응
+        
         floatingButton.snp.makeConstraints {
-            $0.bottom.equalToSuperview().inset(convertByHeightRatio(50))
-            $0.centerX.equalToSuperview()
-            $0.width.equalTo(convertByWidthRatio(339))
-            $0.height.equalTo(convertByHeightRatio(60))
+            $0.width.height.equalTo(convertByWidthRatio(54))
+            $0.trailing.equalToSuperview().inset(18)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(tabBarHeight + 16 + bottomInset - 34)
         }
         
         buttonStackView.snp.makeConstraints {
-            $0.bottom.equalToSuperview().offset(-convertByHeightRatio(118))
-            $0.centerX.equalToSuperview()
+            $0.bottom.equalTo(floatingButton.snp.top).offset(-10)
+            $0.trailing.equalToSuperview().inset(18)
             $0.height.equalTo(constraintByNotch(118, 130))
-            $0.width.equalTo(convertByWidthRatio(339))
+            $0.width.equalTo(convertByWidthRatio(197))
         }
         
         border.snp.makeConstraints {

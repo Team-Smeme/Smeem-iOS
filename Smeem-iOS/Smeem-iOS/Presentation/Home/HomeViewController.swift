@@ -33,7 +33,7 @@ final class HomeViewController: BaseViewController {
     var badgePopupData = [PopupBadge]()
     var isKeyboardVisible: Bool = false
     var keyboardHeight: CGFloat = 0.0
-    
+
     private var cancelBag = Set<AnyCancellable>()
     
     // MARK: - UI Property
@@ -173,9 +173,10 @@ final class HomeViewController: BaseViewController {
         return view
     }()
     
-    private let addDiaryButton: SmeemButton = {
-        let addDiaryButton = SmeemButton(buttonType: .enabled, text: "일기 작성하기")
-        return addDiaryButton
+    private let addDiaryButton: UIButton = {
+        let button = UIButton()
+        button.setImage(Constant.Image.plusButton, for: .normal)
+        return button
     }()
     
     private lazy var bannerView: CustomBannerView = {
@@ -193,6 +194,27 @@ final class HomeViewController: BaseViewController {
         stackView.distribution = .equalSpacing
         return stackView
     }()
+    
+    private func hideTabBar() {
+        if let tabBar = getTabBar() {
+            tabBar.isHidden = true
+        }
+    }
+    
+    private func showTabBar() {
+        if let tabBar = getTabBar() {
+            tabBar.isHidden = false
+        }
+    }
+    
+    private func getTabBar() -> UITabBar? {
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+              let window = windowScene.windows.first,
+              let tabBarController = window.rootViewController as? UITabBarController else {
+            return nil
+        }
+        return tabBarController.tabBar
+    }
     
     // MARK: - Life Cycle
     
@@ -224,6 +246,8 @@ final class HomeViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         homeDiaryWithAPI(start: Date().startOfMonth().addingDate(addValue: -7), end: Date().endOfMonth().addingDate(addValue: 7))
         checkPopupView()
+        self.navigationController?.isNavigationBarHidden = true
+        showTabBar()
     }
     
     // MARK: - @objc
@@ -280,6 +304,7 @@ final class HomeViewController: BaseViewController {
     }
     
     @objc func addDiaryButtonDidTap(_ sender: UIButton) {
+        // 버튼 누를 때마다 다른 동작을 해야 한다.
         let newVC = HomeViewFloatingViewController()
         newVC.modalTransitionStyle = .crossDissolve
         newVC.modalPresentationStyle = .overFullScreen
@@ -519,16 +544,12 @@ final class HomeViewController: BaseViewController {
             $0.width.height.equalTo(convertByWidthRatio(40))
         }
         
-        bottomStackView.snp.makeConstraints {
-            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-16)
-            $0.leading.trailing.equalToSuperview().inset(18)
-        }
-        
-        bottomStackView.addArrangedSubview(addDiaryButton)
+        view.addSubview(addDiaryButton)
         
         addDiaryButton.snp.makeConstraints {
-            $0.width.equalTo(convertByWidthRatio(339))
-            $0.height.equalTo(convertByHeightRatio(60))
+            $0.width.height.equalTo(convertByWidthRatio(54))
+            $0.trailing.equalToSuperview().inset(18)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-16)
         }
     }
 }
@@ -608,6 +629,16 @@ extension HomeViewController: FSCalendarDelegateAppearance {
         diaryThumbnail.isHidden = !isHavingTodayDiary
         emptyView.isHidden = isHavingTodayDiary
         addDiaryButton.isHidden = !(gregorian.isDateInToday(date) && !isHavingTodayDiary)
+        var temp = !(gregorian.isDateInToday(date) && !isHavingTodayDiary)
+        
+        let key = "shouldHideFloatingButton"
+        
+        if !(gregorian.isDateInToday(date) && !isHavingTodayDiary) == true {
+            UserDefaults.standard.set(true, forKey: key)
+        } else {
+            // 아니면 삭제함
+            UserDefaults.standard.removeObject(forKey: key)
+        }
         
         if (!floatingView.isHidden) {
             floatingView.snp.updateConstraints {
@@ -659,4 +690,8 @@ extension HomeViewController {
             }
         }
     }
+}
+
+extension Notification.Name {
+    static let diaryWritten = Notification.Name("diaryWritten")
 }
